@@ -22,7 +22,7 @@ namespace Chocolatey.Explorer.Model
             return Name.CompareTo(((Package)obj).Name);
         }
 
-        public bool Equals(Package other)
+        public bool Equals(PackageVersion other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -33,8 +33,8 @@ namespace Chocolatey.Explorer.Model
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(Package)) return false;
-            return Equals((Package)obj);
+            if (obj.GetType() != typeof(PackageVersion)) return false;
+            return Equals((PackageVersion)obj);
         }
 
         public override int GetHashCode()

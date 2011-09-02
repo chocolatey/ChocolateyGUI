@@ -22,10 +22,15 @@ namespace Chocolatey.Explorer.Services
             OutputDelegate handler = OutputChanged;
             if (handler != null) handler(output);
         }
-        
+
         public ChocolateyService()
+            : this(new RunSync())
         {
-            _powershell = new RunSync();
+        }
+
+        public ChocolateyService(IRun powerShell)
+        {
+            _powershell = powerShell;
             _powershell.OutputChanged += OutPutChangedHandler;
             _powershell.RunFinished += RunFinishedHandler;
         }
@@ -38,11 +43,6 @@ namespace Chocolatey.Explorer.Services
         private void RunFinishedHandler()
         {
             OnRunFinished();
-        }
-
-        public ChocolateyService(IRun powershell)
-        {
-            _powershell = powershell;
         }
 
         public void LatestVersion()

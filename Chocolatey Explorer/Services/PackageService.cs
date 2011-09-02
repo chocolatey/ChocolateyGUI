@@ -23,16 +23,15 @@ namespace Chocolatey.Explorer.Services
             if (handler != null) handler(line);
         }
 
-        public PackageService()
+        public PackageService(): this(new RunAsync())
         {
-            _powershellAsync = new RunAsync();
-            _powershellAsync.OutputChanged += OutputChanged;
-            _powershellAsync.RunFinished += RunFinished;
         }
 
         public PackageService(IRun powershell)
         {
             _powershellAsync = powershell;
+            _powershellAsync.OutputChanged += OutputChanged;
+            _powershellAsync.RunFinished += RunFinished;
         }
 
         public void InstallPackage(string package)

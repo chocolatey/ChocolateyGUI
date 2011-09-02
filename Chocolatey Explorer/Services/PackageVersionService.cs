@@ -18,9 +18,13 @@ namespace Chocolatey.Explorer.Services
             if (handler != null) handler(version);
         }
 
-        public PackageVersionService()
+        public PackageVersionService() : this(new RunAsync())
         {
-            _powershellAsync = new RunAsync();
+        }
+
+        public PackageVersionService(IRun powershell)
+        {
+            _powershellAsync = powershell;
             _powershellAsync.OutputChanged += VersionHandler;
             _powershellAsync.RunFinished += RunFinished;
         } 

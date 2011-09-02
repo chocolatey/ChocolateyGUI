@@ -17,13 +17,17 @@ namespace Chocolatey.Explorer.View
         private readonly PackageVersionService _packageVersionService;
         private readonly PackageService _packageService;
 
-        public PackageManager()
+        public PackageManager(): this(new PackagesService(),new PackageVersionService(),new PackageService())
+        {
+        }
+
+        public PackageManager(PackagesService packagesService, PackageVersionService packageVersionService, PackageService packageService)
         {
             InitializeComponent();
 
-            _packageService = new PackageService();
-            _packagesService = new PackagesService();
-            _packageVersionService = new PackageVersionService();
+            _packageService = packageService;
+            _packagesService = packagesService;
+            _packageVersionService = packageVersionService;
             _packageVersionService.VersionChanged += VersionChangedHandler;
             _packagesService.RunFinshed += PackagesServiceRunFinished;
             _packageService.LineChanged += PackageServiceLineChanged;

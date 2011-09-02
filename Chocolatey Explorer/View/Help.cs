@@ -8,12 +8,8 @@ namespace Chocolatey.Explorer.View
     {
         private ChocolateyService _chocolateyService;
 
-        public Help()
+        public Help() : this(new ChocolateyService())
         {
-            InitializeComponent();
-
-            _chocolateyService = new ChocolateyService();
-            _chocolateyService.OutputChanged += ChocolateyServiceOutPutChanged;
         }
 
         private void ChocolateyServiceOutPutChanged(string output)
@@ -26,6 +22,7 @@ namespace Chocolatey.Explorer.View
             InitializeComponent();
 
             _chocolateyService = chocolateyService;
+            _chocolateyService.OutputChanged += ChocolateyServiceOutPutChanged;
         }
 
         private void Help_Activated(object sender, EventArgs e)

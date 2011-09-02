@@ -8,11 +8,15 @@ namespace Chocolatey.Explorer.View
     {
         private ChocolateyService _chocolateyService;
 
-        public About()
+        public About() : this(new ChocolateyService())
+        {
+        }
+
+        public About(ChocolateyService chocolateyService)
         {
             InitializeComponent();
 
-            _chocolateyService = new ChocolateyService();
+            _chocolateyService = chocolateyService;
             _chocolateyService.OutputChanged += VersionChangedHandler;
         }
 
@@ -21,12 +25,7 @@ namespace Chocolatey.Explorer.View
             textBox1.Text = version;
         }
 
-        public About(ChocolateyService chocolateyService)
-        {
-            InitializeComponent();
-
-            _chocolateyService = chocolateyService;
-        }
+        
 
         private void About_Activated(object sender, EventArgs e)
         {

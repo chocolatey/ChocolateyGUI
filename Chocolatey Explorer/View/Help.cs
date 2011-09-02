@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Windows.Forms;
-using Chocolatey_Explorer.Services;
+using Chocolatey.Explorer.Services;
 
-namespace Chocolatey_Explorer.View
+namespace Chocolatey.Explorer.View
 {
     public partial class Help : Form
     {
-        private Chocolatey _chocolateyService;
+        private ChocolateyService _chocolateyService;
 
         public Help()
         {
             InitializeComponent();
 
-            _chocolateyService = new Chocolatey();
+            _chocolateyService = new ChocolateyService();
             _chocolateyService.OutputChanged += ChocolateyServiceOutPutChanged;
         }
 
@@ -21,7 +21,7 @@ namespace Chocolatey_Explorer.View
             textBox1.Text = output;
         }
 
-        public Help(Chocolatey chocolateyService)
+        public Help(ChocolateyService chocolateyService)
         {
             InitializeComponent();
 

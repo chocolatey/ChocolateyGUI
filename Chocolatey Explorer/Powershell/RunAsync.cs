@@ -2,7 +2,7 @@ using System;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 
-namespace Chocolatey_Explorer.Powershell
+namespace Chocolatey.Explorer.Powershell
 {
     public class RunAsync : IRun
     {

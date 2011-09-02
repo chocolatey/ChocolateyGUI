@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace Chocolatey_Explorer.Powershell
+namespace Chocolatey.Explorer.Powershell
 {
     public class RunSync:IRun
     {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Chocolatey_Explorer.Model;
-using Chocolatey_Explorer.Services;
+using Chocolatey.Explorer.Model;
+using Chocolatey.Explorer.Services;
 
-namespace Chocolatey_Explorer.View
+namespace Chocolatey.Explorer.View
 {
     public partial class PackageManager : Form
     {

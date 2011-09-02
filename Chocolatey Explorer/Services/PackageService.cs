@@ -1,6 +1,6 @@
-﻿using Chocolatey_Explorer.Powershell;
+﻿using Chocolatey.Explorer.Powershell;
 
-namespace Chocolatey_Explorer.Services
+namespace Chocolatey.Explorer.Services
 {
     public class PackageService
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chocolatey_Explorer.Model
+namespace Chocolatey.Explorer.Model
 {
     public class PackageVersion
     {

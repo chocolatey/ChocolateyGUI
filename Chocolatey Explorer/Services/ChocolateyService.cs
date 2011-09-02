@@ -1,8 +1,8 @@
-using Chocolatey_Explorer.Powershell;
+using Chocolatey.Explorer.Powershell;
 
-namespace Chocolatey_Explorer.Services
+namespace Chocolatey.Explorer.Services
 {
-    public class Chocolatey
+    public class ChocolateyService
     {
         private IRun _powershell;
         public delegate void OutputDelegate(string output);
@@ -23,7 +23,7 @@ namespace Chocolatey_Explorer.Services
             if (handler != null) handler(output);
         }
         
-        public Chocolatey()
+        public ChocolateyService()
         {
             _powershell = new RunSync();
             _powershell.OutputChanged += OutPutChangedHandler;
@@ -40,7 +40,7 @@ namespace Chocolatey_Explorer.Services
             OnRunFinished();
         }
 
-        public Chocolatey(IRun powershell)
+        public ChocolateyService(IRun powershell)
         {
             _powershell = powershell;
         }

@@ -1,4 +1,4 @@
-﻿namespace Chocolatey_Explorer.View
+﻿namespace Chocolatey.Explorer.View
 {
     partial class PackageManager
     {

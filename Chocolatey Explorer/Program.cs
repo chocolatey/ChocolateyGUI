@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using Chocolatey_Explorer.View;
+using Chocolatey.Explorer.View;
 
-namespace Chocolatey_Explorer
+namespace Chocolatey.Explorer
 {
     static class Program
     {

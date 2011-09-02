@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chocolatey_Explorer.Services
+namespace Chocolatey.Explorer.Services
 {
     public class Settings
     {

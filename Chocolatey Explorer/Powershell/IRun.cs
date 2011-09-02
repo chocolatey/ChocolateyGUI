@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Chocolatey_Explorer.Powershell
+namespace Chocolatey.Explorer.Powershell
 {
     public delegate void ResultsHandler(String result);
     public delegate void EmptyHandler();

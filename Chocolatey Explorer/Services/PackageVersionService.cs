@@ -1,7 +1,7 @@
-﻿using Chocolatey_Explorer.Model;
-using Chocolatey_Explorer.Powershell;
+﻿using Chocolatey.Explorer.Model;
+using Chocolatey.Explorer.Powershell;
 
-namespace Chocolatey_Explorer.Services
+namespace Chocolatey.Explorer.Services
 {
     public class PackageVersionService
     {

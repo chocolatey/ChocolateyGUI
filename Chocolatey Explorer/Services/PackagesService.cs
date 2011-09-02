@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
-using Chocolatey_Explorer.Model;
-using Chocolatey_Explorer.Powershell;
+using Chocolatey.Explorer.Model;
+using Chocolatey.Explorer.Powershell;
 
-namespace Chocolatey_Explorer.Services
+namespace Chocolatey.Explorer.Services
 {
     public class PackagesService
     {

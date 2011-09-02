@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageManager));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.packagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.availablePackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -240,9 +241,10 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "PackageManager";
-            this.Text = "PackageManager";
+            this.Text = "Chocolatey PackageManager";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

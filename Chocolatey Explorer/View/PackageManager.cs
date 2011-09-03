@@ -8,21 +8,21 @@ using Chocolatey.Explorer.Services;
 
 namespace Chocolatey.Explorer.View
 {
-    public partial class PackageManager : Form
+    public partial class PackageManager : Form,IPackageManager
     {
         private delegate void PackageVersionHandler(PackageVersion version);
         private delegate void PackageSServiceHandler(IList<Package> packages);
         private delegate void PackageServiceHandler(string line);
         private delegate void PackageServiceRunFinishedHandler();
-        private readonly PackagesService _packagesService;
-        private readonly PackageVersionService _packageVersionService;
-        private readonly PackageService _packageService;
+        private readonly IPackagesService _packagesService;
+        private readonly IPackageVersionService _packageVersionService;
+        private readonly IPackageService _packageService;
 
         public PackageManager(): this(new PackagesService(),new PackageVersionService(),new PackageService())
         {
         }
 
-        public PackageManager(PackagesService packagesService, PackageVersionService packageVersionService, PackageService packageService)
+        public PackageManager(IPackagesService packagesService, IPackageVersionService packageVersionService, IPackageService packageService)
         {
             InitializeComponent();
 
@@ -141,11 +141,12 @@ namespace Chocolatey.Explorer.View
         {
             SetStatus("Getting package information");
             EmptyTextBoxes();
-            _packageVersionService.PackageVersion(((Package) PackageList.SelectedItem).Name);
+            if(PackageList.SelectedItem!=null) _packageVersionService.PackageVersion(((Package) PackageList.SelectedItem).Name);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (PackageList.SelectedItem != null) return;
             SetStatus("Updating package " + ((Package)PackageList.SelectedItem).Name);
             txtPowershellOutput.Visible = true;
             _packageService.UpdatePackage(((Package) PackageList.SelectedItem).Name);
@@ -174,6 +175,7 @@ namespace Chocolatey.Explorer.View
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (PackageList.SelectedItem != null) return;
             SetStatus("Installing package " + ((Package) PackageList.SelectedItem).Name);
             txtPowershellOutput.Visible = true;
             _packageService.InstallPackage(((Package) PackageList.SelectedItem).Name);

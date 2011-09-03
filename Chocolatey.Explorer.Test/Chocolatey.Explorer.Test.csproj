@@ -40,6 +40,12 @@
     <Reference Include="pnunit.framework">
       <HintPath>..\Chocolatey Explorer\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\Chocolatey Explorer\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\Chocolatey Explorer\packages\structuremap.automocking.2.6.3\lib\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IoC\TestRegistry.cs" />
     <Compile Include="Model\TestPackage.cs" />
     <Compile Include="Model\TestPackageVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

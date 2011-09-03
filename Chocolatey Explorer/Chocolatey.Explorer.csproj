@@ -70,6 +70,9 @@
     <ApplicationIcon>chocolateyicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StructureMap">
+      <HintPath>packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -86,12 +89,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IoC\Registry.cs" />
     <Compile Include="Model\Package.cs" />
     <Compile Include="Model\PackageVersion.cs" />
     <Compile Include="Powershell\IRun.cs" />
     <Compile Include="Powershell\RunAsync.cs" />
     <Compile Include="Powershell\RunSync.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
+    <Compile Include="Services\IChocolateyService.cs" />
+    <Compile Include="Services\IPackageService.cs" />
+    <Compile Include="Services\IPackagesService.cs" />
+    <Compile Include="Services\IPackageVersionService.cs" />
     <Compile Include="Services\PackageService.cs" />
     <Compile Include="Services\PackagesService.cs" />
     <Compile Include="Services\PackageVersionService.cs" />
@@ -110,6 +118,7 @@
     <Compile Include="View\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\IPackageManager.cs" />
     <Compile Include="View\PackageManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +145,7 @@
       <DependentUpon>PackageManager.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

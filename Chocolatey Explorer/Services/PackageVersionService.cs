@@ -3,7 +3,7 @@ using Chocolatey.Explorer.Powershell;
 
 namespace Chocolatey.Explorer.Services
 {
-    public class PackageVersionService
+    public class PackageVersionService : IPackageVersionService
     {
         private readonly IRun _powershellAsync;
         private string _package;
@@ -12,7 +12,7 @@ namespace Chocolatey.Explorer.Services
         public delegate void VersionResult(PackageVersion version);
         public event VersionResult VersionChanged;
 
-        public void OnVersionChanged(PackageVersion version)
+        private void OnVersionChanged(PackageVersion version)
         {
             var handler = VersionChanged;
             if (handler != null) handler(version);

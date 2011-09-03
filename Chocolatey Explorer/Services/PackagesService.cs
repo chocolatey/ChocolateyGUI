@@ -6,7 +6,7 @@ using Chocolatey.Explorer.Powershell;
 
 namespace Chocolatey.Explorer.Services
 {
-    public class PackagesService
+    public class PackagesService : IPackagesService
     {
         private IRun _powershellAsync;
         private IList<string> lines;
@@ -14,7 +14,7 @@ namespace Chocolatey.Explorer.Services
         public delegate void FinishedDelegate(IList<Package> packages);
         public event FinishedDelegate RunFinshed;
 
-        public void OnRunFinshed(IList<Package> packages)
+        private void OnRunFinshed(IList<Package> packages)
         {
             FinishedDelegate handler = RunFinshed;
             if (handler != null) handler(packages);

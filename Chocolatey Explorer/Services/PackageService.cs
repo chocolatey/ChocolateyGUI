@@ -2,7 +2,7 @@
 
 namespace Chocolatey.Explorer.Services
 {
-    public class PackageService
+    public class PackageService : IPackageService
     {
         private IRun _powershellAsync;
 
@@ -11,13 +11,13 @@ namespace Chocolatey.Explorer.Services
         public delegate void FinishedDelegate();
         public event FinishedDelegate RunFinshed;
 
-        public void OnRunFinshed()
+        private void OnRunFinshed()
         {
             FinishedDelegate handler = RunFinshed;
             if (handler != null) handler();
         }
 
-        public void OnLineChanged(string line)
+        private void OnLineChanged(string line)
         {
             LineDelegate handler = LineChanged;
             if (handler != null) handler(line);

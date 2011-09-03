@@ -6,7 +6,7 @@ namespace Chocolatey.Explorer.View
 {
     public partial class Help : Form
     {
-        private ChocolateyService _chocolateyService;
+        private IChocolateyService _chocolateyService;
 
         public Help() : this(new ChocolateyService())
         {
@@ -17,7 +17,7 @@ namespace Chocolatey.Explorer.View
             textBox1.Text = output;
         }
 
-        public Help(ChocolateyService chocolateyService)
+        public Help(IChocolateyService chocolateyService)
         {
             InitializeComponent();
 

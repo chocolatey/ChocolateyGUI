@@ -6,13 +6,13 @@ namespace Chocolatey.Explorer.View
 {
     public partial class About : Form
     {
-        private ChocolateyService _chocolateyService;
+        private IChocolateyService _chocolateyService;
 
         public About() : this(new ChocolateyService())
         {
         }
 
-        public About(ChocolateyService chocolateyService)
+        public About(IChocolateyService chocolateyService)
         {
             InitializeComponent();
 
@@ -30,6 +30,18 @@ namespace Chocolatey.Explorer.View
         private void About_Activated(object sender, EventArgs e)
         {
             _chocolateyService.LatestVersion();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabel1.LinkVisited = true;
+            System.Diagnostics.Process.Start(linkLabel1.Text);
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabel2.LinkVisited = true;
+            System.Diagnostics.Process.Start(linkLabel2.Text);
         }
     }
 }

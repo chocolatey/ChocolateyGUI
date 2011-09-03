@@ -2,7 +2,7 @@ using Chocolatey.Explorer.Powershell;
 
 namespace Chocolatey.Explorer.Services
 {
-    public class ChocolateyService
+    public class ChocolateyService : IChocolateyService
     {
         private IRun _powershell;
         public delegate void OutputDelegate(string output);
@@ -11,7 +11,7 @@ namespace Chocolatey.Explorer.Services
         public event OutputDelegate OutputChanged;
         public event RunFinishedDelegate RunFinished;
 
-        public void OnRunFinished()
+        private void OnRunFinished()
         {
             RunFinishedDelegate handler = RunFinished;
             if (handler != null) handler();
@@ -47,7 +47,7 @@ namespace Chocolatey.Explorer.Services
 
         public void LatestVersion()
         {
-            _powershell.Run("cver");
+            _powershell.Run("cver" + " -source " + Settings.Source);
         }
 
         public void Help()

@@ -14,12 +14,6 @@ namespace Chocolatey.Explorer.Services
         public delegate void FinishedDelegate(IList<Package> packages);
         public event FinishedDelegate RunFinshed;
 
-        private void OnRunFinshed(IList<Package> packages)
-        {
-            FinishedDelegate handler = RunFinshed;
-            if (handler != null) handler(packages);
-        }
-
         public PackagesService(): this(new RunAsync())
         {
         }
@@ -69,6 +63,12 @@ namespace Chocolatey.Explorer.Services
                     let version = result.Split(" ".ToCharArray()[0])[1]
                     select new Package() { Name = name }).ToList());
         }
-        
+
+        private void OnRunFinshed(IList<Package> packages)
+        {
+            FinishedDelegate handler = RunFinshed;
+            if (handler != null) handler(packages);
+        }
+
     }
 }

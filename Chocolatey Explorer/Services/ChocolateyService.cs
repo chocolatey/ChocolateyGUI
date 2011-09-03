@@ -5,23 +5,12 @@ namespace Chocolatey.Explorer.Services
     public class ChocolateyService : IChocolateyService
     {
         private IRun _powershell;
+        
         public delegate void OutputDelegate(string output);
         public delegate void RunFinishedDelegate();
 
         public event OutputDelegate OutputChanged;
         public event RunFinishedDelegate RunFinished;
-
-        private void OnRunFinished()
-        {
-            RunFinishedDelegate handler = RunFinished;
-            if (handler != null) handler();
-        }
-
-        private void InvokeOutputChanged(string output)
-        {
-            OutputDelegate handler = OutputChanged;
-            if (handler != null) handler(output);
-        }
 
         public ChocolateyService()
             : this(new RunSync())
@@ -35,6 +24,28 @@ namespace Chocolatey.Explorer.Services
             _powershell.RunFinished += RunFinishedHandler;
         }
 
+        public void LatestVersion()
+        {
+            _powershell.Run("cver" + " -source " + Settings.Source);
+        }
+
+        public void Help()
+        {
+            _powershell.Run("chocolatey /?");
+        }
+
+        private void OnRunFinished()
+        {
+            RunFinishedDelegate handler = RunFinished;
+            if (handler != null) handler();
+        }
+
+        private void InvokeOutputChanged(string output)
+        {
+            OutputDelegate handler = OutputChanged;
+            if (handler != null) handler(output);
+        }
+
         private void OutPutChangedHandler(string output)
         {
             InvokeOutputChanged(output);
@@ -45,14 +56,5 @@ namespace Chocolatey.Explorer.Services
             OnRunFinished();
         }
 
-        public void LatestVersion()
-        {
-            _powershell.Run("cver" + " -source " + Settings.Source);
-        }
-
-        public void Help()
-        {
-            _powershell.Run("chocolatey /?");
-        }
     }
 }

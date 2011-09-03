@@ -44,6 +44,7 @@ namespace Chocolatey.Explorer.View
             else
             {
                 ClearStatus();
+                textBox2.Visible = false;
                 SelectPackage();
             }
         }
@@ -68,11 +69,12 @@ namespace Chocolatey.Explorer.View
             }
             else
             {
-                listBox1.DataSource = packages.Distinct().ToList();
+                var distinctpackages = packages.Distinct().ToList();
+                listBox1.DataSource = distinctpackages;
                 listBox1.DisplayMember = "Name";
                 listBox1.SelectedIndex = 0;
                 ClearStatus();
-                SelectPackage();
+                SelectPackage(); 
             }
         }
 
@@ -90,7 +92,8 @@ namespace Chocolatey.Explorer.View
                 textBox1.AppendText("Version on the server: " + version.Serverversion + Environment.NewLine);
                 button1.Enabled = version.CanBeUpdated;
                 button2.Enabled = !version.IsInstalled;
-                ClearStatus(); 
+                ClearStatus();
+                lblStatus.Text = "Number of packages: " + listBox1.Items.Count;  
             }
         }
 
@@ -141,6 +144,7 @@ namespace Chocolatey.Explorer.View
         private void button1_Click(object sender, EventArgs e)
         {
             SetStatus("Updating package " + ((Package)listBox1.SelectedItem).Name);
+            textBox2.Visible = true;
             _packageService.UpdatePackage(((Package) listBox1.SelectedItem).Name);
         }
 
@@ -168,6 +172,7 @@ namespace Chocolatey.Explorer.View
         private void button2_Click(object sender, EventArgs e)
         {
             SetStatus("Installing package " + ((Package) listBox1.SelectedItem).Name);
+            textBox2.Visible = true;
             _packageService.InstallPackage(((Package) listBox1.SelectedItem).Name);
         }
     }

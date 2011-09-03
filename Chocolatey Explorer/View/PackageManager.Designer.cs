@@ -37,18 +37,19 @@
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.PackageList = new System.Windows.Forms.ListBox();
             this.txtPowershellOutput = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnInstall = new System.Windows.Forms.Button();
+            this.txtVersion = new System.Windows.Forms.RichTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.txtVersion = new System.Windows.Forms.RichTextBox();
+            this.lblPackages = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -107,7 +108,7 @@
             // 
             this.helpToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripMenuItem1.Image")));
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.helpToolStripMenuItem1.Text = "H&elp";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
@@ -115,7 +116,7 @@
             // 
             this.aboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem.Image")));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -130,6 +131,25 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(127, 22);
+            this.toolStripButton1.Text = "Available packages";
+            this.toolStripButton1.Click += new System.EventHandler(this.availablePackagesToolStripMenuItem_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(107, 22);
+            this.toolStripButton2.Text = "Installed packages";
+            this.toolStripButton2.Click += new System.EventHandler(this.installedPackagesToolStripMenuItem_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -139,12 +159,13 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.PackageList);
+            this.splitContainer1.Panel1.Controls.Add(this.lblPackages);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.txtPowershellOutput);
-            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
             this.splitContainer1.Panel2.Controls.Add(this.txtVersion);
+            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainer1.Panel2.Controls.Add(this.txtPowershellOutput);
             this.splitContainer1.Size = new System.Drawing.Size(696, 482);
             this.splitContainer1.SplitterDistance = 231;
             this.splitContainer1.TabIndex = 2;
@@ -153,15 +174,15 @@
             // 
             this.PackageList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PackageList.FormattingEnabled = true;
-            this.PackageList.Location = new System.Drawing.Point(0, 0);
+            this.PackageList.Location = new System.Drawing.Point(0, 23);
             this.PackageList.Name = "PackageList";
-            this.PackageList.Size = new System.Drawing.Size(231, 482);
+            this.PackageList.Size = new System.Drawing.Size(231, 459);
             this.PackageList.TabIndex = 0;
             this.PackageList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseClick);
             // 
             // txtPowershellOutput
             // 
-            this.txtPowershellOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPowershellOutput.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txtPowershellOutput.Location = new System.Drawing.Point(0, 269);
             this.txtPowershellOutput.Multiline = true;
             this.txtPowershellOutput.Name = "txtPowershellOutput";
@@ -177,7 +198,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.btnUpdate, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnInstall, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 218);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
@@ -210,6 +231,15 @@
             this.btnInstall.UseVisualStyleBackColor = true;
             this.btnInstall.Click += new System.EventHandler(this.button2_Click);
             // 
+            // txtVersion
+            // 
+            this.txtVersion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtVersion.Location = new System.Drawing.Point(0, 0);
+            this.txtVersion.Name = "txtVersion";
+            this.txtVersion.Size = new System.Drawing.Size(461, 218);
+            this.txtVersion.TabIndex = 5;
+            this.txtVersion.Text = "";
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -234,33 +264,16 @@
             this.lblStatus.Spring = true;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // toolStripButton1
+            // lblPackages
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(127, 22);
-            this.toolStripButton1.Text = "Available packages";
-            this.toolStripButton1.Click += new System.EventHandler(this.availablePackagesToolStripMenuItem_Click);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(107, 22);
-            this.toolStripButton2.Text = "Installed packages";
-            this.toolStripButton2.Click += new System.EventHandler(this.installedPackagesToolStripMenuItem_Click);
-            // 
-            // txtVersion
-            // 
-            this.txtVersion.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtVersion.Location = new System.Drawing.Point(0, 0);
-            this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(461, 218);
-            this.txtVersion.TabIndex = 5;
-            this.txtVersion.Text = "";
+            this.lblPackages.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblPackages.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPackages.Location = new System.Drawing.Point(0, 0);
+            this.lblPackages.Name = "lblPackages";
+            this.lblPackages.Size = new System.Drawing.Size(231, 23);
+            this.lblPackages.TabIndex = 1;
+            this.lblPackages.Text = "Packages";
+            this.lblPackages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PackageManager
             // 
@@ -314,5 +327,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.RichTextBox txtVersion;
+        private System.Windows.Forms.Label lblPackages;
     }
 }

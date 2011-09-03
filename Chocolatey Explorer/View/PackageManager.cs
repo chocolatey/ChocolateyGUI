@@ -96,7 +96,8 @@ namespace Chocolatey.Explorer.View
                 btnUpdate.Enabled = version.CanBeUpdated;
                 btnInstall.Enabled = !version.IsInstalled;
                 ClearStatus();
-                lblStatus.Text = "Number of packages: " + PackageList.Items.Count;  
+                lblStatus.Text = "Number of packages: " + PackageList.Items.Count;
+                PackageList.Enabled = true;
             }
         }
 
@@ -109,6 +110,7 @@ namespace Chocolatey.Explorer.View
         private void availablePackagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetStatus("Getting list of packages on server");
+            lblPackages.Text = "Available packages";
             lblProgressbar.Style = ProgressBarStyle.Marquee;
             _packagesService.ListOfPackages();
         }
@@ -116,6 +118,7 @@ namespace Chocolatey.Explorer.View
         private void installedPackagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetStatus("Getting list of installed packages");
+            lblPackages.Text = "Installed packages";
             lblProgressbar.Style = ProgressBarStyle.Marquee;
             _packagesService.ListOfInstalledPackages();
         }
@@ -139,9 +142,11 @@ namespace Chocolatey.Explorer.View
 
         private void SelectPackage()
         {
-            SetStatus("Getting package information");
+            PackageList.Enabled = false;
+            if (PackageList.SelectedItem == null) return;
+            SetStatus("Getting package information for package: " + ((Package)PackageList.SelectedItem).Name);
             EmptyTextBoxes();
-            if(PackageList.SelectedItem!=null) _packageVersionService.PackageVersion(((Package) PackageList.SelectedItem).Name);
+            _packageVersionService.PackageVersion(((Package) PackageList.SelectedItem).Name);
         }
 
         private void button1_Click(object sender, EventArgs e)

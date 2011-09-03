@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
@@ -44,7 +45,7 @@ namespace Chocolatey.Explorer.View
             else
             {
                 ClearStatus();
-                textBox2.Visible = false;
+                txtPowershellOutput.Visible = false;
                 SelectPackage();
             }
         }
@@ -57,7 +58,7 @@ namespace Chocolatey.Explorer.View
             }
             else
             {
-                textBox2.AppendText(line + Environment.NewLine);
+                txtPowershellOutput.AppendText(line + Environment.NewLine);
             }
         }
 
@@ -70,9 +71,9 @@ namespace Chocolatey.Explorer.View
             else
             {
                 var distinctpackages = packages.Distinct().ToList();
-                listBox1.DataSource = distinctpackages;
-                listBox1.DisplayMember = "Name";
-                listBox1.SelectedIndex = 0;
+                PackageList.DataSource = distinctpackages;
+                PackageList.DisplayMember = "Name";
+                PackageList.SelectedIndex = 0;
                 ClearStatus();
                 SelectPackage(); 
             }
@@ -86,14 +87,16 @@ namespace Chocolatey.Explorer.View
             }
             else
             {
-                textBox1.Text = "";
-                textBox1.AppendText(version.Name + Environment.NewLine);
-                textBox1.AppendText("Current version: " + version.CurrentVersion + Environment.NewLine);
-                textBox1.AppendText("Version on the server: " + version.Serverversion + Environment.NewLine);
-                button1.Enabled = version.CanBeUpdated;
-                button2.Enabled = !version.IsInstalled;
+                txtVersion.Text = "";
+                txtVersion.AppendText(version.Name + Environment.NewLine);
+                txtVersion.Select(0, version.Name.Length);
+                txtVersion.SelectionFont = new Font(txtVersion.SelectionFont.FontFamily, 12, FontStyle.Bold);
+                txtVersion.AppendText("Current version: " + version.CurrentVersion + Environment.NewLine);
+                txtVersion.AppendText("Version on the server: " + version.Serverversion + Environment.NewLine);
+                btnUpdate.Enabled = version.CanBeUpdated;
+                btnInstall.Enabled = !version.IsInstalled;
                 ClearStatus();
-                lblStatus.Text = "Number of packages: " + listBox1.Items.Count;  
+                lblStatus.Text = "Number of packages: " + PackageList.Items.Count;  
             }
         }
 
@@ -138,22 +141,22 @@ namespace Chocolatey.Explorer.View
         {
             SetStatus("Getting package information");
             EmptyTextBoxes();
-            _packageVersionService.PackageVersion(((Package) listBox1.SelectedItem).Name);
+            _packageVersionService.PackageVersion(((Package) PackageList.SelectedItem).Name);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SetStatus("Updating package " + ((Package)listBox1.SelectedItem).Name);
-            textBox2.Visible = true;
-            _packageService.UpdatePackage(((Package) listBox1.SelectedItem).Name);
+            SetStatus("Updating package " + ((Package)PackageList.SelectedItem).Name);
+            txtPowershellOutput.Visible = true;
+            _packageService.UpdatePackage(((Package) PackageList.SelectedItem).Name);
         }
 
         private void EmptyTextBoxes()
         {
-            textBox1.Text = "";
-            textBox2.Text = "";
-            button1.Enabled = false;
-            button2.Enabled = false;
+            txtVersion.Text = "";
+            txtPowershellOutput.Text = "";
+            btnUpdate.Enabled = false;
+            btnInstall.Enabled = false;
         }
 
         private void SetStatus(String text)
@@ -171,9 +174,9 @@ namespace Chocolatey.Explorer.View
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SetStatus("Installing package " + ((Package) listBox1.SelectedItem).Name);
-            textBox2.Visible = true;
-            _packageService.InstallPackage(((Package) listBox1.SelectedItem).Name);
+            SetStatus("Installing package " + ((Package) PackageList.SelectedItem).Name);
+            txtPowershellOutput.Visible = true;
+            _packageService.InstallPackage(((Package) PackageList.SelectedItem).Name);
         }
     }
 }

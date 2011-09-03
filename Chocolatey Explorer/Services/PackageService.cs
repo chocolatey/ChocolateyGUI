@@ -11,18 +11,6 @@ namespace Chocolatey.Explorer.Services
         public delegate void FinishedDelegate();
         public event FinishedDelegate RunFinshed;
 
-        private void OnRunFinshed()
-        {
-            FinishedDelegate handler = RunFinshed;
-            if (handler != null) handler();
-        }
-
-        private void OnLineChanged(string line)
-        {
-            LineDelegate handler = LineChanged;
-            if (handler != null) handler(line);
-        }
-
         public PackageService(): this(new RunAsync())
         {
         }
@@ -53,6 +41,18 @@ namespace Chocolatey.Explorer.Services
         {
             OnRunFinshed();
         }
- 
+
+        private void OnRunFinshed()
+        {
+            FinishedDelegate handler = RunFinshed;
+            if (handler != null) handler();
+        }
+
+        private void OnLineChanged(string line)
+        {
+            LineDelegate handler = LineChanged;
+            if (handler != null) handler(line);
+        }
+
     }
 }

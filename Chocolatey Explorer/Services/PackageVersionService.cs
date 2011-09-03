@@ -12,12 +12,6 @@ namespace Chocolatey.Explorer.Services
         public delegate void VersionResult(PackageVersion version);
         public event VersionResult VersionChanged;
 
-        private void OnVersionChanged(PackageVersion version)
-        {
-            var handler = VersionChanged;
-            if (handler != null) handler(version);
-        }
-
         public PackageVersionService() : this(new RunAsync())
         {
         }
@@ -53,5 +47,12 @@ namespace Chocolatey.Explorer.Services
         {
             OnVersionChanged(_packageVersion);
         }
+
+        private void OnVersionChanged(PackageVersion version)
+        {
+            var handler = VersionChanged;
+            if (handler != null) handler(version);
+        }
+
     }
 }

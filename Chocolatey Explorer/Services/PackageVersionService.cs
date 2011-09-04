@@ -8,17 +8,19 @@ namespace Chocolatey.Explorer.Services
         private readonly IRun _powershellAsync;
         private string _package;
         private PackageVersion _packageVersion;
-            
+        private readonly ISourceService _sourceService;
+
         public delegate void VersionResult(PackageVersion version);
         public event VersionResult VersionChanged;
 
-        public PackageVersionService() : this(new RunAsync())
+        public PackageVersionService() : this(new RunAsync(), new SourceService())
         {
         }
 
-        public PackageVersionService(IRun powershell)
+        public PackageVersionService(IRun powershell, ISourceService sourceService)
         {
             _powershellAsync = powershell;
+            _sourceService = sourceService;
             _powershellAsync.OutputChanged += VersionHandler;
             _powershellAsync.RunFinished += RunFinished;
         } 
@@ -27,7 +29,7 @@ namespace Chocolatey.Explorer.Services
         {
             _packageVersion = new PackageVersion();
             _package = package;
-            _powershellAsync.Run("cver " + package + " -source " + Settings.Source);
+            _powershellAsync.Run("cver " + package + " -source " + _sourceService.Source);
         }
 
         private void VersionHandler(string version)

@@ -8,19 +8,21 @@ namespace Chocolatey.Explorer.Services
 {
     public class PackagesService : IPackagesService
     {
-        private IRun _powershellAsync;
-        private IList<string> lines;
- 
+        private readonly IRun _powershellAsync;
+        private readonly IList<string> _lines;
+        private readonly ISourceService _sourceService;
+
         public delegate void FinishedDelegate(IList<Package> packages);
         public event FinishedDelegate RunFinshed;
 
-        public PackagesService(): this(new RunAsync())
+        public PackagesService(): this(new RunAsync(), new SourceService())
         {
         }
 
-        public PackagesService(IRun powershell)
+        public PackagesService(IRun powershell, ISourceService sourceService)
         {
-            lines = new List<string>();
+            _lines = new List<string>();
+            _sourceService = sourceService;
             _powershellAsync = powershell;
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;
@@ -28,40 +30,33 @@ namespace Chocolatey.Explorer.Services
 
         public void ListOfPackages()
         {
-            _powershellAsync.Run("clist -source " + Settings.Source);
+            _powershellAsync.Run("clist -source " + _sourceService.Source);
         }
 
         public void ListOfInstalledPackages()
         {
-            var thread = new Thread(ListOfInstalledPackagsThread);
-            thread.IsBackground = true;
+            var thread = new Thread(ListOfInstalledPackagsThread) {IsBackground = true};
             thread.Start();
         }
 
         private  void ListOfInstalledPackagsThread()
         {
             var folders = System.IO.Directory.GetDirectories("c:/nuget/lib");
-            IList<Package> packages = new List<Package>();
-            foreach (var folder in folders)
-            {
-                var folder2 = folder.Split("\\".ToCharArray())[1];
-                var name = folder2.Substring(0, folder2.IndexOf("."));
-                packages.Add(new Package() { Name = name });
-            }
+            IList<Package> packages = (from folder in folders select folder.Split("\\".ToCharArray())[1] into folder2 select folder2.Substring(0, folder2.IndexOf(".")) into name select new Package {Name = name}).ToList();
             OnRunFinshed(packages);
         }
 
         private void OutputChanged(string line)
         {
-            lines.Add(line);
+            _lines.Add(line);
         }
 
         private void RunFinished()
         {
-            OnRunFinshed((from result in lines
+            OnRunFinshed((from result in _lines
                     let name = result.Split(" ".ToCharArray()[0])[0]
                     let version = result.Split(" ".ToCharArray()[0])[1]
-                    select new Package() { Name = name }).ToList());
+                    select new Package { Name = name }).ToList());
         }
 
         private void OnRunFinshed(IList<Package> packages)

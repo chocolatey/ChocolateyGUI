@@ -4,8 +4,9 @@ namespace Chocolatey.Explorer.Services
 {
     public class ChocolateyService : IChocolateyService
     {
-        private IRun _powershell;
-        
+        private readonly IRun _powershell;
+        private readonly ISourceService _sourceService;
+
         public delegate void OutputDelegate(string output);
         public delegate void RunFinishedDelegate();
 
@@ -13,20 +14,21 @@ namespace Chocolatey.Explorer.Services
         public event RunFinishedDelegate RunFinished;
 
         public ChocolateyService()
-            : this(new RunSync())
+            : this(new RunSync(), new SourceService())
         {
         }
 
-        public ChocolateyService(IRun powerShell)
+        public ChocolateyService(IRun powerShell, ISourceService sourceService)
         {
             _powershell = powerShell;
+            _sourceService = sourceService;
             _powershell.OutputChanged += OutPutChangedHandler;
             _powershell.RunFinished += RunFinishedHandler;
         }
 
         public void LatestVersion()
         {
-            _powershell.Run("cver" + " -source " + Settings.Source);
+            _powershell.Run("cver" + " -source " + _sourceService.Source);
         }
 
         public void Help()

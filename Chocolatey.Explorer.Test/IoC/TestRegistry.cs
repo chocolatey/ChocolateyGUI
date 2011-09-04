@@ -24,9 +24,21 @@ namespace Chocolatey.Explorer.Test.IoC
         }
 
         [Test]
+        public void IfIPackageManagerIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IPackageManager>(), ObjectFactory.GetInstance<IPackageManager>());
+        }
+
+        [Test]
         public void IfIPackageServiceCanBeResolved()
         {
             Assert.IsNotNull(ObjectFactory.GetInstance<IPackageService>());
+        }
+
+        [Test]
+        public void IfIPackageServiceIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IPackageService>(), ObjectFactory.GetInstance<IPackageService>());
         }
 
         [Test]
@@ -36,9 +48,21 @@ namespace Chocolatey.Explorer.Test.IoC
         }
 
         [Test]
+        public void IfIPackagesServiceIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IPackagesService>(), ObjectFactory.GetInstance<IPackagesService>());
+        }
+
+        [Test]
         public void IfIPackageVersionServiceCanBeResolved()
         {
             Assert.IsNotNull(ObjectFactory.GetInstance<IPackageVersionService>());
+        }
+
+        [Test]
+        public void IfIPackageVersionServiceIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IPackageVersionService>(), ObjectFactory.GetInstance<IPackageVersionService>());
         }
 
         [Test]
@@ -48,9 +72,21 @@ namespace Chocolatey.Explorer.Test.IoC
         }
 
         [Test]
+        public void IfIChocolateyServiceIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IChocolateyService>(), ObjectFactory.GetInstance<IChocolateyService>());
+        }
+
+        [Test]
         public void IfIRunCanBeResolved()
         {
             Assert.IsNotNull(ObjectFactory.GetInstance<IRun>());
+        }
+
+        [Test]
+        public void IfIRunIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IRun>(), ObjectFactory.GetInstance<IRun>());
         }
 
         [Test]
@@ -58,6 +94,17 @@ namespace Chocolatey.Explorer.Test.IoC
         {
             Assert.IsNotNull(ObjectFactory.GetNamedInstance<IRun>("sync"));
         }
-         
+
+        [Test]
+        public void IfISourceServiceCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<ISourceService>());
+        }
+
+        [Test]
+        public void IfISourceServiceIsSingleton()
+        {
+            Assert.AreEqual(ObjectFactory.GetInstance<ISourceService>(), ObjectFactory.GetInstance<ISourceService>());
+        }
     }
 }

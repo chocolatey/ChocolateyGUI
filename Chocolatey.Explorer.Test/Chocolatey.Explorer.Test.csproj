@@ -61,11 +61,13 @@
     <Compile Include="IoC\TestRegistry.cs" />
     <Compile Include="Model\TestPackage.cs" />
     <Compile Include="Model\TestPackageVersion.cs" />
+    <Compile Include="Model\TestSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TestPackageVersionService.cs" />
     <Compile Include="Services\TestPackagesService.cs" />
     <Compile Include="Services\TestChocolateyService.cs" />
     <Compile Include="Services\TestPackageService.cs" />
+    <Compile Include="Services\TestSourceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chocolatey Explorer\Chocolatey.Explorer.csproj">

@@ -9,22 +9,25 @@ namespace Chocolatey.Explorer.Test.Services
     [TestFixture]
     public class TestPackagesService
     {
-        private RhinoAutoMocker<PackagesService> mocks;
-        private PackagesService service;
+        private RhinoAutoMocker<PackagesService> _mocks;
+        private PackagesService _service;
 
         [SetUp]
         public void Setup()
         {
-            mocks = new RhinoAutoMocker<PackagesService>();
-            service = mocks.ClassUnderTest;
+            _mocks = new RhinoAutoMocker<PackagesService>();
+            _service = _mocks.ClassUnderTest;
         }
 
         [Test]
         public void IfListOfPackagesCallsPowershellRun()
         {
-            var powershell = mocks.Get<IRun>();
-            service.ListOfPackages();
-            powershell.AssertWasCalled(mock => mock.Run("clist -source " + Settings.Source));
+            var powershell = _mocks.Get<IRun>();
+            var sourceService = _mocks.Get<ISourceService>();
+            sourceService.Expect(x => x.Source)
+                .Return("test");
+            _service.ListOfPackages();
+            powershell.AssertWasCalled(mock => mock.Run("clist -source test"));
         }
 
     }

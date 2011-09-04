@@ -8,13 +8,14 @@ namespace Chocolatey.Explorer.IoC
     {
          public Registry()
          {
-             this.For<IPackageManager>().Use<PackageManager>();
-             this.For<IPackageService>().Use<PackageService>();
-             this.For<IPackagesService>().Use<PackagesService>();
-             this.For<IPackageVersionService>().Use<PackageVersionService>();
-             this.For<IChocolateyService>().Use<ChocolateyService>();
-             this.For<IRun>().Use<RunAsync>();
-             this.For<IRun>().Use<RunSync>().Named("sync");
+             For<IPackageManager>().Use<PackageManager>();
+             For<IPackageService>().Use<PackageService>();
+             For<IPackagesService>().Use<PackagesService>();
+             For<IPackageVersionService>().Use<PackageVersionService>();
+             For<IChocolateyService>().Use<ChocolateyService>();
+             For<IRun>().Use<RunAsync>();
+             For<IRun>().Use<RunSync>().Named("sync");
+             For<ISourceService>().Singleton().Use<SourceService>();
          }
     }
 }

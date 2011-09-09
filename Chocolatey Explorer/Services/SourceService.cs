@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Chocolatey.Explorer.Model;
+using log4net;
 
 namespace Chocolatey.Explorer.Services
 {
     public class SourceService : ISourceService
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(SourceService));
+
         private IList<Source> _sources;
         private Source _currentsource;
 

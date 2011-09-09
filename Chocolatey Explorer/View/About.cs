@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Services;
+using log4net;
 
 namespace Chocolatey.Explorer.View
 {
     public partial class About : Form
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(About));
+
         private IChocolateyService _chocolateyService;
 
         public About() : this(new ChocolateyService())

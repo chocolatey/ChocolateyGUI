@@ -3,11 +3,14 @@ using System.Linq;
 using System.Threading;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
+using log4net;
 
 namespace Chocolatey.Explorer.Services
 {
     public class PackagesService : IPackagesService
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(PackagesService));
+
         private readonly IRun _powershellAsync;
         private readonly IList<string> _lines;
         private readonly ISourceService _sourceService;
@@ -23,18 +26,20 @@ namespace Chocolatey.Explorer.Services
         {
             _lines = new List<string>();
             _sourceService = sourceService;
-            _powershellAsync = powershell;
+            _powershellAsync = new RunAsync();
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;
         }
 
         public void ListOfPackages()
         {
+            log.Info("Getting list of packages on source: " + _sourceService.Source);
             _powershellAsync.Run("clist -source " + _sourceService.Source);
         }
 
         public void ListOfInstalledPackages()
         {
+            log.Info("Getting list of installed packages");
             var thread = new Thread(ListOfInstalledPackagsThread) {IsBackground = true};
             thread.Start();
         }

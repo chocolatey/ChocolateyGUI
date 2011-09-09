@@ -8,6 +8,7 @@ namespace Chocolatey.Explorer.IoC
     {
          public Registry()
          {
+             
              For<IPackageManager>().Use<PackageManager>();
              For<IPackageService>().Use<PackageService>();
              For<IPackagesService>().Use<PackagesService>();

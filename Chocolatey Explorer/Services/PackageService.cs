@@ -1,9 +1,12 @@
 ﻿using Chocolatey.Explorer.Powershell;
+using log4net;
 
 namespace Chocolatey.Explorer.Services
 {
     public class PackageService : IPackageService
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(PackageService));
+
         private readonly IRun _powershellAsync;
         private readonly ISourceService _sourceService;
 
@@ -18,7 +21,7 @@ namespace Chocolatey.Explorer.Services
 
         public PackageService(IRun powershell, ISourceService sourceService)
         {
-            _powershellAsync = powershell;
+            _powershellAsync = new RunAsync();
             _sourceService = sourceService;
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;
@@ -26,11 +29,13 @@ namespace Chocolatey.Explorer.Services
 
         public void InstallPackage(string package)
         {
+            log.Info("Installing package: " + package);
             _powershellAsync.Run("cup " + package + " -source " + _sourceService.Source);
         }
 
         public void UpdatePackage(string package)
         {
+            log.Info("Updating package: " + package);
             _powershellAsync.Run("cinst " + package + " -source " + _sourceService.Source);
         }
 

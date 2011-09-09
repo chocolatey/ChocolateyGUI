@@ -1,11 +1,14 @@
 using System;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+using log4net;
 
 namespace Chocolatey.Explorer.Powershell
 {
     public class RunAsync : IRun
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(RunAsync));
+
         private Runspace _RunSpace;
         private Pipeline _PipeLine;
         private PipelineReader<PSObject> _OutPut;
@@ -22,6 +25,7 @@ namespace Chocolatey.Explorer.Powershell
 
         public void Run(String command)
         {
+            log.Info("Running command: " + command);
             _PipeLine = _RunSpace.CreatePipeline(command);
             _PipeLine.Input.Close();
             _OutPut = _PipeLine.Output;

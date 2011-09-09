@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chocolatey.Explorer", "Choc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chocolatey.Explorer.Test", "..\Chocolatey.Explorer.Test\Chocolatey.Explorer.Test.csproj", "{B48A48F5-9B8F-473E-80EB-4CBB8BBD91F6}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupChocolateyGUI", "..\SetupChocolateyGUI\SetupChocolateyGUI.vdproj", "{7CE615AD-733A-4198-ABFB-708697DAF66A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,12 @@ Global
 		{B48A48F5-9B8F-473E-80EB-4CBB8BBD91F6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B48A48F5-9B8F-473E-80EB-4CBB8BBD91F6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B48A48F5-9B8F-473E-80EB-4CBB8BBD91F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Debug|Any CPU.ActiveCfg = Debug
+		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Debug|x86.ActiveCfg = Debug
+		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|Any CPU.ActiveCfg = Release
+		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|Mixed Platforms.ActiveCfg = Release
+		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,9 +1,12 @@
 using Chocolatey.Explorer.Powershell;
+using log4net;
 
 namespace Chocolatey.Explorer.Services
 {
     public class ChocolateyService : IChocolateyService
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(ChocolateyService));
+
         private readonly IRun _powershell;
         private readonly ISourceService _sourceService;
 
@@ -20,7 +23,7 @@ namespace Chocolatey.Explorer.Services
 
         public ChocolateyService(IRun powerShell, ISourceService sourceService)
         {
-            _powershell = powerShell;
+            _powershell = new RunSync();
             _sourceService = sourceService;
             _powershell.OutputChanged += OutPutChangedHandler;
             _powershell.RunFinished += RunFinishedHandler;
@@ -28,11 +31,13 @@ namespace Chocolatey.Explorer.Services
 
         public void LatestVersion()
         {
+            log.Info("Getting latest version.");
             _powershell.Run("cver" + " -source " + _sourceService.Source);
         }
 
         public void Help()
         {
+            log.Info("Getting help");
             _powershell.Run("chocolatey /?");
         }
 

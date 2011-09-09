@@ -48,5 +48,24 @@ namespace Chocolatey.Explorer.Test.Services
             Assert.AreEqual("Chocolatey.org",source.Name);
         }
 
+        [Test]
+        public void IfSourceReturnsTheUrlOfTheCurrentSource()
+        {
+            var sourceService = new SourceService();
+            Source source = null;
+            sourceService.CurrentSourceChanged += x => source = x;
+            Assert.AreEqual("http://chocolatey.org/api/feeds", sourceService.Source);
+        }
+
+        [Test]
+        public void IfSetCurrentSourceSetsTheCurrentsource()
+        {
+            var sourceService = new SourceService();
+            Source source = null;
+            sourceService.CurrentSourceChanged += x => source = x;
+            Assert.AreEqual("http://chocolatey.org/api/feeds", sourceService.Source);
+        }
+
+
     }
 }

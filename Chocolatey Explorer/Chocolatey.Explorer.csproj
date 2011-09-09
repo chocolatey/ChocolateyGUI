@@ -70,6 +70,9 @@
     <ApplicationIcon>chocolateyicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -147,6 +150,9 @@
       <DependentUpon>PackageManager.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

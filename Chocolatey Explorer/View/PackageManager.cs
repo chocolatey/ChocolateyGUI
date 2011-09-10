@@ -154,7 +154,7 @@ namespace Chocolatey.Explorer.View
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (PackageList.SelectedItem != null) return;
+            if (PackageList.SelectedItem == null) return;
             SetStatus("Updating package " + ((Package)PackageList.SelectedItem).Name);
             txtPowershellOutput.Visible = true;
             _packageService.UpdatePackage(((Package) PackageList.SelectedItem).Name);

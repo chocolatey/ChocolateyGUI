@@ -39,11 +39,11 @@ namespace Chocolatey.Explorer.Services
         private void VersionHandler(string version)
         {
             _packageVersion.Name = _package;
-            if (version.StartsWith("found"))
+            if (version.StartsWith("found") && !version.StartsWith("foundCompare"))
             {
                 _packageVersion.CurrentVersion = version.Substring(5).Trim();
             }
-            if(version.StartsWith("latest"))
+            if(version.StartsWith("latest") && !version.StartsWith("latestCopmpare"))
             {
                 _packageVersion.Serverversion = version.Substring(6).Trim();
             }

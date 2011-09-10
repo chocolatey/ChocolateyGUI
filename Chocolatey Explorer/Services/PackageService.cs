@@ -30,13 +30,13 @@ namespace Chocolatey.Explorer.Services
         public void InstallPackage(string package)
         {
             log.Info("Installing package: " + package);
-            _powershellAsync.Run("cup " + package + " -source " + _sourceService.Source);
+            _powershellAsync.Run("cinst " + package + " -source " + _sourceService.Source);
         }
 
         public void UpdatePackage(string package)
         {
             log.Info("Updating package: " + package);
-            _powershellAsync.Run("cinst " + package + " -source " + _sourceService.Source);
+            _powershellAsync.Run("cup " + package + " -source " + _sourceService.Source);
         }
 
         private void OutputChanged(string line)

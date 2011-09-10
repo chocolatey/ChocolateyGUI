@@ -183,7 +183,7 @@ namespace Chocolatey.Explorer.View
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (PackageList.SelectedItem != null) return;
+            if (PackageList.SelectedItem == null) return;
             SetStatus("Installing package " + ((Package) PackageList.SelectedItem).Name);
             txtPowershellOutput.Visible = true;
             _packageService.InstallPackage(((Package) PackageList.SelectedItem).Name);

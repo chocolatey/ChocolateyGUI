@@ -352,7 +352,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SetupChocolateyGUI"
         "ProductCode" = "8:{279FC4E4-6D4F-4108-AF9D-2633FCA6BCE8}"
-        "PackageCode" = "8:{7F29C70A-EC17-4B4A-8E26-5D4F7D877960}"
+        "PackageCode" = "8:{3EF5B592-3DE7-4076-B761-673AF83F9A9A}"
         "UpgradeCode" = "8:{FDCC7262-2FE0-41E7-9FE6-0872307EC3FD}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

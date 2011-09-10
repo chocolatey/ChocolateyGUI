@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Services;
 using log4net;
@@ -45,6 +46,11 @@ namespace Chocolatey.Explorer.View
         {
             linkLabel2.LinkVisited = true;
             System.Diagnostics.Process.Start(linkLabel2.Text);
+        }
+
+        private void About_Load(object sender, EventArgs e)
+        {
+            lblVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
     }
 }

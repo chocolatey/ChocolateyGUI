@@ -7,7 +7,7 @@ namespace Chocolatey.Explorer.Model
         public String Name { get; set; }
         public String CurrentVersion { get; set; }
         public String Serverversion { get; set; }
-        public Boolean IsInstalled { get { return !CurrentVersion.Equals("no version"); } }
+        public Boolean IsInstalled { get { return !CurrentVersion.EndsWith("no version"); } }
         public Boolean CanBeUpdated { get { return !CurrentVersion.Equals(Serverversion) && IsInstalled; } }
         public Boolean Description { get; set; }
 

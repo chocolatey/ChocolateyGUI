@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
+using Chocolatey.Explorer.Properties;
 using log4net;
 
 namespace Chocolatey.Explorer.Services
@@ -46,8 +47,9 @@ namespace Chocolatey.Explorer.Services
 
         private  void ListOfInstalledPackagsThread()
         {
-            var folders = System.IO.Directory.GetDirectories("c:/nuget/lib");
-            IList<Package> packages = (from folder in folders select folder.Split("\\".ToCharArray())[1] into folder2 select folder2.Substring(0, folder2.IndexOf(".")) into name select new Package {Name = name}).ToList();
+            var settings = new Settings();
+            var folders = System.IO.Directory.GetDirectories(settings.Installdirectory);
+            IList<Package> packages = (from folder in folders select folder.Split("\\".ToCharArray())[folder.Split("\\".ToCharArray()).Count()-1] into folder2 select folder2.Substring(0, folder2.IndexOf(".")) into name select new Package { Name = name }).ToList();
             OnRunFinshed(packages);
         }
 

@@ -27,12 +27,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4B3A7DA4D5E19CEBBA2981240517FB2D"
-        "OwnerKey" = "8:_6FE07C47F2C74424A7CF3A192DE73830"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_6FE07C47F2C74424A7CF3A192DE73830"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -45,7 +39,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_CF7DDBADA13628336F6D05B02812B652"
+        "MsmKey" = "8:_8AD90B82BC5CA12C6CA19552A1A9A94F"
+        "OwnerKey" = "8:_6FE07C47F2C74424A7CF3A192DE73830"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AA365B8C967CD5A21D40F29EE80BA7DB"
         "OwnerKey" = "8:_6FE07C47F2C74424A7CF3A192DE73830"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -58,7 +58,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4B3A7DA4D5E19CEBBA2981240517FB2D"
+        "OwnerKey" = "8:_6FE07C47F2C74424A7CF3A192DE73830"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AA365B8C967CD5A21D40F29EE80BA7DB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,13 +76,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6FE07C47F2C74424A7CF3A192DE73830"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CF7DDBADA13628336F6D05B02812B652"
+        "OwnerKey" = "8:_8AD90B82BC5CA12C6CA19552A1A9A94F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -97,13 +97,21 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\SetupChocolateyGUI.msi"
+        "OutputFilename" = "8:..\\..\\..\\ChocolateyGUI\\tools\\SetupChocolateyGUI.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -113,6 +121,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -193,14 +222,34 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4B3A7DA4D5E19CEBBA2981240517FB2D"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_74FAA919AFC24C7AAC789DF951E43DB0"
+            {
+            "SourcePath" = "8:..\\Chocolatey Explorer\\sources.xml"
+            "TargetName" = "8:sources.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_E39E7226B96D4125B66BFC0814483CDC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8AD90B82BC5CA12C6CA19552A1A9A94F"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_4B3A7DA4D5E19CEBBA2981240517FB2D"
+                    "_8AD90B82BC5CA12C6CA19552A1A9A94F"
                     {
                     "Name" = "8:System.Management.Automation.dll"
                     "Attributes" = "3:512"
@@ -224,34 +273,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_74FAA919AFC24C7AAC789DF951E43DB0"
-            {
-            "SourcePath" = "8:..\\Chocolatey Explorer\\sources.xml"
-            "TargetName" = "8:sources.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_E39E7226B96D4125B66BFC0814483CDC"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CF7DDBADA13628336F6D05B02812B652"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AA365B8C967CD5A21D40F29EE80BA7DB"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:StructureMap, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_CF7DDBADA13628336F6D05B02812B652"
+                    "_AA365B8C967CD5A21D40F29EE80BA7DB"
                     {
                     "Name" = "8:StructureMap.dll"
                     "Attributes" = "3:512"
@@ -351,15 +380,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SetupChocolateyGUI"
-        "ProductCode" = "8:{279FC4E4-6D4F-4108-AF9D-2633FCA6BCE8}"
-        "PackageCode" = "8:{3EF5B592-3DE7-4076-B761-673AF83F9A9A}"
+        "ProductCode" = "8:{0248324E-4FEB-4690-A141-ECF232EAC71D}"
+        "PackageCode" = "8:{F26649AA-A6DE-4694-83C2-C2991A85C526}"
         "UpgradeCode" = "8:{FDCC7262-2FE0-41E7-9FE6-0872307EC3FD}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.0.8"
+        "ProductVersion" = "8:0.0.10"
         "Manufacturer" = "8:Christiaan Baes"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://lessthandot.com"

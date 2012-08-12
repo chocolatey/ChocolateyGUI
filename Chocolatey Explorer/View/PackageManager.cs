@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
+using Chocolatey.Explorer.Properties;
 using Chocolatey.Explorer.Services;
 using log4net;
 
@@ -76,8 +77,9 @@ namespace Chocolatey.Explorer.View
                 var distinctpackages = packages.Distinct().ToList();
                 PackageList.DataSource = distinctpackages;
                 PackageList.DisplayMember = "Name";
-                PackageList.SelectedIndex = 0;
+                if(distinctpackages.Count > 0) PackageList.SelectedIndex = 0;
                 ClearStatus();
+                lblStatus.Text = "Number of installed packages: " + packages.Count;
                 SelectPackage(); 
             }
         }
@@ -120,10 +122,18 @@ namespace Chocolatey.Explorer.View
 
         private void installedPackagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetStatus("Getting list of installed packages");
-            lblPackages.Text = "Installed packages";
-            lblProgressbar.Style = ProgressBarStyle.Marquee;
-            _packagesService.ListOfInstalledPackages();
+            var settings = new Properties.Settings();
+            if(!System.IO.Directory.Exists(settings.Installdirectory))
+            {
+                MessageBox.Show("Could not find the installed packages directory (" + settings.Installdirectory + "), please change the install directory in the settings.");
+            }
+            else
+            {
+                SetStatus("Getting list of installed packages");
+                lblPackages.Text = "Installed packages";
+                lblProgressbar.Style = ProgressBarStyle.Marquee;
+                _packagesService.ListOfInstalledPackages();    
+            }
         }
 
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -187,6 +197,12 @@ namespace Chocolatey.Explorer.View
             SetStatus("Installing package " + ((Package) PackageList.SelectedItem).Name);
             txtPowershellOutput.Visible = true;
             _packageService.InstallPackage(((Package) PackageList.SelectedItem).Name);
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var settings = new Settings();
+            settings.ShowDialog();
         }
     }
 }

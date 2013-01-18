@@ -100,6 +100,7 @@
     <Compile Include="Powershell\RunAsync.cs" />
     <Compile Include="Powershell\RunSync.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
+    <Compile Include="Services\CachedPackagesService.cs" />
     <Compile Include="Services\IChocolateyService.cs" />
     <Compile Include="Services\IPackageService.cs" />
     <Compile Include="Services\IPackagesService.cs" />

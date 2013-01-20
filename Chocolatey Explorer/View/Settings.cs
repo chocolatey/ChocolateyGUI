@@ -19,13 +19,13 @@ namespace Chocolatey.Explorer.View
         private void Settings_Load(object sender, EventArgs e)
         {
             var settings = new Properties.Settings();
-            txtInstallDirectory.Text = settings.Installdirectory;
+            txtInstallDirectory.Text = settings.ChocolateyLibDirectory;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             var settings = new Properties.Settings();
-            settings.Installdirectory = txtInstallDirectory.Text;
+            settings.ChocolateyLibDirectory = txtInstallDirectory.Text;
             settings.Save();
         }
 

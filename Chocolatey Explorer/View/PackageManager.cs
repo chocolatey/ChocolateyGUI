@@ -123,9 +123,10 @@ namespace Chocolatey.Explorer.View
         private void installedPackagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var settings = new Properties.Settings();
-            if(!System.IO.Directory.Exists(settings.Installdirectory))
+            var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
+            if (!System.IO.Directory.Exists(expandedLibDirectory))
             {
-                MessageBox.Show("Could not find the installed packages directory (" + settings.Installdirectory + "), please change the install directory in the settings.");
+                MessageBox.Show("Could not find the installed packages directory (" + expandedLibDirectory + "), please change the install directory in the settings.");
             }
             else
             {

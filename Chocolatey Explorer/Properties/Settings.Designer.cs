@@ -25,13 +25,13 @@ namespace Chocolatey.Explorer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\chocolatey\\lib")]
-        public string Installdirectory {
+        [global::System.Configuration.DefaultSettingValueAttribute("%ChocolateyInstall%\\lib")]
+        public string ChocolateyLibDirectory {
             get {
-                return ((string)(this["Installdirectory"]));
+                return ((string)(this["ChocolateyLibDirectory"]));
             }
             set {
-                this["Installdirectory"] = value;
+                this["ChocolateyLibDirectory"] = value;
             }
         }
     }

@@ -49,7 +49,8 @@ namespace Chocolatey.Explorer.Services
         private  void ListOfInstalledPackagsThread()
         {
             var settings = new Settings();
-            var directories = System.IO.Directory.GetDirectories(settings.Installdirectory);
+            var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
+            var directories = System.IO.Directory.GetDirectories(expandedLibDirectory);
 
             IList<Package> packages = new List<Package>();
             char[] segmentDelim = "\\".ToCharArray();

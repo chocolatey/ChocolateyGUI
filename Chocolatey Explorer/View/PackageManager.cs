@@ -223,6 +223,7 @@ namespace Chocolatey.Explorer.View
 
         private void EnableUserInteraction()
         {
+            packageTabControl.Selected += packageTabControl_Selected;
             mainSplitContainer.Panel1.Enabled = true;
             tableLayoutPanel1.Enabled = true;
             mainMenu.Enabled = true;
@@ -230,6 +231,7 @@ namespace Chocolatey.Explorer.View
 
         private void DisableUserInteraction()
         {
+            packageTabControl.Selected -= packageTabControl_Selected;
             mainSplitContainer.Panel1.Enabled = false;
             tableLayoutPanel1.Enabled = false;
             mainMenu.Enabled = false;

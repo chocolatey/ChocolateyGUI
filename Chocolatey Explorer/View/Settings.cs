@@ -27,6 +27,7 @@ namespace Chocolatey.Explorer.View
             var settings = new Properties.Settings();
             settings.ChocolateyLibDirectory = txtInstallDirectory.Text;
             settings.Save();
+            Dispose();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)

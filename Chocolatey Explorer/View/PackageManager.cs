@@ -107,34 +107,40 @@ namespace Chocolatey.Explorer.View
             }
         }
 
-        private void availablePackagesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void availablePackages_Click(object sender, EventArgs e)
         {
             QueryAvailablePackges();
         }
 
-        private void installedPackagesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void installedPackages_Click(object sender, EventArgs e)
         {
             QueryInstalledPackages();
         }
 
-        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void help_Click(object sender, EventArgs e)
         {
             var help = new Help();
             help.ShowDialog();
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void about_Click(object sender, EventArgs e)
         {
             var about = new About();
             about.ShowDialog();
         }
 
-        private void listBox1_MouseClick(object sender, MouseEventArgs e)
+        private void settings_Click(object sender, EventArgs e)
+        {
+            var settings = new Settings();
+            settings.ShowDialog();
+        }
+
+        private void packageList_MouseClick(object sender, MouseEventArgs e)
         {
             QueryPackageVersion();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonUpdate_Click(object sender, EventArgs e)
         {
             if (PackageList.SelectedItem == null) return;
             SetStatus("Updating package " + ((Package)PackageList.SelectedItem).Name);
@@ -142,18 +148,12 @@ namespace Chocolatey.Explorer.View
             _packageService.UpdatePackage(((Package) PackageList.SelectedItem).Name);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonInstall_Click(object sender, EventArgs e)
         {
             if (PackageList.SelectedItem == null) return;
             SetStatus("Installing package " + ((Package) PackageList.SelectedItem).Name);
             txtPowershellOutput.Visible = true;
             _packageService.InstallPackage(((Package) PackageList.SelectedItem).Name);
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var settings = new Settings();
-            settings.ShowDialog();
         }
 
         private void QueryPackageVersion()

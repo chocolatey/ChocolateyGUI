@@ -36,6 +36,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -50,7 +51,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -87,14 +87,14 @@
             this.availablePackagesToolStripMenuItem.Name = "availablePackagesToolStripMenuItem";
             this.availablePackagesToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.availablePackagesToolStripMenuItem.Text = "&Available packages";
-            this.availablePackagesToolStripMenuItem.Click += new System.EventHandler(this.availablePackagesToolStripMenuItem_Click);
+            this.availablePackagesToolStripMenuItem.Click += new System.EventHandler(this.availablePackages_Click);
             // 
             // installedPackagesToolStripMenuItem
             // 
             this.installedPackagesToolStripMenuItem.Name = "installedPackagesToolStripMenuItem";
             this.installedPackagesToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.installedPackagesToolStripMenuItem.Text = "&Installed packages";
-            this.installedPackagesToolStripMenuItem.Click += new System.EventHandler(this.installedPackagesToolStripMenuItem_Click);
+            this.installedPackagesToolStripMenuItem.Click += new System.EventHandler(this.installedPackages_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -110,17 +110,24 @@
             // 
             this.helpToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripMenuItem1.Image")));
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(116, 22);
             this.helpToolStripMenuItem1.Text = "H&elp";
-            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.help_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem.Image")));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "&About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.about_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settings_Click);
             // 
             // toolStrip1
             // 
@@ -140,7 +147,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(127, 22);
             this.toolStripButton1.Text = "Available packages";
-            this.toolStripButton1.Click += new System.EventHandler(this.availablePackagesToolStripMenuItem_Click);
+            this.toolStripButton1.Click += new System.EventHandler(this.availablePackages_Click);
             // 
             // toolStripButton2
             // 
@@ -150,7 +157,7 @@
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(107, 22);
             this.toolStripButton2.Text = "Installed packages";
-            this.toolStripButton2.Click += new System.EventHandler(this.installedPackagesToolStripMenuItem_Click);
+            this.toolStripButton2.Click += new System.EventHandler(this.installedPackages_Click);
             // 
             // splitContainer1
             // 
@@ -180,7 +187,7 @@
             this.PackageList.Name = "PackageList";
             this.PackageList.Size = new System.Drawing.Size(231, 459);
             this.PackageList.TabIndex = 0;
-            this.PackageList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseClick);
+            this.PackageList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.packageList_MouseClick);
             // 
             // lblPackages
             // 
@@ -228,7 +235,7 @@
             this.btnUpdate.TabIndex = 1;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.button1_Click);
+            this.btnUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // btnInstall
             // 
@@ -240,7 +247,7 @@
             this.btnInstall.TabIndex = 2;
             this.btnInstall.Text = "Install";
             this.btnInstall.UseVisualStyleBackColor = true;
-            this.btnInstall.Click += new System.EventHandler(this.button2_Click);
+            this.btnInstall.Click += new System.EventHandler(this.buttonInstall_Click);
             // 
             // txtPowershellOutput
             // 
@@ -276,13 +283,6 @@
             this.lblStatus.Size = new System.Drawing.Size(479, 17);
             this.lblStatus.Spring = true;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // PackageManager
             // 

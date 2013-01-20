@@ -140,6 +140,18 @@ namespace Chocolatey.Explorer.View
             QueryPackageVersion();
         }
 
+        private void packageTabControl_Selected(object sender, TabControlEventArgs e)
+        {
+            if (packageTabControl.SelectedTab == tabAvailable)
+            {
+                QueryAvailablePackges();
+            }
+            else
+            {
+                QueryInstalledPackages();
+            }
+        }
+
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             if (PackageList.SelectedItem == null) return;
@@ -168,7 +180,7 @@ namespace Chocolatey.Explorer.View
         private void QueryAvailablePackges()
         {
             SetStatus("Getting list of packages on server");
-            lblPackages.Text = "Available packages";
+            packageTabControl.SelectedTab = tabAvailable;
             lblProgressbar.Style = ProgressBarStyle.Marquee;
             _packagesService.ListOfPackages();
         }
@@ -184,7 +196,7 @@ namespace Chocolatey.Explorer.View
             else
             {
                 SetStatus("Getting list of installed packages");
-                lblPackages.Text = "Installed packages";
+                packageTabControl.SelectedTab = tabInstalled;
                 lblProgressbar.Style = ProgressBarStyle.Marquee;
                 _packagesService.ListOfInstalledPackages();
             }

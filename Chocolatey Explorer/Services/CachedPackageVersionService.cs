@@ -25,6 +25,11 @@ namespace Chocolatey.Explorer.Services
         {
             packageVersionService = new PackageVersionService();
             packageVersionService.VersionChanged += OnUncachedVersionChanged;
+            InvalidateCache();
+        }
+
+        public void InvalidateCache()
+        {
             cachedVersions = new Dictionary<string, PackageVersion>();
         }
 

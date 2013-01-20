@@ -52,6 +52,17 @@ namespace Chocolatey.Explorer.View
                 EnableUserInteraction();
                 ClearStatus();
                 txtPowershellOutput.Visible = false;
+
+                // invalidate caches, because package has been installed
+                if (_packagesService.GetType() == typeof(CachedPackagesService))
+                {
+                    ((CachedPackagesService)_packagesService).InvalidateInstalledPackagesCache();
+                }
+                if (_packageVersionService.GetType() == typeof(CachedPackageVersionService))
+                {
+                    ((CachedPackageVersionService)_packageVersionService).InvalidateCache();
+                }
+
                 QueryPackageVersion();
             }
         }

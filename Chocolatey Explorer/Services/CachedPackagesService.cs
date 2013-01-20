@@ -24,6 +24,16 @@ namespace Chocolatey.Explorer.Services
             packagesService = new PackagesService();
         }
 
+        public void InvalidateAvailablePackagesCache()
+        {
+            availablePackageCache = null;
+        }
+
+        public void InvalidateInstalledPackagesCache()
+        {
+            installedPackageCache = null;
+        }
+
         public void ListOfPackages()
         {
             if (availablePackageCache == null)

@@ -5,6 +5,7 @@ using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Properties;
 using log4net;
+using System.Text.RegularExpressions;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -48,9 +49,29 @@ namespace Chocolatey.Explorer.Services
         private  void ListOfInstalledPackagsThread()
         {
             var settings = new Settings();
-            var folders = System.IO.Directory.GetDirectories(settings.Installdirectory);
-            IList<Package> packages = (from folder in folders select folder.Split("\\".ToCharArray())[folder.Split("\\".ToCharArray()).Count()-1] into folder2 select folder2.Substring(0, folder2.IndexOf(".")) into name select new Package { Name = name }).ToList();
+            var directories = System.IO.Directory.GetDirectories(settings.Installdirectory);
+
+            IList<Package> packages = new List<Package>();
+            char[] segmentDelim = "\\".ToCharArray();
+
+            foreach (string directoryPath in directories)
+            {
+                string[] directoryPathSegments = directoryPath.Split(segmentDelim);
+                string directoryName = directoryPathSegments.Last();
+
+                Package package = new Package();
+                package.Name = getPackageFromDirectoryName(directoryName);
+                packages.Add(package);
+            }
+
             OnRunFinshed(packages);
+        }
+
+        private string getPackageFromDirectoryName(string directoryName)
+        {
+            Regex packageVersionRegexp = new Regex(@"((\.\d+)+)$");
+            var versionMatch = packageVersionRegexp.Match(directoryName);
+            return directoryName.Substring(0, versionMatch.Index);
         }
 
         private void OutputChanged(string line)

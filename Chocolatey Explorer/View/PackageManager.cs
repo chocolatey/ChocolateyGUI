@@ -38,6 +38,7 @@ namespace Chocolatey.Explorer.View
             _packageService.LineChanged += PackageServiceLineChanged;
             _packageService.RunFinshed += PackageServiceRunFinished;
             ClearStatus();
+            QueryInstalledPackages();
         }
 
         private void PackageServiceRunFinished()
@@ -50,7 +51,7 @@ namespace Chocolatey.Explorer.View
             {
                 ClearStatus();
                 txtPowershellOutput.Visible = false;
-                SelectPackage();
+                QueryPackageVersion();
             }
         }
 
@@ -80,7 +81,7 @@ namespace Chocolatey.Explorer.View
                 if(distinctpackages.Count > 0) PackageList.SelectedIndex = 0;
                 ClearStatus();
                 lblStatus.Text = "Number of installed packages: " + packages.Count;
-                SelectPackage(); 
+                QueryPackageVersion(); 
             }
         }
 
@@ -106,35 +107,14 @@ namespace Chocolatey.Explorer.View
             }
         }
 
-        public PackageManager(PackagesService packagesService)
-        {
-            _packagesService = packagesService;
-            ClearStatus();
-        }
-
         private void availablePackagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetStatus("Getting list of packages on server");
-            lblPackages.Text = "Available packages";
-            lblProgressbar.Style = ProgressBarStyle.Marquee;
-            _packagesService.ListOfPackages();
+            QueryAvailablePackges();
         }
 
         private void installedPackagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var settings = new Properties.Settings();
-            var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
-            if (!System.IO.Directory.Exists(expandedLibDirectory))
-            {
-                MessageBox.Show("Could not find the installed packages directory (" + expandedLibDirectory + "), please change the install directory in the settings.");
-            }
-            else
-            {
-                SetStatus("Getting list of installed packages");
-                lblPackages.Text = "Installed packages";
-                lblProgressbar.Style = ProgressBarStyle.Marquee;
-                _packagesService.ListOfInstalledPackages();    
-            }
+            QueryInstalledPackages();
         }
 
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -151,16 +131,7 @@ namespace Chocolatey.Explorer.View
 
         private void listBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            SelectPackage();
-        }
-
-        private void SelectPackage()
-        {
-            PackageList.Enabled = false;
-            if (PackageList.SelectedItem == null) return;
-            SetStatus("Getting package information for package: " + ((Package)PackageList.SelectedItem).Name);
-            EmptyTextBoxes();
-            _packageVersionService.PackageVersion(((Package) PackageList.SelectedItem).Name);
+            QueryPackageVersion();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -169,6 +140,54 @@ namespace Chocolatey.Explorer.View
             SetStatus("Updating package " + ((Package)PackageList.SelectedItem).Name);
             txtPowershellOutput.Visible = true;
             _packageService.UpdatePackage(((Package) PackageList.SelectedItem).Name);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (PackageList.SelectedItem == null) return;
+            SetStatus("Installing package " + ((Package) PackageList.SelectedItem).Name);
+            txtPowershellOutput.Visible = true;
+            _packageService.InstallPackage(((Package) PackageList.SelectedItem).Name);
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var settings = new Settings();
+            settings.ShowDialog();
+        }
+
+        private void QueryPackageVersion()
+        {
+            PackageList.Enabled = false;
+            if (PackageList.SelectedItem == null) return;
+            SetStatus("Getting package information for package: " + ((Package)PackageList.SelectedItem).Name);
+            EmptyTextBoxes();
+            _packageVersionService.PackageVersion(((Package)PackageList.SelectedItem).Name);
+        }
+
+        private void QueryAvailablePackges()
+        {
+            SetStatus("Getting list of packages on server");
+            lblPackages.Text = "Available packages";
+            lblProgressbar.Style = ProgressBarStyle.Marquee;
+            _packagesService.ListOfPackages();
+        }
+
+        private void QueryInstalledPackages()
+        {
+            var settings = new Properties.Settings();
+            var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
+            if (!System.IO.Directory.Exists(expandedLibDirectory))
+            {
+                MessageBox.Show("Could not find the installed packages directory (" + expandedLibDirectory + "), please change the install directory in the settings.");
+            }
+            else
+            {
+                SetStatus("Getting list of installed packages");
+                lblPackages.Text = "Installed packages";
+                lblProgressbar.Style = ProgressBarStyle.Marquee;
+                _packagesService.ListOfInstalledPackages();
+            }
         }
 
         private void EmptyTextBoxes()
@@ -190,20 +209,6 @@ namespace Chocolatey.Explorer.View
         {
             lblStatus.Text = "";
             lblProgressbar.Visible = false;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (PackageList.SelectedItem == null) return;
-            SetStatus("Installing package " + ((Package) PackageList.SelectedItem).Name);
-            txtPowershellOutput.Visible = true;
-            _packageService.InstallPackage(((Package) PackageList.SelectedItem).Name);
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var settings = new Settings();
-            settings.ShowDialog();
         }
     }
 }

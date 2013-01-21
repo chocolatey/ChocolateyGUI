@@ -45,7 +45,7 @@
             this.txtVersion = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnInstall = new System.Windows.Forms.Button();
+            this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
             this.txtPowershellOutput = new System.Windows.Forms.TextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
@@ -208,13 +208,12 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.btnUpdate, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnInstall, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnInstallUninstall, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 243);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(428, 51);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
@@ -230,17 +229,21 @@
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
-            // btnInstall
+            // btnInstallUninstall
             // 
-            this.btnInstall.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnInstall.Enabled = false;
-            this.btnInstall.Location = new System.Drawing.Point(217, 3);
-            this.btnInstall.Name = "btnInstall";
-            this.btnInstall.Size = new System.Drawing.Size(208, 45);
-            this.btnInstall.TabIndex = 2;
-            this.btnInstall.Text = "Install";
-            this.btnInstall.UseVisualStyleBackColor = true;
-            this.btnInstall.Click += new System.EventHandler(this.buttonInstall_Click);
+            this.btnInstallUninstall.Appearance = System.Windows.Forms.Appearance.Button;
+            this.btnInstallUninstall.AutoCheck = false;
+            this.btnInstallUninstall.AutoSize = true;
+            this.btnInstallUninstall.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnInstallUninstall.Location = new System.Drawing.Point(217, 3);
+            this.btnInstallUninstall.Name = "btnInstallUninstall";
+            this.btnInstallUninstall.Size = new System.Drawing.Size(208, 45);
+            this.btnInstallUninstall.TabIndex = 2;
+            this.btnInstallUninstall.Text = "Install";
+            this.btnInstallUninstall.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnInstallUninstall.UseVisualStyleBackColor = true;
+            this.btnInstallUninstall.CheckStateChanged += new System.EventHandler(this.btnInstallUninstall_CheckStateChanged);
+            this.btnInstallUninstall.Click += new System.EventHandler(this.buttonInstallUninstall_Click);
             // 
             // txtPowershellOutput
             // 
@@ -298,6 +301,7 @@
             this.mainSplitContainer.ResumeLayout(false);
             this.packageTabControl.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -315,7 +319,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.SplitContainer mainSplitContainer;
-        private System.Windows.Forms.Button btnInstall;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.TextBox txtPowershellOutput;
         private System.Windows.Forms.StatusStrip statusStrip;
@@ -328,5 +331,6 @@
         private System.Windows.Forms.TabControl packageTabControl;
         private System.Windows.Forms.TabPage tabInstalled;
         private System.Windows.Forms.TabPage tabAvailable;
+        private System.Windows.Forms.CheckBox btnInstallUninstall;
     }
 }

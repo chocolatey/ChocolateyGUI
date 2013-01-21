@@ -38,6 +38,7 @@ namespace Chocolatey.Explorer.View
             _packageService.LineChanged += PackageServiceLineChanged;
             _packageService.RunFinshed += PackageServiceRunFinished;
             ClearStatus();
+            UpdateInstallUninstallButtonLabel();
             QueryInstalledPackages();
         }
 
@@ -63,7 +64,7 @@ namespace Chocolatey.Explorer.View
                     ((CachedPackageVersionService)_packageVersionService).InvalidateCache();
                 }
 
-                QueryPackageVersion();
+                QueryInstalledPackages();
             }
         }
 
@@ -114,7 +115,8 @@ namespace Chocolatey.Explorer.View
                 txtVersion.AppendText("Current version: " + version.CurrentVersion + Environment.NewLine);
                 txtVersion.AppendText("Version on the server: " + version.Serverversion + Environment.NewLine);
                 btnUpdate.Enabled = version.CanBeUpdated;
-                btnInstall.Enabled = !version.IsInstalled;
+                btnInstallUninstall.Checked = !version.IsInstalled;
+                btnInstallUninstall.Enabled = true;
                 ClearStatus();
                 lblStatus.Text = "Number of packages: " + PackageList.Items.Count;
             }
@@ -174,13 +176,38 @@ namespace Chocolatey.Explorer.View
             _packageService.UpdatePackage(((Package) PackageList.SelectedItem).Name);
         }
 
-        private void buttonInstall_Click(object sender, EventArgs e)
+        private void buttonInstallUninstall_Click(object sender, EventArgs e)
         {
             if (PackageList.SelectedItem == null) return;
             DisableUserInteraction();
-            SetStatus("Installing package " + ((Package) PackageList.SelectedItem).Name);
             txtPowershellOutput.Visible = true;
-            _packageService.InstallPackage(((Package) PackageList.SelectedItem).Name);
+            if (btnInstallUninstall.Checked)
+            {
+                SetStatus("Installing package " + ((Package)PackageList.SelectedItem).Name);
+                _packageService.InstallPackage(((Package)PackageList.SelectedItem).Name);
+            }
+            else
+            {
+                SetStatus("Uninstalling package " + ((Package)PackageList.SelectedItem).Name);
+                _packageService.UninstallPackage(((Package)PackageList.SelectedItem).Name);
+            }
+        }
+
+        private void btnInstallUninstall_CheckStateChanged(object sender, EventArgs e)
+        {
+            UpdateInstallUninstallButtonLabel();
+        }
+
+        private void UpdateInstallUninstallButtonLabel()
+        {
+            if (btnInstallUninstall.Checked)
+            {
+                btnInstallUninstall.Text = "Install";
+            }
+            else
+            {
+                btnInstallUninstall.Text = "Uninstall";
+            }
         }
 
         private void QueryPackageVersion()
@@ -242,7 +269,7 @@ namespace Chocolatey.Explorer.View
             txtVersion.Text = "";
             txtPowershellOutput.Text = "";
             btnUpdate.Enabled = false;
-            btnInstall.Enabled = false;
+            btnInstallUninstall.Enabled = false;
         }
 
         private void SetStatus(String text)

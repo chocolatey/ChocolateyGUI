@@ -33,6 +33,12 @@ namespace Chocolatey.Explorer.Services
             _powershellAsync.Run("cinst " + package + " -source " + _sourceService.Source);
         }
 
+        public void UninstallPackage(string package)
+        {
+            log.Info("Uninstalling package: " + package);
+            _powershellAsync.Run("cuninst " + package);
+        }
+
         public void UpdatePackage(string package)
         {
             log.Info("Updating package: " + package);

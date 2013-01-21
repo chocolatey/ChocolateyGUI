@@ -29,22 +29,24 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.latestVersionBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabelChocolatey = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.linkLabelExplorer = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
-            // textBox1
+            // latestVersionBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(8, 168);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(574, 130);
-            this.textBox1.TabIndex = 0;
+            this.latestVersionBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.latestVersionBox.Location = new System.Drawing.Point(0, 165);
+            this.latestVersionBox.Multiline = true;
+            this.latestVersionBox.Name = "latestVersionBox";
+            this.latestVersionBox.Size = new System.Drawing.Size(592, 152);
+            this.latestVersionBox.TabIndex = 0;
             // 
             // label1
             // 
@@ -55,16 +57,16 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Chocolatey was written by Rob Reynolds (@ferventcoder)";
             // 
-            // linkLabel1
+            // linkLabelChocolatey
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(21, 29);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(113, 13);
-            this.linkLabel1.TabIndex = 2;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "http://chocolatey.org/";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabelChocolatey.AutoSize = true;
+            this.linkLabelChocolatey.Location = new System.Drawing.Point(21, 29);
+            this.linkLabelChocolatey.Name = "linkLabelChocolatey";
+            this.linkLabelChocolatey.Size = new System.Drawing.Size(113, 13);
+            this.linkLabelChocolatey.TabIndex = 2;
+            this.linkLabelChocolatey.TabStop = true;
+            this.linkLabelChocolatey.Text = "http://chocolatey.org/";
+            this.linkLabelChocolatey.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelChocolatey_LinkClicked);
             // 
             // label2
             // 
@@ -75,16 +77,16 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Chocolatey explorer was written by christiaan baes (@chrissie1)";
             // 
-            // linkLabel2
+            // linkLabelExplorer
             // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(21, 86);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(239, 13);
-            this.linkLabel2.TabIndex = 4;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "https://github.com/chrissie1/chocolatey-Explorer";
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            this.linkLabelExplorer.AutoSize = true;
+            this.linkLabelExplorer.Location = new System.Drawing.Point(21, 86);
+            this.linkLabelExplorer.Name = "linkLabelExplorer";
+            this.linkLabelExplorer.Size = new System.Drawing.Size(239, 13);
+            this.linkLabelExplorer.TabIndex = 4;
+            this.linkLabelExplorer.TabStop = true;
+            this.linkLabelExplorer.Text = "https://github.com/chrissie1/chocolatey-Explorer";
+            this.linkLabelExplorer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelExplorer_LinkClicked);
             // 
             // label3
             // 
@@ -102,22 +104,32 @@
             this.lblVersion.Size = new System.Drawing.Size(100, 23);
             this.lblVersion.TabIndex = 6;
             // 
+            // progressBar
+            // 
+            this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar.Location = new System.Drawing.Point(0, 317);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(592, 23);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar.TabIndex = 7;
+            this.progressBar.Visible = false;
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 310);
+            this.ClientSize = new System.Drawing.Size(592, 340);
+            this.Controls.Add(this.latestVersionBox);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.linkLabel2);
+            this.Controls.Add(this.linkLabelExplorer);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.linkLabelChocolatey);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "About";
             this.Text = "About";
-            this.Activated += new System.EventHandler(this.About_Activated);
             this.Load += new System.EventHandler(this.About_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -126,12 +138,13 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox latestVersionBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabelChocolatey;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.LinkLabel linkLabelExplorer;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }

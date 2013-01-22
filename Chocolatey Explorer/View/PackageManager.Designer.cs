@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageManager));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.packagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,10 +43,12 @@
             this.packageTabControl = new System.Windows.Forms.TabControl();
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.tabInstalled = new System.Windows.Forms.TabPage();
+            this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
             this.txtVersion = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
+            this.installUninstallImageList = new System.Windows.Forms.ImageList(this.components);
             this.txtPowershellOutput = new System.Windows.Forms.TextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
@@ -67,7 +70,7 @@
             this.helpToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(696, 24);
+            this.mainMenu.Size = new System.Drawing.Size(807, 24);
             this.mainMenu.TabIndex = 0;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -90,6 +93,7 @@
             // 
             // installedPackagesToolStripMenuItem
             // 
+            this.installedPackagesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("installedPackagesToolStripMenuItem.Image")));
             this.installedPackagesToolStripMenuItem.Name = "installedPackagesToolStripMenuItem";
             this.installedPackagesToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.installedPackagesToolStripMenuItem.Text = "&Installed packages";
@@ -123,6 +127,7 @@
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("settingsToolStripMenuItem.Image")));
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -144,8 +149,8 @@
             this.mainSplitContainer.Panel2.Controls.Add(this.txtVersion);
             this.mainSplitContainer.Panel2.Controls.Add(this.tableLayoutPanel1);
             this.mainSplitContainer.Panel2.Controls.Add(this.txtPowershellOutput);
-            this.mainSplitContainer.Size = new System.Drawing.Size(696, 507);
-            this.mainSplitContainer.SplitterDistance = 264;
+            this.mainSplitContainer.Size = new System.Drawing.Size(807, 507);
+            this.mainSplitContainer.SplitterDistance = 306;
             this.mainSplitContainer.TabIndex = 2;
             // 
             // PackageList
@@ -156,7 +161,7 @@
             this.PackageList.ItemHeight = 15;
             this.PackageList.Location = new System.Drawing.Point(0, 25);
             this.PackageList.Name = "PackageList";
-            this.PackageList.Size = new System.Drawing.Size(264, 482);
+            this.PackageList.Size = new System.Drawing.Size(306, 482);
             this.PackageList.TabIndex = 0;
             this.PackageList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.packageList_MouseClick);
             // 
@@ -166,39 +171,49 @@
             this.packageTabControl.Controls.Add(this.tabInstalled);
             this.packageTabControl.Dock = System.Windows.Forms.DockStyle.Top;
             this.packageTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.packageTabControl.ImageList = this.packageTabsImageList;
             this.packageTabControl.Location = new System.Drawing.Point(0, 0);
             this.packageTabControl.Name = "packageTabControl";
             this.packageTabControl.SelectedIndex = 0;
-            this.packageTabControl.Size = new System.Drawing.Size(264, 25);
+            this.packageTabControl.Size = new System.Drawing.Size(306, 25);
             this.packageTabControl.TabIndex = 1;
             this.packageTabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.packageTabControl_Selected);
             // 
             // tabAvailable
             // 
-            this.tabAvailable.Location = new System.Drawing.Point(4, 22);
+            this.tabAvailable.ImageIndex = 0;
+            this.tabAvailable.Location = new System.Drawing.Point(4, 25);
             this.tabAvailable.Name = "tabAvailable";
             this.tabAvailable.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAvailable.Size = new System.Drawing.Size(223, 0);
+            this.tabAvailable.Size = new System.Drawing.Size(298, 0);
             this.tabAvailable.TabIndex = 1;
             this.tabAvailable.Text = "Available packages";
             this.tabAvailable.UseVisualStyleBackColor = true;
             // 
             // tabInstalled
             // 
+            this.tabInstalled.ImageIndex = 1;
             this.tabInstalled.Location = new System.Drawing.Point(4, 25);
             this.tabInstalled.Name = "tabInstalled";
             this.tabInstalled.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInstalled.Size = new System.Drawing.Size(256, 0);
+            this.tabInstalled.Size = new System.Drawing.Size(298, 0);
             this.tabInstalled.TabIndex = 0;
             this.tabInstalled.Text = "Installed packages";
             this.tabInstalled.UseVisualStyleBackColor = true;
+            // 
+            // packageTabsImageList
+            // 
+            this.packageTabsImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("packageTabsImageList.ImageStream")));
+            this.packageTabsImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.packageTabsImageList.Images.SetKeyName(0, "chocolateyicon.ico");
+            this.packageTabsImageList.Images.SetKeyName(1, "monitor.png");
             // 
             // txtVersion
             // 
             this.txtVersion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtVersion.Location = new System.Drawing.Point(0, 0);
             this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(428, 243);
+            this.txtVersion.Size = new System.Drawing.Size(497, 232);
             this.txtVersion.TabIndex = 5;
             this.txtVersion.Text = "";
             // 
@@ -210,22 +225,25 @@
             this.tableLayoutPanel1.Controls.Add(this.btnUpdate, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnInstallUninstall, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 243);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 232);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(428, 51);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(497, 62);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // btnUpdate
             // 
             this.btnUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnUpdate.Enabled = false;
+            this.btnUpdate.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdate.Image")));
             this.btnUpdate.Location = new System.Drawing.Point(3, 3);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(208, 45);
+            this.btnUpdate.Size = new System.Drawing.Size(242, 56);
             this.btnUpdate.TabIndex = 1;
             this.btnUpdate.Text = "Update";
+            this.btnUpdate.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
@@ -235,15 +253,25 @@
             this.btnInstallUninstall.AutoCheck = false;
             this.btnInstallUninstall.AutoSize = true;
             this.btnInstallUninstall.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnInstallUninstall.Location = new System.Drawing.Point(217, 3);
+            this.btnInstallUninstall.ImageIndex = 0;
+            this.btnInstallUninstall.ImageList = this.installUninstallImageList;
+            this.btnInstallUninstall.Location = new System.Drawing.Point(251, 3);
             this.btnInstallUninstall.Name = "btnInstallUninstall";
-            this.btnInstallUninstall.Size = new System.Drawing.Size(208, 45);
+            this.btnInstallUninstall.Size = new System.Drawing.Size(243, 56);
             this.btnInstallUninstall.TabIndex = 2;
             this.btnInstallUninstall.Text = "Install";
-            this.btnInstallUninstall.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnInstallUninstall.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnInstallUninstall.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnInstallUninstall.UseVisualStyleBackColor = true;
             this.btnInstallUninstall.CheckStateChanged += new System.EventHandler(this.btnInstallUninstall_CheckStateChanged);
             this.btnInstallUninstall.Click += new System.EventHandler(this.buttonInstallUninstall_Click);
+            // 
+            // installUninstallImageList
+            // 
+            this.installUninstallImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("installUninstallImageList.ImageStream")));
+            this.installUninstallImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.installUninstallImageList.Images.SetKeyName(0, "add.png");
+            this.installUninstallImageList.Images.SetKeyName(1, "delete.png");
             // 
             // txtPowershellOutput
             // 
@@ -252,7 +280,7 @@
             this.txtPowershellOutput.Multiline = true;
             this.txtPowershellOutput.Name = "txtPowershellOutput";
             this.txtPowershellOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtPowershellOutput.Size = new System.Drawing.Size(428, 213);
+            this.txtPowershellOutput.Size = new System.Drawing.Size(497, 213);
             this.txtPowershellOutput.TabIndex = 3;
             this.txtPowershellOutput.Visible = false;
             // 
@@ -263,7 +291,7 @@
             this.lblStatus});
             this.statusStrip.Location = new System.Drawing.Point(0, 531);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(696, 22);
+            this.statusStrip.Size = new System.Drawing.Size(807, 22);
             this.statusStrip.TabIndex = 3;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -276,7 +304,7 @@
             // lblStatus
             // 
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(479, 17);
+            this.lblStatus.Size = new System.Drawing.Size(590, 17);
             this.lblStatus.Spring = true;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -284,7 +312,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(696, 553);
+            this.ClientSize = new System.Drawing.Size(807, 553);
             this.Controls.Add(this.mainSplitContainer);
             this.Controls.Add(this.mainMenu);
             this.Controls.Add(this.statusStrip);
@@ -332,5 +360,7 @@
         private System.Windows.Forms.TabPage tabInstalled;
         private System.Windows.Forms.TabPage tabAvailable;
         private System.Windows.Forms.CheckBox btnInstallUninstall;
+        private System.Windows.Forms.ImageList installUninstallImageList;
+        private System.Windows.Forms.ImageList packageTabsImageList;
     }
 }

@@ -202,10 +202,12 @@ namespace Chocolatey.Explorer.View
         {
             if (btnInstallUninstall.Checked)
             {
+                btnInstallUninstall.ImageIndex = 0;
                 btnInstallUninstall.Text = "Install";
             }
             else
             {
+                btnInstallUninstall.ImageIndex = 1;
                 btnInstallUninstall.Text = "Uninstall";
             }
         }

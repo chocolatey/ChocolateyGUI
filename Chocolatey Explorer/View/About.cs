@@ -67,6 +67,18 @@ namespace Chocolatey.Explorer.View
             System.Diagnostics.Process.Start(linkLabelExplorer.Text);
         }
 
+        private void linkIcons_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkIcons.LinkVisited = true;
+            System.Diagnostics.Process.Start(linkIcons.Text);
+        }
+
+        private void linkLabelCC_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabelCC.LinkVisited = true;
+            System.Diagnostics.Process.Start("https://creativecommons.org/licenses/by/3.0/us/");
+        }
+
         private void About_Load(object sender, EventArgs e)
         {
             lblVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();

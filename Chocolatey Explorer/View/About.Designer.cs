@@ -37,15 +37,18 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.linkIcons = new System.Windows.Forms.LinkLabel();
+            this.labelIcons = new System.Windows.Forms.Label();
+            this.linkLabelCC = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // latestVersionBox
             // 
             this.latestVersionBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.latestVersionBox.Location = new System.Drawing.Point(0, 165);
+            this.latestVersionBox.Location = new System.Drawing.Point(0, 191);
             this.latestVersionBox.Multiline = true;
             this.latestVersionBox.Name = "latestVersionBox";
-            this.latestVersionBox.Size = new System.Drawing.Size(592, 152);
+            this.latestVersionBox.Size = new System.Drawing.Size(592, 126);
             this.latestVersionBox.TabIndex = 0;
             // 
             // label1
@@ -71,7 +74,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 73);
+            this.label2.Location = new System.Drawing.Point(21, 55);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(305, 13);
             this.label2.TabIndex = 3;
@@ -80,7 +83,7 @@
             // linkLabelExplorer
             // 
             this.linkLabelExplorer.AutoSize = true;
-            this.linkLabelExplorer.Location = new System.Drawing.Point(21, 86);
+            this.linkLabelExplorer.Location = new System.Drawing.Point(21, 68);
             this.linkLabelExplorer.Name = "linkLabelExplorer";
             this.linkLabelExplorer.Size = new System.Drawing.Size(239, 13);
             this.linkLabelExplorer.TabIndex = 4;
@@ -91,7 +94,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 119);
+            this.label3.Location = new System.Drawing.Point(25, 147);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(42, 13);
             this.label3.TabIndex = 5;
@@ -99,7 +102,7 @@
             // 
             // lblVersion
             // 
-            this.lblVersion.Location = new System.Drawing.Point(25, 139);
+            this.lblVersion.Location = new System.Drawing.Point(26, 167);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(100, 23);
             this.lblVersion.TabIndex = 6;
@@ -114,12 +117,46 @@
             this.progressBar.TabIndex = 7;
             this.progressBar.Visible = false;
             // 
+            // linkIcons
+            // 
+            this.linkIcons.AutoSize = true;
+            this.linkIcons.Location = new System.Drawing.Point(21, 107);
+            this.linkIcons.Name = "linkIcons";
+            this.linkIcons.Size = new System.Drawing.Size(176, 13);
+            this.linkIcons.TabIndex = 9;
+            this.linkIcons.TabStop = true;
+            this.linkIcons.Text = "https://www.fatcow.com/free-icons";
+            this.linkIcons.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkIcons_LinkClicked);
+            // 
+            // labelIcons
+            // 
+            this.labelIcons.AutoSize = true;
+            this.labelIcons.Location = new System.Drawing.Point(21, 94);
+            this.labelIcons.Name = "labelIcons";
+            this.labelIcons.Size = new System.Drawing.Size(86, 13);
+            this.labelIcons.TabIndex = 8;
+            this.labelIcons.Text = "Icons by FatCow";
+            // 
+            // linkLabelCC
+            // 
+            this.linkLabelCC.AutoSize = true;
+            this.linkLabelCC.Location = new System.Drawing.Point(200, 107);
+            this.linkLabelCC.Name = "linkLabelCC";
+            this.linkLabelCC.Size = new System.Drawing.Size(80, 13);
+            this.linkLabelCC.TabIndex = 10;
+            this.linkLabelCC.TabStop = true;
+            this.linkLabelCC.Text = "(CC BY 3.0 US)";
+            this.linkLabelCC.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCC_LinkClicked);
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(592, 340);
             this.Controls.Add(this.latestVersionBox);
+            this.Controls.Add(this.linkLabelCC);
+            this.Controls.Add(this.linkIcons);
+            this.Controls.Add(this.labelIcons);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.label3);
@@ -146,5 +183,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.LinkLabel linkIcons;
+        private System.Windows.Forms.Label labelIcons;
+        private System.Windows.Forms.LinkLabel linkLabelCC;
     }
 }

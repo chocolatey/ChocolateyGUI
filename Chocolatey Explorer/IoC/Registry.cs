@@ -12,8 +12,9 @@ namespace Chocolatey.Explorer.IoC
              For<IPackageManager>().Use<PackageManager>();
              For<IPackageService>().Use<PackageService>();
              For<IPackagesService>().Use<CachedPackagesService>();
-             For<IPackageVersionService>().Use<CachedPackageVersionService>();
+             For<IPackageVersionService>().Use<ODataPackageVersionService>();
              For<IChocolateyService>().Use<ChocolateyService>();
+             For<IPackageVersionXMLParser>().Use<PackageVersionXMLParser>();
              For<IRun>().Use<RunAsync>();
              For<IRun>().Use<RunSync>().Named("sync");
              For<ISourceService>().Singleton().Use<SourceService>();

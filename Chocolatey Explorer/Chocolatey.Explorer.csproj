@@ -82,6 +82,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\WindowsPowerShell\v1.0\System.Management.Automation.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,6 +96,8 @@
     <Compile Include="IoC\Registry.cs" />
     <Compile Include="Model\Package.cs" />
     <Compile Include="Model\PackageVersion.cs" />
+    <Compile Include="Services\IPackageVersionXMLParser.cs" />
+    <Compile Include="Services\PackageVersionXMLParser.cs" />
     <Compile Include="Model\Source.cs" />
     <Compile Include="Powershell\IRun.cs" />
     <Compile Include="Powershell\RunAsync.cs" />
@@ -102,6 +105,7 @@
     <Compile Include="Services\CachedPackageVersionService.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
     <Compile Include="Services\CachedPackagesService.cs" />
+    <Compile Include="Services\ODataPackageVersionService.cs" />
     <Compile Include="Services\IChocolateyService.cs" />
     <Compile Include="Services\IPackageService.cs" />
     <Compile Include="Services\IPackagesService.cs" />

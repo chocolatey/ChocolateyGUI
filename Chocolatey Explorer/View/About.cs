@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Services;
 using log4net;
+using System.ComponentModel;
 
 namespace Chocolatey.Explorer.View
 {
@@ -10,6 +11,7 @@ namespace Chocolatey.Explorer.View
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(About));
 
+        private delegate void VersionChangedHandler(string version);
         private IChocolateyService _chocolateyService;
 
         public About() : this(new ChocolateyService())
@@ -21,31 +23,60 @@ namespace Chocolatey.Explorer.View
             InitializeComponent();
 
             _chocolateyService = chocolateyService;
-            _chocolateyService.OutputChanged += VersionChangedHandler;
+            _chocolateyService.OutputChanged += VersionChangeFinished;
+
+            GetChocolateyVersionAsync();
         }
 
-        private void VersionChangedHandler(string version)
+        private void VersionChangeFinished(string version)
         {
-            textBox1.Text = version;
+            if (this.InvokeRequired)
+            {
+                Invoke(new VersionChangedHandler(VersionChangeFinished), new object[] { version });
+            }
+            else
+            {
+                latestVersionBox.Text = version;
+                progressBar.Visible = false;
+            }
         }
 
-        
-
-        private void About_Activated(object sender, EventArgs e)
+        private void GetChocolateyVersionAsync()
         {
-            _chocolateyService.LatestVersion();
+            progressBar.Visible = true;
+
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler(
+                delegate(object o, DoWorkEventArgs args)
+                {
+                    _chocolateyService.LatestVersion();
+                }
+            );
+            bw.RunWorkerAsync();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabelChocolatey_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            linkLabel1.LinkVisited = true;
-            System.Diagnostics.Process.Start(linkLabel1.Text);
+            linkLabelChocolatey.LinkVisited = true;
+            System.Diagnostics.Process.Start(linkLabelChocolatey.Text);
         }
 
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabelExplorer_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            linkLabel2.LinkVisited = true;
-            System.Diagnostics.Process.Start(linkLabel2.Text);
+            linkLabelExplorer.LinkVisited = true;
+            System.Diagnostics.Process.Start(linkLabelExplorer.Text);
+        }
+
+        private void linkIcons_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkIcons.LinkVisited = true;
+            System.Diagnostics.Process.Start(linkIcons.Text);
+        }
+
+        private void linkLabelCC_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabelCC.LinkVisited = true;
+            System.Diagnostics.Process.Start("https://creativecommons.org/licenses/by/3.0/us/");
         }
 
         private void About_Load(object sender, EventArgs e)

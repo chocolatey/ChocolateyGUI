@@ -5,6 +5,7 @@ namespace Chocolatey.Explorer.Services
         event PackageService.LineDelegate LineChanged;
         event PackageService.FinishedDelegate RunFinshed;
         void InstallPackage(string package);
+        void UninstallPackage(string package);
         void UpdatePackage(string package);
     }
 }

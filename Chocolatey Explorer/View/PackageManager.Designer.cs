@@ -28,49 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageManager));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.packagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.availablePackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installedPackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.PackageList = new System.Windows.Forms.ListBox();
-            this.lblPackages = new System.Windows.Forms.Label();
+            this.packageTabControl = new System.Windows.Forms.TabControl();
+            this.tabAvailable = new System.Windows.Forms.TabPage();
+            this.tabInstalled = new System.Windows.Forms.TabPage();
+            this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
             this.txtVersion = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnInstall = new System.Windows.Forms.Button();
+            this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
+            this.installUninstallImageList = new System.Windows.Forms.ImageList(this.components);
             this.txtPowershellOutput = new System.Windows.Forms.TextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.mainMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
+            this.mainSplitContainer.Panel1.SuspendLayout();
+            this.mainSplitContainer.Panel2.SuspendLayout();
+            this.mainSplitContainer.SuspendLayout();
+            this.packageTabControl.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // mainMenu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.packagesToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(696, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.mainMenu.Location = new System.Drawing.Point(0, 0);
+            this.mainMenu.Name = "mainMenu";
+            this.mainMenu.Size = new System.Drawing.Size(807, 24);
+            this.mainMenu.TabIndex = 0;
+            this.mainMenu.Text = "menuStrip1";
             // 
             // packagesToolStripMenuItem
             // 
@@ -87,14 +89,15 @@
             this.availablePackagesToolStripMenuItem.Name = "availablePackagesToolStripMenuItem";
             this.availablePackagesToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.availablePackagesToolStripMenuItem.Text = "&Available packages";
-            this.availablePackagesToolStripMenuItem.Click += new System.EventHandler(this.availablePackagesToolStripMenuItem_Click);
+            this.availablePackagesToolStripMenuItem.Click += new System.EventHandler(this.availablePackages_Click);
             // 
             // installedPackagesToolStripMenuItem
             // 
+            this.installedPackagesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("installedPackagesToolStripMenuItem.Image")));
             this.installedPackagesToolStripMenuItem.Name = "installedPackagesToolStripMenuItem";
             this.installedPackagesToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.installedPackagesToolStripMenuItem.Text = "&Installed packages";
-            this.installedPackagesToolStripMenuItem.Click += new System.EventHandler(this.installedPackagesToolStripMenuItem_Click);
+            this.installedPackagesToolStripMenuItem.Click += new System.EventHandler(this.installedPackages_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -112,7 +115,7 @@
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
             this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.helpToolStripMenuItem1.Text = "H&elp";
-            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.help_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -120,85 +123,97 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "&About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.about_Click);
             // 
-            // toolStrip1
+            // settingsToolStripMenuItem
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(696, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
+            this.settingsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("settingsToolStripMenuItem.Image")));
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settings_Click);
             // 
-            // toolStripButton1
+            // mainSplitContainer
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(127, 22);
-            this.toolStripButton1.Text = "Available packages";
-            this.toolStripButton1.Click += new System.EventHandler(this.availablePackagesToolStripMenuItem_Click);
+            this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainSplitContainer.Location = new System.Drawing.Point(0, 24);
+            this.mainSplitContainer.Name = "mainSplitContainer";
             // 
-            // toolStripButton2
+            // mainSplitContainer.Panel1
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(107, 22);
-            this.toolStripButton2.Text = "Installed packages";
-            this.toolStripButton2.Click += new System.EventHandler(this.installedPackagesToolStripMenuItem_Click);
+            this.mainSplitContainer.Panel1.Controls.Add(this.PackageList);
+            this.mainSplitContainer.Panel1.Controls.Add(this.packageTabControl);
             // 
-            // splitContainer1
+            // mainSplitContainer.Panel2
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 49);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.PackageList);
-            this.splitContainer1.Panel1.Controls.Add(this.lblPackages);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.txtVersion);
-            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer1.Panel2.Controls.Add(this.txtPowershellOutput);
-            this.splitContainer1.Size = new System.Drawing.Size(696, 482);
-            this.splitContainer1.SplitterDistance = 231;
-            this.splitContainer1.TabIndex = 2;
+            this.mainSplitContainer.Panel2.Controls.Add(this.txtVersion);
+            this.mainSplitContainer.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.mainSplitContainer.Panel2.Controls.Add(this.txtPowershellOutput);
+            this.mainSplitContainer.Size = new System.Drawing.Size(807, 507);
+            this.mainSplitContainer.SplitterDistance = 306;
+            this.mainSplitContainer.TabIndex = 2;
             // 
             // PackageList
             // 
             this.PackageList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PackageList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PackageList.FormattingEnabled = true;
-            this.PackageList.Location = new System.Drawing.Point(0, 23);
+            this.PackageList.ItemHeight = 15;
+            this.PackageList.Location = new System.Drawing.Point(0, 25);
             this.PackageList.Name = "PackageList";
-            this.PackageList.Size = new System.Drawing.Size(231, 459);
+            this.PackageList.Size = new System.Drawing.Size(306, 482);
             this.PackageList.TabIndex = 0;
-            this.PackageList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseClick);
+            this.PackageList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.packageList_MouseClick);
             // 
-            // lblPackages
+            // packageTabControl
             // 
-            this.lblPackages.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblPackages.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPackages.Location = new System.Drawing.Point(0, 0);
-            this.lblPackages.Name = "lblPackages";
-            this.lblPackages.Size = new System.Drawing.Size(231, 23);
-            this.lblPackages.TabIndex = 1;
-            this.lblPackages.Text = "Packages";
-            this.lblPackages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.packageTabControl.Controls.Add(this.tabAvailable);
+            this.packageTabControl.Controls.Add(this.tabInstalled);
+            this.packageTabControl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.packageTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.packageTabControl.ImageList = this.packageTabsImageList;
+            this.packageTabControl.Location = new System.Drawing.Point(0, 0);
+            this.packageTabControl.Name = "packageTabControl";
+            this.packageTabControl.SelectedIndex = 0;
+            this.packageTabControl.Size = new System.Drawing.Size(306, 25);
+            this.packageTabControl.TabIndex = 1;
+            this.packageTabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.packageTabControl_Selected);
+            // 
+            // tabAvailable
+            // 
+            this.tabAvailable.ImageIndex = 0;
+            this.tabAvailable.Location = new System.Drawing.Point(4, 25);
+            this.tabAvailable.Name = "tabAvailable";
+            this.tabAvailable.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAvailable.Size = new System.Drawing.Size(298, 0);
+            this.tabAvailable.TabIndex = 1;
+            this.tabAvailable.Text = "Available packages";
+            this.tabAvailable.UseVisualStyleBackColor = true;
+            // 
+            // tabInstalled
+            // 
+            this.tabInstalled.ImageIndex = 1;
+            this.tabInstalled.Location = new System.Drawing.Point(4, 25);
+            this.tabInstalled.Name = "tabInstalled";
+            this.tabInstalled.Padding = new System.Windows.Forms.Padding(3);
+            this.tabInstalled.Size = new System.Drawing.Size(298, 0);
+            this.tabInstalled.TabIndex = 0;
+            this.tabInstalled.Text = "Installed packages";
+            this.tabInstalled.UseVisualStyleBackColor = true;
+            // 
+            // packageTabsImageList
+            // 
+            this.packageTabsImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("packageTabsImageList.ImageStream")));
+            this.packageTabsImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.packageTabsImageList.Images.SetKeyName(0, "chocolateyicon.ico");
+            this.packageTabsImageList.Images.SetKeyName(1, "monitor.png");
             // 
             // txtVersion
             // 
             this.txtVersion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtVersion.Location = new System.Drawing.Point(0, 0);
             this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(461, 218);
+            this.txtVersion.Size = new System.Drawing.Size(497, 232);
             this.txtVersion.TabIndex = 5;
             this.txtVersion.Text = "";
             // 
@@ -208,61 +223,77 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.btnUpdate, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnInstall, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnInstallUninstall, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 218);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 232);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(461, 51);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(497, 62);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // btnUpdate
             // 
             this.btnUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnUpdate.Enabled = false;
+            this.btnUpdate.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdate.Image")));
             this.btnUpdate.Location = new System.Drawing.Point(3, 3);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(224, 45);
+            this.btnUpdate.Size = new System.Drawing.Size(242, 56);
             this.btnUpdate.TabIndex = 1;
             this.btnUpdate.Text = "Update";
+            this.btnUpdate.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.button1_Click);
+            this.btnUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
-            // btnInstall
+            // btnInstallUninstall
             // 
-            this.btnInstall.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnInstall.Enabled = false;
-            this.btnInstall.Location = new System.Drawing.Point(233, 3);
-            this.btnInstall.Name = "btnInstall";
-            this.btnInstall.Size = new System.Drawing.Size(225, 45);
-            this.btnInstall.TabIndex = 2;
-            this.btnInstall.Text = "Install";
-            this.btnInstall.UseVisualStyleBackColor = true;
-            this.btnInstall.Click += new System.EventHandler(this.button2_Click);
+            this.btnInstallUninstall.Appearance = System.Windows.Forms.Appearance.Button;
+            this.btnInstallUninstall.AutoCheck = false;
+            this.btnInstallUninstall.AutoSize = true;
+            this.btnInstallUninstall.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnInstallUninstall.ImageIndex = 0;
+            this.btnInstallUninstall.ImageList = this.installUninstallImageList;
+            this.btnInstallUninstall.Location = new System.Drawing.Point(251, 3);
+            this.btnInstallUninstall.Name = "btnInstallUninstall";
+            this.btnInstallUninstall.Size = new System.Drawing.Size(243, 56);
+            this.btnInstallUninstall.TabIndex = 2;
+            this.btnInstallUninstall.Text = "Install";
+            this.btnInstallUninstall.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnInstallUninstall.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnInstallUninstall.UseVisualStyleBackColor = true;
+            this.btnInstallUninstall.CheckStateChanged += new System.EventHandler(this.btnInstallUninstall_CheckStateChanged);
+            this.btnInstallUninstall.Click += new System.EventHandler(this.buttonInstallUninstall_Click);
+            // 
+            // installUninstallImageList
+            // 
+            this.installUninstallImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("installUninstallImageList.ImageStream")));
+            this.installUninstallImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.installUninstallImageList.Images.SetKeyName(0, "add.png");
+            this.installUninstallImageList.Images.SetKeyName(1, "delete.png");
             // 
             // txtPowershellOutput
             // 
             this.txtPowershellOutput.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtPowershellOutput.Location = new System.Drawing.Point(0, 269);
+            this.txtPowershellOutput.Location = new System.Drawing.Point(0, 294);
             this.txtPowershellOutput.Multiline = true;
             this.txtPowershellOutput.Name = "txtPowershellOutput";
             this.txtPowershellOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtPowershellOutput.Size = new System.Drawing.Size(461, 213);
+            this.txtPowershellOutput.Size = new System.Drawing.Size(497, 213);
             this.txtPowershellOutput.TabIndex = 3;
             this.txtPowershellOutput.Visible = false;
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblProgressbar,
             this.lblStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 531);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(696, 22);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Location = new System.Drawing.Point(0, 531);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(807, 22);
+            this.statusStrip.TabIndex = 3;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // lblProgressbar
             // 
@@ -273,42 +304,34 @@
             // lblStatus
             // 
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(479, 17);
+            this.lblStatus.Size = new System.Drawing.Size(590, 17);
             this.lblStatus.Spring = true;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // PackageManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(696, 553);
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.statusStrip1);
+            this.ClientSize = new System.Drawing.Size(807, 553);
+            this.Controls.Add(this.mainSplitContainer);
+            this.Controls.Add(this.mainMenu);
+            this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.mainMenu;
             this.Name = "PackageManager";
             this.Text = "Chocolatey PackageManager";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.mainMenu.ResumeLayout(false);
+            this.mainMenu.PerformLayout();
+            this.mainSplitContainer.Panel1.ResumeLayout(false);
+            this.mainSplitContainer.Panel2.ResumeLayout(false);
+            this.mainSplitContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
+            this.mainSplitContainer.ResumeLayout(false);
+            this.packageTabControl.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.tableLayoutPanel1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -316,27 +339,28 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip mainMenu;
         private System.Windows.Forms.ToolStripMenuItem packagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem availablePackagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem installedPackagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListBox PackageList;
-        private System.Windows.Forms.Button btnInstall;
+        private System.Windows.Forms.SplitContainer mainSplitContainer;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.TextBox txtPowershellOutput;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripProgressBar lblProgressbar;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.RichTextBox txtVersion;
-        private System.Windows.Forms.Label lblPackages;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ListBox PackageList;
+        private System.Windows.Forms.TabControl packageTabControl;
+        private System.Windows.Forms.TabPage tabInstalled;
+        private System.Windows.Forms.TabPage tabAvailable;
+        private System.Windows.Forms.CheckBox btnInstallUninstall;
+        private System.Windows.Forms.ImageList installUninstallImageList;
+        private System.Windows.Forms.ImageList packageTabsImageList;
     }
 }

@@ -39,9 +39,9 @@ namespace Chocolatey.Explorer.Services
             if (packageVersion == null)
             {
                 packageVersion = new PackageVersion();
-                packageVersion.Name = package;
             }
-            
+
+            packageVersion.Name = package;
             packageVersion.CurrentVersion = GetInstalledVersion(package);
             OnVersionChanged(packageVersion);
         }
@@ -64,7 +64,10 @@ namespace Chocolatey.Explorer.Services
                 catch (XmlException) { }
                 catch (WebException) { }
             }
-            return null;
+
+            var packageVersion = new PackageVersion();
+            packageVersion.Summary = "Could not download package information from '" + url + "'";
+            return packageVersion;
         }
 
         /// <summary>

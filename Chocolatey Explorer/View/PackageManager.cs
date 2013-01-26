@@ -112,9 +112,7 @@ namespace Chocolatey.Explorer.View
                 txtVersion.AppendText(version.Name + Environment.NewLine);
                 txtVersion.Select(0, version.Name.Length);
                 txtVersion.SelectionFont = new Font(txtVersion.SelectionFont.FontFamily, 12, FontStyle.Bold);
-                txtVersion.AppendText("Current version: " + version.CurrentVersion + Environment.NewLine);
-                txtVersion.AppendText("Version on the server: " + version.Serverversion + Environment.NewLine);
-                txtVersion.AppendText("Description: " + version.Description + Environment.NewLine);
+                txtVersion.AppendText(version.ToString());
                 btnUpdate.Enabled = version.CanBeUpdated;
                 btnInstallUninstall.Checked = !version.IsInstalled;
                 btnInstallUninstall.Enabled = true;

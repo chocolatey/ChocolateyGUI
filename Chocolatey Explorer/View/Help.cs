@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Chocolatey.Explorer.Services;
 using log4net;
+using System.ComponentModel;
 
 namespace Chocolatey.Explorer.View
 {
@@ -9,15 +10,11 @@ namespace Chocolatey.Explorer.View
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Help));
 
+        private delegate void ChocolateyServiceOutPutHandler(string output);
         private IChocolateyService _chocolateyService;
 
         public Help() : this(new ChocolateyService())
         {
-        }
-
-        private void ChocolateyServiceOutPutChanged(string output)
-        {
-            textBox1.Text = output;
         }
 
         public Help(IChocolateyService chocolateyService)
@@ -26,12 +23,34 @@ namespace Chocolatey.Explorer.View
 
             _chocolateyService = chocolateyService;
             _chocolateyService.OutputChanged += ChocolateyServiceOutPutChanged;
+
+            LoadHelp();
         }
 
-        private void Help_Activated(object sender, EventArgs e)
+        private void ChocolateyServiceOutPutChanged(string output)
         {
-            _chocolateyService.Help();
+            if (this.InvokeRequired)
+            {
+                Invoke(new ChocolateyServiceOutPutHandler(ChocolateyServiceOutPutChanged), new object[] { output });
+            }
+            else
+            {
+                progressBar.Visible = false;
+                textBox1.Text = output;
+            }
         }
 
+        private void LoadHelp()
+        {
+            progressBar.Visible = true;
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler(
+                delegate(object o, DoWorkEventArgs args)
+                {
+                    _chocolateyService.Help();
+                }
+            );
+            bw.RunWorkerAsync();
+        }
     }
 }

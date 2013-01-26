@@ -9,3 +9,4 @@ _ReSharper.*
 *.vspcc
 *.vscc 
 *.vssscc
+*ncrunch*

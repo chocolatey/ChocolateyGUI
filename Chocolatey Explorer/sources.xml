@@ -2,10 +2,10 @@
 <sources>
   <source>
     <name>Chocolatey.org</name>
-    <url>http://chocolatey.org/api/feeds</url>
+    <url>http://chocolatey.org/api/v2</url>
   </source>
   <source>
     <name>Nuget</name>
-    <url>https://go.microsoft.com/fwlink/?LinkID=206669</url>
+    <url>https://packages.nuget.org/v1/FeedService.svc</url>
   </source>
 </sources>

@@ -29,7 +29,7 @@ namespace Chocolatey.Explorer.Model
         public string ReleaseNotes { get; set; }
         public bool RequireLicenseAcceptance { get; set; }
         public string[] Tags { get; set; }
-        public string Dependencies { get; set; }
+        public string[] Dependencies { get; set; }
 
         public int CompareTo(object obj)
         {

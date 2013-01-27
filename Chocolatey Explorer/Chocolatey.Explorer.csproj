@@ -142,6 +142,12 @@
     <Compile Include="View\Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\PackageVersionPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\PackageVersionPanel.Designer.cs">
+      <DependentUpon>PackageVersionPanel.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -163,6 +169,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PackageVersionPanel.resx">
+      <DependentUpon>PackageVersionPanel.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="log4net.config">

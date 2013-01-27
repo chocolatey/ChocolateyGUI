@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
-using Chocolatey.Explorer.Properties;
 using Chocolatey.Explorer.Services;
 using log4net;
 
@@ -108,11 +107,7 @@ namespace Chocolatey.Explorer.View
             else
             {
                 EnableUserInteraction();
-                txtVersion.Text = "";
-                txtVersion.AppendText(version.Name + Environment.NewLine);
-                txtVersion.Select(0, version.Name.Length);
-                txtVersion.SelectionFont = new Font(txtVersion.SelectionFont.FontFamily, 12, FontStyle.Bold);
-                txtVersion.AppendText(version.ToString());
+                packageVersionPanel.Version = version;
                 btnUpdate.Enabled = version.CanBeUpdated;
                 btnInstallUninstall.Checked = !version.IsInstalled;
                 btnInstallUninstall.Enabled = true;
@@ -263,11 +258,11 @@ namespace Chocolatey.Explorer.View
             mainSplitContainer.Panel1.Enabled = false;
             tableLayoutPanel1.Enabled = false;
             mainMenu.Enabled = false;
+            packageVersionPanel.ClearPanel();
         }
 
         private void EmptyTextBoxes()
         {
-            txtVersion.Text = "";
             txtPowershellOutput.Text = "";
             btnUpdate.Enabled = false;
             btnInstallUninstall.Enabled = false;

@@ -231,6 +231,7 @@
             // 
             this.linkGalleryDetails.AutoSize = true;
             this.linkGalleryDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkGalleryDetails.Enabled = false;
             this.linkGalleryDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkGalleryDetails.Location = new System.Drawing.Point(3, 280);
             this.linkGalleryDetails.Name = "linkGalleryDetails";
@@ -243,6 +244,7 @@
             // 
             this.linkLicense.AutoSize = true;
             this.linkLicense.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkLicense.Enabled = false;
             this.linkLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLicense.Location = new System.Drawing.Point(3, 320);
             this.linkLicense.Name = "linkLicense";
@@ -255,6 +257,7 @@
             // 
             this.linkProjectSite.AutoSize = true;
             this.linkProjectSite.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkProjectSite.Enabled = false;
             this.linkProjectSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkProjectSite.Location = new System.Drawing.Point(3, 300);
             this.linkProjectSite.Name = "linkProjectSite";
@@ -267,6 +270,7 @@
             // 
             this.linkAbuse.AutoSize = true;
             this.linkAbuse.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkAbuse.Enabled = false;
             this.linkAbuse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkAbuse.Location = new System.Drawing.Point(3, 340);
             this.linkAbuse.Name = "linkAbuse";

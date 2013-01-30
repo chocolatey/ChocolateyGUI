@@ -25,6 +25,7 @@ namespace Chocolatey.Explorer.View
         public PackageVersionPanel()
         {
             InitializeComponent();
+            ClearPanel();
 
             linkGalleryDetails.LinkClicked += OnGalleryDetailsClicked;
             linkLicense.LinkClicked += OnLiscenseClicked;
@@ -77,21 +78,41 @@ namespace Chocolatey.Explorer.View
                 foreach (var dependency in _version.Dependencies)
                     dependenciesList.Items.Add(dependency);
             }
+
+            UnlockPanel();
         }
 
         /// <summary>
-        /// Resets all Textfields and user controls.
+        /// Locks all user controls.
         /// </summary>
-        public void ClearPanel()
+        public void LockPanel()
         {
             linkGalleryDetails.LinkVisited = false;
             linkLicense.LinkVisited = false;
             linkProjectSite.LinkVisited = false;
             linkAbuse.LinkVisited = false;
-            linkGalleryDetails.Enabled = false;
-            linkLicense.Enabled = false;
-            linkProjectSite.Enabled = false;
-            linkAbuse.Enabled = false;
+            tagList.Enabled = false;
+            dependenciesList.Enabled = false;
+        }
+
+        /// <summary>
+        /// Locks all user controls.
+        /// </summary>
+        private void UnlockPanel()
+        {
+            linkGalleryDetails.Enabled = true;
+            linkLicense.Enabled = true;
+            linkProjectSite.Enabled = true;
+            linkAbuse.Enabled = true;
+            tagList.Enabled = true;
+            dependenciesList.Enabled = true;
+        }
+
+        /// <summary>
+        /// Resets all Textfields and user controls.
+        /// </summary>
+        private void ClearPanel()
+        {
             lblName.Text = "";
             lblServerVersion.Text = "";
             lblInstalledVersion.Text = "";

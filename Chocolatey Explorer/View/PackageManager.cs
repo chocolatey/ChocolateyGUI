@@ -37,6 +37,7 @@ namespace Chocolatey.Explorer.View
             _packageService.LineChanged += PackageServiceLineChanged;
             _packageService.RunFinshed += PackageServiceRunFinished;
             ClearStatus();
+            PackageList.Focus();
             UpdateInstallUninstallButtonLabel();
             QueryInstalledPackages();
         }
@@ -250,6 +251,7 @@ namespace Chocolatey.Explorer.View
             mainSplitContainer.Panel1.Enabled = true;
             tableLayoutPanel1.Enabled = true;
             mainMenu.Enabled = true;
+            PackageList.Focus();
         }
 
         private void DisableUserInteraction()
@@ -258,7 +260,7 @@ namespace Chocolatey.Explorer.View
             mainSplitContainer.Panel1.Enabled = false;
             tableLayoutPanel1.Enabled = false;
             mainMenu.Enabled = false;
-            packageVersionPanel.ClearPanel();
+            packageVersionPanel.LockPanel();
         }
 
         private void EmptyTextBoxes()

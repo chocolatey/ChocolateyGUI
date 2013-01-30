@@ -4,6 +4,7 @@ using System.Xml;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Properties;
 using log4net;
+using System.Threading;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -32,7 +33,14 @@ namespace Chocolatey.Explorer.Services
         public void PackageVersion(string package)
         {
             log.Info("Getting version of package: " + package);
+            var start = new ParameterizedThreadStart(PackageVersionThread);
+            var thread = new Thread(start) { IsBackground = true };
+            thread.Start(package);
+        }
 
+        private void PackageVersionThread(object packageNameObj)
+        {
+            var package = packageNameObj as string;
             var packageVersion = FillWithOData(package);
 
             // not found on server - use what we know
@@ -53,13 +61,12 @@ namespace Chocolatey.Explorer.Services
 
             var rssFeed = WebRequest.Create(url) as HttpWebRequest;
 
-            // TODO: proper error handling
             if (rssFeed != null)
             {
                 try
                 {
                     xmlDoc.Load(rssFeed.GetResponse().GetResponseStream());
-                    return _versionXmlParser.parse(xmlDoc);
+                    return _versionXmlParser.parseVersion(xmlDoc);
                 }
                 catch (XmlException) { }
                 catch (WebException) { }

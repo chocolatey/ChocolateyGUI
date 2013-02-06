@@ -5,6 +5,7 @@ namespace Chocolatey.Explorer.Model
     public class Package:IComparable
     {
         public String Name { get; set; }
+        public String InstalledVersion { get; set; }
      
         public new String ToString()
         {

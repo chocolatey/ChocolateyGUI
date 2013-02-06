@@ -48,7 +48,10 @@ namespace Chocolatey.Explorer.Services
 
         private void OnPackageVersionThreadCancel()
         {
-            _loadingRssFeed.Abort();
+            if (_loadingRssFeed != null)
+            {
+                _loadingRssFeed.Abort();
+            }
         }
 
         private void PackageVersionThread(CancellationToken cancelToken, string packageNameObj)

@@ -44,6 +44,7 @@
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.tabInstalled = new System.Windows.Forms.TabPage();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
+            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
@@ -52,7 +53,6 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -163,7 +163,7 @@
             this.PackageList.Name = "PackageList";
             this.PackageList.Size = new System.Drawing.Size(387, 424);
             this.PackageList.TabIndex = 0;
-            this.PackageList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.packageList_MouseClick);
+            this.PackageList.SelectedValueChanged += new System.EventHandler(this.PackageList_SelectedValueChanged);
             // 
             // packageTabControl
             // 
@@ -207,6 +207,14 @@
             this.packageTabsImageList.TransparentColor = System.Drawing.Color.Transparent;
             this.packageTabsImageList.Images.SetKeyName(0, "chocolateyicon.ico");
             this.packageTabsImageList.Images.SetKeyName(1, "monitor.png");
+            // 
+            // packageVersionPanel
+            // 
+            this.packageVersionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.packageVersionPanel.Location = new System.Drawing.Point(0, 0);
+            this.packageVersionPanel.Name = "packageVersionPanel";
+            this.packageVersionPanel.Size = new System.Drawing.Size(630, 174);
+            this.packageVersionPanel.TabIndex = 6;
             // 
             // tableLayoutPanel1
             // 
@@ -298,14 +306,6 @@
             this.lblStatus.Size = new System.Drawing.Size(804, 17);
             this.lblStatus.Spring = true;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // packageVersionPanel
-            // 
-            this.packageVersionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.packageVersionPanel.Location = new System.Drawing.Point(0, 0);
-            this.packageVersionPanel.Name = "packageVersionPanel";
-            this.packageVersionPanel.Size = new System.Drawing.Size(630, 174);
-            this.packageVersionPanel.TabIndex = 6;
             // 
             // PackageManager
             // 

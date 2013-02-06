@@ -90,12 +90,10 @@ namespace Chocolatey.Explorer.View
             {
                 EnableUserInteraction();
                 var distinctpackages = packages.Distinct().ToList();
-                PackageList.DataSource = distinctpackages;
-                PackageList.DisplayMember = "Name";
-                if(distinctpackages.Count > 0) PackageList.SelectedIndex = 0;
                 ClearStatus();
+                PackageList.DisplayMember = "Name";
                 lblStatus.Text = "Number of installed packages: " + packages.Count;
-                QueryPackageVersion(); 
+                PackageList.DataSource = distinctpackages;
             }
         }
 
@@ -144,7 +142,7 @@ namespace Chocolatey.Explorer.View
             settings.ShowDialog();
         }
 
-        private void packageList_MouseClick(object sender, MouseEventArgs e)
+        private void PackageList_SelectedValueChanged(object sender, EventArgs e)
         {
             QueryPackageVersion();
         }

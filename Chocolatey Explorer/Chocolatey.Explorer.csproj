@@ -96,25 +96,26 @@
     <Compile Include="IoC\Registry.cs" />
     <Compile Include="Model\Package.cs" />
     <Compile Include="Model\PackageVersion.cs" />
-    <Compile Include="Services\IPackageVersionXMLParser.cs" />
+    <Compile Include="Services\ChocolateyLibDirHelper.cs" />
+    <Compile Include="Services\PackageVersionService\IPackageVersionXMLParser.cs" />
     <Compile Include="Services\PackageVersionXMLParser.cs" />
     <Compile Include="Model\Source.cs" />
     <Compile Include="Powershell\IRun.cs" />
     <Compile Include="Powershell\RunAsync.cs" />
     <Compile Include="Powershell\RunSync.cs" />
-    <Compile Include="Services\CachedPackageVersionService.cs" />
-    <Compile Include="Services\ChocolateyService.cs" />
-    <Compile Include="Services\CachedPackagesService.cs" />
-    <Compile Include="Services\ODataPackageVersionService.cs" />
-    <Compile Include="Services\IChocolateyService.cs" />
-    <Compile Include="Services\IPackageService.cs" />
-    <Compile Include="Services\IPackagesService.cs" />
-    <Compile Include="Services\IPackageVersionService.cs" />
-    <Compile Include="Services\ISourceService.cs" />
-    <Compile Include="Services\PackageService.cs" />
-    <Compile Include="Services\PackagesService.cs" />
-    <Compile Include="Services\PackageVersionService.cs" />
-    <Compile Include="Services\SourceService.cs" />
+    <Compile Include="Services\PackageVersionService\CachedPackageVersionService.cs" />
+    <Compile Include="Services\ChocolateyService\ChocolateyService.cs" />
+    <Compile Include="Services\PackagesService\CachedPackagesService.cs" />
+    <Compile Include="Services\PackageVersionService\ODataPackageVersionService.cs" />
+    <Compile Include="Services\ChocolateyService\IChocolateyService.cs" />
+    <Compile Include="Services\PackageService\IPackageService.cs" />
+    <Compile Include="Services\PackagesService\IPackagesService.cs" />
+    <Compile Include="Services\PackageVersionService\IPackageVersionService.cs" />
+    <Compile Include="Services\SourceService\ISourceService.cs" />
+    <Compile Include="Services\PackageService\PackageService.cs" />
+    <Compile Include="Services\PackagesService\PackagesService.cs" />
+    <Compile Include="Services\PackageVersionService\PackageVersionService.cs" />
+    <Compile Include="Services\SourceService\SourceService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\About.cs">
@@ -194,6 +195,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,9 +3,7 @@ using System.Linq;
 using System.Threading;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
-using Chocolatey.Explorer.Properties;
 using log4net;
-using System.Text.RegularExpressions;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -16,6 +14,7 @@ namespace Chocolatey.Explorer.Services
         private readonly IRun _powershellAsync;
         private readonly IList<string> _lines;
         private readonly ISourceService _sourceService;
+        private readonly ChocolateyLibDirHelper _libDirHelper;
 
         public delegate void FinishedDelegate(IList<Package> packages);
         public event FinishedDelegate RunFinshed;
@@ -28,6 +27,7 @@ namespace Chocolatey.Explorer.Services
         {
             _lines = new List<string>();
             _sourceService = sourceService;
+            _libDirHelper = new ChocolateyLibDirHelper();
             _powershellAsync = new RunAsync();
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;
@@ -48,31 +48,7 @@ namespace Chocolatey.Explorer.Services
 
         private  void ListOfInstalledPackagsThread()
         {
-            var settings = new Settings();
-            var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
-            var directories = System.IO.Directory.GetDirectories(expandedLibDirectory);
-
-            IList<Package> packages = new List<Package>();
-            char[] segmentDelim = "\\".ToCharArray();
-
-            foreach (string directoryPath in directories)
-            {
-                string[] directoryPathSegments = directoryPath.Split(segmentDelim);
-                string directoryName = directoryPathSegments.Last();
-
-                Package package = new Package();
-                package.Name = getPackageFromDirectoryName(directoryName);
-                packages.Add(package);
-            }
-
-            OnRunFinshed(packages);
-        }
-
-        private string getPackageFromDirectoryName(string directoryName)
-        {
-            Regex packageVersionRegexp = new Regex(@"((\.\d+)+)$");
-            var versionMatch = packageVersionRegexp.Match(directoryName);
-            return directoryName.Substring(0, versionMatch.Index);
+            OnRunFinshed(_libDirHelper.ReloadFromDir());
         }
 
         private void OutputChanged(string line)

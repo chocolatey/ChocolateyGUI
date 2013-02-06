@@ -1,10 +1,8 @@
 ﻿using System.Net;
-using System.Text.RegularExpressions;
+using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
-using Chocolatey.Explorer.Properties;
 using log4net;
-using System.Threading;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -23,11 +21,13 @@ namespace Chocolatey.Explorer.Services
 
         private readonly ISourceService _sourceService;
         private readonly IPackageVersionXMLParser _versionXmlParser;
+        private readonly ChocolateyLibDirHelper _libDirHelper;
 
         public ODataPackageVersionService(IPackageVersionXMLParser versionXmlParser, ISourceService sourceService)
         {
             this._versionXmlParser = versionXmlParser;
             this._sourceService = sourceService;
+            this._libDirHelper = new ChocolateyLibDirHelper();
         }
 
         public void PackageVersion(string package)
@@ -40,8 +40,8 @@ namespace Chocolatey.Explorer.Services
 
         private void PackageVersionThread(object packageNameObj)
         {
-            var package = packageNameObj as string;
-            var packageVersion = FillWithOData(package);
+            var packageName = packageNameObj as string;
+            var packageVersion = FillWithOData(packageName);
 
             // not found on server - use what we know
             if (packageVersion == null)
@@ -49,8 +49,8 @@ namespace Chocolatey.Explorer.Services
                 packageVersion = new PackageVersion();
             }
 
-            packageVersion.Name = package;
-            packageVersion.CurrentVersion = GetInstalledVersion(package);
+            packageVersion.Name = packageName;
+            packageVersion.CurrentVersion = _libDirHelper.GetHighestInstalledVersion(packageName);
             OnVersionChanged(packageVersion);
         }
 
@@ -75,30 +75,6 @@ namespace Chocolatey.Explorer.Services
             var packageVersion = new PackageVersion();
             packageVersion.Summary = "Could not download package information from '" + url + "'";
             return packageVersion;
-        }
-
-        /// <summary>
-        /// Searches the chocolatey install directory to look up 
-        /// the installed version of the given package.
-        /// </summary>
-        private string GetInstalledVersion(string package)
-        {
-            var packageRegexp = new Regex(@"(" + package + @")((\.\d+)+)$");
-
-            var settings = new Settings();
-            var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
-            var directories = System.IO.Directory.GetDirectories(expandedLibDirectory);
-
-            foreach (string directory in directories)
-            {
-                var versionMatch = packageRegexp.Match(directory);
-                var installedName = versionMatch.Groups[1].Value;
-                if (installedName == package)
-                {
-                    return versionMatch.Groups[2].Value.Substring(1);
-                }
-            }
-            return "no version";
         }
 
         private void OnVersionChanged(PackageVersion version)

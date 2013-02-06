@@ -97,6 +97,7 @@
     <Compile Include="Model\Package.cs" />
     <Compile Include="Model\PackageVersion.cs" />
     <Compile Include="Services\ChocolateyLibDirHelper.cs" />
+    <Compile Include="Services\ICacheable.cs" />
     <Compile Include="Services\PackageVersionService\IPackageVersionXMLParser.cs" />
     <Compile Include="Services\PackageVersionXMLParser.cs" />
     <Compile Include="Model\Source.cs" />

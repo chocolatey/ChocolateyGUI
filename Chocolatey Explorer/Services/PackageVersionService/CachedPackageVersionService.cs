@@ -11,7 +11,7 @@ namespace Chocolatey.Explorer.Services
     /// Adapter for PackageVersionService, but caching all already
     /// downloaded PackageVersions internally.
     /// </summary>
-    class CachedPackageVersionService : IPackageVersionService
+    class CachedPackageVersionService : IPackageVersionService, ICacheable
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(PackageVersionService));
 

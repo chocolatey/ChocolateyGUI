@@ -8,7 +8,7 @@ namespace Chocolatey.Explorer.Services
     /// Adapter for PackagesService, but caching the Package-Lists
     /// internally.
     /// </summary>
-    class CachedPackagesService : IPackagesService
+    class CachedPackagesService : IPackagesService, ICacheable
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(CachedPackagesService));
 
@@ -22,6 +22,12 @@ namespace Chocolatey.Explorer.Services
         public CachedPackagesService()
         {
             packagesService = new PackagesService();
+        }
+
+        public void InvalidateCache()
+        {
+            InvalidateAvailablePackagesCache();
+            InvalidateAvailablePackagesCache();
         }
 
         public void InvalidateAvailablePackagesCache()

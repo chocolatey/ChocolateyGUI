@@ -55,13 +55,13 @@ namespace Chocolatey.Explorer.View
                 txtPowershellOutput.Visible = false;
 
                 // invalidate caches, because package has been installed
-                if (_packagesService.GetType() == typeof(CachedPackagesService))
+                if (_packagesService.GetType() == typeof(ICacheable))
                 {
-                    ((CachedPackagesService)_packagesService).InvalidateInstalledPackagesCache();
+                    ((ICacheable)_packagesService).InvalidateCache();
                 }
-                if (_packageVersionService.GetType() == typeof(CachedPackageVersionService))
+                if (_packageVersionService.GetType() == typeof(ICacheable))
                 {
-                    ((CachedPackageVersionService)_packageVersionService).InvalidateCache();
+                    ((ICacheable)_packageVersionService).InvalidateCache();
                 }
 
                 QueryInstalledPackages();

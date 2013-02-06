@@ -53,6 +53,10 @@ namespace Chocolatey.Explorer.View
                 pictureBoxLogo.ImageLocation = _version.IconUrl;
                 pictureBoxLogo.LoadAsync();
             }
+            else
+            {
+                pictureBoxLogo.Image = pictureBoxLogo.ErrorImage;
+            }
 
             if (_version.DownloadCount != 0)
                 lblDownloads.Text = _version.DownloadCount.ToString();
@@ -62,11 +66,6 @@ namespace Chocolatey.Explorer.View
                 lblUpdated.Text = _version.LastUpdatedAt.GetDateTimeFormats()[0];
             if (_version.PackageSize != 0)
                 lblPackageSize.Text = String.Format("{0:0.#}", (_version.PackageSize / 1024.0)) + " KB";
-
-            linkGalleryDetails.Enabled = (_version.GalleryDetailsUrl != "" && _version.GalleryDetailsUrl != null);
-            linkLicense.Enabled = (_version.LicenseUrl != "" && _version.LicenseUrl != null);
-            linkProjectSite.Enabled = (_version.ProjectUrl != "" && _version.ProjectUrl != null);
-            linkAbuse.Enabled = (_version.ReportAbuseUrl != "" && _version.ReportAbuseUrl != null);
 
             tagList.Items.Clear();
             if (_version.Tags != null)
@@ -102,10 +101,10 @@ namespace Chocolatey.Explorer.View
         /// </summary>
         private void UnlockPanel()
         {
-            linkGalleryDetails.Enabled = true;
-            linkLicense.Enabled = true;
-            linkProjectSite.Enabled = true;
-            linkAbuse.Enabled = true;
+            linkGalleryDetails.Enabled = (_version.GalleryDetailsUrl != "" && _version.GalleryDetailsUrl != null);
+            linkLicense.Enabled = (_version.LicenseUrl != "" && _version.LicenseUrl != null);
+            linkProjectSite.Enabled = (_version.ProjectUrl != "" && _version.ProjectUrl != null);
+            linkAbuse.Enabled = (_version.ReportAbuseUrl != "" && _version.ReportAbuseUrl != null);
             tagList.Enabled = true;
             dependenciesList.Enabled = true;
         }

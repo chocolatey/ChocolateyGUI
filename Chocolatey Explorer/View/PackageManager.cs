@@ -107,7 +107,6 @@ namespace Chocolatey.Explorer.View
             }
             else
             {
-                EnableUserInteraction();
                 packageVersionPanel.Version = version;
                 btnUpdate.Enabled = version.CanBeUpdated;
                 btnInstallUninstall.Checked = !version.IsInstalled;
@@ -210,7 +209,6 @@ namespace Chocolatey.Explorer.View
         private void QueryPackageVersion()
         {
             if (PackageList.SelectedItem == null) return;
-            DisableUserInteraction();
             SetStatus("Getting package information for package: " + ((Package)PackageList.SelectedItem).Name);
             EmptyTextBoxes();
             _packageVersionService.PackageVersion(((Package)PackageList.SelectedItem).Name);

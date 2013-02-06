@@ -1,7 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
-using System;
+using log4net;
 
 namespace Chocolatey.Explorer.View
 {
@@ -20,6 +21,7 @@ namespace Chocolatey.Explorer.View
             } 
         }
 
+        private static readonly ILog log = LogManager.GetLogger(typeof(PackageVersionPanel));
         private PackageVersion _version;
 
         public PackageVersionPanel()

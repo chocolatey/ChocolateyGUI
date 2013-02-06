@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
@@ -22,6 +23,8 @@ namespace Chocolatey.Explorer.Services
         private readonly ISourceService _sourceService;
         private readonly IPackageVersionXMLParser _versionXmlParser;
         private readonly ChocolateyLibDirHelper _libDirHelper;
+        private CancellationTokenSource _cancelTokenSource;
+        private HttpWebRequest _loadingRssFeed;
 
         public ODataPackageVersionService(IPackageVersionXMLParser versionXmlParser, ISourceService sourceService)
         {
@@ -33,25 +36,42 @@ namespace Chocolatey.Explorer.Services
         public void PackageVersion(string package)
         {
             log.Info("Getting version of package: " + package);
-            var start = new ParameterizedThreadStart(PackageVersionThread);
-            var thread = new Thread(start) { IsBackground = true };
-            thread.Start(package);
+            if (_cancelTokenSource != null)
+            {
+                _cancelTokenSource.Cancel();
+            }
+            _cancelTokenSource = new CancellationTokenSource();
+            _cancelTokenSource.Token.Register(new Action(OnPackageVersionThreadCancel));
+            var thread = new Thread(() => PackageVersionThread(_cancelTokenSource.Token, package)) { IsBackground = true };
+            thread.Start();
         }
 
-        private void PackageVersionThread(object packageNameObj)
+        private void OnPackageVersionThreadCancel()
         {
-            var packageName = packageNameObj as string;
-            var packageVersion = FillWithOData(packageName);
+            _loadingRssFeed.Abort();
+        }
 
-            // not found on server - use what we know
-            if (packageVersion == null)
+        private void PackageVersionThread(CancellationToken cancelToken, string packageNameObj)
+        {
+            try
             {
-                packageVersion = new PackageVersion();
-            }
+                var packageName = packageNameObj as string;
+                var packageVersion = FillWithOData(packageName);
 
-            packageVersion.Name = packageName;
-            packageVersion.CurrentVersion = _libDirHelper.GetHighestInstalledVersion(packageName);
-            OnVersionChanged(packageVersion);
+                // not found on server - use what we know
+                if (packageVersion == null)
+                {
+                    packageVersion = new PackageVersion();
+                }
+
+                cancelToken.ThrowIfCancellationRequested();
+                packageVersion.Name = packageName;
+                packageVersion.CurrentVersion = _libDirHelper.GetHighestInstalledVersion(packageName);
+
+                cancelToken.ThrowIfCancellationRequested();
+                OnVersionChanged(packageVersion);
+            }
+            catch (OperationCanceledException) { } // cancellation is expected and okay
         }
 
         private PackageVersion FillWithOData(string package)
@@ -59,17 +79,17 @@ namespace Chocolatey.Explorer.Services
             string url = _sourceService.Source + "/Packages?$filter=IsLatestVersion eq true and Id eq '" + package + "'";
             XmlDocument xmlDoc = new XmlDocument();
 
-            var rssFeed = WebRequest.Create(url) as HttpWebRequest;
+            _loadingRssFeed = WebRequest.Create(url) as HttpWebRequest;
 
-            if (rssFeed != null)
+            if (_loadingRssFeed != null)
             {
                 try
                 {
-                    xmlDoc.Load(rssFeed.GetResponse().GetResponseStream());
+                    xmlDoc.Load(_loadingRssFeed.GetResponse().GetResponseStream());
                     return _versionXmlParser.parse(xmlDoc);
                 }
-                catch (XmlException) { }
-                catch (WebException) { }
+                catch (XmlException) { } // when xml could not be parsed
+                catch (WebException) { } // when loading xml from server failed
             }
 
             var packageVersion = new PackageVersion();

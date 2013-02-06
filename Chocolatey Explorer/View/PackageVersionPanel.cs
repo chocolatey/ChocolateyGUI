@@ -68,11 +68,13 @@ namespace Chocolatey.Explorer.View
             linkProjectSite.Enabled = (_version.ProjectUrl != "" && _version.ProjectUrl != null);
             linkAbuse.Enabled = (_version.ReportAbuseUrl != "" && _version.ReportAbuseUrl != null);
 
+            tagList.Items.Clear();
             if (_version.Tags != null)
             {
                 foreach (var tag in _version.Tags)
                     tagList.Items.Add("#" + tag);
-            } 
+            }
+            dependenciesList.Items.Clear();
             if (_version.Dependencies != null)
             {
                 foreach (var dependency in _version.Dependencies)

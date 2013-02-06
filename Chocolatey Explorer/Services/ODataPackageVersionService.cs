@@ -66,7 +66,7 @@ namespace Chocolatey.Explorer.Services
                 try
                 {
                     xmlDoc.Load(rssFeed.GetResponse().GetResponseStream());
-                    return _versionXmlParser.parseVersion(xmlDoc);
+                    return _versionXmlParser.parse(xmlDoc);
                 }
                 catch (XmlException) { }
                 catch (WebException) { }

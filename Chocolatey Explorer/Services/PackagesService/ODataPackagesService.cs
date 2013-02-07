@@ -93,6 +93,7 @@ namespace Chocolatey.Explorer.Services
 
             var xmlDoc = new XmlDocument();
             var rssFeed = WebRequest.Create(skipUrl) as HttpWebRequest;
+            rssFeed.Proxy = null;
             if (rssFeed != null)
             {
                 try

@@ -85,6 +85,7 @@ namespace Chocolatey.Explorer.Services
             XmlDocument xmlDoc = new XmlDocument();
 
             _loadingRssFeed = WebRequest.Create(url) as HttpWebRequest;
+            _loadingRssFeed.Proxy = null;
 
             if (_loadingRssFeed != null)
             {

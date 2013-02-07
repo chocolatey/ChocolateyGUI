@@ -53,11 +53,11 @@ namespace Chocolatey.Explorer.View
                 txtPowershellOutput.Visible = false;
 
                 // invalidate caches, because package has been installed
-                if (_packagesService.GetType() == typeof(ICacheable))
+                if (_packagesService is ICacheable)
                 {
                     ((ICacheable)_packagesService).InvalidateCache();
                 }
-                if (_packageVersionService.GetType() == typeof(ICacheable))
+                if (_packageVersionService is ICacheable)
                 {
                     ((ICacheable)_packageVersionService).InvalidateCache();
                 }
@@ -169,23 +169,21 @@ namespace Chocolatey.Explorer.View
         {
             if (PackageGrid.SelectedRows.Count == 0) return;
             var selectedPackage = PackageGrid.SelectedRows[0].DataBoundItem as Package;
-            DisableUserInteraction();
-            txtPowershellOutput.Visible = true;
-            if (btnInstallUninstall.Checked)
-            {
-                SetStatus("Installing package " + selectedPackage.Name);
-                _packageService.InstallPackage(selectedPackage.Name);
-            }
-            else
-            {
-                SetStatus("Uninstalling package " + selectedPackage.Name);
-                _packageService.UninstallPackage(selectedPackage.Name);
-            }
+            InstallOrUninstallPackage(selectedPackage);
         }
 
         private void btnInstallUninstall_CheckStateChanged(object sender, EventArgs e)
         {
             UpdateInstallUninstallButtonLabel();
+        }
+
+        private void PackageGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 2) // isInstalled checkbox
+            {
+                var package = PackageGrid.SelectedRows[0].DataBoundItem as Package;
+                InstallOrUninstallPackage(package);
+            }
         }
 
         private void UpdateInstallUninstallButtonLabel()
@@ -238,6 +236,28 @@ namespace Chocolatey.Explorer.View
                 PackageGrid.DataSource = new List<Package>();
                 _packagesService.ListOfInstalledPackages();
             }
+        }
+
+        private void InstallOrUninstallPackage(Package package)
+        {
+            if (package.IsInstalled)
+            {
+                var result = MessageBox.Show(this, "Do you really want to uninstall '" + package.Name + "'?", "Uninstall", MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    DisableUserInteraction();
+                    txtPowershellOutput.Visible = true;
+                    SetStatus("Uninstalling package " + package.Name);
+                    _packageService.UninstallPackage(package.Name);
+                }
+            }
+            else
+            {
+                DisableUserInteraction();
+                txtPowershellOutput.Visible = true;
+                SetStatus("Installing package " + package.Name);
+                _packageService.InstallPackage(package.Name);
+            } 
         }
 
         private void EnableUserInteraction()

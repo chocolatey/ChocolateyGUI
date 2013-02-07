@@ -51,7 +51,6 @@
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.tabInstalled = new System.Windows.Forms.TabPage();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
-            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
@@ -60,6 +59,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -201,6 +201,7 @@
             this.PackageGrid.ShowRowErrors = false;
             this.PackageGrid.Size = new System.Drawing.Size(387, 424);
             this.PackageGrid.TabIndex = 2;
+            this.PackageGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PackageGrid_CellContentClick);
             this.PackageGrid.SelectionChanged += new System.EventHandler(this.PackageGrid_SelectionChanged);
             // 
             // IsInstalled
@@ -281,14 +282,6 @@
             this.packageTabsImageList.Images.SetKeyName(0, "chocolateyicon.ico");
             this.packageTabsImageList.Images.SetKeyName(1, "monitor.png");
             // 
-            // packageVersionPanel
-            // 
-            this.packageVersionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.packageVersionPanel.Location = new System.Drawing.Point(0, 0);
-            this.packageVersionPanel.Name = "packageVersionPanel";
-            this.packageVersionPanel.Size = new System.Drawing.Size(630, 174);
-            this.packageVersionPanel.TabIndex = 6;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
@@ -297,7 +290,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnUpdate, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnInstallUninstall, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 174);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 79);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -348,11 +341,12 @@
             // txtPowershellOutput
             // 
             this.txtPowershellOutput.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtPowershellOutput.Location = new System.Drawing.Point(0, 236);
+            this.txtPowershellOutput.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPowershellOutput.Location = new System.Drawing.Point(0, 141);
             this.txtPowershellOutput.Multiline = true;
             this.txtPowershellOutput.Name = "txtPowershellOutput";
             this.txtPowershellOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtPowershellOutput.Size = new System.Drawing.Size(630, 213);
+            this.txtPowershellOutput.Size = new System.Drawing.Size(630, 308);
             this.txtPowershellOutput.TabIndex = 3;
             this.txtPowershellOutput.Visible = false;
             // 
@@ -379,6 +373,14 @@
             this.lblStatus.Size = new System.Drawing.Size(804, 17);
             this.lblStatus.Spring = true;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // packageVersionPanel
+            // 
+            this.packageVersionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.packageVersionPanel.Location = new System.Drawing.Point(0, 0);
+            this.packageVersionPanel.Name = "packageVersionPanel";
+            this.packageVersionPanel.Size = new System.Drawing.Size(630, 79);
+            this.packageVersionPanel.TabIndex = 6;
             // 
             // PackageManager
             // 

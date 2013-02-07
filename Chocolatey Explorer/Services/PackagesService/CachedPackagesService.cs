@@ -27,7 +27,7 @@ namespace Chocolatey.Explorer.Services
         public void InvalidateCache()
         {
             InvalidateAvailablePackagesCache();
-            InvalidateAvailablePackagesCache();
+            InvalidateInstalledPackagesCache();
         }
 
         public void InvalidateAvailablePackagesCache()

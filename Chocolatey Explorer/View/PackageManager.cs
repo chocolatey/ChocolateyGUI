@@ -92,14 +92,14 @@ namespace Chocolatey.Explorer.View
                 var distinct = packages;
                 if (packageTabControl.SelectedTab == tabInstalled)
                     distinct = packages.Reverse().Distinct().Reverse().ToList();
-                lblStatus.Text = "Number of installed packages: " + distinct.Count();
+                lblStatus.Text = string.Format(strings.num_installed_packages, distinct.Count());
                 PackageGrid.DataSource = distinct;
             }
         }
 
         private void VersionChangedHandler(PackageVersion version)
         {
-            if(this.InvokeRequired)
+            if (this.InvokeRequired)
             {
                 Invoke(new PackageVersionHandler(VersionChangedHandler), new object[] { version });
             }
@@ -110,7 +110,7 @@ namespace Chocolatey.Explorer.View
                 btnInstallUninstall.Checked = !version.IsInstalled;
                 btnInstallUninstall.Enabled = true;
                 ClearStatus();
-                lblStatus.Text = "Number of packages: " + PackageGrid.Rows.Count;
+                lblStatus.Text = string.Format(strings.num_installed_packages, PackageGrid.Rows.Count);
             }
         }
 
@@ -164,7 +164,7 @@ namespace Chocolatey.Explorer.View
             if (PackageGrid.SelectedRows.Count == 0) return;
             var selectedPackage = PackageGrid.SelectedRows[0].DataBoundItem as Package;
             DisableUserInteraction();
-            SetStatus("Updating package " + selectedPackage.Name);
+            SetStatus(string.Format(strings.updating_package, selectedPackage.Name));
             txtPowershellOutput.Visible = true;
             _packageService.UpdatePackage(selectedPackage.Name);
         }
@@ -210,12 +210,12 @@ namespace Chocolatey.Explorer.View
             if (btnInstallUninstall.Checked)
             {
                 btnInstallUninstall.ImageIndex = 0;
-                btnInstallUninstall.Text = "Install";
+                btnInstallUninstall.Text = strings.install;
             }
             else
             {
                 btnInstallUninstall.ImageIndex = 1;
-                btnInstallUninstall.Text = "Uninstall";
+                btnInstallUninstall.Text = strings.uninstall;
             }
         }
 
@@ -223,7 +223,7 @@ namespace Chocolatey.Explorer.View
         {
             if (PackageGrid.SelectedRows.Count == 0) return;
             var selectedPackage = PackageGrid.SelectedRows[0].DataBoundItem as Package;
-            SetStatus("Getting package information for package: " + selectedPackage.Name);
+            SetStatus(string.Format(strings.getting_package_information, selectedPackage.Name));
             EmptyTextBoxes();
             _packageVersionService.PackageVersion(selectedPackage.Name);
         }
@@ -231,7 +231,7 @@ namespace Chocolatey.Explorer.View
         private void QueryAvailablePackges()
         {
             DisableUserInteraction();
-            SetStatus("Getting list of packages on server");
+            SetStatus(strings.getting_available_packages);
             packageTabControl.SelectedTab = tabAvailable;
             lblProgressbar.Style = ProgressBarStyle.Marquee;
             PackageGrid.DataSource = new List<Package>();
@@ -244,12 +244,12 @@ namespace Chocolatey.Explorer.View
             var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
             if (!System.IO.Directory.Exists(expandedLibDirectory))
             {
-                MessageBox.Show("Could not find the installed packages directory (" + expandedLibDirectory + "), please change the install directory in the settings.");
+                MessageBox.Show(string.Format(strings.lib_dir_not_found, expandedLibDirectory));
             }
             else
             {
                 DisableUserInteraction();
-                SetStatus("Getting list of installed packages");
+                SetStatus(strings.getting_installed_packages);
                 packageTabControl.SelectedTab = tabInstalled;
                 lblProgressbar.Style = ProgressBarStyle.Marquee;
                 PackageGrid.DataSource = new List<Package>();
@@ -261,12 +261,15 @@ namespace Chocolatey.Explorer.View
         {
             if (package.IsInstalled)
             {
-                var result = MessageBox.Show(this, "Do you really want to uninstall '" + package.Name + "'?", "Uninstall", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show(this, 
+                    string.Format(strings.really_uninstall_package_msg, package.Name), 
+                    strings.really_uninstall_package_title, 
+                    MessageBoxButtons.YesNo);
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
                     DisableUserInteraction();
                     txtPowershellOutput.Visible = true;
-                    SetStatus("Uninstalling package " + package.Name);
+                    SetStatus(string.Format(strings.uninstalling, package.Name));
                     _packageService.UninstallPackage(package.Name);
                 }
             }
@@ -274,7 +277,7 @@ namespace Chocolatey.Explorer.View
             {
                 DisableUserInteraction();
                 txtPowershellOutput.Visible = true;
-                SetStatus("Installing package " + package.Name);
+                SetStatus(string.Format(strings.uninstalling, package.Name));
                 _packageService.InstallPackage(package.Name);
             } 
         }

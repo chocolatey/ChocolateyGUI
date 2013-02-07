@@ -44,115 +44,72 @@
             // 
             // latestVersionBox
             // 
-            this.latestVersionBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.latestVersionBox.Location = new System.Drawing.Point(0, 191);
-            this.latestVersionBox.Multiline = true;
+            resources.ApplyResources(this.latestVersionBox, "latestVersionBox");
             this.latestVersionBox.Name = "latestVersionBox";
-            this.latestVersionBox.Size = new System.Drawing.Size(592, 126);
-            this.latestVersionBox.TabIndex = 0;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 16);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(280, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Chocolatey was written by Rob Reynolds (@ferventcoder)";
             // 
             // linkLabelChocolatey
             // 
-            this.linkLabelChocolatey.AutoSize = true;
-            this.linkLabelChocolatey.Location = new System.Drawing.Point(21, 29);
+            resources.ApplyResources(this.linkLabelChocolatey, "linkLabelChocolatey");
             this.linkLabelChocolatey.Name = "linkLabelChocolatey";
-            this.linkLabelChocolatey.Size = new System.Drawing.Size(113, 13);
-            this.linkLabelChocolatey.TabIndex = 2;
             this.linkLabelChocolatey.TabStop = true;
-            this.linkLabelChocolatey.Text = "http://chocolatey.org/";
             this.linkLabelChocolatey.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelChocolatey_LinkClicked);
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 55);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(305, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Chocolatey explorer was written by christiaan baes (@chrissie1)";
             // 
             // linkLabelExplorer
             // 
-            this.linkLabelExplorer.AutoSize = true;
-            this.linkLabelExplorer.Location = new System.Drawing.Point(21, 68);
+            resources.ApplyResources(this.linkLabelExplorer, "linkLabelExplorer");
             this.linkLabelExplorer.Name = "linkLabelExplorer";
-            this.linkLabelExplorer.Size = new System.Drawing.Size(239, 13);
-            this.linkLabelExplorer.TabIndex = 4;
             this.linkLabelExplorer.TabStop = true;
-            this.linkLabelExplorer.Text = "https://github.com/chrissie1/chocolatey-Explorer";
             this.linkLabelExplorer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelExplorer_LinkClicked);
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 147);
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Version";
             // 
             // lblVersion
             // 
-            this.lblVersion.Location = new System.Drawing.Point(26, 167);
+            resources.ApplyResources(this.lblVersion, "lblVersion");
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(100, 23);
-            this.lblVersion.TabIndex = 6;
             // 
             // progressBar
             // 
-            this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar.Location = new System.Drawing.Point(0, 317);
+            resources.ApplyResources(this.progressBar, "progressBar");
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(592, 23);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBar.TabIndex = 7;
-            this.progressBar.Visible = false;
             // 
             // linkIcons
             // 
-            this.linkIcons.AutoSize = true;
-            this.linkIcons.Location = new System.Drawing.Point(21, 107);
+            resources.ApplyResources(this.linkIcons, "linkIcons");
             this.linkIcons.Name = "linkIcons";
-            this.linkIcons.Size = new System.Drawing.Size(176, 13);
-            this.linkIcons.TabIndex = 9;
             this.linkIcons.TabStop = true;
-            this.linkIcons.Text = "https://www.fatcow.com/free-icons";
             this.linkIcons.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkIcons_LinkClicked);
             // 
             // labelIcons
             // 
-            this.labelIcons.AutoSize = true;
-            this.labelIcons.Location = new System.Drawing.Point(21, 94);
+            resources.ApplyResources(this.labelIcons, "labelIcons");
             this.labelIcons.Name = "labelIcons";
-            this.labelIcons.Size = new System.Drawing.Size(86, 13);
-            this.labelIcons.TabIndex = 8;
-            this.labelIcons.Text = "Icons by FatCow";
             // 
             // linkLabelCC
             // 
-            this.linkLabelCC.AutoSize = true;
-            this.linkLabelCC.Location = new System.Drawing.Point(200, 107);
+            resources.ApplyResources(this.linkLabelCC, "linkLabelCC");
             this.linkLabelCC.Name = "linkLabelCC";
-            this.linkLabelCC.Size = new System.Drawing.Size(80, 13);
-            this.linkLabelCC.TabIndex = 10;
             this.linkLabelCC.TabStop = true;
-            this.linkLabelCC.Text = "(CC BY 3.0 US)";
             this.linkLabelCC.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCC_LinkClicked);
             // 
             // About
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 340);
             this.Controls.Add(this.latestVersionBox);
             this.Controls.Add(this.linkLabelCC);
             this.Controls.Add(this.linkIcons);
@@ -164,9 +121,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.linkLabelChocolatey);
             this.Controls.Add(this.label1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "About";
-            this.Text = "About";
             this.Load += new System.EventHandler(this.About_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

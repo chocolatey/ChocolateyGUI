@@ -10,7 +10,7 @@ namespace Chocolatey.Explorer.Model
         {
             get 
             {
-                return InstalledVersion != "no version";
+                return InstalledVersion != strings.not_available;
             }
         }
      

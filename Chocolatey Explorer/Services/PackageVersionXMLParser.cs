@@ -48,9 +48,9 @@ namespace Chocolatey.Explorer.Services
             var version = new PackageVersion();
             if (entryNode == null)
             {
-                version.Summary = "Could not parse package information.";
+                version.Summary = strings.could_not_parse;
                 version.Description = version.Summary;
-                version.Serverversion = "no version";
+                version.Serverversion = strings.not_available;
                 return version;
             }
 

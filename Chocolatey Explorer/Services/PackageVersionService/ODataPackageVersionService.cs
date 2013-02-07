@@ -101,7 +101,7 @@ namespace Chocolatey.Explorer.Services
             }
 
             var packageVersion = new PackageVersion();
-            packageVersion.Summary = "Could not download package information from '" + url + "'";
+            packageVersion.Summary = string.Format(strings.could_not_download, url);
             packageVersion.Description = packageVersion.Summary;
             return packageVersion;
         }

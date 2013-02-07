@@ -7,8 +7,8 @@ namespace Chocolatey.Explorer.Model
         public string Name { get; set; }
         public string CurrentVersion { get; set; }
         public string Serverversion { get; set; }
-        public bool IsInstalled { get { return !CurrentVersion.EndsWith("no version"); } }
-        public bool CanBeUpdated { get { return !Serverversion.EndsWith("no version") && !CurrentVersion.Equals(Serverversion) && IsInstalled; } }
+        public bool IsInstalled { get { return !CurrentVersion.EndsWith(strings.not_available); } }
+        public bool CanBeUpdated { get { return !Serverversion.EndsWith(strings.not_available) && !CurrentVersion.Equals(Serverversion) && IsInstalled; } }
         public string Summary { get; set; }
         public DateTime LastUpdatedAt { get; set; }
         public string AuthorName { get; set; }
@@ -33,8 +33,8 @@ namespace Chocolatey.Explorer.Model
 
         public PackageVersion()
         {
-            Serverversion = "no version";
-            CurrentVersion = "no version";
+            Serverversion = strings.not_available;
+            CurrentVersion = strings.not_available;
         }
 
         public int CompareTo(object obj)

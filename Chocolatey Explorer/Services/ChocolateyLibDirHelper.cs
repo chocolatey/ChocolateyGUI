@@ -61,7 +61,7 @@ namespace Chocolatey.Explorer.Services
 
             if (versionQuery.Count() == 0)
             {
-                return "no version";
+                return strings.not_available;
             }
             else 
             {

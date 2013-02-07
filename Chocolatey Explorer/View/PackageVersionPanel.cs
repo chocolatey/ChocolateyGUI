@@ -41,12 +41,13 @@ namespace Chocolatey.Explorer.View
         /// </summary>
         private void UpdatePanel()
         {
+            ClearPanel();
             lblName.Text = _version.Name;
             lblServerVersion.Text = _version.Serverversion;
             lblInstalledVersion.Text = _version.CurrentVersion;
 
             if (_version.AuthorName != null && _version.AuthorName != "")
-                lblAuthor.Text = "by " + _version.AuthorName;
+                lblAuthor.Text = string.Format(strings.authored_by, _version.AuthorName);
 
             txtDescription.Text = _version.Description;
 
@@ -67,7 +68,7 @@ namespace Chocolatey.Explorer.View
             if (_version.LastUpdatedAt != DateTime.MinValue)
                 lblUpdated.Text = _version.LastUpdatedAt.GetDateTimeFormats()[0];
             if (_version.PackageSize != 0)
-                lblPackageSize.Text = String.Format("{0:0.#}", (_version.PackageSize / 1024.0)) + " KB";
+                lblPackageSize.Text = string.Format(strings.package_size_mb, (_version.PackageSize / 1024.0));
 
             tagList.Items.Clear();
             if (_version.Tags != null)
@@ -122,10 +123,10 @@ namespace Chocolatey.Explorer.View
             lblAuthor.Text = "";
             txtDescription.Text = ""; 
             pictureBoxLogo.Image = pictureBoxLogo.ErrorImage;
-            lblDownloads.Text = "n.a.";
-            lblVersionDownloads.Text = "n.a.";
-            lblUpdated.Text = "n.a.";
-            lblPackageSize.Text = "n.a.";
+            lblDownloads.Text = strings.not_available;
+            lblVersionDownloads.Text = strings.not_available;
+            lblUpdated.Text = strings.not_available;
+            lblPackageSize.Text = strings.not_available;
             tagList.Items.Clear();
             dependenciesList.Items.Clear();
         }

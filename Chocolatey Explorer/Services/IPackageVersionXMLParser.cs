@@ -6,6 +6,7 @@ namespace Chocolatey.Explorer.Services
 {
     public interface IPackageVersionXMLParser
     {
+        int LastTotalCount {get; }
         IList<PackageVersion> parse(XmlDocument xmlDoc);
     }
 }

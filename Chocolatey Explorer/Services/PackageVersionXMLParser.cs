@@ -13,6 +13,8 @@ namespace Chocolatey.Explorer.Services
         private const string METADATA_NS = "http://schemas.microsoft.com/ado/2007/08/dataservices/metadata";
         private const string DATA_SERVICES_NS = "http://schemas.microsoft.com/ado/2007/08/dataservices";
 
+        public int LastTotalCount { get; set; }
+
         /// <summary>
         /// Parses a xml document from the chocolatey api feed 
         /// into a list of package version objects.
@@ -24,6 +26,12 @@ namespace Chocolatey.Explorer.Services
             nsmgr.AddNamespace("ns", xmlDoc.DocumentElement.NamespaceURI);
             nsmgr.AddNamespace("m", METADATA_NS);
             nsmgr.AddNamespace("d", DATA_SERVICES_NS);
+
+            var countNode = xmlDoc.DocumentElement.SelectSingleNode("/ns:feed/m:count", nsmgr);
+            if (countNode != null)
+            {
+                LastTotalCount = int.Parse(countNode.InnerText);
+            }
 
             var entries = xmlDoc.DocumentElement.SelectNodes("/ns:feed/ns:entry", nsmgr);
 

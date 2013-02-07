@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
-using Chocolatey.Explorer.Properties;
 using log4net;
 
 namespace Chocolatey.Explorer.Services
@@ -42,38 +40,69 @@ namespace Chocolatey.Explorer.Services
 
         private void LoadAllPackagesThread()
         {
-            string fullUrl = _sourceService.Source + ALL_PACKAGES_URL;
+            // load and parse first page to have total item count
+            var xmlDocument = LoadFeedDoc(0);
+            var packageVersions = _xmlParser.parse(xmlDocument);
+            var totalCount = _xmlParser.LastTotalCount;
+            var pageSize = packageVersions.Count();
 
-            XmlDocument xmlDoc = new XmlDocument();
-            IList<Package> allPackages = new List<Package>();
-            IList<Package> packages;
-            do
+            // load other pages with thread pool
+            IList<BackgroundPageObject> bgPageObjects = new List<BackgroundPageObject>();
+            for (var skip = pageSize; skip < totalCount; skip += pageSize)
             {
-                var skipUrl = fullUrl + "&$skip=" + allPackages.Count();
-                log.Debug("Getting list of packages on source: " + skipUrl);
+                var backgroundPageObject = new BackgroundPageObject(skip, new ManualResetEvent(false));
+                bgPageObjects.Add(backgroundPageObject);
+                ThreadPool.QueueUserWorkItem(LoadPageAsync, backgroundPageObject);
+            }
 
-                var rssFeed = WebRequest.Create(skipUrl) as HttpWebRequest;
-                packages = new List<Package>();
-                if (rssFeed != null)
+            // concat and return results
+            IEnumerable<Package> allPackages = packageVersions.Select( e => PackageFromVersion(e) );
+            foreach (var backgroundPageObject in bgPageObjects)
+            {
+                backgroundPageObject.DoneEvent.WaitOne();
+                allPackages = allPackages.Concat(
+                        backgroundPageObject.PackageVersions.Select( e => PackageFromVersion(e) )
+                    );
+            }
+            OnRunFinshed(allPackages.ToList());
+        }
+
+        private Package PackageFromVersion(PackageVersion version)
+        {
+            return new Package()
+            {
+                Name = version.Name,
+                InstalledVersion = _libDirHelper.GetHighestInstalledVersion(version.Name)
+            };
+        }
+
+        private void LoadPageAsync(object threadContext)
+        {
+            var backgroundPageObject = threadContext as BackgroundPageObject;
+            var xmlDocument = LoadFeedDoc(backgroundPageObject.Skip);
+            backgroundPageObject.PackageVersions = _xmlParser.parse(xmlDocument);
+            backgroundPageObject.DoneEvent.Set();
+        }
+
+        private XmlDocument LoadFeedDoc(int skip)
+        {
+            var fullUrl = _sourceService.Source + ALL_PACKAGES_URL;
+            var skipUrl = fullUrl + "&$skip=" + skip;
+            log.Debug("Getting list of packages on source: " + skipUrl);
+
+            var xmlDoc = new XmlDocument();
+            var rssFeed = WebRequest.Create(skipUrl) as HttpWebRequest;
+            if (rssFeed != null)
+            {
+                try
                 {
-                    try
-                    {
-                        xmlDoc.Load(rssFeed.GetResponse().GetResponseStream());
-                        packages = _xmlParser.parse(xmlDoc).Select(
-                                e => new Package() 
-                                { 
-                                    Name = e.Name,
-                                    InstalledVersion = _libDirHelper.GetHighestInstalledVersion(e.Name)
-                                }
-                            ).ToList<Package>();
-                    }
-                    catch (XmlException) { }
-                    catch (WebException) { }
+                    xmlDoc.Load(rssFeed.GetResponse().GetResponseStream());
+                    return xmlDoc;
                 }
-                allPackages = allPackages.Concat(packages).ToList<Package>();
-            } while (packages.Count() > 0);
-
-            OnRunFinshed(allPackages);
+                catch (WebException) { }
+                catch (XmlException) { }
+            }
+            return null;
         }
 
         public void ListOfInstalledPackages()
@@ -94,5 +123,17 @@ namespace Chocolatey.Explorer.Services
             if (handler != null) handler(packages);
         }
 
+        public class BackgroundPageObject
+        {
+            public int Skip{ get; set; }
+            public ManualResetEvent DoneEvent { get; set; }
+            public IList<PackageVersion> PackageVersions { get; set; }
+
+            public BackgroundPageObject(int skip, ManualResetEvent doneEvent)
+            {
+                this.Skip = skip;
+                this.DoneEvent = doneEvent;
+            }
+        }
     }
 }

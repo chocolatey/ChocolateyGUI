@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Xml;
@@ -89,7 +91,9 @@ namespace Chocolatey.Explorer.Services
                 try
                 {
                     xmlDoc.Load(_loadingRssFeed.GetResponse().GetResponseStream());
-                    return _versionXmlParser.parse(xmlDoc);
+                    IList<PackageVersion> packages = _versionXmlParser.parse(xmlDoc);
+                    if (packages.Count() > 0)
+                        return packages.First();
                 }
                 catch (XmlException) { } // when xml could not be parsed
                 catch (WebException) { } // when loading xml from server failed
@@ -97,6 +101,7 @@ namespace Chocolatey.Explorer.Services
 
             var packageVersion = new PackageVersion();
             packageVersion.Summary = "Could not download package information from '" + url + "'";
+            packageVersion.Description = packageVersion.Summary;
             return packageVersion;
         }
 

@@ -21,7 +21,7 @@ namespace Chocolatey.Explorer.Services
 
         public CachedPackagesService()
         {
-            packagesService = new PackagesService();
+            packagesService = new ODataPackagesService();
         }
 
         public void InvalidateCache()

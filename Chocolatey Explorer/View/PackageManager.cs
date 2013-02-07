@@ -91,8 +91,9 @@ namespace Chocolatey.Explorer.View
                 EnableUserInteraction();
                 var distinctpackages = packages.Distinct().ToList();
                 ClearStatus();
-                PackageList.DisplayMember = "Name";
                 lblStatus.Text = "Number of installed packages: " + packages.Count;
+                PackageList.DisplayMember = "Label";
+                PackageList.ValueMember = "Name";
                 PackageList.DataSource = distinctpackages;
             }
         }

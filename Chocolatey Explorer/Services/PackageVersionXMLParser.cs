@@ -2,6 +2,7 @@
 using Chocolatey.Explorer.Model;
 using System;
 using log4net;
+using System.Collections.Generic;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -14,33 +15,43 @@ namespace Chocolatey.Explorer.Services
 
         /// <summary>
         /// Parses a xml document from the chocolatey api feed 
-        /// into a package version object.
+        /// into a list of package version objects.
         /// </summary>
         /// <param name="xmlDoc">XML document that should be parsed</param>
-        public PackageVersion parse(XmlDocument xmlDoc)
+        public IList<PackageVersion> parse(XmlDocument xmlDoc)
         {
             var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
             nsmgr.AddNamespace("ns", xmlDoc.DocumentElement.NamespaceURI);
             nsmgr.AddNamespace("m", METADATA_NS);
             nsmgr.AddNamespace("d", DATA_SERVICES_NS);
 
-            var version = new PackageVersion();
-            var entry = xmlDoc.DocumentElement.SelectSingleNode("/ns:feed/ns:entry", nsmgr);
+            var entries = xmlDoc.DocumentElement.SelectNodes("/ns:feed/ns:entry", nsmgr);
 
-            if (entry == null)
+            IList<PackageVersion> versionList = new List<PackageVersion>();
+            foreach (XmlNode entry in entries)
+            {
+                versionList.Add(ParseEntry(entry, nsmgr));
+            }
+            return versionList;
+        }
+
+        private PackageVersion ParseEntry(XmlNode entryNode, XmlNamespaceManager nsmgr)
+        {
+            var version = new PackageVersion();
+            if (entryNode == null)
             {
                 version.Summary = "Could not parse package information.";
                 version.Description = version.Summary;
                 version.Serverversion = "no version";
                 return version;
             }
-            
-            version.Name = entry.SelectSingleNode("ns:title", nsmgr).InnerText;
-            version.Summary = entry.SelectSingleNode("ns:summary", nsmgr).InnerText;
-            version.AuthorName = entry.SelectSingleNode("ns:author/ns:name", nsmgr).InnerText;
-            version.LastUpdatedAt = DateTime.Parse(entry.SelectSingleNode("ns:updated", nsmgr).InnerText);
 
-            var properties = entry.SelectSingleNode("m:properties", nsmgr);
+            version.Name = entryNode.SelectSingleNode("ns:title", nsmgr).InnerText;
+            version.Summary = entryNode.SelectSingleNode("ns:summary", nsmgr).InnerText;
+            version.AuthorName = entryNode.SelectSingleNode("ns:author/ns:name", nsmgr).InnerText;
+            version.LastUpdatedAt = DateTime.Parse(entryNode.SelectSingleNode("ns:updated", nsmgr).InnerText);
+
+            var properties = entryNode.SelectSingleNode("m:properties", nsmgr);
             if (properties != null)
             {
                 var serverversion = properties.SelectSingleNode("d:Version", nsmgr);

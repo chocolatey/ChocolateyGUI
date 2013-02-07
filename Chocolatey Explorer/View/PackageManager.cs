@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services;
@@ -183,6 +184,21 @@ namespace Chocolatey.Explorer.View
             {
                 var package = PackageGrid.SelectedRows[0].DataBoundItem as Package;
                 InstallOrUninstallPackage(package);
+            }
+        }
+
+        private void PackageGrid_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            IEnumerable<int> charIndex = (PackageGrid.DataSource as IList<Package>)
+                .Select((value, index) => new { value, index })
+                .SkipWhile(pair => !pair.value.Name.StartsWith(e.KeyChar.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                .Select(result => result.index);
+
+            if (charIndex.Count() > 0)
+            {
+                PackageGrid.CurrentCell = PackageGrid.Rows[charIndex.First()].Cells[0];
+                PackageGrid.FirstDisplayedScrollingRowIndex = charIndex.First();
+                PackageGrid.Rows[charIndex.First()].Selected = true;
             }
         }
 

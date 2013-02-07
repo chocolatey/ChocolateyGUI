@@ -203,6 +203,7 @@
             this.PackageGrid.TabIndex = 2;
             this.PackageGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PackageGrid_CellContentClick);
             this.PackageGrid.SelectionChanged += new System.EventHandler(this.PackageGrid_SelectionChanged);
+            this.PackageGrid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PackageGrid_KeyPress);
             // 
             // IsInstalled
             // 

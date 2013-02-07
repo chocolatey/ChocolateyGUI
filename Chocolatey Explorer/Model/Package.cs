@@ -6,12 +6,11 @@ namespace Chocolatey.Explorer.Model
     {
         public String Name { get; set; }
         public String InstalledVersion { get; set; }
-        public String Label
+        public bool IsInstalled
         {
             get 
             {
-                var installed = InstalledVersion == "no version" ? "x " : "✓";
-                return installed + " " + Name;
+                return InstalledVersion != "no version";
             }
         }
      

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services;
@@ -37,7 +35,7 @@ namespace Chocolatey.Explorer.View
             _packageService.LineChanged += PackageServiceLineChanged;
             _packageService.RunFinshed += PackageServiceRunFinished;
             ClearStatus();
-            PackageList.Focus();
+            PackageGrid.Focus();
             UpdateInstallUninstallButtonLabel();
             QueryInstalledPackages();
         }
@@ -89,12 +87,9 @@ namespace Chocolatey.Explorer.View
             else
             {
                 EnableUserInteraction();
-                var distinctpackages = packages.Distinct().ToList();
                 ClearStatus();
                 lblStatus.Text = "Number of installed packages: " + packages.Count;
-                PackageList.DisplayMember = "Label";
-                PackageList.ValueMember = "Name";
-                PackageList.DataSource = distinctpackages;
+                PackageGrid.DataSource = packages;
             }
         }
 
@@ -111,7 +106,7 @@ namespace Chocolatey.Explorer.View
                 btnInstallUninstall.Checked = !version.IsInstalled;
                 btnInstallUninstall.Enabled = true;
                 ClearStatus();
-                lblStatus.Text = "Number of packages: " + PackageList.Items.Count;
+                lblStatus.Text = "Number of packages: " + PackageGrid.Rows.Count;
             }
         }
 
@@ -143,7 +138,7 @@ namespace Chocolatey.Explorer.View
             settings.ShowDialog();
         }
 
-        private void PackageList_SelectedValueChanged(object sender, EventArgs e)
+        private void PackageGrid_SelectionChanged(object sender, EventArgs e)
         {
             QueryPackageVersion();
         }
@@ -162,27 +157,29 @@ namespace Chocolatey.Explorer.View
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            if (PackageList.SelectedItem == null) return;
+            if (PackageGrid.SelectedRows.Count == 0) return;
+            var selectedPackage = PackageGrid.SelectedRows[0].DataBoundItem as Package;
             DisableUserInteraction();
-            SetStatus("Updating package " + ((Package)PackageList.SelectedItem).Name);
+            SetStatus("Updating package " + selectedPackage.Name);
             txtPowershellOutput.Visible = true;
-            _packageService.UpdatePackage(((Package) PackageList.SelectedItem).Name);
+            _packageService.UpdatePackage(selectedPackage.Name);
         }
 
         private void buttonInstallUninstall_Click(object sender, EventArgs e)
         {
-            if (PackageList.SelectedItem == null) return;
+            if (PackageGrid.SelectedRows.Count == 0) return;
+            var selectedPackage = PackageGrid.SelectedRows[0].DataBoundItem as Package;
             DisableUserInteraction();
             txtPowershellOutput.Visible = true;
             if (btnInstallUninstall.Checked)
             {
-                SetStatus("Installing package " + ((Package)PackageList.SelectedItem).Name);
-                _packageService.InstallPackage(((Package)PackageList.SelectedItem).Name);
+                SetStatus("Installing package " + selectedPackage.Name);
+                _packageService.InstallPackage(selectedPackage.Name);
             }
             else
             {
-                SetStatus("Uninstalling package " + ((Package)PackageList.SelectedItem).Name);
-                _packageService.UninstallPackage(((Package)PackageList.SelectedItem).Name);
+                SetStatus("Uninstalling package " + selectedPackage.Name);
+                _packageService.UninstallPackage(selectedPackage.Name);
             }
         }
 
@@ -207,10 +204,11 @@ namespace Chocolatey.Explorer.View
 
         private void QueryPackageVersion()
         {
-            if (PackageList.SelectedItem == null) return;
-            SetStatus("Getting package information for package: " + ((Package)PackageList.SelectedItem).Name);
+            if (PackageGrid.SelectedRows.Count == 0) return;
+            var selectedPackage = PackageGrid.SelectedRows[0].DataBoundItem as Package;
+            SetStatus("Getting package information for package: " + selectedPackage.Name);
             EmptyTextBoxes();
-            _packageVersionService.PackageVersion(((Package)PackageList.SelectedItem).Name);
+            _packageVersionService.PackageVersion(selectedPackage.Name);
         }
 
         private void QueryAvailablePackges()
@@ -219,7 +217,7 @@ namespace Chocolatey.Explorer.View
             SetStatus("Getting list of packages on server");
             packageTabControl.SelectedTab = tabAvailable;
             lblProgressbar.Style = ProgressBarStyle.Marquee;
-            PackageList.DataSource = null;
+            PackageGrid.DataSource = new List<Package>();
             _packagesService.ListOfPackages();
         }
 
@@ -237,7 +235,7 @@ namespace Chocolatey.Explorer.View
                 SetStatus("Getting list of installed packages");
                 packageTabControl.SelectedTab = tabInstalled;
                 lblProgressbar.Style = ProgressBarStyle.Marquee;
-                PackageList.DataSource = null;
+                PackageGrid.DataSource = new List<Package>();
                 _packagesService.ListOfInstalledPackages();
             }
         }
@@ -248,7 +246,7 @@ namespace Chocolatey.Explorer.View
             mainSplitContainer.Panel1.Enabled = true;
             tableLayoutPanel1.Enabled = true;
             mainMenu.Enabled = true;
-            PackageList.Focus();
+            PackageGrid.Focus();
         }
 
         private void DisableUserInteraction()

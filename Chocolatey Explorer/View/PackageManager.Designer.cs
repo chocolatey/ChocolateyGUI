@@ -30,6 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageManager));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.packagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.availablePackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,7 +43,10 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.PackageList = new System.Windows.Forms.ListBox();
+            this.PackageGrid = new System.Windows.Forms.DataGridView();
+            this.IsInstalled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.InstalledVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.packageTabControl = new System.Windows.Forms.TabControl();
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.tabInstalled = new System.Windows.Forms.TabPage();
@@ -58,6 +65,7 @@
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PackageGrid)).BeginInit();
             this.packageTabControl.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -141,7 +149,7 @@
             // 
             // mainSplitContainer.Panel1
             // 
-            this.mainSplitContainer.Panel1.Controls.Add(this.PackageList);
+            this.mainSplitContainer.Panel1.Controls.Add(this.PackageGrid);
             this.mainSplitContainer.Panel1.Controls.Add(this.packageTabControl);
             // 
             // mainSplitContainer.Panel2
@@ -153,17 +161,82 @@
             this.mainSplitContainer.SplitterDistance = 387;
             this.mainSplitContainer.TabIndex = 2;
             // 
-            // PackageList
+            // PackageGrid
             // 
-            this.PackageList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PackageList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PackageList.FormattingEnabled = true;
-            this.PackageList.ItemHeight = 15;
-            this.PackageList.Location = new System.Drawing.Point(0, 25);
-            this.PackageList.Name = "PackageList";
-            this.PackageList.Size = new System.Drawing.Size(387, 424);
-            this.PackageList.TabIndex = 0;
-            this.PackageList.SelectedValueChanged += new System.EventHandler(this.PackageList_SelectedValueChanged);
+            this.PackageGrid.AllowUserToAddRows = false;
+            this.PackageGrid.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.PackageGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.PackageGrid.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.PackageGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PackageGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.PackageGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.PackageGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PackageGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.IsInstalled,
+            this.Column1,
+            this.InstalledVersion});
+            this.PackageGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PackageGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.PackageGrid.GridColor = System.Drawing.SystemColors.Control;
+            this.PackageGrid.Location = new System.Drawing.Point(0, 25);
+            this.PackageGrid.MultiSelect = false;
+            this.PackageGrid.Name = "PackageGrid";
+            this.PackageGrid.ReadOnly = true;
+            this.PackageGrid.RowHeadersVisible = false;
+            this.PackageGrid.RowTemplate.ReadOnly = true;
+            this.PackageGrid.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.PackageGrid.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.PackageGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.PackageGrid.ShowCellErrors = false;
+            this.PackageGrid.ShowCellToolTips = false;
+            this.PackageGrid.ShowEditingIcon = false;
+            this.PackageGrid.ShowRowErrors = false;
+            this.PackageGrid.Size = new System.Drawing.Size(387, 424);
+            this.PackageGrid.TabIndex = 2;
+            this.PackageGrid.SelectionChanged += new System.EventHandler(this.PackageGrid_SelectionChanged);
+            // 
+            // IsInstalled
+            // 
+            this.IsInstalled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.IsInstalled.DataPropertyName = "IsInstalled";
+            this.IsInstalled.HeaderText = "Installed";
+            this.IsInstalled.Name = "IsInstalled";
+            this.IsInstalled.ReadOnly = true;
+            this.IsInstalled.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.IsInstalled.Width = 64;
+            // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column1.DataPropertyName = "Name";
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column1.HeaderText = "Name";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // InstalledVersion
+            // 
+            this.InstalledVersion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.InstalledVersion.DataPropertyName = "InstalledVersion";
+            dataGridViewCellStyle4.NullValue = "no version";
+            this.InstalledVersion.DefaultCellStyle = dataGridViewCellStyle4;
+            this.InstalledVersion.HeaderText = "Installed Version";
+            this.InstalledVersion.Name = "InstalledVersion";
+            this.InstalledVersion.ReadOnly = true;
+            this.InstalledVersion.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.InstalledVersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.InstalledVersion.Width = 102;
             // 
             // packageTabControl
             // 
@@ -326,6 +399,7 @@
             this.mainSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
             this.mainSplitContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PackageGrid)).EndInit();
             this.packageTabControl.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -353,7 +427,6 @@
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.ListBox PackageList;
         private System.Windows.Forms.TabControl packageTabControl;
         private System.Windows.Forms.TabPage tabInstalled;
         private System.Windows.Forms.TabPage tabAvailable;
@@ -361,5 +434,9 @@
         private System.Windows.Forms.ImageList installUninstallImageList;
         private System.Windows.Forms.ImageList packageTabsImageList;
         private PackageVersionPanel packageVersionPanel;
+        private System.Windows.Forms.DataGridView PackageGrid;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsInstalled;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn InstalledVersion;
     }
 }

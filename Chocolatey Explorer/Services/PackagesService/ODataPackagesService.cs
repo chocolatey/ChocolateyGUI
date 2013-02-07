@@ -56,6 +56,7 @@ namespace Chocolatey.Explorer.Services
             }
 
             // concat and return results
+            _libDirHelper.ReloadFromDir();
             IEnumerable<Package> allPackages = packageVersions.Select( e => PackageFromVersion(e) );
             foreach (var backgroundPageObject in bgPageObjects)
             {
@@ -72,7 +73,7 @@ namespace Chocolatey.Explorer.Services
             return new Package()
             {
                 Name = version.Name,
-                InstalledVersion = _libDirHelper.GetHighestInstalledVersion(version.Name)
+                InstalledVersion = _libDirHelper.GetHighestInstalledVersion(version.Name, false)
             };
         }
 

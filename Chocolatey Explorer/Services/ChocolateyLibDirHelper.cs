@@ -21,6 +21,7 @@ namespace Chocolatey.Explorer.Services
         private readonly Regex _packageVersionRegexp = new Regex(@"((\.\d+)+)$");
         private readonly char[] _segmentDelim = "\\".ToCharArray();
         private readonly Settings _settings = new Settings();
+        private List<Package> _instaledPackages;
 
         /// <summary>
         /// Reloads information about installed packages from
@@ -28,7 +29,7 @@ namespace Chocolatey.Explorer.Services
         /// </summary>
         public IList<Package> ReloadFromDir()
         {
-            var instaledPackages = new List<Package>();
+            _instaledPackages = new List<Package>();
             var expandedLibDirectory = Environment.ExpandEnvironmentVariables(_settings.ChocolateyLibDirectory);
             var directories = Directory.GetDirectories(expandedLibDirectory);
 
@@ -38,20 +39,23 @@ namespace Chocolatey.Explorer.Services
                 string directoryName = directoryPathSegments.Last();
 
                 Package package = GetPackageFromDirectoryName(directoryName);
-                instaledPackages.Add(package);
+                _instaledPackages.Add(package);
             }
-            return instaledPackages;
+            return _instaledPackages;
         }
 
         /// <summary>
         /// Searches the chocolatey install directory to look up 
         /// the installed version of the given package.
         /// </summary>
-        public string GetHighestInstalledVersion(string packageName)
+        public string GetHighestInstalledVersion(string packageName, bool reload=true)
         {
-            var instaledPackages = ReloadFromDir();
+            if (reload || _instaledPackages == null)
+            {
+                ReloadFromDir();
+            }
             var versionQuery =
-                from package in instaledPackages
+                from package in _instaledPackages
                 where package.Name == packageName
                 select package.InstalledVersion;
 

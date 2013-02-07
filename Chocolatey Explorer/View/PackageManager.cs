@@ -89,8 +89,11 @@ namespace Chocolatey.Explorer.View
             {
                 EnableUserInteraction();
                 ClearStatus();
-                lblStatus.Text = "Number of installed packages: " + packages.Count;
-                PackageGrid.DataSource = packages;
+                var distinct = packages;
+                if (packageTabControl.SelectedTab == tabInstalled)
+                    distinct = packages.Reverse().Distinct().Reverse().ToList();
+                lblStatus.Text = "Number of installed packages: " + distinct.Count();
+                PackageGrid.DataSource = distinct;
             }
         }
 

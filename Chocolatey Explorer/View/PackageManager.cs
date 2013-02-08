@@ -183,7 +183,8 @@ namespace Chocolatey.Explorer.View
 
         private void PackageGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 2) // isInstalled checkbox
+
+            if (e.ColumnIndex == 2 && e.RowIndex != -1) // isInstalled checkbox (not header)
             {
                 var package = PackageGrid.SelectedRows[0].DataBoundItem as Package;
                 InstallOrUninstallPackage(package);

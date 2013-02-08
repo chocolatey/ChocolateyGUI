@@ -31,7 +31,7 @@ namespace Chocolatey.Explorer.View
 
             linkGalleryDetails.LinkClicked += OnGalleryDetailsClicked;
             linkLicense.LinkClicked += OnLiscenseClicked;
-            linkAbuse.LinkClicked += OnProjectSiteClicked;
+            linkProjectSite.LinkClicked += OnProjectSiteClicked;
             linkAbuse.LinkClicked += OnAbuseClicked;
         }
 
@@ -133,25 +133,21 @@ namespace Chocolatey.Explorer.View
 
         private void OnGalleryDetailsClicked(object sender, LinkLabelLinkClickedEventArgs args)
         {
-            linkGalleryDetails.LinkVisited = true;
             System.Diagnostics.Process.Start(_version.GalleryDetailsUrl);
         }
 
         private void OnLiscenseClicked(object sender, LinkLabelLinkClickedEventArgs args)
         {
-            linkLicense.LinkVisited = true;
             System.Diagnostics.Process.Start(_version.LicenseUrl);
         }
 
         private void OnProjectSiteClicked(object sender, LinkLabelLinkClickedEventArgs args)
         {
-            linkProjectSite.LinkVisited = true;
             System.Diagnostics.Process.Start(_version.ProjectUrl);
         }
 
         private void OnAbuseClicked(object sender, LinkLabelLinkClickedEventArgs args)
         {
-            linkAbuse.LinkVisited = true;
             System.Diagnostics.Process.Start(_version.ReportAbuseUrl);
         }
     }

@@ -110,7 +110,7 @@ namespace Chocolatey.Explorer.View
                 btnInstallUninstall.Checked = !version.IsInstalled;
                 btnInstallUninstall.Enabled = true;
                 ClearStatus();
-                lblStatus.Text = string.Format(strings.num_installed_packages, PackageGrid.Rows.Count);
+                lblStatus.Text = string.Format(strings.num_packages, PackageGrid.Rows.Count);
             }
         }
 

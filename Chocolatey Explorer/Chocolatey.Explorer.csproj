@@ -169,6 +169,7 @@
     <EmbeddedResource Include="strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="View\About.resx">
       <DependentUpon>About.cs</DependentUpon>
@@ -202,6 +203,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="chocolateyicon.ico" />
+    <None Include="Resources\packageicon_default.png" />
+    <None Include="Resources\chocolateyicon.ico" />
+    <None Include="Resources\chocolateyicon_small.png" />
+    <None Include="Resources\chocolateyicon_32x32.png" />
+    <None Include="Resources\setting_tools_small.png" />
+    <None Include="Resources\information_small.png" />
+    <None Include="Resources\help_small.png" />
+    <None Include="Resources\monitor_small.png" />
+    <None Include="Resources\folder.png" />
+    <None Include="Resources\update.png" />
+    <None Include="Resources\monitor.png" />
+    <None Include="Resources\chocolateyicon.png" />
     <None Include="sources.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

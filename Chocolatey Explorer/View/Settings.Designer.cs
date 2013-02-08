@@ -54,6 +54,7 @@
             // 
             // btnBrowse
             // 
+            this.btnBrowse.Image = global::Chocolatey.Explorer.Properties.Resources.folder_small;
             resources.ApplyResources(this.btnBrowse, "btnBrowse");
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.UseVisualStyleBackColor = true;

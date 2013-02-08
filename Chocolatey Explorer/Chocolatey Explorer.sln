@@ -43,6 +43,7 @@ Global
 		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Debug|x86.ActiveCfg = Debug
 		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|Any CPU.ActiveCfg = Release
 		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|Mixed Platforms.ActiveCfg = Release
+		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|Mixed Platforms.Build.0 = Release
 		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

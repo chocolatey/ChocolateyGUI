@@ -6,6 +6,7 @@ using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
 using log4net;
+using System.IO;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -89,15 +90,22 @@ namespace Chocolatey.Explorer.Services
 
             if (_loadingRssFeed != null)
             {
+                Stream responseStream = null;
                 try
                 {
-                    xmlDoc.Load(_loadingRssFeed.GetResponse().GetResponseStream());
+                    responseStream = _loadingRssFeed.GetResponse().GetResponseStream();
+                    xmlDoc.Load(responseStream);
                     IList<PackageVersion> packages = _versionXmlParser.parse(xmlDoc);
                     if (packages.Count() > 0)
                         return packages.First();
                 }
                 catch (XmlException) { } // when xml could not be parsed
                 catch (WebException) { } // when loading xml from server failed
+                finally
+                {
+                    if (responseStream != null)
+                        responseStream.Close();
+                }
             }
 
             var packageVersion = new PackageVersion();

@@ -124,6 +124,15 @@ namespace Chocolatey.Explorer {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Installing package {0}... ähnelt.
+        /// </summary>
+        internal static string installing {
+            get {
+                return ResourceManager.GetString("installing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Installing package {0} ähnelt.
         /// </summary>
         internal static string installinging {
@@ -205,7 +214,7 @@ namespace Chocolatey.Explorer {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Uninstalling package {0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Uninstalling package {0}... ähnelt.
         /// </summary>
         internal static string uninstalling {
             get {

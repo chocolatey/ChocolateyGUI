@@ -278,7 +278,7 @@ namespace Chocolatey.Explorer.View
             {
                 DisableUserInteraction();
                 txtPowershellOutput.Visible = true;
-                SetStatus(string.Format(strings.uninstalling, package.Name));
+                SetStatus(string.Format(strings.installing, package.Name));
                 _packageService.InstallPackage(package.Name);
             } 
         }

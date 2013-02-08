@@ -138,6 +138,9 @@
   <data name="install" xml:space="preserve">
     <value>Install</value>
   </data>
+  <data name="installing" xml:space="preserve">
+    <value>Installing package {0}...</value>
+  </data>
   <data name="installinging" xml:space="preserve">
     <value>Installing package {0}</value>
   </data>
@@ -166,7 +169,7 @@
     <value>Uninstall</value>
   </data>
   <data name="uninstalling" xml:space="preserve">
-    <value>Uninstalling package {0}</value>
+    <value>Uninstalling package {0}...</value>
   </data>
   <data name="updating_package" xml:space="preserve">
     <value>Updating package {0}...</value>

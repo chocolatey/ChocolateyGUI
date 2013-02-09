@@ -1,11 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chocolatey.Explorer", "Chocolatey.Explorer.csproj", "{44D4BF09-B14F-4241-9CB7-02B26027F4AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chocolatey.Explorer.Test", "..\Chocolatey.Explorer.Test\Chocolatey.Explorer.Test.csproj", "{B48A48F5-9B8F-473E-80EB-4CBB8BBD91F6}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupChocolateyGUI", "..\SetupChocolateyGUI\SetupChocolateyGUI.vdproj", "{7CE615AD-733A-4198-ABFB-708697DAF66A}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup_ChocolateyGUI", "..\Setup_ChocolateyGUI\Setup_ChocolateyGUI.wixproj", "{1772C1E5-8896-4E28-933A-9413EB588A82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,13 +38,16 @@ Global
 		{B48A48F5-9B8F-473E-80EB-4CBB8BBD91F6}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{B48A48F5-9B8F-473E-80EB-4CBB8BBD91F6}.Release|Mixed Platforms.Build.0 = Release|x86
 		{B48A48F5-9B8F-473E-80EB-4CBB8BBD91F6}.Release|x86.ActiveCfg = Release|Any CPU
-		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Debug|Any CPU.ActiveCfg = Debug
-		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Debug|x86.ActiveCfg = Debug
-		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|Any CPU.ActiveCfg = Release
-		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|Mixed Platforms.ActiveCfg = Release
-		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|Mixed Platforms.Build.0 = Release
-		{7CE615AD-733A-4198-ABFB-708697DAF66A}.Release|x86.ActiveCfg = Release
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Debug|x86.ActiveCfg = Debug|x86
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Debug|x86.Build.0 = Debug|x86
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Release|Any CPU.ActiveCfg = Release|x86
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Release|Mixed Platforms.Build.0 = Release|x86
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Release|x86.ActiveCfg = Release|x86
+		{1772C1E5-8896-4E28-933A-9413EB588A82}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

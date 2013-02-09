@@ -232,6 +232,7 @@ namespace Chocolatey.Explorer.View
         private void QueryAvailablePackges()
         {
             DisableUserInteraction();
+            SearchPackages.Text = "";
             SetStatus(strings.getting_available_packages);
             packageTabControl.SelectedTab = tabAvailable;
             lblProgressbar.Style = ProgressBarStyle.Marquee;
@@ -242,6 +243,7 @@ namespace Chocolatey.Explorer.View
         private void QueryInstalledPackages()
         {
             var settings = new Properties.Settings();
+            SearchPackages.Text = "";
             var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
             if (!System.IO.Directory.Exists(expandedLibDirectory))
             {
@@ -319,6 +321,19 @@ namespace Chocolatey.Explorer.View
         {
             lblStatus.Text = "";
             lblProgressbar.Visible = false;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            DataGridViewRow rowFound = PackageGrid.Rows.OfType<DataGridViewRow>()
+                    .FirstOrDefault(row => row.Cells.OfType<DataGridViewCell>()
+                    .Any(cell => cell.ColumnIndex == 0 && ((String)cell.Value).StartsWith(SearchPackages.Text)));
+
+            if (rowFound != null)
+            {
+                PackageGrid.Rows[rowFound.Index].Selected = true;
+                PackageGrid.FirstDisplayedScrollingRowIndex = rowFound.Index;
+            }
         }
     }
 }

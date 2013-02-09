@@ -29,14 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageManager));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageManager));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.packagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.availablePackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installedPackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.PackageGrid = new System.Windows.Forms.DataGridView();
             this.IsInstalled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -46,20 +51,18 @@
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.tabInstalled = new System.Windows.Forms.TabPage();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
+            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
             this.installUninstallImageList = new System.Windows.Forms.ImageList(this.components);
             this.txtPowershellOutput = new System.Windows.Forms.TextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.availablePackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.installedPackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
-            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.SearchPackages = new System.Windows.Forms.TextBox();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -69,6 +72,7 @@
             this.packageTabControl.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -87,6 +91,19 @@
             this.packagesToolStripMenuItem.Name = "packagesToolStripMenuItem";
             resources.ApplyResources(this.packagesToolStripMenuItem, "packagesToolStripMenuItem");
             // 
+            // availablePackagesToolStripMenuItem
+            // 
+            resources.ApplyResources(this.availablePackagesToolStripMenuItem, "availablePackagesToolStripMenuItem");
+            this.availablePackagesToolStripMenuItem.Name = "availablePackagesToolStripMenuItem";
+            this.availablePackagesToolStripMenuItem.Click += new System.EventHandler(this.availablePackages_Click);
+            // 
+            // installedPackagesToolStripMenuItem
+            // 
+            this.installedPackagesToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.monitor_small;
+            this.installedPackagesToolStripMenuItem.Name = "installedPackagesToolStripMenuItem";
+            resources.ApplyResources(this.installedPackagesToolStripMenuItem, "installedPackagesToolStripMenuItem");
+            this.installedPackagesToolStripMenuItem.Click += new System.EventHandler(this.installedPackages_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -96,6 +113,27 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
             // 
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.Image = global::Chocolatey.Explorer.Properties.Resources.help_small;
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            resources.ApplyResources(this.helpToolStripMenuItem1, "helpToolStripMenuItem1");
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.help_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.information_small;
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.about_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.setting_tools_small;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settings_Click);
+            // 
             // mainSplitContainer
             // 
             resources.ApplyResources(this.mainSplitContainer, "mainSplitContainer");
@@ -104,6 +142,7 @@
             // mainSplitContainer.Panel1
             // 
             this.mainSplitContainer.Panel1.Controls.Add(this.PackageGrid);
+            this.mainSplitContainer.Panel1.Controls.Add(this.panel1);
             this.mainSplitContainer.Panel1.Controls.Add(this.packageTabControl);
             // 
             // mainSplitContainer.Panel2
@@ -214,12 +253,35 @@
             this.packageTabsImageList.Images.SetKeyName(0, "chocolateyicon_small.png");
             this.packageTabsImageList.Images.SetKeyName(1, "monitor.png");
             // 
+            // packageVersionPanel
+            // 
+            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
+            this.packageVersionPanel.Name = "packageVersionPanel";
+            // 
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.btnUpdate, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnInstallUninstall, 1, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            // 
+            // btnUpdate
+            // 
+            resources.ApplyResources(this.btnUpdate, "btnUpdate");
+            this.btnUpdate.Image = global::Chocolatey.Explorer.Properties.Resources.update;
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
+            // 
+            // btnInstallUninstall
+            // 
+            resources.ApplyResources(this.btnInstallUninstall, "btnInstallUninstall");
+            this.btnInstallUninstall.AutoCheck = false;
+            this.btnInstallUninstall.ImageList = this.installUninstallImageList;
+            this.btnInstallUninstall.Name = "btnInstallUninstall";
+            this.btnInstallUninstall.UseVisualStyleBackColor = true;
+            this.btnInstallUninstall.CheckStateChanged += new System.EventHandler(this.btnInstallUninstall_CheckStateChanged);
+            this.btnInstallUninstall.Click += new System.EventHandler(this.buttonInstallUninstall_Click);
             // 
             // installUninstallImageList
             // 
@@ -253,62 +315,23 @@
             resources.ApplyResources(this.lblStatus, "lblStatus");
             this.lblStatus.Spring = true;
             // 
-            // availablePackagesToolStripMenuItem
+            // panel1
             // 
-            resources.ApplyResources(this.availablePackagesToolStripMenuItem, "availablePackagesToolStripMenuItem");
-            this.availablePackagesToolStripMenuItem.Name = "availablePackagesToolStripMenuItem";
-            this.availablePackagesToolStripMenuItem.Click += new System.EventHandler(this.availablePackages_Click);
+            this.panel1.Controls.Add(this.SearchPackages);
+            this.panel1.Controls.Add(this.label1);
+            resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.Name = "panel1";
             // 
-            // installedPackagesToolStripMenuItem
+            // label1
             // 
-            this.installedPackagesToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.monitor_small;
-            this.installedPackagesToolStripMenuItem.Name = "installedPackagesToolStripMenuItem";
-            resources.ApplyResources(this.installedPackagesToolStripMenuItem, "installedPackagesToolStripMenuItem");
-            this.installedPackagesToolStripMenuItem.Click += new System.EventHandler(this.installedPackages_Click);
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
             // 
-            // helpToolStripMenuItem1
+            // SearchPackages
             // 
-            this.helpToolStripMenuItem1.Image = global::Chocolatey.Explorer.Properties.Resources.help_small;
-            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            resources.ApplyResources(this.helpToolStripMenuItem1, "helpToolStripMenuItem1");
-            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.help_Click);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.information_small;
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.about_Click);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.setting_tools_small;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settings_Click);
-            // 
-            // btnUpdate
-            // 
-            resources.ApplyResources(this.btnUpdate, "btnUpdate");
-            this.btnUpdate.Image = global::Chocolatey.Explorer.Properties.Resources.update;
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
-            // 
-            // btnInstallUninstall
-            // 
-            resources.ApplyResources(this.btnInstallUninstall, "btnInstallUninstall");
-            this.btnInstallUninstall.AutoCheck = false;
-            this.btnInstallUninstall.ImageList = this.installUninstallImageList;
-            this.btnInstallUninstall.Name = "btnInstallUninstall";
-            this.btnInstallUninstall.UseVisualStyleBackColor = true;
-            this.btnInstallUninstall.CheckStateChanged += new System.EventHandler(this.btnInstallUninstall_CheckStateChanged);
-            this.btnInstallUninstall.Click += new System.EventHandler(this.buttonInstallUninstall_Click);
-            // 
-            // packageVersionPanel
-            // 
-            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
-            this.packageVersionPanel.Name = "packageVersionPanel";
+            resources.ApplyResources(this.SearchPackages, "SearchPackages");
+            this.SearchPackages.Name = "SearchPackages";
+            this.SearchPackages.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // PackageManager
             // 
@@ -332,6 +355,8 @@
             this.tableLayoutPanel1.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -365,5 +390,8 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsInstalled;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn InstalledVersion;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox SearchPackages;
+        private System.Windows.Forms.Label label1;
     }
 }

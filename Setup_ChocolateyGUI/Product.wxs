@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="ChocolateyGUI" Language="1033" Version="0.1.0.0" Manufacturer="Baes Christiaan" UpgradeCode="f8164f91-fa5c-4789-b68c-9beb5a044695">
+	<Product Id="*" Name="ChocolateyGUI" Language="1033" Version="0.10.0.0" Manufacturer="Baes Christiaan" UpgradeCode="f8164f91-fa5c-4789-b68c-9beb5a046655">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -32,7 +32,7 @@
         <Shortcut Id="ApplicationStartMenuShortcut"
              Name="ChocolateyGUI"
            Description="GUI for chocolatey"
-            Target="[INSTALLFOLDER]Chocolatey.Explorer.exe"
+            Target="[INSTALLFOLDER]ChocolateyGUI.exe"
                   WorkingDirectory="INSTALLFOLDER"/>
         <Shortcut Id="Uninstall"
                           Name="Uninstall ChocolateyGUI"
@@ -48,8 +48,8 @@
   
   <Fragment>
 		<ComponentGroup Id="ChocolateyComponents" Directory="INSTALLFOLDER">
-      <Component Id="Chocolatey.Explorer.exe" Guid="f8164f91-fa5c-0001-0001-9beb5a044699">
-        <File Id="Chocolatey.Explorer.exe" Source="$(var.Chocolatey.Explorer.TargetPath)" KeyPath="yes" Checksum="yes"/>
+      <Component Id="ChocolateyGUI.exe" Guid="f8164f91-fa5c-0001-0001-9beb5a044699">
+        <File Id="ChocolateyGUI.exe" Source="$(var.Chocolatey.Explorer.TargetPath)" KeyPath="yes" Checksum="yes"/>
 			</Component>
       <Component Id="log4net.dll" Guid="f8164f91-fa5c-0002-0001-9beb5a044699">
         <File Id="log4net.dll" Source="$(var.Chocolatey.Explorer.TargetDir)\log4net.dll" KeyPath="yes"/>

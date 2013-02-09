@@ -22,6 +22,14 @@ namespace Chocolatey.Explorer.Services
         private readonly char[] _segmentDelim = "\\".ToCharArray();
         private readonly Settings _settings = new Settings();
         private List<Package> _instaledPackages;
+        private readonly IChocolateyService _chocolateyService;
+        private string chocoVersion;
+
+        public ChocolateyLibDirHelper()
+        {
+            _chocolateyService = new ChocolateyService();
+            _chocolateyService.OutputChanged += VersionChangeFinished;
+        }
 
         /// <summary>
         /// Reloads information about installed packages from
@@ -41,7 +49,18 @@ namespace Chocolatey.Explorer.Services
                 Package package = GetPackageFromDirectoryName(directoryName);
                 _instaledPackages.Add(package);
             }
+            //add chocolatey by default because else this won't work anyway
+            _chocolateyService.Help();
+            var chocoPackage = new Package { Name = "chocolatey", InstalledVersion = chocoVersion };
+            _instaledPackages.Add(chocoPackage);
             return _instaledPackages;
+        }
+
+        private void VersionChangeFinished(string version)
+        {
+            var versionseparator = new string[] {"Version:"};
+            var installseparator = new string[] { "Install" };
+            chocoVersion = version.Split(versionseparator, StringSplitOptions.None)[1].Split(installseparator, StringSplitOptions.None)[0].Trim().Replace("'", "");
         }
 
         /// <summary>

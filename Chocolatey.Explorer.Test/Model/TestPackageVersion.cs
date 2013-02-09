@@ -12,7 +12,7 @@ namespace Chocolatey.Explorer.Test.Model
         {
             var package = new PackageVersion();
             package.Name = "test";
-            Assert.AreEqual("test", package.ToString());
+            Assert.AreEqual("Name", package.ToString().Substring(0,4));
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Chocolatey.Explorer.Test.Model
         public void IfIsInstalledReturnsFalseWhenCurrentVersionIsNoVersion()
         {
             var package = new PackageVersion();
-            package.CurrentVersion = "no version";
+            package.CurrentVersion = "n.a.";
             Assert.IsFalse(package.IsInstalled);
         }
 
@@ -73,7 +73,7 @@ namespace Chocolatey.Explorer.Test.Model
         public void IfCanBeUpdatedIsFalseWhenCurrentVersionNotEqualsServerVersionAndIsInstalled()
         {
             var package = new PackageVersion();
-            package.CurrentVersion = "no version";
+            package.CurrentVersion = "n.a.";
             package.Serverversion = "0.5.2";
             Assert.IsFalse(package.CanBeUpdated);
         }

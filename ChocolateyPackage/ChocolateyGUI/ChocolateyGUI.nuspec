@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ChocolateyGUI</id>
+    <version>0.1.0</version>
+    <title>ChocolateyGUI</title>
+    <authors>Christiaan Baes</authors>
+    <owners>Christiaan Baes</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/chrissie1/chocolatey-Explorer</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ChocolateyGUI</description>
+    <summary>A GUI for Chocolatey</summary>
+    <tags>ChocolateyGUI chocolatey admin</tags>
+  </metadata>
+</package>

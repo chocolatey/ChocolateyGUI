@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="ChocolateyGUI" Language="1033" Version="0.10.0.0" Manufacturer="Baes Christiaan" UpgradeCode="f8164f91-fa5c-4789-b68c-9beb5a046655">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+	<Product Id="*" Name="ChocolateyGUI" Language="1033" Version="0.10.0.1" Manufacturer="Baes Christiaan" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5a046655">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
+    <PropertyRef Id="NETFRAMEWORK40FULL"/>
+
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET 4.0 Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK40FULL]]>
+    </Condition>
+    
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
 
     <Icon Id="icon.ico" SourceFile="$(var.Chocolatey.Explorer.ProjectDir)\chocolateyicon.ico"/>

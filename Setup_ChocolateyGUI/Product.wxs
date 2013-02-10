@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-	<Product Id="*" Name="ChocolateyGUI" Language="1033" Version="0.10.0.1" Manufacturer="Baes Christiaan" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5a046655">
+	<Product Id="*" Name="ChocolateyGUI" Language="1033" Version="0.10.0.2" Manufacturer="Baes Christiaan" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5a146655">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     

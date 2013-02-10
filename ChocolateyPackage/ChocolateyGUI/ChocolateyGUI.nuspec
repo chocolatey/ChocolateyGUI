@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>ChocolateyGUI</id>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <title>ChocolateyGUI</title>
     <authors>Christiaan Baes</authors>
     <owners>Christiaan Baes</owners>
@@ -11,6 +11,24 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>ChocolateyGUI</description>
     <summary>A GUI for Chocolatey</summary>
+	<releaseNotes>
+	v0.1.1
+
+	* Enhancement - The installer should now check if .Net framework 4.0 is installed.
+	
+	v0.1.0
+	
+	* Enhancement - More information about a package
+	* Enhancement - Shows chocolatey as an installed package.
+	* Enhancement - Performance improvement
+	* Enhancement - You can search in the list. It is a StartsWith search.
+	* Enhancement - You can install the available package by clicking on the checkbox.
+	* Enhancement - You can uninstall a package.
+	
+	v0.0.5
+	
+	* First working version
+	</releaseNotes>
     <tags>ChocolateyGUI chocolatey admin</tags>
   </metadata>
 </package>

@@ -38,11 +38,13 @@
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
+            this.label1.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText;
             this.label1.Name = "label1";
             // 
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
+            this.btnSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -54,8 +56,9 @@
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Image = global::Chocolatey.Explorer.Properties.Resources.folder_small;
             resources.ApplyResources(this.btnBrowse, "btnBrowse");
+            this.btnBrowse.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnBrowse.Image = global::Chocolatey.Explorer.Properties.Resources.folder_small;
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
@@ -64,6 +67,7 @@
             // 
             this.AcceptButton = this.btnSave;
             resources.ApplyResources(this, "$this");
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.txtInstallDirectory);

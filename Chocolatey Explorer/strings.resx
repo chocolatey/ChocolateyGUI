@@ -136,13 +136,13 @@
     <value>Getting package information for package: {0}</value>
   </data>
   <data name="install" xml:space="preserve">
-    <value>Install</value>
+    <value>&amp;Install</value>
   </data>
   <data name="installing" xml:space="preserve">
     <value>Installing package {0}...</value>
   </data>
-  <data name="installinging" xml:space="preserve">
-    <value>Installing package {0}</value>
+  <data name="install_long" xml:space="preserve">
+    <value>Install selected package</value>
   </data>
   <data name="lib_dir_not_found" xml:space="preserve">
     <value>Could not find the installed packages directory ({0}), please change the install directory in the settings.</value>
@@ -166,10 +166,13 @@
     <value>Uninstall</value>
   </data>
   <data name="uninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>&amp;Uninstall</value>
   </data>
   <data name="uninstalling" xml:space="preserve">
     <value>Uninstalling package {0}...</value>
+  </data>
+  <data name="unsinstall_long" xml:space="preserve">
+    <value>Uninstall selected package</value>
   </data>
   <data name="updating_package" xml:space="preserve">
     <value>Updating package {0}...</value>

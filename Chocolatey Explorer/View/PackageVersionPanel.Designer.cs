@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageVersionPanel));
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblDownloads = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -47,7 +48,9 @@
             this.dependenciesList = new System.Windows.Forms.ListView();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblServerVersion = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblInstalledVersion = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.lblName = new System.Windows.Forms.Label();
@@ -55,10 +58,8 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tagList = new System.Windows.Forms.ListView();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -66,12 +67,11 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tableLayoutPanel5.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel3
@@ -89,6 +89,15 @@
             this.tableLayoutPanel3.Controls.Add(this.linkAbuse, 0, 8);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             // 
+            // pictureBoxLogo
+            // 
+            resources.ApplyResources(this.pictureBoxLogo, "pictureBoxLogo");
+            this.pictureBoxLogo.AccessibleRole = System.Windows.Forms.AccessibleRole.Graphic;
+            this.pictureBoxLogo.ErrorImage = global::Chocolatey.Explorer.Properties.Resources.packageicon_default;
+            this.pictureBoxLogo.InitialImage = global::Chocolatey.Explorer.Properties.Resources.packageicon_default;
+            this.pictureBoxLogo.Name = "pictureBoxLogo";
+            this.pictureBoxLogo.TabStop = false;
+            // 
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
@@ -99,6 +108,7 @@
             // lblDownloads
             // 
             resources.ApplyResources(this.lblDownloads, "lblDownloads");
+            this.lblDownloads.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblDownloads.Name = "lblDownloads";
             // 
             // groupBox2
@@ -111,6 +121,7 @@
             // lblVersionDownloads
             // 
             resources.ApplyResources(this.lblVersionDownloads, "lblVersionDownloads");
+            this.lblVersionDownloads.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblVersionDownloads.Name = "lblVersionDownloads";
             // 
             // groupBox3
@@ -123,6 +134,7 @@
             // lblUpdated
             // 
             resources.ApplyResources(this.lblUpdated, "lblUpdated");
+            this.lblUpdated.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblUpdated.Name = "lblUpdated";
             // 
             // groupBox4
@@ -135,31 +147,40 @@
             // lblPackageSize
             // 
             resources.ApplyResources(this.lblPackageSize, "lblPackageSize");
+            this.lblPackageSize.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblPackageSize.Name = "lblPackageSize";
             // 
             // linkGalleryDetails
             // 
             resources.ApplyResources(this.linkGalleryDetails, "linkGalleryDetails");
+            this.linkGalleryDetails.AccessibleRole = System.Windows.Forms.AccessibleRole.Link;
             this.linkGalleryDetails.Name = "linkGalleryDetails";
             this.linkGalleryDetails.TabStop = true;
+            this.linkGalleryDetails.UseMnemonic = false;
             // 
             // linkLicense
             // 
             resources.ApplyResources(this.linkLicense, "linkLicense");
+            this.linkLicense.AccessibleRole = System.Windows.Forms.AccessibleRole.Link;
             this.linkLicense.Name = "linkLicense";
             this.linkLicense.TabStop = true;
+            this.linkLicense.UseMnemonic = false;
             // 
             // linkProjectSite
             // 
             resources.ApplyResources(this.linkProjectSite, "linkProjectSite");
+            this.linkProjectSite.AccessibleRole = System.Windows.Forms.AccessibleRole.Link;
             this.linkProjectSite.Name = "linkProjectSite";
             this.linkProjectSite.TabStop = true;
+            this.linkProjectSite.UseMnemonic = false;
             // 
             // linkAbuse
             // 
             resources.ApplyResources(this.linkAbuse, "linkAbuse");
+            this.linkAbuse.AccessibleRole = System.Windows.Forms.AccessibleRole.Link;
             this.linkAbuse.Name = "linkAbuse";
             this.linkAbuse.TabStop = true;
+            this.linkAbuse.UseMnemonic = false;
             // 
             // tableLayoutPanel1
             // 
@@ -180,9 +201,9 @@
             // 
             // dependenciesList
             // 
+            resources.ApplyResources(this.dependenciesList, "dependenciesList");
             this.dependenciesList.BackColor = System.Drawing.SystemColors.Control;
             this.dependenciesList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.dependenciesList, "dependenciesList");
             this.dependenciesList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.dependenciesList.MultiSelect = false;
             this.dependenciesList.Name = "dependenciesList";
@@ -201,19 +222,34 @@
             // lblServerVersion
             // 
             resources.ApplyResources(this.lblServerVersion, "lblServerVersion");
+            this.lblServerVersion.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblServerVersion.Name = "lblServerVersion";
+            // 
+            // pictureBox1
+            // 
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
             // 
             // lblInstalledVersion
             // 
             resources.ApplyResources(this.lblInstalledVersion, "lblInstalledVersion");
+            this.lblInstalledVersion.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblInstalledVersion.Name = "lblInstalledVersion";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::Chocolatey.Explorer.Properties.Resources.monitor;
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.TabStop = false;
             // 
             // txtDescription
             // 
             this.txtDescription.AcceptsReturn = true;
-            this.txtDescription.AcceptsTab = true;
-            this.txtDescription.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.txtDescription, "txtDescription");
+            this.txtDescription.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
+            this.txtDescription.Cursor = System.Windows.Forms.Cursors.Default;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ReadOnly = true;
             // 
@@ -227,6 +263,7 @@
             // lblName
             // 
             resources.ApplyResources(this.lblName, "lblName");
+            this.lblName.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblName.Name = "lblName";
             // 
             // lblAuthor
@@ -243,9 +280,10 @@
             // 
             // tagList
             // 
+            resources.ApplyResources(this.tagList, "tagList");
+            this.tagList.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
             this.tagList.BackColor = System.Drawing.SystemColors.Control;
             this.tagList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.tagList, "tagList");
             this.tagList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.tagList.MultiSelect = false;
             this.tagList.Name = "tagList";
@@ -259,27 +297,6 @@
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             // 
-            // pictureBox1
-            // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::Chocolatey.Explorer.Properties.Resources.monitor;
-            resources.ApplyResources(this.pictureBox2, "pictureBox2");
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBoxLogo
-            // 
-            this.pictureBoxLogo.ErrorImage = global::Chocolatey.Explorer.Properties.Resources.packageicon_default;
-            resources.ApplyResources(this.pictureBoxLogo, "pictureBoxLogo");
-            this.pictureBoxLogo.InitialImage = global::Chocolatey.Explorer.Properties.Resources.packageicon_default;
-            this.pictureBoxLogo.Name = "pictureBoxLogo";
-            this.pictureBoxLogo.TabStop = false;
-            // 
             // PackageVersionPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -288,6 +305,7 @@
             this.Name = "PackageVersionPanel";
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -301,14 +319,13 @@
             this.groupBox6.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -38,11 +38,13 @@
             // textBox1
             // 
             resources.ApplyResources(this.textBox1, "textBox1");
+            this.textBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.textBox1.Name = "textBox1";
             // 
             // progressBar
             // 
             resources.ApplyResources(this.progressBar, "progressBar");
+            this.progressBar.AccessibleRole = System.Windows.Forms.AccessibleRole.ProgressBar;
             this.progressBar.Name = "progressBar";
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
@@ -56,6 +58,7 @@
             // Help
             // 
             resources.ApplyResources(this, "$this");
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Help";

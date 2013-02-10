@@ -115,11 +115,20 @@ namespace Chocolatey.Explorer {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Install ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die &amp;Install ähnelt.
         /// </summary>
         internal static string install {
             get {
                 return ResourceManager.GetString("install", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Install selected package ähnelt.
+        /// </summary>
+        internal static string install_long {
+            get {
+                return ResourceManager.GetString("install_long", resourceCulture);
             }
         }
         
@@ -129,15 +138,6 @@ namespace Chocolatey.Explorer {
         internal static string installing {
             get {
                 return ResourceManager.GetString("installing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Installing package {0} ähnelt.
-        /// </summary>
-        internal static string installinging {
-            get {
-                return ResourceManager.GetString("installinging", resourceCulture);
             }
         }
         
@@ -205,7 +205,7 @@ namespace Chocolatey.Explorer {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Uninstall ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die &amp;Uninstall ähnelt.
         /// </summary>
         internal static string uninstall {
             get {
@@ -219,6 +219,15 @@ namespace Chocolatey.Explorer {
         internal static string uninstalling {
             get {
                 return ResourceManager.GetString("uninstalling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Uninstall selected package ähnelt.
+        /// </summary>
+        internal static string unsinstall_long {
+            get {
+                return ResourceManager.GetString("unsinstall_long", resourceCulture);
             }
         }
         

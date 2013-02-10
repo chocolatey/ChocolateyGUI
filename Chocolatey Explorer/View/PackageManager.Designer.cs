@@ -47,6 +47,9 @@
             this.IsInstalled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InstalledVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.SearchPackages = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.packageTabControl = new System.Windows.Forms.TabControl();
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.tabInstalled = new System.Windows.Forms.TabPage();
@@ -60,78 +63,83 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.SearchPackages = new System.Windows.Forms.TextBox();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PackageGrid)).BeginInit();
+            this.panel1.SuspendLayout();
             this.packageTabControl.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
             // 
+            resources.ApplyResources(this.mainMenu, "mainMenu");
+            this.mainMenu.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuBar;
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.packagesToolStripMenuItem,
             this.helpToolStripMenuItem});
-            resources.ApplyResources(this.mainMenu, "mainMenu");
             this.mainMenu.Name = "mainMenu";
             // 
             // packagesToolStripMenuItem
             // 
+            resources.ApplyResources(this.packagesToolStripMenuItem, "packagesToolStripMenuItem");
+            this.packagesToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuPopup;
             this.packagesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.availablePackagesToolStripMenuItem,
             this.installedPackagesToolStripMenuItem});
             this.packagesToolStripMenuItem.Name = "packagesToolStripMenuItem";
-            resources.ApplyResources(this.packagesToolStripMenuItem, "packagesToolStripMenuItem");
             // 
             // availablePackagesToolStripMenuItem
             // 
             resources.ApplyResources(this.availablePackagesToolStripMenuItem, "availablePackagesToolStripMenuItem");
+            this.availablePackagesToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.availablePackagesToolStripMenuItem.Name = "availablePackagesToolStripMenuItem";
             this.availablePackagesToolStripMenuItem.Click += new System.EventHandler(this.availablePackages_Click);
             // 
             // installedPackagesToolStripMenuItem
             // 
+            resources.ApplyResources(this.installedPackagesToolStripMenuItem, "installedPackagesToolStripMenuItem");
+            this.installedPackagesToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.installedPackagesToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.monitor_small;
             this.installedPackagesToolStripMenuItem.Name = "installedPackagesToolStripMenuItem";
-            resources.ApplyResources(this.installedPackagesToolStripMenuItem, "installedPackagesToolStripMenuItem");
             this.installedPackagesToolStripMenuItem.Click += new System.EventHandler(this.installedPackages_Click);
             // 
             // helpToolStripMenuItem
             // 
+            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
+            this.helpToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuPopup;
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpToolStripMenuItem1,
             this.aboutToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
             // 
             // helpToolStripMenuItem1
             // 
+            resources.ApplyResources(this.helpToolStripMenuItem1, "helpToolStripMenuItem1");
+            this.helpToolStripMenuItem1.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.helpToolStripMenuItem1.Image = global::Chocolatey.Explorer.Properties.Resources.help_small;
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            resources.ApplyResources(this.helpToolStripMenuItem1, "helpToolStripMenuItem1");
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.help_Click);
             // 
             // aboutToolStripMenuItem
             // 
+            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
+            this.aboutToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.aboutToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.information_small;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.about_Click);
             // 
             // settingsToolStripMenuItem
             // 
+            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
+            this.settingsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.settingsToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.setting_tools_small;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settings_Click);
             // 
             // mainSplitContainer
@@ -150,9 +158,12 @@
             this.mainSplitContainer.Panel2.Controls.Add(this.packageVersionPanel);
             this.mainSplitContainer.Panel2.Controls.Add(this.tableLayoutPanel1);
             this.mainSplitContainer.Panel2.Controls.Add(this.txtPowershellOutput);
+            this.mainSplitContainer.TabStop = false;
             // 
             // PackageGrid
             // 
+            resources.ApplyResources(this.PackageGrid, "PackageGrid");
+            this.PackageGrid.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
             this.PackageGrid.AllowUserToAddRows = false;
             this.PackageGrid.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveBorder;
@@ -173,7 +184,6 @@
             this.IsInstalled,
             this.Column1,
             this.InstalledVersion});
-            resources.ApplyResources(this.PackageGrid, "PackageGrid");
             this.PackageGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.PackageGrid.GridColor = System.Drawing.SystemColors.Control;
             this.PackageGrid.MultiSelect = false;
@@ -224,11 +234,31 @@
             this.InstalledVersion.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.InstalledVersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.SearchPackages);
+            this.panel1.Controls.Add(this.label1);
+            resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.Name = "panel1";
+            // 
+            // SearchPackages
+            // 
+            resources.ApplyResources(this.SearchPackages, "SearchPackages");
+            this.SearchPackages.Name = "SearchPackages";
+            this.SearchPackages.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText;
+            this.label1.Name = "label1";
+            // 
             // packageTabControl
             // 
+            resources.ApplyResources(this.packageTabControl, "packageTabControl");
+            this.packageTabControl.AccessibleRole = System.Windows.Forms.AccessibleRole.PageTabList;
             this.packageTabControl.Controls.Add(this.tabAvailable);
             this.packageTabControl.Controls.Add(this.tabInstalled);
-            resources.ApplyResources(this.packageTabControl, "packageTabControl");
             this.packageTabControl.ImageList = this.packageTabsImageList;
             this.packageTabControl.Name = "packageTabControl";
             this.packageTabControl.SelectedIndex = 0;
@@ -237,12 +267,14 @@
             // tabAvailable
             // 
             resources.ApplyResources(this.tabAvailable, "tabAvailable");
+            this.tabAvailable.AccessibleRole = System.Windows.Forms.AccessibleRole.PageTab;
             this.tabAvailable.Name = "tabAvailable";
             this.tabAvailable.UseVisualStyleBackColor = true;
             // 
             // tabInstalled
             // 
             resources.ApplyResources(this.tabInstalled, "tabInstalled");
+            this.tabInstalled.AccessibleRole = System.Windows.Forms.AccessibleRole.PageTab;
             this.tabInstalled.Name = "tabInstalled";
             this.tabInstalled.UseVisualStyleBackColor = true;
             // 
@@ -268,6 +300,7 @@
             // btnUpdate
             // 
             resources.ApplyResources(this.btnUpdate, "btnUpdate");
+            this.btnUpdate.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnUpdate.Image = global::Chocolatey.Explorer.Properties.Resources.update;
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.UseVisualStyleBackColor = true;
@@ -276,6 +309,7 @@
             // btnInstallUninstall
             // 
             resources.ApplyResources(this.btnInstallUninstall, "btnInstallUninstall");
+            this.btnInstallUninstall.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnInstallUninstall.AutoCheck = false;
             this.btnInstallUninstall.ImageList = this.installUninstallImageList;
             this.btnInstallUninstall.Name = "btnInstallUninstall";
@@ -293,49 +327,36 @@
             // txtPowershellOutput
             // 
             resources.ApplyResources(this.txtPowershellOutput, "txtPowershellOutput");
+            this.txtPowershellOutput.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.txtPowershellOutput.Name = "txtPowershellOutput";
             // 
             // statusStrip
             // 
+            resources.ApplyResources(this.statusStrip, "statusStrip");
+            this.statusStrip.AccessibleRole = System.Windows.Forms.AccessibleRole.StatusBar;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblProgressbar,
             this.lblStatus});
-            resources.ApplyResources(this.statusStrip, "statusStrip");
             this.statusStrip.Name = "statusStrip";
             // 
             // lblProgressbar
             // 
-            this.lblProgressbar.Name = "lblProgressbar";
             resources.ApplyResources(this.lblProgressbar, "lblProgressbar");
+            this.lblProgressbar.AccessibleRole = System.Windows.Forms.AccessibleRole.ProgressBar;
+            this.lblProgressbar.Name = "lblProgressbar";
             this.lblProgressbar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // lblStatus
             // 
-            this.lblStatus.Name = "lblStatus";
             resources.ApplyResources(this.lblStatus, "lblStatus");
+            this.lblStatus.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
+            this.lblStatus.Name = "lblStatus";
             this.lblStatus.Spring = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.SearchPackages);
-            this.panel1.Controls.Add(this.label1);
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // SearchPackages
-            // 
-            resources.ApplyResources(this.SearchPackages, "SearchPackages");
-            this.SearchPackages.Name = "SearchPackages";
-            this.SearchPackages.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // PackageManager
             // 
             resources.ApplyResources(this, "$this");
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.Application;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.mainSplitContainer);
             this.Controls.Add(this.mainMenu);
@@ -350,13 +371,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
             this.mainSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PackageGrid)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.packageTabControl.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label1.AccessibleName" xml:space="preserve">
+    <value>Chocolatey lib directory</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -132,7 +135,7 @@
     <value>0</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>Chocolatey lib directory</value>
+    <value>Chocolatey &amp;lib directory</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
@@ -146,6 +149,9 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="btnSave.AccessibleName" xml:space="preserve">
+    <value>save settings</value>
+  </data>
   <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
     <value>374, 60</value>
   </data>
@@ -153,10 +159,10 @@
     <value>75, 23</value>
   </data>
   <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnSave.Text" xml:space="preserve">
-    <value>Save</value>
+    <value>&amp;Save</value>
   </data>
   <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
     <value>btnSave</value>
@@ -170,6 +176,9 @@
   <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="txtInstallDirectory.AccessibleName" xml:space="preserve">
+    <value>Chocolatey lib directory</value>
+  </data>
   <data name="txtInstallDirectory.Location" type="System.Drawing.Point, System.Drawing">
     <value>150, 9</value>
   </data>
@@ -177,7 +186,7 @@
     <value>243, 20</value>
   </data>
   <data name="txtInstallDirectory.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;txtInstallDirectory.Name" xml:space="preserve">
     <value>txtInstallDirectory</value>
@@ -191,6 +200,9 @@
   <data name="&gt;&gt;txtInstallDirectory.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="btnBrowse.AccessibleName" xml:space="preserve">
+    <value>select chocolatey lib directory</value>
+  </data>
   <data name="btnBrowse.Location" type="System.Drawing.Point, System.Drawing">
     <value>399, 7</value>
   </data>
@@ -198,7 +210,7 @@
     <value>50, 23</value>
   </data>
   <data name="btnBrowse.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;btnBrowse.Name" xml:space="preserve">
     <value>btnBrowse</value>
@@ -215,6 +227,9 @@
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AccessibleName" xml:space="preserve">
+    <value>settings</value>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>

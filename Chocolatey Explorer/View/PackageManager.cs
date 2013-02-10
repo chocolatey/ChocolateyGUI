@@ -92,7 +92,8 @@ namespace Chocolatey.Explorer.View
                 var distinct = packages;
                 if (packageTabControl.SelectedTab == tabInstalled)
                     distinct = packages.Reverse().Distinct().Reverse().ToList();
-                lblStatus.Text = string.Format(strings.num_installed_packages, distinct.Count());
+                lblStatus.Text = string.Format(strings.num_installed_packages, distinct.Count()); 
+                this.Activate();
                 PackageGrid.DataSource = distinct;
             }
         }
@@ -212,11 +213,15 @@ namespace Chocolatey.Explorer.View
             {
                 btnInstallUninstall.ImageIndex = 0;
                 btnInstallUninstall.Text = strings.install;
+                btnInstallUninstall.AccessibleName = strings.install;
+                btnInstallUninstall.AccessibleDescription = strings.install_long;
             }
             else
             {
                 btnInstallUninstall.ImageIndex = 1;
                 btnInstallUninstall.Text = strings.uninstall;
+                btnInstallUninstall.AccessibleName = strings.uninstall;
+                btnInstallUninstall.AccessibleDescription = strings.unsinstall_long;
             }
         }
 

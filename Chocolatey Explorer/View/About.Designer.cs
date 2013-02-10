@@ -45,6 +45,7 @@
             // latestVersionBox
             // 
             resources.ApplyResources(this.latestVersionBox, "latestVersionBox");
+            this.latestVersionBox.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.latestVersionBox.Name = "latestVersionBox";
             // 
             // label1
@@ -55,6 +56,7 @@
             // linkLabelChocolatey
             // 
             resources.ApplyResources(this.linkLabelChocolatey, "linkLabelChocolatey");
+            this.linkLabelChocolatey.AccessibleRole = System.Windows.Forms.AccessibleRole.Link;
             this.linkLabelChocolatey.Name = "linkLabelChocolatey";
             this.linkLabelChocolatey.TabStop = true;
             this.linkLabelChocolatey.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelChocolatey_LinkClicked);
@@ -67,6 +69,7 @@
             // linkLabelExplorer
             // 
             resources.ApplyResources(this.linkLabelExplorer, "linkLabelExplorer");
+            this.linkLabelExplorer.AccessibleRole = System.Windows.Forms.AccessibleRole.Link;
             this.linkLabelExplorer.Name = "linkLabelExplorer";
             this.linkLabelExplorer.TabStop = true;
             this.linkLabelExplorer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelExplorer_LinkClicked);
@@ -79,17 +82,20 @@
             // lblVersion
             // 
             resources.ApplyResources(this.lblVersion, "lblVersion");
+            this.lblVersion.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblVersion.Name = "lblVersion";
             // 
             // progressBar
             // 
             resources.ApplyResources(this.progressBar, "progressBar");
+            this.progressBar.AccessibleRole = System.Windows.Forms.AccessibleRole.ProgressBar;
             this.progressBar.Name = "progressBar";
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // linkIcons
             // 
             resources.ApplyResources(this.linkIcons, "linkIcons");
+            this.linkIcons.AccessibleRole = System.Windows.Forms.AccessibleRole.Link;
             this.linkIcons.Name = "linkIcons";
             this.linkIcons.TabStop = true;
             this.linkIcons.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkIcons_LinkClicked);
@@ -102,6 +108,7 @@
             // linkLabelCC
             // 
             resources.ApplyResources(this.linkLabelCC, "linkLabelCC");
+            this.linkLabelCC.AccessibleRole = System.Windows.Forms.AccessibleRole.Link;
             this.linkLabelCC.Name = "linkLabelCC";
             this.linkLabelCC.TabStop = true;
             this.linkLabelCC.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCC_LinkClicked);
@@ -109,6 +116,7 @@
             // About
             // 
             resources.ApplyResources(this, "$this");
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.latestVersionBox);
             this.Controls.Add(this.linkLabelCC);

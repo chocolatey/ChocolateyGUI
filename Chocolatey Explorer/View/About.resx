@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="latestVersionBox.AccessibleName" xml:space="preserve">
+    <value>chocolatey version information</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="latestVersionBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
@@ -133,7 +136,7 @@
     <value>592, 126</value>
   </data>
   <data name="latestVersionBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;latestVersionBox.Name" xml:space="preserve">
     <value>latestVersionBox</value>
@@ -157,7 +160,7 @@
     <value>280, 13</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Chocolatey was written by Rob Reynolds (@ferventcoder)</value>
@@ -174,6 +177,9 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
+  <data name="linkLabelChocolatey.AccessibleName" xml:space="preserve">
+    <value>chocolatey web site</value>
+  </data>
   <data name="linkLabelChocolatey.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -184,7 +190,7 @@
     <value>113, 13</value>
   </data>
   <data name="linkLabelChocolatey.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="linkLabelChocolatey.Text" xml:space="preserve">
     <value>http://chocolatey.org/</value>
@@ -211,7 +217,7 @@
     <value>305, 13</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Chocolatey explorer was written by christiaan baes (@chrissie1)</value>
@@ -228,6 +234,9 @@
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
+  <data name="linkLabelExplorer.AccessibleName" xml:space="preserve">
+    <value>chocolatey explorer web site</value>
+  </data>
   <data name="linkLabelExplorer.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -238,7 +247,7 @@
     <value>239, 13</value>
   </data>
   <data name="linkLabelExplorer.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="linkLabelExplorer.Text" xml:space="preserve">
     <value>https://github.com/chrissie1/chocolatey-Explorer</value>
@@ -265,7 +274,7 @@
     <value>42, 13</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Version</value>
@@ -282,6 +291,9 @@
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="lblVersion.AccessibleName" xml:space="preserve">
+    <value>chocolatey explorer version</value>
+  </data>
   <data name="lblVersion.Location" type="System.Drawing.Point, System.Drawing">
     <value>26, 167</value>
   </data>
@@ -289,7 +301,7 @@
     <value>100, 23</value>
   </data>
   <data name="lblVersion.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;lblVersion.Name" xml:space="preserve">
     <value>lblVersion</value>
@@ -303,6 +315,9 @@
   <data name="&gt;&gt;lblVersion.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="progressBar.AccessibleName" xml:space="preserve">
+    <value>progress bar</value>
+  </data>
   <data name="progressBar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
   </data>
@@ -313,7 +328,7 @@
     <value>592, 23</value>
   </data>
   <data name="progressBar.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>10</value>
   </data>
   <data name="progressBar.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -330,6 +345,9 @@
   <data name="&gt;&gt;progressBar.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="linkIcons.AccessibleName" xml:space="preserve">
+    <value>fat cor iconset website</value>
+  </data>
   <data name="linkIcons.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -340,7 +358,7 @@
     <value>176, 13</value>
   </data>
   <data name="linkIcons.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>5</value>
   </data>
   <data name="linkIcons.Text" xml:space="preserve">
     <value>https://www.fatcow.com/free-icons</value>
@@ -367,7 +385,7 @@
     <value>86, 13</value>
   </data>
   <data name="labelIcons.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>4</value>
   </data>
   <data name="labelIcons.Text" xml:space="preserve">
     <value>Icons by FatCow</value>
@@ -384,6 +402,9 @@
   <data name="&gt;&gt;labelIcons.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="linkLabelCC.AccessibleName" xml:space="preserve">
+    <value>license web site</value>
+  </data>
   <data name="linkLabelCC.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -394,7 +415,7 @@
     <value>80, 13</value>
   </data>
   <data name="linkLabelCC.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>6</value>
   </data>
   <data name="linkLabelCC.Text" xml:space="preserve">
     <value>(CC BY 3.0 US)</value>
@@ -414,6 +435,12 @@
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AccessibleDescription" xml:space="preserve">
+    <value>More information about chocolatey explorer</value>
+  </data>
+  <data name="$this.AccessibleName" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>

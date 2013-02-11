@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
             this.latestVersionBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblChocolatey = new System.Windows.Forms.Label();
             this.linkLabelChocolatey = new System.Windows.Forms.LinkLabel();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblExplorer = new System.Windows.Forms.Label();
             this.linkLabelExplorer = new System.Windows.Forms.LinkLabel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblVersionCaption = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.linkIcons = new System.Windows.Forms.LinkLabel();
@@ -48,10 +48,10 @@
             this.latestVersionBox.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.latestVersionBox.Name = "latestVersionBox";
             // 
-            // label1
+            // lblChocolatey
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.lblChocolatey, "lblChocolatey");
+            this.lblChocolatey.Name = "lblChocolatey";
             // 
             // linkLabelChocolatey
             // 
@@ -61,10 +61,10 @@
             this.linkLabelChocolatey.TabStop = true;
             this.linkLabelChocolatey.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelChocolatey_LinkClicked);
             // 
-            // label2
+            // lblExplorer
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.lblExplorer, "lblExplorer");
+            this.lblExplorer.Name = "lblExplorer";
             // 
             // linkLabelExplorer
             // 
@@ -74,10 +74,10 @@
             this.linkLabelExplorer.TabStop = true;
             this.linkLabelExplorer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelExplorer_LinkClicked);
             // 
-            // label3
+            // lblVersionCaption
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
+            resources.ApplyResources(this.lblVersionCaption, "lblVersionCaption");
+            this.lblVersionCaption.Name = "lblVersionCaption";
             // 
             // lblVersion
             // 
@@ -118,17 +118,17 @@
             resources.ApplyResources(this, "$this");
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.latestVersionBox);
-            this.Controls.Add(this.linkLabelCC);
-            this.Controls.Add(this.linkIcons);
-            this.Controls.Add(this.labelIcons);
-            this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.lblVersion);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.linkLabelExplorer);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblChocolatey);
             this.Controls.Add(this.linkLabelChocolatey);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblExplorer);
+            this.Controls.Add(this.linkLabelExplorer);
+            this.Controls.Add(this.labelIcons);
+            this.Controls.Add(this.linkIcons);
+            this.Controls.Add(this.linkLabelCC);
+            this.Controls.Add(this.lblVersionCaption);
+            this.Controls.Add(this.lblVersion);
+            this.Controls.Add(this.latestVersionBox);
+            this.Controls.Add(this.progressBar);
             this.Name = "About";
             this.Load += new System.EventHandler(this.About_Load);
             this.ResumeLayout(false);
@@ -139,11 +139,11 @@
         #endregion
 
         private System.Windows.Forms.TextBox latestVersionBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblChocolatey;
         private System.Windows.Forms.LinkLabel linkLabelChocolatey;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblExplorer;
         private System.Windows.Forms.LinkLabel linkLabelExplorer;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblVersionCaption;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.LinkLabel linkIcons;

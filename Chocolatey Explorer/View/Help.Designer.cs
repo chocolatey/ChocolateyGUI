@@ -51,8 +51,8 @@
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.progressBar, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.progressBar, 0, 1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // Help

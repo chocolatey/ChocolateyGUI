@@ -159,62 +159,47 @@
   <data name="&gt;&gt;pictureBoxLogo.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="groupBox1.AccessibleName" xml:space="preserve">
+  <data name="groupVersionDownloads.AccessibleDescription" xml:space="preserve">
     <value />
   </data>
-  <data name="groupBox1.AutoSize" type="System.Boolean, mscorlib">
+  <data name="groupVersionDownloads.AccessibleName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupVersionDownloads.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;lblDownloads.Name" xml:space="preserve">
-    <value>lblDownloads</value>
+  <data name="lblVersionDownloads.AccessibleDescription" xml:space="preserve">
+    <value>number of downloads for the newsest version of the selected package</value>
   </data>
-  <data name="&gt;&gt;lblDownloads.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lblVersionDownloads.AccessibleName" xml:space="preserve">
+    <value>version downloads</value>
   </data>
-  <data name="&gt;&gt;lblDownloads.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="lblVersionDownloads.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="&gt;&gt;lblDownloads.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="lblVersionDownloads.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="groupBox1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
+  <data name="lblVersionDownloads.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
   </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 148</value>
+  <data name="lblVersionDownloads.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 39</value>
+  <data name="lblVersionDownloads.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
   </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+  <data name="lblVersionDownloads.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Total Downloads</value>
+  <data name="lblVersionDownloads.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
   </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="lblVersionDownloads.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>tableLayoutPanel3</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="groupBox2.AccessibleDescription" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox2.AccessibleName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="lblVersionDownloads.Text" xml:space="preserve">
+    <value>n.a.</value>
   </data>
   <data name="&gt;&gt;lblVersionDownloads.Name" xml:space="preserve">
     <value>lblVersionDownloads</value>
@@ -223,40 +208,154 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblVersionDownloads.Parent" xml:space="preserve">
-    <value>groupBox2</value>
+    <value>groupVersionDownloads</value>
   </data>
   <data name="&gt;&gt;lblVersionDownloads.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="groupBox2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="groupVersionDownloads.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="groupVersionDownloads.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 103</value>
   </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="groupVersionDownloads.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 39</value>
   </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+  <data name="groupVersionDownloads.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="groupBox2.Text" xml:space="preserve">
+  <data name="groupVersionDownloads.Text" xml:space="preserve">
     <value>Version Downloads</value>
   </data>
-  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
-    <value>groupBox2</value>
+  <data name="&gt;&gt;groupVersionDownloads.Name" xml:space="preserve">
+    <value>groupVersionDownloads</value>
   </data>
-  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
+  <data name="&gt;&gt;groupVersionDownloads.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;groupVersionDownloads.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
   </data>
-  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;groupVersionDownloads.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupTotalDownloads.AccessibleName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupTotalDownloads.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblDownloads.AccessibleDescription" xml:space="preserve">
+    <value>number of total downloads of the selected package</value>
+  </data>
+  <data name="lblDownloads.AccessibleName" xml:space="preserve">
+    <value>total downloads</value>
+  </data>
+  <data name="lblDownloads.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblDownloads.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lblDownloads.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
+  </data>
+  <data name="lblDownloads.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblDownloads.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="lblDownloads.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="lblDownloads.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
+  </data>
+  <data name="lblDownloads.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lblDownloads.Text" xml:space="preserve">
+    <value>n.a.</value>
+  </data>
+  <data name="&gt;&gt;lblDownloads.Name" xml:space="preserve">
+    <value>lblDownloads</value>
+  </data>
+  <data name="&gt;&gt;lblDownloads.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblDownloads.Parent" xml:space="preserve">
+    <value>groupTotalDownloads</value>
+  </data>
+  <data name="&gt;&gt;lblDownloads.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupTotalDownloads.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="groupTotalDownloads.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="groupTotalDownloads.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 148</value>
+  </data>
+  <data name="groupTotalDownloads.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 39</value>
+  </data>
+  <data name="groupTotalDownloads.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="groupTotalDownloads.Text" xml:space="preserve">
+    <value>Total Downloads</value>
+  </data>
+  <data name="&gt;&gt;groupTotalDownloads.Name" xml:space="preserve">
+    <value>groupTotalDownloads</value>
+  </data>
+  <data name="&gt;&gt;groupTotalDownloads.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupTotalDownloads.Parent" xml:space="preserve">
+    <value>tableLayoutPanel3</value>
+  </data>
+  <data name="&gt;&gt;groupTotalDownloads.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="groupBox3.AutoSize" type="System.Boolean, mscorlib">
+  <data name="groupLastUpdated.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="lblUpdated.AccessibleDescription" xml:space="preserve">
+    <value>date when the selected package has been updated</value>
+  </data>
+  <data name="lblUpdated.AccessibleName" xml:space="preserve">
+    <value>last updated</value>
+  </data>
+  <data name="lblUpdated.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblUpdated.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lblUpdated.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
+  </data>
+  <data name="lblUpdated.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblUpdated.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="lblUpdated.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="lblUpdated.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
+  </data>
+  <data name="lblUpdated.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lblUpdated.Text" xml:space="preserve">
+    <value>n.a.</value>
   </data>
   <data name="&gt;&gt;lblUpdated.Name" xml:space="preserve">
     <value>lblUpdated</value>
@@ -265,43 +364,76 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblUpdated.Parent" xml:space="preserve">
-    <value>groupBox3</value>
+    <value>groupLastUpdated</value>
   </data>
   <data name="&gt;&gt;lblUpdated.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="groupBox3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="groupLastUpdated.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="groupBox3.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="groupLastUpdated.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="groupLastUpdated.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 193</value>
   </data>
-  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="groupLastUpdated.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 39</value>
   </data>
-  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
+  <data name="groupLastUpdated.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <data name="groupBox3.Text" xml:space="preserve">
+  <data name="groupLastUpdated.Text" xml:space="preserve">
     <value>Last Updated</value>
   </data>
-  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
-    <value>groupBox3</value>
+  <data name="&gt;&gt;groupLastUpdated.Name" xml:space="preserve">
+    <value>groupLastUpdated</value>
   </data>
-  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
+  <data name="&gt;&gt;groupLastUpdated.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;groupLastUpdated.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
   </data>
-  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;groupLastUpdated.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="groupBox4.AutoSize" type="System.Boolean, mscorlib">
+  <data name="groupPackageSize.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="lblPackageSize.AccessibleDescription" xml:space="preserve">
+    <value>filesize of the the selected package in MB</value>
+  </data>
+  <data name="lblPackageSize.AccessibleName" xml:space="preserve">
+    <value>package size</value>
+  </data>
+  <data name="lblPackageSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblPackageSize.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lblPackageSize.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
+  </data>
+  <data name="lblPackageSize.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblPackageSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="lblPackageSize.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="lblPackageSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
+  </data>
+  <data name="lblPackageSize.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lblPackageSize.Text" xml:space="preserve">
+    <value>n.a.</value>
   </data>
   <data name="&gt;&gt;lblPackageSize.Name" xml:space="preserve">
     <value>lblPackageSize</value>
@@ -310,39 +442,39 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblPackageSize.Parent" xml:space="preserve">
-    <value>groupBox4</value>
+    <value>groupPackageSize</value>
   </data>
   <data name="&gt;&gt;lblPackageSize.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="groupBox4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="groupPackageSize.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="groupBox4.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="groupPackageSize.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="groupPackageSize.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 238</value>
   </data>
-  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="groupPackageSize.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 39</value>
   </data>
-  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
+  <data name="groupPackageSize.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
   </data>
-  <data name="groupBox4.Text" xml:space="preserve">
+  <data name="groupPackageSize.Text" xml:space="preserve">
     <value>Package Size</value>
   </data>
-  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
-    <value>groupBox4</value>
+  <data name="&gt;&gt;groupPackageSize.Name" xml:space="preserve">
+    <value>groupPackageSize</value>
   </data>
-  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
+  <data name="&gt;&gt;groupPackageSize.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;groupPackageSize.Parent" xml:space="preserve">
     <value>tableLayoutPanel3</value>
   </data>
-  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;groupPackageSize.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="linkGalleryDetails.AccessibleDescription" xml:space="preserve">
@@ -390,51 +522,6 @@
   <data name="&gt;&gt;linkGalleryDetails.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="linkLicense.AccessibleDescription" xml:space="preserve">
-    <value>license web page of the selected package</value>
-  </data>
-  <data name="linkLicense.AccessibleName" xml:space="preserve">
-    <value>license</value>
-  </data>
-  <data name="linkLicense.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="linkLicense.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="linkLicense.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="linkLicense.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt</value>
-  </data>
-  <data name="linkLicense.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="linkLicense.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 320</value>
-  </data>
-  <data name="linkLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 20</value>
-  </data>
-  <data name="linkLicense.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="linkLicense.Text" xml:space="preserve">
-    <value>License</value>
-  </data>
-  <data name="&gt;&gt;linkLicense.Name" xml:space="preserve">
-    <value>linkLicense</value>
-  </data>
-  <data name="&gt;&gt;linkLicense.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;linkLicense.Parent" xml:space="preserve">
-    <value>tableLayoutPanel3</value>
-  </data>
-  <data name="&gt;&gt;linkLicense.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
   <data name="linkProjectSite.AccessibleDescription" xml:space="preserve">
     <value>project web page of the selected package</value>
   </data>
@@ -478,6 +565,51 @@
     <value>tableLayoutPanel3</value>
   </data>
   <data name="&gt;&gt;linkProjectSite.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="linkLicense.AccessibleDescription" xml:space="preserve">
+    <value>license web page of the selected package</value>
+  </data>
+  <data name="linkLicense.AccessibleName" xml:space="preserve">
+    <value>license</value>
+  </data>
+  <data name="linkLicense.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkLicense.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="linkLicense.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="linkLicense.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="linkLicense.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="linkLicense.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 320</value>
+  </data>
+  <data name="linkLicense.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 20</value>
+  </data>
+  <data name="linkLicense.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="linkLicense.Text" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="&gt;&gt;linkLicense.Name" xml:space="preserve">
+    <value>linkLicense</value>
+  </data>
+  <data name="&gt;&gt;linkLicense.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkLicense.Parent" xml:space="preserve">
+    <value>tableLayoutPanel3</value>
+  </data>
+  <data name="&gt;&gt;linkLicense.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
   <data name="linkAbuse.AccessibleDescription" xml:space="preserve">
@@ -553,187 +685,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanel3.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pictureBoxLogo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupBox1" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupBox2" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupBox3" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupBox4" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkGalleryDetails" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkLicense" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkProjectSite" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkAbuse" Row="8" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="lblDownloads.AccessibleDescription" xml:space="preserve">
-    <value>number of total downloads of the selected package</value>
-  </data>
-  <data name="lblDownloads.AccessibleName" xml:space="preserve">
-    <value>total downloads</value>
-  </data>
-  <data name="lblDownloads.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblDownloads.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lblDownloads.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
-  </data>
-  <data name="lblDownloads.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblDownloads.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="lblDownloads.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="lblDownloads.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 20</value>
-  </data>
-  <data name="lblDownloads.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="lblDownloads.Text" xml:space="preserve">
-    <value>n.a.</value>
-  </data>
-  <data name="&gt;&gt;lblDownloads.Name" xml:space="preserve">
-    <value>lblDownloads</value>
-  </data>
-  <data name="&gt;&gt;lblDownloads.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblDownloads.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;lblDownloads.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lblVersionDownloads.AccessibleDescription" xml:space="preserve">
-    <value>number of downloads for the newsest version of the selected package</value>
-  </data>
-  <data name="lblVersionDownloads.AccessibleName" xml:space="preserve">
-    <value>version downloads</value>
-  </data>
-  <data name="lblVersionDownloads.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblVersionDownloads.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lblVersionDownloads.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
-  </data>
-  <data name="lblVersionDownloads.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblVersionDownloads.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="lblVersionDownloads.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="lblVersionDownloads.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 20</value>
-  </data>
-  <data name="lblVersionDownloads.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="lblVersionDownloads.Text" xml:space="preserve">
-    <value>n.a.</value>
-  </data>
-  <data name="&gt;&gt;lblVersionDownloads.Name" xml:space="preserve">
-    <value>lblVersionDownloads</value>
-  </data>
-  <data name="&gt;&gt;lblVersionDownloads.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblVersionDownloads.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;lblVersionDownloads.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lblUpdated.AccessibleDescription" xml:space="preserve">
-    <value>date when the selected package has been updated</value>
-  </data>
-  <data name="lblUpdated.AccessibleName" xml:space="preserve">
-    <value>last updated</value>
-  </data>
-  <data name="lblUpdated.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblUpdated.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lblUpdated.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
-  </data>
-  <data name="lblUpdated.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblUpdated.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="lblUpdated.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="lblUpdated.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 20</value>
-  </data>
-  <data name="lblUpdated.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="lblUpdated.Text" xml:space="preserve">
-    <value>n.a.</value>
-  </data>
-  <data name="&gt;&gt;lblUpdated.Name" xml:space="preserve">
-    <value>lblUpdated</value>
-  </data>
-  <data name="&gt;&gt;lblUpdated.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblUpdated.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;lblUpdated.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lblPackageSize.AccessibleDescription" xml:space="preserve">
-    <value>filesize of the the selected package in MB</value>
-  </data>
-  <data name="lblPackageSize.AccessibleName" xml:space="preserve">
-    <value>package size</value>
-  </data>
-  <data name="lblPackageSize.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblPackageSize.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lblPackageSize.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
-  </data>
-  <data name="lblPackageSize.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblPackageSize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="lblPackageSize.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="lblPackageSize.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 20</value>
-  </data>
-  <data name="lblPackageSize.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="lblPackageSize.Text" xml:space="preserve">
-    <value>n.a.</value>
-  </data>
-  <data name="&gt;&gt;lblPackageSize.Name" xml:space="preserve">
-    <value>lblPackageSize</value>
-  </data>
-  <data name="&gt;&gt;lblPackageSize.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblPackageSize.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;lblPackageSize.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pictureBoxLogo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupVersionDownloads" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupTotalDownloads" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupLastUpdated" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupPackageSize" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkGalleryDetails" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkProjectSite" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkLicense" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkAbuse" Row="8" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tableLayoutPanel1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -741,546 +693,11 @@
   <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="groupBox6.AccessibleDescription" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox6.AccessibleName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox6.AutoSize" type="System.Boolean, mscorlib">
+  <data name="titleBar.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;dependenciesList.Name" xml:space="preserve">
-    <value>dependenciesList</value>
-  </data>
-  <data name="&gt;&gt;dependenciesList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dependenciesList.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;dependenciesList.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="groupBox6.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 296</value>
-  </data>
-  <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>435, 64</value>
-  </data>
-  <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="groupBox6.Text" xml:space="preserve">
-    <value>Dependencies</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.Name" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tableLayoutPanel4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="tableLayoutPanel4.ColumnCount" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;lblServerVersion.Name" xml:space="preserve">
-    <value>lblServerVersion</value>
-  </data>
-  <data name="&gt;&gt;lblServerVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblServerVersion.Parent" xml:space="preserve">
-    <value>tableLayoutPanel4</value>
-  </data>
-  <data name="&gt;&gt;lblServerVersion.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Name" xml:space="preserve">
-    <value>pictureBox1</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
-    <value>tableLayoutPanel4</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lblInstalledVersion.Name" xml:space="preserve">
-    <value>lblInstalledVersion</value>
-  </data>
-  <data name="&gt;&gt;lblInstalledVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblInstalledVersion.Parent" xml:space="preserve">
-    <value>tableLayoutPanel4</value>
-  </data>
-  <data name="&gt;&gt;lblInstalledVersion.ZOrder" xml:space="preserve">
+  <data name="titleBar.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Name" xml:space="preserve">
-    <value>pictureBox2</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Parent" xml:space="preserve">
-    <value>tableLayoutPanel4</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tableLayoutPanel4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tableLayoutPanel4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 37</value>
-  </data>
-  <data name="tableLayoutPanel4.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tableLayoutPanel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>435, 32</value>
-  </data>
-  <data name="tableLayoutPanel4.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel4.Name" xml:space="preserve">
-    <value>tableLayoutPanel4</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel4.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tableLayoutPanel4.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblServerVersion" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lblInstalledVersion" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox2" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,32,Percent,50,Absolute,32,Percent,50" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="txtDescription.AccessibleDescription" xml:space="preserve">
-    <value>full description of the selected package</value>
-  </data>
-  <data name="txtDescription.AccessibleName" xml:space="preserve">
-    <value>description</value>
-  </data>
-  <data name="txtDescription.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="txtDescription.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="txtDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 77</value>
-  </data>
-  <data name="txtDescription.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 5, 3, 5</value>
-  </data>
-  <data name="txtDescription.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txtDescription.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="txtDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>435, 141</value>
-  </data>
-  <data name="txtDescription.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="txtDescription.Text" xml:space="preserve">
-    <value>Package Description</value>
-  </data>
-  <data name="&gt;&gt;txtDescription.Name" xml:space="preserve">
-    <value>txtDescription</value>
-  </data>
-  <data name="&gt;&gt;txtDescription.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtDescription.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;txtDescription.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tableLayoutPanel5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="tableLayoutPanel5.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;lblName.Name" xml:space="preserve">
-    <value>lblName</value>
-  </data>
-  <data name="&gt;&gt;lblName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblName.Parent" xml:space="preserve">
-    <value>tableLayoutPanel5</value>
-  </data>
-  <data name="&gt;&gt;lblName.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;lblAuthor.Name" xml:space="preserve">
-    <value>lblAuthor</value>
-  </data>
-  <data name="&gt;&gt;lblAuthor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblAuthor.Parent" xml:space="preserve">
-    <value>tableLayoutPanel5</value>
-  </data>
-  <data name="&gt;&gt;lblAuthor.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tableLayoutPanel5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tableLayoutPanel5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 5</value>
-  </data>
-  <data name="tableLayoutPanel5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="tableLayoutPanel5.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tableLayoutPanel5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>441, 29</value>
-  </data>
-  <data name="tableLayoutPanel5.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel5.Name" xml:space="preserve">
-    <value>tableLayoutPanel5</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel5.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel5.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tableLayoutPanel5.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblName" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lblAuthor" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="groupBox5.AccessibleDescription" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox5.AccessibleName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;tagList.Name" xml:space="preserve">
-    <value>tagList</value>
-  </data>
-  <data name="&gt;&gt;tagList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tagList.Parent" xml:space="preserve">
-    <value>groupBox5</value>
-  </data>
-  <data name="&gt;&gt;tagList.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="groupBox5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 226</value>
-  </data>
-  <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>435, 64</value>
-  </data>
-  <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="groupBox5.Text" xml:space="preserve">
-    <value>Tags</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.Name" xml:space="preserve">
-    <value>groupBox5</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="tableLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 3</value>
-  </data>
-  <data name="tableLayoutPanel1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>451, 382</value>
-  </data>
-  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
-    <value>tableLayoutPanel2</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="groupBox6" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanel4" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="txtDescription" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanel5" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupBox5" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,Absolute,70,Absolute,70,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="dependenciesList.AccessibleDescription" xml:space="preserve">
-    <value>dependencies of the selected package</value>
-  </data>
-  <data name="dependenciesList.AccessibleName" xml:space="preserve">
-    <value>dependencies</value>
-  </data>
-  <data name="dependenciesList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="dependenciesList.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="dependenciesList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="dependenciesList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="dependenciesList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>429, 45</value>
-  </data>
-  <data name="dependenciesList.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;dependenciesList.Name" xml:space="preserve">
-    <value>dependenciesList</value>
-  </data>
-  <data name="&gt;&gt;dependenciesList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dependenciesList.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;dependenciesList.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lblServerVersion.AccessibleDescription" xml:space="preserve">
-    <value>newest available version of the selected package</value>
-  </data>
-  <data name="lblServerVersion.AccessibleName" xml:space="preserve">
-    <value>server version</value>
-  </data>
-  <data name="lblServerVersion.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblServerVersion.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lblServerVersion.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt</value>
-  </data>
-  <data name="lblServerVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblServerVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 0</value>
-  </data>
-  <data name="lblServerVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 32</value>
-  </data>
-  <data name="lblServerVersion.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="lblServerVersion.Text" xml:space="preserve">
-    <value>server version</value>
-  </data>
-  <data name="lblServerVersion.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;lblServerVersion.Name" xml:space="preserve">
-    <value>lblServerVersion</value>
-  </data>
-  <data name="&gt;&gt;lblServerVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblServerVersion.Parent" xml:space="preserve">
-    <value>tableLayoutPanel4</value>
-  </data>
-  <data name="&gt;&gt;lblServerVersion.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
-        j/wB5rdTbUfJUMYAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="pictureBox1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="pictureBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>32, 32</value>
-  </data>
-  <data name="pictureBox1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Name" xml:space="preserve">
-    <value>pictureBox1</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
-    <value>tableLayoutPanel4</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="lblInstalledVersion.AccessibleDescription" xml:space="preserve">
-    <value>installed version of the selected package</value>
-  </data>
-  <data name="lblInstalledVersion.AccessibleName" xml:space="preserve">
-    <value>installed version</value>
-  </data>
-  <data name="lblInstalledVersion.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblInstalledVersion.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lblInstalledVersion.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt</value>
-  </data>
-  <data name="lblInstalledVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblInstalledVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 0</value>
-  </data>
-  <data name="lblInstalledVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 32</value>
-  </data>
-  <data name="lblInstalledVersion.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="lblInstalledVersion.Text" xml:space="preserve">
-    <value>installed version</value>
-  </data>
-  <data name="lblInstalledVersion.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;lblInstalledVersion.Name" xml:space="preserve">
-    <value>lblInstalledVersion</value>
-  </data>
-  <data name="&gt;&gt;lblInstalledVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblInstalledVersion.Parent" xml:space="preserve">
-    <value>tableLayoutPanel4</value>
-  </data>
-  <data name="&gt;&gt;lblInstalledVersion.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pictureBox2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="pictureBox2.InitialImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="pictureBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>217, 0</value>
-  </data>
-  <data name="pictureBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="pictureBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>32, 32</value>
-  </data>
-  <data name="pictureBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Name" xml:space="preserve">
-    <value>pictureBox2</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Parent" xml:space="preserve">
-    <value>tableLayoutPanel4</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>3</value>
   </data>
   <data name="lblName.AccessibleDescription" xml:space="preserve">
     <value>title of the selected package</value>
@@ -1325,7 +742,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblName.Parent" xml:space="preserve">
-    <value>tableLayoutPanel5</value>
+    <value>titleBar</value>
   </data>
   <data name="&gt;&gt;lblName.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1373,10 +790,317 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblAuthor.Parent" xml:space="preserve">
-    <value>tableLayoutPanel5</value>
+    <value>titleBar</value>
   </data>
   <data name="&gt;&gt;lblAuthor.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="titleBar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="titleBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 5</value>
+  </data>
+  <data name="titleBar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="titleBar.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="titleBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>441, 29</value>
+  </data>
+  <data name="titleBar.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;titleBar.Name" xml:space="preserve">
+    <value>titleBar</value>
+  </data>
+  <data name="&gt;&gt;titleBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;titleBar.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;titleBar.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="titleBar.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblName" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lblAuthor" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="versionBar.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="versionBar.ColumnCount" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="picServerVersion.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        j/wB5rdTbUfJUMYAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="picServerVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="picServerVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="picServerVersion.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="picServerVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 32</value>
+  </data>
+  <data name="picServerVersion.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="picServerVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;picServerVersion.Name" xml:space="preserve">
+    <value>picServerVersion</value>
+  </data>
+  <data name="&gt;&gt;picServerVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;picServerVersion.Parent" xml:space="preserve">
+    <value>versionBar</value>
+  </data>
+  <data name="&gt;&gt;picServerVersion.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblServerVersion.AccessibleDescription" xml:space="preserve">
+    <value>newest available version of the selected package</value>
+  </data>
+  <data name="lblServerVersion.AccessibleName" xml:space="preserve">
+    <value>server version</value>
+  </data>
+  <data name="lblServerVersion.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblServerVersion.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lblServerVersion.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="lblServerVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblServerVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 0</value>
+  </data>
+  <data name="lblServerVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 32</value>
+  </data>
+  <data name="lblServerVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblServerVersion.Text" xml:space="preserve">
+    <value>server version</value>
+  </data>
+  <data name="lblServerVersion.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblServerVersion.Name" xml:space="preserve">
+    <value>lblServerVersion</value>
+  </data>
+  <data name="&gt;&gt;lblServerVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblServerVersion.Parent" xml:space="preserve">
+    <value>versionBar</value>
+  </data>
+  <data name="&gt;&gt;lblServerVersion.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="picInstalledVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="picInstalledVersion.InitialImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="picInstalledVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>217, 0</value>
+  </data>
+  <data name="picInstalledVersion.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="picInstalledVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 32</value>
+  </data>
+  <data name="picInstalledVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;picInstalledVersion.Name" xml:space="preserve">
+    <value>picInstalledVersion</value>
+  </data>
+  <data name="&gt;&gt;picInstalledVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;picInstalledVersion.Parent" xml:space="preserve">
+    <value>versionBar</value>
+  </data>
+  <data name="&gt;&gt;picInstalledVersion.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblInstalledVersion.AccessibleDescription" xml:space="preserve">
+    <value>installed version of the selected package</value>
+  </data>
+  <data name="lblInstalledVersion.AccessibleName" xml:space="preserve">
+    <value>installed version</value>
+  </data>
+  <data name="lblInstalledVersion.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblInstalledVersion.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lblInstalledVersion.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="lblInstalledVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblInstalledVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 0</value>
+  </data>
+  <data name="lblInstalledVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 32</value>
+  </data>
+  <data name="lblInstalledVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="lblInstalledVersion.Text" xml:space="preserve">
+    <value>installed version</value>
+  </data>
+  <data name="lblInstalledVersion.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblInstalledVersion.Name" xml:space="preserve">
+    <value>lblInstalledVersion</value>
+  </data>
+  <data name="&gt;&gt;lblInstalledVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblInstalledVersion.Parent" xml:space="preserve">
+    <value>versionBar</value>
+  </data>
+  <data name="&gt;&gt;lblInstalledVersion.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="versionBar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="versionBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 37</value>
+  </data>
+  <data name="versionBar.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="versionBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>435, 32</value>
+  </data>
+  <data name="versionBar.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;versionBar.Name" xml:space="preserve">
+    <value>versionBar</value>
+  </data>
+  <data name="&gt;&gt;versionBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;versionBar.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;versionBar.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="versionBar.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="picServerVersion" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lblServerVersion" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="picInstalledVersion" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="lblInstalledVersion" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,32,Percent,50,Absolute,32,Percent,50" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="txtDescription.AccessibleDescription" xml:space="preserve">
+    <value>full description of the selected package</value>
+  </data>
+  <data name="txtDescription.AccessibleName" xml:space="preserve">
+    <value>description</value>
+  </data>
+  <data name="txtDescription.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="txtDescription.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="txtDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 77</value>
+  </data>
+  <data name="txtDescription.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 5</value>
+  </data>
+  <data name="txtDescription.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtDescription.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="txtDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>435, 141</value>
+  </data>
+  <data name="txtDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="txtDescription.Text" xml:space="preserve">
+    <value>Package Description</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Name" xml:space="preserve">
+    <value>txtDescription</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;txtDescription.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="groupTags.AccessibleDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupTags.AccessibleName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupTags.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tagList.AccessibleDescription" xml:space="preserve">
     <value>tags of the selected package</value>
@@ -1409,10 +1133,142 @@
     <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tagList.Parent" xml:space="preserve">
-    <value>groupBox5</value>
+    <value>groupTags</value>
   </data>
   <data name="&gt;&gt;tagList.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="groupTags.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="groupTags.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 226</value>
+  </data>
+  <data name="groupTags.Size" type="System.Drawing.Size, System.Drawing">
+    <value>435, 64</value>
+  </data>
+  <data name="groupTags.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="groupTags.Text" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="&gt;&gt;groupTags.Name" xml:space="preserve">
+    <value>groupTags</value>
+  </data>
+  <data name="&gt;&gt;groupTags.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupTags.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;groupTags.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="groupDependencies.AccessibleDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupDependencies.AccessibleName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupDependencies.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="dependenciesList.AccessibleDescription" xml:space="preserve">
+    <value>dependencies of the selected package</value>
+  </data>
+  <data name="dependenciesList.AccessibleName" xml:space="preserve">
+    <value>dependencies</value>
+  </data>
+  <data name="dependenciesList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="dependenciesList.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="dependenciesList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="dependenciesList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="dependenciesList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>429, 45</value>
+  </data>
+  <data name="dependenciesList.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;dependenciesList.Name" xml:space="preserve">
+    <value>dependenciesList</value>
+  </data>
+  <data name="&gt;&gt;dependenciesList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dependenciesList.Parent" xml:space="preserve">
+    <value>groupDependencies</value>
+  </data>
+  <data name="&gt;&gt;dependenciesList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupDependencies.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="groupDependencies.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 296</value>
+  </data>
+  <data name="groupDependencies.Size" type="System.Drawing.Size, System.Drawing">
+    <value>435, 64</value>
+  </data>
+  <data name="groupDependencies.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="groupDependencies.Text" xml:space="preserve">
+    <value>Dependencies</value>
+  </data>
+  <data name="&gt;&gt;groupDependencies.Name" xml:space="preserve">
+    <value>groupDependencies</value>
+  </data>
+  <data name="&gt;&gt;groupDependencies.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupDependencies.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;groupDependencies.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tableLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 3</value>
+  </data>
+  <data name="tableLayoutPanel1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>451, 382</value>
+  </data>
+  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="titleBar" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="versionBar" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="txtDescription" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupTags" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupDependencies" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,Absolute,70,Absolute,70,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tableLayoutPanel2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>

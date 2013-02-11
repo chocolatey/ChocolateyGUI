@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblLib = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtInstallDirectory = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // lblLib
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText;
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.lblLib, "lblLib");
+            this.lblLib.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText;
+            this.lblLib.Name = "lblLib";
             // 
             // btnSave
             // 
@@ -69,10 +69,10 @@
             resources.ApplyResources(this, "$this");
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnBrowse);
+            this.Controls.Add(this.lblLib);
             this.Controls.Add(this.txtInstallDirectory);
+            this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Settings";
             this.Load += new System.EventHandler(this.Settings_Load);
@@ -83,7 +83,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblLib;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox txtInstallDirectory;
         private System.Windows.Forms.Button btnBrowse;

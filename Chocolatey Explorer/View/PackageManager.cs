@@ -294,7 +294,7 @@ namespace Chocolatey.Explorer.View
         {
             packageTabControl.Selected += packageTabControl_Selected;
             mainSplitContainer.Panel1.Enabled = true;
-            tableLayoutPanel1.Enabled = true;
+            buttonRow.Enabled = true;
             mainMenu.Enabled = true;
             PackageGrid.Focus();
         }
@@ -303,7 +303,7 @@ namespace Chocolatey.Explorer.View
         {
             packageTabControl.Selected -= packageTabControl_Selected;
             mainSplitContainer.Panel1.Enabled = false;
-            tableLayoutPanel1.Enabled = false;
+            buttonRow.Enabled = false;
             mainMenu.Enabled = false;
             packageVersionPanel.LockPanel();
         }

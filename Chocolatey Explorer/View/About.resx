@@ -148,34 +148,34 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;latestVersionBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>9</value>
   </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lblChocolatey.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblChocolatey.Location" type="System.Drawing.Point, System.Drawing">
     <value>21, 16</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblChocolatey.Size" type="System.Drawing.Size, System.Drawing">
     <value>280, 13</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblChocolatey.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
+  <data name="lblChocolatey.Text" xml:space="preserve">
     <value>Chocolatey was written by Rob Reynolds (@ferventcoder)</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="&gt;&gt;lblChocolatey.Name" xml:space="preserve">
+    <value>lblChocolatey</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblChocolatey.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblChocolatey.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>10</value>
+  <data name="&gt;&gt;lblChocolatey.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="linkLabelChocolatey.AccessibleName" xml:space="preserve">
     <value>chocolatey web site</value>
@@ -205,34 +205,34 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;linkLabelChocolatey.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>1</value>
   </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lblExplorer.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblExplorer.Location" type="System.Drawing.Point, System.Drawing">
     <value>21, 55</value>
   </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblExplorer.Size" type="System.Drawing.Size, System.Drawing">
     <value>305, 13</value>
   </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblExplorer.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
+  <data name="lblExplorer.Text" xml:space="preserve">
     <value>Chocolatey explorer was written by christiaan baes (@chrissie1)</value>
   </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
+  <data name="&gt;&gt;lblExplorer.Name" xml:space="preserve">
+    <value>lblExplorer</value>
   </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblExplorer.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblExplorer.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="&gt;&gt;lblExplorer.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="linkLabelExplorer.AccessibleName" xml:space="preserve">
     <value>chocolatey explorer web site</value>
@@ -262,34 +262,37 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;linkLabelExplorer.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>3</value>
   </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lblVersionCaption.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblVersionCaption.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblVersionCaption.Location" type="System.Drawing.Point, System.Drawing">
     <value>25, 147</value>
   </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblVersionCaption.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 13</value>
   </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblVersionCaption.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="label3.Text" xml:space="preserve">
+  <data name="lblVersionCaption.Text" xml:space="preserve">
     <value>Version</value>
   </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
+  <data name="&gt;&gt;lblVersionCaption.Name" xml:space="preserve">
+    <value>lblVersionCaption</value>
   </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblVersionCaption.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblVersionCaption.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;lblVersionCaption.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="lblVersion.AccessibleName" xml:space="preserve">
     <value>chocolatey explorer version</value>
@@ -313,7 +316,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblVersion.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <data name="progressBar.AccessibleName" xml:space="preserve">
     <value>progress bar</value>
@@ -343,7 +346,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;progressBar.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>10</value>
   </data>
   <data name="linkIcons.AccessibleName" xml:space="preserve">
     <value>fat cor iconset website</value>
@@ -373,7 +376,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;linkIcons.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="labelIcons.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -400,7 +403,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelIcons.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="linkLabelCC.AccessibleName" xml:space="preserve">
     <value>license web site</value>
@@ -430,7 +433,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;linkLabelCC.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>6</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

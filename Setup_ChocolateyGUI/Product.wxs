@@ -67,6 +67,9 @@
       <Component Id="sources.xml" Guid="f8164f91-fa5c-0004-0001-9beb5a044699">
         <File Id="sources.xml" Source="$(var.Chocolatey.Explorer.TargetDir)\sources.xml" KeyPath="yes"/>
       </Component>
+      <Component Id="log4net.config" Guid="f8164f91-fa5c-0004-0001-9beb5b044699">
+        <File Id="log4net.config" Source="$(var.Chocolatey.Explorer.TargetDir)\log4net.config" KeyPath="yes"/>
+      </Component>
 		</ComponentGroup>
 	</Fragment>
 </Wix>

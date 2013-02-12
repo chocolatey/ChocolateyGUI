@@ -52,12 +52,12 @@
             this.lblServerVersion = new System.Windows.Forms.Label();
             this.picInstalledVersion = new System.Windows.Forms.PictureBox();
             this.lblInstalledVersion = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.TextBox();
             this.groupTags = new System.Windows.Forms.GroupBox();
             this.tagList = new System.Windows.Forms.ListView();
             this.groupDependencies = new System.Windows.Forms.GroupBox();
             this.dependenciesList = new System.Windows.Forms.ListView();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtDescription = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.groupVersionDownloads.SuspendLayout();
@@ -244,6 +244,15 @@
             this.lblInstalledVersion.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblInstalledVersion.Name = "lblInstalledVersion";
             // 
+            // txtDescription
+            // 
+            this.txtDescription.AcceptsReturn = true;
+            resources.ApplyResources(this.txtDescription, "txtDescription");
+            this.txtDescription.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
+            this.txtDescription.Cursor = System.Windows.Forms.Cursors.Default;
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.ReadOnly = true;
+            // 
             // groupTags
             // 
             resources.ApplyResources(this.groupTags, "groupTags");
@@ -257,11 +266,14 @@
             this.tagList.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
             this.tagList.BackColor = System.Drawing.SystemColors.Control;
             this.tagList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tagList.GridLines = true;
             this.tagList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.tagList.MultiSelect = false;
             this.tagList.Name = "tagList";
             this.tagList.ShowGroups = false;
+            this.tagList.TileSize = new System.Drawing.Size(40, 20);
             this.tagList.UseCompatibleStateImageBehavior = false;
+            this.tagList.View = System.Windows.Forms.View.SmallIcon;
             // 
             // groupDependencies
             // 
@@ -280,6 +292,7 @@
             this.dependenciesList.Name = "dependenciesList";
             this.dependenciesList.ShowGroups = false;
             this.dependenciesList.UseCompatibleStateImageBehavior = false;
+            this.dependenciesList.View = System.Windows.Forms.View.SmallIcon;
             // 
             // tableLayoutPanel2
             // 
@@ -287,15 +300,6 @@
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            // 
-            // txtDescription
-            // 
-            this.txtDescription.AcceptsReturn = true;
-            resources.ApplyResources(this.txtDescription, "txtDescription");
-            this.txtDescription.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
-            this.txtDescription.Cursor = System.Windows.Forms.Cursors.Default;
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.ReadOnly = true;
             // 
             // PackageVersionPanel
             // 

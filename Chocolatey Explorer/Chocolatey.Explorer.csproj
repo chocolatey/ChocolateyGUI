@@ -219,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="chocolateyicon.ico" />
+    <Content Include="Resources\folder_small.png" />
     <None Include="Resources\packageicon_default.png" />
     <None Include="Resources\chocolateyicon.ico" />
     <None Include="Resources\chocolateyicon_small.png" />

@@ -332,7 +332,7 @@ namespace Chocolatey.Explorer.View
         {
             DataGridViewRow rowFound = PackageGrid.Rows.OfType<DataGridViewRow>()
                     .FirstOrDefault(row => row.Cells.OfType<DataGridViewCell>()
-                    .Any(cell => cell.ColumnIndex == 0 && ((String)cell.Value).StartsWith(SearchPackages.Text)));
+                    .Any(cell => cell.ColumnIndex == 0 && ((String)cell.Value).StartsWith(SearchPackages.Text, StringComparison.OrdinalIgnoreCase)));
 
             if (rowFound != null)
             {

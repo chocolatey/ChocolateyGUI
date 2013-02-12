@@ -166,7 +166,7 @@
             this.PackageGrid.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
             this.PackageGrid.AllowUserToAddRows = false;
             this.PackageGrid.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             this.PackageGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.PackageGrid.BackgroundColor = System.Drawing.SystemColors.Control;
             this.PackageGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;

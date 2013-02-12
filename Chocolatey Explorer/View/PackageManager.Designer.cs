@@ -48,12 +48,13 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InstalledVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.searchBar = new System.Windows.Forms.Panel();
-            this.SearchPackages = new System.Windows.Forms.TextBox();
+            this.searchPackages = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.packageTabControl = new System.Windows.Forms.TabControl();
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.tabInstalled = new System.Windows.Forms.TabPage();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
+            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
             this.buttonRow = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
@@ -62,7 +63,6 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -237,16 +237,16 @@
             // 
             // searchBar
             // 
-            this.searchBar.Controls.Add(this.SearchPackages);
+            this.searchBar.Controls.Add(this.searchPackages);
             this.searchBar.Controls.Add(this.label1);
             resources.ApplyResources(this.searchBar, "searchBar");
             this.searchBar.Name = "searchBar";
             // 
-            // SearchPackages
+            // searchPackages
             // 
-            resources.ApplyResources(this.SearchPackages, "SearchPackages");
-            this.SearchPackages.Name = "SearchPackages";
-            this.SearchPackages.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            resources.ApplyResources(this.searchPackages, "searchPackages");
+            this.searchPackages.Name = "searchPackages";
+            this.searchPackages.TextChanged += new System.EventHandler(this.searchPackages_TextChanged);
             // 
             // label1
             // 
@@ -285,6 +285,11 @@
             this.packageTabsImageList.TransparentColor = System.Drawing.Color.Transparent;
             this.packageTabsImageList.Images.SetKeyName(0, "chocolateyicon_small.png");
             this.packageTabsImageList.Images.SetKeyName(1, "monitor.png");
+            // 
+            // packageVersionPanel
+            // 
+            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
+            this.packageVersionPanel.Name = "packageVersionPanel";
             // 
             // buttonRow
             // 
@@ -349,11 +354,6 @@
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Spring = true;
             // 
-            // packageVersionPanel
-            // 
-            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
-            this.packageVersionPanel.Name = "packageVersionPanel";
-            // 
             // PackageManager
             // 
             resources.ApplyResources(this, "$this");
@@ -413,7 +413,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn InstalledVersion;
         private System.Windows.Forms.Panel searchBar;
-        private System.Windows.Forms.TextBox SearchPackages;
+        private System.Windows.Forms.TextBox searchPackages;
         private System.Windows.Forms.Label label1;
     }
 }

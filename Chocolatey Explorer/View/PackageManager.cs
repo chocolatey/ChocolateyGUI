@@ -201,9 +201,7 @@ namespace Chocolatey.Explorer.View
 
             if (charIndex.Count() > 0)
             {
-                PackageGrid.CurrentCell = PackageGrid.Rows[charIndex.First()].Cells[0];
-                PackageGrid.FirstDisplayedScrollingRowIndex = charIndex.First();
-                PackageGrid.Rows[charIndex.First()].Selected = true;
+                selectPackageGridRow(charIndex.First());
             }
         }
 
@@ -237,7 +235,7 @@ namespace Chocolatey.Explorer.View
         private void QueryAvailablePackges()
         {
             DisableUserInteraction();
-            SearchPackages.Text = "";
+            searchPackages.Text = "";
             SetStatus(strings.getting_available_packages);
             packageTabControl.SelectedTab = tabAvailable;
             lblProgressbar.Style = ProgressBarStyle.Marquee;
@@ -248,7 +246,7 @@ namespace Chocolatey.Explorer.View
         private void QueryInstalledPackages()
         {
             var settings = new Properties.Settings();
-            SearchPackages.Text = "";
+            searchPackages.Text = "";
             var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
             if (!System.IO.Directory.Exists(expandedLibDirectory))
             {
@@ -328,17 +326,23 @@ namespace Chocolatey.Explorer.View
             lblProgressbar.Visible = false;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void searchPackages_TextChanged(object sender, EventArgs e)
         {
             DataGridViewRow rowFound = PackageGrid.Rows.OfType<DataGridViewRow>()
                     .FirstOrDefault(row => row.Cells.OfType<DataGridViewCell>()
-                    .Any(cell => cell.ColumnIndex == 0 && ((String)cell.Value).StartsWith(SearchPackages.Text, StringComparison.OrdinalIgnoreCase)));
+                    .Any(cell => cell.ColumnIndex == 0 && ((String)cell.Value).StartsWith(searchPackages.Text, StringComparison.OrdinalIgnoreCase)));
 
             if (rowFound != null)
             {
-                PackageGrid.Rows[rowFound.Index].Selected = true;
-                PackageGrid.FirstDisplayedScrollingRowIndex = rowFound.Index;
+                selectPackageGridRow(rowFound.Index);
             }
+        }
+
+        private void selectPackageGridRow(int rowIndex)
+        {
+            PackageGrid.Rows[rowIndex].Selected = true;
+            PackageGrid.FirstDisplayedScrollingRowIndex = rowIndex;
+            PackageGrid.CurrentCell = PackageGrid.Rows[rowIndex].Cells[0];
         }
     }
 }

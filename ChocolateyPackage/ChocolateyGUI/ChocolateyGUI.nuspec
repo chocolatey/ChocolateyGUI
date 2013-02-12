@@ -15,6 +15,10 @@ ChocolateyGUI is a nice GUI on top of the chocolatey commanline tool.
 It let's you install, upgrade and uninstall packages.
 It shows you the available packages and it shows the installed packeges.
 It shows all the information about a package.
+
+Due to a dependency on the Windows Management Framework, this package will 
+only work correctly on Windows 7 SP1, Windows Server 2008 R2 SP1 and Windows 
+Server 2008 SP2 and above.
 	</description>
     <summary>A GUI for Chocolatey</summary>
 	<releaseNotes>
@@ -48,5 +52,8 @@ It shows all the information about a package.
 	* First working version
 	</releaseNotes>
     <tags>ChocolateyGUI chocolatey admin</tags>
+    <dependencies>
+      <dependency id="PowerShell" />
+    </dependencies>	
   </metadata>
 </package>

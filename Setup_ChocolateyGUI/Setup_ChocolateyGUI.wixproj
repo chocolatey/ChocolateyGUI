@@ -6,9 +6,9 @@
     <WIX Condition="'$(SolutionRoot)' != ''">$(SolutionRoot)\$(WIXRoot)</WIX>
     <WixTargetsPath Condition="'$(WixTargetsPath)' == ''">$(WIX)Wix.targets</WixTargetsPath>
     <WixCATargetsPath Condition="'$(WixCATargetsPath)' == ''">$(WIX)Wix.ca.targets</WixCATargetsPath>
-    <WixToolPath Condition="'$(WixToolPath)' == ''">$(WIX)bin\</WixToolPath>
+    <WixToolPath Condition="'$(WixToolPath)' == ''">$(WIX)tools\</WixToolPath>
     <!-- Relative to the targets file that defines the UsingTask element is defined -->
-    <WixTasksPath>bin\WixTasks.dll</WixTasksPath>
+    <WixTasksPath>tools\WixTasks.dll</WixTasksPath>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>

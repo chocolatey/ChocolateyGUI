@@ -21,7 +21,7 @@ namespace Chocolatey.Explorer.Services
 
         public PackageService(IRun powershell, ISourceService sourceService)
         {
-            _powershellAsync = new RunAsync();
+			_powershellAsync = powershell;
             _sourceService = sourceService;
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;

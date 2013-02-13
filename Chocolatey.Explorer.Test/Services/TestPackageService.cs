@@ -27,7 +27,7 @@ namespace Chocolatey.Explorer.Test.Services
             sourceService.Expect(x => x.Source)
                 .Return("test");
             _service.InstallPackage("test");
-            powershell.AssertWasCalled(mock => mock.Run("cup test -source test"));
+            powershell.AssertWasCalled(mock => mock.Run("cinst test -source test"));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Chocolatey.Explorer.Test.Services
             sourceService.Expect(x => x.Source)
                 .Return("test");
             _service.UpdatePackage("test");
-            powershell.AssertWasCalled(mock => mock.Run("cinst test -source test"));
+            powershell.AssertWasCalled(mock => mock.Run("cup test -source test"));
         }
     }
 }

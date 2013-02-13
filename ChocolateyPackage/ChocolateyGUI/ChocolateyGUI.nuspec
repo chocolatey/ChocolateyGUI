@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>ChocolateyGUI</id>
-    <version>0.1.4</version>
+    <version>$version$</version>
     <title>ChocolateyGUI</title>
     <authors>Christiaan Baes</authors>
     <owners>Christiaan Baes</owners>

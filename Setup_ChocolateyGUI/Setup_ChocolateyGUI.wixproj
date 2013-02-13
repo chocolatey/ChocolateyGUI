@@ -20,7 +20,7 @@
     <OutputType>Package</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <OutputPath>..\ChocolateyPackage\ChocolateyGUI\tools\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
   </PropertyGroup>
@@ -47,6 +47,11 @@
       <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
       <Name>WixNetFxExtension</Name>
     </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\SharedSource\Common\CommonWixInfo.wxi">
+      <Link>CommonWixInfo.wxi</Link>
+    </Content>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

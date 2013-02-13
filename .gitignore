@@ -10,3 +10,4 @@ _ReSharper.*
 *.vscc 
 *.vssscc
 *ncrunch*
+BuildArtifacts

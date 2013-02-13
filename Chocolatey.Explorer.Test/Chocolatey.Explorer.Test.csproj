@@ -88,6 +88,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedSource\Common\CommonAssemblyVersion.cs">
+      <Link>CommonAssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="..\SharedSource\Common\CommonCopyrightInfo.cs">
+      <Link>CommonCopyrightInfo.cs</Link>
+    </Compile>
     <Compile Include="IoC\TestRegistry.cs" />
     <Compile Include="Model\TestPackage.cs" />
     <Compile Include="Model\TestPackageVersion.cs" />

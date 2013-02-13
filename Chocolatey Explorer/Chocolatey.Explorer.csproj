@@ -232,9 +232,9 @@
     <None Include="Resources\update.png" />
     <None Include="Resources\monitor.png" />
     <None Include="Resources\chocolateyicon.png" />
-    <None Include="sources.xml">
+    <Content Include="sources.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

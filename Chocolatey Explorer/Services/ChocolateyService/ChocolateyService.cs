@@ -21,7 +21,7 @@ namespace Chocolatey.Explorer.Services
         {
         }
 
-        public ChocolateyService(IRun powerShell, ISourceService sourceService)
+        public ChocolateyService(IRunSync powerShell, ISourceService sourceService)
         {
             _powershell = powerShell;
             _sourceService = sourceService;

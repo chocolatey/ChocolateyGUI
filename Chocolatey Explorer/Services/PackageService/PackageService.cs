@@ -19,7 +19,7 @@ namespace Chocolatey.Explorer.Services
         {
         }
 
-        public PackageService(IRun powershell, ISourceService sourceService)
+        public PackageService(IRunAsync powershell, ISourceService sourceService)
         {
 			_powershellAsync = powershell;
             _sourceService = sourceService;

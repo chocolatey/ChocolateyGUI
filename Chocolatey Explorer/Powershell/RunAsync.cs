@@ -5,7 +5,7 @@ using log4net;
 
 namespace Chocolatey.Explorer.Powershell
 {
-    public class RunAsync : IRun
+    public class RunAsync : IRunAsync
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(RunAsync));
 

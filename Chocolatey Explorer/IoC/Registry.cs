@@ -1,5 +1,6 @@
 ﻿using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services;
+using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.View;
 
 namespace Chocolatey.Explorer.IoC
@@ -15,9 +16,10 @@ namespace Chocolatey.Explorer.IoC
              For<IPackageVersionService>().Use<ODataPackageVersionService>();
              For<IChocolateyService>().Use<ChocolateyService>();
              For<IPackageVersionXMLParser>().Use<PackageVersionXMLParser>();
-             For<IRun>().Use<RunAsync>();
-             For<IRun>().Use<RunSync>().Named("sync");
+             For<IRunAsync>().Use<RunAsync>();
+             For<IRunSync>().Use<RunSync>();
              For<ISourceService>().Singleton().Use<SourceService>();
+			 For<IFileStorageService>().Use<LocalFileSystemStorageService>();
          }
     }
 }

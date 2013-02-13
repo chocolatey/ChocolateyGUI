@@ -1,8 +1,10 @@
 ﻿using Chocolatey.Explorer.IoC;
 using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services;
+using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.View;
 using NUnit.Framework;
+using Rhino.Mocks;
 using StructureMap;
 
 namespace Chocolatey.Explorer.Test.IoC
@@ -18,15 +20,15 @@ namespace Chocolatey.Explorer.Test.IoC
         }
 
         [Test]
-		[Ignore("Ignored until we can track down the hanging dialog box")]
+		[Ignore("Inject a file ssytem that returns true for the directory exists call")]
         public void IfIPackageManagerCanBeResolved()
         {
-            Assert.IsNotNull(ObjectFactory.GetInstance<IPackageManager>());
+			Assert.IsNotNull(ObjectFactory.GetInstance<IPackageManager>());
         }
 
         [Test]
-		[Ignore("Ignored until we can track down the hanging dialog box")]
-        public void IfIPackageManagerIsNotSingleton()
+		[Ignore("Inject a file ssytem that returns true for the directory exists call")]
+		public void IfIPackageManagerIsNotSingleton()
         {
             Assert.AreNotEqual(ObjectFactory.GetInstance<IPackageManager>(), ObjectFactory.GetInstance<IPackageManager>());
         }
@@ -79,22 +81,28 @@ namespace Chocolatey.Explorer.Test.IoC
             Assert.AreNotEqual(ObjectFactory.GetInstance<IChocolateyService>(), ObjectFactory.GetInstance<IChocolateyService>());
         }
 
+		[Test]
+		public void IfIRunAsyncCanBeResolved()
+		{
+			Assert.IsNotNull(ObjectFactory.GetInstance<IRunAsync>());
+		}
+
+		[Test]
+		public void IfIRunAsyncIsNotSingleton()
+		{
+			Assert.AreNotEqual(ObjectFactory.GetInstance<IRunSync>(), ObjectFactory.GetInstance<IRunAsync>());
+		}
+
         [Test]
-        public void IfIRunCanBeResolved()
+        public void IfIRunSyncCanBeResolved()
         {
-            Assert.IsNotNull(ObjectFactory.GetInstance<IRun>());
+            Assert.IsNotNull(ObjectFactory.GetInstance<IRunSync>());
         }
 
         [Test]
-        public void IfIRunIsNotSingleton()
+        public void IfIRunSyncIsNotSingleton()
         {
-            Assert.AreNotEqual(ObjectFactory.GetInstance<IRun>(), ObjectFactory.GetInstance<IRun>());
-        }
-
-        [Test]
-        public void IfIRunNamedSyncCanBeResolved()
-        {
-            Assert.IsNotNull(ObjectFactory.GetNamedInstance<IRun>("sync"));
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IRunSync>(), ObjectFactory.GetInstance<IRunSync>());
         }
 
         [Test]
@@ -108,5 +116,11 @@ namespace Chocolatey.Explorer.Test.IoC
         {
             Assert.AreEqual(ObjectFactory.GetInstance<ISourceService>(), ObjectFactory.GetInstance<ISourceService>());
         }
+
+		[Test]
+		public void IfIFileStorageServiceCanBeResolved()
+		{
+			Assert.IsNotNull(ObjectFactory.GetInstance<IFileStorageService>());
+		}
     }
 }

@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <?include ..\SharedSource\Common\CommonWixInfo.wxi ?>
   
-  <Product Id="*" Name="$(var.ProductName)" Language="$(var.Language)" Version="$(var.VersionNumber)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
+  <Product Id="*" Name="$(var.ProductName)" Language="$(var.Language)" Version="$(var.VersionNumber)" Manufacturer="$(var.Manufacturer)" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5b146155">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     

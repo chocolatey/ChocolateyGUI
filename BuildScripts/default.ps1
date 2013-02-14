@@ -28,13 +28,13 @@ Task Build-Solution -description 'Builds the main solution for the package' {
 
 
 Task Pack-Nuget -description 'Packs the module and example package' {
-    if (Test-Path "$baseDir\BuildArtifacts") {
-      Remove-Item "$baseDir\BuildArtifacts" -Recurse -Force
-    }
-    if (Test-Path "$baseDir\buildPackages\*.nupkg") {
-      Remove-Item "$baseDir\buildPackages\*.nupkg" -Force
+    if (!(Test-Path "$baseDir\BuildArtifacts")) {
+		mkdir "$baseDir\BuildArtifacts"
+	}
+	
+	if (Test-Path "$baseDir\BuildArtifacts\*.nupkg") {
+      Remove-Item "$baseDir\BuildArtifacts\*.nupkg" -Force
     }
     
-    mkdir "$baseDir\BuildArtifacts"
-    exec { .$nugetExe pack "$baseDir\ChocolateyPackage\ChocolateyGUI\ChocolateyGUI.nuspec" -OutputDirectory "$baseDir\BuildArtifacts" -NoPackageAnalysis -version $preversion }
+    exec { .$nugetExe pack "$baseDir\ChocolateyPackage\ChocolateyGUI.nuspec" -OutputDirectory "$baseDir\BuildArtifacts" -NoPackageAnalysis -version $preversion }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<package>
   <metadata>
     <id>ChocolateyGUI</id>
     <version>$version$</version>
@@ -22,6 +22,10 @@ Server 2008 SP2 and above.
 	</description>
     <summary>A GUI for Chocolatey</summary>
 	<releaseNotes>
+	v0.11.0
+	
+	*Enhancement - Many new features, including UI enhancements and auto building from MyGet.
+	
 	v0.1.4
 	
 	*Enhancement - Better description for the package.
@@ -56,4 +60,10 @@ Server 2008 SP2 and above.
       <dependency id="PowerShell" />
     </dependencies>	
   </metadata>
+  <files>
+    <file src="chocolateyinstall.ps1" target="tools"/>
+	<file src="install.ps1" target="tools"/>
+    <file src="..\BuildArtifacts\cab1.cab" target="tools"/>
+	<file src="..\BuildArtifacts\Setup_ChocolateyGUI.msi" target="tools"/>
+  </files>  
 </package>

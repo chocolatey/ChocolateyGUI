@@ -23,12 +23,12 @@
     <OutputType>Package</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>..\ChocolateyPackage\ChocolateyGUI\tools\</OutputPath>
+    <OutputPath>..\BuildArtifacts\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>..\ChocolateyPackage\ChocolateyGUI\tools\</OutputPath>
+    <OutputPath>..\BuildArtifacts\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <SuppressPdbOutput>True</SuppressPdbOutput>
   </PropertyGroup>

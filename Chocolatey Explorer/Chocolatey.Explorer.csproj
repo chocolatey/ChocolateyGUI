@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -118,7 +118,11 @@
     <Compile Include="IoC\Registry.cs" />
     <Compile Include="Model\Package.cs" />
     <Compile Include="Model\PackageVersion.cs" />
+    <Compile Include="Powershell\IRunAsync.cs" />
+    <Compile Include="Powershell\IRunSync.cs" />
     <Compile Include="Services\ChocolateyLibDirHelper.cs" />
+    <Compile Include="Services\FileStorageService\LocalFileSystemStorageService.cs" />
+    <Compile Include="Services\FileStorageService\IFileStorageService.cs" />
     <Compile Include="Services\ICacheable.cs" />
     <Compile Include="Services\PackagesService\ODataPackagesService.cs" />
     <Compile Include="Services\IPackageVersionXMLParser.cs" />
@@ -238,9 +242,9 @@
     <None Include="Resources\update.png" />
     <None Include="Resources\monitor.png" />
     <None Include="Resources\chocolateyicon.png" />
-    <None Include="sources.xml">
+    <Content Include="sources.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

@@ -22,7 +22,7 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfListOfPackagesCallsPowershellRun()
         {
-            var powershell = _mocks.Get<IRun>();
+			var powershell = _mocks.Get<IRunAsync>();
             var sourceService = _mocks.Get<ISourceService>();
             sourceService.Expect(x => x.Source)
                 .Return("test");

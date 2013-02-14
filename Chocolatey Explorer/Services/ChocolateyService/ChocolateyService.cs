@@ -21,9 +21,9 @@ namespace Chocolatey.Explorer.Services
         {
         }
 
-        public ChocolateyService(IRun powerShell, ISourceService sourceService)
+        public ChocolateyService(IRunSync powerShell, ISourceService sourceService)
         {
-            _powershell = new RunSync();
+            _powershell = powerShell;
             _sourceService = sourceService;
             _powershell.OutputChanged += OutPutChangedHandler;
             _powershell.RunFinished += RunFinishedHandler;

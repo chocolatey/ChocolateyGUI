@@ -22,7 +22,7 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfLatestVersionCallsPowershellRun()
         {
-            var powershell = _mocks.Get<IRun>();
+			var powershell = _mocks.Get<IRunSync>();
             var sourceService = _mocks.Get<ISourceService>();
             sourceService.Expect(x => x.Source)
                 .Return("test");
@@ -33,7 +33,7 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfHelpCallsPowershellRun()
         {
-            var powershell = _mocks.Get<IRun>();
+            var powershell = _mocks.Get<IRunSync>();
             _service.Help();
             powershell.AssertWasCalled(mock => mock.Run("chocolatey /?"));
         }

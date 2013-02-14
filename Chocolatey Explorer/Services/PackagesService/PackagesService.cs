@@ -23,12 +23,12 @@ namespace Chocolatey.Explorer.Services
         {
         }
 
-        public PackagesService(IRun powershell, ISourceService sourceService)
+        public PackagesService(IRunAsync powershell, ISourceService sourceService)
         {
             _lines = new List<string>();
             _sourceService = sourceService;
             _libDirHelper = new ChocolateyLibDirHelper();
-            _powershellAsync = new RunAsync();
+            _powershellAsync = powershell;
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;
         }

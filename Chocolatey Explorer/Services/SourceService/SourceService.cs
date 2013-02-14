@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Chocolatey.Explorer.Model;
 using log4net;
+using Chocolatey.Explorer.Services.FileStorageService;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -13,6 +14,8 @@ namespace Chocolatey.Explorer.Services
         private IList<Source> _sources;
         private Source _currentsource;
 
+		private readonly IFileStorageService _fileStorageService;
+
         public delegate void SourcesDelegate(IList<Source> sources);
 
         public delegate void CurrentSourceDelegate(Source source);
@@ -20,8 +23,11 @@ namespace Chocolatey.Explorer.Services
         public event SourcesDelegate SourcesChanged;
         public event CurrentSourceDelegate CurrentSourceChanged;
 
-        public SourceService()
+		public SourceService() : this(new LocalFileSystemStorageService()) { }
+
+        public SourceService(IFileStorageService fileStorageService)
         {
+			_fileStorageService = fileStorageService;
             Initialize();
         }
 
@@ -34,7 +40,7 @@ namespace Chocolatey.Explorer.Services
         private void LoadSources()
         {
             _sources = new List<Source>();
-            var document = XDocument.Load("sources.xml");
+			var document = _fileStorageService.LoadXDocument("sources.xml");
             var sources = document.Elements("sources").Elements("source");
             foreach (var xElement in sources)
             {

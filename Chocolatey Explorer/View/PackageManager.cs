@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services;
 using log4net;
+using Chocolatey.Explorer.Services.FileStorageService;
 
 namespace Chocolatey.Explorer.View
 {
@@ -19,18 +20,20 @@ namespace Chocolatey.Explorer.View
         private readonly IPackagesService _packagesService;
         private readonly IPackageVersionService _packageVersionService;
         private readonly IPackageService _packageService;
+		private readonly IFileStorageService _fileStorageService;
 
-        public PackageManager(): this(new PackagesService(),new PackageVersionService(),new PackageService())
+        public PackageManager(): this(new PackagesService(),new PackageVersionService(),new PackageService(), new LocalFileSystemStorageService())
         {
         }
 
-        public PackageManager(IPackagesService packagesService, IPackageVersionService packageVersionService, IPackageService packageService)
+        public PackageManager(IPackagesService packagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService)
         {
             InitializeComponent();
 
             _packageService = packageService;
             _packagesService = packagesService;
             _packageVersionService = packageVersionService;
+			_fileStorageService = fileStorageService;
             _packageVersionService.VersionChanged += VersionChangedHandler;
             _packagesService.RunFinshed += PackagesServiceRunFinished;
             _packageService.LineChanged += PackageServiceLineChanged;
@@ -248,7 +251,7 @@ namespace Chocolatey.Explorer.View
             var settings = new Properties.Settings();
             searchPackages.Text = "";
             var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
-            if (!System.IO.Directory.Exists(expandedLibDirectory))
+            if (!_fileStorageService.DirectoryExists(expandedLibDirectory))
             {
                 MessageBox.Show(string.Format(strings.lib_dir_not_found, expandedLibDirectory));
             }

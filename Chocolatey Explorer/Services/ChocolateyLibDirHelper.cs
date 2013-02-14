@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Properties;
 using log4net;
+using Chocolatey.Explorer.Services.FileStorageService;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -23,11 +23,15 @@ namespace Chocolatey.Explorer.Services
         private readonly Settings _settings = new Settings();
         private List<Package> _instaledPackages;
         private readonly IChocolateyService _chocolateyService;
+		private readonly IFileStorageService _fileStorageService;
         private string chocoVersion;
 
-        public ChocolateyLibDirHelper()
+		public ChocolateyLibDirHelper() : this(new ChocolateyService(), new LocalFileSystemStorageService()) { }
+
+        public ChocolateyLibDirHelper(IChocolateyService chocolateyService, IFileStorageService fileStorageService)
         {
-            _chocolateyService = new ChocolateyService();
+			_chocolateyService = chocolateyService;
+			_fileStorageService = fileStorageService;
             _chocolateyService.OutputChanged += VersionChangeFinished;
         }
 
@@ -39,7 +43,7 @@ namespace Chocolatey.Explorer.Services
         {
             _instaledPackages = new List<Package>();
             var expandedLibDirectory = Environment.ExpandEnvironmentVariables(_settings.ChocolateyLibDirectory);
-            var directories = Directory.GetDirectories(expandedLibDirectory);
+			var directories = _fileStorageService.GetDirectories(expandedLibDirectory);
 
             foreach (string directoryPath in directories)
             {

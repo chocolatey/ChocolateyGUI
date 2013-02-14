@@ -82,6 +82,118 @@ namespace Chocolatey.Explorer.Test.Services
 			Assert.AreEqual("0.9.8.20", result.Single().InstalledVersion);
 		}
 
+        [Test]
+        public void IfFindsVersionFromDirectory()
+        {
+            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
+            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5" });
+            var chocolatelyService = new FakeChocolateyService()
+            {
+                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
+            };
+            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+
+            var result = helper.ReloadFromDir();
+
+            Assert.AreEqual("0.1.5", result[0].InstalledVersion);
+        }
+
+        [Test]
+        public void IfFindsNameFromDirectory()
+        {
+            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
+            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5" });
+            var chocolatelyService = new FakeChocolateyService()
+            {
+                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
+            };
+            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+
+            var result = helper.ReloadFromDir();
+
+            Assert.AreEqual("ChocolateyGUI", result[0].Name);
+        }
+
+        [Test]
+        public void IfFindsVersionFromDirectoryWithPre()
+        {
+            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
+            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5-pre"});
+            var chocolatelyService = new FakeChocolateyService()
+            {
+                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
+            };
+            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+
+            var result = helper.ReloadFromDir();
+
+            Assert.AreEqual("0.1.5-pre", result[0].InstalledVersion);
+        }
+
+        [Test]
+        public void IfFindsNameFromDirectoryWithPre()
+        {
+            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
+            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5-pre" });
+            var chocolatelyService = new FakeChocolateyService()
+            {
+                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
+            };
+            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+
+            var result = helper.ReloadFromDir();
+
+            Assert.AreEqual("ChocolateyGUI", result[0].Name);
+        }
+
+        [Test]
+        public void IfGetHighestInstalledVersionFindsHighestVersionWhenAllNumbersAreSingleDigits()
+        {
+            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
+            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5", "ChocolateyGUI.0.1.6" });
+            var chocolatelyService = new FakeChocolateyService()
+            {
+                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
+            };
+            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+
+            var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
+
+            Assert.AreEqual("0.1.6", result);
+        }
+
+        [Test]
+        public void IfGetHighestInstalledVersionFindsHighestVersionWhenLastNumberIsDoubledigit()
+        {
+            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
+            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.15", "ChocolateyGUI.0.1.6" });
+            var chocolatelyService = new FakeChocolateyService()
+            {
+                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
+            };
+            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+
+            var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
+
+            Assert.AreEqual("0.1.15", result);
+        }
+
+        [Test]
+        public void IfGetHighestInstalledVersionFindsHighestVersionWhenSecondNumberIsDoubleDigit()
+        {
+            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
+            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.11.5", "ChocolateyGUI.0.1.6" });
+            var chocolatelyService = new FakeChocolateyService()
+            {
+                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
+            };
+            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+
+            var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
+
+            Assert.AreEqual("0.11.5", result);
+        }
+
 		private class FakeChocolateyService : IChocolateyService
 		{
 

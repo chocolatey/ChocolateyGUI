@@ -20,18 +20,32 @@ namespace Chocolatey.Explorer.Test.IoC
         }
 
         [Test]
-		[Ignore("Inject a file ssytem that returns true for the directory exists call")]
         public void IfIPackageManagerCanBeResolved()
         {
+			var fileStorage = MockRepository.GenerateMock<IFileStorageService>();
+			fileStorage.Stub(fs => fs.DirectoryExists(Arg<string>.Is.Anything)).Return(true);
+			InjectSetupForPackageManager(fileStorage);
+
 			Assert.IsNotNull(ObjectFactory.GetInstance<IPackageManager>());
         }
 
         [Test]
-		[Ignore("Inject a file ssytem that returns true for the directory exists call")]
 		public void IfIPackageManagerIsNotSingleton()
         {
-            Assert.AreNotEqual(ObjectFactory.GetInstance<IPackageManager>(), ObjectFactory.GetInstance<IPackageManager>());
+			var fileStorage = MockRepository.GenerateMock<IFileStorageService>();
+			fileStorage.Stub(fs => fs.DirectoryExists(Arg<string>.Is.Anything)).Return(true);
+			InjectSetupForPackageManager(fileStorage);
+
+			Assert.AreNotEqual(ObjectFactory.GetInstance<IPackageManager>(), ObjectFactory.GetInstance<IPackageManager>());
         }
+
+		private void InjectSetupForPackageManager(IFileStorageService fileStorageService)
+		{
+			ObjectFactory.Inject<IFileStorageService>(fileStorageService);
+			ObjectFactory.Inject<IPackagesService>(MockRepository.GenerateMock<IPackagesService>());
+			ObjectFactory.Inject<IPackageVersionService>(MockRepository.GenerateMock<IPackageVersionService>());
+			ObjectFactory.Inject<IPackageService>(MockRepository.GenerateMock<IPackageService>());
+		}
 
         [Test]
         public void IfIPackageServiceCanBeResolved()

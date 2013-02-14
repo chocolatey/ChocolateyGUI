@@ -1,10 +1,9 @@
 $psake.use_exit_on_error = $true
 properties {
     $baseDir = (Split-Path -parent $psake.build_script_dir)
-    #$versionTag = git describe --abbrev=0 --tags
-    #$version = $versionTag + "."
-    #$version += (git log $($version + '..') --pretty=oneline | measure-object).Count
-    $version = "0.11.0"
+    $versionTag = git describe --abbrev=0 --tags
+    $version = $versionTag + "."
+    $version += (git log $($version + '..') --pretty=oneline | measure-object).Count
 	$preversion = $version + "-pre"
     $nugetExe = "$env:ChocolateyInstall\ChocolateyInstall\nuget"
 	$assemblyVersionPattern = 'AssemblyVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'

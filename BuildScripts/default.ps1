@@ -5,6 +5,7 @@ properties {
     #$version = $versionTag + "."
     #$version += (git log $($version + '..') --pretty=oneline | measure-object).Count
     $version = "0.1.5"
+	$preversion = $version + "-pre"
     $nugetExe = "$env:ChocolateyInstall\ChocolateyInstall\nuget"
 	$assemblyVersionPattern = 'AssemblyVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
 	$assemblyVersion = 'AssemblyVersion("' + $version + '")'
@@ -35,5 +36,5 @@ Task Pack-Nuget -description 'Packs the module and example package' {
     }
     
     mkdir "$baseDir\BuildArtifacts"
-    exec { .$nugetExe pack "$baseDir\ChocolateyPackage\ChocolateyGUI\ChocolateyGUI.nuspec" -OutputDirectory "$baseDir\BuildArtifacts" -NoPackageAnalysis -version $version }
+    exec { .$nugetExe pack "$baseDir\ChocolateyPackage\ChocolateyGUI\ChocolateyGUI.nuspec" -OutputDirectory "$baseDir\BuildArtifacts" -NoPackageAnalysis -version $preversion }
 }

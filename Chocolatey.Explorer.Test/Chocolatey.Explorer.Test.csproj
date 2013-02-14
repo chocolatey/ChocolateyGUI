@@ -99,6 +99,7 @@
     <Compile Include="Model\TestPackageVersion.cs" />
     <Compile Include="Model\TestSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\TestChocolateyLibDirHelper.cs" />
     <Compile Include="Services\TestPackageVersionService.cs" />
     <Compile Include="Services\TestPackagesService.cs" />
     <Compile Include="Services\TestChocolateyService.cs" />

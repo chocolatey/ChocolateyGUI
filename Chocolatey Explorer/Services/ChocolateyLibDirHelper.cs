@@ -14,7 +14,7 @@ namespace Chocolatey.Explorer.Services
     /// chocolatey lib directory, specified by the setting
     /// "ChocolateyLibDirectory".
     /// </summary>
-    class ChocolateyLibDirHelper
+    public class ChocolateyLibDirHelper
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ChocolateyLibDirHelper));
 
@@ -24,7 +24,7 @@ namespace Chocolatey.Explorer.Services
         private List<Package> _instaledPackages;
         private readonly IChocolateyService _chocolateyService;
 		private readonly IFileStorageService _fileStorageService;
-        private string chocoVersion;
+        private string _chocoVersion;
 
 		public ChocolateyLibDirHelper() : this(new ChocolateyService(), new LocalFileSystemStorageService()) { }
 
@@ -55,16 +55,19 @@ namespace Chocolatey.Explorer.Services
             }
             //add chocolatey by default because else this won't work anyway
             _chocolateyService.Help();
-            var chocoPackage = new Package { Name = "chocolatey", InstalledVersion = chocoVersion };
+            var chocoPackage = new Package { Name = "chocolatey", InstalledVersion = _chocoVersion };
             _instaledPackages.Add(chocoPackage);
             return _instaledPackages;
         }
 
         private void VersionChangeFinished(string version)
         {
-            var versionseparator = new string[] {"Version:"};
-            var installseparator = new string[] { "Install" };
-            chocoVersion = version.Split(versionseparator, StringSplitOptions.None)[1].Split(installseparator, StringSplitOptions.None)[0].Trim().Replace("'", "");
+			var match = Regex.Match(version, "Version:[ ]+'([0-9\\.]+)'");
+
+			if (!match.Success)
+				throw new ChocolateyVersionUnknownException(version);
+
+			_chocoVersion = match.Groups[1].Value;
         }
 
         /// <summary>

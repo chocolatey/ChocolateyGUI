@@ -54,7 +54,6 @@
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.tabInstalled = new System.Windows.Forms.TabPage();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
-            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
             this.buttonRow = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
@@ -63,6 +62,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -144,6 +144,7 @@
             // 
             // mainSplitContainer
             // 
+            this.mainSplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.mainSplitContainer, "mainSplitContainer");
             this.mainSplitContainer.Name = "mainSplitContainer";
             // 
@@ -286,11 +287,6 @@
             this.packageTabsImageList.Images.SetKeyName(0, "chocolateyicon_small.png");
             this.packageTabsImageList.Images.SetKeyName(1, "monitor.png");
             // 
-            // packageVersionPanel
-            // 
-            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
-            this.packageVersionPanel.Name = "packageVersionPanel";
-            // 
             // buttonRow
             // 
             resources.ApplyResources(this.buttonRow, "buttonRow");
@@ -353,6 +349,11 @@
             this.lblStatus.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Spring = true;
+            // 
+            // packageVersionPanel
+            // 
+            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
+            this.packageVersionPanel.Name = "packageVersionPanel";
             // 
             // PackageManager
             // 

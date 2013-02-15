@@ -42,6 +42,8 @@ namespace Chocolatey.Explorer.View
             PackageGrid.Focus();
             UpdateInstallUninstallButtonLabel();
             QueryInstalledPackages();
+            tabAvailable.ImageIndex = 0;
+            tabInstalled.ImageIndex = 1;
         }
 
         private void PackageServiceRunFinished()

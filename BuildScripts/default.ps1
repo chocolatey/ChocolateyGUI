@@ -1,3 +1,8 @@
+# The creation of this build script (and associated files) was only possible using the 
+# work that was done on the BoxStarter Project on GitHub:
+# http://boxstarter.codeplex.com/
+# Big thanks to Matt Wrock (@mwrockx} for creating this project, thanks!
+
 $psake.use_exit_on_error = $true
 properties {
     $baseDir = (Split-Path -parent $psake.build_script_dir)

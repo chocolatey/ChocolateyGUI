@@ -1,3 +1,8 @@
+REM The creation of this build script (and associated files) was only possible using the 
+REM work that was done on the BoxStarter Project on GitHub:
+REM http://boxstarter.codeplex.com/
+REM Big thanks to Matt Wrock (@mwrockx} for creating this project, thanks!
+
 @echo off
 
 if '%1'=='/?' goto help

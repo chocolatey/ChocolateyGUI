@@ -6,15 +6,12 @@ using Chocolatey.Explorer.CommandPattern;
 using Chocolatey.Explorer.Commands;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services;
-using log4net;
 using Chocolatey.Explorer.Services.FileStorageService;
 
 namespace Chocolatey.Explorer.View.Forms
 {
     public partial class PackageManager : Form,IPackageManager
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(PackageManager));
-
         private delegate void PackageVersionHandler(PackageVersion version);
         private delegate void PackageSServiceHandler(IList<Package> packages);
         private delegate void PackageServiceHandler(string line);

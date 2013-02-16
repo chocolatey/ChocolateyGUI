@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Chocolatey.Explorer.Model;
-using log4net;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -10,8 +9,6 @@ namespace Chocolatey.Explorer.Services
     /// </summary>
     class CachedPackagesService : IPackagesService, ICacheable
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(CachedPackagesService));
-
         public event PackagesService.FinishedDelegate RunFinshed;
 		public event PackagesService.FailedDelegate RunFailed;
 

@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
-using log4net;
 using System.IO;
 
 namespace Chocolatey.Explorer.Services
@@ -18,8 +17,6 @@ namespace Chocolatey.Explorer.Services
     /// </summary>
     class ODataPackageVersionService : IPackageVersionService
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(ODataPackageVersionService));
-
         public event PackageVersionService.VersionResult VersionChanged;
         public delegate void VersionResult(PackageVersion version);
 
@@ -38,7 +35,7 @@ namespace Chocolatey.Explorer.Services
 
         public void PackageVersion(string package)
         {
-            log.Info("Getting version of package: " + package);
+            this.Log().Info("Getting version of package: " + package);
             if (_cancelTokenSource != null)
             {
                 _cancelTokenSource.Cancel();

@@ -1,15 +1,12 @@
 ﻿using System.Xml;
 using Chocolatey.Explorer.Model;
 using System;
-using log4net;
 using System.Collections.Generic;
 
 namespace Chocolatey.Explorer.Services
 {
     class PackageVersionXMLParser : IPackageVersionXMLParser
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(PackageVersionXMLParser));
-
         private const string METADATA_NS = "http://schemas.microsoft.com/ado/2007/08/dataservices/metadata";
         private const string DATA_SERVICES_NS = "http://schemas.microsoft.com/ado/2007/08/dataservices";
 

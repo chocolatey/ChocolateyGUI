@@ -18,8 +18,7 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var settings = new Properties.Settings();
-            settings.ChocolateyLibDirectory = txtInstallDirectory.Text;
+            var settings = new Properties.Settings {ChocolateyLibDirectory = txtInstallDirectory.Text};
             settings.Save();
             Dispose();
         }

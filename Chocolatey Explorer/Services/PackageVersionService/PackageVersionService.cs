@@ -1,13 +1,10 @@
 ﻿using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
-using log4net;
 
 namespace Chocolatey.Explorer.Services
 {
 	public class PackageVersionService : IPackageVersionService
 	{
-		private static readonly ILog log = LogManager.GetLogger(typeof(PackageVersionService));
-
 		private readonly IRun _powershellAsync;
 		private string _package;
 		private PackageVersion _packageVersion;
@@ -31,7 +28,7 @@ namespace Chocolatey.Explorer.Services
 
 		public void PackageVersion(string package)
 		{
-			log.Info("Getting version of package: " + package);
+			this.Log().Info("Getting version of package: " + package);
 			_packageVersion = new PackageVersion();
 			_package = package;
 			_powershellAsync.Run("cver " + package + " -source " + _sourceService.Source);

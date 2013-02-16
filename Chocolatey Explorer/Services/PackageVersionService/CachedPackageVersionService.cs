@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Chocolatey.Explorer.Model;
-using log4net;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -13,7 +9,6 @@ namespace Chocolatey.Explorer.Services
     /// </summary>
     class CachedPackageVersionService : IPackageVersionService, ICacheable
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(PackageVersionService));
 
         public delegate void VersionResult(PackageVersion version);
         public event PackageVersionService.VersionResult VersionChanged;

@@ -2,21 +2,14 @@
 using System.Reflection;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Services;
-using log4net;
 using System.ComponentModel;
 
 namespace Chocolatey.Explorer.View.Forms
 {
     public partial class About : Form, IAbout
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(About));
-
         private delegate void VersionChangedHandler(string version);
-        private IChocolateyService _chocolateyService;
-
-        public About() : this(new ChocolateyService())
-        {
-        }
+        private readonly IChocolateyService _chocolateyService;
 
         public About(IChocolateyService chocolateyService)
         {
@@ -30,7 +23,7 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void VersionChangeFinished(string version)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 Invoke(new VersionChangedHandler(VersionChangeFinished), new object[] { version });
             }
@@ -45,13 +38,8 @@ namespace Chocolatey.Explorer.View.Forms
         {
             progressBar.Visible = true;
 
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(
-                delegate(object o, DoWorkEventArgs args)
-                {
-                    _chocolateyService.LatestVersion();
-                }
-            );
+            var bw = new BackgroundWorker();
+            bw.DoWork += (o, args) => _chocolateyService.LatestVersion();
             bw.RunWorkerAsync();
         }
 

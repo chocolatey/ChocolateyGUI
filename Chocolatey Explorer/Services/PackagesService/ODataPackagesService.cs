@@ -4,7 +4,6 @@ using System.Net;
 using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
-using log4net;
 using System.Threading.Tasks;
 
 namespace Chocolatey.Explorer.Services
@@ -12,7 +11,6 @@ namespace Chocolatey.Explorer.Services
     public class ODataPackagesService : IPackagesService
     {
         private const string ALL_PACKAGES_URL = "/Packages?$filter=IsLatestVersion eq true&$inlinecount=allpages&$select=Title";
-        private static readonly ILog log = LogManager.GetLogger(typeof(ODataPackagesService));
 
         private readonly ISourceService _sourceService;
         private readonly IPackageVersionXMLParser _xmlParser;
@@ -90,7 +88,7 @@ namespace Chocolatey.Explorer.Services
         {
             var fullUrl = _sourceService.Source + ALL_PACKAGES_URL;
             var skipUrl = fullUrl + "&$skip=" + skip;
-            log.Debug("Getting list of packages on source: " + skipUrl);
+            this.Log().Debug("Getting list of packages on source: " + skipUrl);
 
             var xmlDoc = new XmlDocument();
             var rssFeed = WebRequest.Create(skipUrl) as HttpWebRequest;
@@ -110,7 +108,7 @@ namespace Chocolatey.Explorer.Services
 
 		public void ListOfInstalledPackages()
 		{
-			log.Info("Getting list of installed packages");
+			this.Log().Info("Getting list of installed packages");
 			Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
 						.ContinueWith((task) =>
 						{

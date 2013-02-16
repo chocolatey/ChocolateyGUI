@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Properties;
-using log4net;
 using Chocolatey.Explorer.Services.FileStorageService;
 
 namespace Chocolatey.Explorer.Services
@@ -16,8 +15,6 @@ namespace Chocolatey.Explorer.Services
     /// </summary>
     public class ChocolateyLibDirHelper
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(ChocolateyLibDirHelper));
-
         private readonly Regex _packageVersionRegexp = new Regex(@"((\.\d+)+)(-[^\.]+)?$");
         private readonly char[] _segmentDelim = "\\".ToCharArray();
         private readonly Settings _settings = new Settings();

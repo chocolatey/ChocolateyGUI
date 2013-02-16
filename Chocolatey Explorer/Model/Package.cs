@@ -22,22 +22,20 @@ namespace Chocolatey.Explorer.Model
         public int CompareTo(object obj)
         {
             if (obj.GetType() != typeof(Package)) return -1;
-            return Name.CompareTo(((Package) obj).Name);
+            return System.String.Compare(Name, ((Package) obj).Name, System.StringComparison.Ordinal);
         }
 
         public bool Equals(Package other)
         {
             if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Name, Name);
+            return ReferenceEquals(this, other) || Equals(other.Name, Name);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Package)) return false;
-            return Equals((Package) obj);
+            return obj.GetType() == typeof (Package) && Equals((Package) obj);
         }
 
         public override int GetHashCode()

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Chocolatey.Explorer.Model;
 
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.PackagesService
 {
     /// <summary>
     /// Adapter for PackagesService, but caching the Package-Lists

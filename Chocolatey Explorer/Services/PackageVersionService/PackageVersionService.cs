@@ -1,7 +1,8 @@
 ﻿using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
+using Chocolatey.Explorer.Services.SourceService;
 
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.PackageVersionService
 {
 	public class PackageVersionService : IPackageVersionService
 	{
@@ -14,7 +15,7 @@ namespace Chocolatey.Explorer.Services
 		public event VersionResult VersionChanged;
 
 		public PackageVersionService()
-			: this(new RunAsync(), new SourceService())
+			: this(new RunAsync(), new SourceService.SourceService())
 		{
 		}
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Chocolatey.Explorer.Model;
 
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.PackageVersionService
 {
     /// <summary>
     /// Adapter for PackageVersionService, but caching all already

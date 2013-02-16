@@ -6,8 +6,9 @@ using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
 using System.IO;
+using Chocolatey.Explorer.Services.SourceService;
 
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.PackageVersionService
 {
     /// <summary>
     /// This class gets its package information via api feed of the current source.

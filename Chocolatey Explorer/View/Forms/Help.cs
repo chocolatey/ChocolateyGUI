@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using Chocolatey.Explorer.Services;
 using System.ComponentModel;
+using Chocolatey.Explorer.Services.ChocolateyService;
 
 namespace Chocolatey.Explorer.View.Forms
 {

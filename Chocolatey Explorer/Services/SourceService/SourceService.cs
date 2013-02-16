@@ -4,7 +4,7 @@ using System.Xml.Linq;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.FileStorageService;
 
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.SourceService
 {
     public class SourceService : ISourceService
     {

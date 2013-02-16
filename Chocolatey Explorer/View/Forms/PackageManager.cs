@@ -6,7 +6,11 @@ using Chocolatey.Explorer.CommandPattern;
 using Chocolatey.Explorer.Commands;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services;
+using Chocolatey.Explorer.Services.ChocolateyService;
 using Chocolatey.Explorer.Services.FileStorageService;
+using Chocolatey.Explorer.Services.PackageService;
+using Chocolatey.Explorer.Services.PackageVersionService;
+using Chocolatey.Explorer.Services.PackagesService;
 
 namespace Chocolatey.Explorer.View.Forms
 {

@@ -5,8 +5,9 @@ using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
 using System.Threading.Tasks;
+using Chocolatey.Explorer.Services.SourceService;
 
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.PackagesService
 {
     public class ODataPackagesService : IPackagesService
     {
@@ -19,7 +20,7 @@ namespace Chocolatey.Explorer.Services
         public event PackagesService.FinishedDelegate RunFinshed;
 		public event PackagesService.FailedDelegate RunFailed;
 
-        public ODataPackagesService(): this(new SourceService(), new PackageVersionXMLParser())
+        public ODataPackagesService(): this(new SourceService.SourceService(), new PackageVersionXMLParser())
         {
         }
 

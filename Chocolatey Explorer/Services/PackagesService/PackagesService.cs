@@ -4,8 +4,9 @@ using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
 using System;
 using System.Threading.Tasks;
+using Chocolatey.Explorer.Services.SourceService;
 
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.PackagesService
 {
     public class PackagesService : IPackagesService
     {
@@ -20,7 +21,7 @@ namespace Chocolatey.Explorer.Services
 		public delegate void FailedDelegate(Exception exc);
 		public event FailedDelegate RunFailed;
 
-        public PackagesService(): this(new RunAsync(), new SourceService())
+        public PackagesService(): this(new RunAsync(), new SourceService.SourceService())
         {
         }
 

@@ -1,6 +1,7 @@
 ﻿using Chocolatey.Explorer.Powershell;
+using Chocolatey.Explorer.Services.SourceService;
 
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.PackageService
 {
     public class PackageService : IPackageService
     {
@@ -12,7 +13,7 @@ namespace Chocolatey.Explorer.Services
         public delegate void FinishedDelegate();
         public event FinishedDelegate RunFinshed;
 
-        public PackageService(): this(new RunAsync(),new SourceService())
+        public PackageService(): this(new RunAsync(),new SourceService.SourceService())
         {
         }
 

@@ -17,7 +17,7 @@ namespace Chocolatey.Explorer.Services
     /// </summary>
     public class ChocolateyLibDirHelper
     {
-        private readonly Regex _packageVersionRegexp = new Regex(@"((\.\d+)+)(-[^\.]+)?$");
+        private readonly Regex _packageVersionRegexp = new Regex(@"((?:\.\d+){1,4})(-[^\.]+)?$");
         private readonly char[] _segmentDelim = "\\".ToCharArray();
         private List<Package> _instaledPackages;
         private readonly IChocolateyService _chocolateyService;
@@ -94,7 +94,8 @@ namespace Chocolatey.Explorer.Services
             var package = new Package();
             var versionMatch = _packageVersionRegexp.Match(directoryName);
             package.Name = directoryName.Substring(0, versionMatch.Index);
-            package.InstalledVersion = directoryName.Substring(versionMatch.Index + 1);
+			package.InstalledVersion = versionMatch.Groups[1].Value.TrimStart('.');
+			package.IsPreRelease = versionMatch.Groups.Count == 3 && !string.IsNullOrWhiteSpace(versionMatch.Groups[2].Value);
             return package;
         }
     }

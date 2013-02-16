@@ -120,7 +120,7 @@ namespace Chocolatey.Explorer.Test.Services
 
             var result = helper.ReloadFromDir();
 
-            Assert.AreEqual("0.1.5-pre", result[0].InstalledVersion);
+            Assert.AreEqual("0.1.5", result[0].InstalledVersion);
         }
 
         [Test]
@@ -171,6 +171,10 @@ namespace Chocolatey.Explorer.Test.Services
             Assert.AreEqual("0.11.5", result);
         }
 
+		/// <summary>
+		/// Follows versioning section at https://github.com/chocolatey/chocolatey/wiki/CreatePackages
+		/// and nuspec versioning: http://docs.nuget.org/docs/reference/versioning
+		/// </summary>
 		[TestCase("BasicOnePart.1",							"BasicOnePart",				"1",                false)]
 		[TestCase("BasicTwoPart.1.1",						"BasicTwoPart",				"1.1",              false)]
 		[TestCase("BasicThreePart.1.1.1",					"BasicThreePart",			"1.1.1",            false)]
@@ -178,7 +182,7 @@ namespace Chocolatey.Explorer.Test.Services
 		[TestCase("MixedDigitLengths.1.10.981.1234",		"MixedDigitLengths",		"1.10.981.1234",    false)]
 		[TestCase("DatePackageFixNotation.1.1.1.20130215",	"DatePackageFixNotation",	"1.1.1.20130215",   false)]
 		[TestCase("SemVerPreRelease.1.1.1.1-pre",			"SemVerPreRelease",			"1.1.1.1",          true)]
-		[TestCase("SemVerCustomPreRelease.1.1.1.1-stuff",	"SemVerCustomPreRelease",	"1.1.1.1-stuff",    false)]
+		[TestCase("SemVerCustomPreRelease.1.1.1.1-stuff",	"SemVerCustomPreRelease",	"1.1.1.1",			true)]
 		[TestCase("OnePartNameWith.Decimal.1.1.1.1",		"OnePartNameWith.Decimal",	"1.1.1.1",          false)]
 		[TestCase("TwoPartNameWith.Decimal.1.1.1.1",		"TwoPartNameWith.Decimal",	"1.1.1.1",          false)]
 		[TestCase("ThreePartNameWith.Decimal.1.1.1.1",		"ThreePartNameWith.Decimal","1.1.1.1",          false)]

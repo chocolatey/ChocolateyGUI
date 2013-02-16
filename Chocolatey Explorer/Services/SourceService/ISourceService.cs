@@ -1,7 +1,7 @@
 using System;
 using Chocolatey.Explorer.Model;
 
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.SourceService
 {
     public interface ISourceService
     {

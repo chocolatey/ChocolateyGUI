@@ -1,5 +1,7 @@
 ﻿using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services;
+using Chocolatey.Explorer.Services.PackagesService;
+using Chocolatey.Explorer.Services.SourceService;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap.AutoMocking;

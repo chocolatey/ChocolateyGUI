@@ -1,7 +1,12 @@
 ﻿using Chocolatey.Explorer.CommandPattern;
 using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services;
+using Chocolatey.Explorer.Services.ChocolateyService;
 using Chocolatey.Explorer.Services.FileStorageService;
+using Chocolatey.Explorer.Services.PackageService;
+using Chocolatey.Explorer.Services.PackageVersionService;
+using Chocolatey.Explorer.Services.PackagesService;
+using Chocolatey.Explorer.Services.SourceService;
 using Chocolatey.Explorer.View;
 using Chocolatey.Explorer.View.Forms;
 

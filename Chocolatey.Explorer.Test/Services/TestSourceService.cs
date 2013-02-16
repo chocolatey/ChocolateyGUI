@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services;
+using Chocolatey.Explorer.Services.SourceService;
 using NUnit.Framework;
 using System.Xml.Linq;
 using System.Linq;

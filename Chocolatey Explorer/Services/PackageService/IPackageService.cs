@@ -1,4 +1,4 @@
-namespace Chocolatey.Explorer.Services
+namespace Chocolatey.Explorer.Services.PackageService
 {
     public interface IPackageService
     {

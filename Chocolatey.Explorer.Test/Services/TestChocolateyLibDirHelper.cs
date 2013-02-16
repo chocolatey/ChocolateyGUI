@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Chocolatey.Explorer.Services.ChocolateyService;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;

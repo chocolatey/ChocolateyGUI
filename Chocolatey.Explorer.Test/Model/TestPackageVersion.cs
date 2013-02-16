@@ -70,6 +70,15 @@ namespace Chocolatey.Explorer.Test.Model
         }
 
         [Test]
+        public void IfCanBeUpdatedIsFalseWhenCurrentVersionIsHigherThanServerVersionAndNotIsInstalled()
+        {
+            var package = new PackageVersion();
+            package.CurrentVersion = "0.5.5";
+            package.Serverversion = "0.5.2";
+            Assert.IsFalse(package.CanBeUpdated);
+        }
+
+        [Test]
         public void IfCanBeUpdatedIsFalseWhenCurrentVersionNotEqualsServerVersionAndIsInstalled()
         {
             var package = new PackageVersion();

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
 
@@ -44,12 +46,12 @@ namespace Chocolatey.Explorer.View.Controls
             lblServerVersion.Text = _version.Serverversion;
             lblInstalledVersion.Text = _version.CurrentVersion;
 
-            if (_version.AuthorName != null && _version.AuthorName != "")
+            if (!string.IsNullOrEmpty(_version.AuthorName))
                 lblAuthor.Text = string.Format(strings.authored_by, _version.AuthorName);
 
             txtDescription.Text = _version.Description;
 
-            if (_version.IconUrl != null && _version.IconUrl != "")
+            if (!string.IsNullOrEmpty(_version.IconUrl))
             {
                 pictureBoxLogo.ImageLocation = _version.IconUrl;
                 pictureBoxLogo.LoadAsync();
@@ -57,6 +59,18 @@ namespace Chocolatey.Explorer.View.Controls
             else
             {
                 pictureBoxLogo.Image = pictureBoxLogo.ErrorImage;
+            }
+            if (_version.IsCurrentVersionPreRelease)
+            {
+                var thisExe = Assembly.GetExecutingAssembly();
+                var file = thisExe.GetManifestResourceStream("Chocolatey.Explorer.Resources.monitorPre.png");
+                picInstalledVersion.Image = Image.FromStream(file);
+            }
+            else
+            {
+                var thisExe = Assembly.GetExecutingAssembly();
+                var file = thisExe.GetManifestResourceStream("Chocolatey.Explorer.Resources.monitor.png");
+                picInstalledVersion.Image = Image.FromStream(file);
             }
 
             if (_version.DownloadCount != 0)

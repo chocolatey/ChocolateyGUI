@@ -259,7 +259,8 @@
     <None Include="Resources\help_small.png" />
     <None Include="Resources\monitor_small.png" />
     <None Include="Resources\update.png" />
-    <None Include="Resources\monitor.png" />
+    <EmbeddedResource Include="Resources\monitor.png" />
+    <EmbeddedResource Include="Resources\monitorPre.png" />
     <Content Include="sources.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

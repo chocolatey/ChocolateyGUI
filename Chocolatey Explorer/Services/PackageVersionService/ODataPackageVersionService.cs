@@ -70,7 +70,9 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 
                 cancelToken.ThrowIfCancellationRequested();
                 packageVersion.Name = packageName;
-                packageVersion.CurrentVersion = _libDirHelper.GetHighestInstalledVersion(packageName);
+                var highestInstalledVersion = _libDirHelper.GetHighestInstalledVersion(packageName);
+                packageVersion.CurrentVersion = highestInstalledVersion.InstalledVersion;
+                packageVersion.IsCurrentVersionPreRelease = highestInstalledVersion.IsPreRelease;
 
                 cancelToken.ThrowIfCancellationRequested();
                 OnVersionChanged(packageVersion);

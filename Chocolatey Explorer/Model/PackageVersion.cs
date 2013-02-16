@@ -8,6 +8,7 @@ namespace Chocolatey.Explorer.Model
     {
         public string Name { get; set; }
         public string CurrentVersion { get; set; }
+        public bool IsCurrentVersionPreRelease { get; set ; }
         public string Serverversion { get; set; }
         public bool IsInstalled { get { return !CurrentVersion.EndsWith(strings.not_available); } }
         public bool CanBeUpdated { get { return !Serverversion.EndsWith(strings.not_available) && IsLower() && IsInstalled; } }

@@ -144,7 +144,7 @@ namespace Chocolatey.Explorer.Test.Services
 
             var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
 
-            Assert.AreEqual("0.1.6", result);
+            Assert.AreEqual("0.1.6", result.InstalledVersion);
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace Chocolatey.Explorer.Test.Services
 
             var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
 
-            Assert.AreEqual("0.1.15", result);
+            Assert.AreEqual("0.1.15", result.InstalledVersion);
         }
 
         [Test]
@@ -168,7 +168,7 @@ namespace Chocolatey.Explorer.Test.Services
 
             var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
 
-            Assert.AreEqual("0.11.5", result);
+            Assert.AreEqual("0.11.5", result.InstalledVersion);
         }
 
 		/// <summary>

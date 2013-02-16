@@ -74,7 +74,7 @@ namespace Chocolatey.Explorer.Services
         /// Searches the chocolatey install directory to look up 
         /// the installed version of the given package.
         /// </summary>
-        public string GetHighestInstalledVersion(string packageName, bool reload=true)
+        public Package GetHighestInstalledVersion(string packageName, bool reload=true)
         {
             if (reload || _instaledPackages == null)
             {
@@ -83,10 +83,10 @@ namespace Chocolatey.Explorer.Services
             var versionQuery =
                 from package in _instaledPackages
                 where package.Name == packageName
-                select package.InstalledVersion;
+                select package;
 
-            var query = versionQuery as string[] ?? versionQuery.ToArray();
-            return !query.Any() ? strings.not_available : query.OrderBy(x=> x, new PackagesSorter()).Last();
+            var query = versionQuery as Package[] ?? versionQuery.ToArray();
+            return !query.Any() ? null : query.OrderBy(x=> x.InstalledVersion, new PackagesSorter()).Last();
         }
 
         public Package GetPackageFromDirectoryName(string directoryName)

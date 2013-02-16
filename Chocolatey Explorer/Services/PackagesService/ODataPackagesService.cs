@@ -73,7 +73,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
             return new Package()
             {
                 Name = version.Name,
-                InstalledVersion = _libDirHelper.GetHighestInstalledVersion(version.Name, false)
+                InstalledVersion = _libDirHelper.GetHighestInstalledVersion(version.Name, false).InstalledVersion
             };
         }
 

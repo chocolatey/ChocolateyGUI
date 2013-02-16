@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -17,3 +18,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("37cbac12-c5b9-42be-8b8d-777bcd3347d4")]
 
 [assembly: AssemblyFileVersion("1.0.0")]
+
+[assembly: InternalsVisibleTo("Chocolatey.Explorer.Test")]

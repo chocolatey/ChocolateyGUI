@@ -7,11 +7,24 @@ namespace Chocolatey.Explorer.Test.Model
     public class TestPackage
     {
         [Test]
-        public void IfToStringReturnName()
+        public void IfToStringReturnsName()
         {
-            var package = new Package();
-            package.Name = "test";
+            var package = new Package {Name = "test"};
             Assert.AreEqual("test",package.ToString());
+        }
+
+        [Test]
+        public void IfIsInstalledIsTrueWhenThereIsAVersion()
+        {
+            var package = new Package { InstalledVersion = "0.1.1" };
+            Assert.IsTrue(package.IsInstalled);
+        }
+
+        [Test]
+        public void IfIsInstalledIsFalseWhenVersionIsNotAvailable()
+        {
+            var package = new Package { InstalledVersion = strings.not_available };
+            Assert.IsFalse(package.IsInstalled);
         }
 
         [Test]

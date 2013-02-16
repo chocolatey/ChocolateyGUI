@@ -60,8 +60,8 @@
       <Component Id="ChocolateyGUI.exe" Guid="f8164f91-fa5c-0001-0001-9beb5a044699">
         <File Id="ChocolateyGUI.exe" Source="$(var.Chocolatey.Explorer.TargetPath)" KeyPath="yes" Checksum="yes"/>
 			</Component>
-      <Component Id="log4net.dll" Guid="f8164f91-fa5c-0002-0001-9beb5a044699">
-        <File Id="log4net.dll" Source="$(var.Chocolatey.Explorer.TargetDir)\log4net.dll" KeyPath="yes"/>
+      <Component Id="NLog.dll" Guid="f8164f91-fa5c-0002-0002-9beb5a044699">
+        <File Id="NLog.dll" Source="$(var.Chocolatey.Explorer.TargetDir)\NLog.dll" KeyPath="yes"/>
       </Component>
       <Component Id="StructureMap.dll" Guid="f8164f91-fa5c-0003-0001-9beb5a044699">
         <File Id="StructureMap.dll" Source="$(var.Chocolatey.Explorer.TargetDir)\StructureMap.dll" KeyPath="yes"/>
@@ -69,9 +69,16 @@
       <Component Id="sources.xml" Guid="f8164f91-fa5c-0004-0001-9beb5a044699">
         <File Id="sources.xml" Source="$(var.Chocolatey.Explorer.TargetDir)\sources.xml" KeyPath="yes"/>
       </Component>
-      <Component Id="log4net.config" Guid="f8164f91-fa5c-0004-0001-9beb5b044699">
-        <File Id="log4net.config" Source="$(var.Chocolatey.Explorer.TargetDir)\log4net.config" KeyPath="yes"/>
+      <Component Id="ChocolateyGUI.exe.config" Guid="f8164f91-fa5c-0004-0002-9beb5b044699">
+        <File Id="ChocolateyGUI.exe.config" Source="$(var.Chocolatey.Explorer.TargetDir)\ChocolateyGUI.exe.config" KeyPath="yes"/>
       </Component>
-		</ComponentGroup>
+      <Component Id="this.Log-NLog.dll" Guid="f8164f91-fa5c-0005-0001-9beb5a044699">
+        <File Id="this.Log-NLog.dll" Source="$(var.Chocolatey.Explorer.TargetDir)\this.Log-NLog.dll" KeyPath="yes"/>
+      </Component>
+      <Component Id="this.Log.dll" Guid="f8164f91-fa5c-0006-0001-9beb5a044699">
+        <File Id="this.Log.dll" Source="$(var.Chocolatey.Explorer.TargetDir)\this.Log.dll" KeyPath="yes"/>
+      </Component>
+
+    </ComponentGroup>
 	</Fragment>
 </Wix>

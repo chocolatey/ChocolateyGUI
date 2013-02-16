@@ -1,14 +1,15 @@
 ﻿using Chocolatey.Explorer.CommandPattern;
-using Chocolatey.Explorer.View;
+using Chocolatey.Explorer.View.Forms;
 
 namespace Chocolatey.Explorer.Commands
 {
-    public class OpenSettingsCommand:ICommand
+    public class OpenSettingsCommand:BaseCommand
     {
-        public void Execute()
+        public ISettings Settings { get; set; }
+
+        public override void Execute()
         {
-            var settings = new Settings();
-            settings.ShowDialog();
+            Settings.DoShowDialog();
         }
     }
 }

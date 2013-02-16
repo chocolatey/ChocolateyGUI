@@ -94,6 +94,9 @@
     <Compile Include="..\SharedSource\Common\CommonCopyrightInfo.cs">
       <Link>CommonCopyrightInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\TestOpenAboutCommand.cs" />
+    <Compile Include="Commands\TestOpenHelpCommand.cs" />
+    <Compile Include="Commands\TestOpenSettingsCommand.cs" />
     <Compile Include="IoC\TestRegistry.cs" />
     <Compile Include="Model\TestPackage.cs" />
     <Compile Include="Model\TestPackageVersion.cs" />

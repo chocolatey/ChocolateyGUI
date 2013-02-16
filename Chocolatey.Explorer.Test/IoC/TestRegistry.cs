@@ -3,6 +3,7 @@ using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services;
 using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.View;
+using Chocolatey.Explorer.View.Forms;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
@@ -136,5 +137,41 @@ namespace Chocolatey.Explorer.Test.IoC
 		{
 			Assert.IsNotNull(ObjectFactory.GetInstance<IFileStorageService>());
 		}
+
+        [Test]
+        public void IfIHelpCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<IHelp>());
+        }
+
+        [Test]
+        public void IfIHelpIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IHelp>(), ObjectFactory.GetInstance<IHelp>());
+        }
+
+        [Test]
+        public void IfIAboutCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<IAbout>());
+        }
+
+        [Test]
+        public void IfIAboutIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IAbout>(), ObjectFactory.GetInstance<IAbout>());
+        }
+
+        [Test]
+        public void IfISettingsCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<ISettings>());
+        }
+
+        [Test]
+        public void IfISettingsIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<ISettings>(), ObjectFactory.GetInstance<ISettings>());
+        }
     }
 }

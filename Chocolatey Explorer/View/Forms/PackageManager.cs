@@ -9,7 +9,7 @@ using Chocolatey.Explorer.Services;
 using log4net;
 using Chocolatey.Explorer.Services.FileStorageService;
 
-namespace Chocolatey.Explorer.View
+namespace Chocolatey.Explorer.View.Forms
 {
     public partial class PackageManager : Form,IPackageManager
     {

@@ -1,4 +1,6 @@
-﻿namespace Chocolatey.Explorer.View
+﻿using Chocolatey.Explorer.View.Controls;
+
+namespace Chocolatey.Explorer.View.Forms
 {
     partial class PackageManager
     {
@@ -62,7 +64,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.packageVersionPanel = new Chocolatey.Explorer.View.PackageVersionPanel();
+            this.packageVersionPanel = new PackageVersionPanel();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();

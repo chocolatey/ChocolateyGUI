@@ -1,14 +1,15 @@
 ﻿using Chocolatey.Explorer.CommandPattern;
-using Chocolatey.Explorer.View;
+using Chocolatey.Explorer.View.Forms;
 
 namespace Chocolatey.Explorer.Commands
 {
-    public class OpenHelpCommand:ICommand
+    public class OpenHelpCommand:BaseCommand
     {
-        public void Execute()
+        public IHelp Help { get; set; }
+
+        public override void Execute()
         {
-            var help = new Help();
-            help.ShowDialog();
+            Help.DoShow();
         }
     }
 }

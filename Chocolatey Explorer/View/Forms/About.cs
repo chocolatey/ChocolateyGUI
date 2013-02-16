@@ -5,9 +5,9 @@ using Chocolatey.Explorer.Services;
 using log4net;
 using System.ComponentModel;
 
-namespace Chocolatey.Explorer.View
+namespace Chocolatey.Explorer.View.Forms
 {
-    public partial class About : Form
+    public partial class About : Form, IAbout
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(About));
 
@@ -82,6 +82,11 @@ namespace Chocolatey.Explorer.View
         private void About_Load(object sender, EventArgs e)
         {
             lblVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
+
+        public void DoShow()
+        {
+            this.Show();
         }
     }
 }

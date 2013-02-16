@@ -3,6 +3,7 @@ using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services;
 using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.View;
+using Chocolatey.Explorer.View.Forms;
 
 namespace Chocolatey.Explorer.IoC
 {
@@ -10,8 +11,7 @@ namespace Chocolatey.Explorer.IoC
     {
          public Registry()
          {
-             
-             For<IPackageManager>().Use<PackageManager>();
+             // Services
              For<IPackageService>().Use<PackageService>();
              For<IPackagesService>().Use<CachedPackagesService>();
              For<IPackageVersionService>().Use<ODataPackageVersionService>();
@@ -22,6 +22,13 @@ namespace Chocolatey.Explorer.IoC
              For<ISourceService>().Singleton().Use<SourceService>();
 			 For<IFileStorageService>().Use<LocalFileSystemStorageService>();
              For<ICommandExecuter>().Use<CommandExecuter>();
+
+             // Forms
+             For<IPackageManager>().Use<PackageManager>();
+             For<IAbout>().Use<About>();
+             For<IHelp>().Use<Help>();
+             For<ISettings>().Use<Settings>();
+             SetAllProperties(x => x.WithAnyTypeFromNamespace("Chocolatey.Explorer.View.Forms"));
          }
     }
 }

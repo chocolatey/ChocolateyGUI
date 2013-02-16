@@ -1,4 +1,4 @@
-﻿namespace Chocolatey.Explorer.View
+﻿namespace Chocolatey.Explorer.View.Forms
 {
     public interface IPackageManager
     {

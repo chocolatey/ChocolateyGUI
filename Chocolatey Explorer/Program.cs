@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using Chocolatey.Explorer.IoC;
 using Chocolatey.Explorer.View;
+using Chocolatey.Explorer.View.Forms;
 using StructureMap;
 using log4net;
 

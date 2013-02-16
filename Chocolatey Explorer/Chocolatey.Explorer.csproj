@@ -115,6 +115,7 @@
     <Compile Include="..\SharedSource\Common\CommonCopyrightInfo.cs">
       <Link>Properties\CommonCopyrightInfo.cs</Link>
     </Compile>
+    <Compile Include="CommandPattern\BaseCommand.cs" />
     <Compile Include="CommandPattern\CommandExecuter.cs" />
     <Compile Include="CommandPattern\ICommand.cs" />
     <Compile Include="CommandPattern\ICommandExecuter.cs" />
@@ -160,35 +161,38 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="View\About.cs">
+    <Compile Include="View\Forms\About.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\About.Designer.cs">
+    <Compile Include="View\Forms\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Help.cs">
+    <Compile Include="View\Forms\Help.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Help.Designer.cs">
+    <Compile Include="View\Forms\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\IPackageManager.cs" />
-    <Compile Include="View\PackageManager.cs">
+    <Compile Include="View\Forms\IAbout.cs" />
+    <Compile Include="View\Forms\IHelp.cs" />
+    <Compile Include="View\Forms\IPackageManager.cs" />
+    <Compile Include="View\Forms\ISettings.cs" />
+    <Compile Include="View\Forms\PackageManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\PackageManager.Designer.cs">
+    <Compile Include="View\Forms\PackageManager.Designer.cs">
       <DependentUpon>PackageManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Settings.cs">
+    <Compile Include="View\Forms\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Settings.Designer.cs">
+    <Compile Include="View\Forms\Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\PackageVersionPanel.cs">
+    <Compile Include="View\Controls\PackageVersionPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="View\PackageVersionPanel.Designer.cs">
+    <Compile Include="View\Controls\PackageVersionPanel.Designer.cs">
       <DependentUpon>PackageVersionPanel.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -206,19 +210,19 @@
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\About.resx">
+    <EmbeddedResource Include="View\Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Help.resx">
+    <EmbeddedResource Include="View\Forms\Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\PackageManager.resx">
+    <EmbeddedResource Include="View\Forms\PackageManager.resx">
       <DependentUpon>PackageManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Settings.resx">
+    <EmbeddedResource Include="View\Forms\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\PackageVersionPanel.resx">
+    <EmbeddedResource Include="View\Controls\PackageVersionPanel.resx">
       <DependentUpon>PackageVersionPanel.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />

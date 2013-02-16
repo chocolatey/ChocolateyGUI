@@ -115,6 +115,13 @@
     <Compile Include="..\SharedSource\Common\CommonCopyrightInfo.cs">
       <Link>Properties\CommonCopyrightInfo.cs</Link>
     </Compile>
+    <Compile Include="CommandPattern\CommandExecuter.cs" />
+    <Compile Include="CommandPattern\ICommand.cs" />
+    <Compile Include="CommandPattern\ICommandExecuter.cs" />
+    <Compile Include="CommandPattern\ICommandWithParameter.cs" />
+    <Compile Include="Commands\OpenAboutCommand.cs" />
+    <Compile Include="Commands\OpenHelpCommand.cs" />
+    <Compile Include="Commands\OpenSettingsCommand.cs" />
     <Compile Include="IoC\Registry.cs" />
     <Compile Include="Model\Package.cs" />
     <Compile Include="Model\PackageVersion.cs" />
@@ -231,19 +238,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="chocolateyicon.ico" />
+    <Content Include="Resources\chocolateyicon.gif" />
     <Content Include="Resources\folder_small.png" />
     <None Include="Resources\packageicon_default.png" />
     <None Include="Resources\chocolateyicon.ico" />
     <None Include="Resources\chocolateyicon_small.png" />
-    <None Include="Resources\chocolateyicon_32x32.png" />
     <None Include="Resources\setting_tools_small.png" />
     <None Include="Resources\information_small.png" />
     <None Include="Resources\help_small.png" />
     <None Include="Resources\monitor_small.png" />
-    <None Include="Resources\folder.png" />
     <None Include="Resources\update.png" />
     <None Include="Resources\monitor.png" />
-    <None Include="Resources\chocolateyicon.png" />
     <Content Include="sources.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

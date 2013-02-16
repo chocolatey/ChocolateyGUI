@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Chocolatey.Explorer.CommandPattern;
+using Chocolatey.Explorer.Commands;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services;
 using log4net;
@@ -21,12 +23,13 @@ namespace Chocolatey.Explorer.View
         private readonly IPackageVersionService _packageVersionService;
         private readonly IPackageService _packageService;
 		private readonly IFileStorageService _fileStorageService;
+        private ICommandExecuter commandExecuter;
 
-        public PackageManager(): this(new PackagesService(),new PackageVersionService(),new PackageService(), new LocalFileSystemStorageService())
+        public PackageManager(): this(new PackagesService(),new PackageVersionService(),new PackageService(), new LocalFileSystemStorageService(), new CommandExecuter())
         {
         }
 
-        public PackageManager(IPackagesService packagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService)
+        public PackageManager(IPackagesService packagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService, ICommandExecuter commandExecuter)
         {
             InitializeComponent();
 
@@ -34,6 +37,7 @@ namespace Chocolatey.Explorer.View
             _packagesService = packagesService;
             _packageVersionService = packageVersionService;
 			_fileStorageService = fileStorageService;
+            this.commandExecuter = commandExecuter;
             _packageVersionService.VersionChanged += VersionChangedHandler;
             _packagesService.RunFinshed += PackagesServiceRunFinished;
             _packageService.LineChanged += PackageServiceLineChanged;
@@ -145,20 +149,17 @@ namespace Chocolatey.Explorer.View
 
         private void help_Click(object sender, EventArgs e)
         {
-            var help = new Help();
-            help.ShowDialog();
+            commandExecuter.Execute<OpenHelpCommand>();
         }
 
         private void about_Click(object sender, EventArgs e)
         {
-            var about = new About();
-            about.ShowDialog();
+            commandExecuter.Execute<OpenAboutCommand>();
         }
 
         private void settings_Click(object sender, EventArgs e)
         {
-            var settings = new Settings();
-            settings.ShowDialog();
+            commandExecuter.Execute<OpenSettingsCommand>();
         }
 
         private void PackageGrid_SelectionChanged(object sender, EventArgs e)

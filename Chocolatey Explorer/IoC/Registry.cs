@@ -1,4 +1,5 @@
-﻿using Chocolatey.Explorer.Powershell;
+﻿using Chocolatey.Explorer.CommandPattern;
+using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services;
 using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.View;
@@ -20,6 +21,7 @@ namespace Chocolatey.Explorer.IoC
              For<IRunSync>().Use<RunSync>();
              For<ISourceService>().Singleton().Use<SourceService>();
 			 For<IFileStorageService>().Use<LocalFileSystemStorageService>();
+             For<ICommandExecuter>().Use<CommandExecuter>();
          }
     }
 }

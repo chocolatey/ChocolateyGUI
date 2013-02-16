@@ -146,6 +146,7 @@
             // 
             this.mainSplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.mainSplitContainer, "mainSplitContainer");
+            this.mainSplitContainer.ForeColor = System.Drawing.SystemColors.ControlText;
             this.mainSplitContainer.Name = "mainSplitContainer";
             // 
             // mainSplitContainer.Panel1
@@ -153,6 +154,7 @@
             this.mainSplitContainer.Panel1.Controls.Add(this.PackageGrid);
             this.mainSplitContainer.Panel1.Controls.Add(this.searchBar);
             this.mainSplitContainer.Panel1.Controls.Add(this.packageTabControl);
+            this.mainSplitContainer.Panel1.ForeColor = System.Drawing.Color.Black;
             // 
             // mainSplitContainer.Panel2
             // 

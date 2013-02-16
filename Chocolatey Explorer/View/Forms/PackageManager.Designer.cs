@@ -46,9 +46,6 @@ namespace Chocolatey.Explorer.View.Forms
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.PackageGrid = new System.Windows.Forms.DataGridView();
-            this.IsInstalled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.InstalledVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.searchBar = new System.Windows.Forms.Panel();
             this.searchPackages = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,6 +53,7 @@ namespace Chocolatey.Explorer.View.Forms
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.tabInstalled = new System.Windows.Forms.TabPage();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
+            this.packageVersionPanel = new Chocolatey.Explorer.View.Controls.PackageVersionPanel();
             this.buttonRow = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
@@ -64,7 +62,10 @@ namespace Chocolatey.Explorer.View.Forms
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.packageVersionPanel = new PackageVersionPanel();
+            this.IsInstalled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.InstalledVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Prerelease = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -188,7 +189,8 @@ namespace Chocolatey.Explorer.View.Forms
             this.PackageGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IsInstalled,
             this.Column1,
-            this.InstalledVersion});
+            this.InstalledVersion,
+            this.Prerelease});
             this.PackageGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.PackageGrid.GridColor = System.Drawing.SystemColors.Control;
             this.PackageGrid.MultiSelect = false;
@@ -206,39 +208,6 @@ namespace Chocolatey.Explorer.View.Forms
             this.PackageGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PackageGrid_CellContentClick);
             this.PackageGrid.SelectionChanged += new System.EventHandler(this.PackageGrid_SelectionChanged);
             this.PackageGrid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PackageGrid_KeyPress);
-            // 
-            // IsInstalled
-            // 
-            this.IsInstalled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.IsInstalled.DataPropertyName = "IsInstalled";
-            resources.ApplyResources(this.IsInstalled, "IsInstalled");
-            this.IsInstalled.Name = "IsInstalled";
-            this.IsInstalled.ReadOnly = true;
-            this.IsInstalled.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Column1
-            // 
-            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column1.DataPropertyName = "Name";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
-            resources.ApplyResources(this.Column1, "Column1");
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // InstalledVersion
-            // 
-            this.InstalledVersion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.InstalledVersion.DataPropertyName = "InstalledVersion";
-            dataGridViewCellStyle4.NullValue = "no version";
-            this.InstalledVersion.DefaultCellStyle = dataGridViewCellStyle4;
-            resources.ApplyResources(this.InstalledVersion, "InstalledVersion");
-            this.InstalledVersion.Name = "InstalledVersion";
-            this.InstalledVersion.ReadOnly = true;
-            this.InstalledVersion.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.InstalledVersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // searchBar
             // 
@@ -290,6 +259,11 @@ namespace Chocolatey.Explorer.View.Forms
             this.packageTabsImageList.TransparentColor = System.Drawing.Color.Transparent;
             this.packageTabsImageList.Images.SetKeyName(0, "chocolateyicon_small.png");
             this.packageTabsImageList.Images.SetKeyName(1, "monitor.png");
+            // 
+            // packageVersionPanel
+            // 
+            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
+            this.packageVersionPanel.Name = "packageVersionPanel";
             // 
             // buttonRow
             // 
@@ -354,10 +328,45 @@ namespace Chocolatey.Explorer.View.Forms
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Spring = true;
             // 
-            // packageVersionPanel
+            // IsInstalled
             // 
-            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
-            this.packageVersionPanel.Name = "packageVersionPanel";
+            this.IsInstalled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.IsInstalled.DataPropertyName = "IsInstalled";
+            resources.ApplyResources(this.IsInstalled, "IsInstalled");
+            this.IsInstalled.Name = "IsInstalled";
+            this.IsInstalled.ReadOnly = true;
+            this.IsInstalled.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column1.DataPropertyName = "Name";
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
+            resources.ApplyResources(this.Column1, "Column1");
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // InstalledVersion
+            // 
+            this.InstalledVersion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.InstalledVersion.DataPropertyName = "InstalledVersion";
+            dataGridViewCellStyle4.NullValue = "no version";
+            this.InstalledVersion.DefaultCellStyle = dataGridViewCellStyle4;
+            resources.ApplyResources(this.InstalledVersion, "InstalledVersion");
+            this.InstalledVersion.Name = "InstalledVersion";
+            this.InstalledVersion.ReadOnly = true;
+            this.InstalledVersion.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.InstalledVersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Prerelease
+            // 
+            this.Prerelease.DataPropertyName = "IsPreRelease";
+            resources.ApplyResources(this.Prerelease, "Prerelease");
+            this.Prerelease.Name = "Prerelease";
+            this.Prerelease.ReadOnly = true;
             // 
             // PackageManager
             // 
@@ -414,11 +423,12 @@ namespace Chocolatey.Explorer.View.Forms
         private System.Windows.Forms.ImageList packageTabsImageList;
         private PackageVersionPanel packageVersionPanel;
         private System.Windows.Forms.DataGridView PackageGrid;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn IsInstalled;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn InstalledVersion;
         private System.Windows.Forms.Panel searchBar;
         private System.Windows.Forms.TextBox searchPackages;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsInstalled;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn InstalledVersion;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Prerelease;
     }
 }

@@ -4,6 +4,8 @@ using System.Threading;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
 using log4net;
+using System;
+using System.Threading.Tasks;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -18,6 +20,9 @@ namespace Chocolatey.Explorer.Services
 
         public delegate void FinishedDelegate(IList<Package> packages);
         public event FinishedDelegate RunFinshed;
+
+		public delegate void FailedDelegate(Exception exc);
+		public event FailedDelegate RunFailed;
 
         public PackagesService(): this(new RunAsync(), new SourceService())
         {
@@ -42,13 +47,13 @@ namespace Chocolatey.Explorer.Services
         public void ListOfInstalledPackages()
         {
             log.Info("Getting list of installed packages");
-            var thread = new Thread(ListOfInstalledPackagsThread) {IsBackground = true};
-            thread.Start();
-        }
-
-        private  void ListOfInstalledPackagsThread()
-        {
-            OnRunFinshed(_libDirHelper.ReloadFromDir());
+			Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
+						.ContinueWith((task) => {
+							if (!task.IsFaulted)
+								OnRunFinshed(task.Result);
+							else if (task.IsFaulted && RunFailed != null)
+								RunFailed(task.Exception);
+						});
         }
 
         private void OutputChanged(string line)

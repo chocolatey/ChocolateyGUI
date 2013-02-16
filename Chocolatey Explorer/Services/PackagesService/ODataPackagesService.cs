@@ -5,6 +5,7 @@ using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
 using log4net;
+using System.Threading.Tasks;
 
 namespace Chocolatey.Explorer.Services
 {
@@ -17,8 +18,8 @@ namespace Chocolatey.Explorer.Services
         private readonly IPackageVersionXMLParser _xmlParser;
         private readonly ChocolateyLibDirHelper _libDirHelper;
 
-        public delegate void PackagesServiceFinishedDelegate(IList<Package> packages);
         public event PackagesService.FinishedDelegate RunFinshed;
+		public event PackagesService.FailedDelegate RunFailed;
 
         public ODataPackagesService(): this(new SourceService(), new PackageVersionXMLParser())
         {
@@ -107,17 +108,18 @@ namespace Chocolatey.Explorer.Services
             return null;
         }
 
-        public void ListOfInstalledPackages()
-        {
-            log.Info("Getting list of installed packages");
-            var thread = new Thread(ListOfInstalledPackagsThread) {IsBackground = true};
-            thread.Start();
-        }
-
-        private void ListOfInstalledPackagsThread()
-        {
-            OnRunFinshed(_libDirHelper.ReloadFromDir());
-        }
+		public void ListOfInstalledPackages()
+		{
+			log.Info("Getting list of installed packages");
+			Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
+						.ContinueWith((task) =>
+						{
+							if (!task.IsFaulted)
+								OnRunFinshed(task.Result);
+							else if (task.IsFaulted && RunFailed != null)
+								RunFailed(task.Exception);
+						});
+		}
 
         private void OnRunFinshed(IList<Package> packages)
         {

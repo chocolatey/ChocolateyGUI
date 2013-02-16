@@ -12,8 +12,8 @@ namespace Chocolatey.Explorer.Services
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(CachedPackagesService));
 
-        public delegate void FinishedDelegate(IList<Package> packages);
         public event PackagesService.FinishedDelegate RunFinshed;
+		public event PackagesService.FailedDelegate RunFailed;
 
         private readonly IPackagesService packagesService;
         private IList<Package> availablePackageCache;
@@ -22,6 +22,7 @@ namespace Chocolatey.Explorer.Services
         public CachedPackagesService()
         {
             packagesService = new ODataPackagesService();
+			packagesService.RunFailed += PackagesServiceRunFailed;
         }
 
         public void InvalidateCache()
@@ -95,5 +96,11 @@ namespace Chocolatey.Explorer.Services
             packagesService.RunFinshed -= OnUncachedInstalledRunFinished;
             OnRunFinshed(packages);
         }
+
+		private void PackagesServiceRunFailed(System.Exception exc)
+		{
+			if (RunFailed != null)
+				RunFailed(exc);
+		}
     }
 }

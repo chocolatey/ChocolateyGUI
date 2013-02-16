@@ -38,6 +38,7 @@ namespace Chocolatey.Explorer.View
             _packagesService.RunFinshed += PackagesServiceRunFinished;
             _packageService.LineChanged += PackageServiceLineChanged;
             _packageService.RunFinshed += PackageServiceRunFinished;
+			_packagesService.RunFailed += PackagesService_RunFailed;
             ClearStatus();
             PackageGrid.Focus();
             UpdateInstallUninstallButtonLabel();
@@ -102,6 +103,18 @@ namespace Chocolatey.Explorer.View
                 PackageGrid.DataSource = distinct;
             }
         }
+
+		private void PackagesService_RunFailed(Exception exc)
+		{
+			//TODO - should we do something to prevent them from using more of the app nd getting more errors?
+			if (exc is ChocolateyVersionUnknownException || (exc is AggregateException || exc.InnerException is IChocolateyService))
+			{
+				var result = MessageBox.Show("Chocolatey version could not be detected. Either Chocolatey is not installed or we cannot access it.", "Chocolatey not found");
+				Application.Exit();
+			}
+			else
+				MessageBox.Show(String.Format("An unexpected error occurred (good thing you're technical, eh?)\n{0}: {1}", exc.GetType().Name, exc.Message), "Unexpected Application Error");
+		}
 
         private void VersionChangedHandler(PackageVersion version)
         {
@@ -264,7 +277,7 @@ namespace Chocolatey.Explorer.View
                 packageTabControl.SelectedTab = tabInstalled;
                 lblProgressbar.Style = ProgressBarStyle.Marquee;
                 PackageGrid.DataSource = new List<Package>();
-                _packagesService.ListOfInstalledPackages();
+				_packagesService.ListOfInstalledPackages();
             }
         }
 

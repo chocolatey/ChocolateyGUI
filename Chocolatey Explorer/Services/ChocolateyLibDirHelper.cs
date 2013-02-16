@@ -18,7 +18,7 @@ namespace Chocolatey.Explorer.Services
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ChocolateyLibDirHelper));
 
-        private readonly Regex _packageVersionRegexp = new Regex(@"((\.\d+)+)$");
+        private readonly Regex _packageVersionRegexp = new Regex(@"((\.\d+)+)(-[^\.]+)?$");
         private readonly char[] _segmentDelim = "\\".ToCharArray();
         private readonly Settings _settings = new Settings();
         private List<Package> _instaledPackages;
@@ -89,7 +89,7 @@ namespace Chocolatey.Explorer.Services
             return !query.Any() ? strings.not_available : query.OrderBy(x=> x, new PackagesSorter()).Last();
         }
 
-        private Package GetPackageFromDirectoryName(string directoryName)
+        public Package GetPackageFromDirectoryName(string directoryName)
         {
             var package = new Package();
             var versionMatch = _packageVersionRegexp.Match(directoryName);

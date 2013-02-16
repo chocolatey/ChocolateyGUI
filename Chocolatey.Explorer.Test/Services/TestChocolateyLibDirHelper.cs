@@ -7,6 +7,7 @@ using Chocolatey.Explorer.Services;
 using Rhino.Mocks;
 using Chocolatey.Explorer.Services.FileStorageService;
 using System.IO;
+using Chocolatey.Explorer.Model;
 
 namespace Chocolatey.Explorer.Test.Services
 {
@@ -57,9 +58,7 @@ namespace Chocolatey.Explorer.Test.Services
 		{
 			var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
 			fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { });
-			var chocolatelyService = new FakeChocolateyService() {
-				ExpectedOutputFromHelp = "not a valid chocolatey version string"
-			};
+			var chocolatelyService = new FakeChocolateyService("not a valid chocolatey version string");
 			var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
 
 			var result = helper.ReloadFromDir();
@@ -72,10 +71,7 @@ namespace Chocolatey.Explorer.Test.Services
 		{
 			var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
 			fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { });
-			var chocolatelyService = new FakeChocolateyService() {
-				ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
-			};
-			var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService);
 
 			var result = helper.ReloadFromDir();
 
@@ -87,11 +83,7 @@ namespace Chocolatey.Explorer.Test.Services
         {
             var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
             fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5" });
-            var chocolatelyService = new FakeChocolateyService()
-            {
-                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
-            };
-            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService);
 
             var result = helper.ReloadFromDir();
 
@@ -103,11 +95,7 @@ namespace Chocolatey.Explorer.Test.Services
         {
             var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
             fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5" });
-            var chocolatelyService = new FakeChocolateyService()
-            {
-                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
-            };
-            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService);
 
             var result = helper.ReloadFromDir();
 
@@ -119,11 +107,7 @@ namespace Chocolatey.Explorer.Test.Services
         {
             var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
             fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5-pre"});
-            var chocolatelyService = new FakeChocolateyService()
-            {
-                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
-            };
-            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService);
 
             var result = helper.ReloadFromDir();
 
@@ -135,11 +119,7 @@ namespace Chocolatey.Explorer.Test.Services
         {
             var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
             fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5-pre" });
-            var chocolatelyService = new FakeChocolateyService()
-            {
-                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
-            };
-            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService);
 
             var result = helper.ReloadFromDir();
 
@@ -151,11 +131,7 @@ namespace Chocolatey.Explorer.Test.Services
         {
             var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
             fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5", "ChocolateyGUI.0.1.6" });
-            var chocolatelyService = new FakeChocolateyService()
-            {
-                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
-            };
-            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService);
 
             var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
 
@@ -167,11 +143,7 @@ namespace Chocolatey.Explorer.Test.Services
         {
             var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
             fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.15", "ChocolateyGUI.0.1.6" });
-            var chocolatelyService = new FakeChocolateyService()
-            {
-                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
-            };
-            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService);
 
             var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
 
@@ -183,24 +155,58 @@ namespace Chocolatey.Explorer.Test.Services
         {
             var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
             fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.11.5", "ChocolateyGUI.0.1.6" });
-            var chocolatelyService = new FakeChocolateyService()
-            {
-                ExpectedOutputFromHelp = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'"
-            };
-            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService);
+			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService);
 
             var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
 
             Assert.AreEqual("0.11.5", result);
         }
 
+		[TestCase("BasicOnePart.1",							"BasicOnePart",				"1")]
+		[TestCase("BasicTwoPart.1.1",						"BasicTwoPart",				"1.1")]
+		[TestCase("BasicThreePart.1.1.1",					"BasicThreePart",			"1.1.1")]
+		[TestCase("BasicFourPart.1.1.1.1",					"BasicFourPart",			"1.1.1.1")]
+		[TestCase("MixedDigitLengths.1.10.981.1234",		"MixedDigitLengths",		"1.10.981.1234")]
+		[TestCase("DatePackageFixNotation.1.1.1.20130215",	"DatePackageFixNotation",	"1.1.1.20130215")]
+		[TestCase("SemVerPreRelease.1.1.1.1-pre",			"SemVerPreRelease",			"1.1.1.1-pre")]
+		[TestCase("SemVerCustomPreRelease.1.1.1.1-stuff",	"SemVerCustomPreRelease",	"1.1.1.1-stuff")]
+		[TestCase("OnePartNameWith.Decimal.1.1.1.1",		"OnePartNameWith.Decimal",	"1.1.1.1")]
+		[TestCase("TwoPartNameWith.Decimal.1.1.1.1",		"TwoPartNameWith.Decimal",	"1.1.1.1")]
+		[TestCase("ThreePartNameWith.Decimal.1.1.1.1",		"ThreePartNameWith.Decimal","1.1.1.1")]
+		[TestCase("FourPartNameWith.Decimal.1.1.1.1",		"FourPartNameWith.Decimal",	"1.1.1.1")]
+		[TestCase("FourPartPreNameWith.Decimal.1.1.1.1-pre", "FourPartPreNameWith.Decimal", "1.1.1.1-pre")]
+		[TestCase("OnePartNumericEnd2.1",					"OnePartNumericEnd2",		"1")]
+		[TestCase("TwoPartNumericEnd2.1.1",					"TwoPartNumericEnd2",		"1.1")]
+		[TestCase("ThreePartNumericEnd2.1.1.1",				"ThreePartNumericEnd2",		"1.1.1")]
+		[TestCase("FourPartNumericEnd2.1.1.1.1",			"FourPartNumericEnd2",		"1.1.1.1")]
+		[TestCase("FourPartPreNumericEnd2.1.1.1.1-pre",		"FourPartPreNumericEnd2",	"1.1.1.1-pre")]
+		public void IfGetPackageFromDirectoryNameReceivesNameThatIsValidPerRecomendations(string filename, string expectedPackageName, string expectedVersion)
+		{
+			var expectedPackage = new Package() { 
+				Name = expectedPackageName, 
+				InstalledVersion = expectedVersion 
+			};
+			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), MockRepository.GenerateMock<IFileStorageService>());
+
+			var actualPackage = helper.GetPackageFromDirectoryName(filename);
+
+			Assert.AreEqual(expectedPackage.Name, actualPackage.Name);
+			Assert.AreEqual(expectedPackage.InstalledVersion, actualPackage.InstalledVersion);
+		}
+
 		private class FakeChocolateyService : IChocolateyService
 		{
+			public const string ValidVersionString = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'";
 
 			public event ChocolateyService.OutputDelegate OutputChanged;
 			public event ChocolateyService.RunFinishedDelegate RunFinished;
-
+			
 			public string ExpectedOutputFromHelp { get; set; }
+
+			public FakeChocolateyService(string expectedOutputFromHelp = ValidVersionString)
+			{
+				ExpectedOutputFromHelp = expectedOutputFromHelp;
+			}
 
 			public void LatestVersion()
 			{

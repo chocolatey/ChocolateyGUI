@@ -9,6 +9,7 @@ namespace Chocolatey.Explorer.Commands
 
         public override void Execute()
         {
+            this.Log().Info("Opened Help form.");
             Help.DoShow();
         }
     }

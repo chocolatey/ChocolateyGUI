@@ -72,8 +72,8 @@
       <Component Id="ChocolateyGUI.exe.config" Guid="f8164f91-fa5c-0004-0002-9beb5b044699">
         <File Id="ChocolateyGUI.exe.config" Source="$(var.Chocolatey.Explorer.TargetDir)\ChocolateyGUI.exe.config" KeyPath="yes"/>
       </Component>
-      <Component Id="this.Log-NLog.dll" Guid="f8164f91-fa5c-0005-0001-9beb5a044699">
-        <File Id="this.Log-NLog.dll" Source="$(var.Chocolatey.Explorer.TargetDir)\this.Log-NLog.dll" KeyPath="yes"/>
+      <Component Id="this.LogNLog.dll" Guid="f8164f91-fa5c-0005-0001-9beb5a044699">
+        <File Id="this.LogNLog.dll" Source="$(var.Chocolatey.Explorer.TargetDir)\this.Log-NLog.dll" KeyPath="yes"/>
       </Component>
       <Component Id="this.Log.dll" Guid="f8164f91-fa5c-0006-0001-9beb5a044699">
         <File Id="this.Log.dll" Source="$(var.Chocolatey.Explorer.TargetDir)\this.Log.dll" KeyPath="yes"/>

@@ -15,7 +15,7 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
 
-    <Icon Id="icon.ico" SourceFile="$(var.Chocolatey.Explorer.ProjectDir)\chocolateyicon.ico"/>
+    <Icon Id="icon.ico" SourceFile="$(var.Chocolatey.Explorer.ProjectDir)\Resources\chocolateyicon.ico"/>
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
     
 		<Feature Id="ProductFeature" Title="ChocolateyGUI" Level="1">

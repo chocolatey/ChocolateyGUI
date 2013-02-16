@@ -82,7 +82,8 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>chocolateyicon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
@@ -241,7 +242,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="chocolateyicon.ico" />
     <Content Include="Resources\chocolateyicon.gif" />
     <Content Include="Resources\folder_small.png" />
     <None Include="Resources\packageicon_default.png" />

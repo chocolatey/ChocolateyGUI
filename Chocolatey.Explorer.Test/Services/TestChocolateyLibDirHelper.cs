@@ -171,29 +171,30 @@ namespace Chocolatey.Explorer.Test.Services
             Assert.AreEqual("0.11.5", result);
         }
 
-		[TestCase("BasicOnePart.1",							"BasicOnePart",				"1")]
-		[TestCase("BasicTwoPart.1.1",						"BasicTwoPart",				"1.1")]
-		[TestCase("BasicThreePart.1.1.1",					"BasicThreePart",			"1.1.1")]
-		[TestCase("BasicFourPart.1.1.1.1",					"BasicFourPart",			"1.1.1.1")]
-		[TestCase("MixedDigitLengths.1.10.981.1234",		"MixedDigitLengths",		"1.10.981.1234")]
-		[TestCase("DatePackageFixNotation.1.1.1.20130215",	"DatePackageFixNotation",	"1.1.1.20130215")]
-		[TestCase("SemVerPreRelease.1.1.1.1-pre",			"SemVerPreRelease",			"1.1.1.1-pre")]
-		[TestCase("SemVerCustomPreRelease.1.1.1.1-stuff",	"SemVerCustomPreRelease",	"1.1.1.1-stuff")]
-		[TestCase("OnePartNameWith.Decimal.1.1.1.1",		"OnePartNameWith.Decimal",	"1.1.1.1")]
-		[TestCase("TwoPartNameWith.Decimal.1.1.1.1",		"TwoPartNameWith.Decimal",	"1.1.1.1")]
-		[TestCase("ThreePartNameWith.Decimal.1.1.1.1",		"ThreePartNameWith.Decimal","1.1.1.1")]
-		[TestCase("FourPartNameWith.Decimal.1.1.1.1",		"FourPartNameWith.Decimal",	"1.1.1.1")]
-		[TestCase("FourPartPreNameWith.Decimal.1.1.1.1-pre", "FourPartPreNameWith.Decimal", "1.1.1.1-pre")]
-		[TestCase("OnePartNumericEnd2.1",					"OnePartNumericEnd2",		"1")]
-		[TestCase("TwoPartNumericEnd2.1.1",					"TwoPartNumericEnd2",		"1.1")]
-		[TestCase("ThreePartNumericEnd2.1.1.1",				"ThreePartNumericEnd2",		"1.1.1")]
-		[TestCase("FourPartNumericEnd2.1.1.1.1",			"FourPartNumericEnd2",		"1.1.1.1")]
-		[TestCase("FourPartPreNumericEnd2.1.1.1.1-pre",		"FourPartPreNumericEnd2",	"1.1.1.1-pre")]
-		public void IfGetPackageFromDirectoryNameReceivesNameThatIsValidPerRecomendations(string filename, string expectedPackageName, string expectedVersion)
+		[TestCase("BasicOnePart.1",							"BasicOnePart",				"1",                false)]
+		[TestCase("BasicTwoPart.1.1",						"BasicTwoPart",				"1.1",              false)]
+		[TestCase("BasicThreePart.1.1.1",					"BasicThreePart",			"1.1.1",            false)]
+		[TestCase("BasicFourPart.1.1.1.1",					"BasicFourPart",			"1.1.1.1",          false)]
+		[TestCase("MixedDigitLengths.1.10.981.1234",		"MixedDigitLengths",		"1.10.981.1234",    false)]
+		[TestCase("DatePackageFixNotation.1.1.1.20130215",	"DatePackageFixNotation",	"1.1.1.20130215",   false)]
+		[TestCase("SemVerPreRelease.1.1.1.1-pre",			"SemVerPreRelease",			"1.1.1.1",          true)]
+		[TestCase("SemVerCustomPreRelease.1.1.1.1-stuff",	"SemVerCustomPreRelease",	"1.1.1.1-stuff",    false)]
+		[TestCase("OnePartNameWith.Decimal.1.1.1.1",		"OnePartNameWith.Decimal",	"1.1.1.1",          false)]
+		[TestCase("TwoPartNameWith.Decimal.1.1.1.1",		"TwoPartNameWith.Decimal",	"1.1.1.1",          false)]
+		[TestCase("ThreePartNameWith.Decimal.1.1.1.1",		"ThreePartNameWith.Decimal","1.1.1.1",          false)]
+		[TestCase("FourPartNameWith.Decimal.1.1.1.1",		"FourPartNameWith.Decimal",	"1.1.1.1",          false)]
+		[TestCase("FourPartPreNameWith.Decimal.1.1.1.1-pre", "FourPartPreNameWith.Decimal", "1.1.1.1",      true)]
+		[TestCase("OnePartNumericEnd2.1",					"OnePartNumericEnd2",		"1",                false)]
+		[TestCase("TwoPartNumericEnd2.1.1",					"TwoPartNumericEnd2",		"1.1",              false)]
+		[TestCase("ThreePartNumericEnd2.1.1.1",				"ThreePartNumericEnd2",		"1.1.1",            false)]
+		[TestCase("FourPartNumericEnd2.1.1.1.1",			"FourPartNumericEnd2",		"1.1.1.1",          false)]
+		[TestCase("FourPartPreNumericEnd2.1.1.1.1-pre",		"FourPartPreNumericEnd2",	"1.1.1.1",          true)]
+		public void IfGetPackageFromDirectoryNameReceivesNameThatIsValidPerRecomendations(string filename, string expectedPackageName, string expectedVersion, bool prerelease)
 		{
 			var expectedPackage = new Package() { 
 				Name = expectedPackageName, 
-				InstalledVersion = expectedVersion 
+				InstalledVersion = expectedVersion,
+                IsPreRelease = prerelease
 			};
 			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), MockRepository.GenerateMock<IFileStorageService>(), _settingsService);
 
@@ -201,6 +202,7 @@ namespace Chocolatey.Explorer.Test.Services
 
 			Assert.AreEqual(expectedPackage.Name, actualPackage.Name);
 			Assert.AreEqual(expectedPackage.InstalledVersion, actualPackage.InstalledVersion);
+            Assert.AreEqual(expectedPackage.IsPreRelease, actualPackage.IsPreRelease);
 		}
 
 		private class FakeChocolateyService : IChocolateyService

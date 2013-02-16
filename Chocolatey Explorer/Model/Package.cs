@@ -6,6 +6,7 @@ namespace Chocolatey.Explorer.Model
     {
         public String Name { get; set; }
         public String InstalledVersion { get; set; }
+        public Boolean IsPreRelease { get; set; }
         public bool IsInstalled
         {
             get 

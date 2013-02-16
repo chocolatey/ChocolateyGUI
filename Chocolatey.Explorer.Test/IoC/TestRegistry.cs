@@ -6,6 +6,7 @@ using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.Services.PackageService;
 using Chocolatey.Explorer.Services.PackageVersionService;
 using Chocolatey.Explorer.Services.PackagesService;
+using Chocolatey.Explorer.Services.SettingsService;
 using Chocolatey.Explorer.Services.SourceService;
 using Chocolatey.Explorer.View;
 using Chocolatey.Explorer.View.Forms;
@@ -177,6 +178,18 @@ namespace Chocolatey.Explorer.Test.IoC
         public void IfISettingsIsNotSingleton()
         {
             Assert.AreNotEqual(ObjectFactory.GetInstance<ISettings>(), ObjectFactory.GetInstance<ISettings>());
+        }
+
+        [Test]
+        public void IfISettingsServiceCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<ISettingsService>());
+        }
+
+        [Test]
+        public void IfISettingsServiceIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<ISettingsService>(), ObjectFactory.GetInstance<SettingsService>());
         }
     }
 }

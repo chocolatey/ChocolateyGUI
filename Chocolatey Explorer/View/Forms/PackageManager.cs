@@ -11,6 +11,7 @@ using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.Services.PackageService;
 using Chocolatey.Explorer.Services.PackageVersionService;
 using Chocolatey.Explorer.Services.PackagesService;
+using Chocolatey.Explorer.Services.SettingsService;
 
 namespace Chocolatey.Explorer.View.Forms
 {
@@ -24,13 +25,14 @@ namespace Chocolatey.Explorer.View.Forms
         private readonly IPackageVersionService _packageVersionService;
         private readonly IPackageService _packageService;
 		private readonly IFileStorageService _fileStorageService;
-        private ICommandExecuter commandExecuter;
+        private readonly ICommandExecuter _commandExecuter;
+        private readonly ISettingsService _settingsService;
 
-        public PackageManager(): this(new PackagesService(),new PackageVersionService(),new PackageService(), new LocalFileSystemStorageService(), new CommandExecuter())
+        public PackageManager(): this(new PackagesService(),new PackageVersionService(),new PackageService(), new LocalFileSystemStorageService(), new CommandExecuter(), new SettingsService())
         {
         }
 
-        public PackageManager(IPackagesService packagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService, ICommandExecuter commandExecuter)
+        public PackageManager(IPackagesService packagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService, ICommandExecuter commandExecuter, ISettingsService settingsService)
         {
             InitializeComponent();
 
@@ -38,7 +40,8 @@ namespace Chocolatey.Explorer.View.Forms
             _packagesService = packagesService;
             _packageVersionService = packageVersionService;
 			_fileStorageService = fileStorageService;
-            this.commandExecuter = commandExecuter;
+            _commandExecuter = commandExecuter;
+            _settingsService = settingsService;
             _packageVersionService.VersionChanged += VersionChangedHandler;
             _packagesService.RunFinshed += PackagesServiceRunFinished;
             _packageService.LineChanged += PackageServiceLineChanged;
@@ -150,17 +153,17 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void help_Click(object sender, EventArgs e)
         {
-            commandExecuter.Execute<OpenHelpCommand>();
+            _commandExecuter.Execute<OpenHelpCommand>();
         }
 
         private void about_Click(object sender, EventArgs e)
         {
-            commandExecuter.Execute<OpenAboutCommand>();
+            _commandExecuter.Execute<OpenAboutCommand>();
         }
 
         private void settings_Click(object sender, EventArgs e)
         {
-            commandExecuter.Execute<OpenSettingsCommand>();
+            _commandExecuter.Execute<OpenSettingsCommand>();
         }
 
         private void PackageGrid_SelectionChanged(object sender, EventArgs e)
@@ -265,9 +268,8 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void QueryInstalledPackages()
         {
-            var settings = new Properties.Settings();
             searchPackages.Text = "";
-            var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(settings.ChocolateyLibDirectory);
+            var expandedLibDirectory = System.Environment.ExpandEnvironmentVariables(_settingsService.ChocolateyLibDirectory);
             if (!_fileStorageService.DirectoryExists(expandedLibDirectory))
             {
                 MessageBox.Show(string.Format(strings.lib_dir_not_found, expandedLibDirectory));

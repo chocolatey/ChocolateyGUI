@@ -157,6 +157,8 @@
     <Compile Include="Services\PackageService\IPackageService.cs" />
     <Compile Include="Services\PackagesService\IPackagesService.cs" />
     <Compile Include="Services\PackageVersionService\IPackageVersionService.cs" />
+    <Compile Include="Services\SettingsService\ISettingsService.cs" />
+    <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SourceService\ISourceService.cs" />
     <Compile Include="Services\PackageService\PackageService.cs" />
     <Compile Include="Services\PackagesService\PackagesService.cs" />

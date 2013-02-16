@@ -6,8 +6,8 @@ using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.Services.PackageService;
 using Chocolatey.Explorer.Services.PackageVersionService;
 using Chocolatey.Explorer.Services.PackagesService;
+using Chocolatey.Explorer.Services.SettingsService;
 using Chocolatey.Explorer.Services.SourceService;
-using Chocolatey.Explorer.View;
 using Chocolatey.Explorer.View.Forms;
 
 namespace Chocolatey.Explorer.IoC
@@ -21,6 +21,7 @@ namespace Chocolatey.Explorer.IoC
              For<IPackagesService>().Use<CachedPackagesService>();
              For<IPackageVersionService>().Use<ODataPackageVersionService>();
              For<IChocolateyService>().Use<ChocolateyService>();
+             For<ISettingsService>().Singleton().Use<SettingsService>();
              For<IPackageVersionXMLParser>().Use<PackageVersionXMLParser>();
              For<IRunAsync>().Use<RunAsync>();
              For<IRunSync>().Use<RunSync>();

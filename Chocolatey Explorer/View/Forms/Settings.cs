@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Windows.Forms;
+using Chocolatey.Explorer.Services.SettingsService;
 
 namespace Chocolatey.Explorer.View.Forms
 {
     public partial class Settings : Form, ISettings
     {
-        public Settings()
+        private readonly ISettingsService _settingsService;
+            
+        public Settings(ISettingsService settingsService)
         {
+            _settingsService = settingsService;
             InitializeComponent();
         }
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            var settings = new Properties.Settings();
-            txtInstallDirectory.Text = settings.ChocolateyLibDirectory;
+            txtInstallDirectory.Text = _settingsService.ChocolateyLibDirectory;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var settings = new Properties.Settings {ChocolateyLibDirectory = txtInstallDirectory.Text};
-            settings.Save();
+            _settingsService.ChocolateyLibDirectory = txtInstallDirectory.Text;
             Dispose();
         }
 

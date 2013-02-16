@@ -2,7 +2,6 @@
 using System.IO;
 using System.Windows.Forms;
 using Chocolatey.Explorer.IoC;
-using Chocolatey.Explorer.View;
 using Chocolatey.Explorer.View.Forms;
 using StructureMap;
 using log4net;
@@ -21,13 +20,13 @@ namespace Chocolatey.Explorer
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));
             log.Info("Log4net initialized");
-            ObjectFactory.Configure(configure => configure.AddRegistry<Registry>());
-            log.Info("Structuremap configured");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            log.Info("Opening PackageManager");
             try
             {
+                ObjectFactory.Configure(configure => configure.AddRegistry<Registry>());
+                log.Info("Structuremap configured");
+                log.Info("Opening PackageManager");
                 Application.Run((PackageManager)ObjectFactory.GetInstance<IPackageManager>());
             }
             catch (Exception ex)

@@ -10,7 +10,7 @@ namespace Chocolatey.Explorer.Commands
         public override void Execute()
         {
             this.Log().Info("Opened Settings form.");
-            ////Settings.DoShowDialog();
+            Settings.DoShowDialog();
         }
     }
 }

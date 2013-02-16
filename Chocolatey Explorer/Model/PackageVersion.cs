@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Chocolatey.Explorer.Services;
 
 namespace Chocolatey.Explorer.Model
 {
@@ -8,7 +10,7 @@ namespace Chocolatey.Explorer.Model
         public string CurrentVersion { get; set; }
         public string Serverversion { get; set; }
         public bool IsInstalled { get { return !CurrentVersion.EndsWith(strings.not_available); } }
-        public bool CanBeUpdated { get { return !Serverversion.EndsWith(strings.not_available) && !CurrentVersion.Equals(Serverversion) && IsInstalled; } }
+        public bool CanBeUpdated { get { return !Serverversion.EndsWith(strings.not_available) && IsLower() && IsInstalled; } }
         public string Summary { get; set; }
         public DateTime LastUpdatedAt { get; set; }
         public string AuthorName { get; set; }
@@ -30,6 +32,15 @@ namespace Chocolatey.Explorer.Model
         public bool RequireLicenseAcceptance { get; set; }
         public string[] Tags { get; set; }
         public string[] Dependencies { get; set; }
+
+        private bool IsLower()
+        {
+            var packages = new List<String>() {CurrentVersion, Serverversion};
+            if (CurrentVersion.Equals(Serverversion)) return false;
+            if (CurrentVersion.EndsWith(strings.not_available)) return false;
+            packages.Sort(new PackagesSorter());
+            return packages[0].Equals(CurrentVersion);
+        }
 
         public PackageVersion()
         {

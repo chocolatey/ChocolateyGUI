@@ -8,7 +8,6 @@ using Chocolatey.Explorer.Services.PackageVersionService;
 using Chocolatey.Explorer.Services.PackagesService;
 using Chocolatey.Explorer.Services.SettingsService;
 using Chocolatey.Explorer.Services.SourceService;
-using Chocolatey.Explorer.View;
 using Chocolatey.Explorer.View.Forms;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -49,8 +48,9 @@ namespace Chocolatey.Explorer.Test.IoC
 		private void InjectSetupForPackageManager(IFileStorageService fileStorageService)
 		{
 			ObjectFactory.Inject<IFileStorageService>(fileStorageService);
-			ObjectFactory.Inject<IPackagesService>(MockRepository.GenerateMock<IPackagesService>());
-			ObjectFactory.Inject<IPackageVersionService>(MockRepository.GenerateMock<IPackageVersionService>());
+			ObjectFactory.Inject<IAvailablePackagesService>(MockRepository.GenerateMock<IAvailablePackagesService>());
+            ObjectFactory.Inject<IInstalledPackagesService>(MockRepository.GenerateMock<IInstalledPackagesService>());
+            ObjectFactory.Inject<IPackageVersionService>(MockRepository.GenerateMock<IPackageVersionService>());
 			ObjectFactory.Inject<IPackageService>(MockRepository.GenerateMock<IPackageService>());
 		}
 
@@ -69,13 +69,13 @@ namespace Chocolatey.Explorer.Test.IoC
         [Test]
         public void IfIPackagesServiceCanBeResolved()
         {
-            Assert.IsNotNull(ObjectFactory.GetInstance<IPackagesService>());
+            Assert.IsNotNull(ObjectFactory.GetInstance<IAvailablePackagesService>());
         }
 
         [Test]
         public void IfIPackagesServiceIsNotSingleton()
         {
-            Assert.AreNotEqual(ObjectFactory.GetInstance<IPackagesService>(), ObjectFactory.GetInstance<IPackagesService>());
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IAvailablePackagesService>(), ObjectFactory.GetInstance<IAvailablePackagesService>());
         }
 
         [Test]

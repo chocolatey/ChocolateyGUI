@@ -4,34 +4,33 @@ using System.Net;
 using System.Threading;
 using System.Xml;
 using Chocolatey.Explorer.Model;
-using System.Threading.Tasks;
 using Chocolatey.Explorer.Services.SourceService;
 
 namespace Chocolatey.Explorer.Services.PackagesService
 {
-    public class ODataPackagesService : IPackagesService
+    public class ODataAvailablePackagesService : IAvailablePackagesService
     {
-        private const string ALL_PACKAGES_URL = "/Packages?$filter=IsLatestVersion eq true&$inlinecount=allpages&$select=Title";
+        private const string AllPackagesUrl = "/Packages?$filter=IsLatestVersion eq true&$inlinecount=allpages&$select=Title";
 
         private readonly ISourceService _sourceService;
         private readonly IPackageVersionXMLParser _xmlParser;
         private readonly ChocolateyLibDirHelper _libDirHelper;
 
-        public event PackagesService.FinishedDelegate RunFinshed;
-		public event PackagesService.FailedDelegate RunFailed;
+        public event AvailablePackagesService.FinishedDelegate RunFinshed;
+		public event AvailablePackagesService.FailedDelegate RunFailed;
 
-        public ODataPackagesService(): this(new SourceService.SourceService(), new PackageVersionXMLParser())
+        public ODataAvailablePackagesService(): this(new SourceService.SourceService(), new PackageVersionXMLParser())
         {
         }
 
-        public ODataPackagesService(ISourceService sourceService, IPackageVersionXMLParser xmlParser)
+        public ODataAvailablePackagesService(ISourceService sourceService, IPackageVersionXMLParser xmlParser)
         {
             _sourceService = sourceService;
             _xmlParser = xmlParser;
             _libDirHelper = new ChocolateyLibDirHelper();
         }
 
-        public void ListOfPackages()
+        public void ListOfAvalablePackages()
         {
             var thread = new Thread(LoadAllPackagesThread) { IsBackground = true };
             thread.Start();
@@ -57,12 +56,12 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
             // concat and return results
             _libDirHelper.ReloadFromDir();
-            IEnumerable<Package> allPackages = packageVersions.Select( e => PackageFromVersion(e) );
+            IEnumerable<Package> allPackages = packageVersions.Select( PackageFromVersion );
             foreach (var backgroundPageObject in bgPageObjects)
             {
                 backgroundPageObject.DoneEvent.WaitOne();
                 allPackages = allPackages.Concat(
-                        backgroundPageObject.PackageVersions.Select( e => PackageFromVersion(e) )
+                        backgroundPageObject.PackageVersions.Select( PackageFromVersion )
                     );
             }
             OnRunFinshed(allPackages.ToList());
@@ -71,8 +70,8 @@ namespace Chocolatey.Explorer.Services.PackagesService
         private Package PackageFromVersion(PackageVersion version)
         {
             var highestPackage = _libDirHelper.GetHighestInstalledVersion(version.Name, false);
-            return new Package()
-            {
+            return new Package
+                {
                 Name = version.Name,
                 InstalledVersion = highestPackage == null?strings.not_available:highestPackage.InstalledVersion
             };
@@ -88,7 +87,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private XmlDocument LoadFeedDoc(int skip)
         {
-            var fullUrl = _sourceService.Source + ALL_PACKAGES_URL;
+            var fullUrl = _sourceService.Source + AllPackagesUrl;
             var skipUrl = fullUrl + "&$skip=" + skip;
             this.Log().Debug("Getting list of packages on source: " + skipUrl);
 
@@ -108,20 +107,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
             return null;
         }
 
-		public void ListOfInstalledPackages()
-		{
-			this.Log().Info("Getting list of installed packages");
-			Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
-						.ContinueWith((task) =>
-						{
-							if (!task.IsFaulted)
-								OnRunFinshed(task.Result);
-							else if (task.IsFaulted && RunFailed != null)
-								RunFailed(task.Exception);
-						});
-		}
-
-        private void OnRunFinshed(IList<Package> packages)
+		private void OnRunFinshed(IList<Package> packages)
         {
             var handler = RunFinshed;
             if (handler != null) handler(packages);
@@ -135,8 +121,8 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
             public BackgroundPageObject(int skip, ManualResetEvent doneEvent)
             {
-                this.Skip = skip;
-                this.DoneEvent = doneEvent;
+                Skip = skip;
+                DoneEvent = doneEvent;
             }
         }
     }

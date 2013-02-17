@@ -21,32 +21,36 @@ namespace Chocolatey.Explorer.View.Forms
         private delegate void PackageSServiceHandler(IList<Package> packages);
         private delegate void PackageServiceHandler(string line);
         private delegate void PackageServiceRunFinishedHandler();
-        private readonly IPackagesService _packagesService;
+        private readonly IAvailablePackagesService _availablePackagesService;
+        private readonly IInstalledPackagesService _installedPackagesService;
         private readonly IPackageVersionService _packageVersionService;
         private readonly IPackageService _packageService;
 		private readonly IFileStorageService _fileStorageService;
         private readonly ICommandExecuter _commandExecuter;
         private readonly ISettingsService _settingsService;
 
-        public PackageManager(): this(new PackagesService(),new PackageVersionService(),new PackageService(), new LocalFileSystemStorageService(), new CommandExecuter(), new SettingsService())
+        public PackageManager(): this(new AvailablePackagesService(),new PackageVersionService(),new PackageService(), new LocalFileSystemStorageService(), new CommandExecuter(), new SettingsService(), new InstalledPackagesService(new ChocolateyLibDirHelper()))
         {
         }
 
-        public PackageManager(IPackagesService packagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService, ICommandExecuter commandExecuter, ISettingsService settingsService)
+        public PackageManager(IAvailablePackagesService availablePackagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService, ICommandExecuter commandExecuter, ISettingsService settingsService, IInstalledPackagesService installedPackagesService)
         {
             InitializeComponent();
 
             _packageService = packageService;
-            _packagesService = packagesService;
+            _availablePackagesService = availablePackagesService;
             _packageVersionService = packageVersionService;
 			_fileStorageService = fileStorageService;
             _commandExecuter = commandExecuter;
             _settingsService = settingsService;
+            _installedPackagesService = installedPackagesService;
             _packageVersionService.VersionChanged += VersionChangedHandler;
-            _packagesService.RunFinshed += PackagesServiceRunFinished;
+            _availablePackagesService.RunFinshed += AvailablePackagesServiceRunFinished;
+            _installedPackagesService.RunFinshed += AvailablePackagesServiceRunFinished;
             _packageService.LineChanged += PackageServiceLineChanged;
             _packageService.RunFinshed += PackageServiceRunFinished;
-			_packagesService.RunFailed += PackagesService_RunFailed;
+			_availablePackagesService.RunFailed += AvailablePackagesServiceRunFailed;
+            _installedPackagesService.RunFailed += AvailablePackagesServiceRunFailed;
             ClearStatus();
             PackageGrid.Focus();
             UpdateInstallUninstallButtonLabel();
@@ -57,7 +61,7 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void PackageServiceRunFinished()
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 Invoke(new PackageServiceRunFinishedHandler(PackageServiceRunFinished));
             }
@@ -68,9 +72,9 @@ namespace Chocolatey.Explorer.View.Forms
                 txtPowershellOutput.Visible = false;
 
                 // invalidate caches, because package has been installed
-                if (_packagesService is ICacheable)
+                if (_availablePackagesService is ICacheable)
                 {
-                    ((ICacheable)_packagesService).InvalidateCache();
+                    ((ICacheable)_availablePackagesService).InvalidateCache();
                 }
                 if (_packageVersionService is ICacheable)
                 {
@@ -83,7 +87,7 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void PackageServiceLineChanged(string line)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 Invoke(new PackageServiceHandler(PackageServiceLineChanged), new object[] { line });
             }
@@ -93,11 +97,11 @@ namespace Chocolatey.Explorer.View.Forms
             }
         }
 
-        private void PackagesServiceRunFinished(IList<Package> packages)
+        private void AvailablePackagesServiceRunFinished(IList<Package> packages)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
-                Invoke(new PackageSServiceHandler(PackagesServiceRunFinished), new object[] { packages });
+                Invoke(new PackageSServiceHandler(AvailablePackagesServiceRunFinished), new object[] { packages });
             }
             else
             {
@@ -107,12 +111,12 @@ namespace Chocolatey.Explorer.View.Forms
                 if (packageTabControl.SelectedTab == tabInstalled)
                     distinct = packages.Reverse().Distinct().Reverse().ToList();
                 lblStatus.Text = string.Format(strings.num_installed_packages, distinct.Count()); 
-                this.Activate();
+                Activate();
                 PackageGrid.DataSource = distinct;
             }
         }
 
-		private void PackagesService_RunFailed(Exception exc)
+		private void AvailablePackagesServiceRunFailed(Exception exc)
 		{
 			//TODO - should we do something to prevent them from using more of the app nd getting more errors?
 			if (exc is ChocolateyVersionUnknownException || (exc is AggregateException || exc.InnerException is IChocolateyService))
@@ -126,7 +130,7 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void VersionChangedHandler(PackageVersion version)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 Invoke(new PackageVersionHandler(VersionChangedHandler), new object[] { version });
             }
@@ -263,7 +267,7 @@ namespace Chocolatey.Explorer.View.Forms
             packageTabControl.SelectedTab = tabAvailable;
             lblProgressbar.Style = ProgressBarStyle.Marquee;
             PackageGrid.DataSource = new List<Package>();
-            _packagesService.ListOfPackages();
+            _availablePackagesService.ListOfAvalablePackages();
         }
 
         private void QueryInstalledPackages()
@@ -281,7 +285,7 @@ namespace Chocolatey.Explorer.View.Forms
                 packageTabControl.SelectedTab = tabInstalled;
                 lblProgressbar.Style = ProgressBarStyle.Marquee;
                 PackageGrid.DataSource = new List<Package>();
-				_packagesService.ListOfInstalledPackages();
+				_installedPackagesService.ListOfIntalledPackages();
             }
         }
 

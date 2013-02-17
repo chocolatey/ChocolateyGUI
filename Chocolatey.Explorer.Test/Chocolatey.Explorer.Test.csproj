@@ -106,10 +106,11 @@
     <Compile Include="Powershell\TestRunSync.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TestChocolateyLibDirHelper.cs" />
+    <Compile Include="Services\TestInstalledPackagesService.cs" />
     <Compile Include="Services\TestLocalFileSystemStorageService.cs" />
     <Compile Include="Services\TestPackagesSorter.cs" />
     <Compile Include="Services\TestPackageVersionService.cs" />
-    <Compile Include="Services\TestPackagesService.cs" />
+    <Compile Include="Services\TestAvailablePackagesService.cs" />
     <Compile Include="Services\TestChocolateyService.cs" />
     <Compile Include="Services\TestPackageService.cs" />
     <Compile Include="Services\TestSourceService.cs" />

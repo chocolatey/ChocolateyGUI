@@ -8,50 +8,36 @@ using Chocolatey.Explorer.Services.SourceService;
 
 namespace Chocolatey.Explorer.Services.PackagesService
 {
-    public class PackagesService : IPackagesService
+    public class AvailablePackagesService : IAvailablePackagesService
     {
         private readonly IRun _powershellAsync;
         private readonly IList<string> _lines;
         private readonly ISourceService _sourceService;
-        private readonly IChocolateyLibDirHelper _libDirHelper;
-
+        
         public delegate void FinishedDelegate(IList<Package> packages);
         public event FinishedDelegate RunFinshed;
 
 		public delegate void FailedDelegate(Exception exc);
 		public event FailedDelegate RunFailed;
 
-        public PackagesService()
-            : this(new RunAsync(), new SourceService.SourceService(), new ChocolateyLibDirHelper())
+        public AvailablePackagesService()
+            : this(new RunAsync(), new SourceService.SourceService())
         {
         }
 
-        public PackagesService(IRunAsync powershell, ISourceService sourceService, IChocolateyLibDirHelper libDirHelper)
+        public AvailablePackagesService(IRunAsync powershell, ISourceService sourceService)
         {
             _lines = new List<string>();
             _sourceService = sourceService;
-            _libDirHelper = libDirHelper;
             _powershellAsync = powershell;
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;
         }
 
-        public void ListOfPackages()
+        public void ListOfAvalablePackages()
         {
             this.Log().Info("Getting list of packages on source: " + _sourceService.Source);
             _powershellAsync.Run("clist -source " + _sourceService.Source);
-        }
-
-        public void ListOfInstalledPackages()
-        {
-            this.Log().Info("Getting list of installed packages");
-			Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
-						.ContinueWith((task) => {
-							if (!task.IsFaulted)
-								OnRunFinshed(task.Result);
-							else if (task.IsFaulted && RunFailed != null)
-								RunFailed(task.Exception);
-						});
         }
 
         private void OutputChanged(string line)

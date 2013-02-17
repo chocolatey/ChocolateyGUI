@@ -60,19 +60,15 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
             try
             {
                 var packageName = packageNameObj as string;
-                var packageVersion = FillWithOData(packageName);
+                var packageVersion = FillWithOData(packageName) ?? new PackageVersion();
 
                 // not found on server - use what we know
-                if (packageVersion == null)
-                {
-                    packageVersion = new PackageVersion();
-                }
 
                 cancelToken.ThrowIfCancellationRequested();
                 packageVersion.Name = packageName;
                 var highestInstalledVersion = _libDirHelper.GetHighestInstalledVersion(packageName);
-                packageVersion.CurrentVersion = highestInstalledVersion.InstalledVersion;
-                packageVersion.IsCurrentVersionPreRelease = highestInstalledVersion.IsPreRelease;
+                packageVersion.CurrentVersion = highestInstalledVersion == null?strings.not_available:highestInstalledVersion.InstalledVersion;
+                packageVersion.IsCurrentVersionPreRelease = highestInstalledVersion != null && highestInstalledVersion.IsPreRelease;
 
                 cancelToken.ThrowIfCancellationRequested();
                 OnVersionChanged(packageVersion);
@@ -82,8 +78,8 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 
         private PackageVersion FillWithOData(string package)
         {
-            string url = _sourceService.Source + "/Packages?$filter=IsLatestVersion eq true and Id eq '" + package + "'";
-            XmlDocument xmlDoc = new XmlDocument();
+            var url = _sourceService.Source + "/Packages?$filter=IsLatestVersion eq true and Id eq '" + package + "'";
+            var xmlDoc = new XmlDocument();
 
             _loadingRssFeed = WebRequest.Create(url) as HttpWebRequest;
             _loadingRssFeed.Proxy = null;
@@ -96,7 +92,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
                     responseStream = _loadingRssFeed.GetResponse().GetResponseStream();
                     xmlDoc.Load(responseStream);
                     IList<PackageVersion> packages = _versionXmlParser.parse(xmlDoc);
-                    if (packages.Count() > 0)
+                    if (packages.Any())
                         return packages.First();
                 }
                 catch (XmlException) { } // when xml could not be parsed

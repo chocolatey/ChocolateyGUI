@@ -70,10 +70,11 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private Package PackageFromVersion(PackageVersion version)
         {
+            var highestPackage = _libDirHelper.GetHighestInstalledVersion(version.Name, false);
             return new Package()
             {
                 Name = version.Name,
-                InstalledVersion = _libDirHelper.GetHighestInstalledVersion(version.Name, false).InstalledVersion
+                InstalledVersion = highestPackage == null?strings.not_available:highestPackage.InstalledVersion
             };
         }
 

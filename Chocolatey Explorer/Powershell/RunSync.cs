@@ -1,4 +1,5 @@
 using System;
+using System.Management.Automation;
 using System.Text;
 
 namespace Chocolatey.Explorer.Powershell
@@ -9,13 +10,23 @@ namespace Chocolatey.Explorer.Powershell
         {
             this.Log().Info("Running command: " + command);
             var result = new StringBuilder();
-            var results = System.Management.Automation.PowerShell.Create().AddScript(command).AddCommand("out-String").Invoke<String>();
-            foreach(var line in results)
+            var results = PowerShell.Create()
+                .AddScript(command)
+                .AddCommand("out-String")
+                .Invoke<String>();
+            if (results != null && results.Count > 0 && (results.Count == 1 && !String.IsNullOrWhiteSpace(results[0])))
             {
-                result.AppendLine(line);
+                foreach (var line in results)
+                {
+                    result.AppendLine(line);
+                }
+                if(OutputChanged!= null) OutputChanged(result.ToString());
             }
-            OutputChanged(result.ToString());
-            RunFinished();
+            else
+            {
+                if (OutputChanged != null) OutputChanged("No output");
+            }
+            if (RunFinished != null) RunFinished();
        }
         
         public event ResultsHandler OutputChanged;

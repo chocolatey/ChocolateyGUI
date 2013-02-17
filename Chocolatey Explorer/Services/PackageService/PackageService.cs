@@ -55,13 +55,13 @@ namespace Chocolatey.Explorer.Services.PackageService
 
         private void OnRunFinshed()
         {
-            FinishedDelegate handler = RunFinshed;
+            var handler = RunFinshed;
             if (handler != null) handler();
         }
 
         private void OnLineChanged(string line)
         {
-            LineDelegate handler = LineChanged;
+            var handler = LineChanged;
             if (handler != null) handler(line);
         }
 

@@ -1,5 +1,4 @@
 ﻿using Chocolatey.Explorer.Powershell;
-using Chocolatey.Explorer.Services;
 using Chocolatey.Explorer.Services.PackageService;
 using Chocolatey.Explorer.Services.SourceService;
 using NUnit.Framework;
@@ -33,6 +32,17 @@ namespace Chocolatey.Explorer.Test.Services
         }
 
         [Test]
+        public void IfUnInstallPackageCallsPowershellRun()
+        {
+            var powershell = _mocks.Get<IRunAsync>();
+            var sourceService = _mocks.Get<ISourceService>();
+            sourceService.Expect(x => x.Source)
+                .Return("test");
+            _service.UninstallPackage("test");
+            powershell.AssertWasCalled(mock => mock.Run("cuninst test"));
+        }
+
+        [Test]
         public void IfUpdatePackageCallsPowershellRun()
         {
 			var powershell = _mocks.Get<IRunAsync>();
@@ -41,6 +51,28 @@ namespace Chocolatey.Explorer.Test.Services
                 .Return("test");
             _service.UpdatePackage("test");
             powershell.AssertWasCalled(mock => mock.Run("cup test -source test"));
+        }
+
+        [Test]
+        public void IfRaisesOutputChangedOnRun()
+        {
+            var powershell = _mocks.Get<IRunAsync>();
+            var result = "";
+            _service.LineChanged += line => result = line;
+            powershell.GetEventRaiser(x => x.OutputChanged += null).Raise("test");
+
+            Assert.AreEqual("test", result);
+        }
+
+        [Test]
+        public void IfRaisesRunFinishedOnRun()
+        {
+            var powershell = _mocks.Get<IRunAsync>();
+            var result = 0;
+            _service.RunFinshed += () => result = 1;
+            powershell.GetEventRaiser(x => x.RunFinished += null).Raise();
+
+            Assert.AreEqual(1, result);
         }
     }
 }

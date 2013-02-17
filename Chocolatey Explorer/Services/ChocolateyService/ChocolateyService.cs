@@ -41,13 +41,13 @@ namespace Chocolatey.Explorer.Services.ChocolateyService
 
         private void OnRunFinished()
         {
-            RunFinishedDelegate handler = RunFinished;
+            var handler = RunFinished;
             if (handler != null) handler();
         }
 
         private void InvokeOutputChanged(string output)
         {
-            OutputDelegate handler = OutputChanged;
+            var handler = OutputChanged;
             if (handler != null) handler(output);
         }
 

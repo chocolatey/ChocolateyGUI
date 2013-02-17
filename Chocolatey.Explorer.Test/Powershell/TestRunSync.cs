@@ -33,7 +33,7 @@ namespace Chocolatey.Explorer.Test.Powershell
         }
 
         [Test]
-        public void IfCanRunCommandWithNoOutput()
+        public void IfCanRunCommandWithNoOutputRaisesEvenOutputChanged()
         {
             var runSync = new RunSync();
             var result = "";
@@ -43,13 +43,33 @@ namespace Chocolatey.Explorer.Test.Powershell
         }
 
         [Test]
-        public void IfCanRunWrongCommand()
+        public void IfCanRunCommandWithNoOutputRaisesEventRunFinished()
+        {
+            var runSync = new RunSync();
+            var result = 0;
+            runSync.RunFinished += () => result = 1;
+            runSync.Run("write");
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void IfCanRunWrongCommandRaisesEventOutputChanged()
         {
             var runSync = new RunSync();
             var result = "";
             runSync.OutputChanged += (x) => result = x;
             runSync.Run("thingdingding");
             Assert.AreEqual("No output", result);
+        }
+
+        [Test]
+        public void IfCanRunWrongCommandWithNoOutputRaisesEventRunFinished()
+        {
+            var runSync = new RunSync();
+            var result = 0;
+            runSync.RunFinished += () => result = 1;
+            runSync.Run("thingdingding");
+            Assert.AreEqual(1, result);
         }
     }
 }

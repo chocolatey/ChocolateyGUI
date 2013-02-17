@@ -9,7 +9,7 @@ namespace Chocolatey.Explorer.Powershell
         private readonly Runspace _runSpace;
         private Pipeline _pipeLine;
         private PipelineReader<PSObject> _outPut;
-
+        private bool hasData;
         public event ResultsHandler OutputChanged;
 
         public event EmptyHandler RunFinished;
@@ -47,6 +47,7 @@ namespace Chocolatey.Explorer.Powershell
             var data = _pipeLine.Output.NonBlockingRead();
             if (data.Count > 0)
             {
+                hasData = true;
                 foreach (var d in data)
                 {
                     OnOutputChanged(d + Environment.NewLine);
@@ -55,6 +56,7 @@ namespace Chocolatey.Explorer.Powershell
             }
             if(_pipeLine.Output.EndOfPipeline )
             {
+                if (!hasData) OnOutputChanged("No output");
                 OnFinishedRun();
             }
         }

@@ -50,7 +50,7 @@ namespace Chocolatey.Explorer.Test.Powershell
         }
 
         [Test]
-        public void IfCanRunCommandWithNoOutput()
+        public void IfCanRunCommandWithNoOutputAndEventRunFinishedIsRaised()
         {
             var runSync = new RunAsync();
             var result = 0;
@@ -66,7 +66,23 @@ namespace Chocolatey.Explorer.Test.Powershell
         }
 
         [Test]
-        public void IfCanRunWrongCommand()
+        public void IfCanRunCommandWithNoOutputAndEventOutputChangedIsRaised()
+        {
+            var runSync = new RunAsync();
+            var result = "";
+            var waitHandle = new AutoResetEvent(false);
+            runSync.OutputChanged += (x) =>
+            {
+                result = x;
+                waitHandle.Set();
+            };
+            runSync.Run("write");
+            waitHandle.ThrowIfHandleTimesOut(TimeSpan.FromSeconds(5));
+            Assert.AreEqual("No output", result);
+        }
+
+        [Test]
+        public void IfCanRunWrongCommandAndEventRunFinishedIsRaised()
         {
             var runSync = new RunAsync();
             var result = 0;
@@ -79,6 +95,22 @@ namespace Chocolatey.Explorer.Test.Powershell
             runSync.Run("thingdingding");
             waitHandle.ThrowIfHandleTimesOut(TimeSpan.FromSeconds(5));
             Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void IfCanRunWrongCommandWithNoOutputAndEventOutputChangedIsRaised()
+        {
+            var runSync = new RunAsync();
+            var result = "";
+            var waitHandle = new AutoResetEvent(false);
+            runSync.OutputChanged += (x) =>
+            {
+                result = x;
+                waitHandle.Set();
+            };
+            runSync.Run("thingdingding");
+            waitHandle.ThrowIfHandleTimesOut(TimeSpan.FromSeconds(5));
+            Assert.AreEqual("No output", result);
         }
     }
 }

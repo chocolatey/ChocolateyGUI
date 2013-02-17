@@ -6,9 +6,9 @@ namespace Chocolatey.Explorer.Powershell
 {
     public class RunAsync : IRunAsync
     {
-        private Runspace _RunSpace;
-        private Pipeline _PipeLine;
-        private PipelineReader<PSObject> _OutPut;
+        private readonly Runspace _runSpace;
+        private Pipeline _pipeLine;
+        private PipelineReader<PSObject> _outPut;
 
         public event ResultsHandler OutputChanged;
 
@@ -16,18 +16,18 @@ namespace Chocolatey.Explorer.Powershell
 
         public RunAsync()
         {
-            _RunSpace = RunspaceFactory.CreateRunspace();
-            _RunSpace.Open();
+            _runSpace = RunspaceFactory.CreateRunspace();
+            _runSpace.Open();
         }
 
         public void Run(String command)
         {
             this.Log().Info("Running command: " + command);
-            _PipeLine = _RunSpace.CreatePipeline(command);
-            _PipeLine.Input.Close();
-            _OutPut = _PipeLine.Output;
-            _OutPut.DataReady += _Output_DataReady;
-            _PipeLine.InvokeAsync();
+            _pipeLine = _runSpace.CreatePipeline(command);
+            _pipeLine.Input.Close();
+            _outPut = _pipeLine.Output;
+            _outPut.DataReady += OutputDataReady;
+            _pipeLine.InvokeAsync();
         }
 
         public void OnOutputChanged(string version)
@@ -42,9 +42,9 @@ namespace Chocolatey.Explorer.Powershell
             if (handler != null) handler();
         }
 
-        private void _Output_DataReady(Object sender, System.EventArgs e)
+        private void OutputDataReady(Object sender, EventArgs e)
         {
-            var data = _PipeLine.Output.NonBlockingRead();
+            var data = _pipeLine.Output.NonBlockingRead();
             if (data.Count > 0)
             {
                 foreach (var d in data)
@@ -53,7 +53,7 @@ namespace Chocolatey.Explorer.Powershell
                 }
 
             }
-            if(_PipeLine.Output.EndOfPipeline )
+            if(_pipeLine.Output.EndOfPipeline )
             {
                 OnFinishedRun();
             }

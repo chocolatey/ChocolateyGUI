@@ -97,10 +97,12 @@
     <Compile Include="Commands\TestOpenAboutCommand.cs" />
     <Compile Include="Commands\TestOpenHelpCommand.cs" />
     <Compile Include="Commands\TestOpenSettingsCommand.cs" />
+    <Compile Include="Extensions\AsyncTesting.cs" />
     <Compile Include="IoC\TestRegistry.cs" />
     <Compile Include="Model\TestPackage.cs" />
     <Compile Include="Model\TestPackageVersion.cs" />
     <Compile Include="Model\TestSource.cs" />
+    <Compile Include="Powershell\TestRunAsync.cs" />
     <Compile Include="Powershell\TestRunSync.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TestChocolateyLibDirHelper.cs" />

@@ -15,9 +15,9 @@ namespace Chocolatey.Explorer.Services.FileStorageService
 			return Directory.Exists(path);
 		}
 		
-		public System.Xml.Linq.XDocument LoadXDocument(string filename)
+		public XDocument LoadXDocument(string filename)
 		{
-			return XDocument.Load(filename);
+		    return File.Exists(filename) ? XDocument.Load(filename) : null;
 		}
 	}
 }

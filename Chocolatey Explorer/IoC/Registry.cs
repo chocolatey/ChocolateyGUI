@@ -20,7 +20,7 @@ namespace Chocolatey.Explorer.IoC
              For<IPackageService>().Use<PackageService>();
              For<IAvailablePackagesService>().Use<CachedAvailablePackagesService>();
              For<IInstalledPackagesService>().Use<InstalledPackagesService>();
-             For<IPackageVersionService>().Use<ODataPackageVersionService>();
+             For<IPackageVersionService>().Singleton().Use<ODataPackageVersionService>();
              For<IChocolateyService>().Use<ChocolateyService>();
              For<ISettingsService>().Singleton().Use<SettingsService>();
              For<IPackageVersionXMLParser>().Use<PackageVersionXMLParser>();
@@ -37,6 +37,7 @@ namespace Chocolatey.Explorer.IoC
              For<IHelp>().Use<Help>();
              For<ISettings>().Use<Settings>();
              SetAllProperties(x => x.WithAnyTypeFromNamespace("Chocolatey.Explorer.View.Forms"));
+             SetAllProperties(x => x.OfType<IPackageVersionService>());
          }
     }
 }

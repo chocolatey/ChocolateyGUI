@@ -9,8 +9,8 @@ namespace Chocolatey.Explorer.Services.PackagesService
     /// </summary>
     class CachedAvailablePackagesService : IAvailablePackagesService, ICacheable
     {
-        public event AvailablePackagesService.FinishedDelegate RunFinshed;
-		public event AvailablePackagesService.FailedDelegate RunFailed;
+        public event Delegates.FinishedDelegate RunFinshed;
+		public event Delegates.FailedDelegate RunFailed;
 
         private readonly IAvailablePackagesService _availablePackagesService;
         private IList<Package> _availablePackageCache;

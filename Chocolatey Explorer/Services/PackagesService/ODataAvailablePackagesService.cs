@@ -16,8 +16,8 @@ namespace Chocolatey.Explorer.Services.PackagesService
         private readonly IPackageVersionXMLParser _xmlParser;
         private readonly ChocolateyLibDirHelper _libDirHelper;
 
-        public event AvailablePackagesService.FinishedDelegate RunFinshed;
-		public event AvailablePackagesService.FailedDelegate RunFailed;
+        public event Delegates.FinishedDelegate RunFinshed;
+		public event Delegates.FailedDelegate RunFailed;
 
         public ODataAvailablePackagesService(): this(new SourceService.SourceService(), new PackageVersionXMLParser())
         {

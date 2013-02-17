@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
-using System;
-using System.Threading.Tasks;
 using Chocolatey.Explorer.Services.SourceService;
 
 namespace Chocolatey.Explorer.Services.PackagesService
@@ -14,11 +12,8 @@ namespace Chocolatey.Explorer.Services.PackagesService
         private readonly IList<string> _lines;
         private readonly ISourceService _sourceService;
         
-        public delegate void FinishedDelegate(IList<Package> packages);
-        public event FinishedDelegate RunFinshed;
-
-		public delegate void FailedDelegate(Exception exc);
-		public event FailedDelegate RunFailed;
+        public event Delegates.FinishedDelegate RunFinshed;
+        public event Delegates.FailedDelegate RunFailed;
 
         public AvailablePackagesService()
             : this(new RunAsync(), new SourceService.SourceService())

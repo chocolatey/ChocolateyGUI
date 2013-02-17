@@ -12,8 +12,8 @@ namespace Chocolatey.Explorer.Services.PackagesService
         {
             _libDirHelper = libDirHelper;
         }
-        public event AvailablePackagesService.FinishedDelegate RunFinshed;
-        public event AvailablePackagesService.FailedDelegate RunFailed;
+        public event Delegates.FinishedDelegate RunFinshed;
+        public event Delegates.FailedDelegate RunFailed;
         
         public void ListOfIntalledPackages()
         {

@@ -136,7 +136,6 @@ namespace Chocolatey.Explorer.View.Forms
             }
             else
             {
-                packageVersionPanel.Version = version;
                 btnUpdate.Enabled = version.CanBeUpdated;
                 btnInstallUninstall.Checked = !version.IsInstalled;
                 btnInstallUninstall.Enabled = true;

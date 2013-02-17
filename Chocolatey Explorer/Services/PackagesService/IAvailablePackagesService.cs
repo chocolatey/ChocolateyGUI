@@ -2,8 +2,8 @@ namespace Chocolatey.Explorer.Services.PackagesService
 {
     public interface IAvailablePackagesService
     {
-        event AvailablePackagesService.FinishedDelegate RunFinshed;
-		event AvailablePackagesService.FailedDelegate RunFailed;
+        event Delegates.FinishedDelegate RunFinshed;
+		event Delegates.FailedDelegate RunFailed;
         void ListOfAvalablePackages();
     }
 }

@@ -2,8 +2,8 @@
 {
     public interface IInstalledPackagesService
     {
-        event AvailablePackagesService.FinishedDelegate RunFinshed;
-        event AvailablePackagesService.FailedDelegate RunFailed;
+        event Delegates.FinishedDelegate RunFinshed;
+        event Delegates.FailedDelegate RunFailed;
         void ListOfIntalledPackages(); 
     }
 }

@@ -138,6 +138,7 @@
     <Compile Include="Powershell\IRunSync.cs" />
     <Compile Include="Services\ChocolateyLibDirHelper.cs" />
     <Compile Include="Services\ChocolateyVersionUnknownException.cs" />
+    <Compile Include="Services\Delegates.cs" />
     <Compile Include="Services\FileStorageService\LocalFileSystemStorageService.cs" />
     <Compile Include="Services\FileStorageService\IFileStorageService.cs" />
     <Compile Include="Services\ICacheable.cs" />
@@ -174,6 +175,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\AvailablePackagesGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\Controls\InstalledPackagesGrid.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="View\Forms\About.cs">
       <SubType>Form</SubType>

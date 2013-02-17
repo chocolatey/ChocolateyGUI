@@ -123,7 +123,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private void OnRunFinshed(IList<Package> packages)
         {
-            PackagesService.FinishedDelegate handler = RunFinshed;
+            var handler = RunFinshed;
             if (handler != null) handler(packages);
         }
 

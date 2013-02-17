@@ -13,7 +13,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
         private readonly IRun _powershellAsync;
         private readonly IList<string> _lines;
         private readonly ISourceService _sourceService;
-        private readonly ChocolateyLibDirHelper _libDirHelper;
+        private readonly IChocolateyLibDirHelper _libDirHelper;
 
         public delegate void FinishedDelegate(IList<Package> packages);
         public event FinishedDelegate RunFinshed;
@@ -21,15 +21,16 @@ namespace Chocolatey.Explorer.Services.PackagesService
 		public delegate void FailedDelegate(Exception exc);
 		public event FailedDelegate RunFailed;
 
-        public PackagesService(): this(new RunAsync(), new SourceService.SourceService())
+        public PackagesService()
+            : this(new RunAsync(), new SourceService.SourceService(), new ChocolateyLibDirHelper())
         {
         }
 
-        public PackagesService(IRunAsync powershell, ISourceService sourceService)
+        public PackagesService(IRunAsync powershell, ISourceService sourceService, IChocolateyLibDirHelper libDirHelper)
         {
             _lines = new List<string>();
             _sourceService = sourceService;
-            _libDirHelper = new ChocolateyLibDirHelper();
+            _libDirHelper = libDirHelper;
             _powershellAsync = powershell;
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;
@@ -63,12 +64,12 @@ namespace Chocolatey.Explorer.Services.PackagesService
             OnRunFinshed((from result in _lines
                     let name = result.Split(" ".ToCharArray()[0])[0]
                     let version = result.Split(" ".ToCharArray()[0])[1]
-                    select new Package { Name = name }).ToList());
+                    select new Package { Name = name, InstalledVersion = version}).ToList());
         }
 
         private void OnRunFinshed(IList<Package> packages)
         {
-            FinishedDelegate handler = RunFinshed;
+            var handler = RunFinshed;
             if (handler != null) handler(packages);
         }
 

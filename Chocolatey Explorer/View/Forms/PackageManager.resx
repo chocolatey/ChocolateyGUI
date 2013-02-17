@@ -132,13 +132,56 @@
   <data name="packagesToolStripMenuItem.AccessibleName" xml:space="preserve">
     <value>Packages</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="packagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 20</value>
+  </data>
+  <data name="packagesToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Packages</value>
+  </data>
+  <data name="helpToolStripMenuItem.AccessibleDescription" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="helpToolStripMenuItem.AccessibleName" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="mainMenu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="mainMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1021, 24</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="mainMenu.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="mainMenu.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;mainMenu.Name" xml:space="preserve">
+    <value>mainMenu</value>
+  </data>
+  <data name="&gt;&gt;mainMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mainMenu.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;mainMenu.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="availablePackagesToolStripMenuItem.AccessibleDescription" xml:space="preserve">
     <value>Available Packages</value>
   </data>
   <data name="availablePackagesToolStripMenuItem.AccessibleName" xml:space="preserve">
     <value>Available Packages</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="availablePackagesToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -191,18 +234,6 @@
   <data name="installedPackagesToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Installed packages</value>
   </data>
-  <data name="packagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 20</value>
-  </data>
-  <data name="packagesToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Packages</value>
-  </data>
-  <data name="helpToolStripMenuItem.AccessibleDescription" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="helpToolStripMenuItem.AccessibleName" xml:space="preserve">
-    <value>Help</value>
-  </data>
   <data name="helpToolStripMenuItem1.AccessibleDescription" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -239,199 +270,12 @@
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Settings</value>
   </data>
-  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
-  </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Help</value>
-  </data>
-  <data name="mainMenu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="mainMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1021, 24</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="mainMenu.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="mainMenu.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;mainMenu.Name" xml:space="preserve">
-    <value>mainMenu</value>
-  </data>
-  <data name="&gt;&gt;mainMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;mainMenu.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;mainMenu.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="mainSplitContainer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="mainSplitContainer.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 24</value>
-  </data>
-  <data name="PackageGrid.AccessibleDescription" xml:space="preserve">
-    <value>List of packages</value>
-  </data>
-  <data name="PackageGrid.AccessibleName" xml:space="preserve">
-    <value>List of packages</value>
-  </data>
-  <metadata name="IsInstalled.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="IsInstalled.HeaderText" xml:space="preserve">
-    <value>Installed</value>
-  </data>
-  <data name="IsInstalled.Width" type="System.Int32, mscorlib">
-    <value>64</value>
-  </data>
-  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <metadata name="InstalledVersion.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="InstalledVersion.HeaderText" xml:space="preserve">
-    <value>Installed Version</value>
-  </data>
-  <data name="InstalledVersion.Width" type="System.Int32, mscorlib">
-    <value>102</value>
-  </data>
-  <metadata name="Prerelease.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="Prerelease.HeaderText" xml:space="preserve">
-    <value>Pre release</value>
-  </data>
-  <data name="Prerelease.Width" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <data name="PackageGrid.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PackageGrid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 53</value>
-  </data>
-  <data name="PackageGrid.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="PackageGrid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>385, 460</value>
-  </data>
-  <data name="PackageGrid.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;PackageGrid.Name" xml:space="preserve">
-    <value>PackageGrid</value>
-  </data>
-  <data name="&gt;&gt;PackageGrid.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PackageGrid.Parent" xml:space="preserve">
-    <value>mainSplitContainer.Panel1</value>
-  </data>
-  <data name="&gt;&gt;PackageGrid.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="searchPackages.AccessibleDescription" xml:space="preserve">
-    <value>Search for packages</value>
-  </data>
-  <data name="searchPackages.AccessibleName" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="searchPackages.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="searchPackages.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 4</value>
-  </data>
-  <data name="searchPackages.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 20</value>
-  </data>
-  <data name="searchPackages.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;searchPackages.Name" xml:space="preserve">
-    <value>searchPackages</value>
-  </data>
-  <data name="&gt;&gt;searchPackages.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;searchPackages.Parent" xml:space="preserve">
-    <value>searchBar</value>
-  </data>
-  <data name="&gt;&gt;searchPackages.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label1.AccessibleDescription" xml:space="preserve">
-    <value>Search for packages</value>
-  </data>
-  <data name="label1.AccessibleName" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 8</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 13</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>&amp;Search</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>searchBar</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="searchBar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="searchBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 25</value>
-  </data>
-  <data name="searchBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>385, 28</value>
-  </data>
-  <data name="searchBar.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;searchBar.Name" xml:space="preserve">
-    <value>searchBar</value>
-  </data>
-  <data name="&gt;&gt;searchBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;searchBar.Parent" xml:space="preserve">
-    <value>mainSplitContainer.Panel1</value>
-  </data>
-  <data name="&gt;&gt;searchBar.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="packageTabControl.AccessibleDescription" xml:space="preserve">
     <value>Packages tabs</value>
@@ -445,6 +289,30 @@
   <data name="tabAvailable.AccessibleName" xml:space="preserve">
     <value>Available Packages</value>
   </data>
+  <data name="&gt;&gt;availablePackagesGrid1.Name" xml:space="preserve">
+    <value>availablePackagesGrid1</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.Type" xml:space="preserve">
+    <value>Chocolatey.Explorer.View.Controls.AvailablePackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.Parent" xml:space="preserve">
+    <value>tabAvailable</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;searchBar.Name" xml:space="preserve">
+    <value>searchBar</value>
+  </data>
+  <data name="&gt;&gt;searchBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchBar.Parent" xml:space="preserve">
+    <value>tabAvailable</value>
+  </data>
+  <data name="&gt;&gt;searchBar.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="tabAvailable.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 25</value>
   </data>
@@ -452,7 +320,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabAvailable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>377, 0</value>
+    <value>377, 484</value>
   </data>
   <data name="tabAvailable.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -478,6 +346,30 @@
   <data name="tabInstalled.AccessibleName" xml:space="preserve">
     <value>Installed packages</value>
   </data>
+  <data name="&gt;&gt;installedPackagesGrid1.Name" xml:space="preserve">
+    <value>installedPackagesGrid1</value>
+  </data>
+  <data name="&gt;&gt;installedPackagesGrid1.Type" xml:space="preserve">
+    <value>Chocolatey.Explorer.View.Controls.InstalledPackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;installedPackagesGrid1.Parent" xml:space="preserve">
+    <value>tabInstalled</value>
+  </data>
+  <data name="&gt;&gt;installedPackagesGrid1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>tabInstalled</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="tabInstalled.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 25</value>
   </data>
@@ -485,7 +377,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabInstalled.Size" type="System.Drawing.Size, System.Drawing">
-    <value>377, 0</value>
+    <value>377, 484</value>
   </data>
   <data name="tabInstalled.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -506,7 +398,7 @@
     <value>1</value>
   </data>
   <data name="packageTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
+    <value>Fill</value>
   </data>
   <data name="packageTabControl.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 10pt</value>
@@ -518,60 +410,60 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACY
-        CgAAAk1TRnQBSQFMAgEBAgEAAXABBAFwAQQBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACU
+        CgAAAk1TRnQBSQFMAgEBAgEAAYgBBAGIAQQBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABEAMAAQEBAAEgBgABEGoAAwgBCwMQARYDEAEWAw0BEgMCAQOkAAMCAQMDOwFjA04BlQNKAYwDTgGZ
-        A1IBqQNUAa8DUQGiAx8BLCAAAxYBHgNTAagBlAFIATEB/wGTAUcBMQH/A2QB7AMoATwDBQEHoAABWgJe
-        AdgCAAERAf8CAAEPAf8CAAEXAf8CAAEFAf8CAAEKAf8BAAEKASwB/wIAAQsB/wIAASMB/wM+AWocAAGe
+        A1IBqQNUAa8DUQGiAx8BLCAAAxYBHgNTAagBlAFFAS4B/wGTAUQBLgH/A2QB7AMoATwDBQEHoAABWgJe
+        AdgCAAEOAf8CAAEMAf8CAAEUAf8CAAECAf8CAAEHAf8BAAEHASkB/wIAAQgB/wIAASAB/wM+AWocAAGe
         AYkBQAH9Ad8B1QHCAf8BzgHBAagB/wHOAcABpwH/AdQBxwGxAf8B2wHRAcEB/wMQARacAANTAaoDAAH/
-        AgABHQH/AQABAwElAf8CAAEfAf8BAAEhAT4B/wHdAeIB5wX/Ae0B8AHxAf8BAAEQASwB/wIAASEB/wMd
-        ASkIAAMKAQ0DEAEWAxABFgMQARYBpwGTAUcB/wGwAZsBRwH/AeQB3AHLAf8B5AHbAcoB/wHaAc8BtgH/
-        AbIBngGBAf8DFAEcAxABFgMQARYDEAEVAwMBBIgAAwIBAwJIAVsB9gIAAQ0B/wIAASAB/wIAARwB/wIA
-        ARUB/wG9AcgB0A3/AdEB2QHeAf8CAAEFAf8DTAGQCAADWwHEAZUBgQE0Af8BlQGBATMB/wGVAYEBMwH/
-        AZQBgAEyAf8BkgFHATAB/wGRAUUBLwH/AZEBRgEwAf8BmQGGAToB/wGTAUgBMgH/AZQBgQEzAf8BlQGB
-        ATMB/wGVAYEBNAH/AZcBgwE1Af8DEAEViAADFAEcAQABGAFHAf8BAAERAUQB/wEAARcBSAH/AQABEQFB
-        Af8BAAEPATgB/wHhAeUB6A3/Ae8B8gHzAf8CAAEVAf8DUgGpCAABlwGDATUB/wHaAdQBvgH/AesB7gHp
-        Af8B6gHtAekB/wHpAewB6QH/AekB6wHpAf8B6AHrAekB/wHoAesB6QH/AegB6wHpAf8B6QHsAekB/wHq
-        Ae0B6QH/AesB7QHpAf8B7AHuAegB/wHMAbcBmwH/AxABFogAAxQBGwEAAScBigH/AQABGgGAAf8BAAEf
-        AYMB/wEAASABhQH/AQABFQFTAf8BoAG5AcwN/wG0Ab4BxwH/AgABBAH/A1MBqAgAAZkBhQE3Af8B0AHL
-        AboB/wHiAZUBAAH/AegBnQEAAf8B7gGkAQAB/wH0AawBAAH/AfoBtAEAAf8B/gG4AQAB/wH4AbEBAAH/
-        AfIBqQEAAf8B6wGiAQAB/wHlAZoBAAH/AeABjwEAAf8B0gHAAacB/wMQARaIAAMQARYBAAEnAYYB/wEA
-        ARIBTQH/AQABBQFEAf8BAAEFAUQB/wEAARkBUwH/AQABIgGAAf8BmAGzAcQB/wHwAfUB+AH/AasBwwHU
-        Af8BAAEPATMB/wIAAQQB/wNSAacIAAGaAYYBOQH/AckBwgGwAf8B4QGWAQAB/wHoAaABAwH/Ae0BpAEA
-        Af8B8wGrAQAB/wH3AbEBAAH/AfkBswEAAf8B9gGvAQAB/wHwAagBAAH/AesBoQEAAf8B5QGaAQAB/wHg
-        AY8BAAH/AdkByQGyAf8DEAEWiAADGgElAQABHgGAAf8BAAEfAVUB/wNqAfkBXAFjAWsB+AEAASoBhgH/
-        AQABGAFSAf8BAAEOAUoB/wEAASIBgAH/AQABEQFNAf8BAAEdAYAB/wEAAQYBLgH/A1IBqQgAAZwBiAE7
-        Af8BwAG4AaQB/wHfAZMBAAH/AeYBngEBAf8B7AGpAQ0B/wHwAasBBQH/AfIBqQEAAf8B8wGsAQAB/wHx
-        AakBAAH/Ae0BpAEAAf8B6AGeAQAB/wHjAZgBAAH/Ad8BjgEAAf8B3wHRAb4B/wMQARaIAAMvAUkBAAEC
-        AUMB/wFCAZQBswH/A64B/gOrAf0BQwGVAbUB/wEAAQoBSAH/AQABGwFUAf8BAAEZAVIB/wEAARwBVAH/
-        AQABHwGBAf8BAAESAVEB/wFQAlIBowgAAZ4BigE9Af8BuAGtAZgB/wHcAY8BAAH/AeIBmAEAAf8B5wGi
-        AQcB/wHsAaoBEAH/Ae8BsgEaAf8B8AG3ASMB/wHvAbMBIAH/AesBqgESAf8B5wGgAQcB/wHfAZABAAH/
-        AdwBigEAAf8B5gHaAcgB/wMQARaIAAMNAREBAAEaAVQB/wEFATsBkQn/ARcBTAGeAf8BAAEQAUwB/wEA
-        AR0BVAH/AQABHQFVAf8BAAEeAVUB/wEAAR8BVgH/AgABQQH/Az4BawgAAaABiwE+Af8BsQGjAY4B/wHZ
-        AYwBAAH/Ad4BkgEAAf8B4gGbAQMB/wHnAaMBCwH/AekBqQEUAf8B6wGtAR0B/wHrAbABJQH/AeoBswEt
-        Af8B6QG0ATYB/wHnAbMBPAH/AecBsAE6Af8B7AHjAdMB/wMQARaMAANKAYoCAAExAf8BAAEnAYUB/wEA
-        ATYBjwH/AQABEgFNAf8BAAEcAVMB/wEAARsBUgH/AQABGwFTAf8BAAEYAVEB/wIAAT4B/wJYAWIB7wMB
-        AQIIAAGiAY0BQQH/AaoBmgGDAf8B1QGHAQAB/wHZAYwBAAH/Ad0BkwEAAf8B4QGbAQgB/wHkAaEBEQH/
-        AeYBpgEZAf8B5gGpASIB/wHmAawBKgH/AeUBrgEyAf8B5AGvAToB/wHkAa0BOQH/AfMB7AHdAf8DEAEW
-        gAADEwEaA0IBdANZAccEAANAAW4BAAEXAVIB/wEAAQsBSQH/AQABGgFUAf8BAAEbAVUB/wEAARsBVAH/
-        AQABFAFRAf8BAAEXAVIB/wFYAlwB0QMWAR8MAAGkAY8BQgH/AaMBkAE/Af8B0QGAAQAB/wHVAYYBAAH/
-        AdgBiwEAAf8B3AGSAQQB/wHfAZkBDAH/AeEBnQEWAf8B4gGhAR4B/wHiAaQBJgH/AeIBpwEuAf8B4QGp
-        ATcB/wHjAakBOQH/AfsB9QHoAf8DEAEWgAADRAF7AlIBZQH0AwAB/wNCAXYEAAMKAQ0DNwFaAzoBYAM3
-        AVsDNwFaAzkBXwMiATIUAAGmAZABRAH/AZcBRwEnAf8BmQGFATMB/wGYAYQBMwH/AZgBhAEzAf8BmAGD
-        ATIB/wGXAYIBMgH/AZcBggEwAf8BlwGCATAB/wGXAYEBLwH/AZcBgQEuAf8BlwGBAS0B/wGXAYABKwL/
-        AfsB8AH/AxABFYAAAxkBIwNKAYkBWAJiAekDGgEkNAADVgGzAc4BwgGtAf8BzQHAAasB/wHNAcABqwH/
-        Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwAGrAf8BzQHA
-        AasB/wHNAcEBqwH/AakBkwFHAf8DAwEE/wCBAAFCAU0BPgcAAT4DAAEoAwABQAMAARADAAEBAQABAQUA
-        AYAXAAP/AQAC/wH8AR8EAAHwAQcB+AEPBAAB8AEDAfgBDwQAAeABAQGABQABwAEBAYAFAAHAAQEBgAUA
-        AcABAQGABQABwAEBAYAFAAHAAQEBgAUAAcABAQGABQABwAEBAYAFAAHgAQEBgAUAARABAwGABQABCAEP
-        AYAFAAEPAf8BgAUABP8EAAs=
+        AgABGgH/AgABIgH/AgABHAH/AQABHgE7Af8B3QHiAecF/wHtAfAB8QH/AQABDQEpAf8CAAEeAf8DHQEp
+        CAADCgENAxABFgMQARYDEAEWAacBkwFEAf8BsAGbAUQB/wHkAdwBywH/AeQB2wHKAf8B2gHPAbYB/wGy
+        AZ4BgQH/AxQBHAMQARYDEAEWAxABFQMDAQSIAAMCAQMCSAFbAfYCAAEKAf8CAAEdAf8CAAEZAf8CAAES
+        Af8BvQHIAdAN/wHRAdkB3gH/AgABAgH/A0wBkAgAA1sBxAGVAYEBMQH/AZUBgQEwAf8BlQGBATAB/wGU
+        AYABLwH/AZIBRAEtAf8BkQFCASwB/wGRAUMBLQH/AZkBhgE3Af8BkwFFAS8B/wGUAYEBMAH/AZUBgQEw
+        Af8BlQGBATEB/wGXAYMBMgH/AxABFYgAAxQBHAEAARUBRAH/AQABDgFBAf8BAAEUAUUB/wEAAQ4BPgH/
+        AQABDAE1Af8B4QHlAegN/wHvAfIB8wH/AgABEgH/A1IBqQgAAZcBgwEyAf8B2gHUAb4B/wHrAe4B6QH/
+        AeoB7QHpAf8B6QHsAekB/wHpAesB6QH/AegB6wHpAf8B6AHrAekB/wHoAesB6QH/AekB7AHpAf8B6gHt
+        AekB/wHrAe0B6QH/AewB7gHoAf8BzAG3AZsB/wMQARaIAAMUARsBAAEkAYoB/wEAARcBgAH/AQABHAGD
+        Af8BAAEdAYUB/wEAARIBUAH/AaABuQHMDf8BtAG+AccB/wIAAQEB/wNTAagIAAGZAYUBNAH/AdABywG6
+        Af8B4gGVAQAB/wHoAZ0BAAH/Ae4BpAEAAf8B9AGsAQAB/wH6AbQBAAH/Af4BuAEAAf8B+AGxAQAB/wHy
+        AakBAAH/AesBogEAAf8B5QGaAQAB/wHgAY8BAAH/AdIBwAGnAf8DEAEWiAADEAEWAQABJAGGAf8BAAEP
+        AUoB/wEAAQIBQQH/AQABAgFBAf8BAAEWAVAB/wEAAR8BgAH/AZgBswHEAf8B8AH1AfgB/wGrAcMB1AH/
+        AQABDAEwAf8CAAEBAf8DUgGnCAABmgGGATYB/wHJAcIBsAH/AeEBlgEAAf8B6AGgAQAB/wHtAaQBAAH/
+        AfMBqwEAAf8B9wGxAQAB/wH5AbMBAAH/AfYBrwEAAf8B8AGoAQAB/wHrAaEBAAH/AeUBmgEAAf8B4AGP
+        AQAB/wHZAckBsgH/AxABFogAAxoBJQEAARsBgAH/AQABHAFSAf8DagH5AVwBXQFlAfgBAAEnAYYB/wEA
+        ARUBTwH/AQABCwFHAf8BAAEfAYAB/wEAAQ4BSgH/AQABGgGAAf8BAAEDASsB/wNSAakIAAGcAYgBOAH/
+        AcABuAGkAf8B3wGTAQAB/wHmAZ4BAAH/AewBqQEKAf8B8AGrAQIB/wHyAakBAAH/AfMBrAEAAf8B8QGp
+        AQAB/wHtAaQBAAH/AegBngEAAf8B4wGYAQAB/wHfAY4BAAH/Ad8B0QG+Af8DEAEWiAADLwFJAgABQAH/
+        AT8BlAGzAf8DqAH+A6gB/QFAAZUBtQH/AQABBwFFAf8BAAEYAVEB/wEAARYBTwH/AQABGQFRAf8BAAEc
+        AYEB/wEAAQ8BTgH/AVACUgGjCAABngGKAToB/wG4Aa0BmAH/AdwBjwEAAf8B4gGYAQAB/wHnAaIBBAH/
+        AewBqgENAf8B7wGyARcB/wHwAbcBIAH/Ae8BswEdAf8B6wGqAQ8B/wHnAaABBAH/Ad8BkAEAAf8B3AGK
+        AQAB/wHmAdoByAH/AxABFogAAw0BEQEAARcBUQH/AQIBOAGRCf8BFAFJAZ4B/wEAAQ0BSQH/AQABGgFR
+        Af8BAAEaAVIB/wEAARsBUgH/AQABHAFTAf8CAAE+Af8DPgFrCAABoAGLATsB/wGxAaMBjgH/AdkBjAEA
+        Af8B3gGSAQAB/wHiAZsBAAH/AecBowEIAf8B6QGpAREB/wHrAa0BGgH/AesBsAEiAf8B6gGzASoB/wHp
+        AbQBMwH/AecBswE5Af8B5wGwATcB/wHsAeMB0wH/AxABFowAA0oBigIAAS4B/wEAASQBhQH/AQABMwGP
+        Af8BAAEPAUoB/wEAARkBUAH/AQABGAFPAf8BAAEYAVAB/wEAARUBTgH/AgABOwH/AlgBYgHvAwEBAggA
+        AaIBjQE+Af8BqgGaAYMB/wHVAYcBAAH/AdkBjAEAAf8B3QGTAQAB/wHhAZsBBQH/AeQBoQEOAf8B5gGm
+        ARYB/wHmAakBHwH/AeYBrAEnAf8B5QGuAS8B/wHkAa8BNwH/AeQBrQE2Af8B8wHsAd0B/wMQARaAAAMT
+        ARoDQgF0A1kBxwQAA0ABbgEAARQBTwH/AQABCAFGAf8BAAEXAVEB/wEAARgBUgH/AQABGAFRAf8BAAER
+        AU4B/wEAARQBTwH/AVgCXAHRAxYBHwwAAaQBjwE/Af8BowGQATwB/wHRAYABAAH/AdUBhgEAAf8B2AGL
+        AQAB/wHcAZIBAQH/Ad8BmQEJAf8B4QGdARMB/wHiAaEBGwH/AeIBpAEjAf8B4gGnASsB/wHhAakBNAH/
+        AeMBqQE2Af8B+wH1AegB/wMQARaAAANEAXsCUgFlAfQDAAH/A0IBdgQAAwoBDQM3AVoDOgFgAzcBWwM3
+        AVoDOQFfAyIBMhQAAaYBkAFBAf8BlwFEASQB/wGZAYUBMAH/AZgBhAEwAf8BmAGEATAB/wGYAYMBLwH/
+        AZcBggEvAf8BlwGCAS0B/wGXAYIBLQH/AZcBgQEsAf8BlwGBASsB/wGXAYEBKgH/AZcBgAEoAv8B+wHw
+        Af8DEAEVgAADGQEjA0oBiQFYAmIB6QMaASQ0AANWAbMBzgHCAa0B/wHNAcABqwH/Ac0BwAGrAf8BzQHA
+        AasB/wHNAcABqwH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/
+        Ac0BwQGrAf8BqQGTAUQB/wMDAQT/AIEAAUIBTQE+BwABPgMAASgDAAFAAwABEAMAAQEBAAEBBQABgBcA
+        A/8BAAL/AfwBHwQAAfABBwH4AQ8EAAHwAQMB+AEPBAAB4AEBAYAFAAHAAQEBgAUAAcABAQGABQABwAEB
+        AYAFAAHAAQEBgAUAAcABAQGABQABwAEBAYAFAAHAAQEBgAUAAeABAQGABQABEAEDAYAFAAEIAQ8BgAUA
+        AQ8B/wGABQAE/wQACw==
 </value>
   </data>
   <data name="packageTabControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
   <data name="packageTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>385, 25</value>
+    <value>385, 513</value>
   </data>
   <data name="packageTabControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -586,7 +478,7 @@
     <value>mainSplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;packageTabControl.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;mainSplitContainer.Panel1.Name" xml:space="preserve">
     <value>mainSplitContainer.Panel1</value>
@@ -616,7 +508,7 @@
     <value>0, 0</value>
   </data>
   <data name="packageVersionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>628, 150</value>
+    <value>628, 148</value>
   </data>
   <data name="packageVersionPanel.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -633,336 +525,29 @@
   <data name="&gt;&gt;packageVersionPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="buttonRow.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="btnUpdate.AccessibleDescription" xml:space="preserve">
-    <value>Update selected package</value>
-  </data>
-  <data name="btnUpdate.AccessibleName" xml:space="preserve">
-    <value>Update</value>
-  </data>
-  <data name="btnUpdate.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="btnUpdate.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="btnUpdate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnUpdate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="btnUpdate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 56</value>
-  </data>
-  <data name="btnUpdate.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="btnUpdate.Text" xml:space="preserve">
-    <value>Up&amp;date</value>
-  </data>
-  <data name="btnUpdate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="btnUpdate.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="&gt;&gt;btnUpdate.Name" xml:space="preserve">
-    <value>btnUpdate</value>
-  </data>
-  <data name="&gt;&gt;btnUpdate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnUpdate.Parent" xml:space="preserve">
-    <value>buttonRow</value>
-  </data>
-  <data name="&gt;&gt;btnUpdate.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="btnInstallUninstall.AccessibleName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnInstallUninstall.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
-    <value>Button</value>
-  </data>
-  <data name="btnInstallUninstall.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="btnInstallUninstall.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="btnInstallUninstall.ImageIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <metadata name="installUninstallImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>346, 17</value>
-  </metadata>
-  <data name="installUninstallImageList.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACS
-        LQAAAk1TRnQBSQFMAgEBAgEAAWgBBAFoAQQBIAEAASABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAGA
-        AwABIAMAAQEBAAEgBgABQDoAAwIBAwMHAQkDDQERAxABFQMQARYDEAEWAxABFgMQARYDEAEVAw0BEQMH
-        AQkDAgEDUAADAgEDAwcBCQMNAREDEAEVAxABFgMQARYDEAEWAxABFgMQARUDDQERAwcBCQMCAQP/AEgA
-        AQEDBAEGAwwBEAMUARsDHQEpAyYBOAMqAUEDKwFDAysBQwMrAUMDKwFDAyoBQQMmATgDHQEpAxQBGwMM
-        ARADBAEGAwABATsAAQEDBAEGAwwBEAMUARsDHQEpAyYBOAMqAUEDKwFDAysBQwMrAUMDKwFDAyoBQQMm
-        ATgDHQEpAxQBGwMMARADBAEGAwABAf8ANQADAgEDAwoBDQMXASADJAE1AzABTANOAZkBWgFgAVoB3gEA
-        AYwBEwH/AQABiwETAf8BAAGLARMB/wEAAYsBEwH/AQABiwETAf8BAAGMARMB/wFaAWABWgHeA04BmQMw
-        AUwDJAE1AxcBIAMKAQ0DAgEDMAADAgEDAwoBDQMXASADJAE1AzABTANOAZkCWgFgAd4BAAEFAcAB/wEA
-        AQUBwAH/AQABBgHAAf8BAAEGAcAB/wEAAQYBwAH/AQABBwHBAf8CWgFgAd4DTgGZAzABTAMkATUDFwEg
-        AwoBDQMCAQP/AC0AAwQBBQMQARYDIAEuAzcBWgFXAVwBVwHfAQABjQEWAf8BAAGaAScB/wEAAaIBMgH/
-        AQABqgE9Af8BAAGsAUAB/wEAAawBQAH/AQABrAFAAf8BAAGsAUAB/wEAAaoBPQH/AQABogEyAf8BAAGa
-        AScB/wEAAY0BFgH/AVcBXAFXAd8DNwFaAyABLgMQARYDBAEFKAADBAEFAxABFgMgAS4DNwFaAlcBXAHf
-        AQABBwHDAf8BAgEYAdMB/wEGAR8B3gH/AQkBJgHpAf8BBgEkAesB/wECASEB6gH/AQABHQHoAf8BAAEa
-        AekB/wEAARYB5QH/AQABDwHbAf8BAAELAdAB/wEAAQcBwgH/AlcBXAHfAzcBWgMgAS4DEAEWAwQBBf8A
-        JQADBAEFAxIBGQMmATgBVQFWAVUBtAEAAY0BFgH/AQABoAEwAf8BAAGwAUUB/wEAAb0BkAH/AQcBzAGl
-        Af8BIAHYAbYB/wEmAdsBugH/ASYB2wG5Af8BJgHbAbkB/wEmAdsBuQH/ASAB2AG2Af8BBwHMAaUB/wEA
-        Ab0BkAH/AQABsAFFAf8BAAGgATAB/wEAAY0BFgH/AVUBVgFVAbQDJgE4AxIBGQMEAQUgAAMEAQUDEgEZ
-        AyYBOAJVAVYBtAEAAQYBwwH/AQ0BJQHeAf8BHAE5AfAB/wErAUQB9QH/ATwBigH8Af8BgwGWAv8BhQGZ
-        Av8BhAGYAv8BgwGVAv8BggGVAv8BRgGPAv8BMAFGAfoB/wEVAS0B8QH/AQABFAHnAf8BAAEMAdgB/wEA
-        AQgBwgH/AlUBVgG0AyYBOAMSARkDBAEF/wAdAAMEAQUDEgEZAycBOgNdAe0BAAGVASEB/wEAAaoBPQH/
-        AQABxAGZAf8BIAHYAbYB/wEHAdoBsAH/AQAB2AGkAf8BAAHXAZwB/wEAAdcBlwH/AQAB1wGXAf8BAAHX
-        AZcB/wEAAdcBlwH/AQAB1wGcAf8BAAHYAaQB/wEHAdoBrwH/ASAB2AG2Af8BAAHEAZgB/wEAAaoBPQH/
-        AQABlQEhAf8DXQHtAycBOgMSARkDBAEFGAADBAEFAxIBGQMnAToDXQHtAQQBFgHOAf8BHwE7Ae8B/wE5
-        AYkB+QH/AYgBnQL/AUcBkAL/ATkBgwL/ATABQgL/ASsBPgH+Af8BLAE+Af4B/wEsAT8B/gH/ASwBPwH+
-        Af8BMQFCAv8BNwGBAv8BPwGJAv8BQwGMAv8BHQE0AfQB/wEAAQwB4wH/AQABCAHMAf8DXQHtAycBOgMS
-        ARkDBAEF/wAVAAMCAQMDEAEWAyYBOAFZAWABWQHrAQABngEtAf8BAAGyAUgB/wEUAdMBrgH/AQ0B2gGx
-        Af8BAAHXAZwB/wEAAdYBmAH/AQAB1QGYAf8BAAHVAZgB/wEAAdUBmQH/AQAB1QGZAf8BAAHVAZkB/wEA
-        AdUBmQH/AQAB1QGYAf8BAAHVAZgB/wEAAdYBmAH/AQAB1wGcAf8BDQHaAbAB/wEUAdMBrgH/AQABsgFI
-        Af8BAAGeAS0B/wFZAWABWQHrAyYBOAMQARYDAgEDEAADAgEDAxABFgMmATgCWQFgAesBFAErAd0B/wEu
-        AYIB9QH/AYUBnAL/AYEBlgL/AS4BQAH9Af8BKQE8Af0B/wEqAT0B/QH/ASoBPQH9Af8BKwE+Af0B/wEr
-        AT4B/QH/ASsBPgH9Af8BKwE+Af0B/wErAT4B/QH/ASsBPgH9Af8BKwE9Af0B/wEuAUAB/gH/AUABiQL/
-        ATcBggH+Af8BAAEVAegB/wEAAQoB1QH/AlkBYAHrAyYBOAMQARYDAgED/wAQAAEBAwoBDQMgAS4BWQFk
-        AVkB7AEAAZ4BLQH/AQABtQGDAf8BIAHYAbcB/wEAAdcBpwH/AQAB1QGXAf8BAAHUAZgB/wEAAdQBmQH/
-        AQAB1AGZAf8BAAHUAZkB/wEAAdQBmAH/AQAB0wGXAf8BAAHTAZcB/wEAAdQBmAH/AQAB1AGZAf8BAAHU
-        AZkB/wEAAdQBmQH/AQAB1AGYAf8BAAHVAZgB/wEAAdcBpgH/ASAB2AG2Af8BAAG1AYMB/wEAAZ4BLQH/
-        AVkBZAFZAewDIAEuAwoBDQMAAQELAAEBAwoBDQMgAS4CWQFkAewBGAEuAd4B/wE3AYoB9wH/AY4BpAL/
-        ATsBhgH+Af8BJQE4AfwB/wEmATkB/AH/ASgBOgH8Af8BKAE7AfwB/wEoATsB/AH/ASgBOwH8Af8BKAE7
-        AfwB/wEoATsB/AH/ASgBOwH8Af8BKAE7AfwB/wEoATsB/AH/ASgBOwH8Af8BKAE7AfwB/wEnAToB/AH/
-        ATQBRwL/AUIBjAL/AQABGgHqAf8BAAEKAdUB/wJZAWQB7AMgAS4DCgENAwABAf8ACQADBAEGAxYBHwFT
-        AVUBUwGwAQABlQEhAf8BAAGxAUgB/wEgAdgBtwH/AQAB1gGkAf8BAAHTAZcB/wEAAdMBmQH/AQAB0wGZ
-        Af8BAAHTAZkB/wEAAdMBmQH/AQAB0gGXAf8BAAHQAZMB/wEAAc8BkAH/AQABzwGQAf8BAAHQAZMB/wEA
-        AdIBlwH/AQAB0wGZAf8BAAHTAZkB/wEAAdMBmQH/AQAB0wGZAf8BAAHTAZgB/wEAAdYBpAH/ASAB2AG2
-        Af8BAAGxAUgB/wEAAZUBIQH/AVMBVQFTAbADFgEfAwQBBggAAwQBBgMWAR8CUwFVAbABCAEbAdAB/wE7
-        AY0B9wH/AZEBpwL/ATYBgQH8Af8BIwE2AfsB/wElATgB+wH/ASYBOQH7Af8BJgE5AfsB/wEmATkB+wH/
-        ASYBOQH7Af8BJgE5AfsB/wEmATkB+wH/ASYBOQH7Af8BJgE5AfsB/wEmATkB+wH/ASYBOQH7Af8BJgE5
-        AfsB/wEmATkB+wH/ASYBOQH7Af8BJQE4AfsB/wEyAUQB/QH/AUMBjAL/AQABFQHoAf8BAAEIAcsB/wJT
-        AVUBsAMWAR8DBAEG/wAJAAMMARADMAFMAQABjQEWAf8BAAGqATwB/wEUAdMBrwH/AQAB1gGnAf8BAAHT
-        AZcB/wEAAdMBmQH/AQAB0wGZAf8BAAHTAZkB/wEAAdMBmQH/AQAB0wGYAf8BAAHQAZMB/wGwAfEB4An/
-        AbAB8QHgAf8BAAHQAZMB/wEAAdMBmAH/AQAB0wGZAf8BAAHTAZkB/wEAAdMBmQH/AQAB0wGZAf8BAAHT
-        AZcB/wEAAdYBpgH/ARQB0wGuAf8BAAGqAT0B/wEAAY0BFgH/AzABTAMMARAIAAMMARADMAFMAQABBgHC
-        Af8BOgGMAfUB/wGPAacC/wE5AYUB/QH/ASABNAH6Af8BIgE2AfoB/wEjATcB+gH/ASMBNwH6Af8BIwE3
-        AfoB/wEjATcB+gH/ASMBNwH6Af8BIwE3AfoB/wEjATcB+gH/ASMBNwH6Af8BIwE3AfoB/wEjATcB+gH/
-        ASMBNwH6Af8BIwE3AfoB/wEjATcB+gH/ASMBNwH6Af8BIgE3AfoB/wEiATYB+gH/ATIBRQH+Af8BOAGC
-        Af4B/wEAAQwB4wH/AQABCAHCAf8DMAFMAwwBEP8ABQADAgEDAxQBGwFYAV4BWAHdAQABoAEwAf8BAAHF
-        AZkB/wENAdkBsgH/AQAB0gGXAf8BAAHSAZkB/wEAAdIBmQH/AQAB0gGZAf8BAAHSAZkB/wEAAdIBmQH/
-        AQAB0QGXAf8BAAHOAZAR/wEAAc4BkAH/AQAB0QGXAf8BAAHSAZkB/wEAAdIBmQH/AQAB0gGZAf8BAAHS
-        AZkB/wEAAdIBmQH/AQAB0gGXAf8BDQHZAbAB/wEAAcUBmAH/AQABoAEwAf8BWAFeAVgB3QMUARsDAgED
-        AwIBAwMUARsCWAFeAd0BJQE9AeUB/wGIAaEB/QH/AYYBnAL/AR0BMAH5Af8BIAE0AfkB/wEhATUB+QH/
-        ASEBNQH5Af8BIQE1AfkB/wEhATUB+QH/ASEBNQH5Af8BIQE1AfkB/wEhATUB+QH/ASEBNQH5Af8BIQE1
-        AfkB/wEhATUB+QH/ASEBNQH5Af8BIQE1AfkB/wEhATUB+QH/ASEBNQH5Af8BIQE1AfkB/wEhATUB+QH/
-        ASEBNQH5Af8BHwEzAfkB/wE+AYcC/wEdATUB9QH/AQABDAHYAf8CWAFeAd0DFAEbAwIBA/8AAQADBwEJ
-        AyIBMgEAAY0BFgH/AQABsAFFAf8BIAHYAbgB/wEAAdMBnAH/AQAB0QGYAf8BAAHRAZkB/wEAAdEBmQH/
-        AQAB0QGZAf8BAAHRAZkB/wEAAdEBmQH/AQAB0AGXAf8BAAHMAY4R/wEAAcwBjgH/AQAB0AGXAf8BAAHR
-        AZkB/wEAAdEBmQH/AQAB0QGZAf8BAAHRAZkB/wEAAdEBmQH/AQAB0QGYAf8BAAHTAZwB/wEgAdgBtgH/
-        AQABsAFFAf8BAAGNARYB/wMiATIDBwEJAwcBCQMiATIBAAEFAcIB/wGBAZ0B/AH/AZgBrwL/ASABNQH4
-        Af8BHAExAfcB/wEeATMB9wH/AR4BMwH3Af8BHgEzAfcB/wEeATMB9wH/AR4BMwH3Af8BHgEzAfcB/wEe
-        ATMB9wH/AR4BMwH3Af8BHgEzAfcB/wEeATMB9wH/AR4BMwH3Af8BHgEzAfcB/wEeATMB9wH/AR4BMwH3
-        Af8BHgEzAfcB/wEeATMB9wH/AR4BMwH3Af8BHgEzAfcB/wEdATIB9wH/ASEBNgH4Af8BRAGNAv8BAAEU
-        AegB/wEAAQcBwgH/AyIBMgMHAQn/AAEAAw0BEQNKAY0BAAGaAScB/wEAAb0BkQH/AQcB2AGxAf8BAAHQ
-        AZcB/wEAAdABmQH/AQAB0AGZAf8BAAHQAZkB/wEAAdABmQH/AQAB0AGZAf8BAAHQAZkB/wEAAc8BlwH/
-        AQABywGOEf8BAAHLAY4B/wEAAc8BlwH/AQAB0AGZAf8BAAHQAZkB/wEAAdABmQH/AQAB0AGZAf8BAAHQ
-        AZkB/wEAAdABmQH/AQAB0AGYAf8BBwHYAa8B/wEAAb0BkAH/AQABmgEnAf8DSgGNAw0BEQMNAREDSgGN
-        ARoBLwHZAf8BjAGmAf4B/wGCAZkB/gH/ARcBLAH1Af8BGwEwAfYB/wEcATEB9gH/ARwBMQH2Af8BHAEx
-        AfYB/wEcATEB9gH/ARwBMQH2Af8BHAExAfYB/wEcATEB9gH/ARwBMQH2Af8BHAExAfYB/wEcATEB9gH/
-        ARwBMQH2Af8BHAExAfYB/wEcATEB9gH/ARwBMQH2Af8BHAExAfYB/wEcATEB9gH/ARwBMQH2Af8BHAEx
-        AfYB/wEcATEB9gH/ARoBLwH2Af8BOgGFAv8BFQEuAfEB/wEAAQsB0AH/A0oBjQMNARH/AAEAAxABFQFe
-        AWEBXgHaAQABogExAf8BBgHMAacB/wEAAdQBpQH/AQAB0AGYAf8BAAHQAZkB/wEAAdABmQH/AQAB0AGY
-        Af8BAAHPAZcB/wEAAc8BlwH/AQABzwGXAf8BAAHOAZYB/wEAAcsBjRH/AQABywGNAf8BAAHOAZYB/wEA
-        Ac8BlwH/AQABzwGXAf8BAAHPAZcB/wEAAdABmAH/AQAB0AGZAf8BAAHQAZkB/wEAAdABmAH/AQAB1AGk
-        Af8BBwHNAaUB/wEAAaIBMgH/AV4BYQFeAdoDEAEVAxABFQJeAWEB2gE0AYIB6gH/AZYBrgL/ATIBRwH5
-        Af8BFgEsAfUB/wEYAS8B9QH/ARgBLwH1Af8BFwEtAfUB/wEWAS0B9QH/ARYBLAH1Af8BFgEsAfUB/wEW
-        ASwB9QH/ARYBLAH1Af8BFgEsAfUB/wEWASwB9QH/ARYBLAH1Af8BFgEsAfUB/wEWASwB9QH/ARYBLAH1
-        Af8BFgEsAfUB/wEWASwB9QH/ARYBLQH1Af8BFwEtAfUB/wEYAS8B9QH/ARkBLwH1Af8BFwEtAfUB/wEq
-        AT4B+gH/ATEBRwH6Af8BAAEQAdsB/wJeAWEB2gMQARX/AAEAAxABFgEAAYwBEwH/AQABqgE9Af8BIgHb
-        AbsB/wEAAdABmwH/AQABzwGYAf8BAAHPAZkB/wEAAc4BlwH/AQABzAGTAf8BAAHKAZAB/wEAAcoBjgH/
-        AQABygGOAf8BAAHJAY0B/wEAAcYBhhH/AQABxgGGAf8BAAHJAY0B/wEAAcoBjgH/AQABygGOAf8BAAHK
-        AZAB/wEAAcwBkwH/AQABzgGXAf8BAAHPAZkB/wEAAc8BmAH/AQAB0QGcAf8BHwHZAbYB/wEAAaoBPQH/
-        AQABjAETAf8DEAEWAxABFgIAAb8B/wGHAaIB+wH/AZ0BtgL/ARoBLwH0Af8BFQErAfQB/wEWAS0B9AH/
-        ARMBKgH0Af8BDAEkAfMB/wEGAR8B8wH/AQQBHQHzAf8BBAEcAfMB/wEEARwB8wH/AQQBHAHzAf8BBAEc
-        AfMB/wEEARwB8wH/AQQBHAHzAf8BBAEcAfMB/wEEARwB8wH/AQQBHAHzAf8BBAEcAfMB/wEEAR0B8wH/
-        AQYBHwHzAf8BDAEkAfMB/wETASoB9AH/ARYBLQH0Af8BFgEsAfQB/wEaAS8B9QH/AUgBkQL/AQABFgHm
-        Af8BAAEGAcAB/wMQARb/AAEAAxABFgEAAYsBEwH/AQABqwE/Af8BLQHiAcQB/wEAAc0BlwH/AQABzgGY
-        Af8BAAHOAZgB/wEAAcsBkwH/AbAB8AHgOf8BsAHwAeAB/wEAAcsBkwH/AQABzgGYAf8BAAHOAZkB/wEA
-        Ac4BlwH/ASYB3AG6Af8BAAGsAUAB/wEAAYsBEwH/AxABFgMQARYCAAG+Af8BkAGtAv8BoAG4Av8BDAEi
-        AfIB/wESASgB8wH/ARIBKAHzAf8BCQEgAfIB/wHIAc4B+zn/AcgBzgH7Af8BCQEgAfIB/wESASgB8wH/
-        ARMBKQHzAf8BEAEmAfIB/wGFAZcC/wEAARoB6QH/AQABBgHAAf8DEAEW/wABAAMQARYBAAGLARIB/wEA
-        AbABRgH/ATAB5QHHAf8BAAHMAZYB/wEAAc0BmAH/AQABzAGXAf8BAAHIAZBB/wEAAcgBkAH/AQABzAGX
-        Af8BAAHNAZkB/wEAAc0BlwH/ASYB3AG6Af8BAAGsAUAB/wEAAYsBEwH/AxABFgMQARYCAAG+Af8BkwGv
-        Av8BoQG6Av8BCQEgAfEB/wEQAScB8gH/AQ4BJgHyAf8BAAEZAfFB/wEAARkB8QH/AQ4BJgHyAf8BEAEn
-        AfIB/wENASQB8QH/AYYBmAL/AQABHQHpAf8BAAEGAcAB/wMQARb/AAEAAxABFgEAAYoBEQH/AQABtgGG
-        Af8BNAHqAcsB/wEAAcsBlgH/AQABzQGYAf8BAAHNAZcB/wEAAcgBkEH/AQAByAGQAf8BAAHNAZcB/wEA
-        Ac0BmQH/AQABzQGXAf8BJgHcAboB/wEAAawBQAH/AQABiwETAf8DEAEWAxABFgIAAb4B/wGXAbIC/wGi
-        AbsC/wEHAR0B7gH/AQ4BJAHwAf8BDAEkAfAB/wEAARcB7kH/AQABFwHuAf8BDAEkAfAB/wEOASUB8AH/
-        AQoBIQHvAf8BhwGaAv8BAwEhAeoB/wEAAQYBwAH/AxABFv8AAQADEAEVAQABigERAf8BAAG8AY8B/wE4
-        Ae0BzwH/AQABygGVAf8BAAHMAZgB/wEAAcwBmAH/AQAByQGTAf8BsAHwAeA5/wGwAfAB4AH/AQAByQGT
-        Af8BAAHMAZgB/wEAAcwBmQH/AQABzAGXAf8BJgHcAboB/wEAAawBQAH/AQABiwETAf8DEAEVAxABFQIA
-        Ab4B/wGbAbYC/wGjAbwC/wEDARsB7QH/AQoBIgHvAf8BCgEiAe8B/wEBARoB7gH/AcUBzAH6Of8BxQHM
-        AfoB/wEBARoB7gH/AQoBIgHvAf8BCwEjAe8B/wEHAR8B7gH/AYkBmwL/AQcBJQHrAf8BAAEFAcAB/wMQ
-        ARX/AAEAAw0BEQEAAYoBEQH/AQABvwGTAf8BOAHuAdAB/wEAAc0BnAH/AQABygGXAf8BAAHLAZkB/wEA
-        AcoBlwH/AQAByAGTAf8BAAHGAZAB/wEAAcYBjgH/AQABxgGOAf8BAAHFAY0B/wEAAcIBhhH/AQABwgGG
-        Af8BAAHFAY0B/wEAAcYBjgH/AQABxgGOAf8BAAHGAZAB/wEAAcgBkwH/AQABygGXAf8BAAHLAZkB/wEA
-        AcsBmAH/AQABzAGcAf8BHwHZAbYB/wEAAaoBPQH/AQABjAETAf8DDQERAw0BEQIAAb8B/wGXAbIC/wGk
-        Ab4C/wEOASUB7wH/AQcBHwHuAf8BCQEhAe4B/wEGAR8B7gH/AQABGAHtAf8BAAETAewB/wEAAREB7AH/
-        AQABEQHsAf8BAAERAewB/wEAAREB7AH/AQABEQHsAf8BAAERAewB/wEAAREB7AH/AQABEQHsAf8BAAER
-        AewB/wEAAREB7AH/AQABEQHsAf8BAAERAewB/wEAARMB7AH/AQABGAHtAf8BBgEfAe4B/wEJASEB7gH/
-        AQgBIAHuAf8BDwElAe8B/wGGAZkC/wEKASYB6QH/AQABBQHAAf8DDQER/wABAAMHAQkBWwFgAVsB1gEA
-        AbQBhAH/AS0B5gHGAf8BAAHWAasB/wEAAcgBlgH/AQABygGZAf8BAAHKAZkB/wEAAcoBmAH/AQAByQGX
-        Af8BAAHJAZcB/wEAAckBlwH/AQAByAGWAf8BAAHEAY0R/wEAAcQBjQH/AQAByAGWAf8BAAHJAZcB/wEA
-        AckBlwH/AQAByQGXAf8BAAHKAZgB/wEAAcoBmQH/AQABygGZAf8BAAHKAZgB/wEAAdEBpAH/AQcBzQGl
-        Af8BAAGiATIB/wFbAWABWwHWAwcBCQMHAQkCWwFgAdYBQwGRAe0B/wGjAb4C/wEoAUEB9AH/AQIBGwHs
-        Af8BBgEfAe0B/wEGASAB7QH/AQUBHgHtAf8BBAEeAe0B/wEEAR0B7QH/AQQBHQHtAf8BBAEdAe0B/wEE
-        AR0B7QH/AQQBHQHtAf8BBAEdAe0B/wEEAR0B7QH/AQQBHQHtAf8BBAEdAe0B/wEEAR0B7QH/AQQBHQHt
-        Af8BBAEdAe0B/wEEAR4B7QH/AQUBHgHtAf8BBgEgAe0B/wEGASAB7QH/AQQBHQHsAf8BIQE3AfUB/wE/
-        AYwB/QH/AQYBHwHeAf8CWwFgAdYDBwEJ/wABAAMCAQMBRAFFAUQBfAEAAacBOwH/ASYB3gG+Af8BFgHm
-        AcMB/wEAAccBlQH/AQABygGYAf8BAAHKAZkB/wEAAcoBmQH/AQABygGZAf8BAAHKAZkB/wEAAcoBmQH/
-        AQAByQGXAf8BAAHEAY4R/wEAAcQBjgH/AQAByQGXAf8BAAHKAZkB/wEAAcoBmQH/AQABygGZAf8BAAHK
-        AZkB/wEAAcoBmQH/AQABygGZAf8BAAHKAZcB/wEHAdYBsAH/AQABvgGRAf8BAAGaAScB/wFEAUUBRAF8
-        AwIBAwMCAQMCRAFFAXwBJgE7Ad0B/wGjAb4C/wGCAZsB+wH/AQABFgHqAf8BAwEcAewB/wEFAR4B7AH/
-        AQUBHgHsAf8BBQEeAewB/wEFAR4B7AH/AQUBHgHsAf8BBQEeAewB/wEFAR4B7AH/AQUBHgHsAf8BBQEe
-        AewB/wEFAR4B7AH/AQUBHgHsAf8BBQEeAewB/wEFAR4B7AH/AQUBHgHsAf8BBQEeAewB/wEFAR4B7AH/
-        AQUBHgHsAf8BBQEeAewB/wEEAR0B7AH/AQABGQHrAf8BOwGHAfwB/wEtAUUB9gH/AQMBGAHUAf8CRAFF
-        AXwDAgED/wAFAAMTARoBAAGMARQB/wEmAdoBugH/AUAB9gHaAf8BAAHLAZsB/wEAAccBlwH/AQAByQGZ
-        Af8BAAHJAZkB/wEAAckBmQH/AQAByQGZAf8BAAHJAZkB/wEAAcgBlwH/AQABwwGOEf8BAAHDAY4B/wEA
-        AcgBlwH/AQAByQGZAf8BAAHJAZkB/wEAAckBmQH/AQAByQGZAf8BAAHJAZkB/wEAAckBmAH/AQABywGc
-        Af8BIAHZAbcB/wEAAbABRQH/AQABjQEWAf8DEwEaCAADEwEaAQABBQHDAf8BpwHCAv8BqQHCAv8BBQEf
-        AesB/wEAARgB6gH/AQEBGwHrAf8BAgEcAesB/wECARwB6wH/AQIBHAHrAf8BAgEcAesB/wECARwB6wH/
-        AQIBHAHrAf8BAgEcAesB/wECARwB6wH/AQIBHAHrAf8BAgEcAesB/wECARwB6wH/AQIBHAHrAf8BAgEc
-        AesB/wECARwB6wH/AQIBHAHrAf8BAgEcAesB/wECARwB6wH/AQABGQHqAf8BBQEeAesB/wGMAaAC/wEd
-        ATkB8AH/AQABBwHDAf8DEwEa/wAJAAMEAQYBWwFgAVsB1gEHAb0BkQH/AT4B7QHRAf8BIgHsAcoB/wEA
-        AcQBlAH/AQABxwGXAf8BAAHIAZkB/wEAAcgBmQH/AQAByAGZAf8BAAHIAZkB/wEAAccBlwH/AQABwwGQ
-        Ef8BAAHDAZAB/wEAAccBlwH/AQAByAGZAf8BAAHIAZkB/wEAAcgBmQH/AQAByAGZAf8BAAHIAZkB/wEA
-        AccBlwH/AQ0B1wGyAf8BAAHFAZkB/wEAAaEBMAH/AVsBYAFbAdYDBAEGCAADBAEGAlsBYAHWAUEBjgHq
-        Af8BpgHBAv8BigGjAfwB/wEAARAB5wH/AQABFwHoAf8BAAEaAekB/wEAARoB6QH/AQABGgHpAf8BAAEa
-        AekB/wEAARoB6QH/AQABGgHpAf8BAAEaAekB/wEAARoB6QH/AQABGgHpAf8BAAEaAekB/wEAARoB6QH/
-        AQABGgHpAf8BAAEaAekB/wEAARoB6QH/AQABGgHpAf8BAAEaAekB/wEAARgB6AH/AQABEwHnAf8BQgGP
-        Af0B/wE7AYsB+QH/AQ4BJgHfAf8CWwFgAdYDBAEG/wAMAAEBAx0BKQEAAYwBFAH/AT4B4AHFAf8BRwH5
-        AdwB/wEAAdsBswH/AQABxAGUAf8BAAHGAZcB/wEAAccBmQH/AQABxwGZAf8BAAHHAZkB/wEAAcYBmAH/
-        AQABxAGTAf8BsAHuAeAJ/wGwAe4B4AH/AQABxAGTAf8BAAHGAZgB/wEAAccBmQH/AQABxwGZAf8BAAHH
-        AZkB/wEAAccBmQH/AQABxgGXAf8BAAHQAacB/wEUAdMBrwH/AQABqgE8Af8BAAGNARYB/wMdASkDAAEB
-        CwABAQMdASkBAAEFAcIB/wGiAbwC/wGoAcMC/wEpAUMB8gH/AQABDwHmAf8BAAEUAegB/wEAARcB6AH/
-        AQABFwHoAf8BAAEXAegB/wEAARcB6AH/AQABFwHoAf8BAAEXAegB/wEAARcB6AH/AQABFwHoAf8BAAEX
-        AegB/wEAARcB6AH/AQABFwHoAf8BAAEXAegB/wEAARcB6AH/AQABFwHoAf8BAAEVAegB/wEAAREB5gH/
-        ASEBOQHyAf8BiAGfAv8BIAE8Ae8B/wEAAQYBwgH/Ax0BKQMAAQH/AA0AAwIBAwFPAVEBTwGcAQABpQE4
-        Af8BkAHwAdsB/wFFAfwB4AH/AQAB1wGuAf8BAAHDAZQB/wEAAcYBlwH/AQABxwGZAf8BAAHHAZkB/wEA
-        AccBmQH/AQABxgGXAf8BAAHEAZMB/wEAAcIBkAH/AQABwgGQAf8BAAHEAZMB/wEAAcYBlwH/AQABxwGZ
-        Af8BAAHHAZkB/wEAAccBmQH/AQABxwGZAf8BAAHGAZcB/wEAAc8BpQH/ASAB2QG3Af8BAAGyAUgB/wEA
-        AZUBIQH/AU8BUQFPAZwDAgEDEAADAgEDAk8BUQGcARYBKQHTAf8BqQHEAv8BqgHEAv8BIAE6Ae8B/wEA
-        AQwB5QH/AQABEgHmAf8BAAEUAecB/wEAARUB5wH/AQABFQHnAf8BAAEVAecB/wEAARUB5wH/AQABFQHn
-        Af8BAAEVAecB/wEAARUB5wH/AQABFQHnAf8BAAEVAecB/wEAARUB5wH/AQABFAHnAf8BAAETAeYB/wEA
-        AQ4B5QH/ARoBMgHwAf8BkgGoAv8BLwGDAfUB/wEEARYBzgH/Ak8BUQGcAwIBA/8AFQADBAEFAVwBZAFc
-        AecBHAHFAZ0B/wGeAfkB5wH/AUYB/AHfAf8BAAHbAbMB/wEAAcEBkwH/AQABxAGWAf8BAAHFAZgB/wEA
-        AcYBmQH/AQABxgGZAf8BAAHGAZgB/wEAAcUBlwH/AQABxQGXAf8BAAHGAZgB/wEAAcYBmQH/AQABxgGZ
-        Af8BAAHGAZkB/wEAAcUBmAH/AQABxQGXAf8BAAHPAacB/wEgAdkBuAH/AQABtQGDAf8BAAGfAS0B/wFc
-        AWQBXAHnAwQBBRgAAwQBBQJcAWQB5wE6AYYB5wH/AagBwwL/AaoBxAL/ASYBQAHxAf8BAAEIAeMB/wEA
-        AQ4B5QH/AQABEQHmAf8BAAESAeYB/wEAARMB5gH/AQABEwHmAf8BAAETAeYB/wEAARMB5gH/AQABEwHm
-        Af8BAAETAeYB/wEAARIB5gH/AQABEQHmAf8BAAEPAeUB/wEAAQoB5AH/ASEBOgHxAf8BlQGrAv8BOAGK
-        AfcB/wEVASsB3QH/AlwBZAHnAwQBBf8AHQADBAEFAV4BZQFeAeUBJwHJAaQB/wG1Af8B9AH/AYUB/QHj
-        Af8BIQHsAcsB/wEAAcYBmwH/AQABwQGUAf8BAAHDAZYB/wEAAcMBlwH/AQABxAGYAf8BAAHEAZgB/wEA
-        AcQBmAH/AQABxAGYAf8BAAHEAZgB/wEAAcQBlwH/AQABwwGXAf8BAAHHAZwB/wEOAdYBswH/ARQB1AGw
-        Af8BAAGyAUcB/wEAAZ4BLQH/AV4BZQFeAeUDBAEFIAADBAEFAl4BZQHlAToBhgHnAf8BqQHEAv8BqAHD
-        Av8BiQGiAfsB/wEAARUB5QH/AQABCAHjAf8BAAELAeMB/wEAAQ4B5AH/AQABDwHlAf8BAAEPAeUB/wEA
-        AQ8B5QH/AQABDwHlAf8BAAEOAeQB/wEAAQwB4wH/AQABCQHjAf8BAAEVAeYB/wFGAZUB/AH/AZIBqgL/
-        ATwBjgH4Af8BGAEuAd8B/wJeAWUB5QMEAQX/ACUAAwQBBQFYAWEBWAHmAQABrQFDAf8BwAH/AfcB/wGc
-        Af8B6gH/AUcB/QHgAf8BGQHoAcUB/wEAAdYBrgH/AQABxwGbAf8BAAG/AZMB/wEAAcABlAH/AQABwAGU
-        Af8BAAHBAZQB/wEAAcYBmwH/AQAB0AGqAf8BDgHcAbgB/wEoAeABwAH/AQABxgGdAf8BAAGqATwB/wEA
-        AZUBIQH/AVgBYQFYAeYDBAEFKAADBAEFAlgBYQHmARcBKQHTAf8BogG8Av8BpwHCAv8BqgHDAv8BRgGX
-        AfkB/wEaATUB7QH/AQABFAHlAf8BAAEDAeEB/wEAAQQB4QH/AQABBAHhAf8BAAEDAeEB/wEAARQB5QH/
-        ARgBMwHuAf8BQAGQAfkB/wGcAbIC/wGKAaIB/gH/AToBjQH1Af8BCAEbAdAB/wJYAWEB5gMEAQX/AC0A
-        AwIBAwNOAZkBAAGMARQB/wE7AdUBtAH/Aa0B/QHvAf8BkQH4AeEB/wGBAfgB3AH/AUQB+QHcAf8BQgH4
-        AdsB/wE/AfYB2AH/ATwB8wHVAf8BPAHxAdQB/wE1AewBzgH/AR8B3gG7Af8BAAHKAaIB/wEAAbYBhAH/
-        AQABoAEvAf8BAAGNARUB/wNOAZkDAgEDMAADAgEDA04BmQEAAQUBwgH/AUEBjgHqAf8BpwHCAv8BpAG/
-        Av8BpQG/Av8BpwG/Av8BpgG/Av8BpQG+Av8BpAG9Av8BowG6Av8BoAG4Av8BmQGxAv8BjQGnAv8BggGd
-        Af0B/wEmAT0B5QH/AQABBgHCAf8DTgGZAwIBA/8AOAABAQMZASMBWgFdAVoB0wEAAYwBFAH/AQYBtgGI
-        Af8BJQHNAakB/wE+AeEBxgH/ATgB3wHFAf8BKQHZAbkB/wEZAdIBsAH/AQoBywGnAf8BAAHDAZgB/wEA
-        Aa4BRAH/AQABnwEuAf8BAAGMARUB/wFaAV0BWgHTAxkBIwMAAQE7AAEBAxkBIwJaAV0B0wEAAQUBwwH/
-        ASYBOwHdAf8BQwGRAe4B/wGXAbIC/wGbAbcC/wGYAbMC/wGUAa8C/wGRAa0C/wGIAaMB+wH/ATQBgwHq
-        Af8BGgEvAdkB/wEAAQUBwgH/AloBXQHTAxkBIwMAAQH/AEUAAwoBDgNBAXIBWAFcAVgB0QEAAYcBDQH/
-        AQABhwENAf8BAAGHAQ0B/wEAAYgBDgH/AQABiQEPAf8BAAGKARAB/wFYAVwBWAHRA0EBcgMKAQ5QAAMK
-        AQ4DQQFyAlgBXAHRAgABvwH/AgABvgH/AgABvgH/AgABvgH/AgABvgH/AgABvwH/AlgBXAHRA0EBcgMK
-        AQ7/ACkAAUIBTQE+BwABPgMAASgDAAGAAwABIAMAAQEBAAEBBgABAhYAA/8BAAH/AcABAwL/AcABAwH/
-        CAAB/gIAAX8B/gIAAX8IAAH8AgABPwH8AgABPwgAAfgCAAEfAfgCAAEfCAAB8AIAAQ8B8AIAAQ8IAAHg
-        AgABBwHgAgABBwgAAcACAAEDAcACAAEDCAABgAIAAQEBgAIAAQEIAAGAAgABAQGAAgABAQgAAYACAAEB
-        AYACAAEByAABgAIAAQEBgAIAAQEIAAGAAgABAQGAAgABAQgAAYACAAEBAYACAAEBCAABwAIAAQMBwAIA
-        AQMIAAHgAgABBwHgAgABBwgAAfACAAEPAfACAAEPCAAB+AIAAR8B+AIAAR8IAAH8AgABPwH8AgABPwgA
-        Af4CAAF/Af4CAAF/CAAB/wHAAQMC/wHAAQMB/wgACw==
-</value>
-  </data>
-  <data name="btnInstallUninstall.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnInstallUninstall.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 3</value>
-  </data>
-  <data name="btnInstallUninstall.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 56</value>
-  </data>
-  <data name="btnInstallUninstall.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="btnInstallUninstall.Text" xml:space="preserve">
-    <value>Install</value>
-  </data>
-  <data name="btnInstallUninstall.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="btnInstallUninstall.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="&gt;&gt;btnInstallUninstall.Name" xml:space="preserve">
-    <value>btnInstallUninstall</value>
-  </data>
-  <data name="&gt;&gt;btnInstallUninstall.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnInstallUninstall.Parent" xml:space="preserve">
-    <value>buttonRow</value>
-  </data>
-  <data name="&gt;&gt;btnInstallUninstall.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="buttonRow.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="packageButtonsPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
   </data>
-  <data name="buttonRow.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 150</value>
+  <data name="packageButtonsPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 148</value>
   </data>
-  <data name="buttonRow.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="packageButtonsPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>628, 79</value>
   </data>
-  <data name="buttonRow.Size" type="System.Drawing.Size, System.Drawing">
-    <value>628, 62</value>
+  <data name="packageButtonsPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
-  <data name="buttonRow.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="&gt;&gt;packageButtonsPanel1.Name" xml:space="preserve">
+    <value>packageButtonsPanel1</value>
   </data>
-  <data name="&gt;&gt;buttonRow.Name" xml:space="preserve">
-    <value>buttonRow</value>
+  <data name="&gt;&gt;packageButtonsPanel1.Type" xml:space="preserve">
+    <value>Chocolatey.Explorer.View.Controls.PackageButtonsPanel, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;buttonRow.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonRow.Parent" xml:space="preserve">
+  <data name="&gt;&gt;packageButtonsPanel1.Parent" xml:space="preserve">
     <value>mainSplitContainer.Panel2</value>
   </data>
-  <data name="&gt;&gt;buttonRow.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;packageButtonsPanel1.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="buttonRow.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="btnUpdate" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="btnInstallUninstall" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="txtPowershellOutput.AccessibleName" xml:space="preserve">
     <value>Console output</value>
@@ -974,7 +559,7 @@
     <value>Courier New, 9pt</value>
   </data>
   <data name="txtPowershellOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 212</value>
+    <value>0, 227</value>
   </data>
   <data name="txtPowershellOutput.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -983,7 +568,7 @@
     <value>Vertical</value>
   </data>
   <data name="txtPowershellOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>628, 301</value>
+    <value>628, 286</value>
   </data>
   <data name="txtPowershellOutput.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1039,6 +624,120 @@
   <data name="&gt;&gt;mainSplitContainer.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;searchPackages.Name" xml:space="preserve">
+    <value>searchPackages</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.Parent" xml:space="preserve">
+    <value>searchBar</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>searchBar</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="searchBar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="searchBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="searchBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 33</value>
+  </data>
+  <data name="searchBar.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;searchBar.Name" xml:space="preserve">
+    <value>searchBar</value>
+  </data>
+  <data name="&gt;&gt;searchBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchBar.Parent" xml:space="preserve">
+    <value>tabAvailable</value>
+  </data>
+  <data name="&gt;&gt;searchBar.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="searchPackages.AccessibleDescription" xml:space="preserve">
+    <value>Search for packages</value>
+  </data>
+  <data name="searchPackages.AccessibleName" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="searchPackages.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="searchPackages.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 4</value>
+  </data>
+  <data name="searchPackages.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 23</value>
+  </data>
+  <data name="searchPackages.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.Name" xml:space="preserve">
+    <value>searchPackages</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.Parent" xml:space="preserve">
+    <value>searchBar</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label1.AccessibleDescription" xml:space="preserve">
+    <value>Search for packages</value>
+  </data>
+  <data name="label1.AccessibleName" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 8</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 17</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>&amp;Search</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>searchBar</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>237, 17</value>
   </metadata>
@@ -1047,27 +746,6 @@
   </data>
   <data name="statusStrip.AccessibleName" xml:space="preserve">
     <value>Status bar</value>
-  </data>
-  <data name="lblProgressbar.AccessibleDescription" xml:space="preserve">
-    <value>Progress</value>
-  </data>
-  <data name="lblProgressbar.AccessibleName" xml:space="preserve">
-    <value>Progress</value>
-  </data>
-  <data name="lblProgressbar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 16</value>
-  </data>
-  <data name="lblStatus.AccessibleDescription" xml:space="preserve">
-    <value>Current status</value>
-  </data>
-  <data name="lblStatus.AccessibleName" xml:space="preserve">
-    <value>Current status</value>
-  </data>
-  <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>804, 17</value>
-  </data>
-  <data name="lblStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
   </data>
   <data name="statusStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 539</value>
@@ -1092,6 +770,189 @@
   </data>
   <data name="&gt;&gt;statusStrip.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="lblProgressbar.AccessibleDescription" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="lblProgressbar.AccessibleName" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="lblProgressbar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 16</value>
+  </data>
+  <data name="lblStatus.AccessibleDescription" xml:space="preserve">
+    <value>Current status</value>
+  </data>
+  <data name="lblStatus.AccessibleName" xml:space="preserve">
+    <value>Current status</value>
+  </data>
+  <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 17</value>
+  </data>
+  <data name="lblStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
+    <value>textBox1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 33</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>tabInstalled</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="textBox1.AccessibleDescription" xml:space="preserve">
+    <value>Search for packages</value>
+  </data>
+  <data name="textBox1.AccessibleName" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 4</value>
+  </data>
+  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 23</value>
+  </data>
+  <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
+    <value>textBox1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label2.AccessibleDescription" xml:space="preserve">
+    <value>Search for packages</value>
+  </data>
+  <data name="label2.AccessibleName" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 8</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 17</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>&amp;Search</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="availablePackagesGrid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="availablePackagesGrid1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 36</value>
+  </data>
+  <data name="availablePackagesGrid1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 445</value>
+  </data>
+  <data name="availablePackagesGrid1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.Name" xml:space="preserve">
+    <value>availablePackagesGrid1</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.Type" xml:space="preserve">
+    <value>Chocolatey.Explorer.View.Controls.AvailablePackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.Parent" xml:space="preserve">
+    <value>tabAvailable</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="installedPackagesGrid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="installedPackagesGrid1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 36</value>
+  </data>
+  <data name="installedPackagesGrid1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 445</value>
+  </data>
+  <data name="installedPackagesGrid1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;installedPackagesGrid1.Name" xml:space="preserve">
+    <value>installedPackagesGrid1</value>
+  </data>
+  <data name="&gt;&gt;installedPackagesGrid1.Type" xml:space="preserve">
+    <value>Chocolatey.Explorer.View.Controls.InstalledPackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;installedPackagesGrid1.Parent" xml:space="preserve">
+    <value>tabInstalled</value>
+  </data>
+  <data name="&gt;&gt;installedPackagesGrid1.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2319,12 +2180,6 @@
   <data name="&gt;&gt;packageTabsImageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;installUninstallImageList.Name" xml:space="preserve">
-    <value>installUninstallImageList</value>
-  </data>
-  <data name="&gt;&gt;installUninstallImageList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;lblProgressbar.Name" xml:space="preserve">
     <value>lblProgressbar</value>
   </data>
@@ -2336,30 +2191,6 @@
   </data>
   <data name="&gt;&gt;lblStatus.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;IsInstalled.Name" xml:space="preserve">
-    <value>IsInstalled</value>
-  </data>
-  <data name="&gt;&gt;IsInstalled.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Column1.Name" xml:space="preserve">
-    <value>Column1</value>
-  </data>
-  <data name="&gt;&gt;Column1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;InstalledVersion.Name" xml:space="preserve">
-    <value>InstalledVersion</value>
-  </data>
-  <data name="&gt;&gt;InstalledVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Prerelease.Name" xml:space="preserve">
-    <value>Prerelease</value>
-  </data>
-  <data name="&gt;&gt;Prerelease.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>PackageManager</value>

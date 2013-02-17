@@ -8,6 +8,7 @@ using Chocolatey.Explorer.Services.PackageVersionService;
 using Chocolatey.Explorer.Services.PackagesService;
 using Chocolatey.Explorer.Services.SettingsService;
 using Chocolatey.Explorer.Services.SourceService;
+using Chocolatey.Explorer.View.Controls;
 using Chocolatey.Explorer.View.Forms;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -67,15 +68,27 @@ namespace Chocolatey.Explorer.Test.IoC
         }
 
         [Test]
-        public void IfIPackagesServiceCanBeResolved()
+        public void IfIAvailablePackagesServiceCanBeResolved()
         {
             Assert.IsNotNull(ObjectFactory.GetInstance<IAvailablePackagesService>());
         }
 
         [Test]
-        public void IfIPackagesServiceIsNotSingleton()
+        public void IfIAvailablePackagesServiceIsNotSingleton()
         {
-            Assert.AreNotEqual(ObjectFactory.GetInstance<IAvailablePackagesService>(), ObjectFactory.GetInstance<IAvailablePackagesService>());
+            Assert.AreEqual(ObjectFactory.GetInstance<IAvailablePackagesService>(), ObjectFactory.GetInstance<IAvailablePackagesService>());
+        }
+
+        [Test]
+        public void IfIInstalledPackagesServiceCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<IInstalledPackagesService>());
+        }
+
+        [Test]
+        public void IfIInstalledPackagesServiceIsNotSingleton()
+        {
+            Assert.AreEqual(ObjectFactory.GetInstance<IInstalledPackagesService>(), ObjectFactory.GetInstance<IInstalledPackagesService>());
         }
 
         [Test]
@@ -202,6 +215,27 @@ namespace Chocolatey.Explorer.Test.IoC
         public void IfIChocolateyLibDirHelperIsNotSingleton()
         {
             Assert.AreNotEqual(ObjectFactory.GetInstance<IChocolateyLibDirHelper>(), ObjectFactory.GetInstance<IChocolateyLibDirHelper>());
+        }
+
+        [Test]
+        public void IfPackageVersionPanelGetsIPackageVersionService()
+        {
+            var panel = new PackageVersionPanel();
+            Assert.IsNotNull(panel.PackageVersionService);
+        }
+
+        [Test]
+        public void IfAvailablePackagesGirdGetsIAvailablePackagesService()
+        {
+            var grid = new AvailablePackagesGrid();
+            Assert.IsNotNull(grid.AvailablePackagesService);
+        }
+
+        [Test]
+        public void IfInstalledPackagesGridGetsIInstalledPackagesService()
+        {
+            var grid = new InstalledPackagesGrid();
+            Assert.IsNotNull(grid.InstalledPackagesService);
         }
     }
 }

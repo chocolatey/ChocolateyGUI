@@ -182,6 +182,15 @@
     <Compile Include="View\Controls\InstalledPackagesGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="View\Controls\PackageButtonsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Controls\PackageButtonsPanel.Designer.cs">
+      <DependentUpon>PackageButtonsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PackagesBaseGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\Forms\About.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -230,6 +239,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Controls\PackageButtonsPanel.resx">
+      <DependentUpon>PackageButtonsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>

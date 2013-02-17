@@ -32,10 +32,6 @@ namespace Chocolatey.Explorer.View.Forms
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageManager));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.packagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.availablePackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,7 +41,6 @@ namespace Chocolatey.Explorer.View.Forms
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.PackageGrid = new System.Windows.Forms.DataGridView();
             this.searchBar = new System.Windows.Forms.Panel();
             this.searchPackages = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -54,28 +49,29 @@ namespace Chocolatey.Explorer.View.Forms
             this.tabInstalled = new System.Windows.Forms.TabPage();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
             this.packageVersionPanel = new Chocolatey.Explorer.View.Controls.PackageVersionPanel();
-            this.buttonRow = new System.Windows.Forms.TableLayoutPanel();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnInstallUninstall = new System.Windows.Forms.CheckBox();
-            this.installUninstallImageList = new System.Windows.Forms.ImageList(this.components);
+            this.packageButtonsPanel1 = new Chocolatey.Explorer.View.Controls.PackageButtonsPanel();
             this.txtPowershellOutput = new System.Windows.Forms.TextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProgressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.IsInstalled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.InstalledVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prerelease = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.availablePackagesGrid1 = new Chocolatey.Explorer.View.Controls.AvailablePackagesGrid();
+            this.installedPackagesGrid1 = new Chocolatey.Explorer.View.Controls.InstalledPackagesGrid();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PackageGrid)).BeginInit();
             this.searchBar.SuspendLayout();
             this.packageTabControl.SuspendLayout();
-            this.buttonRow.SuspendLayout();
+            this.tabAvailable.SuspendLayout();
+            this.tabInstalled.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.availablePackagesGrid1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.installedPackagesGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -101,7 +97,6 @@ namespace Chocolatey.Explorer.View.Forms
             resources.ApplyResources(this.availablePackagesToolStripMenuItem, "availablePackagesToolStripMenuItem");
             this.availablePackagesToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.availablePackagesToolStripMenuItem.Name = "availablePackagesToolStripMenuItem";
-            this.availablePackagesToolStripMenuItem.Click += new System.EventHandler(this.availablePackages_Click);
             // 
             // installedPackagesToolStripMenuItem
             // 
@@ -109,7 +104,6 @@ namespace Chocolatey.Explorer.View.Forms
             this.installedPackagesToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.installedPackagesToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.monitor_small;
             this.installedPackagesToolStripMenuItem.Name = "installedPackagesToolStripMenuItem";
-            this.installedPackagesToolStripMenuItem.Click += new System.EventHandler(this.installedPackages_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -127,7 +121,7 @@ namespace Chocolatey.Explorer.View.Forms
             this.helpToolStripMenuItem1.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.helpToolStripMenuItem1.Image = global::Chocolatey.Explorer.Properties.Resources.help_small;
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.help_Click);
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.HelpClick);
             // 
             // aboutToolStripMenuItem
             // 
@@ -135,7 +129,7 @@ namespace Chocolatey.Explorer.View.Forms
             this.aboutToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.aboutToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.information_small;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.about_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutClick);
             // 
             // settingsToolStripMenuItem
             // 
@@ -143,7 +137,7 @@ namespace Chocolatey.Explorer.View.Forms
             this.settingsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.settingsToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.setting_tools_small;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settings_Click);
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsClick);
             // 
             // mainSplitContainer
             // 
@@ -154,60 +148,15 @@ namespace Chocolatey.Explorer.View.Forms
             // 
             // mainSplitContainer.Panel1
             // 
-            this.mainSplitContainer.Panel1.Controls.Add(this.PackageGrid);
-            this.mainSplitContainer.Panel1.Controls.Add(this.searchBar);
             this.mainSplitContainer.Panel1.Controls.Add(this.packageTabControl);
             this.mainSplitContainer.Panel1.ForeColor = System.Drawing.Color.Black;
             // 
             // mainSplitContainer.Panel2
             // 
             this.mainSplitContainer.Panel2.Controls.Add(this.packageVersionPanel);
-            this.mainSplitContainer.Panel2.Controls.Add(this.buttonRow);
+            this.mainSplitContainer.Panel2.Controls.Add(this.packageButtonsPanel1);
             this.mainSplitContainer.Panel2.Controls.Add(this.txtPowershellOutput);
             this.mainSplitContainer.TabStop = false;
-            // 
-            // PackageGrid
-            // 
-            resources.ApplyResources(this.PackageGrid, "PackageGrid");
-            this.PackageGrid.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
-            this.PackageGrid.AllowUserToAddRows = false;
-            this.PackageGrid.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            this.PackageGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.PackageGrid.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.PackageGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PackageGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.PackageGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.PackageGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PackageGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.IsInstalled,
-            this.Column1,
-            this.InstalledVersion,
-            this.Prerelease});
-            this.PackageGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.PackageGrid.GridColor = System.Drawing.SystemColors.Control;
-            this.PackageGrid.MultiSelect = false;
-            this.PackageGrid.Name = "PackageGrid";
-            this.PackageGrid.ReadOnly = true;
-            this.PackageGrid.RowHeadersVisible = false;
-            this.PackageGrid.RowTemplate.ReadOnly = true;
-            this.PackageGrid.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.PackageGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PackageGrid.ShowCellErrors = false;
-            this.PackageGrid.ShowCellToolTips = false;
-            this.PackageGrid.ShowEditingIcon = false;
-            this.PackageGrid.ShowRowErrors = false;
-            this.PackageGrid.StandardTab = true;
-            this.PackageGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PackageGrid_CellContentClick);
-            this.PackageGrid.SelectionChanged += new System.EventHandler(this.PackageGrid_SelectionChanged);
-            this.PackageGrid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PackageGrid_KeyPress);
             // 
             // searchBar
             // 
@@ -243,6 +192,8 @@ namespace Chocolatey.Explorer.View.Forms
             // 
             resources.ApplyResources(this.tabAvailable, "tabAvailable");
             this.tabAvailable.AccessibleRole = System.Windows.Forms.AccessibleRole.PageTab;
+            this.tabAvailable.Controls.Add(this.availablePackagesGrid1);
+            this.tabAvailable.Controls.Add(this.searchBar);
             this.tabAvailable.Name = "tabAvailable";
             this.tabAvailable.UseVisualStyleBackColor = true;
             // 
@@ -250,6 +201,8 @@ namespace Chocolatey.Explorer.View.Forms
             // 
             resources.ApplyResources(this.tabInstalled, "tabInstalled");
             this.tabInstalled.AccessibleRole = System.Windows.Forms.AccessibleRole.PageTab;
+            this.tabInstalled.Controls.Add(this.installedPackagesGrid1);
+            this.tabInstalled.Controls.Add(this.panel1);
             this.tabInstalled.Name = "tabInstalled";
             this.tabInstalled.UseVisualStyleBackColor = true;
             // 
@@ -265,39 +218,10 @@ namespace Chocolatey.Explorer.View.Forms
             resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
             this.packageVersionPanel.Name = "packageVersionPanel";
             // 
-            // buttonRow
+            // packageButtonsPanel1
             // 
-            resources.ApplyResources(this.buttonRow, "buttonRow");
-            this.buttonRow.Controls.Add(this.btnUpdate, 0, 0);
-            this.buttonRow.Controls.Add(this.btnInstallUninstall, 1, 0);
-            this.buttonRow.Name = "buttonRow";
-            // 
-            // btnUpdate
-            // 
-            resources.ApplyResources(this.btnUpdate, "btnUpdate");
-            this.btnUpdate.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnUpdate.Image = global::Chocolatey.Explorer.Properties.Resources.update;
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
-            // 
-            // btnInstallUninstall
-            // 
-            resources.ApplyResources(this.btnInstallUninstall, "btnInstallUninstall");
-            this.btnInstallUninstall.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnInstallUninstall.AutoCheck = false;
-            this.btnInstallUninstall.ImageList = this.installUninstallImageList;
-            this.btnInstallUninstall.Name = "btnInstallUninstall";
-            this.btnInstallUninstall.UseVisualStyleBackColor = true;
-            this.btnInstallUninstall.CheckStateChanged += new System.EventHandler(this.btnInstallUninstall_CheckStateChanged);
-            this.btnInstallUninstall.Click += new System.EventHandler(this.buttonInstallUninstall_Click);
-            // 
-            // installUninstallImageList
-            // 
-            this.installUninstallImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("installUninstallImageList.ImageStream")));
-            this.installUninstallImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.installUninstallImageList.Images.SetKeyName(0, "add.png");
-            this.installUninstallImageList.Images.SetKeyName(1, "delete.png");
+            resources.ApplyResources(this.packageButtonsPanel1, "packageButtonsPanel1");
+            this.packageButtonsPanel1.Name = "packageButtonsPanel1";
             // 
             // txtPowershellOutput
             // 
@@ -328,45 +252,35 @@ namespace Chocolatey.Explorer.View.Forms
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Spring = true;
             // 
-            // IsInstalled
+            // panel1
             // 
-            this.IsInstalled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.IsInstalled.DataPropertyName = "IsInstalled";
-            resources.ApplyResources(this.IsInstalled, "IsInstalled");
-            this.IsInstalled.Name = "IsInstalled";
-            this.IsInstalled.ReadOnly = true;
-            this.IsInstalled.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.label2);
+            resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.Name = "panel1";
             // 
-            // Column1
+            // textBox1
             // 
-            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column1.DataPropertyName = "Name";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
-            resources.ApplyResources(this.Column1, "Column1");
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            resources.ApplyResources(this.textBox1, "textBox1");
+            this.textBox1.Name = "textBox1";
             // 
-            // InstalledVersion
+            // label2
             // 
-            this.InstalledVersion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.InstalledVersion.DataPropertyName = "InstalledVersion";
-            dataGridViewCellStyle4.NullValue = "no version";
-            this.InstalledVersion.DefaultCellStyle = dataGridViewCellStyle4;
-            resources.ApplyResources(this.InstalledVersion, "InstalledVersion");
-            this.InstalledVersion.Name = "InstalledVersion";
-            this.InstalledVersion.ReadOnly = true;
-            this.InstalledVersion.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.InstalledVersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText;
+            this.label2.Name = "label2";
             // 
-            // Prerelease
+            // availablePackagesGrid1
             // 
-            this.Prerelease.DataPropertyName = "IsPreRelease";
-            resources.ApplyResources(this.Prerelease, "Prerelease");
-            this.Prerelease.Name = "Prerelease";
-            this.Prerelease.ReadOnly = true;
+            this.availablePackagesGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            resources.ApplyResources(this.availablePackagesGrid1, "availablePackagesGrid1");
+            this.availablePackagesGrid1.Name = "availablePackagesGrid1";
+            // 
+            // installedPackagesGrid1
+            // 
+            this.installedPackagesGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            resources.ApplyResources(this.installedPackagesGrid1, "installedPackagesGrid1");
+            this.installedPackagesGrid1.Name = "installedPackagesGrid1";
             // 
             // PackageManager
             // 
@@ -385,14 +299,17 @@ namespace Chocolatey.Explorer.View.Forms
             this.mainSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
             this.mainSplitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PackageGrid)).EndInit();
             this.searchBar.ResumeLayout(false);
             this.searchBar.PerformLayout();
             this.packageTabControl.ResumeLayout(false);
-            this.buttonRow.ResumeLayout(false);
-            this.buttonRow.PerformLayout();
+            this.tabAvailable.ResumeLayout(false);
+            this.tabInstalled.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.availablePackagesGrid1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.installedPackagesGrid1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -408,27 +325,24 @@ namespace Chocolatey.Explorer.View.Forms
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.SplitContainer mainSplitContainer;
-        private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.TextBox txtPowershellOutput;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripProgressBar lblProgressbar;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
-        private System.Windows.Forms.TableLayoutPanel buttonRow;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.TabControl packageTabControl;
         private System.Windows.Forms.TabPage tabInstalled;
         private System.Windows.Forms.TabPage tabAvailable;
-        private System.Windows.Forms.CheckBox btnInstallUninstall;
-        private System.Windows.Forms.ImageList installUninstallImageList;
         private System.Windows.Forms.ImageList packageTabsImageList;
         private PackageVersionPanel packageVersionPanel;
-        private System.Windows.Forms.DataGridView PackageGrid;
         private System.Windows.Forms.Panel searchBar;
         private System.Windows.Forms.TextBox searchPackages;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn IsInstalled;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn InstalledVersion;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Prerelease;
+        private PackageButtonsPanel packageButtonsPanel1;
+        private AvailablePackagesGrid availablePackagesGrid1;
+        private InstalledPackagesGrid installedPackagesGrid1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
     }
 }

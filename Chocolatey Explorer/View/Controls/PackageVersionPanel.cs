@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Reflection;
@@ -10,24 +11,25 @@ using StructureMap;
 namespace Chocolatey.Explorer.View.Controls
 {
 
-     public partial class PackageVersionPanel : UserControl
-     {
+    public partial class PackageVersionPanel : UserControl
+    {
         private IPackageVersionService _packageVersionService;
-         private PackageVersion _version;
+        private PackageVersion _version;
 
-         public IPackageVersionService PackageVersionService
-         {
-             get
-             {
-                 return _packageVersionService;
-             } 
-             set 
-             { 
-                 _packageVersionService = value;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IPackageVersionService PackageVersionService
+        {
+            get
+            {
+                return _packageVersionService;
+            }
+            set
+            {
+                _packageVersionService = value;
                 _packageVersionService.VersionChanged += UpdatePanel;
-             }
-         }
-        
+            }
+        }
+
         public PackageVersionPanel()
         {
             ObjectFactory.BuildUp(this);
@@ -93,7 +95,7 @@ namespace Chocolatey.Explorer.View.Controls
                 if (_version.LastUpdatedAt != DateTime.MinValue)
                     lblUpdated.Text = _version.LastUpdatedAt.GetDateTimeFormats()[0];
                 if (_version.PackageSize != 0)
-                    lblPackageSize.Text = string.Format(strings.package_size_mb, (_version.PackageSize/1024.0));
+                    lblPackageSize.Text = string.Format(strings.package_size_mb, (_version.PackageSize / 1024.0));
 
                 tagList.Items.Clear();
                 if (_version.Tags != null)
@@ -147,7 +149,7 @@ namespace Chocolatey.Explorer.View.Controls
             lblServerVersion.Text = "";
             lblInstalledVersion.Text = "";
             lblAuthor.Text = "";
-            txtDescription.Text = ""; 
+            txtDescription.Text = "";
             pictureBoxLogo.Image = pictureBoxLogo.ErrorImage;
             lblDownloads.Text = strings.not_available;
             lblVersionDownloads.Text = strings.not_available;
@@ -176,5 +178,6 @@ namespace Chocolatey.Explorer.View.Controls
         {
             System.Diagnostics.Process.Start(_version.ReportAbuseUrl);
         }
+
     }
 }

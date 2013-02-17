@@ -1,4 +1,5 @@
-﻿using Chocolatey.Explorer.Model;
+﻿using System;
+using Chocolatey.Explorer.Model;
 using NUnit.Framework;
 
 namespace Chocolatey.Explorer.Test.Model
@@ -32,6 +33,15 @@ namespace Chocolatey.Explorer.Test.Model
             var package2 = new PackageVersion();
             package1.Name = "test";
             package2.Name = "test2";
+            Assert.IsFalse(package1.Equals(package2));
+        }
+
+        [Test]
+        public void IfTwoClassesWithOneClassNotAPackageVersionAreNotEqual()
+        {
+            var package1 = new PackageVersion();
+            var package2 = new Object();
+            package1.Name = "test";
             Assert.IsFalse(package1.Equals(package2));
         }
 
@@ -85,6 +95,44 @@ namespace Chocolatey.Explorer.Test.Model
             package.CurrentVersion = "n.a.";
             package.Serverversion = "0.5.2";
             Assert.IsFalse(package.CanBeUpdated);
+        }
+
+        [Test]
+        public void GivesHashCodeOfName()
+        {
+            var package1 = new PackageVersion();
+            package1.Name = "test2";
+            Assert.AreEqual("test2".GetHashCode(), package1.GetHashCode());
+        }
+
+        [Test]
+        public void IfTwoClassesWithTheSameNameGiveCompareToOf0()
+        {
+            var package1 = new PackageVersion();
+            var package2 = new PackageVersion();
+            package1.Name = "test";
+            package2.Name = "test";
+            Assert.AreEqual(0, package1.CompareTo(package2));
+        }
+
+        [Test]
+        public void IfTwoClassesWithPackage1IsBeforePackage2GiveCompareToOfMinus1()
+        {
+            var package1 = new PackageVersion();
+            var package2 = new PackageVersion();
+            package1.Name = "test1";
+            package2.Name = "test2";
+            Assert.AreEqual(-1, package1.CompareTo(package2));
+        }
+
+        [Test]
+        public void IfTwoClassesWithPackage2IsBeforePackage1GiveCompareToOf1()
+        {
+            var package1 = new PackageVersion();
+            var package2 = new PackageVersion();
+            package1.Name = "test2";
+            package2.Name = "test1";
+            Assert.AreEqual(1, package1.CompareTo(package2));
         }
     }
 }

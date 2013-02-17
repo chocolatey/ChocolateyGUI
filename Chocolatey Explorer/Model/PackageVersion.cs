@@ -36,7 +36,7 @@ namespace Chocolatey.Explorer.Model
 
         private bool IsLower()
         {
-            var packages = new List<String>() {CurrentVersion, Serverversion};
+            var packages = new List<String> {CurrentVersion, Serverversion};
             if (CurrentVersion.Equals(Serverversion)) return false;
             if (CurrentVersion.EndsWith(strings.not_available)) return false;
             packages.Sort(new PackagesSorter());
@@ -51,23 +51,21 @@ namespace Chocolatey.Explorer.Model
 
         public int CompareTo(object obj)
         {
-            if (obj.GetType() != typeof(Package)) return -1;
-            return Name.CompareTo(((Package)obj).Name);
+            if (obj.GetType() != typeof(PackageVersion)) return -1;
+            return String.Compare(Name, ((PackageVersion)obj).Name, StringComparison.Ordinal);
         }
 
         public bool Equals(PackageVersion other)
         {
             if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Name, Name);
+            return ReferenceEquals(this, other) || Equals(other.Name, Name);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(PackageVersion)) return false;
-            return Equals((PackageVersion)obj);
+            return obj.GetType() == typeof(PackageVersion) && Equals((PackageVersion)obj);
         }
 
         public override int GetHashCode()

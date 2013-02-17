@@ -10,16 +10,14 @@ namespace Chocolatey.Explorer.Model
         public bool Equals(Source other)
         {
             if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Name, Name);
+            return ReferenceEquals(this, other) || Equals(other.Name, Name);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Source)) return false;
-            return Equals((Source) obj);
+            return obj.GetType() == typeof (Source) && Equals((Source) obj);
         }
 
         public override int GetHashCode()

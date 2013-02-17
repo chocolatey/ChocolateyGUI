@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Chocolatey.Explorer.Model;
-using Chocolatey.Explorer.Properties;
 using Chocolatey.Explorer.Services.ChocolateyService;
 using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.Services.SettingsService;
@@ -15,7 +14,7 @@ namespace Chocolatey.Explorer.Services
     /// chocolatey lib directory, specified by the setting
     /// "ChocolateyLibDirectory".
     /// </summary>
-    public class ChocolateyLibDirHelper
+    public class ChocolateyLibDirHelper : IChocolateyLibDirHelper
     {
         private readonly Regex _packageVersionRegexp = new Regex(@"((?:\.\d+){1,4})(-[^\.]+)?$");
         private readonly char[] _segmentDelim = "\\".ToCharArray();
@@ -45,12 +44,12 @@ namespace Chocolatey.Explorer.Services
             var expandedLibDirectory = Environment.ExpandEnvironmentVariables(_settingsService.ChocolateyLibDirectory);
 			var directories = _fileStorageService.GetDirectories(expandedLibDirectory);
 
-            foreach (string directoryPath in directories)
+            foreach (var directoryPath in directories)
             {
-                string[] directoryPathSegments = directoryPath.Split(_segmentDelim);
-                string directoryName = directoryPathSegments.Last();
+                var directoryPathSegments = directoryPath.Split(_segmentDelim);
+                var directoryName = directoryPathSegments.Last();
 
-                Package package = GetPackageFromDirectoryName(directoryName);
+                var package = GetPackageFromDirectoryName(directoryName);
                 _instaledPackages.Add(package);
             }
             //add chocolatey by default because else this won't work anyway

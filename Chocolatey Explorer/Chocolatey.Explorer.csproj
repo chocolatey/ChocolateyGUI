@@ -141,6 +141,7 @@
     <Compile Include="Services\FileStorageService\LocalFileSystemStorageService.cs" />
     <Compile Include="Services\FileStorageService\IFileStorageService.cs" />
     <Compile Include="Services\ICacheable.cs" />
+    <Compile Include="Services\IChocolateyLibDirHelper.cs" />
     <Compile Include="Services\PackagesService\ODataPackagesService.cs" />
     <Compile Include="Services\IPackageVersionXMLParser.cs" />
     <Compile Include="Services\PackagesSorter.cs" />

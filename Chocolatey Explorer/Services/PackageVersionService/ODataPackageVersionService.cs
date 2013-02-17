@@ -23,15 +23,15 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 
         private readonly ISourceService _sourceService;
         private readonly IPackageVersionXMLParser _versionXmlParser;
-        private readonly ChocolateyLibDirHelper _libDirHelper;
+        private readonly IChocolateyLibDirHelper _libDirHelper;
         private CancellationTokenSource _cancelTokenSource;
         private HttpWebRequest _loadingRssFeed;
 
-        public ODataPackageVersionService(IPackageVersionXMLParser versionXmlParser, ISourceService sourceService)
+        public ODataPackageVersionService(IPackageVersionXMLParser versionXmlParser, ISourceService sourceService, IChocolateyLibDirHelper libDirHelper)
         {
-            this._versionXmlParser = versionXmlParser;
-            this._sourceService = sourceService;
-            this._libDirHelper = new ChocolateyLibDirHelper();
+            _versionXmlParser = versionXmlParser;
+            _sourceService = sourceService;
+            _libDirHelper = libDirHelper;
         }
 
         public void PackageVersion(string package)
@@ -42,7 +42,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
                 _cancelTokenSource.Cancel();
             }
             _cancelTokenSource = new CancellationTokenSource();
-            _cancelTokenSource.Token.Register(new Action(OnPackageVersionThreadCancel));
+            _cancelTokenSource.Token.Register(OnPackageVersionThreadCancel);
             var thread = new Thread(() => PackageVersionThread(_cancelTokenSource.Token, package)) { IsBackground = true };
             thread.Start();
         }
@@ -59,7 +59,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         {
             try
             {
-                var packageName = packageNameObj as string;
+                var packageName = packageNameObj;
                 var packageVersion = FillWithOData(packageName) ?? new PackageVersion();
 
                 // not found on server - use what we know
@@ -91,7 +91,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
                 {
                     responseStream = _loadingRssFeed.GetResponse().GetResponseStream();
                     xmlDoc.Load(responseStream);
-                    IList<PackageVersion> packages = _versionXmlParser.parse(xmlDoc);
+                    var packages = _versionXmlParser.parse(xmlDoc);
                     if (packages.Any())
                         return packages.First();
                 }
@@ -104,8 +104,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
                 }
             }
 
-            var packageVersion = new PackageVersion();
-            packageVersion.Summary = string.Format(strings.could_not_download, url);
+            var packageVersion = new PackageVersion {Summary = string.Format(strings.could_not_download, url)};
             packageVersion.Description = packageVersion.Summary;
             return packageVersion;
         }

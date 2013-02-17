@@ -1,11 +1,11 @@
 ﻿using Chocolatey.Explorer.Services.ChocolateyService;
+using Chocolatey.Explorer.Services.FileStorageService;
 using Chocolatey.Explorer.Services.SettingsService;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using Chocolatey.Explorer.Services;
 using Rhino.Mocks;
-using Chocolatey.Explorer.Services.FileStorageService;
 using System.IO;
 using Chocolatey.Explorer.Model;
 
@@ -15,46 +15,43 @@ namespace Chocolatey.Explorer.Test.Services
 	public class TestChocolateyLibDirHelper
 	{
 	    private ISettingsService _settingsService;
-
+        private IFileStorageService _fileStorageService;
+			
         [SetUp]
         public void Setup()
         {
+            _fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
             _settingsService = MockRepository.GenerateMock<ISettingsService>();
             _settingsService.Stub(ssS => ssS.ChocolateyLibDirectory).Return("");
         }
 
 		[Test]
-		[ExpectedException()]
 		public void IfReloadFromDirWithInvalidDirectoryThenThrowsException()
 		{
-			var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-			fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Throw(new DirectoryNotFoundException());
-            var helper = new ChocolateyLibDirHelper(MockRepository.GenerateMock<IChocolateyService>(), fileStorageService, _settingsService);
+			_fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Throw(new DirectoryNotFoundException());
 
-			var result = helper.ReloadFromDir();
+            var helper = new ChocolateyLibDirHelper(MockRepository.GenerateMock<IChocolateyService>(), _fileStorageService, _settingsService);
 
-			// expects some sort of exception to match current behavior - test should be latered if this behavior is not actually expected :)
+            Assert.Throws<DirectoryNotFoundException>(() => helper.ReloadFromDir());
+
 		}
 
 		[Test]
-		[ExpectedException()]
 		public void IfReloadFromDirWithInvalidEnvironmentVariableThenThrowsException()
 		{
-			var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-			fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Throw(new Exception("Posing as HREsult-based exception that environment would throw, per the way the logic is currently written"));
-            var helper = new ChocolateyLibDirHelper(MockRepository.GenerateMock<IChocolateyService>(), fileStorageService, _settingsService);
+			_fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Throw(new Exception("Posing as HREsult-based exception that environment would throw, per the way the logic is currently written"));
+           
+            var helper = new ChocolateyLibDirHelper(MockRepository.GenerateMock<IChocolateyService>(), _fileStorageService, _settingsService);
 
-			var result = helper.ReloadFromDir();
-
-			// expects some sort of exception to match current behavior - test should be latered if this behavior is not actually expected :)
+            Assert.Throws<Exception>(() => helper.ReloadFromDir());
 		}
 
 		[Test]
 		public void IfReloadFromDirWithEmptyDirectoryThenReturnsListWithChocolatelyOnly()
 		{
-			var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-			fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { });
-            var helper = new ChocolateyLibDirHelper(MockRepository.GenerateMock<IChocolateyService>(), fileStorageService, _settingsService);
+			_fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { });
+            
+            var helper = new ChocolateyLibDirHelper(MockRepository.GenerateMock<IChocolateyService>(), _fileStorageService, _settingsService);
 
 			var result = helper.ReloadFromDir();
 
@@ -62,25 +59,22 @@ namespace Chocolatey.Explorer.Test.Services
 		}
 
 		[Test]
-		[ExpectedException(typeof(ChocolateyVersionUnknownException))]
 		public void IfReloadFromDirAndHelpTextIsUnrecognizedThenThrowsChocoVersionUnknownException()
 		{
-			var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-			fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { });
-			var chocolatelyService = new FakeChocolateyService("not a valid chocolatey version string");
-            var helper = new ChocolateyLibDirHelper(chocolatelyService, fileStorageService, _settingsService);
+			_fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { });
+			
+            var chocolatelyService = new FakeChocolateyService("not a valid chocolatey version string");
+            var helper = new ChocolateyLibDirHelper(chocolatelyService, _fileStorageService, _settingsService);
 
-			var result = helper.ReloadFromDir();
-
-			// expect the version exception
+            Assert.Throws<ChocolateyVersionUnknownException>(() => helper.ReloadFromDir());
 		}
 
 		[Test]
 		public void IfReloadFromDirAndHelpTextIsCorrectPatternThenChocolateyPackageContainsProperVersion()
 		{
-			var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-			fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { });
-            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService, _settingsService);
+			_fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { });
+            
+            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), _fileStorageService, _settingsService);
 
 			var result = helper.ReloadFromDir();
 
@@ -90,9 +84,8 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfFindsVersionFromDirectory()
         {
-            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5" });
-            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService, _settingsService);
+            _fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5" });
+            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), _fileStorageService, _settingsService);
 
             var result = helper.ReloadFromDir();
 
@@ -102,9 +95,8 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfFindsNameFromDirectory()
         {
-            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5" });
-            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService, _settingsService);
+            _fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5" });
+            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), _fileStorageService, _settingsService);
 
             var result = helper.ReloadFromDir();
 
@@ -114,9 +106,8 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfFindsVersionFromDirectoryWithPre()
         {
-            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5-pre"});
-            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService, _settingsService);
+            _fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5-pre"});
+            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), _fileStorageService, _settingsService);
 
             var result = helper.ReloadFromDir();
 
@@ -126,9 +117,8 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfFindsNameFromDirectoryWithPre()
         {
-            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5-pre" });
-            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService, _settingsService);
+            _fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5-pre" });
+            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), _fileStorageService, _settingsService);
 
             var result = helper.ReloadFromDir();
 
@@ -138,9 +128,8 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfGetHighestInstalledVersionFindsHighestVersionWhenAllNumbersAreSingleDigits()
         {
-            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5", "ChocolateyGUI.0.1.6" });
-            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService, _settingsService);
+            _fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.5", "ChocolateyGUI.0.1.6" });
+            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), _fileStorageService, _settingsService);
 
             var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
 
@@ -150,9 +139,8 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfGetHighestInstalledVersionFindsHighestVersionWhenLastNumberIsDoubledigit()
         {
-            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.15", "ChocolateyGUI.0.1.6" });
-            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService, _settingsService);
+            _fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.1.15", "ChocolateyGUI.0.1.6" });
+            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), _fileStorageService, _settingsService);
 
             var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
 
@@ -162,9 +150,8 @@ namespace Chocolatey.Explorer.Test.Services
         [Test]
         public void IfGetHighestInstalledVersionFindsHighestVersionWhenSecondNumberIsDoubleDigit()
         {
-            var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
-            fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.11.5", "ChocolateyGUI.0.1.6" });
-            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), fileStorageService, _settingsService);
+            _fileStorageService.Stub(fss => fss.GetDirectories(Arg<string>.Is.Anything)).Return(new string[] { "ChocolateyGUI.0.11.5", "ChocolateyGUI.0.1.6" });
+            var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), _fileStorageService, _settingsService);
 
             var result = helper.GetHighestInstalledVersion("ChocolateyGUI", true);
 
@@ -200,7 +187,7 @@ namespace Chocolatey.Explorer.Test.Services
 				InstalledVersion = expectedVersion,
                 IsPreRelease = prerelease
 			};
-			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), MockRepository.GenerateMock<IFileStorageService>(), _settingsService);
+			var helper = new ChocolateyLibDirHelper(new FakeChocolateyService(), _fileStorageService, _settingsService);
 
 			var actualPackage = helper.GetPackageFromDirectoryName(filename);
 
@@ -211,12 +198,12 @@ namespace Chocolatey.Explorer.Test.Services
 
 		private class FakeChocolateyService : IChocolateyService
 		{
-			public const string ValidVersionString = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'";
+		    private const string ValidVersionString = "Version: '0.9.8.20'\nInstall Directory: 'C:\\Chocolatey'";
 
 			public event ChocolateyService.OutputDelegate OutputChanged;
 			public event ChocolateyService.RunFinishedDelegate RunFinished;
-			
-			public string ExpectedOutputFromHelp { get; set; }
+
+		    private string ExpectedOutputFromHelp { get; set; }
 
 			public FakeChocolateyService(string expectedOutputFromHelp = ValidVersionString)
 			{

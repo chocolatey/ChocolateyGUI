@@ -191,5 +191,17 @@ namespace Chocolatey.Explorer.Test.IoC
         {
             Assert.AreNotEqual(ObjectFactory.GetInstance<ISettingsService>(), ObjectFactory.GetInstance<SettingsService>());
         }
+
+        [Test]
+        public void IfIChocolateyLibDirHelperCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<IChocolateyLibDirHelper>());
+        }
+
+        [Test]
+        public void IfIChocolateyLibDirHelperIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IChocolateyLibDirHelper>(), ObjectFactory.GetInstance<IChocolateyLibDirHelper>());
+        }
     }
 }

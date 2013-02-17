@@ -28,6 +28,7 @@ namespace Chocolatey.Explorer.IoC
              For<ISourceService>().Singleton().Use<SourceService>();
 			 For<IFileStorageService>().Use<LocalFileSystemStorageService>();
              For<ICommandExecuter>().Use<CommandExecuter>();
+             For<IChocolateyLibDirHelper>().Use<ChocolateyLibDirHelper>();
 
              // Forms
              For<IPackageManager>().Use<PackageManager>();

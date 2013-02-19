@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Chocolatey.Explorer.Model;
 
@@ -26,6 +27,22 @@ namespace Chocolatey.Explorer.Services.PackagesService
                             else if (task.IsFaulted && RunFailed != null)
                                 RunFailed(task.Exception);
                         });
+        }
+
+        public void ListOfDistinctHighestInstalledPackages()
+        {
+            this.Log().Info("Getting list of installed packages");
+            Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
+                        .ContinueWith((task) =>
+                            {
+                                if (!task.IsFaulted)
+                                {
+                                    var results = task.Result.OrderByDescending(x => x.InstalledVersion,new PackagesSorter()).Distinct().OrderBy(x=> x.Name).ToList();
+                                    OnRunFinshed(results);
+                                }
+                                else if (task.IsFaulted && RunFailed != null)
+                                    RunFailed(task.Exception);
+                            });
         }
 
         private void OnRunFinshed(IList<Package> packages)

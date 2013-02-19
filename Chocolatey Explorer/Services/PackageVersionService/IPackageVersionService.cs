@@ -2,7 +2,8 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 {
     public interface IPackageVersionService
     {
-        event PackageVersionService.VersionResult VersionChanged;
+        event Delegates.VersionResult VersionChanged;
+        event Delegates.StartedDelegate Started;
         void PackageVersion(string package);
     }
 }

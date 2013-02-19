@@ -83,7 +83,6 @@ namespace Chocolatey.Explorer.Services
                 from package in _instaledPackages
                 where package.Name == packageName
                 select package;
-
             var query = versionQuery as Package[] ?? versionQuery.ToArray();
             return !query.Any() ? null : query.OrderBy(x=> x.InstalledVersion, new PackagesSorter()).Last();
         }

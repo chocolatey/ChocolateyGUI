@@ -11,8 +11,8 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 		private PackageVersion _packageVersion;
 		private readonly ISourceService _sourceService;
 
-		public delegate void VersionResult(PackageVersion version);
-		public event VersionResult VersionChanged;
+		public event Delegates.VersionResult VersionChanged;
+	    public event Delegates.StartedDelegate Started;
 
 		public PackageVersionService()
 			: this(new RunAsync(), new SourceService.SourceService())
@@ -32,6 +32,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 			this.Log().Info("Getting version of package: " + package);
 			_packageVersion = new PackageVersion();
 			_package = package;
+            OnStarted();
 			_powershellAsync.Run("cver " + package + " -source " + _sourceService.Source);
 		}
 
@@ -58,6 +59,12 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 			var handler = VersionChanged;
 			if (handler != null) handler(version);
 		}
+
+        private void OnStarted()
+        {
+            var handler = Started;
+            if (handler != null) handler();
+        }
 
 	}
 }

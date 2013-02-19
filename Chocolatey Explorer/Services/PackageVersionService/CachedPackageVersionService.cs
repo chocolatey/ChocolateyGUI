@@ -10,8 +10,8 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
     class CachedPackageVersionService : IPackageVersionService, ICacheable
     {
 
-        public delegate void VersionResult(PackageVersion version);
-        public event PackageVersionService.VersionResult VersionChanged;
+        public event Delegates.VersionResult VersionChanged;
+        public event Delegates.StartedDelegate Started;
 
         private IPackageVersionService packageVersionService;
         private IDictionary<string, PackageVersion> cachedVersions;
@@ -32,6 +32,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         {
             PackageVersion cachedPackage;
             cachedVersions.TryGetValue(packageName, out cachedPackage);
+            OnStarted();
 
             if (cachedPackage == null)
             {
@@ -58,6 +59,12 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         {
             var handler = VersionChanged;
             if (handler != null) handler(version);
+        }
+
+        private void OnStarted()
+        {
+            var handler = Started;
+            if (handler != null) handler();
         }
     }
 }

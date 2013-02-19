@@ -35,26 +35,37 @@ namespace Chocolatey.Explorer.View.Forms
 
         public PackageManager(IAvailablePackagesService availablePackagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService, ICommandExecuter commandExecuter, ISettingsService settingsService, IInstalledPackagesService installedPackagesService)
         {
-            InitializeComponent();
-
+            _packageVersionService = packageVersionService;
+            _packageVersionService.Started += PackageVersionServiceStarted; 
+            
+            
             _packageService = packageService;
             _availablePackagesService = availablePackagesService;
-            _packageVersionService = packageVersionService;
-			_fileStorageService = fileStorageService;
+            _fileStorageService = fileStorageService;
             _commandExecuter = commandExecuter;
             _settingsService = settingsService;
             _installedPackagesService = installedPackagesService;
             _packageVersionService.VersionChanged += VersionChangedHandler;
+            _packageVersionService.Started += PackageVersionServiceStarted;
             _availablePackagesService.RunFinshed += AvailablePackagesServiceRunFinished;
             _installedPackagesService.RunFinshed += AvailablePackagesServiceRunFinished;
             _packageService.LineChanged += PackageServiceLineChanged;
             _packageService.RunFinshed += PackageServiceRunFinished;
 			_availablePackagesService.RunFailed += AvailablePackagesServiceRunFailed;
             _installedPackagesService.RunFailed += AvailablePackagesServiceRunFailed;
+            
+            InitializeComponent();
             ClearStatus();
-            QueryInstalledPackages();
             tabAvailable.ImageIndex = 0;
             tabInstalled.ImageIndex = 1;
+        }
+
+        private void PackageVersionServiceStarted()
+        {
+            DisableUserInteraction();
+            lblprogress.Text = "Looking for packageversion.";
+            progressbar2.Visible = true;
+            progressbar2.Style = ProgressBarStyle.Marquee;
         }
 
         private void PackageServiceRunFinished()
@@ -66,7 +77,7 @@ namespace Chocolatey.Explorer.View.Forms
             else
             {
                 EnableUserInteraction();
-                ClearStatus();
+                //ClearStatus();
                 txtPowershellOutput.Visible = false;
 
                 // invalidate caches, because package has been installed
@@ -105,7 +116,6 @@ namespace Chocolatey.Explorer.View.Forms
             {
                 EnableUserInteraction();
                 ClearStatus();
-                lblProgressbar.Style = ProgressBarStyle.Marquee;
                 SetStatus(); 
                 Activate();
             }
@@ -131,7 +141,9 @@ namespace Chocolatey.Explorer.View.Forms
             }
             else
             {
-                ClearStatus();
+                EnableUserInteraction();
+                lblprogress.Text = "";
+                progressbar2.Visible = false;
                 SetStatus();
             }
         }
@@ -167,16 +179,18 @@ namespace Chocolatey.Explorer.View.Forms
         {
             DisableUserInteraction();
             searchPackages.Text = "";
+            lblprogress.Text = "Looking for available packages.";
             SetStatus();
             packageTabControl.SelectedTab = tabAvailable;
-            lblProgressbar.Visible = true; 
-            lblProgressbar.Style = ProgressBarStyle.Marquee;
+            progressbar1.Visible = true; 
+            progressbar1.Style = ProgressBarStyle.Marquee;
             _availablePackagesService.ListOfAvalablePackages();
         }
 
         private void QueryInstalledPackages()
         {
             searchPackages.Text = "";
+            lblprogress.Text = "Looking for installed packages.";
             var expandedLibDirectory = Environment.ExpandEnvironmentVariables(_settingsService.ChocolateyLibDirectory);
             if (!_fileStorageService.DirectoryExists(expandedLibDirectory))
             {
@@ -187,9 +201,9 @@ namespace Chocolatey.Explorer.View.Forms
                 DisableUserInteraction();
                 SetStatus();
                 packageTabControl.SelectedTab = tabInstalled;
-                lblProgressbar.Visible = true;
-                lblProgressbar.Style = ProgressBarStyle.Marquee;
-                _installedPackagesService.ListOfIntalledPackages();
+                progressbar1.Visible = true;
+                progressbar1.Style = ProgressBarStyle.Marquee;
+                _installedPackagesService.ListOfDistinctHighestInstalledPackages();
             }
         }
 
@@ -218,7 +232,8 @@ namespace Chocolatey.Explorer.View.Forms
         private void ClearStatus()
         {
             lblStatus.Text = "";
-            lblProgressbar.Visible = false;
+            lblprogress.Text = "";
+            progressbar1.Visible = false;
         }
 
         private void searchPackages_TextChanged(object sender, EventArgs e)

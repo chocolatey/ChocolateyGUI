@@ -132,56 +132,13 @@
   <data name="packagesToolStripMenuItem.AccessibleName" xml:space="preserve">
     <value>Packages</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="packagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 20</value>
-  </data>
-  <data name="packagesToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Packages</value>
-  </data>
-  <data name="helpToolStripMenuItem.AccessibleDescription" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="helpToolStripMenuItem.AccessibleName" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
-  </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Help</value>
-  </data>
-  <data name="mainMenu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="mainMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1021, 24</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="mainMenu.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="mainMenu.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;mainMenu.Name" xml:space="preserve">
-    <value>mainMenu</value>
-  </data>
-  <data name="&gt;&gt;mainMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;mainMenu.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;mainMenu.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="availablePackagesToolStripMenuItem.AccessibleDescription" xml:space="preserve">
     <value>Available Packages</value>
   </data>
   <data name="availablePackagesToolStripMenuItem.AccessibleName" xml:space="preserve">
     <value>Available Packages</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="availablePackagesToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -234,6 +191,18 @@
   <data name="installedPackagesToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Installed packages</value>
   </data>
+  <data name="packagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 20</value>
+  </data>
+  <data name="packagesToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Packages</value>
+  </data>
+  <data name="helpToolStripMenuItem.AccessibleDescription" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="helpToolStripMenuItem.AccessibleName" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="helpToolStripMenuItem1.AccessibleDescription" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -270,6 +239,37 @@
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Settings</value>
   </data>
+  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="mainMenu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="mainMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1021, 24</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="mainMenu.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="mainMenu.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;mainMenu.Name" xml:space="preserve">
+    <value>mainMenu</value>
+  </data>
+  <data name="&gt;&gt;mainMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mainMenu.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;mainMenu.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="mainSplitContainer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -283,68 +283,23 @@
   <data name="packageTabControl.AccessibleName" xml:space="preserve">
     <value>Packages tabs</value>
   </data>
-  <data name="tabAvailable.AccessibleDescription" xml:space="preserve">
-    <value>Available Packages</value>
-  </data>
-  <data name="tabAvailable.AccessibleName" xml:space="preserve">
-    <value>Available Packages</value>
-  </data>
-  <data name="&gt;&gt;availablePackagesGrid1.Name" xml:space="preserve">
-    <value>availablePackagesGrid1</value>
-  </data>
-  <data name="&gt;&gt;availablePackagesGrid1.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.AvailablePackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;availablePackagesGrid1.Parent" xml:space="preserve">
-    <value>tabAvailable</value>
-  </data>
-  <data name="&gt;&gt;availablePackagesGrid1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;searchBar.Name" xml:space="preserve">
-    <value>searchBar</value>
-  </data>
-  <data name="&gt;&gt;searchBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;searchBar.Parent" xml:space="preserve">
-    <value>tabAvailable</value>
-  </data>
-  <data name="&gt;&gt;searchBar.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabAvailable.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 25</value>
-  </data>
-  <data name="tabAvailable.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabAvailable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>377, 484</value>
-  </data>
-  <data name="tabAvailable.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tabAvailable.Text" xml:space="preserve">
-    <value>Available packages</value>
-  </data>
-  <data name="&gt;&gt;tabAvailable.Name" xml:space="preserve">
-    <value>tabAvailable</value>
-  </data>
-  <data name="&gt;&gt;tabAvailable.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabAvailable.Parent" xml:space="preserve">
-    <value>packageTabControl</value>
-  </data>
-  <data name="&gt;&gt;tabAvailable.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="tabInstalled.AccessibleDescription" xml:space="preserve">
     <value>Installed packages</value>
   </data>
   <data name="tabInstalled.AccessibleName" xml:space="preserve">
     <value>Installed packages</value>
+  </data>
+  <data name="installedPackagesGrid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="installedPackagesGrid1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 36</value>
+  </data>
+  <data name="installedPackagesGrid1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 445</value>
+  </data>
+  <data name="installedPackagesGrid1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;installedPackagesGrid1.Name" xml:space="preserve">
     <value>installedPackagesGrid1</value>
@@ -357,6 +312,84 @@
   </data>
   <data name="&gt;&gt;installedPackagesGrid1.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="textBox1.AccessibleDescription" xml:space="preserve">
+    <value>Search for packages</value>
+  </data>
+  <data name="textBox1.AccessibleName" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 4</value>
+  </data>
+  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 23</value>
+  </data>
+  <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
+    <value>textBox1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label2.AccessibleDescription" xml:space="preserve">
+    <value>Search for packages</value>
+  </data>
+  <data name="label2.AccessibleName" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 8</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 17</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>&amp;Search</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 33</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;panel1.Name" xml:space="preserve">
     <value>panel1</value>
@@ -395,6 +428,153 @@
     <value>packageTabControl</value>
   </data>
   <data name="&gt;&gt;tabInstalled.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabAvailable.AccessibleDescription" xml:space="preserve">
+    <value>Available Packages</value>
+  </data>
+  <data name="tabAvailable.AccessibleName" xml:space="preserve">
+    <value>Available Packages</value>
+  </data>
+  <data name="availablePackagesGrid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="availablePackagesGrid1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 36</value>
+  </data>
+  <data name="availablePackagesGrid1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 445</value>
+  </data>
+  <data name="availablePackagesGrid1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.Name" xml:space="preserve">
+    <value>availablePackagesGrid1</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.Type" xml:space="preserve">
+    <value>Chocolatey.Explorer.View.Controls.AvailablePackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.Parent" xml:space="preserve">
+    <value>tabAvailable</value>
+  </data>
+  <data name="&gt;&gt;availablePackagesGrid1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="searchPackages.AccessibleDescription" xml:space="preserve">
+    <value>Search for packages</value>
+  </data>
+  <data name="searchPackages.AccessibleName" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="searchPackages.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="searchPackages.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 4</value>
+  </data>
+  <data name="searchPackages.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 23</value>
+  </data>
+  <data name="searchPackages.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.Name" xml:space="preserve">
+    <value>searchPackages</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.Parent" xml:space="preserve">
+    <value>searchBar</value>
+  </data>
+  <data name="&gt;&gt;searchPackages.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label1.AccessibleDescription" xml:space="preserve">
+    <value>Search for packages</value>
+  </data>
+  <data name="label1.AccessibleName" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 8</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 17</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>&amp;Search</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>searchBar</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="searchBar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="searchBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="searchBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 33</value>
+  </data>
+  <data name="searchBar.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;searchBar.Name" xml:space="preserve">
+    <value>searchBar</value>
+  </data>
+  <data name="&gt;&gt;searchBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchBar.Parent" xml:space="preserve">
+    <value>tabAvailable</value>
+  </data>
+  <data name="&gt;&gt;searchBar.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabAvailable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="tabAvailable.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabAvailable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>377, 484</value>
+  </data>
+  <data name="tabAvailable.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabAvailable.Text" xml:space="preserve">
+    <value>Available packages</value>
+  </data>
+  <data name="&gt;&gt;tabAvailable.Name" xml:space="preserve">
+    <value>tabAvailable</value>
+  </data>
+  <data name="&gt;&gt;tabAvailable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabAvailable.Parent" xml:space="preserve">
+    <value>packageTabControl</value>
+  </data>
+  <data name="&gt;&gt;tabAvailable.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="packageTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -410,53 +590,52 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACU
-        CgAAAk1TRnQBSQFMAgEBAgEAAYgBBAGIAQQBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACE
+        CgAAAk1TRnQBSQFMAgEBAgEAAagBBAGoAQQBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABEAMAAQEBAAEgBgABEGoAAwgBCwMQARYDEAEWAw0BEgMCAQOkAAMCAQMDOwFjA04BlQNKAYwDTgGZ
-        A1IBqQNUAa8DUQGiAx8BLCAAAxYBHgNTAagBlAFFAS4B/wGTAUQBLgH/A2QB7AMoATwDBQEHoAABWgJe
-        AdgCAAEOAf8CAAEMAf8CAAEUAf8CAAECAf8CAAEHAf8BAAEHASkB/wIAAQgB/wIAASAB/wM+AWocAAGe
-        AYkBQAH9Ad8B1QHCAf8BzgHBAagB/wHOAcABpwH/AdQBxwGxAf8B2wHRAcEB/wMQARacAANTAaoDAAH/
-        AgABGgH/AgABIgH/AgABHAH/AQABHgE7Af8B3QHiAecF/wHtAfAB8QH/AQABDQEpAf8CAAEeAf8DHQEp
-        CAADCgENAxABFgMQARYDEAEWAacBkwFEAf8BsAGbAUQB/wHkAdwBywH/AeQB2wHKAf8B2gHPAbYB/wGy
-        AZ4BgQH/AxQBHAMQARYDEAEWAxABFQMDAQSIAAMCAQMCSAFbAfYCAAEKAf8CAAEdAf8CAAEZAf8CAAES
-        Af8BvQHIAdAN/wHRAdkB3gH/AgABAgH/A0wBkAgAA1sBxAGVAYEBMQH/AZUBgQEwAf8BlQGBATAB/wGU
-        AYABLwH/AZIBRAEtAf8BkQFCASwB/wGRAUMBLQH/AZkBhgE3Af8BkwFFAS8B/wGUAYEBMAH/AZUBgQEw
-        Af8BlQGBATEB/wGXAYMBMgH/AxABFYgAAxQBHAEAARUBRAH/AQABDgFBAf8BAAEUAUUB/wEAAQ4BPgH/
-        AQABDAE1Af8B4QHlAegN/wHvAfIB8wH/AgABEgH/A1IBqQgAAZcBgwEyAf8B2gHUAb4B/wHrAe4B6QH/
-        AeoB7QHpAf8B6QHsAekB/wHpAesB6QH/AegB6wHpAf8B6AHrAekB/wHoAesB6QH/AekB7AHpAf8B6gHt
-        AekB/wHrAe0B6QH/AewB7gHoAf8BzAG3AZsB/wMQARaIAAMUARsBAAEkAYoB/wEAARcBgAH/AQABHAGD
-        Af8BAAEdAYUB/wEAARIBUAH/AaABuQHMDf8BtAG+AccB/wIAAQEB/wNTAagIAAGZAYUBNAH/AdABywG6
-        Af8B4gGVAQAB/wHoAZ0BAAH/Ae4BpAEAAf8B9AGsAQAB/wH6AbQBAAH/Af4BuAEAAf8B+AGxAQAB/wHy
-        AakBAAH/AesBogEAAf8B5QGaAQAB/wHgAY8BAAH/AdIBwAGnAf8DEAEWiAADEAEWAQABJAGGAf8BAAEP
-        AUoB/wEAAQIBQQH/AQABAgFBAf8BAAEWAVAB/wEAAR8BgAH/AZgBswHEAf8B8AH1AfgB/wGrAcMB1AH/
-        AQABDAEwAf8CAAEBAf8DUgGnCAABmgGGATYB/wHJAcIBsAH/AeEBlgEAAf8B6AGgAQAB/wHtAaQBAAH/
-        AfMBqwEAAf8B9wGxAQAB/wH5AbMBAAH/AfYBrwEAAf8B8AGoAQAB/wHrAaEBAAH/AeUBmgEAAf8B4AGP
-        AQAB/wHZAckBsgH/AxABFogAAxoBJQEAARsBgAH/AQABHAFSAf8DagH5AVwBXQFlAfgBAAEnAYYB/wEA
-        ARUBTwH/AQABCwFHAf8BAAEfAYAB/wEAAQ4BSgH/AQABGgGAAf8BAAEDASsB/wNSAakIAAGcAYgBOAH/
-        AcABuAGkAf8B3wGTAQAB/wHmAZ4BAAH/AewBqQEKAf8B8AGrAQIB/wHyAakBAAH/AfMBrAEAAf8B8QGp
-        AQAB/wHtAaQBAAH/AegBngEAAf8B4wGYAQAB/wHfAY4BAAH/Ad8B0QG+Af8DEAEWiAADLwFJAgABQAH/
-        AT8BlAGzAf8DqAH+A6gB/QFAAZUBtQH/AQABBwFFAf8BAAEYAVEB/wEAARYBTwH/AQABGQFRAf8BAAEc
-        AYEB/wEAAQ8BTgH/AVACUgGjCAABngGKAToB/wG4Aa0BmAH/AdwBjwEAAf8B4gGYAQAB/wHnAaIBBAH/
-        AewBqgENAf8B7wGyARcB/wHwAbcBIAH/Ae8BswEdAf8B6wGqAQ8B/wHnAaABBAH/Ad8BkAEAAf8B3AGK
-        AQAB/wHmAdoByAH/AxABFogAAw0BEQEAARcBUQH/AQIBOAGRCf8BFAFJAZ4B/wEAAQ0BSQH/AQABGgFR
-        Af8BAAEaAVIB/wEAARsBUgH/AQABHAFTAf8CAAE+Af8DPgFrCAABoAGLATsB/wGxAaMBjgH/AdkBjAEA
-        Af8B3gGSAQAB/wHiAZsBAAH/AecBowEIAf8B6QGpAREB/wHrAa0BGgH/AesBsAEiAf8B6gGzASoB/wHp
-        AbQBMwH/AecBswE5Af8B5wGwATcB/wHsAeMB0wH/AxABFowAA0oBigIAAS4B/wEAASQBhQH/AQABMwGP
-        Af8BAAEPAUoB/wEAARkBUAH/AQABGAFPAf8BAAEYAVAB/wEAARUBTgH/AgABOwH/AlgBYgHvAwEBAggA
-        AaIBjQE+Af8BqgGaAYMB/wHVAYcBAAH/AdkBjAEAAf8B3QGTAQAB/wHhAZsBBQH/AeQBoQEOAf8B5gGm
-        ARYB/wHmAakBHwH/AeYBrAEnAf8B5QGuAS8B/wHkAa8BNwH/AeQBrQE2Af8B8wHsAd0B/wMQARaAAAMT
-        ARoDQgF0A1kBxwQAA0ABbgEAARQBTwH/AQABCAFGAf8BAAEXAVEB/wEAARgBUgH/AQABGAFRAf8BAAER
-        AU4B/wEAARQBTwH/AVgCXAHRAxYBHwwAAaQBjwE/Af8BowGQATwB/wHRAYABAAH/AdUBhgEAAf8B2AGL
-        AQAB/wHcAZIBAQH/Ad8BmQEJAf8B4QGdARMB/wHiAaEBGwH/AeIBpAEjAf8B4gGnASsB/wHhAakBNAH/
-        AeMBqQE2Af8B+wH1AegB/wMQARaAAANEAXsCUgFlAfQDAAH/A0IBdgQAAwoBDQM3AVoDOgFgAzcBWwM3
-        AVoDOQFfAyIBMhQAAaYBkAFBAf8BlwFEASQB/wGZAYUBMAH/AZgBhAEwAf8BmAGEATAB/wGYAYMBLwH/
-        AZcBggEvAf8BlwGCAS0B/wGXAYIBLQH/AZcBgQEsAf8BlwGBASsB/wGXAYEBKgH/AZcBgAEoAv8B+wHw
-        Af8DEAEVgAADGQEjA0oBiQFYAmIB6QMaASQ0AANWAbMBzgHCAa0B/wHNAcABqwH/Ac0BwAGrAf8BzQHA
-        AasB/wHNAcABqwH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/
-        Ac0BwQGrAf8BqQGTAUQB/wMDAQT/AIEAAUIBTQE+BwABPgMAASgDAAFAAwABEAMAAQEBAAEBBQABgBcA
-        A/8BAAL/AfwBHwQAAfABBwH4AQ8EAAHwAQMB+AEPBAAB4AEBAYAFAAHAAQEBgAUAAcABAQGABQABwAEB
-        AYAFAAHAAQEBgAUAAcABAQGABQABwAEBAYAFAAHAAQEBgAUAAeABAQGABQABEAEDAYAFAAEIAQ8BgAUA
-        AQ8B/wGABQAE/wQACw==
+        A1IBqQNUAa8DUQGiAx8BLCAAAxYBHgNTAagBlAFBASoB/wGTAUABKgH/A2QB7AMoATwDBQEHoAABWgJe
+        AdgCAAEKAf8CAAEIAf8CAAEQAf8DAAH/AgABAwH/AQABAwElAf8CAAEEAf8CAAEcAf8DPgFqHAABngGJ
+        AUAB/QHfAdUBwgH/Ac4BwQGoAf8BzgHAAacB/wHUAccBsQH/AdsB0QHBAf8DEAEWnAADUwGqAwAB/wIA
+        ARYB/wIAAR4B/wIAARgB/wEAARoBNwH/Ad0B4gHnBf8B7QHwAfEB/wEAAQkBJQH/AgABGgH/Ax0BKQgA
+        AwoBDQMQARYDEAEWAxABFgGnAZMBQAH/AbABmwFAAf8B5AHcAcsB/wHkAdsBygH/AdoBzwG2Af8BsgGe
+        AYEB/wMUARwDEAEWAxABFgMQARUDAwEEiAADAgEDAkgBWwH2AgABBgH/AgABGQH/AgABFQH/AgABDgH/
+        Ab0ByAHQDf8B0QHZAd4B/wMAAf8DTAGQCAADWwHEAZUBgQEtAf8BlQGBASwB/wGVAYEBLAH/AZQBgAEr
+        Af8BkgFAASkB/wGRAT4BKAH/AZEBPwEpAf8BmQGGATMB/wGTAUEBKwH/AZQBgQEsAf8BlQGBASwB/wGV
+        AYEBLQH/AZcBgwEuAf8DEAEViAADFAEcAQABEQFAAf8BAAEKAT0B/wEAARABQQH/AQABCgE6Af8BAAEI
+        ATEB/wHhAeUB6A3/Ae8B8gHzAf8CAAEOAf8DUgGpCAABlwGDAS4B/wHaAdQBvgH/AesB7gHpAf8B6gHt
+        AekB/wHpAewB6QH/AekB6wHpAf8B6AHrAekB/wHoAesB6QH/AegB6wHpAf8B6QHsAekB/wHqAe0B6QH/
+        AesB7QHpAf8B7AHuAegB/wHMAbcBmwH/AxABFogAAxQBGwEAASABigH/AQABEwGAAf8BAAEYAYMB/wEA
+        ARkBhQH/AQABDgFMAf8BoAG5AcwN/wG0Ab4BxwH/AwAB/wNTAagIAAGZAYUBMAH/AdABywG6Af8B4gGV
+        AQAB/wHoAZ0BAAH/Ae4BpAEAAf8B9AGsAQAB/wH6AbQBAAH/Af4BuAEAAf8B+AGxAQAB/wHyAakBAAH/
+        AesBogEAAf8B5QGaAQAB/wHgAY8BAAH/AdIBwAGnAf8DEAEWiAADEAEWAQABIAGGAf8BAAELAUYB/wIA
+        AT0B/wIAAT0B/wEAARIBTAH/AQABGwGAAf8BmAGzAcQB/wHwAfUB+AH/AasBwwHUAf8BAAEIASwB/wMA
+        Af8DUgGnCAABmgGGATIB/wHJAcIBsAH/AeEBlgEAAf8B6AGgAQAB/wHtAaQBAAH/AfMBqwEAAf8B9wGx
+        AQAB/wH5AbMBAAH/AfYBrwEAAf8B8AGoAQAB/wHrAaEBAAH/AeUBmgEAAf8B4AGPAQAB/wHZAckBsgH/
+        AxABFogAAxoBJQEAARcBgAH/AQABGAFOAf8DagH5AlwBXQH4AQABIwGGAf8BAAERAUsB/wEAAQcBQwH/
+        AQABGwGAAf8BAAEKAUYB/wEAARYBgAH/AgABJwH/A1IBqQgAAZwBiAE0Af8BwAG4AaQB/wHfAZMBAAH/
+        AeYBngEAAf8B7AGpAQYB/wHwAasBAAH/AfIBqQEAAf8B8wGsAQAB/wHxAakBAAH/Ae0BpAEAAf8B6AGe
+        AQAB/wHjAZgBAAH/Ad8BjgEAAf8B3wHRAb4B/wMQARaIAAMvAUkCAAE8Af8BOwGUAbMB/wOgAf4DqAH9
+        ATwBlQG1Af8BAAEDAUEB/wEAARQBTQH/AQABEgFLAf8BAAEVAU0B/wEAARgBgQH/AQABCwFKAf8BUAJS
+        AaMIAAGeAYoBNgH/AbgBrQGYAf8B3AGPAQAB/wHiAZgBAAH/AecBogEAAf8B7AGqAQkB/wHvAbIBEwH/
+        AfABtwEcAf8B7wGzARkB/wHrAaoBCwH/AecBoAEAAf8B3wGQAQAB/wHcAYoBAAH/AeYB2gHIAf8DEAEW
+        iAADDQERAQABEwFNAf8BAAE0AZEJ/wEQAUUBngH/AQABCQFFAf8BAAEWAU0B/wEAARYBTgH/AQABFwFO
+        Af8BAAEYAU8B/wIAAToB/wM+AWsIAAGgAYsBNwH/AbEBowGOAf8B2QGMAQAB/wHeAZIBAAH/AeIBmwEA
+        Af8B5wGjAQQB/wHpAakBDQH/AesBrQEWAf8B6wGwAR4B/wHqAbMBJgH/AekBtAEvAf8B5wGzATUB/wHn
+        AbABMwH/AewB4wHTAf8DEAEWjAADSgGKAgABKgH/AQABIAGFAf8BAAEvAY8B/wEAAQsBRgH/AQABFQFM
+        Af8BAAEUAUsB/wEAARQBTAH/AQABEQFKAf8CAAE3Af8CWAFiAe8DAQECCAABogGNAToB/wGqAZoBgwH/
+        AdUBhwEAAf8B2QGMAQAB/wHdAZMBAAH/AeEBmwEBAf8B5AGhAQoB/wHmAaYBEgH/AeYBqQEbAf8B5gGs
+        ASMB/wHlAa4BKwH/AeQBrwEzAf8B5AGtATIB/wHzAewB3QH/AxABFoAAAxMBGgNCAXQDWQHHBAADQAFu
+        AQABEAFLAf8BAAEEAUIB/wEAARMBTQH/AQABFAFOAf8BAAEUAU0B/wEAAQ0BSgH/AQABEAFLAf8BWAJc
+        AdEDFgEfDAABpAGPATsB/wGjAZABOAH/AdEBgAEAAf8B1QGGAQAB/wHYAYsBAAH/AdwBkgEAAf8B3wGZ
+        AQUB/wHhAZ0BDwH/AeIBoQEXAf8B4gGkAR8B/wHiAacBJwH/AeEBqQEwAf8B4wGpATIB/wH7AfUB6AH/
+        AxABFoAAA0QBewJSAWUB9AMAAf8DQgF2BAADCgENAzcBWgM6AWADNwFbAzcBWgM5AV8DIgEyFAABpgGQ
+        AT0B/wGXAUABIAH/AZkBhQEsAf8BmAGEASwB/wGYAYQBLAH/AZgBgwErAf8BlwGCASsB/wGXAYIBKQH/
+        AZcBggEpAf8BlwGBASgB/wGXAYEBJwH/AZcBgQEmAf8BlwGAASQC/wH7AfAB/wMQARWAAAMZASMDSgGJ
+        AVgCYgHpAxoBJDQAA1YBswHOAcIBrQH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwAGrAf8BzQHA
+        AasB/wHNAcABqwH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwAGrAf8BzQHBAasB/wGpAZMBQAH/
+        AwMBBP8AgQABQgFNAT4HAAE+AwABKAMAAUADAAEQAwABAQEAAQEFAAGAFwAD/wEAAv8B/AEfBAAB8AEH
+        AfgBDwQAAfABAwH4AQ8EAAHgAQEBgAUAAcABAQGABQABwAEBAYAFAAHAAQEBgAUAAcABAQGABQABwAEB
+        AYAFAAHAAQEBgAUAAcABAQGABQAB4AEBAYAFAAEQAQMBgAUAAQgBDwGABQABDwH/AYAFAAT/BAAL
 </value>
   </data>
   <data name="packageTabControl.Location" type="System.Drawing.Point, System.Drawing">
@@ -624,119 +803,35 @@
   <data name="&gt;&gt;mainSplitContainer.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;searchPackages.Name" xml:space="preserve">
-    <value>searchPackages</value>
+  <data name="dataGridViewCheckBoxColumn1.HeaderText" xml:space="preserve">
+    <value>Installed</value>
   </data>
-  <data name="&gt;&gt;searchPackages.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="&gt;&gt;searchPackages.Parent" xml:space="preserve">
-    <value>searchBar</value>
+  <data name="dataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
+    <value>Installed version</value>
   </data>
-  <data name="&gt;&gt;searchPackages.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="dataGridViewCheckBoxColumn2.HeaderText" xml:space="preserve">
+    <value>Pre release</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="dataGridViewCheckBoxColumn2.Width" type="System.Int32, mscorlib">
+    <value>70</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="dataGridViewCheckBoxColumn3.HeaderText" xml:space="preserve">
+    <value>Installed</value>
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>searchBar</value>
+  <data name="dataGridViewTextBoxColumn3.HeaderText" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="dataGridViewTextBoxColumn4.HeaderText" xml:space="preserve">
+    <value>Installed version</value>
   </data>
-  <data name="searchBar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
+  <data name="dataGridViewCheckBoxColumn4.HeaderText" xml:space="preserve">
+    <value>Pre release</value>
   </data>
-  <data name="searchBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="searchBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>371, 33</value>
-  </data>
-  <data name="searchBar.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;searchBar.Name" xml:space="preserve">
-    <value>searchBar</value>
-  </data>
-  <data name="&gt;&gt;searchBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;searchBar.Parent" xml:space="preserve">
-    <value>tabAvailable</value>
-  </data>
-  <data name="&gt;&gt;searchBar.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="searchPackages.AccessibleDescription" xml:space="preserve">
-    <value>Search for packages</value>
-  </data>
-  <data name="searchPackages.AccessibleName" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="searchPackages.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="searchPackages.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 4</value>
-  </data>
-  <data name="searchPackages.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 23</value>
-  </data>
-  <data name="searchPackages.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;searchPackages.Name" xml:space="preserve">
-    <value>searchPackages</value>
-  </data>
-  <data name="&gt;&gt;searchPackages.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;searchPackages.Parent" xml:space="preserve">
-    <value>searchBar</value>
-  </data>
-  <data name="&gt;&gt;searchPackages.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label1.AccessibleDescription" xml:space="preserve">
-    <value>Search for packages</value>
-  </data>
-  <data name="label1.AccessibleName" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 8</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 17</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>&amp;Search</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>searchBar</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="dataGridViewCheckBoxColumn4.Width" type="System.Int32, mscorlib">
+    <value>70</value>
   </data>
   <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>237, 17</value>
@@ -746,6 +841,54 @@
   </data>
   <data name="statusStrip.AccessibleName" xml:space="preserve">
     <value>Status bar</value>
+  </data>
+  <data name="progressbar1.AccessibleDescription" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="progressbar1.AccessibleName" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="progressbar1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 16</value>
+  </data>
+  <data name="progressbar2.AccessibleDescription" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="progressbar2.AccessibleName" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="progressbar2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 16</value>
+  </data>
+  <data name="lblStatus.AccessibleDescription" xml:space="preserve">
+    <value>Current status</value>
+  </data>
+  <data name="lblStatus.AccessibleName" xml:space="preserve">
+    <value>Current status</value>
+  </data>
+  <data name="lblStatus.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 17</value>
+  </data>
+  <data name="lblStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="lblprogress.AccessibleDescription" xml:space="preserve">
+    <value>Current status</value>
+  </data>
+  <data name="lblprogress.AccessibleName" xml:space="preserve">
+    <value>Current status</value>
+  </data>
+  <data name="lblprogress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 17</value>
+  </data>
+  <data name="lblprogress.Text" xml:space="preserve">
+    <value>test</value>
+  </data>
+  <data name="lblprogress.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="statusStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 539</value>
@@ -770,189 +913,6 @@
   </data>
   <data name="&gt;&gt;statusStrip.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="lblProgressbar.AccessibleDescription" xml:space="preserve">
-    <value>Progress</value>
-  </data>
-  <data name="lblProgressbar.AccessibleName" xml:space="preserve">
-    <value>Progress</value>
-  </data>
-  <data name="lblProgressbar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 16</value>
-  </data>
-  <data name="lblStatus.AccessibleDescription" xml:space="preserve">
-    <value>Current status</value>
-  </data>
-  <data name="lblStatus.AccessibleName" xml:space="preserve">
-    <value>Current status</value>
-  </data>
-  <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>804, 17</value>
-  </data>
-  <data name="lblStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
-    <value>textBox1</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>371, 33</value>
-  </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
-    <value>tabInstalled</value>
-  </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="textBox1.AccessibleDescription" xml:space="preserve">
-    <value>Search for packages</value>
-  </data>
-  <data name="textBox1.AccessibleName" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 4</value>
-  </data>
-  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 23</value>
-  </data>
-  <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
-    <value>textBox1</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label2.AccessibleDescription" xml:space="preserve">
-    <value>Search for packages</value>
-  </data>
-  <data name="label2.AccessibleName" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 8</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 17</value>
-  </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>&amp;Search</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="availablePackagesGrid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="availablePackagesGrid1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 36</value>
-  </data>
-  <data name="availablePackagesGrid1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>371, 445</value>
-  </data>
-  <data name="availablePackagesGrid1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;availablePackagesGrid1.Name" xml:space="preserve">
-    <value>availablePackagesGrid1</value>
-  </data>
-  <data name="&gt;&gt;availablePackagesGrid1.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.AvailablePackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;availablePackagesGrid1.Parent" xml:space="preserve">
-    <value>tabAvailable</value>
-  </data>
-  <data name="&gt;&gt;availablePackagesGrid1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="installedPackagesGrid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="installedPackagesGrid1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 36</value>
-  </data>
-  <data name="installedPackagesGrid1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>371, 445</value>
-  </data>
-  <data name="installedPackagesGrid1.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;installedPackagesGrid1.Name" xml:space="preserve">
-    <value>installedPackagesGrid1</value>
-  </data>
-  <data name="&gt;&gt;installedPackagesGrid1.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.InstalledPackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;installedPackagesGrid1.Parent" xml:space="preserve">
-    <value>tabInstalled</value>
-  </data>
-  <data name="&gt;&gt;installedPackagesGrid1.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2180,16 +2140,76 @@
   <data name="&gt;&gt;packageTabsImageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblProgressbar.Name" xml:space="preserve">
-    <value>lblProgressbar</value>
+  <data name="&gt;&gt;dataGridViewCheckBoxColumn1.Name" xml:space="preserve">
+    <value>dataGridViewCheckBoxColumn1</value>
   </data>
-  <data name="&gt;&gt;lblProgressbar.Type" xml:space="preserve">
+  <data name="&gt;&gt;dataGridViewCheckBoxColumn1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
+    <value>dataGridViewTextBoxColumn1</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn2.Name" xml:space="preserve">
+    <value>dataGridViewTextBoxColumn2</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCheckBoxColumn2.Name" xml:space="preserve">
+    <value>dataGridViewCheckBoxColumn2</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCheckBoxColumn2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCheckBoxColumn3.Name" xml:space="preserve">
+    <value>dataGridViewCheckBoxColumn3</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCheckBoxColumn3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn3.Name" xml:space="preserve">
+    <value>dataGridViewTextBoxColumn3</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn4.Name" xml:space="preserve">
+    <value>dataGridViewTextBoxColumn4</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCheckBoxColumn4.Name" xml:space="preserve">
+    <value>dataGridViewCheckBoxColumn4</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCheckBoxColumn4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;progressbar1.Name" xml:space="preserve">
+    <value>progressbar1</value>
+  </data>
+  <data name="&gt;&gt;progressbar1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;progressbar2.Name" xml:space="preserve">
+    <value>progressbar2</value>
+  </data>
+  <data name="&gt;&gt;progressbar2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblStatus.Name" xml:space="preserve">
     <value>lblStatus</value>
   </data>
   <data name="&gt;&gt;lblStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblprogress.Name" xml:space="preserve">
+    <value>lblprogress</value>
+  </data>
+  <data name="&gt;&gt;lblprogress.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

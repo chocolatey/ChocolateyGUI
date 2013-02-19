@@ -14,7 +14,45 @@ namespace Chocolatey.Explorer.View.Controls
         public PackagesBaseGrid()
         {
             ObjectFactory.BuildUp(this);
+        }
 
+        private  IPackageVersionService _packageVersionService;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IPackageVersionService PackageVersionService
+        {
+            get { return _packageVersionService; }
+            set
+            {
+                _packageVersionService = value;
+                _packageVersionService.VersionChanged += VersionChanged;
+                DoLayout();
+            }
+        }
+
+        private void VersionChanged(PackageVersion version)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(() => VersionChanged(version)));
+            }
+            else
+            {
+                Enabled = true;
+                IsLoading = false;
+            }
+        }
+
+        protected void GridSelectionChanged(object sender, EventArgs e)
+        {
+            if (SelectedRows.Count <= 0 || IsLoading) return;
+            Enabled = false;
+            IsLoading = true;
+            _packageVersionService.PackageVersion(SelectedRows[0].Cells[0].Value.ToString());
+        }
+
+        private void DoLayout()
+        {
             SelectionChanged += GridSelectionChanged;
             RowHeadersVisible = false;
             MultiSelect = false;
@@ -28,17 +66,17 @@ namespace Chocolatey.Explorer.View.Controls
             BorderStyle = BorderStyle.None;
             CellBorderStyle = DataGridViewCellBorderStyle.None;
             var dataGridViewCellStyle2 = new DataGridViewCellStyle
-                {
-                    Alignment = DataGridViewContentAlignment.MiddleLeft,
-                    BackColor = System.Drawing.SystemColors.Control,
-                    Font =
-                        new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular,
-                                                System.Drawing.GraphicsUnit.Point, 0),
-                    ForeColor = System.Drawing.SystemColors.WindowText,
-                    SelectionBackColor = System.Drawing.SystemColors.Highlight,
-                    SelectionForeColor = System.Drawing.SystemColors.HighlightText,
-                    WrapMode = DataGridViewTriState.True
-                };
+            {
+                Alignment = DataGridViewContentAlignment.MiddleLeft,
+                BackColor = System.Drawing.SystemColors.Control,
+                Font =
+                    new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular,
+                                            System.Drawing.GraphicsUnit.Point, 0),
+                ForeColor = System.Drawing.SystemColors.WindowText,
+                SelectionBackColor = System.Drawing.SystemColors.Highlight,
+                SelectionForeColor = System.Drawing.SystemColors.HighlightText,
+                WrapMode = DataGridViewTriState.True
+            };
             ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             EditMode = DataGridViewEditMode.EditProgrammatically;
@@ -53,11 +91,11 @@ namespace Chocolatey.Explorer.View.Controls
             ShowRowErrors = false;
             StandardTab = true;
             var column1 = new DataGridViewCheckBoxColumn
-                {
-                    DataPropertyName = "IsInstalled",
-                    HeaderText = "Installed",
-                    AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
-                };
+            {
+                DataPropertyName = "IsInstalled",
+                HeaderText = "Installed",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+            };
             var column2 = new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "Name",
@@ -79,44 +117,13 @@ namespace Chocolatey.Explorer.View.Controls
                 ReadOnly = true,
                 Width = 70
             };
-            Columns.Add(column1);
-            Columns.Add(column2);
-            Columns.Add(column3);
-            Columns.Add(column4);
-        }
-
-        private IPackageVersionService _packageVersionService;
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IPackageVersionService PackageVersionService
-        {
-            get { return _packageVersionService; }
-            set
+            if (ColumnCount == 0)
             {
-                _packageVersionService = value;
-                _packageVersionService.VersionChanged += VersionChanged;
+                Columns.Add(column1);
+                Columns.Add(column2);
+                Columns.Add(column3);
+                Columns.Add(column4);
             }
-        }
-
-        private void VersionChanged(PackageVersion version)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker(() => VersionChanged(version)));
-            }
-            else
-            {
-                Enabled = true;
-                IsLoading = false;
-            }
-        }
-
-        private void GridSelectionChanged(object sender, EventArgs e)
-        {
-            if (SelectedRows.Count <= 0 || IsLoading) return;
-            Enabled = false;
-            IsLoading = true;
-            _packageVersionService.PackageVersion(SelectedRows[0].Cells[0].Value.ToString());
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Chocolatey.Explorer.Services
 
         /// <summary>
         /// Searches the chocolatey install directory to look up 
-        /// the installed version of the given package.
+        /// the highest installed version of the given package.
         /// </summary>
         Package GetHighestInstalledVersion(string packageName, bool reload=true);
 

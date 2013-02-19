@@ -4,6 +4,7 @@
     {
         event Delegates.FinishedDelegate RunFinshed;
         event Delegates.FailedDelegate RunFailed;
-        void ListOfIntalledPackages(); 
+        void ListOfIntalledPackages();
+        void ListOfDistinctHighestInstalledPackages();
     }
 }

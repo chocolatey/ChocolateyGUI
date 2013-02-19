@@ -54,6 +54,9 @@ namespace Chocolatey.Explorer.View.Controls
             else
             {
                 _version = version;
+                btnInstallUninstall.Checked = !_version.IsInstalled;
+                btnInstallUninstall.Enabled = true;
+                btnUpdate.Enabled = _version.CanBeUpdated;
                 if (btnInstallUninstall.Checked)
                 {
                     btnInstallUninstall.ImageIndex = 0;

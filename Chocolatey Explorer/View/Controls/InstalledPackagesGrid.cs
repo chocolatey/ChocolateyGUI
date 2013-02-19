@@ -12,7 +12,6 @@ namespace Chocolatey.Explorer.View.Controls
     {
         private IInstalledPackagesService _installedPackagesService;
         
-
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IInstalledPackagesService InstalledPackagesService
         {
@@ -22,6 +21,9 @@ namespace Chocolatey.Explorer.View.Controls
                 _installedPackagesService = value;
                 _installedPackagesService.RunFinshed += InstalledPackagesServiceRunFinished;
                 _installedPackagesService.RunFailed += InstalledPackagesServiceRunFailed;
+                Enabled = false;
+                SelectionChanged -= GridSelectionChanged; 
+                _installedPackagesService.ListOfDistinctHighestInstalledPackages();
             }
         }
 
@@ -34,6 +36,7 @@ namespace Chocolatey.Explorer.View.Controls
             else
             {
                 DataSource = null;
+                SelectionChanged += GridSelectionChanged;
             }
         }
 
@@ -45,8 +48,8 @@ namespace Chocolatey.Explorer.View.Controls
             }
             else
             {
-                IList<Package> distinct = packages.Distinct().ToList();
-                DataSource = distinct;
+                DataSource = packages;
+                SelectionChanged += GridSelectionChanged;
             }
         }
     }

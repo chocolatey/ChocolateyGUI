@@ -11,7 +11,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
     {
 
         public event Delegates.VersionResult VersionChanged;
-        public event Delegates.StartedDelegate Started;
+        public event Delegates.StartedDelegate RunStarted;
 
         private IPackageVersionService packageVersionService;
         private IDictionary<string, PackageVersion> cachedVersions;
@@ -32,7 +32,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         {
             PackageVersion cachedPackage;
             cachedVersions.TryGetValue(packageName, out cachedPackage);
-            OnStarted();
+            OnStarted(packageName);
 
             if (cachedPackage == null)
             {
@@ -61,10 +61,10 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
             if (handler != null) handler(version);
         }
 
-        private void OnStarted()
+        private void OnStarted(string packageName)
         {
-            var handler = Started;
-            if (handler != null) handler();
+            var handler = RunStarted;
+            if (handler != null) handler("Getting package " + packageName);
         }
     }
 }

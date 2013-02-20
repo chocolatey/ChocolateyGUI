@@ -18,6 +18,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         public event Delegates.FinishedDelegate RunFinshed;
 		public event Delegates.FailedDelegate RunFailed;
+        public event Delegates.StartedDelegate RunStarted;
 
         public ODataAvailablePackagesService(): this(new SourceService.SourceService(), new PackageVersionXMLParser())
         {
@@ -32,9 +33,9 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         public void ListOfAvalablePackages()
         {
+            OnRunStarted();
             var thread = new Thread(LoadAllPackagesThread) { IsBackground = true };
             thread.Start();
-
         }
 
         private void LoadAllPackagesThread()
@@ -111,6 +112,12 @@ namespace Chocolatey.Explorer.Services.PackagesService
         {
             var handler = RunFinshed;
             if (handler != null) handler(packages);
+        }
+
+        private void OnRunStarted()
+        {
+            var handler = RunStarted;
+            if (handler != null) handler("Getting list of available packages.");
         }
 
         public class BackgroundPageObject

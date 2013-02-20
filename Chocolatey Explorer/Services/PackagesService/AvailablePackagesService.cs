@@ -14,6 +14,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
         
         public event Delegates.FinishedDelegate RunFinshed;
         public event Delegates.FailedDelegate RunFailed;
+        public event Delegates.StartedDelegate RunStarted;
 
         public AvailablePackagesService()
             : this(new RunAsync(), new SourceService.SourceService())
@@ -32,6 +33,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
         public void ListOfAvalablePackages()
         {
             this.Log().Info("Getting list of packages on source: " + _sourceService.Source);
+            OnRunStarted();
             _powershellAsync.Run("clist -source " + _sourceService.Source);
         }
 
@@ -52,6 +54,12 @@ namespace Chocolatey.Explorer.Services.PackagesService
         {
             var handler = RunFinshed;
             if (handler != null) handler(packages);
+        }
+
+        private void OnRunStarted()
+        {
+            var handler = RunStarted;
+            if (handler != null) handler("Getting list of available packages.");
         }
 
     }

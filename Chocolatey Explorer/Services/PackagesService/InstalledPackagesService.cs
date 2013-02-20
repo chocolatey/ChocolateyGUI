@@ -15,10 +15,12 @@ namespace Chocolatey.Explorer.Services.PackagesService
         }
         public event Delegates.FinishedDelegate RunFinshed;
         public event Delegates.FailedDelegate RunFailed;
-        
+        public event Delegates.StartedDelegate RunStarted;
+
         public void ListOfIntalledPackages()
         {
             this.Log().Info("Getting list of installed packages");
+            OnRunStarted();
             Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
                         .ContinueWith((task) =>
                         {
@@ -32,6 +34,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
         public void ListOfDistinctHighestInstalledPackages()
         {
             this.Log().Info("Getting list of installed packages");
+            OnRunStarted(); 
             Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
                         .ContinueWith((task) =>
                             {
@@ -49,6 +52,12 @@ namespace Chocolatey.Explorer.Services.PackagesService
         {
             var handler = RunFinshed;
             if (handler != null) handler(packages);
+        }
+
+        private void OnRunStarted()
+        {
+            var handler = RunStarted;
+            if (handler != null) handler("Getting list of installed packages.");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
     class ODataPackageVersionService : IPackageVersionService
     {
         public event Delegates.VersionResult VersionChanged;
-        public event Delegates.StartedDelegate Started;
+        public event Delegates.StartedDelegate RunStarted;
 
         private readonly ISourceService _sourceService;
         private readonly IPackageVersionXMLParser _versionXmlParser;
@@ -43,7 +43,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
             }
             _cancelTokenSource = new CancellationTokenSource();
             _cancelTokenSource.Token.Register(OnPackageVersionThreadCancel);
-            OnStarted();
+            OnStarted(package);
             var thread = new Thread(() => PackageVersionThread(_cancelTokenSource.Token, package)) { IsBackground = true };
             thread.Start();
         }
@@ -116,10 +116,10 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
             if (handler != null) handler(version);
         }
 
-        private void OnStarted()
+        private void OnStarted(string packageName)
         {
-            var handler = Started;
-            if (handler != null) handler();
+            var handler = RunStarted;
+            if (handler != null) handler("Getting package " + packageName);
         }
     }
 }

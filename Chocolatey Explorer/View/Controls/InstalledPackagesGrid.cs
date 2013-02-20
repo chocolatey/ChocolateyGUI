@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.PackagesService;
@@ -12,7 +11,7 @@ namespace Chocolatey.Explorer.View.Controls
     {
         private IInstalledPackagesService _installedPackagesService;
         
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IInstalledPackagesService InstalledPackagesService
         {
             get { return _installedPackagesService; }
@@ -23,7 +22,6 @@ namespace Chocolatey.Explorer.View.Controls
                 _installedPackagesService.RunFailed += InstalledPackagesServiceRunFailed;
                 Enabled = false;
                 SelectionChanged -= GridSelectionChanged; 
-                _installedPackagesService.ListOfDistinctHighestInstalledPackages();
             }
         }
 

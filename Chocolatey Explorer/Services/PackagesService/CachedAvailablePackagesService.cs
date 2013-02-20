@@ -11,6 +11,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
     {
         public event Delegates.FinishedDelegate RunFinshed;
 		public event Delegates.FailedDelegate RunFailed;
+        public event Delegates.StartedDelegate RunStarted;
 
         private readonly IAvailablePackagesService _availablePackagesService;
         private IList<Package> _availablePackageCache;
@@ -35,6 +36,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
         {
             if (_availablePackageCache == null)
             {
+                OnRunStarted();
                 _availablePackagesService.RunFinshed += OnUncachedAvailableRunFinished;
                 _availablePackagesService.ListOfAvalablePackages();
             }
@@ -67,5 +69,11 @@ namespace Chocolatey.Explorer.Services.PackagesService
 			if (RunFailed != null)
 				RunFailed(exc);
 		}
+
+        private void OnRunStarted()
+        {
+            var handler = RunStarted;
+            if (handler != null) handler("Getting list of available packages.");
+        }
     }
 }

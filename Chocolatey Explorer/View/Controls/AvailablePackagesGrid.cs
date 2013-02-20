@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Model;
-using Chocolatey.Explorer.Services.PackageVersionService;
 using Chocolatey.Explorer.Services.PackagesService;
 
 namespace Chocolatey.Explorer.View.Controls
@@ -13,7 +12,7 @@ namespace Chocolatey.Explorer.View.Controls
     {
         private IAvailablePackagesService _availablePackagesService;
         
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IAvailablePackagesService AvailablePackagesService
         {
             get { return _availablePackagesService; }

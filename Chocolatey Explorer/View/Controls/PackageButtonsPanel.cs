@@ -14,14 +14,14 @@ namespace Chocolatey.Explorer.View.Controls
         private IPackageService _packageService;
         private PackageVersion _version;
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IPackageService PackageService
         {
             get { return _packageService; }
             set { _packageService = value; }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IPackageVersionService PackageVersionService
         {
             get

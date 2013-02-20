@@ -8,10 +8,9 @@ namespace Chocolatey.Explorer.Services.PackageService
         private readonly IRun _powershellAsync;
         private readonly ISourceService _sourceService;
 
-        public delegate void LineDelegate(string line);
-        public event LineDelegate LineChanged;
-        public delegate void FinishedDelegate();
-        public event FinishedDelegate RunFinshed;
+        public event Delegates.LineDelegate LineChanged;
+        public event Delegates.FinishedPackageDelegate RunFinshed;
+        public event Delegates.StartedDelegate RunStarted;
 
         public PackageService(): this(new RunAsync(),new SourceService.SourceService())
         {
@@ -28,18 +27,21 @@ namespace Chocolatey.Explorer.Services.PackageService
         public void InstallPackage(string package)
         {
             this.Log().Info("Installing package: " + package);
+            OnRunStarted("Installing package " + package);
             _powershellAsync.Run("cinst " + package + " -source " + _sourceService.Source);
         }
 
         public void UninstallPackage(string package)
         {
             this.Log().Info("Uninstalling package: " + package);
+            OnRunStarted("Uninstalling package " + package);
             _powershellAsync.Run("cuninst " + package);
         }
 
         public void UpdatePackage(string package)
         {
             this.Log().Info("Updating package: " + package);
+            OnRunStarted("Updating package " + package);
             _powershellAsync.Run("cup " + package + " -source " + _sourceService.Source);
         }
 
@@ -57,6 +59,12 @@ namespace Chocolatey.Explorer.Services.PackageService
         {
             var handler = RunFinshed;
             if (handler != null) handler();
+        }
+
+        private void OnRunStarted(string message)
+        {
+            var handler = RunStarted;
+            if (handler != null) handler(message);
         }
 
         private void OnLineChanged(string line)

@@ -16,7 +16,7 @@ namespace Chocolatey.Explorer.View.Controls
         private IPackageVersionService _packageVersionService;
         private PackageVersion _version;
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IPackageVersionService PackageVersionService
         {
             get

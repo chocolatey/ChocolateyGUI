@@ -55,9 +55,12 @@ namespace Chocolatey.Explorer.View.Forms
             this.searchPackages = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
+            this.tabControlPackage = new System.Windows.Forms.TabControl();
+            this.tabPackageInformation = new System.Windows.Forms.TabPage();
             this.packageVersionPanel = new Chocolatey.Explorer.View.Controls.PackageVersionPanel();
             this.packageButtonsPanel1 = new Chocolatey.Explorer.View.Controls.PackageButtonsPanel();
-            this.txtPowershellOutput = new System.Windows.Forms.TextBox();
+            this.tabPackageRun = new System.Windows.Forms.TabPage();
+            this.packageRunPanel1 = new Chocolatey.Explorer.View.Controls.PackageRunPanel();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,8 +72,8 @@ namespace Chocolatey.Explorer.View.Forms
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.progressbar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.progressbar2 = new System.Windows.Forms.ToolStripProgressBar();
-            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblprogress = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -83,6 +86,9 @@ namespace Chocolatey.Explorer.View.Forms
             this.tabAvailable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.availablePackagesGrid1)).BeginInit();
             this.searchBar.SuspendLayout();
+            this.tabControlPackage.SuspendLayout();
+            this.tabPackageInformation.SuspendLayout();
+            this.tabPackageRun.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -165,9 +171,7 @@ namespace Chocolatey.Explorer.View.Forms
             // 
             // mainSplitContainer.Panel2
             // 
-            this.mainSplitContainer.Panel2.Controls.Add(this.packageVersionPanel);
-            this.mainSplitContainer.Panel2.Controls.Add(this.packageButtonsPanel1);
-            this.mainSplitContainer.Panel2.Controls.Add(this.txtPowershellOutput);
+            this.mainSplitContainer.Panel2.Controls.Add(this.tabControlPackage);
             this.mainSplitContainer.TabStop = false;
             // 
             // packageTabControl
@@ -295,6 +299,22 @@ namespace Chocolatey.Explorer.View.Forms
             this.packageTabsImageList.Images.SetKeyName(0, "chocolateyicon_small.png");
             this.packageTabsImageList.Images.SetKeyName(1, "monitor.png");
             // 
+            // tabControlPackage
+            // 
+            this.tabControlPackage.Controls.Add(this.tabPackageInformation);
+            this.tabControlPackage.Controls.Add(this.tabPackageRun);
+            resources.ApplyResources(this.tabControlPackage, "tabControlPackage");
+            this.tabControlPackage.Name = "tabControlPackage";
+            this.tabControlPackage.SelectedIndex = 0;
+            // 
+            // tabPackageInformation
+            // 
+            this.tabPackageInformation.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPackageInformation.Controls.Add(this.packageVersionPanel);
+            this.tabPackageInformation.Controls.Add(this.packageButtonsPanel1);
+            resources.ApplyResources(this.tabPackageInformation, "tabPackageInformation");
+            this.tabPackageInformation.Name = "tabPackageInformation";
+            // 
             // packageVersionPanel
             // 
             resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
@@ -305,11 +325,17 @@ namespace Chocolatey.Explorer.View.Forms
             resources.ApplyResources(this.packageButtonsPanel1, "packageButtonsPanel1");
             this.packageButtonsPanel1.Name = "packageButtonsPanel1";
             // 
-            // txtPowershellOutput
+            // tabPackageRun
             // 
-            resources.ApplyResources(this.txtPowershellOutput, "txtPowershellOutput");
-            this.txtPowershellOutput.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
-            this.txtPowershellOutput.Name = "txtPowershellOutput";
+            this.tabPackageRun.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPackageRun.Controls.Add(this.packageRunPanel1);
+            resources.ApplyResources(this.tabPackageRun, "tabPackageRun");
+            this.tabPackageRun.Name = "tabPackageRun";
+            // 
+            // packageRunPanel1
+            // 
+            resources.ApplyResources(this.packageRunPanel1, "packageRunPanel1");
+            this.packageRunPanel1.Name = "packageRunPanel1";
             // 
             // dataGridViewCheckBoxColumn1
             // 
@@ -380,8 +406,8 @@ namespace Chocolatey.Explorer.View.Forms
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.progressbar1,
             this.progressbar2,
-            this.lblStatus,
-            this.lblprogress});
+            this.lblprogress,
+            this.lblStatus});
             this.statusStrip.Name = "statusStrip";
             // 
             // progressbar1
@@ -398,19 +424,19 @@ namespace Chocolatey.Explorer.View.Forms
             this.progressbar2.Name = "progressbar2";
             this.progressbar2.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
-            // lblStatus
-            // 
-            resources.ApplyResources(this.lblStatus, "lblStatus");
-            this.lblStatus.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Tag = "test2";
-            // 
             // lblprogress
             // 
             resources.ApplyResources(this.lblprogress, "lblprogress");
             this.lblprogress.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.lblprogress.Name = "lblprogress";
             this.lblprogress.Spring = true;
+            // 
+            // lblStatus
+            // 
+            resources.ApplyResources(this.lblStatus, "lblStatus");
+            this.lblStatus.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Tag = "test2";
             // 
             // PackageManager
             // 
@@ -426,7 +452,6 @@ namespace Chocolatey.Explorer.View.Forms
             this.mainMenu.PerformLayout();
             this.mainSplitContainer.Panel1.ResumeLayout(false);
             this.mainSplitContainer.Panel2.ResumeLayout(false);
-            this.mainSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
             this.mainSplitContainer.ResumeLayout(false);
             this.packageTabControl.ResumeLayout(false);
@@ -438,6 +463,9 @@ namespace Chocolatey.Explorer.View.Forms
             ((System.ComponentModel.ISupportInitialize)(this.availablePackagesGrid1)).EndInit();
             this.searchBar.ResumeLayout(false);
             this.searchBar.PerformLayout();
+            this.tabControlPackage.ResumeLayout(false);
+            this.tabPackageInformation.ResumeLayout(false);
+            this.tabPackageRun.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -455,7 +483,6 @@ namespace Chocolatey.Explorer.View.Forms
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.SplitContainer mainSplitContainer;
-        private System.Windows.Forms.TextBox txtPowershellOutput;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripProgressBar progressbar1;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
@@ -484,5 +511,9 @@ namespace Chocolatey.Explorer.View.Forms
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
         private System.Windows.Forms.ToolStripProgressBar progressbar2;
         private System.Windows.Forms.ToolStripStatusLabel lblprogress;
+        private System.Windows.Forms.TabControl tabControlPackage;
+        private System.Windows.Forms.TabPage tabPackageInformation;
+        private System.Windows.Forms.TabPage tabPackageRun;
+        private PackageRunPanel packageRunPanel1;
     }
 }

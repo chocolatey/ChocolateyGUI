@@ -17,7 +17,7 @@ namespace Chocolatey.Explorer.IoC
          public Registry()
          {
              // Services
-             For<IPackageService>().Use<PackageService>();
+             For<IPackageService>().Singleton().Use<PackageService>();
              For<IAvailablePackagesService>().Singleton().Use<CachedAvailablePackagesService>();
              For<IInstalledPackagesService>().Singleton().Use<InstalledPackagesService>();
              For<IPackageVersionService>().Singleton().Use<ODataPackageVersionService>();
@@ -40,6 +40,7 @@ namespace Chocolatey.Explorer.IoC
              SetAllProperties(x => x.OfType<IPackageVersionService>());
              SetAllProperties(x => x.OfType<IInstalledPackagesService>());
              SetAllProperties(x => x.OfType<IAvailablePackagesService>());
+             SetAllProperties(x => x.OfType<IPackageService>());
          }
     }
 }

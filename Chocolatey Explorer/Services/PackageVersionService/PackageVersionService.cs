@@ -12,7 +12,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 		private readonly ISourceService _sourceService;
 
 		public event Delegates.VersionResult VersionChanged;
-	    public event Delegates.StartedDelegate Started;
+	    public event Delegates.StartedDelegate RunStarted;
 
 		public PackageVersionService()
 			: this(new RunAsync(), new SourceService.SourceService())
@@ -62,8 +62,8 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 
         private void OnStarted()
         {
-            var handler = Started;
-            if (handler != null) handler();
+            var handler = RunStarted;
+            if (handler != null) handler("Getting package " + _package);
         }
 
 	}

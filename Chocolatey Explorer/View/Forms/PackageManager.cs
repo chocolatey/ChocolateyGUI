@@ -36,9 +36,6 @@ namespace Chocolatey.Explorer.View.Forms
         public PackageManager(IAvailablePackagesService availablePackagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService, ICommandExecuter commandExecuter, ISettingsService settingsService, IInstalledPackagesService installedPackagesService)
         {
             _packageVersionService = packageVersionService;
-            _packageVersionService.Started += PackageVersionServiceStarted; 
-            
-            
             _packageService = packageService;
             _availablePackagesService = availablePackagesService;
             _fileStorageService = fileStorageService;
@@ -46,24 +43,46 @@ namespace Chocolatey.Explorer.View.Forms
             _settingsService = settingsService;
             _installedPackagesService = installedPackagesService;
             _packageVersionService.VersionChanged += VersionChangedHandler;
-            _packageVersionService.Started += PackageVersionServiceStarted;
-            _availablePackagesService.RunFinshed += AvailablePackagesServiceRunFinished;
-            _installedPackagesService.RunFinshed += AvailablePackagesServiceRunFinished;
-            _packageService.LineChanged += PackageServiceLineChanged;
+            _packageVersionService.RunStarted += PackageVersionServiceStarted;
+            _availablePackagesService.RunFinshed += PackagesServiceRunFinished;
+            _installedPackagesService.RunFinshed += PackagesServiceRunFinished;
             _packageService.RunFinshed += PackageServiceRunFinished;
-			_availablePackagesService.RunFailed += AvailablePackagesServiceRunFailed;
-            _installedPackagesService.RunFailed += AvailablePackagesServiceRunFailed;
+            _packageService.RunStarted += PackageServiceRunStarted;
+			_availablePackagesService.RunFailed += PackagesServiceRunFailed;
+            _installedPackagesService.RunFailed += PackagesServiceRunFailed;
+            _availablePackagesService.RunStarted += PackagesServiceRunStarted;
+            _installedPackagesService.RunStarted += PackagesServiceRunStarted;
             
             InitializeComponent();
             ClearStatus();
             tabAvailable.ImageIndex = 0;
             tabInstalled.ImageIndex = 1;
+            _installedPackagesService.ListOfDistinctHighestInstalledPackages();
         }
 
-        private void PackageVersionServiceStarted()
+        private void PackageServiceRunStarted(string message)
         {
             DisableUserInteraction();
-            lblprogress.Text = "Looking for packageversion.";
+            lblprogress.Text = message;
+            progressbar1.Visible = true;
+            progressbar1.Style = ProgressBarStyle.Marquee;
+            tabControlPackage.SelectTab(tabPackageRun);
+        }
+
+        private void PackagesServiceRunStarted(string message)
+        {
+            DisableUserInteraction();
+            searchPackages.Text = "";
+            lblprogress.Text = message;
+            SetStatus();
+            progressbar1.Visible = true;
+            progressbar1.Style = ProgressBarStyle.Marquee;
+        }
+
+        private void PackageVersionServiceStarted(string message)
+        {
+            DisableUserInteraction();
+            lblprogress.Text = message;
             progressbar2.Visible = true;
             progressbar2.Style = ProgressBarStyle.Marquee;
         }
@@ -77,9 +96,10 @@ namespace Chocolatey.Explorer.View.Forms
             else
             {
                 EnableUserInteraction();
-                //ClearStatus();
-                txtPowershellOutput.Visible = false;
-
+                lblprogress.Text = "";
+                progressbar2.Visible = false;
+                tabControlPackage.SelectTab(tabPackageInformation);
+                packageTabControl.SelectTab(tabInstalled);
                 // invalidate caches, because package has been installed
                 if (_availablePackagesService is ICacheable)
                 {
@@ -94,23 +114,11 @@ namespace Chocolatey.Explorer.View.Forms
             }
         }
 
-        private void PackageServiceLineChanged(string line)
+        private void PackagesServiceRunFinished(IList<Package> packages)
         {
             if (InvokeRequired)
             {
-                Invoke(new PackageServiceHandler(PackageServiceLineChanged), new object[] { line });
-            }
-            else
-            {
-                txtPowershellOutput.AppendText(line + Environment.NewLine);
-            }
-        }
-
-        private void AvailablePackagesServiceRunFinished(IList<Package> packages)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new PackageSServiceHandler(AvailablePackagesServiceRunFinished), new object[] { packages });
+                Invoke(new PackageSServiceHandler(PackagesServiceRunFinished), new object[] { packages });
             }
             else
             {
@@ -121,7 +129,7 @@ namespace Chocolatey.Explorer.View.Forms
             }
         }
 
-		private void AvailablePackagesServiceRunFailed(Exception exc)
+		private void PackagesServiceRunFailed(Exception exc)
 		{
 			//TODO - should we do something to prevent them from using more of the app nd getting more errors?
 			if (exc is ChocolateyVersionUnknownException || (exc is AggregateException || exc.InnerException is IChocolateyService))
@@ -177,20 +185,11 @@ namespace Chocolatey.Explorer.View.Forms
         
         private void QueryAvailablePackges()
         {
-            DisableUserInteraction();
-            searchPackages.Text = "";
-            lblprogress.Text = "Looking for available packages.";
-            SetStatus();
-            packageTabControl.SelectedTab = tabAvailable;
-            progressbar1.Visible = true; 
-            progressbar1.Style = ProgressBarStyle.Marquee;
             _availablePackagesService.ListOfAvalablePackages();
         }
 
         private void QueryInstalledPackages()
         {
-            searchPackages.Text = "";
-            lblprogress.Text = "Looking for installed packages.";
             var expandedLibDirectory = Environment.ExpandEnvironmentVariables(_settingsService.ChocolateyLibDirectory);
             if (!_fileStorageService.DirectoryExists(expandedLibDirectory))
             {
@@ -198,12 +197,7 @@ namespace Chocolatey.Explorer.View.Forms
             }
             else
             {
-                DisableUserInteraction();
-                SetStatus();
-                packageTabControl.SelectedTab = tabInstalled;
-                progressbar1.Visible = true;
-                progressbar1.Style = ProgressBarStyle.Marquee;
-                _installedPackagesService.ListOfDistinctHighestInstalledPackages();
+               _installedPackagesService.ListOfDistinctHighestInstalledPackages();
             }
         }
 
@@ -226,7 +220,11 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void SetStatus()
         {
-            lblStatus.Text = "Available packages: " + availablePackagesGrid1.RowCount + " - Installed packages: " + installedPackagesGrid1.RowCount;
+            int rowcount1 = 0;
+            int rowcount2 = 0;
+            if (availablePackagesGrid1 != null) rowcount1 = availablePackagesGrid1.RowCount;
+            if (installedPackagesGrid1 != null) rowcount2 = installedPackagesGrid1.RowCount;
+            lblStatus.Text = "Available packages: " + rowcount1 + " - Installed packages: " + rowcount2;
         }
 
         private void ClearStatus()
@@ -254,5 +252,11 @@ namespace Chocolatey.Explorer.View.Forms
             availablePackagesGrid1.FirstDisplayedScrollingRowIndex = rowIndex;
             availablePackagesGrid1.CurrentCell = availablePackagesGrid1.Rows[rowIndex].Cells[0];
         }
+
+        private void packageRunPanel1_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

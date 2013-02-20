@@ -13,30 +13,30 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         public event Delegates.VersionResult VersionChanged;
         public event Delegates.StartedDelegate RunStarted;
 
-        private IPackageVersionService packageVersionService;
-        private IDictionary<string, PackageVersion> cachedVersions;
+        private readonly IPackageVersionService _packageVersionService;
+        private IDictionary<string, PackageVersion> _cachedVersions;
 
-        public CachedPackageVersionService()
+        public CachedPackageVersionService(ODataPackageVersionService packageVersionService)
         {
-            packageVersionService = new PackageVersionService();
-            packageVersionService.VersionChanged += OnUncachedVersionChanged;
+            _packageVersionService = packageVersionService;
+            _packageVersionService.VersionChanged += OnUncachedVersionChanged;
             InvalidateCache();
         }
 
         public void InvalidateCache()
         {
-            cachedVersions = new Dictionary<string, PackageVersion>();
+            _cachedVersions = new Dictionary<string, PackageVersion>();
         }
 
         public void PackageVersion(string packageName)
         {
             PackageVersion cachedPackage;
-            cachedVersions.TryGetValue(packageName, out cachedPackage);
+            _cachedVersions.TryGetValue(packageName, out cachedPackage);
             OnStarted(packageName);
 
             if (cachedPackage == null)
             {
-                packageVersionService.PackageVersion(packageName);
+                _packageVersionService.PackageVersion(packageName);
             }
             else
             {
@@ -51,7 +51,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         /// <param name="version"></param>
         private void OnUncachedVersionChanged(PackageVersion version)
         {
-            cachedVersions.Add(version.Name, version);
+            _cachedVersions.Add(version.Name, version);
             OnVersionChanged(version);
         }
 

@@ -16,9 +16,9 @@ namespace Chocolatey.Explorer.Services.PackagesService
         private readonly IAvailablePackagesService _availablePackagesService;
         private IList<Package> _availablePackageCache;
 
-        public CachedAvailablePackagesService()
+        public CachedAvailablePackagesService(ODataAvailablePackagesService availablePackagesService)
         {
-            _availablePackagesService = new ODataAvailablePackagesService();
+            _availablePackagesService = availablePackagesService;
 			_availablePackagesService.RunFailed += AvailablePackagesServiceRunFailed;
         }
 

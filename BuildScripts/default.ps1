@@ -7,7 +7,7 @@ $psake.use_exit_on_error = $true
 properties {
     $baseDir = (Split-Path -parent $psake.build_script_dir)
     $versionTag = git describe --abbrev=0 --tags
-    $buildCounter = (git log $($version + '..') --pretty=oneline | measure-object).Count
+    $buildCounter = (git log $($versionTag + '..') --pretty=oneline | measure-object).Count
 	
 	$version = $versionTag + "." + $buildCounter	
 	$preversion = $versionTag + "-pre" + $buildCounter.ToString("0000")

@@ -178,16 +178,22 @@
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\AvailablePackagesGrid.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\Controls\InstalledPackagesGrid.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\Controls\PackageButtonsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\Controls\PackageButtonsPanel.Designer.cs">
       <DependentUpon>PackageButtonsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PackageExtraInformationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Controls\PackageExtraInformationPanel.Designer.cs">
+      <DependentUpon>PackageExtraInformationPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\PackageRunPanel.cs">
       <SubType>UserControl</SubType>
@@ -249,6 +255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Controls\PackageButtonsPanel.resx">
       <DependentUpon>PackageButtonsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Controls\PackageExtraInformationPanel.resx">
+      <DependentUpon>PackageExtraInformationPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Controls\PackageRunPanel.resx">
       <DependentUpon>PackageRunPanel.cs</DependentUpon>

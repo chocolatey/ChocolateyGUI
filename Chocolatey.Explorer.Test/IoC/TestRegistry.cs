@@ -64,7 +64,7 @@ namespace Chocolatey.Explorer.Test.IoC
         [Test]
         public void IfIPackageServiceIsNotSingleton()
         {
-            Assert.AreNotEqual(ObjectFactory.GetInstance<IPackageService>(), ObjectFactory.GetInstance<IPackageService>());
+            Assert.AreEqual(ObjectFactory.GetInstance<IPackageService>(), ObjectFactory.GetInstance<IPackageService>());
         }
 
         [Test]

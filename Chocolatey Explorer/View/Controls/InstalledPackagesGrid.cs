@@ -21,7 +21,6 @@ namespace Chocolatey.Explorer.View.Controls
                 _installedPackagesService.RunFinshed += InstalledPackagesServiceRunFinished;
                 _installedPackagesService.RunFailed += InstalledPackagesServiceRunFailed;
                 Enabled = false;
-                SelectionChanged -= GridSelectionChanged; 
             }
         }
 
@@ -33,8 +32,7 @@ namespace Chocolatey.Explorer.View.Controls
             }
             else
             {
-                DataSource = null;
-                SelectionChanged += GridSelectionChanged;
+                _bindingsource.DataSource = null;
             }
         }
 
@@ -46,8 +44,8 @@ namespace Chocolatey.Explorer.View.Controls
             }
             else
             {
-                DataSource = packages;
-                SelectionChanged += GridSelectionChanged;
+                
+                _bindingsource.DataSource = packages;
             }
         }
     }

@@ -17,9 +17,7 @@ namespace Chocolatey.Explorer.View.Forms
 {
     public partial class PackageManager : Form,IPackageManager
     {
-        private delegate void PackageVersionHandler(PackageVersion version);
         private delegate void PackageSServiceHandler(IList<Package> packages);
-        private delegate void PackageServiceHandler(string line);
         private delegate void PackageServiceRunFinishedHandler();
         private readonly IAvailablePackagesService _availablePackagesService;
         private readonly IInstalledPackagesService _installedPackagesService;
@@ -28,10 +26,6 @@ namespace Chocolatey.Explorer.View.Forms
 		private readonly IFileStorageService _fileStorageService;
         private readonly ICommandExecuter _commandExecuter;
         private readonly ISettingsService _settingsService;
-
-        public PackageManager(): this(new AvailablePackagesService(),new PackageVersionService(),new PackageService(), new LocalFileSystemStorageService(), new CommandExecuter(), new SettingsService(), new InstalledPackagesService(new ChocolateyLibDirHelper()))
-        {
-        }
 
         public PackageManager(IAvailablePackagesService availablePackagesService, IPackageVersionService packageVersionService, IPackageService packageService, IFileStorageService fileStorageService, ICommandExecuter commandExecuter, ISettingsService settingsService, IInstalledPackagesService installedPackagesService)
         {
@@ -145,7 +139,7 @@ namespace Chocolatey.Explorer.View.Forms
         {
             if (InvokeRequired)
             {
-                Invoke(new PackageVersionHandler(VersionChangedHandler), new object[] { version });
+                Invoke(new MethodInvoker(() => VersionChangedHandler(version )));
             }
             else
             {
@@ -203,7 +197,7 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void EnableUserInteraction()
         {
-            packageTabControl.Selected += packageTabControl_Selected;
+            packageTabControl.Enabled = true;
             mainSplitContainer.Panel1.Enabled = true;
             packageButtonsPanel1.Enabled = true;
             mainMenu.Enabled = true;
@@ -211,7 +205,7 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void DisableUserInteraction()
         {
-            packageTabControl.Selected -= packageTabControl_Selected;
+            packageTabControl.Enabled = true;
             mainSplitContainer.Panel1.Enabled = false;
             packageButtonsPanel1.Enabled = false;
             mainMenu.Enabled = false;
@@ -222,8 +216,8 @@ namespace Chocolatey.Explorer.View.Forms
         {
             int rowcount1 = 0;
             int rowcount2 = 0;
-            if (availablePackagesGrid1 != null) rowcount1 = availablePackagesGrid1.RowCount;
-            if (installedPackagesGrid1 != null) rowcount2 = installedPackagesGrid1.RowCount;
+            if (availablePackagesGrid1 != null) rowcount1 = availablePackagesGrid1.Rowcount;
+            if (installedPackagesGrid1 != null) rowcount2 = installedPackagesGrid1.Rowcount;
             lblStatus.Text = "Available packages: " + rowcount1 + " - Installed packages: " + rowcount2;
         }
 
@@ -233,30 +227,5 @@ namespace Chocolatey.Explorer.View.Forms
             lblprogress.Text = "";
             progressbar1.Visible = false;
         }
-
-        private void searchPackages_TextChanged(object sender, EventArgs e)
-        {
-            DataGridViewRow rowFound = availablePackagesGrid1.Rows.OfType<DataGridViewRow>()
-                    .FirstOrDefault(row => row.Cells.OfType<DataGridViewCell>()
-                    .Any(cell => cell.ColumnIndex == 0 && ((String)cell.Value).StartsWith(searchPackages.Text, StringComparison.OrdinalIgnoreCase)));
-
-            if (rowFound != null)
-            {
-                selectPackageGridRow(rowFound.Index);
-            }
-        }
-
-        private void selectPackageGridRow(int rowIndex)
-        {
-            availablePackagesGrid1.Rows[rowIndex].Selected = true;
-            availablePackagesGrid1.FirstDisplayedScrollingRowIndex = rowIndex;
-            availablePackagesGrid1.CurrentCell = availablePackagesGrid1.Rows[rowIndex].Cells[0];
-        }
-
-        private void packageRunPanel1_Load(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

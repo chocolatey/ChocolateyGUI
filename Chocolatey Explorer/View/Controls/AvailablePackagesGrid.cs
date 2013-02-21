@@ -32,7 +32,7 @@ namespace Chocolatey.Explorer.View.Controls
             }
             else
             {
-                DataSource = null;
+                _bindingsource.DataSource = null;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Chocolatey.Explorer.View.Controls
             else
             {
                 IList<Package> distinct = packages.Distinct().ToList();
-                DataSource = distinct;
+                _bindingsource.DataSource = distinct;
             }
         }
     }

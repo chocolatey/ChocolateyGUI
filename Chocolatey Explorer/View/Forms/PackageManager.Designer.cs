@@ -32,8 +32,6 @@ namespace Chocolatey.Explorer.View.Forms
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackageManager));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.packagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.availablePackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,14 +44,9 @@ namespace Chocolatey.Explorer.View.Forms
             this.packageTabControl = new System.Windows.Forms.TabControl();
             this.tabInstalled = new System.Windows.Forms.TabPage();
             this.installedPackagesGrid1 = new Chocolatey.Explorer.View.Controls.InstalledPackagesGrid();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabAvailable = new System.Windows.Forms.TabPage();
             this.availablePackagesGrid1 = new Chocolatey.Explorer.View.Controls.AvailablePackagesGrid();
             this.searchBar = new System.Windows.Forms.Panel();
-            this.searchPackages = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
             this.tabControlPackage = new System.Windows.Forms.TabControl();
             this.tabPackageInformation = new System.Windows.Forms.TabPage();
@@ -61,6 +54,8 @@ namespace Chocolatey.Explorer.View.Forms
             this.packageButtonsPanel1 = new Chocolatey.Explorer.View.Controls.PackageButtonsPanel();
             this.tabPackageRun = new System.Windows.Forms.TabPage();
             this.packageRunPanel1 = new Chocolatey.Explorer.View.Controls.PackageRunPanel();
+            this.searchPackages = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,11 +76,7 @@ namespace Chocolatey.Explorer.View.Forms
             this.mainSplitContainer.SuspendLayout();
             this.packageTabControl.SuspendLayout();
             this.tabInstalled.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.installedPackagesGrid1)).BeginInit();
-            this.panel1.SuspendLayout();
             this.tabAvailable.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.availablePackagesGrid1)).BeginInit();
-            this.searchBar.SuspendLayout();
             this.tabControlPackage.SuspendLayout();
             this.tabPackageInformation.SuspendLayout();
             this.tabPackageRun.SuspendLayout();
@@ -190,53 +181,14 @@ namespace Chocolatey.Explorer.View.Forms
             resources.ApplyResources(this.tabInstalled, "tabInstalled");
             this.tabInstalled.AccessibleRole = System.Windows.Forms.AccessibleRole.PageTab;
             this.tabInstalled.Controls.Add(this.installedPackagesGrid1);
-            this.tabInstalled.Controls.Add(this.panel1);
             this.tabInstalled.Name = "tabInstalled";
             this.tabInstalled.UseVisualStyleBackColor = true;
             // 
             // installedPackagesGrid1
             // 
             this.installedPackagesGrid1.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
-            this.installedPackagesGrid1.AllowUserToAddRows = false;
-            this.installedPackagesGrid1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            this.installedPackagesGrid1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.installedPackagesGrid1.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.installedPackagesGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.installedPackagesGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.installedPackagesGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             resources.ApplyResources(this.installedPackagesGrid1, "installedPackagesGrid1");
-            this.installedPackagesGrid1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.installedPackagesGrid1.GridColor = System.Drawing.SystemColors.Control;
-            this.installedPackagesGrid1.MultiSelect = false;
             this.installedPackagesGrid1.Name = "installedPackagesGrid1";
-            this.installedPackagesGrid1.ReadOnly = true;
-            this.installedPackagesGrid1.RowHeadersVisible = false;
-            this.installedPackagesGrid1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.installedPackagesGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.installedPackagesGrid1.ShowCellErrors = false;
-            this.installedPackagesGrid1.ShowCellToolTips = false;
-            this.installedPackagesGrid1.ShowEditingIcon = false;
-            this.installedPackagesGrid1.ShowRowErrors = false;
-            this.installedPackagesGrid1.StandardTab = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.label2);
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
-            // 
-            // textBox1
-            // 
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText;
-            this.label2.Name = "label2";
             // 
             // tabAvailable
             // 
@@ -250,47 +202,13 @@ namespace Chocolatey.Explorer.View.Forms
             // availablePackagesGrid1
             // 
             this.availablePackagesGrid1.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
-            this.availablePackagesGrid1.AllowUserToAddRows = false;
-            this.availablePackagesGrid1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            this.availablePackagesGrid1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
-            this.availablePackagesGrid1.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.availablePackagesGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.availablePackagesGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.availablePackagesGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             resources.ApplyResources(this.availablePackagesGrid1, "availablePackagesGrid1");
-            this.availablePackagesGrid1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.availablePackagesGrid1.GridColor = System.Drawing.SystemColors.Control;
-            this.availablePackagesGrid1.MultiSelect = false;
             this.availablePackagesGrid1.Name = "availablePackagesGrid1";
-            this.availablePackagesGrid1.ReadOnly = true;
-            this.availablePackagesGrid1.RowHeadersVisible = false;
-            this.availablePackagesGrid1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.availablePackagesGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.availablePackagesGrid1.ShowCellErrors = false;
-            this.availablePackagesGrid1.ShowCellToolTips = false;
-            this.availablePackagesGrid1.ShowEditingIcon = false;
-            this.availablePackagesGrid1.ShowRowErrors = false;
-            this.availablePackagesGrid1.StandardTab = true;
             // 
             // searchBar
             // 
-            this.searchBar.Controls.Add(this.searchPackages);
-            this.searchBar.Controls.Add(this.label1);
             resources.ApplyResources(this.searchBar, "searchBar");
             this.searchBar.Name = "searchBar";
-            // 
-            // searchPackages
-            // 
-            resources.ApplyResources(this.searchPackages, "searchPackages");
-            this.searchPackages.Name = "searchPackages";
-            this.searchPackages.TextChanged += new System.EventHandler(this.searchPackages_TextChanged);
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.AccessibleRole = System.Windows.Forms.AccessibleRole.StaticText;
-            this.label1.Name = "label1";
             // 
             // packageTabsImageList
             // 
@@ -337,67 +255,15 @@ namespace Chocolatey.Explorer.View.Forms
             resources.ApplyResources(this.packageRunPanel1, "packageRunPanel1");
             this.packageRunPanel1.Name = "packageRunPanel1";
             // 
-            // dataGridViewCheckBoxColumn1
+            // searchPackages
             // 
-            this.dataGridViewCheckBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewCheckBoxColumn1.DataPropertyName = "IsInstalled";
-            resources.ApplyResources(this.dataGridViewCheckBoxColumn1, "dataGridViewCheckBoxColumn1");
-            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
-            this.dataGridViewCheckBoxColumn1.ReadOnly = true;
+            resources.ApplyResources(this.searchPackages, "searchPackages");
+            this.searchPackages.Name = "searchPackages";
             // 
-            // dataGridViewTextBoxColumn1
+            // label1
             // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
-            resources.ApplyResources(this.dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "InstalledVersion";
-            resources.ApplyResources(this.dataGridViewTextBoxColumn2, "dataGridViewTextBoxColumn2");
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewCheckBoxColumn2
-            // 
-            this.dataGridViewCheckBoxColumn2.DataPropertyName = "IsPreRelease";
-            resources.ApplyResources(this.dataGridViewCheckBoxColumn2, "dataGridViewCheckBoxColumn2");
-            this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
-            this.dataGridViewCheckBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewCheckBoxColumn3
-            // 
-            this.dataGridViewCheckBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewCheckBoxColumn3.DataPropertyName = "IsInstalled";
-            resources.ApplyResources(this.dataGridViewCheckBoxColumn3, "dataGridViewCheckBoxColumn3");
-            this.dataGridViewCheckBoxColumn3.Name = "dataGridViewCheckBoxColumn3";
-            this.dataGridViewCheckBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Name";
-            resources.ApplyResources(this.dataGridViewTextBoxColumn3, "dataGridViewTextBoxColumn3");
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "InstalledVersion";
-            resources.ApplyResources(this.dataGridViewTextBoxColumn4, "dataGridViewTextBoxColumn4");
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // dataGridViewCheckBoxColumn4
-            // 
-            this.dataGridViewCheckBoxColumn4.DataPropertyName = "IsPreRelease";
-            resources.ApplyResources(this.dataGridViewCheckBoxColumn4, "dataGridViewCheckBoxColumn4");
-            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
-            this.dataGridViewCheckBoxColumn4.ReadOnly = true;
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
             // 
             // statusStrip
             // 
@@ -456,13 +322,7 @@ namespace Chocolatey.Explorer.View.Forms
             this.mainSplitContainer.ResumeLayout(false);
             this.packageTabControl.ResumeLayout(false);
             this.tabInstalled.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.installedPackagesGrid1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.tabAvailable.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.availablePackagesGrid1)).EndInit();
-            this.searchBar.ResumeLayout(false);
-            this.searchBar.PerformLayout();
             this.tabControlPackage.ResumeLayout(false);
             this.tabPackageInformation.ResumeLayout(false);
             this.tabPackageRun.ResumeLayout(false);
@@ -498,9 +358,6 @@ namespace Chocolatey.Explorer.View.Forms
         private PackageButtonsPanel packageButtonsPanel1;
         private AvailablePackagesGrid availablePackagesGrid1;
         private InstalledPackagesGrid installedPackagesGrid1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;

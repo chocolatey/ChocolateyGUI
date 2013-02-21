@@ -143,6 +143,7 @@
     <Compile Include="Services\FileStorageService\IFileStorageService.cs" />
     <Compile Include="Services\ICacheable.cs" />
     <Compile Include="Services\IChocolateyLibDirHelper.cs" />
+    <Compile Include="Services\PackagesService\CachedInstalledPackagesService.cs" />
     <Compile Include="Services\PackagesService\IInstalledPackagesService.cs" />
     <Compile Include="Services\PackagesService\InstalledPackagesService.cs" />
     <Compile Include="Services\PackagesService\ODataAvailablePackagesService.cs" />
@@ -195,7 +196,7 @@
       <DependentUpon>PackageRunPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\PackagesBaseGrid.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\Forms\About.cs">
       <SubType>Form</SubType>
@@ -251,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Controls\PackageRunPanel.resx">
       <DependentUpon>PackageRunPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Controls\PackagesBaseGrid.resx">
+      <DependentUpon>PackagesBaseGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>

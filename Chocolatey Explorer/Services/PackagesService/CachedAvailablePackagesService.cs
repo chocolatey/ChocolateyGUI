@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Chocolatey.Explorer.Model;
 
 namespace Chocolatey.Explorer.Services.PackagesService
@@ -15,29 +16,27 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private readonly IAvailablePackagesService _availablePackagesService;
         private IList<Package> _availablePackageCache;
+        private DateTime _invalidateCacheTime;
 
         public CachedAvailablePackagesService(ODataAvailablePackagesService availablePackagesService)
         {
             _availablePackagesService = availablePackagesService;
 			_availablePackagesService.RunFailed += AvailablePackagesServiceRunFailed;
+            _availablePackagesService.RunFinshed += OnUncachedAvailableRunFinished;
+            InvalidateCache();
         }
 
         public void InvalidateCache()
         {
-            InvalidateAvailablePackagesCache();
-        }
-
-        public void InvalidateAvailablePackagesCache()
-        {
             _availablePackageCache = null;
+            _invalidateCacheTime = DateTime.Now.AddMinutes(60);
         }
 
         public void ListOfAvalablePackages()
         {
-            if (_availablePackageCache == null)
+            if (_availablePackageCache == null || DateTime.Now > _invalidateCacheTime)
             {
                 OnRunStarted();
-                _availablePackagesService.RunFinshed += OnUncachedAvailableRunFinished;
                 _availablePackagesService.ListOfAvalablePackages();
             }
             else
@@ -60,7 +59,6 @@ namespace Chocolatey.Explorer.Services.PackagesService
         public void OnUncachedAvailableRunFinished(IList<Package> packages)
         {
             _availablePackageCache = packages;
-            _availablePackagesService.RunFinshed -= OnUncachedAvailableRunFinished;
             OnRunFinshed(packages);
         }
 

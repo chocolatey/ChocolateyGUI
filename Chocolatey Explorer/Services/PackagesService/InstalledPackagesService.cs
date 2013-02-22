@@ -13,6 +13,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
         {
             _libDirHelper = libDirHelper;
         }
+
         public event Delegates.FinishedDelegate RunFinshed;
         public event Delegates.FailedDelegate RunFailed;
         public event Delegates.StartedDelegate RunStarted;
@@ -22,7 +23,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
             this.Log().Info("Getting list of installed packages");
             OnRunStarted();
             Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
-                        .ContinueWith((task) =>
+                        .ContinueWith(task =>
                         {
                             if (!task.IsFaulted)
                                 OnRunFinshed(task.Result);
@@ -36,7 +37,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
             this.Log().Info("Getting list of installed packages");
             OnRunStarted(); 
             Task.Factory.StartNew(() => _libDirHelper.ReloadFromDir())
-                        .ContinueWith((task) =>
+                        .ContinueWith(task =>
                             {
                                 if (!task.IsFaulted)
                                 {

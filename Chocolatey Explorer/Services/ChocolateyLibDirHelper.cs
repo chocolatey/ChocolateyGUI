@@ -24,9 +24,7 @@ namespace Chocolatey.Explorer.Services
         private readonly ISettingsService _settingsService;
         private string _chocoVersion;
 
-		public ChocolateyLibDirHelper() : this(new ChocolateyService.ChocolateyService(), new LocalFileSystemStorageService(), new SettingsService.SettingsService()) { }
-
-        public ChocolateyLibDirHelper(IChocolateyService chocolateyService, IFileStorageService fileStorageService, ISettingsService settingsService)
+		public ChocolateyLibDirHelper(IChocolateyService chocolateyService, IFileStorageService fileStorageService, ISettingsService settingsService)
         {
 			_chocolateyService = chocolateyService;
 			_fileStorageService = fileStorageService;

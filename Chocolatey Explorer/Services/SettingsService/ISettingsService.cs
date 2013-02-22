@@ -1,5 +1,4 @@
 ﻿using System;
-using Chocolatey.Explorer.Properties;
 
 namespace Chocolatey.Explorer.Services.SettingsService
 {

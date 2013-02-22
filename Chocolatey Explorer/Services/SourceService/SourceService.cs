@@ -20,9 +20,7 @@ namespace Chocolatey.Explorer.Services.SourceService
         public event SourcesDelegate SourcesChanged;
         public event CurrentSourceDelegate CurrentSourceChanged;
 
-		public SourceService() : this(new LocalFileSystemStorageService()) { }
-
-        public SourceService(IFileStorageService fileStorageService)
+		public SourceService(IFileStorageService fileStorageService)
         {
 			_fileStorageService = fileStorageService;
             Initialize();
@@ -41,7 +39,7 @@ namespace Chocolatey.Explorer.Services.SourceService
             var sources = document.Elements("sources").Elements("source");
             foreach (var xElement in sources)
             {
-                _sources.Add(new Source() {Name = xElement.Element("name").Value,Url = xElement.Element("url").Value});
+                _sources.Add(new Source {Name = xElement.Element("name").Value,Url = xElement.Element("url").Value});
             }
             OnSourcesChanged(_sources);
         }

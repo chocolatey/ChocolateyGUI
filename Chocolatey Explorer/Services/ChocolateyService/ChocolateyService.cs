@@ -14,11 +14,6 @@ namespace Chocolatey.Explorer.Services.ChocolateyService
         public event OutputDelegate OutputChanged;
         public event RunFinishedDelegate RunFinished;
 
-        public ChocolateyService()
-            : this(new RunSync(), new SourceService.SourceService())
-        {
-        }
-
         public ChocolateyService(IRunSync powerShell, ISourceService sourceService)
         {
             _powershell = powerShell;

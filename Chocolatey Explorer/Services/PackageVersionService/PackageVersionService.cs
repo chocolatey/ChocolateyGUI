@@ -14,11 +14,6 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 		public event Delegates.VersionResult VersionChanged;
 	    public event Delegates.StartedDelegate RunStarted;
 
-		public PackageVersionService()
-			: this(new RunAsync(), new SourceService.SourceService())
-		{
-		}
-
 		public PackageVersionService(IRunAsync powershell, ISourceService sourceService)
 		{
 			_powershellAsync = powershell;

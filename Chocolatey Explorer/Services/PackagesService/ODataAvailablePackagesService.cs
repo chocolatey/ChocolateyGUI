@@ -14,21 +14,17 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private readonly ISourceService _sourceService;
         private readonly IPackageVersionXMLParser _xmlParser;
-        private readonly ChocolateyLibDirHelper _libDirHelper;
+        private readonly IChocolateyLibDirHelper _libDirHelper;
 
         public event Delegates.FinishedDelegate RunFinshed;
 		public event Delegates.FailedDelegate RunFailed;
         public event Delegates.StartedDelegate RunStarted;
 
-        public ODataAvailablePackagesService(): this(new SourceService.SourceService(), new PackageVersionXMLParser())
-        {
-        }
-
-        public ODataAvailablePackagesService(ISourceService sourceService, IPackageVersionXMLParser xmlParser)
+        public ODataAvailablePackagesService(ISourceService sourceService, IPackageVersionXMLParser xmlParser, IChocolateyLibDirHelper libDirHelper)
         {
             _sourceService = sourceService;
             _xmlParser = xmlParser;
-            _libDirHelper = new ChocolateyLibDirHelper();
+            _libDirHelper = libDirHelper;
         }
 
         public void ListOfAvalablePackages()

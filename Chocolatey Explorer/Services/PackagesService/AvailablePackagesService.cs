@@ -16,11 +16,6 @@ namespace Chocolatey.Explorer.Services.PackagesService
         public event Delegates.FailedDelegate RunFailed;
         public event Delegates.StartedDelegate RunStarted;
 
-        public AvailablePackagesService()
-            : this(new RunAsync(), new SourceService.SourceService())
-        {
-        }
-
         public AvailablePackagesService(IRunAsync powershell, ISourceService sourceService)
         {
             _lines = new List<string>();

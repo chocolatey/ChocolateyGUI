@@ -28,9 +28,9 @@ namespace Chocolatey.Explorer.Test.CommandPattern
             Assert.Throws<System.NotImplementedException>(() => executer.Execute<TestCommandWithParameter, String>("test"));
         }
 
-        private class TestCommandWithParameter : ICommandWithParameter<object>
+        private class TestCommandWithParameter : ICommandWithParameter<String>
         {
-            public void ExecuteWitParameter(object parameter)
+            public void ExecuteWitParameter(String parameter)
             {
                 throw new System.NotImplementedException();
             }

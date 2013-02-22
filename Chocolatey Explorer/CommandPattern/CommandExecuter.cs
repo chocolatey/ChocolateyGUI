@@ -10,7 +10,7 @@ namespace Chocolatey.Explorer.CommandPattern
             command.Execute();
         }
 
-        public void Execute<TCommandWithParameter, TParameterType>(TParameterType parameter) where TCommandWithParameter : class, ICommandWithParameter<object>, new()
+        public void Execute<TCommandWithParameter, TParameterType>(TParameterType parameter) where TCommandWithParameter : class, ICommandWithParameter<TParameterType>, new()
         {
             var command = new TCommandWithParameter();
             command.ExecuteWitParameter(parameter);

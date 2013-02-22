@@ -1,4 +1,6 @@
 ﻿using Chocolatey.Explorer.Powershell;
+using Chocolatey.Explorer.Services.PackageVersionService;
+using Chocolatey.Explorer.Services.PackagesService;
 using Chocolatey.Explorer.Services.SourceService;
 
 namespace Chocolatey.Explorer.Services.PackageService
@@ -7,19 +9,21 @@ namespace Chocolatey.Explorer.Services.PackageService
     {
         private readonly IRun _powershellAsync;
         private readonly ISourceService _sourceService;
+        private readonly IAvailablePackagesService _availabePackagesService;
+        private readonly IInstalledPackagesService _installedPackagesService;
+        private readonly IPackageVersionService _packageVersionService;
 
         public event Delegates.LineDelegate LineChanged;
         public event Delegates.FinishedPackageDelegate RunFinshed;
         public event Delegates.StartedDelegate RunStarted;
 
-        public PackageService(): this(new RunAsync(),new SourceService.SourceService())
-        {
-        }
-
-        public PackageService(IRunAsync powershell, ISourceService sourceService)
+        public PackageService(IRunAsync powershell, ISourceService sourceService, IAvailablePackagesService availabePackagesService, IInstalledPackagesService installedPackagesService, IPackageVersionService packageVersionService)
         {
 			_powershellAsync = powershell;
             _sourceService = sourceService;
+            _availabePackagesService = availabePackagesService;
+            _installedPackagesService = installedPackagesService;
+            _packageVersionService = packageVersionService;
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;
         }
@@ -52,6 +56,7 @@ namespace Chocolatey.Explorer.Services.PackageService
 
         private void RunFinished()
         {
+            InvalidateCache();
             OnRunFinshed();
         }
 
@@ -71,6 +76,25 @@ namespace Chocolatey.Explorer.Services.PackageService
         {
             var handler = LineChanged;
             if (handler != null) handler(line);
+        }
+
+        private void InvalidateCache()
+        {
+            var service = _availabePackagesService as ICacheable;
+            if (service != null)
+            {
+                service.InvalidateCache();
+            }
+            var cacheable = _installedPackagesService as ICacheable;
+            if (cacheable != null)
+            {
+                cacheable.InvalidateCache();
+            }
+            var versionService = _packageVersionService as ICacheable;
+            if (versionService != null)
+            {
+                versionService.InvalidateCache();
+            }
         }
 
     }

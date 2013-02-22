@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows.Forms;
+using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Services;
 using System.ComponentModel;
 using Chocolatey.Explorer.Services.ChocolateyService;
@@ -24,15 +25,11 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void VersionChangeFinished(string version)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new VersionChangedHandler(VersionChangeFinished), new object[] { version });
-            }
-            else
-            {
-                latestVersionBox.Text = version;
-                progressBar.Visible = false;
-            }
+            this.Invoke(() =>
+                {
+                    latestVersionBox.Text = version;
+                    progressBar.Visible = false;
+                });
         }
 
         private void GetChocolateyVersionAsync()

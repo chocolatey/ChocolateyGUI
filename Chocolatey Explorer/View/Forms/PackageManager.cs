@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Chocolatey.Explorer.CommandPattern;
 using Chocolatey.Explorer.Commands;
+using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services;
 using Chocolatey.Explorer.Services.ChocolateyService;
@@ -15,15 +15,13 @@ using Chocolatey.Explorer.Services.SettingsService;
 
 namespace Chocolatey.Explorer.View.Forms
 {
-    public partial class PackageManager : Form,IPackageManager
+    public partial class PackageManager : Form, IPackageManager
     {
-        private delegate void PackageSServiceHandler(IList<Package> packages);
-        private delegate void PackageServiceRunFinishedHandler();
         private readonly IAvailablePackagesService _availablePackagesService;
         private readonly IInstalledPackagesService _installedPackagesService;
         private readonly IPackageVersionService _packageVersionService;
         private readonly IPackageService _packageService;
-		private readonly IFileStorageService _fileStorageService;
+        private readonly IFileStorageService _fileStorageService;
         private readonly ICommandExecuter _commandExecuter;
         private readonly ISettingsService _settingsService;
 
@@ -42,13 +40,13 @@ namespace Chocolatey.Explorer.View.Forms
             _installedPackagesService.RunFinshed += PackagesServiceRunFinished;
             _packageService.RunFinshed += PackageServiceRunFinished;
             _packageService.RunStarted += PackageServiceRunStarted;
-			_availablePackagesService.RunFailed += PackagesServiceRunFailed;
+            _availablePackagesService.RunFailed += PackagesServiceRunFailed;
             _installedPackagesService.RunFailed += PackagesServiceRunFailed;
             _availablePackagesService.RunStarted += PackagesServiceRunStarted;
             _installedPackagesService.RunStarted += PackagesServiceRunStarted;
-            
+
             InitializeComponent();
-            ClearStatus();
+
             tabAvailable.ImageIndex = 0;
             tabInstalled.ImageIndex = 1;
             _installedPackagesService.ListOfDistinctHighestInstalledPackages();
@@ -56,98 +54,62 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void PackageServiceRunStarted(string message)
         {
-            DisableUserInteraction();
-            lblprogress.Text = message;
-            progressbar1.Visible = true;
-            progressbar1.Style = ProgressBarStyle.Marquee;
-            tabControlPackage.SelectTab(tabPackageRun);
+            this.Invoke(() =>
+                {
+                    DisableUserInteraction();
+                    tabControlPackage.SelectTab(tabPackageRun);
+                });
         }
 
         private void PackagesServiceRunStarted(string message)
         {
-            DisableUserInteraction();
-            searchPackages.Text = "";
-            lblprogress.Text = message;
-            SetStatus();
-            progressbar1.Visible = true;
-            progressbar1.Style = ProgressBarStyle.Marquee;
+            this.Invoke(() =>
+                {
+                    DisableUserInteraction();
+                    searchPackages.Text = "";
+                });
         }
 
         private void PackageVersionServiceStarted(string message)
         {
-            DisableUserInteraction();
-            lblprogress.Text = message;
-            progressbar2.Visible = true;
-            progressbar2.Style = ProgressBarStyle.Marquee;
+            this.Invoke(DisableUserInteraction);
         }
 
         private void PackageServiceRunFinished()
         {
-            if (InvokeRequired)
-            {
-                Invoke(new PackageServiceRunFinishedHandler(PackageServiceRunFinished));
-            }
-            else
-            {
-                EnableUserInteraction();
-                lblprogress.Text = "";
-                progressbar2.Visible = false;
-                tabControlPackage.SelectTab(tabPackageInformation);
-                packageTabControl.SelectTab(tabInstalled);
-                // invalidate caches, because package has been installed
-                if (_availablePackagesService is ICacheable)
+            this.Invoke(() =>
                 {
-                    ((ICacheable)_availablePackagesService).InvalidateCache();
-                }
-                if (_packageVersionService is ICacheable)
-                {
-                    ((ICacheable)_packageVersionService).InvalidateCache();
-                }
-
-                QueryInstalledPackages();
-            }
+                    EnableUserInteraction();
+                    tabControlPackage.SelectTab(tabPackageInformation);
+                    packageTabControl.SelectTab(tabInstalled);
+                    QueryInstalledPackages();
+                });
         }
 
         private void PackagesServiceRunFinished(IList<Package> packages)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new PackageSServiceHandler(PackagesServiceRunFinished), new object[] { packages });
-            }
-            else
-            {
-                EnableUserInteraction();
-                ClearStatus();
-                SetStatus(); 
-                Activate();
-            }
+            this.Invoke(() =>
+                {
+                    EnableUserInteraction();
+                    Activate();
+                });
         }
 
-		private void PackagesServiceRunFailed(Exception exc)
-		{
-			//TODO - should we do something to prevent them from using more of the app nd getting more errors?
-			if (exc is ChocolateyVersionUnknownException || (exc is AggregateException || exc.InnerException is IChocolateyService))
-			{
-				var result = MessageBox.Show("Chocolatey version could not be detected. Either Chocolatey is not installed or we cannot access it.", "Chocolatey not found");
-				Application.Exit();
-			}
-			else
-				MessageBox.Show(String.Format("An unexpected error occurred (good thing you're technical, eh?)\n{0}: {1}", exc.GetType().Name, exc.Message), "Unexpected Application Error");
-		}
+        private void PackagesServiceRunFailed(Exception exc)
+        {
+            //TODO - should we do something to prevent them from using more of the app nd getting more errors?
+            if (exc is ChocolateyVersionUnknownException || (exc is AggregateException || exc.InnerException is IChocolateyService))
+            {
+                var result = MessageBox.Show("Chocolatey version could not be detected. Either Chocolatey is not installed or we cannot access it.", "Chocolatey not found");
+                Application.Exit();
+            }
+            else
+                MessageBox.Show(String.Format("An unexpected error occurred (good thing you're technical, eh?)\n{0}: {1}", exc.GetType().Name, exc.Message), "Unexpected Application Error");
+        }
 
         private void VersionChangedHandler(PackageVersion version)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker(() => VersionChangedHandler(version )));
-            }
-            else
-            {
-                EnableUserInteraction();
-                lblprogress.Text = "";
-                progressbar2.Visible = false;
-                SetStatus();
-            }
+            this.Invoke(EnableUserInteraction);
         }
 
         private void HelpClick(object sender, EventArgs e)
@@ -176,7 +138,7 @@ namespace Chocolatey.Explorer.View.Forms
                 QueryInstalledPackages();
             }
         }
-        
+
         private void QueryAvailablePackges()
         {
             _availablePackagesService.ListOfAvalablePackages();
@@ -191,7 +153,7 @@ namespace Chocolatey.Explorer.View.Forms
             }
             else
             {
-               _installedPackagesService.ListOfDistinctHighestInstalledPackages();
+                _installedPackagesService.ListOfDistinctHighestInstalledPackages();
             }
         }
 
@@ -212,20 +174,5 @@ namespace Chocolatey.Explorer.View.Forms
             packageVersionPanel.LockPanel();
         }
 
-        private void SetStatus()
-        {
-            int rowcount1 = 0;
-            int rowcount2 = 0;
-            if (availablePackagesGrid1 != null) rowcount1 = availablePackagesGrid1.Rowcount;
-            if (installedPackagesGrid1 != null) rowcount2 = installedPackagesGrid1.Rowcount;
-            lblStatus.Text = "Available packages: " + rowcount1 + " - Installed packages: " + rowcount2;
-        }
-
-        private void ClearStatus()
-        {
-            lblStatus.Text = "";
-            lblprogress.Text = "";
-            progressbar1.Visible = false;
-        }
     }
 }

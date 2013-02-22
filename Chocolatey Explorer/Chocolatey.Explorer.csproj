@@ -130,6 +130,7 @@
     <Compile Include="Commands\OpenAboutCommand.cs" />
     <Compile Include="Commands\OpenHelpCommand.cs" />
     <Compile Include="Commands\OpenSettingsCommand.cs" />
+    <Compile Include="Extensions\CrossThreadExtension.cs" />
     <Compile Include="IoC\Registry.cs" />
     <Compile Include="LogExtensions.cs" />
     <Compile Include="Model\Package.cs" />
@@ -204,6 +205,12 @@
     <Compile Include="View\Controls\PackagesBaseGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="View\Controls\Statusbar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Controls\Statusbar.Designer.cs">
+      <DependentUpon>Statusbar.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Forms\About.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Controls\PackagesBaseGrid.resx">
       <DependentUpon>PackagesBaseGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Controls\Statusbar.resx">
+      <DependentUpon>Statusbar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>

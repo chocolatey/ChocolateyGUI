@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.PackageVersionService;
 using StructureMap;
@@ -44,15 +45,11 @@ namespace Chocolatey.Explorer.View.Controls
 
         private void VersionChanged(PackageVersion version)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker(() => VersionChanged(version)));
-            }
-            else
-            {
-                Enabled = true;
-                IsLoading = false;
-            }
+            this.Invoke(() =>
+                {
+                    Enabled = true;
+                    IsLoading = false;
+                });
         }
 
         protected void GridSelectionChanged(object sender, EventArgs e)
@@ -138,7 +135,7 @@ namespace Chocolatey.Explorer.View.Controls
 
         private void TxtSearchTextChanged(object sender, EventArgs e)
         {
-            DataGridViewRow rowFound = packagesGrid.Rows.OfType<DataGridViewRow>()
+            var rowFound = packagesGrid.Rows.OfType<DataGridViewRow>()
                     .FirstOrDefault(row => row.Cells.OfType<DataGridViewCell>()
                     .Any(cell => cell.ColumnIndex == 0 && ((String)cell.Value).StartsWith(txtSearch.Text, StringComparison.OrdinalIgnoreCase)));
 

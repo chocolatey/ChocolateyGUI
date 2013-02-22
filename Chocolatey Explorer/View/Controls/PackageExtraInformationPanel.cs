@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.PackageVersionService;
 using StructureMap;
@@ -39,16 +40,14 @@ namespace Chocolatey.Explorer.View.Controls
         /// </summary>
         private void UpdatePanel(PackageVersion version)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker(() => UpdatePanel(version)));
-            }
-            else
-            {
-                _version = version;
-                txtCopyrightInformation.Text = _version.CopyrightInformation;
-                txtReleaseNotes.Text = _version.ReleaseNotes != null ? _version.ReleaseNotes.Replace("\n\t\n\t", Environment.NewLine) : "";
-            }
+            this.Invoke(() =>
+                {
+                    _version = version;
+                    txtCopyrightInformation.Text = _version.CopyrightInformation;
+                    txtReleaseNotes.Text = _version.ReleaseNotes != null
+                                               ? _version.ReleaseNotes.Replace("\n\t\n\t", Environment.NewLine)
+                                               : "";
+                });
         }
     }
 }

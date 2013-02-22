@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.PackagesService;
 
@@ -26,27 +27,19 @@ namespace Chocolatey.Explorer.View.Controls
 
         private void AvailablePackagesServiceRunFailed(Exception exc)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker(() => AvailablePackagesServiceRunFailed(exc)));
-            }
-            else
-            {
-                _bindingsource.DataSource = null;
-            }
+            this.Invoke(() =>
+                {
+                    _bindingsource.DataSource = null;
+                });
         }
 
         private void AvailablePackagesServiceRunFinished(IList<Package> packages)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker(() => AvailablePackagesServiceRunFinished(packages)));
-            }
-            else
-            {
-                IList<Package> distinct = packages.Distinct().ToList();
-                _bindingsource.DataSource = distinct;
-            }
+            this.Invoke(() =>
+                {
+                    IList<Package> distinct = packages.Distinct().ToList();
+                    _bindingsource.DataSource = distinct;
+                });
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.PackageService;
 using Chocolatey.Explorer.Services.PackageVersionService;
@@ -47,31 +48,27 @@ namespace Chocolatey.Explorer.View.Controls
 
         private void UpdateInstallUninstallButtonLabel(PackageVersion version)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker(() => UpdateInstallUninstallButtonLabel(version)));
-            }
-            else
-            {
-                _version = version;
-                btnInstallUninstall.Checked = !_version.IsInstalled;
-                btnInstallUninstall.Enabled = true;
-                btnUpdate.Enabled = _version.CanBeUpdated;
-                if (btnInstallUninstall.Checked)
+            this.Invoke(() =>
                 {
-                    btnInstallUninstall.ImageIndex = 0;
-                    btnInstallUninstall.Text = strings.install;
-                    btnInstallUninstall.AccessibleName = strings.install;
-                    btnInstallUninstall.AccessibleDescription = strings.install_long;
-                }
-                else
-                {
-                    btnInstallUninstall.ImageIndex = 1;
-                    btnInstallUninstall.Text = strings.uninstall;
-                    btnInstallUninstall.AccessibleName = strings.uninstall;
-                    btnInstallUninstall.AccessibleDescription = strings.unsinstall_long;
-                }
-            }
+                    _version = version;
+                    btnInstallUninstall.Checked = !_version.IsInstalled;
+                    btnInstallUninstall.Enabled = true;
+                    btnUpdate.Enabled = _version.CanBeUpdated;
+                    if (btnInstallUninstall.Checked)
+                    {
+                        btnInstallUninstall.ImageIndex = 0;
+                        btnInstallUninstall.Text = strings.install;
+                        btnInstallUninstall.AccessibleName = strings.install;
+                        btnInstallUninstall.AccessibleDescription = strings.install_long;
+                    }
+                    else
+                    {
+                        btnInstallUninstall.ImageIndex = 1;
+                        btnInstallUninstall.Text = strings.uninstall;
+                        btnInstallUninstall.AccessibleName = strings.uninstall;
+                        btnInstallUninstall.AccessibleDescription = strings.unsinstall_long;
+                    }
+                });
         }
         
         private void BtnUpdateClick(object sender, EventArgs e)

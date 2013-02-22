@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
+using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.PackageVersionService;
 using StructureMap;
@@ -49,69 +50,65 @@ namespace Chocolatey.Explorer.View.Controls
         /// </summary>
         private void UpdatePanel(PackageVersion version)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker(() => UpdatePanel(version)));
-            }
-            else
-            {
-                _version = version;
-                ClearPanel();
-                lblName.Text = _version.Name;
-                lblServerVersion.Text = _version.Serverversion;
-                lblInstalledVersion.Text = _version.CurrentVersion;
-
-                if (!string.IsNullOrEmpty(_version.AuthorName))
-                    lblAuthor.Text = string.Format(strings.authored_by, _version.AuthorName);
-
-                txtDescription.Text = _version.Description;
-
-                if (!string.IsNullOrEmpty(_version.IconUrl))
+            this.Invoke(() =>
                 {
-                    pictureBoxLogo.ImageLocation = _version.IconUrl;
-                    pictureBoxLogo.LoadAsync();
-                }
-                else
-                {
-                    pictureBoxLogo.Image = pictureBoxLogo.ErrorImage;
-                }
-                if (_version.IsCurrentVersionPreRelease)
-                {
-                    var thisExe = Assembly.GetExecutingAssembly();
-                    var file = thisExe.GetManifestResourceStream("Chocolatey.Explorer.Resources.monitorPre.png");
-                    if (file != null) picInstalledVersion.Image = Image.FromStream(file);
-                }
-                else
-                {
-                    var thisExe = Assembly.GetExecutingAssembly();
-                    var file = thisExe.GetManifestResourceStream("Chocolatey.Explorer.Resources.monitor.png");
-                    if (file != null) picInstalledVersion.Image = Image.FromStream(file);
-                }
+                    _version = version;
+                    ClearPanel();
+                    lblName.Text = _version.Name;
+                    lblServerVersion.Text = _version.Serverversion;
+                    lblInstalledVersion.Text = _version.CurrentVersion;
 
-                if (_version.DownloadCount != 0)
-                    lblDownloads.Text = _version.DownloadCount.ToString(CultureInfo.InvariantCulture);
-                if (_version.VersionDownloadCount != 0)
-                    lblVersionDownloads.Text = _version.VersionDownloadCount.ToString(CultureInfo.InvariantCulture);
-                if (_version.LastUpdatedAt != DateTime.MinValue)
-                    lblUpdated.Text = _version.LastUpdatedAt.GetDateTimeFormats()[0];
-                if (_version.PackageSize != 0)
-                    lblPackageSize.Text = string.Format(strings.package_size_mb, (_version.PackageSize / 1024.0));
+                    if (!string.IsNullOrEmpty(_version.AuthorName))
+                        lblAuthor.Text = string.Format(strings.authored_by, _version.AuthorName);
 
-                tagList.Items.Clear();
-                if (_version.Tags != null)
-                {
-                    foreach (var tag in _version.Tags)
-                        tagList.Items.Add("#" + tag);
-                }
-                dependenciesList.Items.Clear();
-                if (_version.Dependencies != null)
-                {
-                    foreach (var dependency in _version.Dependencies)
-                        dependenciesList.Items.Add(dependency);
-                }
+                    txtDescription.Text = _version.Description;
 
-                UnlockPanel();
-            }
+                    if (!string.IsNullOrEmpty(_version.IconUrl))
+                    {
+                        pictureBoxLogo.ImageLocation = _version.IconUrl;
+                        pictureBoxLogo.LoadAsync();
+                    }
+                    else
+                    {
+                        pictureBoxLogo.Image = pictureBoxLogo.ErrorImage;
+                    }
+                    if (_version.IsCurrentVersionPreRelease)
+                    {
+                        var thisExe = Assembly.GetExecutingAssembly();
+                        var file = thisExe.GetManifestResourceStream("Chocolatey.Explorer.Resources.monitorPre.png");
+                        if (file != null) picInstalledVersion.Image = Image.FromStream(file);
+                    }
+                    else
+                    {
+                        var thisExe = Assembly.GetExecutingAssembly();
+                        var file = thisExe.GetManifestResourceStream("Chocolatey.Explorer.Resources.monitor.png");
+                        if (file != null) picInstalledVersion.Image = Image.FromStream(file);
+                    }
+
+                    if (_version.DownloadCount != 0)
+                        lblDownloads.Text = _version.DownloadCount.ToString(CultureInfo.InvariantCulture);
+                    if (_version.VersionDownloadCount != 0)
+                        lblVersionDownloads.Text = _version.VersionDownloadCount.ToString(CultureInfo.InvariantCulture);
+                    if (_version.LastUpdatedAt != DateTime.MinValue)
+                        lblUpdated.Text = _version.LastUpdatedAt.GetDateTimeFormats()[0];
+                    if (_version.PackageSize != 0)
+                        lblPackageSize.Text = string.Format(strings.package_size_mb, (_version.PackageSize/1024.0));
+
+                    tagList.Items.Clear();
+                    if (_version.Tags != null)
+                    {
+                        foreach (var tag in _version.Tags)
+                            tagList.Items.Add("#" + tag);
+                    }
+                    dependenciesList.Items.Clear();
+                    if (_version.Dependencies != null)
+                    {
+                        foreach (var dependency in _version.Dependencies)
+                            dependenciesList.Items.Add(dependency);
+                    }
+
+                    UnlockPanel();
+                });
         }
 
         /// <summary>

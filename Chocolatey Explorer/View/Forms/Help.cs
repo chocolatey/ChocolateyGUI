@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using Chocolatey.Explorer.Services;
+using Chocolatey.Explorer.Extensions;
 using System.ComponentModel;
 using Chocolatey.Explorer.Services.ChocolateyService;
 
@@ -23,15 +23,11 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void ChocolateyServiceOutPutChanged(string output)
         {
-            if (this.InvokeRequired)
-            {
-                Invoke(new ChocolateyServiceOutPutHandler(ChocolateyServiceOutPutChanged), new object[] { output });
-            }
-            else
-            {
-                progressBar.Visible = false;
-                textBox1.Text = output;
-            }
+            this.Invoke(() =>
+                {
+                    progressBar.Visible = false;
+                    textBox1.Text = output;
+                });
         }
 
         private void LoadHelp()

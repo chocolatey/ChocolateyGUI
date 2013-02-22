@@ -129,6 +129,7 @@
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.latestVersionBox);
             this.Controls.Add(this.progressBar);
+            this.KeyPreview = true;
             this.Name = "About";
             this.Load += new System.EventHandler(this.About_Load);
             this.ResumeLayout(false);

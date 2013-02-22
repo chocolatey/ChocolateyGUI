@@ -77,5 +77,17 @@ namespace Chocolatey.Explorer.View.Forms
         {
             this.Show();
         }
+
+        /// <summary>
+        /// Close form on escape key.
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape) this.Close();
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
     }
 }

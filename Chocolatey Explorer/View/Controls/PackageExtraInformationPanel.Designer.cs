@@ -48,9 +48,9 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(367, 378);
             this.tableLayoutPanel1.TabIndex = 0;
@@ -69,16 +69,16 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 241);
+            this.label2.Location = new System.Drawing.Point(3, 242);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(159, 19);
+            this.label2.Size = new System.Drawing.Size(159, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "Copyright information";
             // 
             // txtReleaseNotes
             // 
             this.txtReleaseNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtReleaseNotes.Location = new System.Drawing.Point(3, 24);
+            this.txtReleaseNotes.Location = new System.Drawing.Point(3, 25);
             this.txtReleaseNotes.Multiline = true;
             this.txtReleaseNotes.Name = "txtReleaseNotes";
             this.txtReleaseNotes.ReadOnly = true;
@@ -89,12 +89,12 @@
             // txtCopyrightInformation
             // 
             this.txtCopyrightInformation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCopyrightInformation.Location = new System.Drawing.Point(3, 263);
+            this.txtCopyrightInformation.Location = new System.Drawing.Point(3, 267);
             this.txtCopyrightInformation.Multiline = true;
             this.txtCopyrightInformation.Name = "txtCopyrightInformation";
             this.txtCopyrightInformation.ReadOnly = true;
             this.txtCopyrightInformation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtCopyrightInformation.Size = new System.Drawing.Size(361, 112);
+            this.txtCopyrightInformation.Size = new System.Drawing.Size(361, 110);
             this.txtCopyrightInformation.TabIndex = 3;
             // 
             // PackageExtraInformationPanel

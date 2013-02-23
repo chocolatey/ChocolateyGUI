@@ -43,13 +43,19 @@ namespace Chocolatey.Explorer.View.Forms
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.packageTabControl = new System.Windows.Forms.TabControl();
             this.tabInstalled = new System.Windows.Forms.TabPage();
+            this.installedPackagesGrid1 = new Chocolatey.Explorer.View.Controls.InstalledPackagesGrid();
             this.tabAvailable = new System.Windows.Forms.TabPage();
+            this.availablePackagesGrid1 = new Chocolatey.Explorer.View.Controls.AvailablePackagesGrid();
             this.searchBar = new System.Windows.Forms.Panel();
             this.packageTabsImageList = new System.Windows.Forms.ImageList(this.components);
             this.tabControlPackage = new System.Windows.Forms.TabControl();
             this.tabPackageInformation = new System.Windows.Forms.TabPage();
+            this.packageVersionPanel = new Chocolatey.Explorer.View.Controls.PackageVersionPanel();
+            this.packageButtonsPanel1 = new Chocolatey.Explorer.View.Controls.PackageButtonsPanel();
             this.tabExtraPackageInformation = new System.Windows.Forms.TabPage();
+            this.packageExtraInformationPanel1 = new Chocolatey.Explorer.View.Controls.PackageExtraInformationPanel();
             this.tabPackageRun = new System.Windows.Forms.TabPage();
+            this.packageRunPanel1 = new Chocolatey.Explorer.View.Controls.PackageRunPanel();
             this.searchPackages = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -60,13 +66,9 @@ namespace Chocolatey.Explorer.View.Forms
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.installedPackagesGrid1 = new Chocolatey.Explorer.View.Controls.InstalledPackagesGrid();
-            this.availablePackagesGrid1 = new Chocolatey.Explorer.View.Controls.AvailablePackagesGrid();
-            this.packageVersionPanel = new Chocolatey.Explorer.View.Controls.PackageVersionPanel();
-            this.packageButtonsPanel1 = new Chocolatey.Explorer.View.Controls.PackageButtonsPanel();
-            this.packageExtraInformationPanel1 = new Chocolatey.Explorer.View.Controls.PackageExtraInformationPanel();
-            this.packageRunPanel1 = new Chocolatey.Explorer.View.Controls.PackageRunPanel();
             this.statusbar1 = new Chocolatey.Explorer.View.Controls.Statusbar();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.logsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -119,7 +121,9 @@ namespace Chocolatey.Explorer.View.Forms
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpToolStripMenuItem1,
             this.aboutToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.toolStripMenuItem1,
+            this.settingsToolStripMenuItem,
+            this.logsToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             // 
             // helpToolStripMenuItem1
@@ -182,6 +186,12 @@ namespace Chocolatey.Explorer.View.Forms
             this.tabInstalled.Name = "tabInstalled";
             this.tabInstalled.UseVisualStyleBackColor = true;
             // 
+            // installedPackagesGrid1
+            // 
+            this.installedPackagesGrid1.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
+            resources.ApplyResources(this.installedPackagesGrid1, "installedPackagesGrid1");
+            this.installedPackagesGrid1.Name = "installedPackagesGrid1";
+            // 
             // tabAvailable
             // 
             resources.ApplyResources(this.tabAvailable, "tabAvailable");
@@ -190,6 +200,12 @@ namespace Chocolatey.Explorer.View.Forms
             this.tabAvailable.Controls.Add(this.searchBar);
             this.tabAvailable.Name = "tabAvailable";
             this.tabAvailable.UseVisualStyleBackColor = true;
+            // 
+            // availablePackagesGrid1
+            // 
+            this.availablePackagesGrid1.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
+            resources.ApplyResources(this.availablePackagesGrid1, "availablePackagesGrid1");
+            this.availablePackagesGrid1.Name = "availablePackagesGrid1";
             // 
             // searchBar
             // 
@@ -220,6 +236,16 @@ namespace Chocolatey.Explorer.View.Forms
             resources.ApplyResources(this.tabPackageInformation, "tabPackageInformation");
             this.tabPackageInformation.Name = "tabPackageInformation";
             // 
+            // packageVersionPanel
+            // 
+            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
+            this.packageVersionPanel.Name = "packageVersionPanel";
+            // 
+            // packageButtonsPanel1
+            // 
+            resources.ApplyResources(this.packageButtonsPanel1, "packageButtonsPanel1");
+            this.packageButtonsPanel1.Name = "packageButtonsPanel1";
+            // 
             // tabExtraPackageInformation
             // 
             this.tabExtraPackageInformation.Controls.Add(this.packageExtraInformationPanel1);
@@ -227,12 +253,23 @@ namespace Chocolatey.Explorer.View.Forms
             this.tabExtraPackageInformation.Name = "tabExtraPackageInformation";
             this.tabExtraPackageInformation.UseVisualStyleBackColor = true;
             // 
+            // packageExtraInformationPanel1
+            // 
+            this.packageExtraInformationPanel1.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(this.packageExtraInformationPanel1, "packageExtraInformationPanel1");
+            this.packageExtraInformationPanel1.Name = "packageExtraInformationPanel1";
+            // 
             // tabPackageRun
             // 
             this.tabPackageRun.BackColor = System.Drawing.SystemColors.Control;
             this.tabPackageRun.Controls.Add(this.packageRunPanel1);
             resources.ApplyResources(this.tabPackageRun, "tabPackageRun");
             this.tabPackageRun.Name = "tabPackageRun";
+            // 
+            // packageRunPanel1
+            // 
+            resources.ApplyResources(this.packageRunPanel1, "packageRunPanel1");
+            this.packageRunPanel1.Name = "packageRunPanel1";
             // 
             // searchPackages
             // 
@@ -276,43 +313,21 @@ namespace Chocolatey.Explorer.View.Forms
             // 
             this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
             // 
-            // installedPackagesGrid1
-            // 
-            this.installedPackagesGrid1.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
-            resources.ApplyResources(this.installedPackagesGrid1, "installedPackagesGrid1");
-            this.installedPackagesGrid1.Name = "installedPackagesGrid1";
-            // 
-            // availablePackagesGrid1
-            // 
-            this.availablePackagesGrid1.AccessibleRole = System.Windows.Forms.AccessibleRole.List;
-            resources.ApplyResources(this.availablePackagesGrid1, "availablePackagesGrid1");
-            this.availablePackagesGrid1.Name = "availablePackagesGrid1";
-            // 
-            // packageVersionPanel
-            // 
-            resources.ApplyResources(this.packageVersionPanel, "packageVersionPanel");
-            this.packageVersionPanel.Name = "packageVersionPanel";
-            // 
-            // packageButtonsPanel1
-            // 
-            resources.ApplyResources(this.packageButtonsPanel1, "packageButtonsPanel1");
-            this.packageButtonsPanel1.Name = "packageButtonsPanel1";
-            // 
-            // packageExtraInformationPanel1
-            // 
-            this.packageExtraInformationPanel1.BackColor = System.Drawing.SystemColors.Control;
-            resources.ApplyResources(this.packageExtraInformationPanel1, "packageExtraInformationPanel1");
-            this.packageExtraInformationPanel1.Name = "packageExtraInformationPanel1";
-            // 
-            // packageRunPanel1
-            // 
-            resources.ApplyResources(this.packageRunPanel1, "packageRunPanel1");
-            this.packageRunPanel1.Name = "packageRunPanel1";
-            // 
             // statusbar1
             // 
             resources.ApplyResources(this.statusbar1, "statusbar1");
             this.statusbar1.Name = "statusbar1";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            // 
+            // logsToolStripMenuItem
+            // 
+            this.logsToolStripMenuItem.Name = "logsToolStripMenuItem";
+            resources.ApplyResources(this.logsToolStripMenuItem, "logsToolStripMenuItem");
+            this.logsToolStripMenuItem.Click += new System.EventHandler(this.logsToolStripMenuItem_Click);
             // 
             // PackageManager
             // 
@@ -379,5 +394,7 @@ namespace Chocolatey.Explorer.View.Forms
         private System.Windows.Forms.TabPage tabExtraPackageInformation;
         private PackageExtraInformationPanel packageExtraInformationPanel1;
         private Statusbar statusbar1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem logsToolStripMenuItem;
     }
 }

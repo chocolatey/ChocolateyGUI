@@ -99,6 +99,7 @@
     <Compile Include="Commands\TestClearCacheAll.cs" />
     <Compile Include="Commands\TestClearCacheInstalledPackagesCommand.cs" />
     <Compile Include="Commands\TestClearCachePackageVersionCommand.cs" />
+    <Compile Include="Commands\TestLogsCommand.cs" />
     <Compile Include="Commands\TestOpenAboutCommand.cs" />
     <Compile Include="Commands\TestOpenHelpCommand.cs" />
     <Compile Include="Commands\TestOpenSettingsCommand.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Services\TestChocolateyLibDirHelper.cs" />
     <Compile Include="Services\TestInstalledPackagesService.cs" />
     <Compile Include="Services\TestLocalFileSystemStorageService.cs" />
+    <Compile Include="Services\TestLogsService.cs" />
     <Compile Include="Services\TestPackagesSorter.cs" />
     <Compile Include="Services\TestPackageVersionService.cs" />
     <Compile Include="Services\TestAvailablePackagesService.cs" />

@@ -133,6 +133,7 @@
     <Compile Include="Commands\ClearCachePackageVersionCommand.cs" />
     <Compile Include="Commands\OpenAboutCommand.cs" />
     <Compile Include="Commands\OpenHelpCommand.cs" />
+    <Compile Include="Commands\OpenLogsCommand.cs" />
     <Compile Include="Commands\OpenSettingsCommand.cs" />
     <Compile Include="Extensions\CrossThreadExtension.cs" />
     <Compile Include="IoC\Registry.cs" />
@@ -148,6 +149,8 @@
     <Compile Include="Services\FileStorageService\IFileStorageService.cs" />
     <Compile Include="Services\ICacheable.cs" />
     <Compile Include="Services\IChocolateyLibDirHelper.cs" />
+    <Compile Include="Services\LogsService\ILogsService.cs" />
+    <Compile Include="Services\LogsService\LogsService.cs" />
     <Compile Include="Services\PackagesService\CachedInstalledPackagesService.cs" />
     <Compile Include="Services\PackagesService\IInstalledPackagesService.cs" />
     <Compile Include="Services\PackagesService\InstalledPackagesService.cs" />
@@ -229,8 +232,15 @@
     </Compile>
     <Compile Include="View\Forms\IAbout.cs" />
     <Compile Include="View\Forms\IHelp.cs" />
+    <Compile Include="View\Forms\ILogs.cs" />
     <Compile Include="View\Forms\IPackageManager.cs" />
     <Compile Include="View\Forms\ISettings.cs" />
+    <Compile Include="View\Forms\Logs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Forms\Logs.Designer.cs">
+      <DependentUpon>Logs.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Forms\PackageManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -284,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Forms\Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Forms\Logs.resx">
+      <DependentUpon>Logs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Forms\PackageManager.resx">
       <DependentUpon>PackageManager.cs</DependentUpon>

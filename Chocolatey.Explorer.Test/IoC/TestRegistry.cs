@@ -4,6 +4,7 @@ using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services;
 using Chocolatey.Explorer.Services.ChocolateyService;
 using Chocolatey.Explorer.Services.FileStorageService;
+using Chocolatey.Explorer.Services.LogsService;
 using Chocolatey.Explorer.Services.PackageService;
 using Chocolatey.Explorer.Services.PackageVersionService;
 using Chocolatey.Explorer.Services.PackagesService;
@@ -165,6 +166,18 @@ namespace Chocolatey.Explorer.Test.IoC
         }
 
         [Test]
+        public void IfILogsServiceCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<ILogsService>());
+        }
+
+        [Test]
+        public void IfILogsServiceIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<ILogsService>(), ObjectFactory.GetInstance<ILogsService>());
+        }
+
+        [Test]
         public void IfIHelpCanBeResolved()
         {
             Assert.IsNotNull(ObjectFactory.GetInstance<IHelp>());
@@ -198,6 +211,18 @@ namespace Chocolatey.Explorer.Test.IoC
         public void IfISettingsIsNotSingleton()
         {
             Assert.AreNotEqual(ObjectFactory.GetInstance<ISettings>(), ObjectFactory.GetInstance<ISettings>());
+        }
+
+        [Test]
+        public void IfILogsCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<ILogs>());
+        }
+
+        [Test]
+        public void IfILogsIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<ILogs>(), ObjectFactory.GetInstance<ILogs>());
         }
 
         [Test]

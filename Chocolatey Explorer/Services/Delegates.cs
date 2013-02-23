@@ -12,5 +12,6 @@ namespace Chocolatey.Explorer.Services
         public delegate void VersionResult(PackageVersion version);
         public delegate void StartedDelegate(string message);
         public delegate void LineDelegate(string line);
+        public delegate void FinishedLogsDelegate(IList<string> logs);
     }
 }

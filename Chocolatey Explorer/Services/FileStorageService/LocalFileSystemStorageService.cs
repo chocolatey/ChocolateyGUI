@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 
 namespace Chocolatey.Explorer.Services.FileStorageService
@@ -22,5 +23,11 @@ namespace Chocolatey.Explorer.Services.FileStorageService
             this.Log().Debug("Load document: {0}", filename);
 		    return File.Exists(filename) ? XDocument.Load(filename) : null;
 		}
+
+	    public IList<string> GetFiles(string path)
+	    {
+            this.Log().Debug("Get files: {0}", path);
+	        return Directory.GetFiles(path);
+	    }
 	}
 }

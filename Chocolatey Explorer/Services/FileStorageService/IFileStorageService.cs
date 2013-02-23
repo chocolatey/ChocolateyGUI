@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Chocolatey.Explorer.Services.FileStorageService
 {
@@ -9,5 +10,6 @@ namespace Chocolatey.Explorer.Services.FileStorageService
 		bool DirectoryExists(string path);
 
 		XDocument LoadXDocument(string filename);
+	    IList<string> GetFiles(string path);
 	}
 }

@@ -174,5 +174,10 @@ namespace Chocolatey.Explorer.View.Forms
             packageVersionPanel.LockPanel();
         }
 
+        private void logsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _commandExecuter.Execute<OpenLogsCommand>();
+        }
+
     }
 }

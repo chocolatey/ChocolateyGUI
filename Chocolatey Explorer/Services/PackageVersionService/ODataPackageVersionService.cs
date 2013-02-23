@@ -101,8 +101,8 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
                     if (packages.Any())
                         return packages.First();
                 }
-                catch (XmlException ex) { this.Log().Error("Message: {0} - Stacktrac: {1}", ex.Message, ex.StackTrace); } // when xml could not be parsed
-                catch (WebException ex) { this.Log().Error("Message: {0} - Stacktrac: {1}", ex.Message, ex.StackTrace); } // when loading xml from server failed
+                catch (XmlException ex) { this.Log().Error("Message: {0} - Stacktrace: {1}", ex.Message, ex.StackTrace); } // when xml could not be parsed
+                catch (WebException ex) { this.Log().Error("Message: {0} - Stacktrace: {1}", ex.Message, ex.StackTrace); } // when loading xml from server failed
                 finally
                 {
                     if (responseStream != null)

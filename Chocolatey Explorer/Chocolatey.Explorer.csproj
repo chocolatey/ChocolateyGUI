@@ -145,6 +145,7 @@
     <Compile Include="Services\ChocolateyLibDirHelper.cs" />
     <Compile Include="Services\ChocolateyVersionUnknownException.cs" />
     <Compile Include="Services\Delegates.cs" />
+    <Compile Include="Services\DependenciesFormatter.cs" />
     <Compile Include="Services\FileStorageService\LocalFileSystemStorageService.cs" />
     <Compile Include="Services\FileStorageService\IFileStorageService.cs" />
     <Compile Include="Services\ICacheable.cs" />

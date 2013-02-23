@@ -7,6 +7,13 @@ namespace Chocolatey.Explorer.Services
 {
     class PackageVersionXMLParser : IPackageVersionXMLParser
     {
+        private DependenciesFormatter _dependeciesFormatter;
+
+        public PackageVersionXMLParser()
+        {
+            _dependeciesFormatter = new DependenciesFormatter();
+        }
+
         private const string METADATA_NS = "http://schemas.microsoft.com/ado/2007/08/dataservices/metadata";
         private const string DATA_SERVICES_NS = "http://schemas.microsoft.com/ado/2007/08/dataservices";
 
@@ -86,7 +93,7 @@ namespace Chocolatey.Explorer.Services
                 if (createdAt != null)
                     version.CreatedAt = DateTime.Parse(createdAt.InnerText);
                 if (dependencies != null)
-                    version.Dependencies = dependencies.InnerText.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    version.Dependencies = _dependeciesFormatter.Execute(dependencies.InnerText);
                 if (description != null)
                     version.Description = description.InnerText.Replace("\n", "\r\n");
                 if (downloadCount != null)

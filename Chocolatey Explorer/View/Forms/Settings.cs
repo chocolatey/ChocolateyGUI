@@ -119,6 +119,7 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void lstSources_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_sourceService.Source.Equals((Source)lstSources.SelectedItem)) return;
             tabControl1.Enabled = false;
             lstSources.Enabled = false;
             _sourceService.SetCurrentSource((Source)lstSources.SelectedItem);

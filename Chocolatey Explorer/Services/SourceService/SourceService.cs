@@ -43,8 +43,8 @@ namespace Chocolatey.Explorer.Services.SourceService
             var sources = document.Elements("sources").Elements("source");
             foreach (var xElement in sources)
             {
-                this.Log().Debug("Added source: {0} {1} {2}", xElement.Element("name").Value, xElement.Element("url").Value, xElement.Element("name").Value == "1");
-                _sources.Add(new Source { Name = xElement.Element("name").Value, Url = xElement.Element("url").Value, HasODataFeed = xElement.Element("name").Value == "1"});
+                this.Log().Debug("Added source: {0} {1} {2}", xElement.Element("name").Value, xElement.Element("url").Value, xElement.Element("hasodatafeed").Value == "1");
+                _sources.Add(new Source { Name = xElement.Element("name").Value, Url = xElement.Element("url").Value, HasODataFeed = xElement.Element("hasodatafeed").Value == "1" });
             }
             OnSourcesChanged(_sources);
         }

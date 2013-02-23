@@ -52,7 +52,7 @@ namespace Chocolatey.Explorer.Test.Services
 		private IFileStorageService GetMockFileStorageWithSources(string firstName = "First Name", string firstUrl = "http://first.url.com", 
 																  string secondName = "Second Name", string secondUrl = "http://second.url.com")
 		{
-			var fakeData = string.Format("<sources><source><name>{0}</name><url>{1}</url></source><source><name>{2}</name><url>{3}</url></source></sources>",
+            var fakeData = string.Format("<sources><source><name>{0}</name><url>{1}</url><hasodatafeed>1</hasodatafeed></source><source><name>{2}</name><url>{3}</url><hasodatafeed>1</hasodatafeed></source></sources>",
 									firstName, firstUrl, secondName, secondUrl);
 			var fileStorageService = MockRepository.GenerateMock<IFileStorageService>();
 			fileStorageService.Stub(fss => fss.LoadXDocument("sources.xml")).Return(XDocument.Parse(fakeData));

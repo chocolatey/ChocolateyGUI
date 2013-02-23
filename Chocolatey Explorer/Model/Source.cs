@@ -6,6 +6,7 @@ namespace Chocolatey.Explorer.Model
     {
         public string Name { get; set; }
         public string Url { get; set; }
+        public bool HasODataFeed { get; set; }
 
         public override string ToString()
         {

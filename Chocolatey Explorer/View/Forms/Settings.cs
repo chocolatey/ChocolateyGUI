@@ -47,11 +47,13 @@ namespace Chocolatey.Explorer.View.Forms
                 lstSources.Items.Add(source);
             }
             txtSource.Text = _sourceService.Source.ToString();
+            chkHasODataFeed.Checked = _sourceService.Source.HasODataFeed;
         }
 
         private void _sourceService_CurrentSourceChanged(Source source)
         {
             txtSource.Text = source.ToString();
+            chkHasODataFeed.Checked = source.HasODataFeed;
         }
 
         private void Settings_Load(object sender, EventArgs e)
@@ -121,6 +123,6 @@ namespace Chocolatey.Explorer.View.Forms
             lstSources.Enabled = false;
             _sourceService.SetCurrentSource((Source)lstSources.SelectedItem);
         }
-
+        
     }
 }

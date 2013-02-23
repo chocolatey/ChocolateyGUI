@@ -45,6 +45,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lstSources = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.chkHasODataFeed = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -138,6 +140,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.chkHasODataFeed);
+            this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.txtSource);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.label1);
@@ -168,6 +172,17 @@
             this.lstSources.FormattingEnabled = true;
             this.lstSources.Name = "lstSources";
             this.lstSources.SelectedIndexChanged += new System.EventHandler(this.lstSources_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // chkHasODataFeed
+            // 
+            resources.ApplyResources(this.chkHasODataFeed, "chkHasODataFeed");
+            this.chkHasODataFeed.Name = "chkHasODataFeed";
+            this.chkHasODataFeed.UseVisualStyleBackColor = true;
             // 
             // Settings
             // 
@@ -206,6 +221,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox lstSources;
+        private System.Windows.Forms.CheckBox chkHasODataFeed;
+        private System.Windows.Forms.Label label3;
 
     }
 }

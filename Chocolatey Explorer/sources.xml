@@ -3,9 +3,11 @@
   <source>
     <name>Chocolatey.org</name>
     <url>http://chocolatey.org/api/v2</url>
+    <hasodatafeed>1</hasodatafeed>
   </source>
   <source>
     <name>Nuget</name>
     <url>https://packages.nuget.org/v1/FeedService.svc</url>
+    <hasodatafeed>1</hasodatafeed>
   </source>
 </sources>

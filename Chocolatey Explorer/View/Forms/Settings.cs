@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using Chocolatey.Explorer.CommandPattern;
+using Chocolatey.Explorer.Commands;
 using Chocolatey.Explorer.Services.SettingsService;
 
 namespace Chocolatey.Explorer.View.Forms
@@ -7,10 +9,12 @@ namespace Chocolatey.Explorer.View.Forms
     public partial class Settings : Form, ISettings
     {
         private readonly ISettingsService _settingsService;
-            
-        public Settings(ISettingsService settingsService)
+        private readonly ICommandExecuter _commandExecutor;
+
+        public Settings(ISettingsService settingsService, ICommandExecuter commandExecutor)
         {
             _settingsService = settingsService;
+            _commandExecutor = commandExecutor;
             InitializeComponent();
         }
 
@@ -22,7 +26,7 @@ namespace Chocolatey.Explorer.View.Forms
         private void btnSave_Click(object sender, EventArgs e)
         {
             _settingsService.ChocolateyLibDirectory = txtInstallDirectory.Text;
-            Dispose();
+            MessageBox.Show("Chocolatey lib directory saved to settings.", "Lib directory", MessageBoxButtons.OK);
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -50,5 +54,30 @@ namespace Chocolatey.Explorer.View.Forms
             if (keyData == Keys.Escape) this.Close();
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        private void btnClearPackageVersionCache_Click(object sender, EventArgs e)
+        {
+            _commandExecutor.Execute<ClearCachePackageVersionCommand>();
+            MessageBox.Show("Cache package version is cleared.", "Cache", MessageBoxButtons.OK);
+        }
+
+        private void btnClearInstalledPackagesCache_Click(object sender, EventArgs e)
+        {
+            _commandExecutor.Execute<ClearCacheInstalledPackagesCommand>();
+            MessageBox.Show("Cache installed packages is cleared.", "Cache", MessageBoxButtons.OK);
+        }
+
+        private void btnClearAvailablePackagesCache_Click(object sender, EventArgs e)
+        {
+            _commandExecutor.Execute<ClearCacheAvailablePackagesCommand>();
+            MessageBox.Show("Cache available packages is cleared.", "Cache", MessageBoxButtons.OK);
+        }
+
+        private void btnClearCacheAll_Click(object sender, EventArgs e)
+        {
+            _commandExecutor.Execute<ClearCacheAllCommand>();
+            MessageBox.Show("Cache is cleared.", "Cache", MessageBoxButtons.OK);
+        }
+
     }
 }

@@ -31,26 +31,17 @@ namespace Chocolatey.Explorer.View.Controls
 
         private void RunFinished()
         {
-            this.Invoke(() =>
-                {
-                    txtPowershellOutput.AppendText("Run finished at " + DateTime.Now.ToLocalTime());
-                });
+            this.Invoke(() => txtPowershellOutput.AppendText("Run finished at " + DateTime.Now.ToLocalTime()));
         }
 
         private void LineChanged(string line)
         {
-            this.Invoke(() =>
-                {
-                    txtPowershellOutput.AppendText(line + Environment.NewLine);
-                });
+            this.Invoke(() => txtPowershellOutput.AppendText(line + Environment.NewLine));
         }
 
         private void RunStarted(string message)
         {
-            this.Invoke(() =>
-                {
-                    txtPowershellOutput.AppendText("Started run at " + DateTime.Now.ToLocalTime() + Environment.NewLine);
-                });
+            this.Invoke(() => txtPowershellOutput.AppendText("Started run at " + DateTime.Now.ToLocalTime() + Environment.NewLine));
         }
 
         private PackageVersion _version;

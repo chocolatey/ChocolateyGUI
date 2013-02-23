@@ -1,6 +1,6 @@
 ﻿namespace Chocolatey.Explorer.Services
 {
-    interface ICacheable
+    public interface ICacheable
     {
         void InvalidateCache();
     }

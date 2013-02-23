@@ -1,4 +1,6 @@
-﻿using Chocolatey.Explorer.Powershell;
+﻿using Chocolatey.Explorer.CommandPattern;
+using Chocolatey.Explorer.Commands;
+using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services.PackageVersionService;
 using Chocolatey.Explorer.Services.PackagesService;
 using Chocolatey.Explorer.Services.SourceService;
@@ -9,21 +11,17 @@ namespace Chocolatey.Explorer.Services.PackageService
     {
         private readonly IRun _powershellAsync;
         private readonly ISourceService _sourceService;
-        private readonly IAvailablePackagesService _availabePackagesService;
-        private readonly IInstalledPackagesService _installedPackagesService;
-        private readonly IPackageVersionService _packageVersionService;
+        private readonly ICommandExecuter _commandExecuter;
 
         public event Delegates.LineDelegate LineChanged;
         public event Delegates.FinishedPackageDelegate RunFinshed;
         public event Delegates.StartedDelegate RunStarted;
 
-        public PackageService(IRunAsync powershell, ISourceService sourceService, IAvailablePackagesService availabePackagesService, IInstalledPackagesService installedPackagesService, IPackageVersionService packageVersionService)
+        public PackageService(IRunAsync powershell, ISourceService sourceService, ICommandExecuter commandExecuter)
         {
 			_powershellAsync = powershell;
             _sourceService = sourceService;
-            _availabePackagesService = availabePackagesService;
-            _installedPackagesService = installedPackagesService;
-            _packageVersionService = packageVersionService;
+            _commandExecuter = commandExecuter;
             _powershellAsync.OutputChanged += OutputChanged;
             _powershellAsync.RunFinished += RunFinished;
         }
@@ -80,21 +78,7 @@ namespace Chocolatey.Explorer.Services.PackageService
 
         private void InvalidateCache()
         {
-            var service = _availabePackagesService as ICacheable;
-            if (service != null)
-            {
-                service.InvalidateCache();
-            }
-            var cacheable = _installedPackagesService as ICacheable;
-            if (cacheable != null)
-            {
-                cacheable.InvalidateCache();
-            }
-            var versionService = _packageVersionService as ICacheable;
-            if (versionService != null)
-            {
-                versionService.InvalidateCache();
-            }
+            _commandExecuter.Execute<ClearCacheAllCommand>();
         }
 
     }

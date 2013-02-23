@@ -1,4 +1,5 @@
-﻿using Chocolatey.Explorer.IoC;
+﻿using Chocolatey.Explorer.CommandPattern;
+using Chocolatey.Explorer.IoC;
 using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services;
 using Chocolatey.Explorer.Services.ChocolateyService;
@@ -158,6 +159,12 @@ namespace Chocolatey.Explorer.Test.IoC
 		}
 
         [Test]
+        public void IfIFileStorageServiceIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IFileStorageService>(), ObjectFactory.GetInstance<IFileStorageService>());
+        }
+
+        [Test]
         public void IfIHelpCanBeResolved()
         {
             Assert.IsNotNull(ObjectFactory.GetInstance<IHelp>());
@@ -218,6 +225,30 @@ namespace Chocolatey.Explorer.Test.IoC
         }
 
         [Test]
+        public void IfIPackageVersionXMLParserCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<IPackageVersionXMLParser>());
+        }
+
+        [Test]
+        public void IfIPackageVersionXMLParserIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<IPackageVersionXMLParser>(), ObjectFactory.GetInstance<IPackageVersionXMLParser>());
+        }
+
+        [Test]
+        public void IfICommandExecuterCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<ICommandExecuter>());
+        }
+
+        [Test]
+        public void IfICommandExecuterIsNotSingleton()
+        {
+            Assert.AreNotEqual(ObjectFactory.GetInstance<ICommandExecuter>(), ObjectFactory.GetInstance<ICommandExecuter>());
+        }
+
+        [Test]
         public void IfPackageVersionPanelGetsIPackageVersionService()
         {
             var panel = new PackageVersionPanel();
@@ -236,6 +267,76 @@ namespace Chocolatey.Explorer.Test.IoC
         {
             var grid = new InstalledPackagesGrid();
             Assert.IsNotNull(grid.InstalledPackagesService);
+        }
+
+        [Test]
+        public void IfPackagesButtonsPanelGetsPackageService()
+        {
+            var panel = new PackageButtonsPanel();
+            Assert.IsNotNull(panel.PackageService);
+        }
+
+        [Test]
+        public void IfPackagesButtonsPanelGetsPackageVersionService()
+        {
+            var panel = new PackageButtonsPanel();
+            Assert.IsNotNull(panel.PackageVersionService);
+        }
+
+        [Test]
+        public void IfPackageExtraInformationPanelGetsPackageVersionService()
+        {
+            var panel = new PackageExtraInformationPanel();
+            Assert.IsNotNull(panel.PackageVersionService);
+        }
+
+        [Test]
+        public void IfPackageRunPanelGetsPackageVersionService()
+        {
+            var panel = new PackageRunPanel();
+            Assert.IsNotNull(panel.PackageVersionService);
+        }
+
+        [Test]
+        public void IfPackageRunPanelGetsPackageService()
+        {
+            var panel = new PackageRunPanel();
+            Assert.IsNotNull(panel.PackageService);
+        }
+
+        [Test]
+        public void IfPackagesBaseGridGetsPackageVersionService()
+        {
+            var panel = new PackagesBaseGrid();
+            Assert.IsNotNull(panel.PackageVersionService);
+        }
+
+        [Test]
+        public void IfStatusBarGetsPackageVersionService()
+        {
+            var panel = new Statusbar();
+            Assert.IsNotNull(panel.PackageVersionService);
+        }
+
+        [Test]
+        public void IfStatusBarGetsPackageService()
+        {
+            var panel = new Statusbar();
+            Assert.IsNotNull(panel.PackageService);
+        }
+
+        [Test]
+        public void IfStatusBarGetsInstalledPackagesService()
+        {
+            var panel = new Statusbar();
+            Assert.IsNotNull(panel.InstalledPackagesService);
+        }
+
+        [Test]
+        public void IfStatusBarGetsAvailablePackagesService()
+        {
+            var panel = new Statusbar();
+            Assert.IsNotNull(panel.AvailablePackagesService);
         }
     }
 }

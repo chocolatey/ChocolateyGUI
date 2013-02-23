@@ -36,11 +36,14 @@ namespace Chocolatey.Explorer.IoC
              For<IAbout>().Use<About>();
              For<IHelp>().Use<Help>();
              For<ISettings>().Use<Settings>();
+
+             // SetProperties
              SetAllProperties(x => x.WithAnyTypeFromNamespace("Chocolatey.Explorer.View.Forms"));
              SetAllProperties(x => x.OfType<IPackageVersionService>());
              SetAllProperties(x => x.OfType<IInstalledPackagesService>());
              SetAllProperties(x => x.OfType<IAvailablePackagesService>());
              SetAllProperties(x => x.OfType<IPackageService>());
+             SetAllProperties(x => x.OfType<ICommandExecuter>());
          }
     }
 }

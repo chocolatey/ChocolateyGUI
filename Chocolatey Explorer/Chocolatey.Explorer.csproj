@@ -127,6 +127,10 @@
     <Compile Include="CommandPattern\ICommand.cs" />
     <Compile Include="CommandPattern\ICommandExecuter.cs" />
     <Compile Include="CommandPattern\ICommandWithParameter.cs" />
+    <Compile Include="Commands\ClearCacheAllCommand.cs" />
+    <Compile Include="Commands\ClearCacheAvailablePackagesCommand.cs" />
+    <Compile Include="Commands\ClearCacheInstalledPackagesCommand.cs" />
+    <Compile Include="Commands\ClearCachePackageVersionCommand.cs" />
     <Compile Include="Commands\OpenAboutCommand.cs" />
     <Compile Include="Commands\OpenHelpCommand.cs" />
     <Compile Include="Commands\OpenSettingsCommand.cs" />

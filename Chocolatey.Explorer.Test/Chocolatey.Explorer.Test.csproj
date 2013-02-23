@@ -96,9 +96,13 @@
       <Link>CommonCopyrightInfo.cs</Link>
     </Compile>
     <Compile Include="CommandPattern\TestCommandExecuter.cs" />
+    <Compile Include="Commands\TestClearCacheAll.cs" />
+    <Compile Include="Commands\TestClearCacheInstalledPackagesCommand.cs" />
+    <Compile Include="Commands\TestClearCachePackageVersionCommand.cs" />
     <Compile Include="Commands\TestOpenAboutCommand.cs" />
     <Compile Include="Commands\TestOpenHelpCommand.cs" />
     <Compile Include="Commands\TestOpenSettingsCommand.cs" />
+    <Compile Include="Commands\TextClearCacheAvailablePackagesCommand.cs" />
     <Compile Include="Extensions\AsyncTesting.cs" />
     <Compile Include="IoC\TestRegistry.cs" />
     <Compile Include="Model\TestPackage.cs" />

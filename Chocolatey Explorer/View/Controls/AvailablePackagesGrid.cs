@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows.Forms;
 using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.PackagesService;

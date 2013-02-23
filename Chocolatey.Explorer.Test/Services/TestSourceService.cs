@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Chocolatey.Explorer.Model;
+using Chocolatey.Explorer.Services.PackagesService;
 using Chocolatey.Explorer.Services.SourceService;
 using NUnit.Framework;
 using System.Xml.Linq;
@@ -62,7 +63,7 @@ namespace Chocolatey.Explorer.Test.Services
         public void IfCurrentSourceIsTheFirstSourceWhenInstantiated()
         {
 			const string expectedFirstName = "First Entry";
-			var sourceService = new SourceService(GetMockFileStorageWithSources(expectedFirstName, secondName: "SECOND!1One!1"));
+            var sourceService = new SourceService(GetMockFileStorageWithSources(expectedFirstName, secondName: "SECOND!1One!1"));
             Source source = null;
             sourceService.CurrentSourceChanged += x => source = x;
             
@@ -75,22 +76,22 @@ namespace Chocolatey.Explorer.Test.Services
         public void IfSourceReturnsTheUrlOfTheCurrentSource()
         {
 			const string expectedUrl = "http://first.url.com/notSureIunderstandThisTest?";
-			var sourceService = new SourceService(GetMockFileStorageWithSources(firstUrl: expectedUrl, secondUrl: "http://totally.different.com"));
+            var sourceService = new SourceService(GetMockFileStorageWithSources(firstUrl: expectedUrl, secondUrl: "http://totally.different.com"));
 			
 			sourceService.Initialize();
 
-			Assert.AreEqual(expectedUrl, sourceService.Source);
+			Assert.AreEqual(expectedUrl, sourceService.Source.Url);
         }
 
         [Test]
         public void IfSetCurrentSourceSetsTheCurrentsource()
         {
 			var newService = new Source { Name = "Third Service", Url = "http://third.entry.com"};
-			var sourceService = new SourceService(GetMockFileStorageWithSources());
+            var sourceService = new SourceService(GetMockFileStorageWithSources());
 			
 			sourceService.SetCurrentSource(newService);
 
-			Assert.AreEqual(newService.Url, sourceService.Source);
+			Assert.AreEqual(newService, sourceService.Source);
         }
 
 		[Test]

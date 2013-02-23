@@ -41,10 +41,10 @@
             this.btnClearCacheAll = new System.Windows.Forms.Button();
             this.btnClearPackageVersionCache = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.lstSources = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtSource = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lstSources = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -146,26 +146,28 @@
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // lstSources
+            // txtSource
             // 
-            resources.ApplyResources(this.lstSources, "lstSources");
-            this.lstSources.FormattingEnabled = true;
-            this.lstSources.Name = "lstSources";
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.txtSource, "txtSource");
+            this.txtSource.Name = "txtSource";
+            this.txtSource.ReadOnly = true;
             // 
             // label2
             // 
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
             // 
-            // txtSource
+            // label1
             // 
-            resources.ApplyResources(this.txtSource, "txtSource");
-            this.txtSource.Name = "txtSource";
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // lstSources
+            // 
+            resources.ApplyResources(this.lstSources, "lstSources");
+            this.lstSources.FormattingEnabled = true;
+            this.lstSources.Name = "lstSources";
+            this.lstSources.SelectedIndexChanged += new System.EventHandler(this.lstSources_SelectedIndexChanged);
             // 
             // Settings
             // 

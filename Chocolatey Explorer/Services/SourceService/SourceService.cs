@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.FileStorageService;
+using Chocolatey.Explorer.Services.PackagesService;
 
 namespace Chocolatey.Explorer.Services.SourceService
 {
@@ -12,6 +13,7 @@ namespace Chocolatey.Explorer.Services.SourceService
         private Source _currentsource;
 
 		private readonly IFileStorageService _fileStorageService;
+        private readonly IAvailablePackagesService _availablePackagesService;
 
         public delegate void SourcesDelegate(IList<Source> sources);
 
@@ -23,7 +25,7 @@ namespace Chocolatey.Explorer.Services.SourceService
 		public SourceService(IFileStorageService fileStorageService)
         {
 			_fileStorageService = fileStorageService;
-            Initialize();
+		    Initialize();
         }
 
         public void Initialize()
@@ -61,9 +63,9 @@ namespace Chocolatey.Explorer.Services.SourceService
             if (handler != null) handler(currentsource);
         }
 
-        public String Source
+        public Source Source
         {
-            get { return _currentsource.Url; }
+            get { return _currentsource; }
         }
 
         public void AddSource(Source source)

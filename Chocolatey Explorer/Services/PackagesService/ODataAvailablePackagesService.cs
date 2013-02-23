@@ -89,7 +89,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
         private XmlDocument LoadFeedDoc(int skip)
         {
             this.Log().Debug("LoadFeedDoc: {0}", skip);
-            var fullUrl = _sourceService.Source + AllPackagesUrl;
+            var fullUrl = _sourceService.Source.Url + AllPackagesUrl;
             var skipUrl = fullUrl + "&$skip=" + skip;
             this.Log().Debug("Getting list of packages on source: {0}", skipUrl);
 

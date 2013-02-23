@@ -27,9 +27,9 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         public void ListOfAvailablePackages()
         {
-            this.Log().Info("Getting list of packages on source: " + _sourceService.Source);
+            this.Log().Info("Getting list of packages on source: " + _sourceService.Source.Url);
             OnRunStarted();
-            _powershellAsync.Run("clist -source " + _sourceService.Source);
+            _powershellAsync.Run("clist -source " + _sourceService.Source.Url);
         }
 
         private void OutputChanged(string line)

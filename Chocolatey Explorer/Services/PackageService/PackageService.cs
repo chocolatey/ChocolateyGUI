@@ -28,7 +28,7 @@ namespace Chocolatey.Explorer.Services.PackageService
         {
             this.Log().Info("Installing package: " + package);
             OnRunStarted("Installing package " + package);
-            _powershellAsync.Run("cinst " + package + " -source " + _sourceService.Source);
+            _powershellAsync.Run("cinst " + package + " -source " + _sourceService.Source.Url);
         }
 
         public void UninstallPackage(string package)
@@ -42,7 +42,7 @@ namespace Chocolatey.Explorer.Services.PackageService
         {
             this.Log().Info("Updating package: " + package);
             OnRunStarted("Updating package " + package);
-            _powershellAsync.Run("cup " + package + " -source " + _sourceService.Source);
+            _powershellAsync.Run("cup " + package + " -source " + _sourceService.Source.Url);
         }
 
         private void OnRunFinished()

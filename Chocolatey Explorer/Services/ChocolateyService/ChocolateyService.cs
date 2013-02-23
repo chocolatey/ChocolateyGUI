@@ -25,7 +25,7 @@ namespace Chocolatey.Explorer.Services.ChocolateyService
         public void LatestVersion()
         {
             this.Log().Info("Getting latest version.");
-            _powershell.Run("cver" + " -source " + _sourceService.Source);
+            _powershell.Run("cver" + " -source " + _sourceService.Source.Url);
         }
 
         public void Help()

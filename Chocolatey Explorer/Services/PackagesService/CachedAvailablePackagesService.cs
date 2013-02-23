@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Chocolatey.Explorer.Model;
+using Chocolatey.Explorer.Services.SourceService;
 
 namespace Chocolatey.Explorer.Services.PackagesService
 {
@@ -17,13 +18,22 @@ namespace Chocolatey.Explorer.Services.PackagesService
         private readonly IAvailablePackagesService _availablePackagesService;
         private IList<Package> _availablePackageCache;
         private DateTime _invalidateCacheTime;
+        private ISourceService _sourceService;
 
-        public CachedAvailablePackagesService(ODataAvailablePackagesService availablePackagesService)
+        public CachedAvailablePackagesService(ODataAvailablePackagesService availablePackagesService, ISourceService sourceService)
         {
             _availablePackagesService = availablePackagesService;
-			_availablePackagesService.RunFailed += AvailablePackagesServiceRunFailed;
+            _sourceService = sourceService;
+            _availablePackagesService.RunFailed += AvailablePackagesServiceRunFailed;
             _availablePackagesService.RunFinshed += OnUncachedAvailableRunFinished;
+            _sourceService.CurrentSourceChanged += _sourceService_CurrentSourceChanged;
             InvalidateCache();
+        }
+
+        private void _sourceService_CurrentSourceChanged(Source source)
+        {
+            InvalidateCache();
+            ListOfAvailablePackages();
         }
 
         public void InvalidateCache()

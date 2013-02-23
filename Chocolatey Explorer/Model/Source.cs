@@ -7,6 +7,11 @@ namespace Chocolatey.Explorer.Model
         public string Name { get; set; }
         public string Url { get; set; }
 
+        public override string ToString()
+        {
+            return Name + " (" + Url + ")";
+        }
+
         public bool Equals(Source other)
         {
             if (ReferenceEquals(null, other)) return false;

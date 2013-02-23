@@ -44,5 +44,14 @@ namespace Chocolatey.Explorer.Test.Model
             source1.Name = "test2";
             Assert.AreEqual("test2".GetHashCode(), source1.GetHashCode());
         }
+
+        [Test]
+        public void IfToStringGivesCorrectString()
+        {
+            var source1 = new Source();
+            source1.Name = "testName";
+            source1.Url = "testUrl";
+            Assert.AreEqual("testName (testUrl)", source1.ToString());
+        }
     }
 }

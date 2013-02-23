@@ -8,7 +8,7 @@ namespace Chocolatey.Explorer.Services.SourceService
         event SourceService.SourcesDelegate SourcesChanged;
         event SourceService.CurrentSourceDelegate CurrentSourceChanged;
         void SetCurrentSource(Source source);
-        String Source { get; }
+        Source Source { get; }
         void AddSource(Source source);
         void LoadSources();
     }

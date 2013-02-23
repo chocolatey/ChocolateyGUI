@@ -117,30 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lblLib.AccessibleName" xml:space="preserve">
-    <value>Chocolatey lib directory</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lblLib.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lblLib.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lblLib.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 17</value>
-  </data>
-  <data name="lblLib.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 13</value>
-  </data>
-  <data name="lblLib.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="lblLib.Text" xml:space="preserve">
-    <value>Chocolatey &amp;lib directory</value>
-  </data>
   <data name="&gt;&gt;lblLib.Name" xml:space="preserve">
     <value>lblLib</value>
   </data>
@@ -152,18 +128,6 @@
   </data>
   <data name="&gt;&gt;lblLib.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="txtInstallDirectory.AccessibleName" xml:space="preserve">
-    <value>Chocolatey lib directory</value>
-  </data>
-  <data name="txtInstallDirectory.Location" type="System.Drawing.Point, System.Drawing">
-    <value>144, 14</value>
-  </data>
-  <data name="txtInstallDirectory.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 20</value>
-  </data>
-  <data name="txtInstallDirectory.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
   </data>
   <data name="&gt;&gt;txtInstallDirectory.Name" xml:space="preserve">
     <value>txtInstallDirectory</value>
@@ -177,21 +141,6 @@
   <data name="&gt;&gt;txtInstallDirectory.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnBrowse.AccessibleName" xml:space="preserve">
-    <value>select chocolatey lib directory</value>
-  </data>
-  <data name="btnBrowse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnBrowse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>393, 12</value>
-  </data>
-  <data name="btnBrowse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 23</value>
-  </data>
-  <data name="btnBrowse.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
   <data name="&gt;&gt;btnBrowse.Name" xml:space="preserve">
     <value>btnBrowse</value>
   </data>
@@ -203,24 +152,6 @@
   </data>
   <data name="&gt;&gt;btnBrowse.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="btnSave.AccessibleName" xml:space="preserve">
-    <value>save settings</value>
-  </data>
-  <data name="btnSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 65</value>
-  </data>
-  <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="btnSave.Text" xml:space="preserve">
-    <value>&amp;Save</value>
   </data>
   <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
     <value>btnSave</value>
@@ -234,15 +165,18 @@
   <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tabPage1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
     <value>453, 189</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
@@ -261,24 +195,6 @@
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="btnClearInstalledPackagesCache.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="btnClearInstalledPackagesCache.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnClearInstalledPackagesCache.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 35</value>
-  </data>
-  <data name="btnClearInstalledPackagesCache.Size" type="System.Drawing.Size, System.Drawing">
-    <value>437, 23</value>
-  </data>
-  <data name="btnClearInstalledPackagesCache.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="btnClearInstalledPackagesCache.Text" xml:space="preserve">
-    <value>Clear installed packages cache</value>
-  </data>
   <data name="&gt;&gt;btnClearInstalledPackagesCache.Name" xml:space="preserve">
     <value>btnClearInstalledPackagesCache</value>
   </data>
@@ -290,24 +206,6 @@
   </data>
   <data name="&gt;&gt;btnClearInstalledPackagesCache.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="btnClearAvailablePackagesCache.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="btnClearAvailablePackagesCache.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnClearAvailablePackagesCache.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 64</value>
-  </data>
-  <data name="btnClearAvailablePackagesCache.Size" type="System.Drawing.Size, System.Drawing">
-    <value>437, 23</value>
-  </data>
-  <data name="btnClearAvailablePackagesCache.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="btnClearAvailablePackagesCache.Text" xml:space="preserve">
-    <value>Clear available packages cache</value>
   </data>
   <data name="&gt;&gt;btnClearAvailablePackagesCache.Name" xml:space="preserve">
     <value>btnClearAvailablePackagesCache</value>
@@ -321,24 +219,6 @@
   <data name="&gt;&gt;btnClearAvailablePackagesCache.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnClearCacheAll.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="btnClearCacheAll.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnClearCacheAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 129</value>
-  </data>
-  <data name="btnClearCacheAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>437, 23</value>
-  </data>
-  <data name="btnClearCacheAll.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="btnClearCacheAll.Text" xml:space="preserve">
-    <value>Clear all</value>
-  </data>
   <data name="&gt;&gt;btnClearCacheAll.Name" xml:space="preserve">
     <value>btnClearCacheAll</value>
   </data>
@@ -350,21 +230,6 @@
   </data>
   <data name="&gt;&gt;btnClearCacheAll.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="btnClearPackageVersionCache.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="btnClearPackageVersionCache.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 6</value>
-  </data>
-  <data name="btnClearPackageVersionCache.Size" type="System.Drawing.Size, System.Drawing">
-    <value>437, 23</value>
-  </data>
-  <data name="btnClearPackageVersionCache.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnClearPackageVersionCache.Text" xml:space="preserve">
-    <value>Clear packageversion cache</value>
   </data>
   <data name="&gt;&gt;btnClearPackageVersionCache.Name" xml:space="preserve">
     <value>btnClearPackageVersionCache</value>
@@ -557,6 +422,237 @@
   </data>
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="lblLib.AccessibleName" xml:space="preserve">
+    <value>Chocolatey lib directory</value>
+  </data>
+  <data name="lblLib.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblLib.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblLib.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 17</value>
+  </data>
+  <data name="lblLib.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 13</value>
+  </data>
+  <data name="lblLib.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lblLib.Text" xml:space="preserve">
+    <value>Chocolatey &amp;lib directory</value>
+  </data>
+  <data name="&gt;&gt;lblLib.Name" xml:space="preserve">
+    <value>lblLib</value>
+  </data>
+  <data name="&gt;&gt;lblLib.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLib.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;lblLib.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtInstallDirectory.AccessibleName" xml:space="preserve">
+    <value>Chocolatey lib directory</value>
+  </data>
+  <data name="txtInstallDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>144, 14</value>
+  </data>
+  <data name="txtInstallDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>243, 20</value>
+  </data>
+  <data name="txtInstallDirectory.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;txtInstallDirectory.Name" xml:space="preserve">
+    <value>txtInstallDirectory</value>
+  </data>
+  <data name="&gt;&gt;txtInstallDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtInstallDirectory.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;txtInstallDirectory.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnBrowse.AccessibleName" xml:space="preserve">
+    <value>select chocolatey lib directory</value>
+  </data>
+  <data name="btnBrowse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnBrowse.Location" type="System.Drawing.Point, System.Drawing">
+    <value>393, 12</value>
+  </data>
+  <data name="btnBrowse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 23</value>
+  </data>
+  <data name="btnBrowse.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;btnBrowse.Name" xml:space="preserve">
+    <value>btnBrowse</value>
+  </data>
+  <data name="&gt;&gt;btnBrowse.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnBrowse.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;btnBrowse.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnSave.AccessibleName" xml:space="preserve">
+    <value>save settings</value>
+  </data>
+  <data name="btnSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 65</value>
+  </data>
+  <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
+    <value>btnSave</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnClearInstalledPackagesCache.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="btnClearInstalledPackagesCache.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnClearInstalledPackagesCache.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 35</value>
+  </data>
+  <data name="btnClearInstalledPackagesCache.Size" type="System.Drawing.Size, System.Drawing">
+    <value>437, 23</value>
+  </data>
+  <data name="btnClearInstalledPackagesCache.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="btnClearInstalledPackagesCache.Text" xml:space="preserve">
+    <value>Clear installed packages cache</value>
+  </data>
+  <data name="&gt;&gt;btnClearInstalledPackagesCache.Name" xml:space="preserve">
+    <value>btnClearInstalledPackagesCache</value>
+  </data>
+  <data name="&gt;&gt;btnClearInstalledPackagesCache.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClearInstalledPackagesCache.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;btnClearInstalledPackagesCache.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnClearAvailablePackagesCache.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="btnClearAvailablePackagesCache.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnClearAvailablePackagesCache.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 64</value>
+  </data>
+  <data name="btnClearAvailablePackagesCache.Size" type="System.Drawing.Size, System.Drawing">
+    <value>437, 23</value>
+  </data>
+  <data name="btnClearAvailablePackagesCache.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="btnClearAvailablePackagesCache.Text" xml:space="preserve">
+    <value>Clear available packages cache</value>
+  </data>
+  <data name="&gt;&gt;btnClearAvailablePackagesCache.Name" xml:space="preserve">
+    <value>btnClearAvailablePackagesCache</value>
+  </data>
+  <data name="&gt;&gt;btnClearAvailablePackagesCache.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClearAvailablePackagesCache.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;btnClearAvailablePackagesCache.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnClearCacheAll.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="btnClearCacheAll.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnClearCacheAll.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 129</value>
+  </data>
+  <data name="btnClearCacheAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>437, 23</value>
+  </data>
+  <data name="btnClearCacheAll.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btnClearCacheAll.Text" xml:space="preserve">
+    <value>Clear all</value>
+  </data>
+  <data name="&gt;&gt;btnClearCacheAll.Name" xml:space="preserve">
+    <value>btnClearCacheAll</value>
+  </data>
+  <data name="&gt;&gt;btnClearCacheAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClearCacheAll.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;btnClearCacheAll.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnClearPackageVersionCache.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="btnClearPackageVersionCache.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 6</value>
+  </data>
+  <data name="btnClearPackageVersionCache.Size" type="System.Drawing.Size, System.Drawing">
+    <value>437, 23</value>
+  </data>
+  <data name="btnClearPackageVersionCache.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnClearPackageVersionCache.Text" xml:space="preserve">
+    <value>Clear packageversion cache</value>
+  </data>
+  <data name="&gt;&gt;btnClearPackageVersionCache.Name" xml:space="preserve">
+    <value>btnClearPackageVersionCache</value>
+  </data>
+  <data name="&gt;&gt;btnClearPackageVersionCache.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClearPackageVersionCache.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;btnClearPackageVersionCache.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

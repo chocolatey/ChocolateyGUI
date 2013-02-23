@@ -84,7 +84,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         private PackageVersion FillWithOData(string package)
         {
             this.Log().Debug("Filling data for {0}", package);
-            var url = _sourceService.Source + "/Packages?$filter=IsLatestVersion eq true and Id eq '" + package + "'";
+            var url = _sourceService.Source.Url + "/Packages?$filter=IsLatestVersion eq true and Id eq '" + package + "'";
             var xmlDoc = new XmlDocument();
 
             _loadingRssFeed = WebRequest.Create(url) as HttpWebRequest;

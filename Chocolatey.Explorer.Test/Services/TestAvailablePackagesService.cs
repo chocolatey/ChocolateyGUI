@@ -28,7 +28,7 @@ namespace Chocolatey.Explorer.Test.Services
 			var powershell = _mocks.Get<IRunAsync>();
             var sourceService = _mocks.Get<ISourceService>();
             sourceService.Expect(x => x.Source)
-                .Return("test");
+                .Return(new Source {Url = "test"});
             _service.ListOfAvailablePackages();
             powershell.AssertWasCalled(mock => mock.Run("clist -source test"));
         }

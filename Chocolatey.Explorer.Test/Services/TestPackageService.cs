@@ -1,4 +1,5 @@
-﻿using Chocolatey.Explorer.Powershell;
+﻿using Chocolatey.Explorer.Model;
+using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services.PackageService;
 using Chocolatey.Explorer.Services.SourceService;
 using NUnit.Framework;
@@ -26,7 +27,7 @@ namespace Chocolatey.Explorer.Test.Services
             var powershell = _mocks.Get<IRunAsync>();
             var sourceService = _mocks.Get<ISourceService>();
             sourceService.Expect(x => x.Source)
-                .Return("test");
+                .Return(new Source {Url="test"});
             _service.InstallPackage("test");
             powershell.AssertWasCalled(mock => mock.Run("cinst test -source test"));
         }
@@ -37,7 +38,7 @@ namespace Chocolatey.Explorer.Test.Services
             var powershell = _mocks.Get<IRunAsync>();
             var sourceService = _mocks.Get<ISourceService>();
             sourceService.Expect(x => x.Source)
-                .Return("test");
+                .Return(new Source { Name = "test" });
             _service.UninstallPackage("test");
             powershell.AssertWasCalled(mock => mock.Run("cuninst test"));
         }
@@ -48,7 +49,7 @@ namespace Chocolatey.Explorer.Test.Services
 			var powershell = _mocks.Get<IRunAsync>();
             var sourceService = _mocks.Get<ISourceService>();
             sourceService.Expect(x => x.Source)
-                .Return("test");
+                .Return(new Source { Url = "test" });
             _service.UpdatePackage("test");
             powershell.AssertWasCalled(mock => mock.Run("cup test -source test"));
         }

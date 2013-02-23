@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Chocolatey.Explorer.CommandPattern;
 using Chocolatey.Explorer.Commands;
+using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Model;
+using Chocolatey.Explorer.Services.PackagesService;
 using Chocolatey.Explorer.Services.SettingsService;
 using Chocolatey.Explorer.Services.SourceService;
 
@@ -14,30 +16,42 @@ namespace Chocolatey.Explorer.View.Forms
         private readonly ISettingsService _settingsService;
         private readonly ICommandExecuter _commandExecutor;
         private readonly ISourceService _sourceService;
+        private readonly IAvailablePackagesService _availablePackagesService;
 
-        public Settings(ISettingsService settingsService, ICommandExecuter commandExecutor, ISourceService sourceService)
+        public Settings(ISettingsService settingsService, ICommandExecuter commandExecutor, ISourceService sourceService, IAvailablePackagesService availablePackagesService)
         {
             _settingsService = settingsService;
             _commandExecutor = commandExecutor;
             _sourceService = sourceService;
-            _sourceService.SourcesChanged +=_sourceService_SourcesChanged;
-            _sourceService.CurrentSourceChanged +=_sourceService_CurrentSourceChanged;
+            _availablePackagesService = availablePackagesService;
+            _sourceService.SourcesChanged += _sourceService_SourcesChanged;
+            _sourceService.CurrentSourceChanged += _sourceService_CurrentSourceChanged;
+            _availablePackagesService.RunFinshed += _availablePackagesService_RunFinshed;
             InitializeComponent();
-            _sourceService.LoadSources(); 
+            _sourceService.LoadSources();
+        }
+
+        private void _availablePackagesService_RunFinshed(IList<Package> packages)
+        {
+            this.Invoke(() =>
+                {
+                    tabControl1.Enabled = true;
+                    lstSources.Enabled = true;
+                });
         }
 
         private void _sourceService_SourcesChanged(IList<Source> sources)
         {
             foreach (var source in sources)
             {
-                lstSources.Items.Add(source.Name + " (" + source.Url + ")");
+                lstSources.Items.Add(source);
             }
-            txtSource.Text = _sourceService.Source;
+            txtSource.Text = _sourceService.Source.ToString();
         }
 
         private void _sourceService_CurrentSourceChanged(Source source)
         {
-            txtSource.Text = source.Name;
+            txtSource.Text = source.ToString();
         }
 
         private void Settings_Load(object sender, EventArgs e)
@@ -54,7 +68,7 @@ namespace Chocolatey.Explorer.View.Forms
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             var dirDialog = new FolderBrowserDialog();
-            if(dirDialog.ShowDialog() == DialogResult.OK)
+            if (dirDialog.ShowDialog() == DialogResult.OK)
             {
                 txtInstallDirectory.Text = dirDialog.SelectedPath;
             }
@@ -99,6 +113,13 @@ namespace Chocolatey.Explorer.View.Forms
         {
             _commandExecutor.Execute<ClearCacheAllCommand>();
             MessageBox.Show("Cache is cleared.", "Cache", MessageBoxButtons.OK);
+        }
+
+        private void lstSources_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tabControl1.Enabled = false;
+            lstSources.Enabled = false;
+            _sourceService.SetCurrentSource((Source)lstSources.SelectedItem);
         }
 
     }

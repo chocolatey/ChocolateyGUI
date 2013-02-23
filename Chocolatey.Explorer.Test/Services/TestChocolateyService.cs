@@ -1,5 +1,5 @@
-﻿using Chocolatey.Explorer.Powershell;
-using Chocolatey.Explorer.Services;
+﻿using Chocolatey.Explorer.Model;
+using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services.ChocolateyService;
 using Chocolatey.Explorer.Services.SourceService;
 using NUnit.Framework;
@@ -27,7 +27,7 @@ namespace Chocolatey.Explorer.Test.Services
 			var powershell = _mocks.Get<IRunSync>();
             var sourceService = _mocks.Get<ISourceService>();
             sourceService.Expect(x => x.Source)
-                .Return("test");
+                .Return(new Source { Url = "test" });
             _service.LatestVersion();
             powershell.AssertWasCalled(mock => mock.Run("cver" + " -source test"));
         }

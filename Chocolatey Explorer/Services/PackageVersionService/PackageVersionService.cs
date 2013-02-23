@@ -28,7 +28,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 			_packageVersion = new PackageVersion();
 			_package = package;
             OnStarted();
-			_powershellAsync.Run("cver " + package + " -source " + _sourceService.Source);
+			_powershellAsync.Run("cver " + package + " -source " + _sourceService.Source.Url);
 		}
 
 		private void VersionHandler(string version)

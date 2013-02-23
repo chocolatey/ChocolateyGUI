@@ -25,6 +25,12 @@ Server 2008 SP2 and above.
 	v0.11.0
 	
 	*Enhancement - Many new features, including UI enhancements and auto building from MyGet.
+	*Enhancement - Better logging and Log form so you can find those log files more easily.
+	*Enhancement - In the settings you can empty the cache, better caching of packages and list
+	*Enhancement - better parsing of dependencies
+	*Enhancement - selecting of sources from the sources.xml file. For now just 2 sources.
+	*Enhancement - release notes and copyreight information in seperate tab
+	*Enhancement - chocolatey run information in seperate tab
 	
 	v0.1.4
 	

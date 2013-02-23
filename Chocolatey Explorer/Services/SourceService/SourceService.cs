@@ -33,7 +33,7 @@ namespace Chocolatey.Explorer.Services.SourceService
             SetCurrentSource(_sources[0]);
         }
         
-        private void LoadSources()
+        public void LoadSources()
         {
             this.Log().Debug("Loadsources");
             _sources = new List<Source>();

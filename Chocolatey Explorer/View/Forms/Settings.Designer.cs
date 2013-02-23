@@ -40,15 +40,22 @@
             this.btnClearAvailablePackagesCache = new System.Windows.Forms.Button();
             this.btnClearCacheAll = new System.Windows.Forms.Button();
             this.btnClearPackageVersionCache = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lstSources = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtSource = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -129,6 +136,37 @@
             this.btnClearPackageVersionCache.UseVisualStyleBackColor = true;
             this.btnClearPackageVersionCache.Click += new System.EventHandler(this.btnClearPackageVersionCache_Click);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.txtSource);
+            this.tabPage3.Controls.Add(this.label2);
+            this.tabPage3.Controls.Add(this.label1);
+            this.tabPage3.Controls.Add(this.lstSources);
+            resources.ApplyResources(this.tabPage3, "tabPage3");
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // lstSources
+            // 
+            resources.ApplyResources(this.lstSources, "lstSources");
+            this.lstSources.FormattingEnabled = true;
+            this.lstSources.Name = "lstSources";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // txtSource
+            // 
+            resources.ApplyResources(this.txtSource, "txtSource");
+            this.txtSource.Name = "txtSource";
+            // 
             // Settings
             // 
             resources.ApplyResources(this, "$this");
@@ -142,6 +180,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -159,6 +199,11 @@
         private System.Windows.Forms.Button btnClearAvailablePackagesCache;
         private System.Windows.Forms.Button btnClearCacheAll;
         private System.Windows.Forms.Button btnClearPackageVersionCache;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TextBox txtSource;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox lstSources;
 
     }
 }

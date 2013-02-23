@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Chocolatey.Explorer.CommandPattern;
 using Chocolatey.Explorer.Commands;
+using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.SettingsService;
+using Chocolatey.Explorer.Services.SourceService;
 
 namespace Chocolatey.Explorer.View.Forms
 {
@@ -10,12 +13,31 @@ namespace Chocolatey.Explorer.View.Forms
     {
         private readonly ISettingsService _settingsService;
         private readonly ICommandExecuter _commandExecutor;
+        private readonly ISourceService _sourceService;
 
-        public Settings(ISettingsService settingsService, ICommandExecuter commandExecutor)
+        public Settings(ISettingsService settingsService, ICommandExecuter commandExecutor, ISourceService sourceService)
         {
             _settingsService = settingsService;
             _commandExecutor = commandExecutor;
+            _sourceService = sourceService;
+            _sourceService.SourcesChanged +=_sourceService_SourcesChanged;
+            _sourceService.CurrentSourceChanged +=_sourceService_CurrentSourceChanged;
             InitializeComponent();
+            _sourceService.LoadSources(); 
+        }
+
+        private void _sourceService_SourcesChanged(IList<Source> sources)
+        {
+            foreach (var source in sources)
+            {
+                lstSources.Items.Add(source.Name + " (" + source.Url + ")");
+            }
+            txtSource.Text = _sourceService.Source;
+        }
+
+        private void _sourceService_CurrentSourceChanged(Source source)
+        {
+            txtSource.Text = source.Name;
         }
 
         private void Settings_Load(object sender, EventArgs e)

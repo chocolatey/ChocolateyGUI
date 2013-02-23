@@ -10,5 +10,6 @@ namespace Chocolatey.Explorer.Services.SourceService
         void SetCurrentSource(Source source);
         String Source { get; }
         void AddSource(Source source);
+        void LoadSources();
     }
 }

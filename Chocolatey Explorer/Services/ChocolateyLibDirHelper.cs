@@ -38,12 +38,14 @@ namespace Chocolatey.Explorer.Services
         /// </summary>
         public IList<Package> ReloadFromDir()
         {
+            this.Log().Debug("Reloadfromdir");
             _instaledPackages = new List<Package>();
             var expandedLibDirectory = Environment.ExpandEnvironmentVariables(_settingsService.ChocolateyLibDirectory);
 			var directories = _fileStorageService.GetDirectories(expandedLibDirectory);
 
             foreach (var directoryPath in directories)
             {
+                this.Log().Debug("Found directory: {0}", directoryPath);
                 var directoryPathSegments = directoryPath.Split(_segmentDelim);
                 var directoryName = directoryPathSegments.Last();
 
@@ -53,18 +55,23 @@ namespace Chocolatey.Explorer.Services
             //add chocolatey by default because else this won't work anyway
             _chocolateyService.Help();
             var chocoPackage = new Package { Name = "chocolatey", InstalledVersion = _chocoVersion };
+            this.Log().Debug("Chocolatey package added: {0}", chocoPackage);
             _instaledPackages.Add(chocoPackage);
             return _instaledPackages;
         }
 
         private void VersionChangeFinished(string version)
         {
-			var match = Regex.Match(version, "Version:[ ]+'([0-9\\.]+)'");
+            this.Log().Debug("VersionChangeFinished for version: {0}", version);
+            var match = Regex.Match(version, "Version:[ ]+'([0-9\\.]+)'");
 
-			if (!match.Success)
-				throw new ChocolateyVersionUnknownException(version);
+            if (!match.Success)
+            {
+                this.Log().Debug("Chocolatey version not found");
+                throw new ChocolateyVersionUnknownException(version);
+            }
 
-			_chocoVersion = match.Groups[1].Value;
+            _chocoVersion = match.Groups[1].Value;
         }
 
         /// <summary>
@@ -73,8 +80,10 @@ namespace Chocolatey.Explorer.Services
         /// </summary>
         public Package GetHighestInstalledVersion(string packageName, bool reload=true)
         {
+            this.Log().Debug("Find highest version for: {0}", packageName);
             if (reload || _instaledPackages == null)
             {
+                this.Log().Debug("With reload");
                 ReloadFromDir();
             }
             var versionQuery =
@@ -87,6 +96,7 @@ namespace Chocolatey.Explorer.Services
 
         public Package GetPackageFromDirectoryName(string directoryName)
         {
+            this.Log().Debug("Get packagename for directory: {0}", directoryName);
             var package = new Package();
             var versionMatch = _packageVersionRegexp.Match(directoryName);
             package.Name = directoryName.Substring(0, versionMatch.Index);

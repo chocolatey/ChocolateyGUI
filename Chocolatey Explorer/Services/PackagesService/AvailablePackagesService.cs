@@ -25,7 +25,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
             _powershellAsync.RunFinished += RunFinished;
         }
 
-        public void ListOfAvalablePackages()
+        public void ListOfAvailablePackages()
         {
             this.Log().Info("Getting list of packages on source: " + _sourceService.Source);
             OnRunStarted();
@@ -34,6 +34,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private void OutputChanged(string line)
         {
+            this.Log().Debug("Output changed: {0}", line);
             _lines.Add(line);
         }
 
@@ -47,12 +48,14 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private void OnRunFinshed(IList<Package> packages)
         {
+            this.Log().Debug("Run finished found {0} packages", packages.Count);
             var handler = RunFinshed;
             if (handler != null) handler(packages);
         }
 
         private void OnRunStarted()
         {
+            this.Log().Debug("Run started");
             var handler = RunStarted;
             if (handler != null) handler("Getting list of available packages.");
         }

@@ -1,8 +1,6 @@
 ﻿using Chocolatey.Explorer.CommandPattern;
 using Chocolatey.Explorer.Commands;
 using Chocolatey.Explorer.Powershell;
-using Chocolatey.Explorer.Services.PackageVersionService;
-using Chocolatey.Explorer.Services.PackagesService;
 using Chocolatey.Explorer.Services.SourceService;
 
 namespace Chocolatey.Explorer.Services.PackageService
@@ -22,8 +20,8 @@ namespace Chocolatey.Explorer.Services.PackageService
 			_powershellAsync = powershell;
             _sourceService = sourceService;
             _commandExecuter = commandExecuter;
-            _powershellAsync.OutputChanged += OutputChanged;
-            _powershellAsync.RunFinished += RunFinished;
+            _powershellAsync.OutputChanged += OnLineChanged;
+            _powershellAsync.RunFinished += OnRunFinished;
         }
 
         public void InstallPackage(string package)
@@ -47,37 +45,31 @@ namespace Chocolatey.Explorer.Services.PackageService
             _powershellAsync.Run("cup " + package + " -source " + _sourceService.Source);
         }
 
-        private void OutputChanged(string line)
+        private void OnRunFinished()
         {
-            OnLineChanged(line);
-        }
-
-        private void RunFinished()
-        {
+            this.Log().Debug("Run finished");
             InvalidateCache();
-            OnRunFinshed();
-        }
-
-        private void OnRunFinshed()
-        {
             var handler = RunFinshed;
             if (handler != null) handler();
         }
 
         private void OnRunStarted(string message)
         {
+            this.Log().Debug("Run started");
             var handler = RunStarted;
             if (handler != null) handler(message);
         }
 
         private void OnLineChanged(string line)
         {
+            this.Log().Debug("Output changed: {0} ", line);
             var handler = LineChanged;
             if (handler != null) handler(line);
         }
 
         private void InvalidateCache()
         {
+            this.Log().Debug("Invalidate cache");
             _commandExecuter.Execute<ClearCacheAllCommand>();
         }
 

@@ -28,30 +28,35 @@ namespace Chocolatey.Explorer.Services.SourceService
 
         public void Initialize()
         {
+            this.Log().Debug("Initialize");
             LoadSources();
             SetCurrentSource(_sources[0]);
         }
         
         private void LoadSources()
         {
+            this.Log().Debug("Loadsources");
             _sources = new List<Source>();
 			var document = _fileStorageService.LoadXDocument("sources.xml");
             var sources = document.Elements("sources").Elements("source");
             foreach (var xElement in sources)
             {
-                _sources.Add(new Source {Name = xElement.Element("name").Value,Url = xElement.Element("url").Value});
+                this.Log().Debug("Added source: {0} {1}", xElement.Element("name").Value, xElement.Element("url").Value);
+                _sources.Add(new Source { Name = xElement.Element("name").Value, Url = xElement.Element("url").Value });
             }
             OnSourcesChanged(_sources);
         }
 
         public void SetCurrentSource(Source source)
         {
+            this.Log().Debug("Current source: {0}", source);
             _currentsource = source;
             OnCurrentSourceChanged(_currentsource);
         }
 
         private void OnCurrentSourceChanged(Source currentsource)
         {
+            this.Log().Debug("Current source changed: {0}", currentsource);
             var handler = CurrentSourceChanged;
             if (handler != null) handler(currentsource);
         }
@@ -63,17 +68,20 @@ namespace Chocolatey.Explorer.Services.SourceService
 
         public void AddSource(Source source)
         {
+            this.Log().Debug("Add source: {0}", source);
             _sources.Add(source);
             SaveSources();
         }
 
         private void SaveSources()
         {
+            this.Log().Debug("Savesources");
             LoadSources();
         }
 
         private void OnSourcesChanged(IList<Source> sources)
         {
+            this.Log().Debug("Sources changed: {0}", sources);
             var handler = SourcesChanged;
             if (handler != null) handler(sources);
         }

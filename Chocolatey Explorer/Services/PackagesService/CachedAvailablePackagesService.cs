@@ -28,48 +28,55 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         public void InvalidateCache()
         {
+            this.Log().Debug("Invalidate cache");
             _availablePackageCache = null;
             _invalidateCacheTime = DateTime.Now.AddMinutes(60);
         }
 
-        public void ListOfAvalablePackages()
+        public void ListOfAvailablePackages()
         {
             if (_availablePackageCache == null || DateTime.Now > _invalidateCacheTime)
             {
                 OnRunStarted();
-                _availablePackagesService.ListOfAvalablePackages();
+                this.Log().Debug("Get list of available packages from source");
+                _availablePackagesService.ListOfAvailablePackages();
             }
             else
             {
+                this.Log().Debug("Return list of packages from cache.");
                 OnRunFinshed(_availablePackageCache);
             }
         }
 
         private void OnRunFinshed(IList<Package> packages)
         {
+            this.Log().Debug("Run Finished");
             var handler = RunFinshed;
             if (handler != null) handler(packages);
         }
 
         /// <summary>
         /// Called when the package service that should be cached finishes
-        /// its run for currently packages currently available on the server.
+        /// it's run for packages currently available on the server.
         /// </summary>
         /// <param name="packages"></param>
         public void OnUncachedAvailableRunFinished(IList<Package> packages)
         {
+            this.Log().Debug("UnCached run finishes.");
             _availablePackageCache = packages;
             OnRunFinshed(packages);
         }
 
         private void AvailablePackagesServiceRunFailed(System.Exception exc)
 		{
-			if (RunFailed != null)
+            this.Log().Debug("Run Failed");
+            if (RunFailed != null)
 				RunFailed(exc);
 		}
 
         private void OnRunStarted()
         {
+            this.Log().Debug("Run started");
             var handler = RunStarted;
             if (handler != null) handler("Getting list of available packages.");
         }

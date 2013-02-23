@@ -8,7 +8,7 @@ namespace Chocolatey.Explorer.Powershell
     {
         public void Run(String command)
         {
-            this.Log().Info("Running command: " + command);
+            this.Log().Info("Running command: {0}", command);
             var result = new StringBuilder();
             var results = PowerShell.Create()
                 .AddScript(command)
@@ -18,16 +18,27 @@ namespace Chocolatey.Explorer.Powershell
             {
                 foreach (var line in results)
                 {
+                    this.Log().Debug("Line: {0}", line);
                     result.AppendLine(line);
                 }
-                if(OutputChanged!= null) OutputChanged(result.ToString());
+                if (OutputChanged != null)
+                {
+                    this.Log().Debug("Result: {0}", result.ToString());
+                    OutputChanged(result.ToString());
+                }
             }
             else
             {
-                if (OutputChanged != null) OutputChanged("No output");
+                if (OutputChanged != null)
+                {
+                    this.Log().Debug("No output");
+                    OutputChanged("No output");
+                }
             }
-            if (RunFinished != null) RunFinished();
-       }
+            if (RunFinished == null) return;
+            this.Log().Debug("Run finished");
+            RunFinished();
+        }
         
         public event ResultsHandler OutputChanged;
 

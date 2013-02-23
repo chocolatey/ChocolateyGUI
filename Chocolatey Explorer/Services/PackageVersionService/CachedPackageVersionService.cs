@@ -25,21 +25,25 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 
         public void InvalidateCache()
         {
+            this.Log().Debug("Invalidate cache");
             _cachedVersions = new Dictionary<string, PackageVersion>();
         }
 
         public void PackageVersion(string packageName)
         {
+            this.Log().Debug("Get packageVersion for packagename {0}", packageName);
             PackageVersion cachedPackage;
             _cachedVersions.TryGetValue(packageName, out cachedPackage);
             OnStarted(packageName);
 
             if (cachedPackage == null)
             {
+                this.Log().Debug("Get pacakge from service");
                 _packageVersionService.PackageVersion(packageName);
             }
             else
             {
+                this.Log().Debug("Get package from cache");
                 OnVersionChanged(cachedPackage);
             }
         }
@@ -51,18 +55,21 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         /// <param name="version"></param>
         private void OnUncachedVersionChanged(PackageVersion version)
         {
+            this.Log().Debug("Run finished on uncached version");
             _cachedVersions.Add(version.Name, version);
             OnVersionChanged(version);
         }
 
         private void OnVersionChanged(PackageVersion version)
         {
+            this.Log().Debug("New packageversion {0}", version);
             var handler = VersionChanged;
             if (handler != null) handler(version);
         }
 
         private void OnStarted(string packageName)
         {
+            this.Log().Debug("Run started");
             var handler = RunStarted;
             if (handler != null) handler("Getting package " + packageName);
         }

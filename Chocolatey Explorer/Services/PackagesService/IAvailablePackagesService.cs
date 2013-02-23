@@ -5,6 +5,6 @@ namespace Chocolatey.Explorer.Services.PackagesService
         event Delegates.StartedDelegate RunStarted;
         event Delegates.FinishedDelegate RunFinshed;
 		event Delegates.FailedDelegate RunFailed;
-        void ListOfAvalablePackages();
+        void ListOfAvailablePackages();
     }
 }

@@ -49,6 +49,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 
         private void OnPackageVersionThreadCancel()
         {
+            this.Log().Debug("Packageversion thread cancelled");
             if (_loadingRssFeed != null)
             {
                 _loadingRssFeed.Abort();
@@ -59,6 +60,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         {
             try
             {
+                this.Log().Debug("Getting package: {0}", packageNameObj);
                 var packageName = packageNameObj;
                 var packageVersion = FillWithOData(packageName) ?? new PackageVersion();
 
@@ -73,11 +75,15 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
                 cancelToken.ThrowIfCancellationRequested();
                 OnVersionChanged(packageVersion);
             }
-            catch (OperationCanceledException) { } // cancellation is expected and okay
+            catch (OperationCanceledException ex)
+            {
+                this.Log().Error("Message: {0} - Stacktrac: {1}", ex.Message, ex.StackTrace);
+            } // cancellation is expected and okay
         }
 
         private PackageVersion FillWithOData(string package)
         {
+            this.Log().Debug("Filling data for {0}", package);
             var url = _sourceService.Source + "/Packages?$filter=IsLatestVersion eq true and Id eq '" + package + "'";
             var xmlDoc = new XmlDocument();
 
@@ -95,8 +101,8 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
                     if (packages.Any())
                         return packages.First();
                 }
-                catch (XmlException) { } // when xml could not be parsed
-                catch (WebException) { } // when loading xml from server failed
+                catch (XmlException ex) { this.Log().Error("Message: {0} - Stacktrac: {1}", ex.Message, ex.StackTrace); } // when xml could not be parsed
+                catch (WebException ex) { this.Log().Error("Message: {0} - Stacktrac: {1}", ex.Message, ex.StackTrace); } // when loading xml from server failed
                 finally
                 {
                     if (responseStream != null)
@@ -111,12 +117,14 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 
         private void OnVersionChanged(PackageVersion version)
         {
+            this.Log().Debug("Version changed: {0}", version);
             var handler = VersionChanged;
             if (handler != null) handler(version);
         }
 
         private void OnStarted(string packageName)
         {
+            this.Log().Debug("Run started");
             var handler = RunStarted;
             if (handler != null) handler("Getting package " + packageName);
         }

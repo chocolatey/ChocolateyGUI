@@ -16,10 +16,12 @@ namespace Chocolatey.Explorer.Services.SettingsService
         {
             get
             {
+                this.Log().Debug("Returing lib: {0}", _settings.ChocolateyLibDirectory);
                 return _settings.ChocolateyLibDirectory;
             }
             set 
             {
+                this.Log().Debug("Saving lib: {0}", value);
                 _settings.ChocolateyLibDirectory = value;
                 _settings.Save();
             }

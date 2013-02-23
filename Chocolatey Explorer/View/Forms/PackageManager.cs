@@ -141,7 +141,7 @@ namespace Chocolatey.Explorer.View.Forms
 
         private void QueryAvailablePackges()
         {
-            _availablePackagesService.ListOfAvalablePackages();
+            _availablePackagesService.ListOfAvailablePackages();
         }
 
         private void QueryInstalledPackages()

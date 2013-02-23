@@ -33,7 +33,8 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 
 		private void VersionHandler(string version)
 		{
-			_packageVersion.Name = _package;
+            this.Log().Debug("Version found: {0}", version);
+            _packageVersion.Name = _package;
 			if (version.StartsWith("found") && !version.StartsWith("foundCompare"))
 			{
 				_packageVersion.CurrentVersion = version.Substring(5).Trim();
@@ -46,17 +47,20 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
 
 		private void RunFinished()
 		{
-			OnVersionChanged(_packageVersion);
+            this.Log().Debug("Run finished");
+            OnVersionChanged(_packageVersion);
 		}
 
 		private void OnVersionChanged(PackageVersion version)
 		{
-			var handler = VersionChanged;
+            this.Log().Debug("Version changed: {0}", version);
+            var handler = VersionChanged;
 			if (handler != null) handler(version);
 		}
 
         private void OnStarted()
         {
+            this.Log().Debug("Run started");
             var handler = RunStarted;
             if (handler != null) handler("Getting package " + _package);
         }

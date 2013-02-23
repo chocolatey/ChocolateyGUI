@@ -22,7 +22,7 @@ namespace Chocolatey.Explorer.Powershell
 
         public void Run(String command)
         {
-            this.Log().Info("Running command: " + command);
+            this.Log().Info("Running command: {0}", command);
             _pipeLine = _runSpace.CreatePipeline(command);
             _pipeLine.Input.Close();
             _outPut = _pipeLine.Output;
@@ -30,35 +30,42 @@ namespace Chocolatey.Explorer.Powershell
             _pipeLine.InvokeAsync();
         }
 
-        public void OnOutputChanged(string version)
+        public void OnOutputChanged(string output)
         {
+            this.Log().Debug("Output changed: {0}", output);
             var handler = OutputChanged;
-            if (handler != null) handler(version);
+            if (handler != null) handler(output);
         }
 
         public void OnFinishedRun()
         {
+            this.Log().Debug("Run finished");
             var handler = RunFinished;
             if (handler != null) handler();
         }
 
         private void OutputDataReady(Object sender, EventArgs e)
         {
+            this.Log().Debug("Output ready");
             var data = _pipeLine.Output.NonBlockingRead();
             if (data.Count > 0)
             {
+                this.Log().Debug("Has data");
                 hasData = true;
                 foreach (var d in data)
                 {
+                    this.Log().Debug("data: {0}", d);
                     OnOutputChanged(d + Environment.NewLine);
                 }
 
             }
-            if(_pipeLine.Output.EndOfPipeline )
+            if (!_pipeLine.Output.EndOfPipeline) return;
+            if (!hasData)
             {
-                if (!hasData) OnOutputChanged("No output");
-                OnFinishedRun();
+                this.Log().Debug("No output");
+                OnOutputChanged("No output");
             }
+            OnFinishedRun();
         }
 
     }

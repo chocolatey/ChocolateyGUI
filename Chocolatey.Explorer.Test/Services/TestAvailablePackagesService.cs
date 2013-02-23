@@ -29,7 +29,7 @@ namespace Chocolatey.Explorer.Test.Services
             var sourceService = _mocks.Get<ISourceService>();
             sourceService.Expect(x => x.Source)
                 .Return("test");
-            _service.ListOfAvalablePackages();
+            _service.ListOfAvailablePackages();
             powershell.AssertWasCalled(mock => mock.Run("clist -source test"));
         }
 

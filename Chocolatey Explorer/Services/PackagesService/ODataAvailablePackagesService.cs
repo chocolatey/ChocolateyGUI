@@ -27,8 +27,9 @@ namespace Chocolatey.Explorer.Services.PackagesService
             _libDirHelper = libDirHelper;
         }
 
-        public void ListOfAvalablePackages()
+        public void ListOfAvailablePackages()
         {
+            this.Log().Info("Getting list of available packages.");
             OnRunStarted();
             var thread = new Thread(LoadAllPackagesThread) { IsBackground = true };
             thread.Start();
@@ -37,6 +38,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
         private void LoadAllPackagesThread()
         {
             // load and parse first page to have total item count
+            this.Log().Debug("Load packages");
             var xmlDocument = LoadFeedDoc(0);
             var packageVersions = _xmlParser.parse(xmlDocument);
             var totalCount = _xmlParser.LastTotalCount;
@@ -53,7 +55,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
             // concat and return results
             _libDirHelper.ReloadFromDir();
-            IEnumerable<Package> allPackages = packageVersions.Select( PackageFromVersion );
+            var allPackages = packageVersions.Select( PackageFromVersion );
             foreach (var backgroundPageObject in bgPageObjects)
             {
                 backgroundPageObject.DoneEvent.WaitOne();
@@ -66,6 +68,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private Package PackageFromVersion(PackageVersion version)
         {
+            this.Log().Debug("Get package from version: {0}", version);
             var highestPackage = _libDirHelper.GetHighestInstalledVersion(version.Name, false);
             return new Package
                 {
@@ -76,6 +79,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private void LoadPageAsync(object threadContext)
         {
+            this.Log().Debug("Load page async");
             var backgroundPageObject = threadContext as BackgroundPageObject;
             var xmlDocument = LoadFeedDoc(backgroundPageObject.Skip);
             backgroundPageObject.PackageVersions = _xmlParser.parse(xmlDocument);
@@ -84,9 +88,10 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         private XmlDocument LoadFeedDoc(int skip)
         {
+            this.Log().Debug("LoadFeedDoc: {0}", skip);
             var fullUrl = _sourceService.Source + AllPackagesUrl;
             var skipUrl = fullUrl + "&$skip=" + skip;
-            this.Log().Debug("Getting list of packages on source: " + skipUrl);
+            this.Log().Debug("Getting list of packages on source: {0}", skipUrl);
 
             var xmlDoc = new XmlDocument();
             var rssFeed = WebRequest.Create(skipUrl) as HttpWebRequest;
@@ -98,20 +103,28 @@ namespace Chocolatey.Explorer.Services.PackagesService
                     xmlDoc.Load(rssFeed.GetResponse().GetResponseStream());
                     return xmlDoc;
                 }
-                catch (WebException) { }
-                catch (XmlException) { }
+                catch (WebException ex)
+                {
+                    this.Log().Error("Message: {0} - Stacktrac: {1}", ex.Message, ex.StackTrace);
+                }
+                catch (XmlException ex)
+                {
+                    this.Log().Error("Message: {0} - Stacktrac: {1}",ex.Message, ex.StackTrace);
+                }
             }
             return null;
         }
 
 		private void OnRunFinshed(IList<Package> packages)
         {
+            this.Log().Debug("Run finshed");
             var handler = RunFinshed;
             if (handler != null) handler(packages);
         }
 
         private void OnRunStarted()
         {
+            this.Log().Debug("Run started");
             var handler = RunStarted;
             if (handler != null) handler("Getting list of available packages.");
         }

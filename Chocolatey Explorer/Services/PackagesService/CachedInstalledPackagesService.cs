@@ -24,6 +24,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
 
         public void InvalidateCache()
         {
+            this.Log().Debug("Invalidate cache");
             _installedPackageCache = null;
             _invalidateCacheTime = DateTime.Now.AddMinutes(30);
         }
@@ -33,10 +34,12 @@ namespace Chocolatey.Explorer.Services.PackagesService
             if (_installedPackageCache == null || DateTime.Now > _invalidateCacheTime)
             {
                 OnRunStarted();
+                this.Log().Debug("Get list of packages from source.");
                 _installedPackagesService.ListOfIntalledPackages();
             }
             else
             {
+                this.Log().Debug("Get list of packages from cache.");
                 OnRunFinshed(_installedPackageCache);
             }
         }
@@ -46,16 +49,19 @@ namespace Chocolatey.Explorer.Services.PackagesService
             if (_installedPackageCache == null || DateTime.Now > _invalidateCacheTime)
             {
                 OnRunStarted();
+                this.Log().Debug("Get list of distinct packages from server.");
                 _installedPackagesService.ListOfDistinctHighestInstalledPackages();
             }
             else
             {
+                this.Log().Debug("Get list of distinct packages from cache.");
                 OnRunFinshed(_installedPackageCache);
             }
         }
 
         private void OnRunFinshed(IList<Package> packages)
         {
+            this.Log().Debug("Run finished");
             var handler = RunFinshed;
             if (handler != null) handler(packages);
         }
@@ -67,18 +73,21 @@ namespace Chocolatey.Explorer.Services.PackagesService
         /// <param name="packages"></param>
         private void OnUncachedInstalledRunFinished(IList<Package> packages)
         {
+            this.Log().Debug("Uncached run finished");
             _installedPackageCache = packages;
             OnRunFinshed(packages);
         }
 
         private void InstalledPackagesServiceRunFailed(Exception exc)
         {
+            this.Log().Debug("Run failed");
             if (RunFailed != null)
                 RunFailed(exc);
         }
 
         private void OnRunStarted()
         {
+            this.Log().Debug("Run started");
             var handler = RunStarted;
             if (handler != null) handler("Getting list of installed packages.");
         }

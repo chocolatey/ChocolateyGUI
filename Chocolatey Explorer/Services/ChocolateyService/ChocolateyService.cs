@@ -18,8 +18,8 @@ namespace Chocolatey.Explorer.Services.ChocolateyService
         {
             _powershell = powerShell;
             _sourceService = sourceService;
-            _powershell.OutputChanged += OutPutChangedHandler;
-            _powershell.RunFinished += RunFinishedHandler;
+            _powershell.OutputChanged += InvokeOutputChanged;
+            _powershell.RunFinished += OnRunFinished;
         }
 
         public void LatestVersion()
@@ -36,25 +36,16 @@ namespace Chocolatey.Explorer.Services.ChocolateyService
 
         private void OnRunFinished()
         {
+            this.Log().Debug("Run finished");
             var handler = RunFinished;
             if (handler != null) handler();
         }
 
         private void InvokeOutputChanged(string output)
         {
+            this.Log().Debug("Output changed: {0}", output);
             var handler = OutputChanged;
             if (handler != null) handler(output);
         }
-
-        private void OutPutChangedHandler(string output)
-        {
-            InvokeOutputChanged(output);
-        }
-
-        private void RunFinishedHandler()
-        {
-            OnRunFinished();
-        }
-
     }
 }

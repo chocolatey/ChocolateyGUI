@@ -16,6 +16,8 @@ namespace Chocolatey.Explorer.IoC
     {
          public Registry()
          {
+             this.Log().Info("Registering in Ioc");
+            
              // Services
              For<IPackageService>().Singleton().Use<PackageService>();
              For<IAvailablePackagesService>().Singleton().Use<CachedAvailablePackagesService>();

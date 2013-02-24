@@ -29,7 +29,7 @@ Server 2008 SP2 and above.
 	*Enhancement - In the settings you can empty the cache, better caching of packages and list
 	*Enhancement - better parsing of dependencies
 	*Enhancement - selecting of sources from the sources.xml file. For now just 2 sources.
-	*Enhancement - release notes and copyreight information in seperate tab
+	*Enhancement - release notes and copyright information in seperate tab
 	*Enhancement - chocolatey run information in seperate tab
 	
 	v0.1.4
@@ -67,7 +67,8 @@ Server 2008 SP2 and above.
     </dependencies>	
   </metadata>
   <files>
-    <file src="chocolateyinstall.ps1" target="tools"/>
+    <file src="chocolateyInstall.ps1" target="tools"/>
+	<file src="chocolateyUninstall.ps1" target="tools"/>
 	<file src="install.ps1" target="tools"/>
     <file src="..\BuildArtifacts\cab1.cab" target="tools"/>
 	<file src="..\BuildArtifacts\Setup_ChocolateyGUI.msi" target="tools"/>

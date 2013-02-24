@@ -22,6 +22,11 @@ Server 2008 SP2 and above.
 	</description>
     <summary>A GUI for Chocolatey</summary>
 	<releaseNotes>
+	v0.11.1
+	
+	*bugfix - uninstall should now work
+	*bugfix - program crashing when packages came out of cache.
+	
 	v0.11.0
 	
 	*Enhancement - Many new features, including UI enhancements and auto building from MyGet.

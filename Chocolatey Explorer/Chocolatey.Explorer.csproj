@@ -82,8 +82,7 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>chocolateyicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog">
@@ -322,6 +321,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="chocolateyicon.ico" />
     <Content Include="Resources\chocolateyicon.gif" />
     <Content Include="Resources\folder_small.png" />
     <None Include="Resources\packageicon_default.png" />

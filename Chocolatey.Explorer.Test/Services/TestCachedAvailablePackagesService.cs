@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Powershell;
 using Chocolatey.Explorer.Services.PackagesService;
@@ -22,39 +23,42 @@ namespace Chocolatey.Explorer.Test.Services
         }
 
         [Test]
-        public void IfListOfPackagesCallsPowershellRun()
+        public void IfListOfPackagesCallsPackagesServiceListOfPackagesWhenNoCache()
         {
-            var packagesService = _mocks.Get<ODataAvailablePackagesService>();
-            var sourceService = _mocks.Get<ISourceService>();
-            sourceService.Expect(x => x.Source)
-                .Return(new Source { Url = "test" });
+            var packagesService = _mocks.Get<IODataAvailablePackagesService>();
             _service.ListOfAvailablePackages();
             packagesService.AssertWasCalled(mock => mock.ListOfAvailablePackages());
         }
 
         [Test]
-        public void IfRaisesRunFinishedOnRunWithoutLines()
+        public void IfRaisesRunFinishedOnPackagesServiceRunFinishedWhenNoCache()
         {
-            var powershell = _mocks.Get<IRunAsync>();
+            var packagesService = _mocks.Get<IODataAvailablePackagesService>();
             var result = 0;
             _service.RunFinshed += (x) => result = 1;
-            powershell.GetEventRaiser(x => x.RunFinished += null).Raise();
+            packagesService.GetEventRaiser(x => x.RunFinshed += null).Raise(new List<Package>());
 
             Assert.AreEqual(1, result);
         }
 
         [Test]
-        public void IfRaisesRunFinishedOnRunWithLines()
+        public void IfRaisesRunFailedOnPackagesServiceRunFailedWhenNoCache()
         {
-            var powershell = _mocks.Get<IRunAsync>();
-            IList<Package> result = new List<Package>();
-            _service.RunFinshed += (x) => result = x;
-            powershell.GetEventRaiser(x => x.OutputChanged += null).Raise("test testversion");
-            powershell.GetEventRaiser(x => x.RunFinished += null).Raise();
+            var packagesService = _mocks.Get<IODataAvailablePackagesService>();
+            var result = 0;
+            _service.RunFailed += (x) => result = 1;
+            packagesService.GetEventRaiser(x => x.RunFailed += null).Raise(new Exception());
 
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("test", result[0].Name);
-            Assert.AreEqual("testversion", result[0].InstalledVersion);
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void IfRaisesRunRunStartedOnListOfAvailablePackages()
+        {
+            var result = 0;
+            _service.RunStarted += (x) => result = 1;
+            _service.ListOfAvailablePackages();
+            Assert.AreEqual(1, result);
         } 
     }
 }

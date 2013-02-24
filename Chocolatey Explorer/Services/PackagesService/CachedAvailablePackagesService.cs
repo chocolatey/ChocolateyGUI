@@ -15,12 +15,12 @@ namespace Chocolatey.Explorer.Services.PackagesService
 		public event Delegates.FailedDelegate RunFailed;
         public event Delegates.StartedDelegate RunStarted;
 
-        private readonly IAvailablePackagesService _availablePackagesService;
+        private readonly IODataAvailablePackagesService _availablePackagesService;
         private IList<Package> _availablePackageCache;
         private DateTime _invalidateCacheTime;
         private readonly ISourceService _sourceService;
 
-        public CachedAvailablePackagesService(ODataAvailablePackagesService availablePackagesService, ISourceService sourceService)
+        public CachedAvailablePackagesService(IODataAvailablePackagesService availablePackagesService, ISourceService sourceService)
         {
             _availablePackagesService = availablePackagesService;
             _sourceService = sourceService;

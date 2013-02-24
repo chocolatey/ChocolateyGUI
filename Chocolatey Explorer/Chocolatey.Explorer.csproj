@@ -155,6 +155,7 @@
     <Compile Include="Services\PackagesService\CachedInstalledPackagesService.cs" />
     <Compile Include="Services\PackagesService\IInstalledPackagesService.cs" />
     <Compile Include="Services\PackagesService\InstalledPackagesService.cs" />
+    <Compile Include="Services\PackagesService\IODataAvailablePackagesService.cs" />
     <Compile Include="Services\PackagesService\ODataAvailablePackagesService.cs" />
     <Compile Include="Services\IPackageVersionXMLParser.cs" />
     <Compile Include="Services\PackagesSorter.cs" />

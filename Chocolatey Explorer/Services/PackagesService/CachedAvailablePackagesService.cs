@@ -18,7 +18,7 @@ namespace Chocolatey.Explorer.Services.PackagesService
         private readonly IAvailablePackagesService _availablePackagesService;
         private IList<Package> _availablePackageCache;
         private DateTime _invalidateCacheTime;
-        private ISourceService _sourceService;
+        private readonly ISourceService _sourceService;
 
         public CachedAvailablePackagesService(ODataAvailablePackagesService availablePackagesService, ISourceService sourceService)
         {

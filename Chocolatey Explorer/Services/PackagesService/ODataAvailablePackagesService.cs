@@ -8,7 +8,7 @@ using Chocolatey.Explorer.Services.SourceService;
 
 namespace Chocolatey.Explorer.Services.PackagesService
 {
-    public class ODataAvailablePackagesService : IAvailablePackagesService
+    public class ODataAvailablePackagesService : IODataAvailablePackagesService
     {
         private const string AllPackagesUrl = "/Packages?$filter=IsLatestVersion eq true&$inlinecount=allpages&$select=Title";
 

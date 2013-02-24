@@ -158,6 +158,7 @@
     <Compile Include="Services\PackagesService\ODataAvailablePackagesService.cs" />
     <Compile Include="Services\IPackageVersionXMLParser.cs" />
     <Compile Include="Services\PackagesSorter.cs" />
+    <Compile Include="Services\PackageVersionService\IODataPackageVersionService.cs" />
     <Compile Include="Services\PackageVersionXMLParser.cs" />
     <Compile Include="Model\Source.cs" />
     <Compile Include="Powershell\IRun.cs" />

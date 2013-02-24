@@ -25,6 +25,7 @@ namespace Chocolatey.Explorer.IoC
              For<IODataAvailablePackagesService>().Singleton().Use<ODataAvailablePackagesService>();
              For<IInstalledPackagesService>().Singleton().Use<CachedInstalledPackagesService>();
              For<IPackageVersionService>().Singleton().Use<CachedPackageVersionService>();
+             For<IODataPackageVersionService>().Singleton().Use<ODataPackageVersionService>();
              For<IChocolateyService>().Use<ChocolateyService>();
              For<ISettingsService>().Singleton().Use<SettingsService>();
              For<IPackageVersionXMLParser>().Use<PackageVersionXMLParser>();

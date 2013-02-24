@@ -82,6 +82,18 @@ namespace Chocolatey.Explorer.Test.IoC
         }
 
         [Test]
+        public void IfIODataAvailablePackagesServiceCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<IODataAvailablePackagesService>());
+        }
+
+        [Test]
+        public void IfIODataAvailablePackagesServiceIsNotSingleton()
+        {
+            Assert.AreEqual(ObjectFactory.GetInstance<IODataAvailablePackagesService>(), ObjectFactory.GetInstance<IODataAvailablePackagesService>());
+        }
+
+        [Test]
         public void IfIInstalledPackagesServiceCanBeResolved()
         {
             Assert.IsNotNull(ObjectFactory.GetInstance<IInstalledPackagesService>());
@@ -103,6 +115,18 @@ namespace Chocolatey.Explorer.Test.IoC
         public void IfIPackageVersionServiceIsNotSingleton()
         {
             Assert.AreEqual(ObjectFactory.GetInstance<IPackageVersionService>(), ObjectFactory.GetInstance<IPackageVersionService>());
+        }
+
+        [Test]
+        public void IfIODataPackageVersionServiceCanBeResolved()
+        {
+            Assert.IsNotNull(ObjectFactory.GetInstance<IODataPackageVersionService>());
+        }
+
+        [Test]
+        public void IfIODataPackageVersionServiceIsNotSingleton()
+        {
+            Assert.AreEqual(ObjectFactory.GetInstance<IODataPackageVersionService>(), ObjectFactory.GetInstance<IODataPackageVersionService>());
         }
 
         [Test]

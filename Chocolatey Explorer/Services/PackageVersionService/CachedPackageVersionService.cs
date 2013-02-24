@@ -14,10 +14,10 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         public event Delegates.VersionResult VersionChanged;
         public event Delegates.StartedDelegate RunStarted;
 
-        private readonly IPackageVersionService _packageVersionService;
+        private readonly IODataPackageVersionService _packageVersionService;
         private IDictionary<string, VersionAndCacheTime> _cachedVersions;
 
-        public CachedPackageVersionService(ODataPackageVersionService packageVersionService)
+        public CachedPackageVersionService(IODataPackageVersionService packageVersionService)
         {
             _packageVersionService = packageVersionService;
             _packageVersionService.VersionChanged += OnUncachedVersionChanged;
@@ -57,7 +57,14 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
         private void OnUncachedVersionChanged(PackageVersion version)
         {
             this.Log().Debug("Run finished on uncached version");
-            _cachedVersions.Add(version.Name, new VersionAndCacheTime() { Version = version, InvalidateCacheTime = DateTime.Now.AddMinutes(30)});
+            if (_cachedVersions.ContainsKey(version.Name))
+            {
+                _cachedVersions[version.Name] = new VersionAndCacheTime { Version = version, InvalidateCacheTime = DateTime.Now.AddMinutes(30) };
+            }
+            else
+            {
+                _cachedVersions.Add(version.Name, new VersionAndCacheTime { Version = version, InvalidateCacheTime = DateTime.Now.AddMinutes(30) });
+            }
             OnVersionChanged(version);
         }
 

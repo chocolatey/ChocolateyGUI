@@ -59,6 +59,7 @@ namespace Chocolatey.Explorer.Test.Services
             _service.RunStarted += (x) => result = 1;
             _service.ListOfAvailablePackages();
             Assert.AreEqual(1, result);
-        } 
+        }
+
     }
 }

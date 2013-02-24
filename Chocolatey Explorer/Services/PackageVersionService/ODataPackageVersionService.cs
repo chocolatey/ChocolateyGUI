@@ -15,7 +15,7 @@ namespace Chocolatey.Explorer.Services.PackageVersionService
     /// The version of the currently installed package is read from the chocolatey
     /// lib directory.
     /// </summary>
-    class ODataPackageVersionService : IPackageVersionService
+    class ODataPackageVersionService : IODataPackageVersionService
     {
         public event Delegates.VersionResult VersionChanged;
         public event Delegates.StartedDelegate RunStarted;

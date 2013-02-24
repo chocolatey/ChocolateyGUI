@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Chocolatey.Explorer.Model;
 using Chocolatey.Explorer.Services.FileStorageService;
 
 namespace Chocolatey.Explorer.Services.LogsService

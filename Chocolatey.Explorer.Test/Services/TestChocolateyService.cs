@@ -39,5 +39,25 @@ namespace Chocolatey.Explorer.Test.Services
             _service.Help();
             powershell.AssertWasCalled(mock => mock.Run("chocolatey /?"));
         }
+
+        [Test]
+        public void IfRunFinishedGetsCalledOnPowershellRun()
+        {
+            var powershell = _mocks.Get<IRunSync>();
+            var result = 0;
+            _service.RunFinished += () => result = 1;
+            powershell.GetEventRaiser(x => x.RunFinished += null).Raise();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void IfOutputChangedGetsCalledOnPowershellRun()
+        {
+            var powershell = _mocks.Get<IRunSync>();
+            var result = "";
+            _service.OutputChanged += (x) => result = x;
+            powershell.GetEventRaiser(x => x.OutputChanged += null).Raise("test");
+            Assert.AreEqual("test", result);
+        }
     }
 }

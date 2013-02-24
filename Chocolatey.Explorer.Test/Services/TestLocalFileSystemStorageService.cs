@@ -33,6 +33,12 @@ namespace Chocolatey.Explorer.Test.Services
         }
 
         [Test]
+        public void IfGetFilesReturnsFilesForParentOfCurrentDirectory()
+        {
+            Assert.Greater(_fileStorage.GetFiles(Environment.CurrentDirectory).Count, 0);
+        }
+
+        [Test]
         public void CanLoadXmlDocument()
         {
             Assert.IsNotNull(_fileStorage.LoadXDocument("sources.xml"));

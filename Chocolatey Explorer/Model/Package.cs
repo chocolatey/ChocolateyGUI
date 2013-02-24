@@ -23,7 +23,7 @@ namespace Chocolatey.Explorer.Model
         public int CompareTo(object obj)
         {
             if (obj.GetType() != typeof(Package)) return -1;
-            return System.String.Compare(Name, ((Package) obj).Name, System.StringComparison.Ordinal);
+            return String.Compare(Name, ((Package) obj).Name, StringComparison.Ordinal);
         }
 
         public bool Equals(Package other)

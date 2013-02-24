@@ -3,6 +3,9 @@ using Chocolatey.Explorer.View.Forms;
 
 namespace Chocolatey.Explorer.Commands
 {
+    /// <summary>
+    /// Opens the <see cref="ISettings"/> form and calls DoShowDialog on it.
+    /// </summary>
     public class OpenSettingsCommand:BaseCommand
     {
         public ISettings Settings { get; set; }

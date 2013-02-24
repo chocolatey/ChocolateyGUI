@@ -4,6 +4,10 @@ using Chocolatey.Explorer.Services.PackageVersionService;
 
 namespace Chocolatey.Explorer.Commands
 {
+    /// <summary>
+    /// Gets the <see cref="IPackageVersionService"/> from the container and then chechs if it is of type <see cref="ICacheable"/>.
+    /// If it is it will then call InvalidateCache.
+    /// </summary>
     public class ClearCachePackageVersionCommand : BaseCommand
     {
         public IPackageVersionService PackageVersionService { get; set; }

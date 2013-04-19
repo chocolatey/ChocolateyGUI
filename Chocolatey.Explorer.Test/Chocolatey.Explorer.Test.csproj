@@ -65,19 +65,19 @@
   <ItemGroup>
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Chocolatey Explorer\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\Chocolatey.Explorer\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Chocolatey Explorer\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+      <HintPath>..\Chocolatey.Explorer\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Chocolatey Explorer\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+      <HintPath>..\Chocolatey.Explorer\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.AutoMocking, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Chocolatey Explorer\packages\structuremap.automocking.2.6.4.1\lib\net40\StructureMap.AutoMocking.dll</HintPath>
+      <HintPath>..\Chocolatey.Explorer\packages\structuremap.automocking.2.6.4.1\lib\net40\StructureMap.AutoMocking.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -127,7 +127,7 @@
     <Compile Include="Services\TestSourceService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chocolatey Explorer\Chocolatey.Explorer.csproj">
+    <ProjectReference Include="..\Chocolatey.Explorer\Chocolatey.Explorer.csproj">
       <Project>{44D4BF09-B14F-4241-9CB7-02B26027F4AB}</Project>
       <Name>Chocolatey.Explorer</Name>
     </ProjectReference>

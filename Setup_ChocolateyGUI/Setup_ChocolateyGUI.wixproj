@@ -36,16 +36,6 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chocolatey Explorer\Chocolatey.Explorer.csproj">
-      <Name>Chocolatey.Explorer</Name>
-      <Project>{44d4bf09-b14f-4241-9cb7-02b26027f4ab}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WixExtension Include="WixNetFxExtension">
       <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
       <Name>WixNetFxExtension</Name>
@@ -55,6 +45,16 @@
     <Content Include="..\SharedSource\Common\CommonWixInfo.wxi">
       <Link>CommonWixInfo.wxi</Link>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Chocolatey.Explorer\Chocolatey.Explorer.csproj">
+      <Name>Chocolatey.Explorer</Name>
+      <Project>{44d4bf09-b14f-4241-9cb7-02b26027f4ab}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

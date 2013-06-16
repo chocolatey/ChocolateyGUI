@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Chocolatey.Explorer.Extensions;
 using Chocolatey.Explorer.Model;
@@ -16,6 +18,8 @@ namespace Chocolatey.Explorer.View.Controls
         private Panel panel1;
         private TextBox txtSearch;
         private Label label2;
+        private Button searchButton;
+
         protected BindingSource _bindingsource;
 
         public PackagesBaseGrid()
@@ -25,7 +29,7 @@ namespace Chocolatey.Explorer.View.Controls
             InitializeComponent();
             DoLayout();
             packagesGrid.DataSource = _bindingsource;
-            txtSearch.TextChanged += TxtSearchTextChanged;
+            searchButton.Click += SearchButtonClick;
         }
 
         private  IPackageVersionService _packageVersionService;
@@ -133,7 +137,7 @@ namespace Chocolatey.Explorer.View.Controls
             packagesGrid.Columns.Add(column4);
         }
 
-        private void TxtSearchTextChanged(object sender, EventArgs e)
+        private void SearchButtonClick(object sender, EventArgs e)
         {
             var rowFound = packagesGrid.Rows.OfType<DataGridViewRow>()
                     .FirstOrDefault(row => row.Cells.OfType<DataGridViewCell>()
@@ -158,6 +162,7 @@ namespace Chocolatey.Explorer.View.Controls
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.searchButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.packagesGrid)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -175,6 +180,7 @@ namespace Chocolatey.Explorer.View.Controls
             // 
             this.panel1.Controls.Add(this.txtSearch);
             this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.searchButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -187,9 +193,9 @@ namespace Chocolatey.Explorer.View.Controls
             this.txtSearch.AccessibleName = "Search";
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.Location = new System.Drawing.Point(69, 4);
+            this.txtSearch.Location = new System.Drawing.Point(64, 5);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(212, 20);
+            this.txtSearch.Size = new System.Drawing.Size(199, 20);
             this.txtSearch.TabIndex = 2;
             // 
             // label2
@@ -205,6 +211,15 @@ namespace Chocolatey.Explorer.View.Controls
             this.label2.TabIndex = 1;
             this.label2.Text = "&Search";
             // 
+            // searchButton
+            // 
+            this.searchButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.searchButton.Image = global::Chocolatey.Explorer.Properties.Resources.search_small;
+            this.searchButton.Location = new System.Drawing.Point(266, 4);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(27, 25);
+            this.searchButton.TabIndex = 3;
+            // 
             // PackagesBaseGrid
             // 
             this.Controls.Add(this.packagesGrid);
@@ -217,5 +232,6 @@ namespace Chocolatey.Explorer.View.Controls
             this.ResumeLayout(false);
 
         }
+
     }
 }

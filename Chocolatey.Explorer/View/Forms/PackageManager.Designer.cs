@@ -39,7 +39,8 @@ namespace Chocolatey.Explorer.View.Forms
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.logsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.packageTabControl = new System.Windows.Forms.TabControl();
             this.tabInstalled = new System.Windows.Forms.TabPage();
@@ -67,8 +68,8 @@ namespace Chocolatey.Explorer.View.Forms
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.statusbar1 = new Chocolatey.Explorer.View.Controls.Statusbar();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.logsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -89,6 +90,7 @@ namespace Chocolatey.Explorer.View.Forms
             this.mainMenu.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuBar;
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.packagesToolStripMenuItem,
+            this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.mainMenu.Name = "mainMenu";
             // 
@@ -122,7 +124,6 @@ namespace Chocolatey.Explorer.View.Forms
             this.helpToolStripMenuItem1,
             this.aboutToolStripMenuItem,
             this.toolStripMenuItem1,
-            this.settingsToolStripMenuItem,
             this.logsToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             // 
@@ -142,13 +143,16 @@ namespace Chocolatey.Explorer.View.Forms
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutClick);
             // 
-            // settingsToolStripMenuItem
+            // toolStripMenuItem1
             // 
-            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
-            this.settingsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.settingsToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.setting_tools_small;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsClick);
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            // 
+            // logsToolStripMenuItem
+            // 
+            this.logsToolStripMenuItem.Name = "logsToolStripMenuItem";
+            resources.ApplyResources(this.logsToolStripMenuItem, "logsToolStripMenuItem");
+            this.logsToolStripMenuItem.Click += new System.EventHandler(this.logsToolStripMenuItem_Click);
             // 
             // mainSplitContainer
             // 
@@ -318,16 +322,19 @@ namespace Chocolatey.Explorer.View.Forms
             resources.ApplyResources(this.statusbar1, "statusbar1");
             this.statusbar1.Name = "statusbar1";
             // 
-            // toolStripMenuItem1
+            // toolsToolStripMenuItem
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
             // 
-            // logsToolStripMenuItem
+            // settingsToolStripMenuItem
             // 
-            this.logsToolStripMenuItem.Name = "logsToolStripMenuItem";
-            resources.ApplyResources(this.logsToolStripMenuItem, "logsToolStripMenuItem");
-            this.logsToolStripMenuItem.Click += new System.EventHandler(this.logsToolStripMenuItem_Click);
+            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
+            this.settingsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            this.settingsToolStripMenuItem.Image = global::Chocolatey.Explorer.Properties.Resources.setting_tools_small;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             // 
             // PackageManager
             // 
@@ -367,7 +374,6 @@ namespace Chocolatey.Explorer.View.Forms
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.SplitContainer mainSplitContainer;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.TabControl packageTabControl;
         private System.Windows.Forms.TabPage tabInstalled;
         private System.Windows.Forms.TabPage tabAvailable;
@@ -396,5 +402,7 @@ namespace Chocolatey.Explorer.View.Forms
         private Statusbar statusbar1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem logsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }

@@ -174,7 +174,7 @@
 </value>
   </data>
   <data name="availablePackagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 22</value>
+    <value>206, 24</value>
   </data>
   <data name="availablePackagesToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Available packages</value>
@@ -186,16 +186,34 @@
     <value>Installed Packages</value>
   </data>
   <data name="installedPackagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 22</value>
+    <value>206, 24</value>
   </data>
   <data name="installedPackagesToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Installed packages</value>
   </data>
   <data name="packagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 20</value>
+    <value>82, 24</value>
   </data>
   <data name="packagesToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Packages</value>
+  </data>
+  <data name="settingsToolStripMenuItem.AccessibleDescription" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="settingsToolStripMenuItem.AccessibleName" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 24</value>
+  </data>
+  <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Settings</value>
+  </data>
+  <data name="toolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 24</value>
+  </data>
+  <data name="toolsToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Tools</value>
   </data>
   <data name="helpToolStripMenuItem.AccessibleDescription" xml:space="preserve">
     <value>Help</value>
@@ -210,7 +228,7 @@
     <value>Help</value>
   </data>
   <data name="helpToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>175, 24</value>
   </data>
   <data name="helpToolStripMenuItem1.Text" xml:space="preserve">
     <value>H&amp;elp</value>
@@ -222,34 +240,22 @@
     <value>About</value>
   </data>
   <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>175, 24</value>
   </data>
   <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;About</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 6</value>
-  </data>
-  <data name="settingsToolStripMenuItem.AccessibleDescription" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="settingsToolStripMenuItem.AccessibleName" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Settings</value>
+    <value>172, 6</value>
   </data>
   <data name="logsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>175, 24</value>
   </data>
   <data name="logsToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Logs</value>
   </data>
   <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
+    <value>53, 24</value>
   </data>
   <data name="helpToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Help</value>
@@ -257,8 +263,12 @@
   <data name="mainMenu.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="mainMenu.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 2, 0, 2</value>
+  </data>
   <data name="mainMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1021, 24</value>
+    <value>1361, 28</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="mainMenu.TabIndex" type="System.Int32, mscorlib">
@@ -279,12 +289,14 @@
   <data name="&gt;&gt;mainMenu.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="mainSplitContainer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="mainSplitContainer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 24</value>
+    <value>0, 28</value>
+  </data>
+  <data name="mainSplitContainer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="packageTabControl.AccessibleDescription" xml:space="preserve">
     <value>Packages tabs</value>
@@ -302,10 +314,13 @@
     <value>Fill</value>
   </data>
   <data name="installedPackagesGrid1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>4, 4</value>
+  </data>
+  <data name="installedPackagesGrid1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="installedPackagesGrid1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>371, 477</value>
+    <value>497, 591</value>
   </data>
   <data name="installedPackagesGrid1.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -314,7 +329,7 @@
     <value>installedPackagesGrid1</value>
   </data>
   <data name="&gt;&gt;installedPackagesGrid1.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.InstalledPackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Chocolatey.Explorer.View.Controls.InstalledPackagesGrid, ChocolateyGUI, Version=0.11.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;installedPackagesGrid1.Parent" xml:space="preserve">
     <value>tabInstalled</value>
@@ -323,13 +338,16 @@
     <value>0</value>
   </data>
   <data name="tabInstalled.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 25</value>
+    <value>4, 29</value>
+  </data>
+  <data name="tabInstalled.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabInstalled.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabInstalled.Size" type="System.Drawing.Size, System.Drawing">
-    <value>377, 483</value>
+    <value>505, 599</value>
   </data>
   <data name="tabInstalled.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -359,10 +377,13 @@
     <value>Fill</value>
   </data>
   <data name="availablePackagesGrid1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>4, 4</value>
+  </data>
+  <data name="availablePackagesGrid1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="availablePackagesGrid1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>371, 477</value>
+    <value>497, 589</value>
   </data>
   <data name="availablePackagesGrid1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -371,7 +392,7 @@
     <value>availablePackagesGrid1</value>
   </data>
   <data name="&gt;&gt;availablePackagesGrid1.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.AvailablePackagesGrid, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Chocolatey.Explorer.View.Controls.AvailablePackagesGrid, ChocolateyGUI, Version=0.11.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;availablePackagesGrid1.Parent" xml:space="preserve">
     <value>tabAvailable</value>
@@ -382,8 +403,11 @@
   <data name="searchBar.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="searchBar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="searchBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 100</value>
+    <value>267, 123</value>
   </data>
   <data name="searchBar.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -401,13 +425,16 @@
     <value>1</value>
   </data>
   <data name="tabAvailable.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 25</value>
+    <value>4, 29</value>
+  </data>
+  <data name="tabAvailable.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabAvailable.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabAvailable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>377, 483</value>
+    <value>505, 597</value>
   </data>
   <data name="tabAvailable.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -440,58 +467,61 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABG
-        CgAAAk1TRnQBSQFMAgEBAgEAATABBQEwAQUBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABC
+        CgAAAk1TRnQBSQFMAgEBAgEAATgBBQE4AQUBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABEAMAAQEBAAEgBgABEGoAAwgBCwMQARYDEAEWAw0BEgMCAQOkAAMCAQMDOwFjA04BlQNKAYwDTgGZ
-        A1IBqQNUAa8DUQGiAx8BLCAAAxYBHgNTAagBlAEwARkB/wGTAS8BGQH/A2QB7AMoATwDBQEHoAABWgJe
-        AdgDAAH/AwAB/wMAAf8DAAH/AwAB/wIAARQB/wMAAf8CAAELAf8DPgFqHAABngGJAUAB/QHfAdUBwgH/
-        Ac4BwQGoAf8BzgHAAacB/wHUAccBsQH/AdsB0QHBAf8DEAEWnAADUwGqAwAB/wIAAQUB/wIAAQ0B/wIA
-        AQcB/wEAAQkBJgH/Ad0B4gHnBf8B7QHwAfEB/wIAARQB/wIAAQkB/wMdASkIAAMKAQ0DEAEWAxABFgMQ
-        ARYBpwGTAS8B/wGwAZsBLwH/AeQB3AHLAf8B5AHbAcoB/wHaAc8BtgH/AbIBngGBAf8DFAEcAxABFgMQ
-        ARYDEAEVAwMBBIgAAwIBAwJIAVsB9gMAAf8CAAEIAf8CAAEEAf8DAAH/Ab0ByAHQDf8B0QHZAd4B/wMA
-        Af8DTAGQCAADWwHEAZUBgQEcAf8BlQGBARsB/wGVAYEBGwH/AZQBgAEaAf8BkgEvARgB/wGRAS0BFwH/
-        AZEBLgEYAf8BmQGGASIB/wGTATABGgH/AZQBgQEbAf8BlQGBARsB/wGVAYEBHAH/AZcBgwEdAf8DEAEV
-        iAADFAEcAgABLwH/AgABLAH/AgABMAH/AgABKQH/AgABIAH/AeEB5QHoDf8B7wHyAfMB/wMAAf8DUgGp
-        CAABlwGDAR0B/wHaAdQBvgH/AesB7gHpAf8B6gHtAekB/wHpAewB6QH/AekB6wHpAf8B6AHrAekB/wHo
+        A1IBqQNUAa8DUQGiAx8BLCAAAxYBHgNTAagBlAEvARgB/wGTAS4BGAH/A2QB7AMoATwDBQEHoAABWgJe
+        AdgDAAH/AwAB/wMAAf8DAAH/AwAB/wIAARMB/wMAAf8CAAEKAf8DPgFqHAABngGJAUAB/QHfAdUBwgH/
+        Ac4BwQGoAf8BzgHAAacB/wHUAccBsQH/AdsB0QHBAf8DEAEWnAADUwGqAwAB/wIAAQQB/wIAAQwB/wIA
+        AQYB/wEAAQgBJQH/Ad0B4gHnBf8B7QHwAfEB/wIAARMB/wIAAQgB/wMdASkIAAMKAQ0DEAEWAxABFgMQ
+        ARYBpwGTAS4B/wGwAZsBLgH/AeQB3AHLAf8B5AHbAcoB/wHaAc8BtgH/AbIBngGBAf8DFAEcAxABFgMQ
+        ARYDEAEVAwMBBIgAAwIBAwJIAVsB9gMAAf8CAAEHAf8CAAEDAf8DAAH/Ab0ByAHQDf8B0QHZAd4B/wMA
+        Af8DTAGQCAADWwHEAZUBgQEbAf8BlQGBARoB/wGVAYEBGgH/AZQBgAEZAf8BkgEuARcB/wGRASwBFgH/
+        AZEBLQEXAf8BmQGGASEB/wGTAS8BGQH/AZQBgQEaAf8BlQGBARoB/wGVAYEBGwH/AZcBgwEcAf8DEAEV
+        iAADFAEcAgABLgH/AgABKwH/AgABLwH/AgABKAH/AgABHwH/AeEB5QHoDf8B7wHyAfMB/wMAAf8DUgGp
+        CAABlwGDARwB/wHaAdQBvgH/AesB7gHpAf8B6gHtAekB/wHpAewB6QH/AekB6wHpAf8B6AHrAekB/wHo
         AesB6QH/AegB6wHpAf8B6QHsAekB/wHqAe0B6QH/AesB7QHpAf8B7AHuAegB/wHMAbcBmwH/AxABFogA
-        AxQBGwEAAQ8BigH/AQABAgGAAf8BAAEHAYMB/wEAAQgBhQH/AgABOwH/AaABuQHMDf8BtAG+AccB/wMA
-        Af8DUwGoCAABmQGFAR8B/wHQAcsBugH/AeIBlQEAAf8B6AGdAQAB/wHuAaQBAAH/AfQBrAEAAf8B+gG0
+        AxQBGwEAAQ4BigH/AQABAQGAAf8BAAEGAYMB/wEAAQcBhQH/AgABOgH/AaABuQHMDf8BtAG+AccB/wMA
+        Af8DUwGoCAABmQGFAR4B/wHQAcsBugH/AeIBlQEAAf8B6AGdAQAB/wHuAaQBAAH/AfQBrAEAAf8B+gG0
         AQAB/wH+AbgBAAH/AfgBsQEAAf8B8gGpAQAB/wHrAaIBAAH/AeUBmgEAAf8B4AGPAQAB/wHSAcABpwH/
-        AxABFogAAxABFgEAAQ8BhgH/AgABNQH/AgABLAH/AgABLAH/AQABAQE7Af8BAAEKAYAB/wGYAbMBxAH/
-        AfAB9QH4Af8BqwHDAdQB/wIAARsB/wMAAf8DUgGnCAABmgGGASEB/wHJAcIBsAH/AeEBlgEAAf8B6AGg
-        AQAB/wHtAaQBAAH/AfMBqwEAAf8B9wGxAQAB/wH5AbMBAAH/AfYBrwEAAf8B8AGoAQAB/wHrAaEBAAH/
-        AeUBmgEAAf8B4AGPAQAB/wHZAckBsgH/AxABFogAAxoBJQEAAQYBgAH/AQABBwE9Af8DagH5A1wB+AEA
-        ARIBhgH/AgABOgH/AgABMgH/AQABCgGAAf8CAAE1Af8BAAEFAYAB/wIAARYB/wNSAakIAAGcAYgBIwH/
-        AcABuAGkAf8B3wGTAQAB/wHmAZ4BAAH/AewBqQEAAf8B8AGrAQAB/wHyAakBAAH/AfMBrAEAAf8B8QGp
-        AQAB/wHtAaQBAAH/AegBngEAAf8B4wGYAQAB/wHfAY4BAAH/Ad8B0QG+Af8DEAEWiAADLwFJAgABKwH/
-        ASoBlAGzAf8DfwH+A6gB/QErAZUBtQH/AgABMAH/AQABAwE8Af8BAAEBAToB/wEAAQQBPAH/AQABBwGB
-        Af8CAAE5Af8BUAJSAaMIAAGeAYoBJQH/AbgBrQGYAf8B3AGPAQAB/wHiAZgBAAH/AecBogEAAf8B7AGq
-        AQAB/wHvAbIBAgH/AfABtwELAf8B7wGzAQgB/wHrAaoBAAH/AecBoAEAAf8B3wGQAQAB/wHcAYoBAAH/
-        AeYB2gHIAf8DEAEWiAADDQERAQABAgE8Af8BAAEjAZEJ/wEAATQBngH/AgABNAH/AQABBQE8Af8BAAEF
-        AT0B/wEAAQYBPQH/AQABBwE+Af8CAAEpAf8DPgFrCAABoAGLASYB/wGxAaMBjgH/AdkBjAEAAf8B3gGS
-        AQAB/wHiAZsBAAH/AecBowEAAf8B6QGpAQAB/wHrAa0BBQH/AesBsAENAf8B6gGzARUB/wHpAbQBHgH/
-        AecBswEkAf8B5wGwASIB/wHsAeMB0wH/AxABFowAA0oBigIAARkB/wEAAQ8BhQH/AQABHgGPAf8CAAE1
-        Af8BAAEEATsB/wEAAQMBOgH/AQABAwE7Af8CAAE5Af8CAAEmAf8CWAFiAe8DAQECCAABogGNASkB/wGq
-        AZoBgwH/AdUBhwEAAf8B2QGMAQAB/wHdAZMBAAH/AeEBmwEAAf8B5AGhAQAB/wHmAaYBAQH/AeYBqQEK
-        Af8B5gGsARIB/wHlAa4BGgH/AeQBrwEiAf8B5AGtASEB/wHzAewB3QH/AxABFoAAAxMBGgNCAXQDWQHH
-        BAADQAFuAgABOgH/AgABMQH/AQABAgE8Af8BAAEDAT0B/wEAAQMBPAH/AgABOQH/AgABOgH/AVgCXAHR
-        AxYBHwwAAaQBjwEqAf8BowGQAScB/wHRAYABAAH/AdUBhgEAAf8B2AGLAQAB/wHcAZIBAAH/Ad8BmQEA
-        Af8B4QGdAQAB/wHiAaEBBgH/AeIBpAEOAf8B4gGnARYB/wHhAakBHwH/AeMBqQEhAf8B+wH1AegB/wMQ
-        ARaAAANEAXsCUgFlAfQDAAH/A0IBdgQAAwoBDQM3AVoDOgFgAzcBWwM3AVoDOQFfAyIBMhQAAaYBkAEs
-        Af8BlwEvAQ8B/wGZAYUBGwH/AZgBhAEbAf8BmAGEARsB/wGYAYMBGgH/AZcBggEaAf8BlwGCARgB/wGX
-        AYIBGAH/AZcBgQEXAf8BlwGBARYB/wGXAYEBFQH/AZcBgAETAv8B+wHwAf8DEAEVgAADGQEjA0oBiQFY
-        AmIB6QMaASQ0AANWAbMBzgHCAa0B/wHNAcABqwH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwAGr
-        Af8BzQHAAasB/wHNAcABqwH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwQGrAf8BqQGTAS8B/wMD
-        AQT/AIEAAUIBTQE+BwABPgMAASgDAAFAAwABEAMAAQEBAAEBBQABgBcAA/8BAAL/AfwBHwQAAfABBwH4
-        AQ8EAAHwAQMB+AEPBAAB4AEBAYAFAAHAAQEBgAUAAcABAQGABQABwAEBAYAFAAHAAQEBgAUAAcABAQGA
-        BQABwAEBAYAFAAHAAQEBgAUAAeABAQGABQABEAEDAYAFAAEIAQ8BgAUAAQ8B/wGABQAE/wQACw==
+        AxABFogAAxABFgEAAQ4BhgH/AgABNAH/AgABKwH/AgABKwH/AgABOgH/AQABCQGAAf8BmAGzAcQB/wHw
+        AfUB+AH/AasBwwHUAf8CAAEaAf8DAAH/A1IBpwgAAZoBhgEgAf8ByQHCAbAB/wHhAZYBAAH/AegBoAEA
+        Af8B7QGkAQAB/wHzAasBAAH/AfcBsQEAAf8B+QGzAQAB/wH2Aa8BAAH/AfABqAEAAf8B6wGhAQAB/wHl
+        AZoBAAH/AeABjwEAAf8B2QHJAbIB/wMQARaIAAMaASUBAAEFAYAB/wEAAQYBPAH/A2oB+QNcAfgBAAER
+        AYYB/wIAATkB/wIAATEB/wEAAQkBgAH/AgABNAH/AQABBAGAAf8CAAEVAf8DUgGpCAABnAGIASIB/wHA
+        AbgBpAH/Ad8BkwEAAf8B5gGeAQAB/wHsAakBAAH/AfABqwEAAf8B8gGpAQAB/wHzAawBAAH/AfEBqQEA
+        Af8B7QGkAQAB/wHoAZ4BAAH/AeMBmAEAAf8B3wGOAQAB/wHfAdEBvgH/AxABFogAAy8BSQIAASoB/wEp
+        AZQBswH/A38B/gOoAf0BKgGVAbUB/wIAAS8B/wEAAQIBOwH/AgABOQH/AQABAwE7Af8BAAEGAYEB/wIA
+        ATgB/wFQAlIBowgAAZ4BigEkAf8BuAGtAZgB/wHcAY8BAAH/AeIBmAEAAf8B5wGiAQAB/wHsAaoBAAH/
+        Ae8BsgEBAf8B8AG3AQoB/wHvAbMBBwH/AesBqgEAAf8B5wGgAQAB/wHfAZABAAH/AdwBigEAAf8B5gHa
+        AcgB/wMQARaIAAMNAREBAAEBATsB/wEAASIBkQn/AQABMwGeAf8CAAEzAf8BAAEEATsB/wEAAQQBPAH/
+        AQABBQE8Af8BAAEGAT0B/wIAASgB/wM+AWsIAAGgAYsBJQH/AbEBowGOAf8B2QGMAQAB/wHeAZIBAAH/
+        AeIBmwEAAf8B5wGjAQAB/wHpAakBAAH/AesBrQEEAf8B6wGwAQwB/wHqAbMBFAH/AekBtAEdAf8B5wGz
+        ASMB/wHnAbABIQH/AewB4wHTAf8DEAEWjAADSgGKAgABGAH/AQABDgGFAf8BAAEdAY8B/wIAATQB/wEA
+        AQMBOgH/AQABAgE5Af8BAAECAToB/wIAATgB/wIAASUB/wJYAWIB7wMBAQIIAAGiAY0BKAH/AaoBmgGD
+        Af8B1QGHAQAB/wHZAYwBAAH/Ad0BkwEAAf8B4QGbAQAB/wHkAaEBAAH/AeYBpgEAAf8B5gGpAQkB/wHm
+        AawBEQH/AeUBrgEZAf8B5AGvASEB/wHkAa0BIAH/AfMB7AHdAf8DEAEWgAADEwEaA0IBdANZAccEAANA
+        AW4CAAE5Af8CAAEwAf8BAAEBATsB/wEAAQIBPAH/AQABAgE7Af8CAAE4Af8CAAE5Af8BWAJcAdEDFgEf
+        DAABpAGPASkB/wGjAZABJgH/AdEBgAEAAf8B1QGGAQAB/wHYAYsBAAH/AdwBkgEAAf8B3wGZAQAB/wHh
+        AZ0BAAH/AeIBoQEFAf8B4gGkAQ0B/wHiAacBFQH/AeEBqQEeAf8B4wGpASAB/wH7AfUB6AH/AxABFoAA
+        A0QBewJSAWUB9AMAAf8DQgF2BAADCgENAzcBWgM6AWADNwFbAzcBWgM5AV8DIgEyFAABpgGQASsB/wGX
+        AS4BDgH/AZkBhQEaAf8BmAGEARoB/wGYAYQBGgH/AZgBgwEZAf8BlwGCARkB/wGXAYIBFwH/AZcBggEX
+        Af8BlwGBARYB/wGXAYEBFQH/AZcBgQEUAf8BlwGAARIC/wH7AfAB/wMQARWAAAMZASMDSgGJAVgCYgHp
+        AxoBJDQAA1YBswHOAcIBrQH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwAGrAf8BzQHAAasB/wHN
+        AcABqwH/Ac0BwAGrAf8BzQHAAasB/wHNAcABqwH/Ac0BwAGrAf8BzQHBAasB/wGpAZMBLgH/AwMBBP8A
+        gQABQgFNAT4HAAE+AwABKAMAAUADAAEQAwABAQEAAQEFAAGAFwAD/wEAAv8B/AEfBAAB8AEHAfgBDwQA
+        AfABAwH4AQ8EAAHgAQEBgAUAAcABAQGABQABwAEBAYAFAAHAAQEBgAUAAcABAQGABQABwAEBAYAFAAHA
+        AQEBgAUAAcABAQGABQAB4AEBAYAFAAEQAQMBgAUAAQgBDwGABQABDwH/AYAFAAT/BAAL
 </value>
   </data>
   <data name="packageTabControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="packageTabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="packageTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>385, 512</value>
+    <value>513, 632</value>
   </data>
   <data name="packageTabControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -533,10 +563,13 @@
     <value>Fill</value>
   </data>
   <data name="packageVersionPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>4, 4</value>
+  </data>
+  <data name="packageVersionPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
   </data>
   <data name="packageVersionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>614, 401</value>
+    <value>823, 498</value>
   </data>
   <data name="packageVersionPanel.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -545,7 +578,7 @@
     <value>packageVersionPanel</value>
   </data>
   <data name="&gt;&gt;packageVersionPanel.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.PackageVersionPanel, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Chocolatey.Explorer.View.Controls.PackageVersionPanel, ChocolateyGUI, Version=0.11.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;packageVersionPanel.Parent" xml:space="preserve">
     <value>tabPackageInformation</value>
@@ -557,10 +590,13 @@
     <value>Bottom</value>
   </data>
   <data name="packageButtonsPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 404</value>
+    <value>4, 502</value>
+  </data>
+  <data name="packageButtonsPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="packageButtonsPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>614, 79</value>
+    <value>823, 97</value>
   </data>
   <data name="packageButtonsPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -569,7 +605,7 @@
     <value>packageButtonsPanel1</value>
   </data>
   <data name="&gt;&gt;packageButtonsPanel1.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.PackageButtonsPanel, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Chocolatey.Explorer.View.Controls.PackageButtonsPanel, ChocolateyGUI, Version=0.11.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;packageButtonsPanel1.Parent" xml:space="preserve">
     <value>tabPackageInformation</value>
@@ -578,13 +614,16 @@
     <value>1</value>
   </data>
   <data name="tabPackageInformation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 25</value>
+  </data>
+  <data name="tabPackageInformation.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabPackageInformation.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabPackageInformation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>620, 486</value>
+    <value>831, 603</value>
   </data>
   <data name="tabPackageInformation.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -608,10 +647,13 @@
     <value>Fill</value>
   </data>
   <data name="packageExtraInformationPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>4, 4</value>
+  </data>
+  <data name="packageExtraInformationPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
   </data>
   <data name="packageExtraInformationPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>614, 480</value>
+    <value>821, 593</value>
   </data>
   <data name="packageExtraInformationPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -620,7 +662,7 @@
     <value>packageExtraInformationPanel1</value>
   </data>
   <data name="&gt;&gt;packageExtraInformationPanel1.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.PackageExtraInformationPanel, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Chocolatey.Explorer.View.Controls.PackageExtraInformationPanel, ChocolateyGUI, Version=0.11.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;packageExtraInformationPanel1.Parent" xml:space="preserve">
     <value>tabExtraPackageInformation</value>
@@ -629,13 +671,16 @@
     <value>0</value>
   </data>
   <data name="tabExtraPackageInformation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 25</value>
+  </data>
+  <data name="tabExtraPackageInformation.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabExtraPackageInformation.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabExtraPackageInformation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>620, 486</value>
+    <value>829, 601</value>
   </data>
   <data name="tabExtraPackageInformation.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -659,10 +704,13 @@
     <value>Fill</value>
   </data>
   <data name="packageRunPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>4, 4</value>
+  </data>
+  <data name="packageRunPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
   </data>
   <data name="packageRunPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>614, 480</value>
+    <value>821, 593</value>
   </data>
   <data name="packageRunPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -671,7 +719,7 @@
     <value>packageRunPanel1</value>
   </data>
   <data name="&gt;&gt;packageRunPanel1.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.PackageRunPanel, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Chocolatey.Explorer.View.Controls.PackageRunPanel, ChocolateyGUI, Version=0.11.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;packageRunPanel1.Parent" xml:space="preserve">
     <value>tabPackageRun</value>
@@ -680,13 +728,16 @@
     <value>0</value>
   </data>
   <data name="tabPackageRun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 25</value>
+  </data>
+  <data name="tabPackageRun.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabPackageRun.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabPackageRun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>620, 486</value>
+    <value>829, 601</value>
   </data>
   <data name="tabPackageRun.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -712,8 +763,11 @@
   <data name="tabControlPackage.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="tabControlPackage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="tabControlPackage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>628, 512</value>
+    <value>839, 632</value>
   </data>
   <data name="tabControlPackage.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -746,10 +800,13 @@
     <value>500</value>
   </data>
   <data name="mainSplitContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1021, 514</value>
+    <value>1361, 634</value>
   </data>
   <data name="mainSplitContainer.SplitterDistance" type="System.Int32, mscorlib">
-    <value>387</value>
+    <value>515</value>
+  </data>
+  <data name="mainSplitContainer.SplitterWidth" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="mainSplitContainer.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -770,7 +827,7 @@
     <value>0, 0</value>
   </data>
   <data name="searchPackages.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>100, 22</value>
   </data>
   <data name="searchPackages.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -803,10 +860,13 @@
     <value>Bottom</value>
   </data>
   <data name="statusbar1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 538</value>
+    <value>0, 662</value>
+  </data>
+  <data name="statusbar1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
   </data>
   <data name="statusbar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1021, 23</value>
+    <value>1361, 28</value>
   </data>
   <data name="statusbar1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -815,7 +875,7 @@
     <value>statusbar1</value>
   </data>
   <data name="&gt;&gt;statusbar1.Type" xml:space="preserve">
-    <value>Chocolatey.Explorer.View.Controls.Statusbar, ChocolateyGUI, Version=0.11.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Chocolatey.Explorer.View.Controls.Statusbar, ChocolateyGUI, Version=0.11.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;statusbar1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -836,10 +896,10 @@
     <value>Chocolatey Package Manager</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>8, 16</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1021, 561</value>
+    <value>1361, 690</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1995,8 +2055,11 @@
         AAfiAAAPgQAAH4DAAH+A////gf///8H//////////////w==
 </value>
   </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>1000, 600</value>
+    <value>1327, 728</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Chocolatey Package Manager</value>
@@ -2037,10 +2100,16 @@
   <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;settingsToolStripMenuItem.Name" xml:space="preserve">
-    <value>settingsToolStripMenuItem</value>
+  <data name="&gt;&gt;toolStripMenuItem1.Name" xml:space="preserve">
+    <value>toolStripMenuItem1</value>
   </data>
-  <data name="&gt;&gt;settingsToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;toolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;logsToolStripMenuItem.Name" xml:space="preserve">
+    <value>logsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;logsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;packageTabsImageList.Name" xml:space="preserve">
@@ -2097,16 +2166,16 @@
   <data name="&gt;&gt;dataGridViewCheckBoxColumn4.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripMenuItem1.Name" xml:space="preserve">
-    <value>toolStripMenuItem1</value>
+  <data name="&gt;&gt;toolsToolStripMenuItem.Name" xml:space="preserve">
+    <value>toolsToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;toolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;toolsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;logsToolStripMenuItem.Name" xml:space="preserve">
-    <value>logsToolStripMenuItem</value>
+  <data name="&gt;&gt;settingsToolStripMenuItem.Name" xml:space="preserve">
+    <value>settingsToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;logsToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;settingsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

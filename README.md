@@ -1,8 +1,12 @@
-# chocolatey-Explorer
-Chocolatey-Explorer is a user interface for Chocolatey NuGet (a Machine Package Manager for windows - see http://chocolatey.org).
+# ChocolateyGUI
+ChocolateyGUI is a user interface for Chocolatey NuGet (a Machine Package Manager for Windows - see http://chocolatey.org).
 You can install it via Chocolatey by executing 
 ```cinst ChocolateyGUI```
-in your powershell.
+
+## Support
+If you find any problems with ChocolateyGUI, please raise an issue [here](https://github.com/gep13/chocolatey-Explorer/issues/new).
+
+If you want to ask any questions about ChocolateyGUI, please issue the forum [here](https://groups.google.com/forum/#!forum/chocolateygui)
 
 ## Features:
 * view all **installed** and **available** packages

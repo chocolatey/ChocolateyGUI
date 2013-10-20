@@ -63,7 +63,13 @@ namespace Chocolatey.Explorer.Services
         private void VersionChangeFinished(string version)
         {
             this.Log().Debug("VersionChangeFinished for version: {0}", version);
-            var match = Regex.Match(version, "Version:[ ]+'([0-9\\.]+)'");
+
+            // Possible matches incclude things like the following
+            // Version: '0.9.8.21'
+            // Version: '0.9.8.21-alpha3'
+            // The most typical is the four version numbers, but to account for the format string used by
+            // Chocolatey itself, the additional optionals were added to the regular expression
+            var match = Regex.Match(version, "Version:[ ]+'([0-9\\.]+)-[a-z]{0,5}?[0-9]?'");
 
             if (!match.Success)
             {

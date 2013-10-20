@@ -12,8 +12,6 @@ properties {
 	$version = $preversion |  % {$_ -replace '-pre', '.' }
 	$assemblyVersionPattern = 'AssemblyVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
 	$assemblyVersion = 'AssemblyVersion("' + $version + '")'
-	$wixVersionPattern = 'VersionNumber="[0-9]+(\.([0-9]+|\*)){1,3}"'
-	$wivVersion = 'VersionNumber="' + $version + '"'
 }
 
 $private = "This is a private task not meant for external use!";
@@ -70,7 +68,6 @@ Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Descript
 
 Task -Name VersionFiles -Description "Stamps the common file with the version" -Action {
     (Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyVersionPattern, $assemblyVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs" )
-	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonWixInfo.wxi")) | % {$_ -replace $wixVersionPattern, $wivVersion } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonWixInfo.wxi" )
 }
 
 Task -Name BuildSolution -Depends __VerifyConfiguration, VersionFiles -Description "Builds the main solution for the package" -Action {

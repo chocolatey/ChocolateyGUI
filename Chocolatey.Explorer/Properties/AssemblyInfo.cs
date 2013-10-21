@@ -17,6 +17,4 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("37cbac12-c5b9-42be-8b8d-777bcd3347d4")]
 
-[assembly: AssemblyFileVersion("1.0.0")]
-
 [assembly: InternalsVisibleTo("Chocolatey.Explorer.Test")]

@@ -29,7 +29,7 @@ if not '%PackageVersion%'=='' (
 )
 
 if '%version%'=='' (
-	set version='1.0.0-pre13'
+	set version='12.13.14-pre15'
 )
 
 powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0/BuildScripts/trigger-build.ps1 -Action %action% -Config %config% -PackageVersion %version%"

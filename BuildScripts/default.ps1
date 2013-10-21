@@ -8,10 +8,7 @@ properties {
 	$config = 'Debug';
 	$nugetExe = "./../SharedBinaries/NuGet.exe";
 	$projectName = "ChocolateyGUI";
-	$preversion = '1.0.0-pre13'
-	$version = $preversion |  % {$_ -replace '-pre', '.' }
-	$assemblyVersionPattern = 'AssemblyVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
-	$assemblyVersion = 'AssemblyVersion("' + $version + '")'
+	$preversion = '13.14.15-pre16'
 }
 
 $private = "This is a private task not meant for external use!";
@@ -66,8 +63,28 @@ Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Descript
 
 # build tasks
 
-Task -Name VersionFiles -Description "Stamps the common file with the version" -Action {
+Task -Name VersionFiles -Description "Stamps the common file with the version" -Action {	
+	$version = $preversion |  % {$_ -replace '-pre', '.' }
+	
+	if ($version -Match '(\d{1,3}).(\d{1,3}).(\d{1,3}).(\d{1,3})') {  
+		$major = $matches[1] 
+		$minor = $matches[2] 
+		$build = $matches[3] 
+		$revision = $matches[4] 
+	}
+	
+	$assemblyVersionPattern = 'AssemblyVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
+	$assemblyVersion = 'AssemblyVersion("' + $major + "." + $minor + "." + $build + '")'
+	
+	$assemblyFileVersionPattern = 'AssemblyFileVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
+	$assemblyFileVersion = 'AssemblyFileVersion("' + $version + '")'
+	
+	$assemblyInformationalVersionPattern = 'AssemblyInformationalVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
+	$assemblyInformationalVersion = 'AssemblyInformationalVersion("' + $major + "." + $minor + "." + $build + " Build " + $revision + '")'
+	
     (Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyVersionPattern, $assemblyVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs" )
+	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyFileVersionPattern, $assemblyFileVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs" )
+	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyInformationalVersionPattern, $assemblyInformationalVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs" )
 }
 
 Task -Name BuildSolution -Depends __VerifyConfiguration, VersionFiles -Description "Builds the main solution for the package" -Action {

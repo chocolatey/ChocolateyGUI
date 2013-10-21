@@ -66,7 +66,7 @@ Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Descript
 Task -Name VersionFiles -Description "Stamps the common file with the version" -Action {	
 	$version = $preversion |  % {$_ -replace '-pre', '.' }
 	
-	if ($version -Match '(\d{1,3}).(\d{1,3}).(\d{1,3}).(\d{1,3})') {  
+	if ($version -Match '(\d{1,3}).(\d{1,3}).(\d{1,3}).(\d{1,5})') {  
 		$major = $matches[1] 
 		$minor = $matches[2] 
 		$build = $matches[3] 

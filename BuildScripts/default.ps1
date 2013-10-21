@@ -8,7 +8,7 @@ properties {
 	$config = 'Debug';
 	$nugetExe = "./../SharedBinaries/NuGet.exe";
 	$projectName = "ChocolateyGUI";
-	$preversion = '13.14.15-pre16'
+	$preversion = '14.15.16-pre00017'
 }
 
 $private = "This is a private task not meant for external use!";

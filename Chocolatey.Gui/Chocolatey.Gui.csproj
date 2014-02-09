@@ -116,6 +116,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\PackagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\RemoteSourcePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -135,12 +139,17 @@
     <Compile Include="Base\ObservableBase.cs" />
     <Compile Include="ViewModels\Items\IPackageViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
+    <Compile Include="ViewModels\Pages\IPackagePageViewModel.cs" />
     <Compile Include="ViewModels\Pages\IRemoteSourcePageViewModel.cs" />
+    <Compile Include="ViewModels\Pages\PackagePageViewModel.cs" />
     <Compile Include="ViewModels\Pages\RemoteSourcePageViewModel.cs" />
     <Compile Include="ViewModels\Pages\ILocalSourcePageViewModel.cs" />
     <Compile Include="ViewModels\Pages\LocalSourcePageViewModel.cs" />
     <Compile Include="ViewModels\Windows\IMainWindowViewModel.cs" />
     <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
+    <Compile Include="Views\Pages\PackagePage.xaml.cs">
+      <DependentUpon>PackagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\RemoteSourcePage.xaml.cs">
       <DependentUpon>RemoteSourcePage.xaml</DependentUpon>
     </Compile>

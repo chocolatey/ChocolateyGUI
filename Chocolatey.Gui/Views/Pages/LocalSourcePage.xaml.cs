@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Autofac;
+using Chocolatey.Gui.Services;
+using Chocolatey.Gui.ViewModels.Items;
 using Chocolatey.Gui.ViewModels.Pages;
 
 namespace Chocolatey.Gui.Views.Pages
@@ -18,12 +11,26 @@ namespace Chocolatey.Gui.Views.Pages
     /// <summary>
     /// Interaction logic for LocalSourcePage.xaml
     /// </summary>
-    public partial class LocalSourcePage : Page
+    public partial class LocalSourcePage
     {
         public LocalSourcePage(ILocalSourcePageViewModel vm)
         {
             InitializeComponent();
             DataContext = vm;
+        }
+
+        private void PackageDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            dynamic source = e.OriginalSource;
+            var item = source.DataContext as IPackageViewModel;
+            if (item != null)
+            {
+                using (var scope = App.Container.BeginLifetimeScope())
+                {
+                    var navigationService = scope.Resolve<INavigationService>();
+                    navigationService.Navigate(typeof(PackagePage), item);
+                }
+            }
         }
     }
 }

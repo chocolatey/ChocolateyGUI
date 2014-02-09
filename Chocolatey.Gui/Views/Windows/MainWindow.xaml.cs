@@ -9,6 +9,7 @@ using System.Windows.Navigation;
 using Autofac;
 using Autofac.Core;
 using Chocolatey.Gui.Models;
+using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Pages;
 using Chocolatey.Gui.ViewModels.Windows;
 using Chocolatey.Gui.Views.Pages;
@@ -20,10 +21,13 @@ namespace Chocolatey.Gui.Views.Windows
     /// </summary>
     public partial class MainWindow
     {
+        private readonly INavigationService _navigationService;
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
+            _navigationService = App.Container.Resolve<INavigationService>();
+            _navigationService.SetNavigationItem(PackagesPageFrame);
         }
 
         private void SourcesListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -31,12 +35,11 @@ namespace Chocolatey.Gui.Views.Windows
             var target = e.AddedItems[0] as SourceModel;
             if (target.Url == "Local" && !(PackagesPageFrame.NavigationService.Content != null && PackagesPageFrame.NavigationService.Content.GetType() == typeof(LocalSourcePage)))
             {
-                PackagesPageFrame.Navigate(new LocalSourcePage(App.Container.Resolve<ILocalSourcePageViewModel>()));
+                _navigationService.Navigate(typeof(LocalSourcePage));
             }
             else
             {
-                PackagesPageFrame.Navigate(
-                    new RemoteSourcePage(App.Container.Resolve<IRemoteSourcePageViewModel>()));
+                _navigationService.Navigate(typeof(RemoteSourcePage));
             }
         }
     }

@@ -101,16 +101,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CommandExecutionManager.cs" />
+    <Compile Include="Commands\DataContextCommandAdapter.cs" />
+    <Compile Include="Commands\DataContextCommandBinding.cs" />
+    <Compile Include="Commands\RoutedCommandBinding.cs" />
+    <Compile Include="Commands\RoutedCommandMonitor.cs" />
     <Compile Include="ConfigurationSection.cs" />
     <Compile Include="Controls\FauxPowerShellConsole.cs" />
     <Compile Include="Controls\ObservableRingBuffer.cs" />
+    <Compile Include="IoC\AutoFacConfiguration.cs" />
     <Compile Include="Models\PowerShellOutputLine.cs" />
     <Compile Include="Models\SourceModel.cs" />
+    <Compile Include="Services\INavigationService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
     <Compile Include="Utilities\Converters\PackageDependenciesToString.cs" />
     <Compile Include="Utilities\Converters\UriToVisibility.cs" />
+    <Compile Include="Utilities\Markdown\Markdown.cs" />
+    <Compile Include="Utilities\Markdown\TextToFlowDocumentConverter.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
     <Page Include="Resources\Controls.xaml">
       <SubType>Designer</SubType>
@@ -196,9 +206,7 @@
     </Resource>
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>

@@ -5,6 +5,7 @@
                     xmlns:models="clr-namespace:Chocolatey.Gui.Models"
                     xmlns:items="clr-namespace:Chocolatey.Gui.ViewModels.Items"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:xaml="clr-namespace:Markdown.Xaml"
                     mc:Ignorable="d">
 
     <Style x:Key="BaseTextBlockStyle" TargetType="{x:Type TextBlock}">
@@ -201,7 +202,6 @@
 
     <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource AccentColor}" />
 
-
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}"/>
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}"/>
@@ -321,5 +321,126 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="PackageResourceLabel" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="0,0,5,2"/>
+    </Style>
+
+    <Style x:Key="PackageResourceValue" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#FF000000"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="5,0,0,7"/>
+    </Style>
+
+    <Style x:Key="TitleTextStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"/>
+        <Setter Property="FontSize" Value="48"/>
+        <Setter Property="Margin" Value="3,0,0,5"/>
+    </Style>
+
+    <Style x:Key="SubtitleTextStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="Margin" Value="3,0,0,10"/>
+    </Style>
+
+    <Style x:Key="SubtitleRunTextStyle" TargetType="{x:Type Run}">
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"/>
+        <Setter Property="FontSize" Value="22"/>
+    </Style>
+
+    <Style x:Key="SectionHeaderTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="3,0,0,3"/>
+    </Style>
+
+    <Style x:Key="DescriptionTextStyle" TargetType="{x:Type Run}">
+        <Setter Property="Foreground" Value="#FF000000"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style x:Key="PageCountTextStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource TextHighlightBrush}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <Style TargetType="{x:Type Hyperlink}">
+        <Setter Property="Foreground" Value="#FF34a1fe"/>
+    </Style>
+    <Style TargetType="FlowDocument" x:Key="DocumentStyle">
+        <Setter Property="FontFamily"
+                    Value="Calibri" />
+        <Setter Property="TextAlignment"
+                    Value="Left" />
+    </Style>
+
+    <Style x:Key="PageHeader"
+               TargetType="Paragraph">
+        <Setter Property="FontSize"
+                    Value="42" />
+        <Setter Property="Foreground"
+                    Value="#ff000000" />
+        <Setter Property="FontWeight"
+                    Value="Light" />
+    </Style>
+
+    <Style x:Key="SubHeader"
+               TargetType="Paragraph">
+        <Setter Property="FontSize"
+                    Value="20" />
+        <Setter Property="Foreground"
+                    Value="#ff000000" />
+        <Setter Property="FontWeight"
+                    Value="Light" />
+    </Style>
+
+    <Style x:Key="SubHeaderSecondary"
+               TargetType="Paragraph">
+        <Setter Property="FontSize"
+                    Value="20" />
+        <Setter Property="Foreground"
+                    Value="#99000000" />
+        <Setter Property="FontWeight"
+                    Value="Light" />
+    </Style>
+
+    <xaml:Markdown x:Key="Markdown"
+                        DocumentStyle="{StaticResource DocumentStyle}"
+                        Heading1Style="{StaticResource PageHeader}"
+                        Heading2Style="{StaticResource SubHeader}"
+                        Heading3Style="{StaticResource SubHeaderSecondary}"/>
+
+    <Style x:Key="PageTextBlockStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#FF000000"/>
+        <Setter Property="Margin" Value="5,0,5,5"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <Style x:Key="BigIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroCircleButtonStyle}">
+        <Setter Property="Width" Value="55"/>
+        <Setter Property="Height" Value="55"/>
+        <Setter Property="Margin" Value="7"/>
+    </Style>
+
+    <Style x:Key="BackButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigIconButton}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" Margin="0,0,2,0">
+                    <!-- Chevron Left-->
+                    <Path Width="16" Height="18" Canvas.Left="15.9063" Canvas.Top="14.75" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z " />
+                </Canvas>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"></Setter>
+        <Setter Property="AutomationProperties.Name" Value="Back"/>
+        <Setter Property="AutomationProperties.HelpText" Value="Go's back"/>
+        <Setter Property="AutomationProperties.AcceleratorKey" Value="B"/>
+        <Setter Property="ToolTip" Value="Back"/>
     </Style>
 </ResourceDictionary>

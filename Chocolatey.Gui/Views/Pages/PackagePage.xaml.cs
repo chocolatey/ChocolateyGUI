@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Chocolatey.Gui.ViewModels.Items;
+using Chocolatey.Gui.ViewModels.Pages;
 
 namespace Chocolatey.Gui.Views.Pages
 {
     /// <summary>
     /// Interaction logic for PackagePage.xaml
     /// </summary>
-    public partial class PackagePage : Page
+    public partial class PackagePage
     {
-        public PackagePage()
+        public PackagePage(IPackagePageViewModel vm, IPackageViewModel packageViewModel)
         {
             InitializeComponent();
+            vm.Package = packageViewModel;
+            DataContext = vm;
+        }
+        private void HandleLinkClick(object sender, RoutedEventArgs e)
+        {
+            var hl = (Hyperlink)sender;
+            var navigateUri = hl.NavigateUri.ToString();
+            Process.Start(new ProcessStartInfo(navigateUri));
+            e.Handled = true;
         }
     }
 }

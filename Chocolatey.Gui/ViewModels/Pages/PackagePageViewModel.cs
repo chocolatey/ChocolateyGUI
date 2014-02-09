@@ -1,12 +1,12 @@
-﻿using Chocolatey.Gui.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Autofac;
+using Chocolatey.Gui.Base;
+using Chocolatey.Gui.Services;
+using Chocolatey.Gui.ViewModels.Items;
 
 namespace Chocolatey.Gui.ViewModels.Pages
 {
     public class PackagePageViewModel : ObservableBase, IPackagePageViewModel
     {
+        public IPackageViewModel Package { get; set; }
     }
 }

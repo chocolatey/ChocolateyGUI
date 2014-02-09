@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Chocolatey.Gui.ViewModels.Items;
 
 namespace Chocolatey.Gui.ViewModels.Pages
 {
     public interface IPackagePageViewModel
     {
-        IPackagePageViewModel Package { get; set; }
+        IPackageViewModel Package { get; set; }
     }
 }

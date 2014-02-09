@@ -22,6 +22,7 @@
             <CheckBox Name="MatchCheckBox" Margin="5" Content="Match Word Exactly"/>
         </StackPanel>
         <ListView Grid.Row="1" ItemsSource="{Binding Packages}" ItemContainerStyle="{StaticResource PackagesListItemContainerStyle}" Background="{StaticResource LightBackgroundColorBrush}"
-                   HorizontalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListView>
+                   HorizontalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  MouseDoubleClick="PackageDoubleClick"></ListView>
     </Grid>
 </Page>

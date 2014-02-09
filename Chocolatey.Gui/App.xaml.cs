@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Chocolatey.Gui.IoC;
+using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Items;
 using Chocolatey.Gui.ViewModels.Pages;
 using Chocolatey.Gui.ViewModels.Windows;
@@ -14,13 +16,7 @@ namespace Chocolatey.Gui
 
         static App()
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>();
-            builder.RegisterType<LocalSourcePageViewModel>().As<ILocalSourcePageViewModel>();
-            builder.RegisterType<RemoteSourcePageViewModel>().As<IRemoteSourcePageViewModel>();
-            builder.RegisterType<PackageViewModel>().As<IPackageViewModel>();
-
-            Container = builder.Build();
+            Container = AutoFacConfiguration.RegisterAutoFac();
         }
     }
 }

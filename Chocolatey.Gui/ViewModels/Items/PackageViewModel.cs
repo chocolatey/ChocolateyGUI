@@ -10,7 +10,13 @@ using Chocolatey.Gui.Services;
 namespace Chocolatey.Gui.ViewModels.Items
 {
     public class PackageViewModel : ObservableBase, IPackageViewModel
-    {    
+    {
+        private IPackageService _packageService;
+        public PackageViewModel(IPackageService packageService)
+        {
+            _packageService = packageService;
+        }
+
         #region Properties
         private string _authors;
         public string Authors
@@ -66,7 +72,7 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _galleryDetailsUrl, value); }
         }
 
-        private string _iconUrl;
+        private string _iconUrl = "";
         public string IconUrl
         {
             get { return _iconUrl; }
@@ -120,7 +126,7 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _lastUpdated, value); }
         }
 
-        private string _licenseUrl;
+        private string _licenseUrl = "";
         public string LicenseUrl
         {
             get { return _licenseUrl; }
@@ -148,7 +154,7 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _packageSize, value); }
         }
         
-        private string _projectUrl;
+        private string _projectUrl = "";
         public string ProjectUrl
         {
             get { return _projectUrl; }
@@ -169,7 +175,7 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _releaseNotes, value); }
         }
 
-        private string _reportAbuseUrl;
+        private string _reportAbuseUrl = "";
         public string ReportAbuseUrl
         {
             get { return _reportAbuseUrl; }
@@ -211,14 +217,14 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _version, value); }
         }
 
-        //public SemanticVersion LatestVersion
-        //{
-        //    get
-        //    {
-        //        var latest = _remoteService.GetLatest(Id);
-        //        return latest != null ? new SemanticVersion(latest.Version) : Version; 
-        //    }
-        //}
+        public SemanticVersion LatestVersion
+        {
+            get
+            {
+                var latest = _packageService.GetLatest(Id);
+                return latest != null ? latest.Version : Version;
+            }
+        }
 
         private int _versionDownloadCount;
         public int VersionDownloadCount

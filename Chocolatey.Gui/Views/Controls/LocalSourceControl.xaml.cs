@@ -1,19 +1,14 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
+﻿using System.Windows.Input;
 using Autofac;
 using Chocolatey.Gui.Services;
+using Chocolatey.Gui.ViewModels.Controls;
 using Chocolatey.Gui.ViewModels.Items;
-using Chocolatey.Gui.ViewModels.Pages;
 
-namespace Chocolatey.Gui.Views.Pages
+namespace Chocolatey.Gui.Views.Controls
 {
-    /// <summary>
-    /// Interaction logic for LocalSourcePage.xaml
-    /// </summary>
-    public partial class LocalSourcePage
+    public partial class LocalSourceControl
     {
-        public LocalSourcePage(ILocalSourcePageViewModel vm)
+        public LocalSourceControl(ILocalSourceControlViewModel vm)
         {
             InitializeComponent();
             DataContext = vm;
@@ -28,7 +23,7 @@ namespace Chocolatey.Gui.Views.Pages
                 using (var scope = App.Container.BeginLifetimeScope())
                 {
                     var navigationService = scope.Resolve<INavigationService>();
-                    navigationService.Navigate(typeof(PackagePage), item);
+                    navigationService.Navigate(typeof(PackageControl), item);
                 }
             }
         }

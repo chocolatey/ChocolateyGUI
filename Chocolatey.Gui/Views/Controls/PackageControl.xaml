@@ -1,18 +1,18 @@
-﻿<Page x:Class="Chocolatey.Gui.Views.Pages.PackagePage"
+﻿<UserControl x:Class="Chocolatey.Gui.Views.Controls.PackageControl"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:items="clr-namespace:Chocolatey.Gui.ViewModels.Items"
-      xmlns:pages="clr-namespace:Chocolatey.Gui.ViewModels.Pages"
+      xmlns:controlVms="clr-namespace:Chocolatey.Gui.ViewModels.Controls"
       xmlns:converters="clr-namespace:Chocolatey.Gui.Utilities.Converters"
       xmlns:xaml="clr-namespace:Markdown.Xaml"
       xmlns:commands="clr-namespace:Chocolatey.Gui.Commands"
       mc:Ignorable="d" 
       d:DesignHeight="786" d:DesignWidth="1366"
-	Title="PackagePage" d:DataContext="{d:DesignInstance pages:PackagePageViewModel}">
+	d:DataContext="{d:DesignInstance controlVms:PackageControlViewModel}">
 
-    <Page.Resources>
+    <UserControl.Resources>
         <converters:UriToVisibility x:Key="UriToVisibilty"/>
         <converters:NullToVisibility x:Key="NullToVisibility"/>
         <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
@@ -20,7 +20,7 @@
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString"/>
         <xaml:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" Markdown="{StaticResource Markdown}"/>
 
-     </Page.Resources>
+     </UserControl.Resources>
 
     <DockPanel x:Name="PackageViewGrid" LastChildFill="True" DataContext="{Binding Package}" d:DataContext="{d:DesignInstance items:PackageViewModel}"
                           Margin="20,0,0,0"  Background="{StaticResource LightBackgroundColorBrush}"
@@ -103,4 +103,4 @@
 
         </Grid>
     </DockPanel>
-</Page>
+</UserControl>

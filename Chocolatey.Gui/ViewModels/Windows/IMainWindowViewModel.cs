@@ -9,6 +9,5 @@ namespace Chocolatey.Gui.ViewModels.Windows
 {
     public interface IMainWindowViewModel
     {
-        ObservableCollection<SourceModel> Sources { get; set; } 
     }
 }

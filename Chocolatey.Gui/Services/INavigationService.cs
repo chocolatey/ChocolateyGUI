@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
+using MahApps.Metro.Controls;
 
 namespace Chocolatey.Gui.Services
 {
@@ -12,7 +9,7 @@ namespace Chocolatey.Gui.Services
         /// Sets the Navigation Service's frame.
         /// </summary>
         /// <param name="frame">The frame used for navigation.</param>
-        void SetNavigationItem(Frame frame);
+        void SetNavigationItem(TransitioningContentControl frame);
         /// <summary>
         /// Navigates to a page of the specified type.
         /// </summary>

@@ -4,11 +4,18 @@ namespace Chocolatey.Gui
 {
     public class ChocoConfigurationSection : ConfigurationSection 
     {
-        [ConfigurationProperty("", IsRequired = true, IsDefaultCollection = true)]
+        [ConfigurationProperty("packageSources", IsRequired = true, IsDefaultCollection = true)]
         public SourcesCollection Sources
         {
-            get { return (SourcesCollection) this[""]; }
-            set { this[""] = value; }
+            get { return (SourcesCollection)this["packageSources"]; }
+            set { this["packageSources"] = value; }
+        }
+
+        [ConfigurationProperty("currentSource", IsRequired = true)]
+        public CurrentSourceElement CurrentSource
+        {
+            get { return (CurrentSourceElement) this["currentSource"]; }
+            set { this["currentSource"] = value; }
         }
     }
 
@@ -40,6 +47,16 @@ namespace Chocolatey.Gui
         {
             get { return (string)base["Url"]; }
             set { base["Url"] = value; }
+        }
+    }
+
+    public class CurrentSourceElement : ConfigurationElement
+    {
+        [ConfigurationProperty("Name", IsKey = true, IsRequired = true)]
+        public string Name
+        {
+            get { return (string)base["Name"]; }
+            set { base["Name"] = value; }
         }
     }
 }

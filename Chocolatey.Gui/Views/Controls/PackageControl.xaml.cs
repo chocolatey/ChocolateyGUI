@@ -2,17 +2,17 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Chocolatey.Gui.ViewModels.Controls;
 using Chocolatey.Gui.ViewModels.Items;
-using Chocolatey.Gui.ViewModels.Pages;
 
-namespace Chocolatey.Gui.Views.Pages
+namespace Chocolatey.Gui.Views.Controls
 {
     /// <summary>
-    /// Interaction logic for PackagePage.xaml
+    /// Interaction logic for PackageControl.xaml
     /// </summary>
-    public partial class PackagePage
+    public partial class PackageControl
     {
-        public PackagePage(IPackagePageViewModel vm, IPackageViewModel packageViewModel)
+        public PackageControl(IPackageControlViewModel vm, IPackageViewModel packageViewModel)
         {
             InitializeComponent();
             vm.Package = packageViewModel;

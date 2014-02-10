@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using MahApps.Metro.Controls;
 using Autofac;
 
 namespace Chocolatey.Gui.Services
 {
     public class NavigationService : INavigationService
     {
-        private Frame _frame;
-        public void SetNavigationItem(Frame frame)
+        private TransitioningContentControl _frame;
+        public void SetNavigationItem(TransitioningContentControl frame)
         {
             if(frame == null)
                 throw new ArgumentNullException("frame", @"Frame can't be null");
@@ -30,7 +33,10 @@ namespace Chocolatey.Gui.Services
 
         public void Navigate(object page)
         {
-            _frame.Navigate(page);
+            if(_frame.Content != null)
+                _backStack.Push(_frame.Content);
+            _frame.Content = page;
+            _forwardStack.Clear();
         }
 
         public void GoHome()
@@ -41,43 +47,45 @@ namespace Chocolatey.Gui.Services
 
         public void GoBack()
         {
-            if(CanGoBack)
-                _frame.GoBack();
+            _forwardStack.Push(_frame.Content);
+            _frame.Content = _backStack.Pop();
         }
 
         public void GoForward()
         {
-            if(CanGoForward)
-                _frame.GoForward();
+            _backStack.Push(_frame.Content);
+                _frame.Content = _forwardStack.Pop();
         }
 
         public void ClearNavigationStack()
         {
-            throw new NotImplementedException();
+            _backStack.Clear();
+            _forwardStack.Clear();
         }
 
         public void SetHome(Type pageType)
         {
-            GoHome();
+            ClearNavigationStack();
             Navigate(pageType);
-            _frame.RemoveBackEntry();
         }
 
         public void SetHome(object page)
         {
-            GoHome();
+            ClearNavigationStack();
             Navigate(page);
-            _frame.RemoveBackEntry();
         }
 
         public bool CanGoBack
         {
-            get { return _frame.CanGoBack; }
+            get { return _backStack.Count > 0; }
         }
 
         public bool CanGoForward
         {
-            get { return _frame.CanGoForward; }
+            get { return _forwardStack.Count > 0; }
         }
+
+        private readonly Stack<object> _backStack = new Stack<object>();
+        private readonly Stack<object> _forwardStack = new Stack<object>();
     }
 }

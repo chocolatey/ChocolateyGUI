@@ -285,7 +285,7 @@ namespace Chocolatey.Gui.Commands
                 }
                 if (this._executed == null && this._executedWithParam == null)
                     throw new Exception(string.Format(
-                        "Method {0} on type {1} does not have a valid method signature. The method must have one of the following signatures: 'public void Executed()' or 'public void Executed(object parameter)'",
+                        "Method {0} on type {1} does not have a valid method signature. The method must have one of the following signatures: 'public void " + executedMethodName + "()' or 'public void " + executedMethodName + "(object parameter)'",
                         ExecutedMethodName, typeof(TTarget)));
             }
 

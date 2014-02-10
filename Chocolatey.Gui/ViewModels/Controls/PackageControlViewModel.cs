@@ -3,9 +3,9 @@ using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Items;
 
-namespace Chocolatey.Gui.ViewModels.Pages
+namespace Chocolatey.Gui.ViewModels.Controls
 {
-    public class PackagePageViewModel : ObservableBase, IPackagePageViewModel
+    public class PackageControlViewModel : ObservableBase, IPackageControlViewModel
     {
         public IPackageViewModel Package { get; set; }
     }

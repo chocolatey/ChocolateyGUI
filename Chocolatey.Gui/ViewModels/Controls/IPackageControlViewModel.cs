@@ -1,8 +1,8 @@
 ﻿using Chocolatey.Gui.ViewModels.Items;
 
-namespace Chocolatey.Gui.ViewModels.Pages
+namespace Chocolatey.Gui.ViewModels.Controls
 {
-    public interface IPackagePageViewModel
+    public interface IPackageControlViewModel
     {
         IPackageViewModel Package { get; set; }
     }

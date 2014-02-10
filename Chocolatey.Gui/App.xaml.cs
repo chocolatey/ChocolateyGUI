@@ -1,9 +1,7 @@
 ﻿using Autofac;
+using Chocolatey.Gui.ChocolateyFeedService;
 using Chocolatey.Gui.IoC;
-using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Items;
-using Chocolatey.Gui.ViewModels.Pages;
-using Chocolatey.Gui.ViewModels.Windows;
 
 namespace Chocolatey.Gui
 {
@@ -17,6 +15,8 @@ namespace Chocolatey.Gui
         static App()
         {
             Container = AutoFacConfiguration.RegisterAutoFac();
+
+            AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
         }
     }
 }

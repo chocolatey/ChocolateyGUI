@@ -12,16 +12,9 @@
             <Button Content="settings" />
         </metro:WindowCommands>
     </metro:MetroWindow.WindowCommands>
-    <DockPanel Background="{StaticResource LightBackgroundColorBrush}">
-        <StackPanel DockPanel.Dock="Left" Background="#FF4e2c01">
-            <TextBlock Text="chocolatey" FontSize="38" Foreground="#FF4e2c01" FontWeight="SemiBold" Padding="20,5" Background="#b4884f"/>
-            <Grid DockPanel.Dock="Left" MinWidth="250">
-                <ListView x:Name="SourcesListView" ItemsSource="{Binding Sources}" Background="Transparent" BorderBrush="Transparent" Padding="5,0, -1, 0"
-                            ItemContainerStyle="{DynamicResource SourcesListItemContainerStyle}" SelectionChanged="SourcesListView_OnSelectionChanged"/>
-            </Grid>
-        </StackPanel>
-        <Frame x:Name="PackagesPageFrame" NavigationUIVisibility="Hidden">
-            
-        </Frame>
-    </DockPanel>
+    <Border Background="{StaticResource LightBackgroundColorBrush}"> 
+        <metro:TransitioningContentControl x:Name="GlobalFrame">
+
+        </metro:TransitioningContentControl>
+    </Border>
 </metro:MetroWindow>

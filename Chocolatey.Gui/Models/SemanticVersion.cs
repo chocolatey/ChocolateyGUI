@@ -78,9 +78,16 @@ namespace Chocolatey.Gui.Models
 
         public static bool operator ==(SemanticVersion version1, SemanticVersion version2)
         {
-            if (version1 == null)
-                return version2 == null;
-            
+            if (ReferenceEquals(version1, version2))
+            {
+                return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)version1 == null) || ((object)version2 == null))
+            {
+                return false;
+            }
             return version1.Equals(version2);
         }
 

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.ObjectModel;
+using Autofac;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Models;
+using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Items;
 
-namespace Chocolatey.Gui.ViewModels.Pages
+namespace Chocolatey.Gui.ViewModels.Controls
 {
-    public class LocalSourcePageViewModel : ObservableBase, ILocalSourcePageViewModel
+    public class LocalSourceControlViewModel : ObservableBase, ILocalSourceControlViewModel
     {
         private ObservableCollection<PackageViewModel> _packageViewModels; 
         public ObservableCollection<PackageViewModel> Packages
@@ -18,11 +16,12 @@ namespace Chocolatey.Gui.ViewModels.Pages
             set { SetPropertyValue(ref _packageViewModels, value); }
         }
 
-        public LocalSourcePageViewModel()
+        public LocalSourceControlViewModel()
         {
+            var packageService = App.Container.Resolve<IPackageService>();
             Packages = new ObservableCollection<PackageViewModel>
             {
-                new PackageViewModel
+                new PackageViewModel(packageService)
                 {
                     Title = "Test 1", 
                     Version = new SemanticVersion(0,1,0,1337),
@@ -31,7 +30,7 @@ namespace Chocolatey.Gui.ViewModels.Pages
                     DownloadCount = 1337,
                     Tags = "yolo awesome that stuff"
                 },
-                new PackageViewModel
+                new PackageViewModel(packageService)
                 {
                     Title = "Test 2", 
                     Version = new SemanticVersion(0,1,0,1337),
@@ -40,7 +39,7 @@ namespace Chocolatey.Gui.ViewModels.Pages
                     DownloadCount = 1337,
                     Tags = "yolo awesome that stuff"
                 },
-                new PackageViewModel
+                new PackageViewModel(packageService)
                 {
                     Title = "Test 3", 
                     Version = new SemanticVersion(0,1,0,1337),
@@ -49,7 +48,7 @@ namespace Chocolatey.Gui.ViewModels.Pages
                     DownloadCount = 1337,
                     Tags = "yolo awesome that stuff"
                 },
-                new PackageViewModel
+                new PackageViewModel(packageService)
                 {
                     Title = "Test 4", 
                     Version = new SemanticVersion(0,1,0,1337),

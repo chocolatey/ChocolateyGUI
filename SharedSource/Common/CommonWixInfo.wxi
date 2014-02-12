@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include>
-  <?define MainExe=$(var.Chocolatey.Explorer.TargetFileName)?>
+  <?define MainExe=$(var.Chocolatey.Gui.TargetFileName)?>
   <?define Version=!(bind.fileVersion.$(var.MainExe))?>
   <?define ProductName="ChocolateyGUI" ?>
   <?define Language="1033" ?>
-  <?define Manufacturer="Baes Christiaan"?>
+  <?define Manufacturer="Chocolatey"?>
 </Include>

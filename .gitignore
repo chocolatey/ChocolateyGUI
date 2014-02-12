@@ -119,7 +119,7 @@ publish/
 
 # NuGet Packages Directory
 ## TODO: If you have NuGet Package Restore enabled, uncomment the next line
-packages/*
+**/packages/*
 ## TODO: If the tool you use requires repositories.config, also uncomment the next line
 !packages/repositories.config
 

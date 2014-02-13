@@ -19,9 +19,10 @@ namespace Chocolatey.Gui.Base
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
+            var propertyChangedEvent = PropertyChanged;
+            if (propertyChangedEvent != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                propertyChangedEvent(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

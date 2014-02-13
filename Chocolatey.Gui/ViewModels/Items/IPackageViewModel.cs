@@ -1,13 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using Chocolatey.Gui.Models;
 
 namespace Chocolatey.Gui.ViewModels.Items
 {
     public interface IPackageViewModel
     {
+        Task EnsureIsLoaded();
+
+        void Install();
+        void Update();
+        void Uninstall();
+
         string Authors { get; set; }
 
         bool CanUpdate { get; }

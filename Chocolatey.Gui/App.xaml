@@ -10,8 +10,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/styles/Colors.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/basedark.xaml" />
-                <ResourceDictionary Source="Resources/Controls.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Resources/Icons.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/Controls.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
     </Application.Resources>

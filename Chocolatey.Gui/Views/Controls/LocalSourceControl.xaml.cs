@@ -12,19 +12,20 @@ namespace Chocolatey.Gui.Views.Controls
         {
             InitializeComponent();
             DataContext = vm;
+
+            Loaded += vm.Loaded;
         }
 
-        private void PackageDoubleClick(object sender, MouseButtonEventArgs e)
+        private async void PackageDoubleClick(object sender, MouseButtonEventArgs e)
         {
             dynamic source = e.OriginalSource;
             var item = source.DataContext as IPackageViewModel;
-            if (item != null)
+
+            await item.EnsureIsLoaded();
+            using (var scope = App.Container.BeginLifetimeScope())
             {
-                using (var scope = App.Container.BeginLifetimeScope())
-                {
-                    var navigationService = scope.Resolve<INavigationService>();
-                    navigationService.Navigate(typeof(PackageControl), item);
-                }
+                var navigationService = scope.Resolve<INavigationService>();
+                navigationService.Navigate(typeof(PackageControl), item);
             }
         }
     }

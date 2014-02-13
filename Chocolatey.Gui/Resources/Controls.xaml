@@ -212,7 +212,7 @@
     <SolidColorBrush x:Key="Brown4Brush" Color="{StaticResource Brown4}"></SolidColorBrush>
     <SolidColorBrush x:Key="Brown5Brush" Color="{StaticResource Brown5}"></SolidColorBrush>
     <SolidColorBrush x:Key="Brown6Brush" Color="{StaticResource Brown6}"></SolidColorBrush>
-
+    
     <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource AccentColor}" />
 
     <Style TargetType="{x:Type TextBox}">
@@ -437,6 +437,60 @@
         <Setter Property="FontSize" Value="14"/>
     </Style>
 
+    <Style x:Key="EntypoIconStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="/Resources/#Entypo"></Setter>
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"></Setter>
+        <Setter Property="Margin" Value="0,-15,0,15"></Setter>
+    </Style>
+
+    <Style x:Key="EntypoIconLargeStyle" BasedOn="{StaticResource EntypoIconStyle}" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="72"/>
+    </Style>
+
+    <Style x:Key="BigEntypeIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroCircleButtonStyle}">
+        <Setter Property="Width" Value="80"/>
+        <Setter Property="Height" Value="80"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"/>
+    </Style>
+
+    <Style x:Key="InstallButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <TextBlock Style="{StaticResource EntypoIconLargeStyle}">&#59256;</TextBlock>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="AutomationProperties.Name" Value="Install"/>
+        <Setter Property="AutomationProperties.HelpText" Value="Installs the Package"/>
+        <Setter Property="AutomationProperties.AcceleratorKey" Value="I"/>
+        <Setter Property="ToolTip" Value="Install"/>
+    </Style>
+
+    <Style x:Key="UninstallButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <TextBlock Style="{StaticResource EntypoIconLargeStyle}"></TextBlock>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="AutomationProperties.Name" Value="Uninstall"/>
+        <Setter Property="AutomationProperties.HelpText" Value="Uninstalls the Package"/>
+        <Setter Property="AutomationProperties.AcceleratorKey" Value="U"/>
+        <Setter Property="ToolTip" Value="Uninstall"/>
+    </Style>
+
+    <Style x:Key="UpdateButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <TextBlock Style="{StaticResource EntypoIconLargeStyle}">&#128260;</TextBlock>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="AutomationProperties.Name" Value="Update"/>
+        <Setter Property="AutomationProperties.HelpText" Value="Updates the Package"/>
+        <Setter Property="AutomationProperties.AcceleratorKey" Value="P"/>
+        <Setter Property="ToolTip" Value="Update"/>
+    </Style>
+
     <Style x:Key="BigIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroCircleButtonStyle}">
         <Setter Property="Width" Value="55"/>
         <Setter Property="Height" Value="55"/>
@@ -447,7 +501,7 @@
         <Setter Property="Content">
             <Setter.Value>
                 <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" Margin="0,0,2,0">
-                    <!-- Chevron Left-->
+                     <!--Chevron Left-->
                     <Path Width="16" Height="18" Canvas.Left="15.9063" Canvas.Top="14.75" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z " />
                 </Canvas>
             </Setter.Value>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using Autofac;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Models;
@@ -9,12 +11,15 @@ using Chocolatey.Gui.Services;
 
 namespace Chocolatey.Gui.ViewModels.Items
 {
-    public class PackageViewModel : ObservableBase, IPackageViewModel
+    public class PackageViewModel : ObservableBase, IPackageViewModel, IWeakEventListener
     {
-        private IPackageService _packageService;
-        public PackageViewModel(IPackageService packageService)
+        private readonly IPackageService _packageService;
+        private readonly IChocolateyService _chocolateyService;
+        public PackageViewModel(IPackageService packageService, IChocolateyService chocolateyService)
         {
             _packageService = packageService;
+            _chocolateyService = chocolateyService;
+            PackagesChangedEventManager.AddListener(_chocolateyService, this);
         }
 
         #region Properties
@@ -93,9 +98,16 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _isAbsoluteLatestVersion, value); }
         }
 
+        private bool? _isInstalled;
         public bool IsInstalled
         {
-            get { return false; }
+            get
+            {
+                if (!_isInstalled.HasValue)
+                    _isInstalled = _chocolateyService.IsPackageInstalled(Id, Version);
+
+                return _isInstalled.Value;
+            }
         }
 
         private bool _isLatestVersion;
@@ -255,5 +267,38 @@ namespace Chocolatey.Gui.ViewModels.Items
             }
         }
         #endregion
+
+        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        {
+            if (sender is IChocolateyService && e is PackagesChangedEventArgs)
+            {
+                _isInstalled = (sender as IChocolateyService).IsPackageInstalled(Id, Version);
+                NotifyPropertyChanged("IsInstalled");
+                NotifyPropertyChanged("CanUpdate");
+            }
+            return true;
+        }
+
+        public async Task EnsureIsLoaded()
+        {
+            if (Published == DateTime.MinValue)
+                await _packageService.EnsureIsLoaded(this);
+        }
+
+
+        public void Install()
+        {
+            _chocolateyService.InstallPackage(Id, Version);
+        }
+
+        public void Update()
+        {
+            _chocolateyService.UpdatePackage(Id);
+        }
+
+        public void Uninstall()
+        {
+            _chocolateyService.UninstallPackage(Id, Version, true);
+        }
     }
 }

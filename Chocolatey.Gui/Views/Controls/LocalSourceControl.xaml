@@ -5,10 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controlVms="clr-namespace:Chocolatey.Gui.ViewModels.Controls"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
+      xmlns:commands="clr-namespace:Chocolatey.Gui.Commands"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1366"
 	  d:DataContext="{d:DesignInstance controlVms:LocalSourceControlViewModel}">
-
 
     <Grid Background="{StaticResource AccentColorBrush}">
         <Grid.RowDefinitions>
@@ -17,16 +17,13 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="0,5">
             <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}">Search: </Label>
-            <TextBox x:Name="SearchTextBox" Width="300" Padding="0,2,0,-2" FontSize="14"></TextBox>
-            <CheckBox Name="AllVersionsCheckBox" Margin="10,5,5,5" Content="All Versions"/>
-            <CheckBox Name="PrereleaseCheckBox" Margin="5" Content="Include Prerelease"/>
-            <CheckBox Name="MatchCheckBox" Margin="5" Content="Match Word Exactly"/>
+            <TextBox x:Name="SearchTextBox" Width="300" Padding="0,2,0,-2" FontSize="14" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <CheckBox Name="MatchCheckBox" Margin="5" Content="Match Word Exactly" IsChecked="{Binding MatchWord}"/>
         </StackPanel>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Packages}" Background="{StaticResource LightBackgroundColorBrush}"
                   AutoGenerateColumns="False" IsReadOnly="True"
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" MaxWidth="150"></DataGridTextColumn>
                 <DataGridTextColumn Header="Name" Binding="{Binding Title}" MinWidth="200"></DataGridTextColumn>
                 <DataGridTextColumn Header="Authors" Binding="{Binding Authors}" MinWidth="300"></DataGridTextColumn>
                 <DataGridTextColumn Header="Version" Binding="{Binding Version}" MinWidth="200"></DataGridTextColumn>

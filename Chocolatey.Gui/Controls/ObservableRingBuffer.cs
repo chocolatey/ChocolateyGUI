@@ -11,8 +11,7 @@ namespace Chocolatey.Gui.Controls
    /// </summary>
    /// <typeparam name="T">The generic type of the items stored within the ring buffer.</typeparam>
    [DebuggerDisplay("Count = {Count}")]
-    public class ObservableRingBuffer<T> : INotifyCollectionChanged, IList<T>, ICollection<T>, 
-                                IEnumerable<T>, IEnumerable {
+    public class ObservableRingBuffer<T> : INotifyCollectionChanged, IList<T> {
       /// <summary>
       /// Creates a new instance of a <see cref="RingBuffer&lt;T&gt;"/> with a 
       /// specified cache size.

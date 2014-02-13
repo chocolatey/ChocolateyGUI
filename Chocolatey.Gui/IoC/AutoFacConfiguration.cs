@@ -23,8 +23,10 @@ namespace Chocolatey.Gui.IoC
             builder.RegisterType<PackageControlViewModel>().As<IPackageControlViewModel>();
 
             // Register Services
-            builder.Register(c => new NavigationService()).As<INavigationService>().SingleInstance();
+            builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<PackageService>().As<IPackageService>().SingleInstance();
+            builder.RegisterType<ChocolateyService>().As<IChocolateyService>().SingleInstance();
+            builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
 
             // Register Views
             builder.RegisterType<MainWindow>();

@@ -10,6 +10,12 @@ namespace Chocolatey.Gui.Services
 {
     public class NavigationService : INavigationService
     {
+        private readonly IProgressService _progressService;
+        public NavigationService(IProgressService progressService)
+        {
+            _progressService = progressService;
+        }
+
         private TransitioningContentControl _frame;
         public void SetNavigationItem(TransitioningContentControl frame)
         {

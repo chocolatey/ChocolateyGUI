@@ -77,6 +77,10 @@
     <Reference Include="System.IO">
       <HintPath>packages\Microsoft.Bcl.1.1.6\lib\net40\System.IO.dll</HintPath>
     </Reference>
+    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\System.Management.Automation.6.1.7601.17515\lib\net40\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Reactive.Core">
       <HintPath>packages\Rx-Core.2.2.2\lib\net40\System.Reactive.Core.dll</HintPath>
@@ -96,6 +100,7 @@
     <Reference Include="System.Runtime">
       <HintPath>packages\Microsoft.Bcl.1.1.6\lib\net40\System.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -140,10 +145,16 @@
     <Compile Include="Controls\FauxPowerShellConsole.cs" />
     <Compile Include="Controls\ObservableRingBuffer.cs" />
     <Compile Include="IoC\AutoFacConfiguration.cs" />
+    <Compile Include="Models\NuspecPackage.cs" />
+    <Compile Include="Models\PackagesChangedEvent.cs" />
     <Compile Include="Models\PackageSearchOptions.cs" />
     <Compile Include="Models\PackageSearchResults.cs" />
     <Compile Include="Models\PowerShellOutputLine.cs" />
+    <Compile Include="Services\ChocolateyService.cs" />
+    <Compile Include="Services\IProgressService.cs" />
+    <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
+    <Compile Include="Utilities\Nuspec\NupkgReader.cs" />
     <Compile Include="ViewModels\Items\SourceViewModel.cs" />
     <Compile Include="Service References\ChocolateyFeedService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -203,6 +214,7 @@
     <Compile Include="ViewModels\Controls\RemoteSourceControlViewModel.cs" />
     <Compile Include="ViewModels\Controls\ILocalSourceControlViewModel.cs" />
     <Compile Include="ViewModels\Controls\LocalSourceControlViewModel.cs" />
+    <Compile Include="ViewModels\PackagesChangedEventManager.cs" />
     <Compile Include="ViewModels\Windows\IMainWindowViewModel.cs" />
     <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
     <Compile Include="Views\Controls\PackageControl.xaml.cs">
@@ -253,11 +265,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="Resources\Entypo.otf" />
     <None Include="Service References\ChocolateyFeedService\service.edmx" />
     <Resource Include="Resources\SourceSansPro-Regular.otf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

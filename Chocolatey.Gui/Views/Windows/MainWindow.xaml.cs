@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System.ComponentModel;
+using System.Windows;
+using Autofac;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Windows;
 using Chocolatey.Gui.Views.Controls;
@@ -10,6 +12,7 @@ namespace Chocolatey.Gui.Views.Windows
     /// </summary>
     public partial class MainWindow
     {
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -17,6 +20,9 @@ namespace Chocolatey.Gui.Views.Windows
             var navigationService = App.Container.Resolve<INavigationService>();
             navigationService.SetNavigationItem(GlobalFrame);
             navigationService.Navigate(typeof(SourcesControl));
+
+            var progressService = App.Container.Resolve<IProgressService>();
+            LoadingOverlay.DataContext = progressService;
         }
     }
 }

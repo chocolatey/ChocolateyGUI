@@ -5,16 +5,28 @@
         xmlns:local="clr-namespace:Chocolatey.Gui.ViewModels.Windows"
         xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:services="clr-namespace:Chocolatey.Gui.Services"
+        xmlns:converters="clr-namespace:Chocolatey.Gui.Utilities.Converters"
         mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
+    <Window.Resources>
+        <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
+    </Window.Resources>
     <metro:MetroWindow.WindowCommands>
         <metro:WindowCommands>
             <Button Content="settings" />
         </metro:WindowCommands>
     </metro:MetroWindow.WindowCommands>
     <Border Background="{StaticResource LightBackgroundColorBrush}"> 
-        <metro:TransitioningContentControl x:Name="GlobalFrame">
+        <Grid>
+            <metro:TransitioningContentControl x:Name="GlobalFrame">
 
-        </metro:TransitioningContentControl>
+            </metro:TransitioningContentControl>
+
+            <Border x:Name="LoadingOverlay" Background="#44000000" d:DataContext="{d:DesignInstance services:ProgressService}" 
+                   Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibility}, Mode=OneWay}">
+                <metro:ProgressRing IsActive="{Binding IsLoading, Mode=OneWay}"></metro:ProgressRing>
+            </Border>
+        </Grid>
     </Border>
 </metro:MetroWindow>

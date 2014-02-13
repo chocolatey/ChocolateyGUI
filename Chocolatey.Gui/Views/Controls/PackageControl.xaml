@@ -61,9 +61,9 @@
                 </TextBlock>
             </StackPanel>
 
-            <!--<Button Style="{StaticResource InstallButtonStyle}" Command="{cmds:DataContextCommandAdapter Install}"  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
-            <Button Style="{StaticResource UninstallButtonStyle}" Command="{cmds:DataContextCommandAdapter Remove}" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"/>
-            <Button Style="{StaticResource UpdateButtonStyle}" Command="{cmds:DataContextCommandAdapter Update}" Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"/>-->
+            <Button Style="{StaticResource InstallButtonStyle}" Command="{commands:DataContextCommandAdapter Install}"  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
+            <Button Style="{StaticResource UninstallButtonStyle}" Command="{commands:DataContextCommandAdapter Uninstall}" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"/>
+            <Button Style="{StaticResource UpdateButtonStyle}" Command="{commands:DataContextCommandAdapter Update}" Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"/>
         </StackPanel>
 
         <Grid DockPanel.Dock="Right">

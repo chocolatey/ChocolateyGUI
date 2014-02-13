@@ -15,5 +15,6 @@ namespace Chocolatey.Gui.Services
         Task<PackageSearchResults> Search(string query);
         Task<PackageSearchResults> Search(string query, PackageSearchOptions options);
         IPackageViewModel GetLatest(string id, bool includePrerelease = false);
+        Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm);
     }
 }

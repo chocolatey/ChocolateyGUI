@@ -4,11 +4,20 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controlVms="clr-namespace:Chocolatey.Gui.ViewModels.Controls"
-        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:commands="clr-namespace:Chocolatey.Gui.Commands"
+        xmlns:converters="clr-namespace:Chocolatey.Gui.Utilities.Converters"
         mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1366"
 	    d:DataContext="{d:DesignInstance controlVms:RemoteSourceControlViewModel}">
+
+    <UserControl.Resources>
+        <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
+
+        <DataGridTextColumn x:Key="NameColumn" Header="Name" Binding="{Binding Title}" Width="2*"></DataGridTextColumn>
+        <DataGridTextColumn x:Key="VersionColumn" Header="Version" Binding="{Binding Version}" Width="1*"></DataGridTextColumn>
+        <DataGridTextColumn x:Key="DownloadCountColumn" Header="Downloads" Binding="{Binding DownloadCount}" Width="1*" Visibility="{Binding DataContext.IncludeAllVersions, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True, Source={x:Reference PackagesGrid}}"></DataGridTextColumn>
+        <DataGridTextColumn x:Key="VersionDownloadCountColumn" Header="Version Downlaods" Binding="{Binding VersionDownloadCount}" Width="1*" Visibility="{Binding DataContext.IncludeAllVersions, Converter={StaticResource BooleanToVisibility}, Source={x:Reference PackagesGrid}}"></DataGridTextColumn>
+    </UserControl.Resources>
 
     <DockPanel Background="{StaticResource AccentColorBrush}">
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,5">
@@ -36,10 +45,10 @@
                   AutoGenerateColumns="False" IsReadOnly="True" Sorting="DataGrid_OnSorting"
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" MaxWidth="150"></DataGridTextColumn>
-                <DataGridTextColumn Header="Name" Binding="{Binding Title}" MinWidth="200"></DataGridTextColumn>
-                <DataGridTextColumn Header="Authors" Binding="{Binding Authors}" MinWidth="300"></DataGridTextColumn>
-                <DataGridTextColumn Header="Version" Binding="{Binding Version}" MinWidth="200"></DataGridTextColumn>
+                <StaticResource ResourceKey="NameColumn"></StaticResource>
+                <StaticResource ResourceKey="VersionColumn"></StaticResource>
+                <StaticResource ResourceKey="DownloadCountColumn"></StaticResource>
+                <StaticResource ResourceKey="VersionDownloadCountColumn"></StaticResource>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

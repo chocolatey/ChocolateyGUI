@@ -1,63 +1,128 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using Autofac;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Items;
+using Ninject.Infrastructure.Language;
 
 namespace Chocolatey.Gui.ViewModels.Controls
 {
-    public class LocalSourceControlViewModel : ObservableBase, ILocalSourceControlViewModel
+    public class LocalSourceControlViewModel : ObservableBase, ILocalSourceControlViewModel, IWeakEventListener
     {
-        private ObservableCollection<PackageViewModel> _packageViewModels; 
-        public ObservableCollection<PackageViewModel> Packages
+        private readonly List<IPackageViewModel> _packages;
+        private bool _hasLoaded = false;
+
+        private ObservableCollection<IPackageViewModel> _packageViewModels; 
+        public ObservableCollection<IPackageViewModel> Packages
         {
             get { return _packageViewModels; }
             set { SetPropertyValue(ref _packageViewModels, value); }
         }
 
-        public LocalSourceControlViewModel()
+        private readonly IChocolateyService _chocolateyService;
+        public LocalSourceControlViewModel(IChocolateyService chocolateyService)
         {
-            var packageService = App.Container.Resolve<IPackageService>();
-            Packages = new ObservableCollection<PackageViewModel>
+            _chocolateyService = chocolateyService;
+            PackagesChangedEventManager.AddListener(_chocolateyService, this);
+
+            Packages = new ObservableCollection<IPackageViewModel>();
+            _packages = new List<IPackageViewModel>();
+        }
+
+        public async void Loaded(object sender, EventArgs args)
+        {
+            if (_hasLoaded)
+                return;
+
+            await LoadPackages();
+            Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                .Where(e => e.EventArgs.PropertyName == "MatchWord" || e.EventArgs.PropertyName == "SearchQuery")
+                .ObserveOnDispatcher()
+                .Subscribe(e => FilterPackages());
+
+            _hasLoaded = true;
+        }
+
+        private async Task LoadPackages()
+        {
+            _packages.Clear();
+            Packages.Clear();
+
+            var packages = await _chocolateyService.GetPackages();
+            foreach (var packageViewModel in packages)
             {
-                new PackageViewModel(packageService)
-                {
-                    Title = "Test 1", 
-                    Version = new SemanticVersion(0,1,0,1337),
-                    Authors = "Richard Simpson", 
-                    Summary = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ipsum risus, sodales vel neque eget, porta egestas lorem. Nam id dui quam. Nam at ligula ultricies, dignissim dolor ut, consectetur nisl. In semper elit non nunc porttitor faucibus. Quisque vestibulum varius ante, et ultrices orci feugiat vel. Nulla aliquam augue vel lacus tincidunt, ultricies pharetra nibh porttitor. Praesent porttitor malesuada velit, a molestie nisl faucibus aliquet. Curabitur pellentesque nisi ut magna vestibulum aliquam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam feugiat dolor at lectus dignissim, at faucibus leo molestie.",
-                    DownloadCount = 1337,
-                    Tags = "yolo awesome that stuff"
-                },
-                new PackageViewModel(packageService)
-                {
-                    Title = "Test 2", 
-                    Version = new SemanticVersion(0,1,0,1337),
-                    Authors = "Richard Simpson", 
-                    Summary = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ipsum risus, sodales vel neque eget, porta egestas lorem. Nam id dui quam. Nam at ligula ultricies, dignissim dolor ut, consectetur nisl. In semper elit non nunc porttitor faucibus. Quisque vestibulum varius ante, et ultrices orci feugiat vel. Nulla aliquam augue vel lacus tincidunt, ultricies pharetra nibh porttitor. Praesent porttitor malesuada velit, a molestie nisl faucibus aliquet. Curabitur pellentesque nisi ut magna vestibulum aliquam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam feugiat dolor at lectus dignissim, at faucibus leo molestie.",
-                    DownloadCount = 1337,
-                    Tags = "yolo awesome that stuff"
-                },
-                new PackageViewModel(packageService)
-                {
-                    Title = "Test 3", 
-                    Version = new SemanticVersion(0,1,0,1337),
-                    Authors = "Richard Simpson", 
-                    Summary = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ipsum risus, sodales vel neque eget, porta egestas lorem. Nam id dui quam. Nam at ligula ultricies, dignissim dolor ut, consectetur nisl. In semper elit non nunc porttitor faucibus. Quisque vestibulum varius ante, et ultrices orci feugiat vel. Nulla aliquam augue vel lacus tincidunt, ultricies pharetra nibh porttitor. Praesent porttitor malesuada velit, a molestie nisl faucibus aliquet. Curabitur pellentesque nisi ut magna vestibulum aliquam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam feugiat dolor at lectus dignissim, at faucibus leo molestie.",
-                    DownloadCount = 1337,
-                    Tags = "yolo awesome that stuff"
-                },
-                new PackageViewModel(packageService)
-                {
-                    Title = "Test 4", 
-                    Version = new SemanticVersion(0,1,0,1337),
-                    Authors = "Richard Simpson", 
-                    Summary = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ipsum risus, sodales vel neque eget, porta egestas lorem. Nam id dui quam. Nam at ligula ultricies, dignissim dolor ut, consectetur nisl. In semper elit non nunc porttitor faucibus. Quisque vestibulum varius ante, et ultrices orci feugiat vel. Nulla aliquam augue vel lacus tincidunt, ultricies pharetra nibh porttitor. Praesent porttitor malesuada velit, a molestie nisl faucibus aliquet. Curabitur pellentesque nisi ut magna vestibulum aliquam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam feugiat dolor at lectus dignissim, at faucibus leo molestie.",
-                    DownloadCount = 1337,
-                    Tags = "yolo awesome that stuff"
-                },
-            };
+                _packages.Add(packageViewModel);
+                Packages.Add(packageViewModel);
+            }
+        }
+
+        private void FilterPackages()
+        {
+            Packages.Clear();
+            if (!string.IsNullOrWhiteSpace(SearchQuery))
+            {
+               var query = MatchWord
+                    ? _packages.Where(
+                        package =>
+                            String.Compare((package.Title ?? package.Id), SearchQuery,
+                                StringComparison.OrdinalIgnoreCase) == 0)
+                    : _packages.Where(
+                        package =>
+                            CultureInfo.CurrentCulture.CompareInfo.IndexOf((package.Title ?? package.Id), SearchQuery,
+                                CompareOptions.OrdinalIgnoreCase) >= 0);
+
+                query.ToList().ForEach(Packages.Add);
+            }
+            else
+            {
+                Packages = new ObservableCollection<IPackageViewModel>(_packages);
+            }
+        }
+
+        private string _searchQuery;
+        public string SearchQuery
+        {
+            get { return _searchQuery; }
+            set { SetPropertyValue(ref _searchQuery, value); }
+        }
+
+        private bool _matchWord;
+        public bool MatchWord
+        {
+            get { return _matchWord; }
+            set { SetPropertyValue(ref _matchWord, value); }
+        }
+
+        private string _sortColumn;
+        public string SortColumn
+        {
+            get { return _sortColumn; }
+            set { SetPropertyValue(ref _sortColumn, value); }
+        }
+
+        private bool _sortDescending;
+        public bool SortDescending
+        {
+            get { return _sortDescending; }
+            set { SetPropertyValue(ref _sortDescending, value); }
+        }
+
+        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        {
+            if (sender is IChocolateyService && e is PackagesChangedEventArgs)
+            {
+                LoadPackages();
+            }
+            return true;
         }
     }
 }

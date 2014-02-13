@@ -43,6 +43,9 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=0.12.1.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\MahApps.Metro.0.12.1.0\lib\net40\MahApps.Metro.dll</HintPath>
@@ -151,9 +154,12 @@
     <Compile Include="Models\PackageSearchResults.cs" />
     <Compile Include="Models\PowerShellOutputLine.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
+    <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\IProgressService.cs" />
+    <Compile Include="Services\Log4NetLoggingService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
+    <Compile Include="Utilities\Extensions\LogExtensions.cs" />
     <Compile Include="Utilities\Nuspec\NupkgReader.cs" />
     <Compile Include="ViewModels\Items\SourceViewModel.cs" />
     <Compile Include="Service References\ChocolateyFeedService\Reference.cs">

@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Controls;
 using Chocolatey.Gui.ViewModels.Items;
@@ -23,6 +24,7 @@ namespace Chocolatey.Gui.IoC
             builder.RegisterType<PackageControlViewModel>().As<IPackageControlViewModel>();
 
             // Register Services
+            builder.Register((c,parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<PackageService>().As<IPackageService>().SingleInstance();
             builder.RegisterType<ChocolateyService>().As<IChocolateyService>().SingleInstance();

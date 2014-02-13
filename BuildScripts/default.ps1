@@ -63,6 +63,14 @@ Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Descript
 
 # build tasks
 
+Task -Name NugetPackageRestore -Description "Restores all the required nuget packages for this solution, before running the build" -Action {
+	$sourceDirectory = get-sourceDirectory;
+	
+	exec {
+		.$nugetExe restore "$sourceDirectory\Chocolatey.Gui\Chocolatey.Gui.sln"
+	}
+}
+
 Task -Name VersionFiles -Description "Stamps the common file with the version" -Action {	
 	$version = $preversion |  % {$_ -replace '-pre', '.' }
 	
@@ -87,7 +95,7 @@ Task -Name VersionFiles -Description "Stamps the common file with the version" -
 	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyInformationalVersionPattern, $assemblyInformationalVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs" )
 }
 
-Task -Name BuildSolution -Depends __VerifyConfiguration, VersionFiles -Description "Builds the main solution for the package" -Action {
+Task -Name BuildSolution -Depends __VerifyConfiguration, VersionFiles, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	exec { 
 		msbuild "$sourceDirectory\Chocolatey.Gui\Chocolatey.Gui.sln" /t:Build /p:Configuration=$config

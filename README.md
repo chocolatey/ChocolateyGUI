@@ -3,6 +3,8 @@ ChocolateyGUI is a user interface for Chocolatey NuGet (a Machine Package Manage
 You can install it via Chocolatey by executing 
 ```cinst ChocolateyGUI```
 
+##Build Status
+[![ChocolateyGUI WPF Refresh Build Status](https://www.myget.org/BuildSource/Badge/chocolateygui-wpf_refresh?identifier=3251a865-0412-44fe-a0c6-3fe479afaa42)](https://www.myget.org/F/chocolateygui-wpf_refresh/)
 ## Support
 If you find any problems with ChocolateyGUI, please raise an issue [here](https://github.com/gep13/chocolatey-Explorer/issues/new).
 

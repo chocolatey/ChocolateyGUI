@@ -12,7 +12,7 @@
     </Condition>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-    <MediaTemplate />
+    <MediaTemplate EmbedCab="yes" />
 
     <Icon Id="icon.ico" SourceFile="$(var.Chocolatey.Gui.ProjectDir)\chocolateyicon.ico"/>
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />

@@ -5,7 +5,7 @@ You can install it via Chocolatey by executing
 
 ##Build Status
 ###ChocolateyGUI Master Branch
-[![ChocolateyGUI WPF Refresh Build Status](https://www.myget.org/BuildSource/Badge/chocolateygui?identifier=124190bb-ec73-4776-bfb3-e07bc6658e35)](https://www.myget.org/F/chocolateygui)
+[![ChocolateyGUI Build Status](https://www.myget.org/BuildSource/Badge/chocolateygui?identifier=124190bb-ec73-4776-bfb3-e07bc6658e35)](https://www.myget.org/F/chocolateygui)
 
 ###ChocolateyGUI WPF Refresh Branch
 [![ChocolateyGUI WPF Refresh Build Status](https://www.myget.org/BuildSource/Badge/chocolateygui-wpf_refresh?identifier=3251a865-0412-44fe-a0c6-3fe479afaa42)](https://www.myget.org/F/chocolateygui-wpf_refresh)

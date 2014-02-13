@@ -90,7 +90,7 @@ Task -Name VersionFiles -Description "Stamps the common file with the version" -
 Task -Name BuildSolution -Depends __VerifyConfiguration, VersionFiles -Description "Builds the main solution for the package" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	exec { 
-		msbuild "$sourceDirectory\Chocolatey.Explorer\Chocolatey.Explorer.sln" /t:Build /p:Configuration=$config
+		msbuild "$sourceDirectory\Chocolatey.Gui\Chocolatey.Gui.sln" /t:Build /p:Configuration=$config
 	}
 }
 
@@ -101,7 +101,7 @@ Task -Name RebuildSolution -Depends CleanSolution, __CreateBuildArtifactsDirecto
 Task -Name CleanSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfiguration -Description "Deletes all build artifacts" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	exec {
-		msbuild "$sourceDirectory\Chocolatey.Explorer\Chocolatey.Explorer.sln" /t:Clean /p:Configuration=$config
+		msbuild "$sourceDirectory\Chocolatey.Gui\Chocolatey.Gui.sln" /t:Clean /p:Configuration=$config
 	}
 }
 

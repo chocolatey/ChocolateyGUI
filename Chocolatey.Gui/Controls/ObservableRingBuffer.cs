@@ -11,7 +11,7 @@ namespace Chocolatey.Gui.Controls
    /// </summary>
    /// <typeparam name="T">The generic type of the items stored within the ring buffer.</typeparam>
    [DebuggerDisplay("Count = {Count}")]
-    public class ObservableRingBuffer<T> : INotifyCollectionChanged, IList<T> {
+    public sealed class ObservableRingBuffer<T> : INotifyCollectionChanged, IList<T> {
       /// <summary>
       /// Creates a new instance of a <see cref="RingBuffer&lt;T&gt;"/> with a 
       /// specified cache size.
@@ -52,6 +52,7 @@ namespace Chocolatey.Gui.Controls
       /// <returns>The fond item at the specified position within the ring buffer.
       /// </returns>
       /// <exception cref="IndexOutOfRangeException"></exception>
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
       public T this[int index] {
          get {
             // validate the index

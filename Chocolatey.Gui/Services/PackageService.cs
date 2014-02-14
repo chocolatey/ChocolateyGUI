@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using Autofac;
 using Chocolatey.Gui.ChocolateyFeedService;
 using Chocolatey.Gui.Models;
+using Chocolatey.Gui.Properties;
 using Chocolatey.Gui.ViewModels.Items;
 using Chocolatey.Gui.Utilities.Extensions;
+using Chocolatey.Gui.Views.Controls;
 
 namespace Chocolatey.Gui.Services
 {
@@ -88,13 +90,15 @@ namespace Chocolatey.Gui.Services
 
         public async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm)
         {
+            _progressService.StartLoading();
             if (_service == null)
             {
-                var defaultSourceName = ChocoConfigurationSection.Current.CurrentSource.Name;
-                var defaultSource =
-                    ChocoConfigurationSection.Current.Sources.FirstOrDefault(source => source.Name == defaultSourceName);
-
-                SetSource(defaultSource.Url);
+                var currentSource = Settings.Default.currentSource;
+                var sources = Settings.Default.sources;
+                foreach (var parts in (from string source in sources select source.Split('|')).Where(parts => parts[0] == currentSource))
+                {
+                    SetSource(parts[1]);
+                }
             }
 
             var feedQuery =
@@ -105,6 +109,7 @@ namespace Chocolatey.Gui.Services
                 return vm;
 
             var packageInfo = v2FeedPackages.Single();
+            _progressService.StopLoading();
             return AutoMapper.Mapper.Map(packageInfo, vm);
         }
     }

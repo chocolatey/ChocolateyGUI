@@ -7,12 +7,13 @@ using System.Runtime.Caching;
 using System.Threading;
 using System.Threading.Tasks;
 using Chocolatey.Gui.Models;
+using Chocolatey.Gui.Properties;
 using Chocolatey.Gui.Utilities.Nuspec;
 using Chocolatey.Gui.ViewModels.Items;
 
 namespace Chocolatey.Gui.Services
 {
-    public class ChocolateyService : IChocolateyService
+    public class ChocolateyService : IChocolateyService, IDisposable
     {        
         /// <summary>
         /// The PowerShell runspace for this service.
@@ -62,7 +63,7 @@ namespace Chocolatey.Gui.Services
 
             _progressService.StartLoading();
 
-            var chocoPath = ChocoConfigurationSection.Current.ChocolateyInstall.Path;
+            var chocoPath = Settings.Default.chocolateyInstall;
             var libPath = Path.Combine(chocoPath, "lib");
 
             packages = new List<IPackageViewModel>();
@@ -212,5 +213,30 @@ namespace Chocolatey.Gui.Services
         }
 
         public event PackagesChangedEventHandler PackagesUpdated;
+
+        ~ChocolateyService()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                _ss.Dispose();
+            }
+
+            _disposed = true;
+        }
+
+        private bool _disposed;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
     }
 }

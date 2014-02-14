@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using Autofac;
 using Chocolatey.Gui.Base;
+using Chocolatey.Gui.Properties;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Items;
 using Chocolatey.Gui.Views.Controls;
@@ -33,10 +35,10 @@ namespace Chocolatey.Gui.ViewModels.Controls
                 new SourceViewModel(service) { Name ="Local", PageType = typeof(LocalSourceControl) }
             };
 
-            var config = (ChocoConfigurationSection)System.Configuration.ConfigurationManager.GetSection("chocolatey");
-            foreach (SourceElement source in config.Sources)
+            var sources = Settings.Default.sources;
+            foreach (var parts in from string source in sources select source.Split('|'))
             {
-                Sources.Add(new SourceViewModel(service) { Name = source.Name, Url = source.Url, PageType = typeof(RemoteSourceControl) });
+                Sources.Add(new SourceViewModel(service) { Name = parts[0], Url = parts[1], PageType = typeof(RemoteSourceControl) });
             }
         }
     }

@@ -6,6 +6,7 @@ using Autofac;
 using Chocolatey.Gui.ChocolateyFeedService;
 using Chocolatey.Gui.IoC;
 using Chocolatey.Gui.Models;
+using Chocolatey.Gui.Properties;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.Utilities.Extensions;
 using Chocolatey.Gui.ViewModels.Items;
@@ -36,11 +37,8 @@ namespace Chocolatey.Gui
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
             AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
 
-            var appConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var config = (ChocoConfigurationSection)appConfig.GetSection(ChocoConfigurationSection.SectionName);
-            config.SectionInformation.ForceSave = true;
 
-            if (string.IsNullOrWhiteSpace(config.ChocolateyInstall.Path))
+            if (string.IsNullOrWhiteSpace(Settings.Default.chocolateyInstall))
             {
                 var chocoDirectoryPath = Environment.GetEnvironmentVariable("ChocolateyInstall");
                 if (string.IsNullOrWhiteSpace(chocoDirectoryPath))
@@ -54,8 +52,8 @@ namespace Chocolatey.Gui
 
                 if (!string.IsNullOrWhiteSpace(chocoDirectoryPath))
                 {
-                    config.ChocolateyInstall.Path = chocoDirectoryPath;
-                    appConfig.Save(ConfigurationSaveMode.Full);
+                    Settings.Default.chocolateyInstall = chocoDirectoryPath;
+                    Settings.Default.Save();
                 }
             }
         }

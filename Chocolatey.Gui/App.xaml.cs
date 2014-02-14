@@ -33,29 +33,6 @@ namespace Chocolatey.Gui
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             Log.Info("Starting...");
-
-            AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
-            AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
-
-
-            if (string.IsNullOrWhiteSpace(Settings.Default.chocolateyInstall))
-            {
-                var chocoDirectoryPath = Environment.GetEnvironmentVariable("ChocolateyInstall");
-                if (string.IsNullOrWhiteSpace(chocoDirectoryPath))
-                {
-                    var pathVar = Environment.GetEnvironmentVariable("PATH");
-                    if (!string.IsNullOrWhiteSpace(pathVar))
-                    {
-                        chocoDirectoryPath = pathVar.Split(';').SingleOrDefault(path => path.IndexOf("Chocolatey", StringComparison.OrdinalIgnoreCase) > -1);
-                    }
-                }
-
-                if (!string.IsNullOrWhiteSpace(chocoDirectoryPath))
-                {
-                    Settings.Default.chocolateyInstall = chocoDirectoryPath;
-                    Settings.Default.Save();
-                }
-            }
         }
 
         protected override void OnExit(ExitEventArgs e)

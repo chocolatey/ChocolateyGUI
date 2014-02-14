@@ -67,7 +67,7 @@
         </StackPanel>
 
         <Grid DockPanel.Dock="Right">
-            <Image AutomationProperties.Name="Package Icon" Source="{Binding IconUrl}" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Image AutomationProperties.Name="Package Icon" Source="{Binding IconUrl, IsAsync=True}" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Grid>
 
         <Grid Margin="25,5,0,0">
@@ -89,7 +89,7 @@
                                   VerticalAlignment="Stretch"
                                   HorizontalAlignment="Stretch"
                                   Margin="5"
-                                  Document="{Binding Description, Converter={StaticResource TextToFlowDocumentConverter}}"/>
+                                  Document="{Binding Description, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
             <StackPanel Grid.Row="4" Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                 <TextBlock Text="Dependencies" Style="{StaticResource SectionHeaderTextStyle}"/>
                 <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"  Margin="5" Style="{StaticResource PageTextBlockStyle}" AutomationProperties.Name="Package Dependencies"/>
@@ -99,7 +99,7 @@
                                 Name="AvailablePackageReleaseNotes" AutomationProperties.Name="Package Release Notes"
                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                 Margin="5" Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}"
-                                Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}}" />
+                                Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}" />
 
         </Grid>
     </DockPanel>

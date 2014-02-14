@@ -20,8 +20,9 @@ namespace Chocolatey.Gui.IoC
             builder.RegisterType<SourcesControlViewModel>().As<ISourcesControlViewModel>();
             builder.RegisterType<LocalSourceControlViewModel>().As<ILocalSourceControlViewModel>();
             builder.RegisterType<RemoteSourceControlViewModel>().As<IRemoteSourceControlViewModel>();
-            builder.RegisterType<PackageViewModel>().As<IPackageViewModel>();
             builder.RegisterType<PackageControlViewModel>().As<IPackageControlViewModel>();
+
+            builder.Register(c => new PackageViewModel(c.Resolve<IPackageService>(), c.Resolve<IChocolateyService>())).As<IPackageViewModel>();
 
             // Register Services
             builder.Register((c,parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();

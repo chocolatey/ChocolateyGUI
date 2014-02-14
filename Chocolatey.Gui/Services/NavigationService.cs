@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using MahApps.Metro.Controls;
 using Autofac;
 
 namespace Chocolatey.Gui.Services
@@ -16,8 +14,8 @@ namespace Chocolatey.Gui.Services
             _progressService = progressService;
         }
 
-        private TransitioningContentControl _frame;
-        public void SetNavigationItem(TransitioningContentControl frame)
+        private ContentControl _frame;
+        public void SetNavigationItem(ContentControl frame)
         {
             if(frame == null)
                 throw new ArgumentNullException("frame", @"Frame can't be null");

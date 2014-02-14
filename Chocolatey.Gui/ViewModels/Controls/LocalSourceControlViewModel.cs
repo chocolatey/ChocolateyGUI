@@ -7,12 +7,10 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Autofac;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Items;
-using Ninject.Infrastructure.Language;
 
 namespace Chocolatey.Gui.ViewModels.Controls
 {

@@ -71,6 +71,9 @@
       <Component Id="AutoMapper.Net4.dll" Guid="AC45B646-B968-43CC-BF19-EBF6E2DC74DC">
         <File Id="AutoMapper.Net4.dll" Source="$(var.Chocolatey.Gui.TargetDir)\AutoMapper.Net4.dll" KeyPath="yes"/>
       </Component>
+      <Component Id="log4net.dll" Guid="0E8D8943-24F9-4934-86D5-AB314BFDC23E">
+        <File Id="log4net.dll" Source="$(var.Chocolatey.Gui.TargetDir)\log4net.dll" KeyPath="yes"/>
+      </Component>
       <Component Id="MahApps.Metro.dll" Guid="3B37657E-820C-40F8-92F4-6A282418D90B">
         <File Id="MahApps.Metro.dll" Source="$(var.Chocolatey.Gui.TargetDir)\MahApps.Metro.dll" KeyPath="yes"/>
       </Component>
@@ -91,12 +94,6 @@
       </Component>
       <Component Id="Microsoft.Threading.Tasks.Extensions.dll" Guid="12FE8573-4364-450D-9CDB-2E114E237CB6">
         <File Id="Microsoft.Threading.Tasks.Extensions.dll" Source="$(var.Chocolatey.Gui.TargetDir)\Microsoft.Threading.Tasks.Extensions.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Ninject.dll" Guid="67A8F335-107A-4AF4-81A4-87359E8232B9">
-        <File Id="Ninject.dll" Source="$(var.Chocolatey.Gui.TargetDir)\Ninject.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="System.IO.dll" Guid="B0EEB69A-B210-4EBC-9019-9E1AAC926AAF">
-        <File Id="System.IO.dll" Source="$(var.Chocolatey.Gui.TargetDir)\System.IO.dll" KeyPath="yes"/>
       </Component>
       <Component Id="System.Reactive.Core.dll" Guid="11AFB91C-B27E-4212-B963-9580FE7C07DA">
         <File Id="System.Reactive.Core.dll" Source="$(var.Chocolatey.Gui.TargetDir)\System.Reactive.Core.dll" KeyPath="yes"/>

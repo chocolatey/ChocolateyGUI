@@ -28,7 +28,7 @@ namespace Chocolatey.Gui
 
             Log = typeof (App).GetLogger();
 
-            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+            //AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             Log.Info("Starting...");

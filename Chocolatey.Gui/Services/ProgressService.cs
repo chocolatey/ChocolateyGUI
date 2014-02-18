@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Threading;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Controls;
 using Chocolatey.Gui.Models;
@@ -29,7 +26,7 @@ namespace Chocolatey.Gui.Services
         {
             lock (this)
             {
-                _loadingItems++;
+                Interlocked.Increment(ref _loadingItems);
                 if (_isLoading == false)
                 {
                     _isLoading = true;
@@ -42,8 +39,7 @@ namespace Chocolatey.Gui.Services
         {
             lock (this)
             {
-                _loadingItems--;
-                if (_isLoading && _loadingItems < 1)
+                if (_isLoading && Interlocked.Decrement(ref _loadingItems) < 1)
                 {
                     _isLoading = false;
                     _output.Clear();
@@ -52,7 +48,7 @@ namespace Chocolatey.Gui.Services
             }
         }
 
-        private ObservableRingBuffer<PowerShellOutputLine> _output;
+        private readonly ObservableRingBuffer<PowerShellOutputLine> _output;
         public ObservableRingBuffer<PowerShellOutputLine> Output
         {
             get { return _output; }

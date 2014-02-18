@@ -3,7 +3,7 @@ $package = "ChocolateyGUI"
 try {
   	$packageGuid = Get-ChildItem HKLM:\SOFTWARE\Classes\Installer\Products |
     	Get-ItemProperty -Name 'ProductName' |
-    	? { $_.ProductName -eq $package } |
+    	? { $_.ProductName -like $package + "*"} |
     	Select -ExpandProperty PSChildName -First 1
 	
 	$properties = Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\$packageGuid\InstallProperties

@@ -14,7 +14,7 @@ This uses the public ChocolateyGUI feed which is hosed on [MyGet.org](https://ww
 
 Further, if you are interested in trying out the new WPF Refresh of ChocolateyGUI which is currently being worked on, you can install it from here:
 
-```cinst ChocolateyGUI -source https://www.myget.org/F/chocolateygui-wpf_refres -pre```
+```cinst ChocolateyGUI -source https://www.myget.org/F/chocolateygui-wpf_refresh -pre```
 
 **NOTE:** The above wpf-refresh branch of ChocolateyGUI is VERY new, and as such, it likely to contain issues and missing features.  Please bear with us while we work on this, and understand that this is not even at alpha stage yet.  Having said that, all feedback is welcome, and gratefully received.
 

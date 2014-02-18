@@ -182,6 +182,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\ControlStyles\Flyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\PackageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

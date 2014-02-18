@@ -7,6 +7,9 @@
                     xmlns:xaml="clr-namespace:Markdown.Xaml"
                     xmlns:custom="http://metro.mahapps.com/winfx/xaml/shared"
                     mc:Ignorable="d">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ControlStyles/Flyout.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="BaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular"/>

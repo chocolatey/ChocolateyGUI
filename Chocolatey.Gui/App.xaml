@@ -7,9 +7,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/styles/Colors.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/basedark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Brown.xaml" />
                 <ResourceDictionary Source="Resources/Icons.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Resources/Controls.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>

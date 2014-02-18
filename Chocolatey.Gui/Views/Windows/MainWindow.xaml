@@ -9,14 +9,29 @@
         xmlns:converters="clr-namespace:Chocolatey.Gui.Utilities.Converters"
         mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
+    
     <Window.Resources>
         <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
     </Window.Resources>
+    
     <metro:MetroWindow.WindowCommands>
         <metro:WindowCommands>
-            <Button Content="settings" />
+            <Button x:Name="SettingsButton" Content="settings" Click="SettingsButton_OnClick" ClickMode="Release"/>
         </metro:WindowCommands>
     </metro:MetroWindow.WindowCommands>
+
+    <metro:MetroWindow.Flyouts>
+        <metro:FlyoutsControl>
+            <metro:Flyout x:Name="SettingsFlyout" Header="Settings" Position="Right" Width="500" Theme="Accent">
+                <StackPanel>
+                    <Button HorizontalAlignment="Stretch" Style="{StaticResource SetttingsButtonStyle}">
+                        Sources
+                    </Button>
+                </StackPanel>
+            </metro:Flyout>
+        </metro:FlyoutsControl>
+    </metro:MetroWindow.Flyouts>
+    
     <Border Background="{StaticResource LightBackgroundColorBrush}"> 
         <Grid>
             <ContentControl x:Name="GlobalFrame"></ContentControl>

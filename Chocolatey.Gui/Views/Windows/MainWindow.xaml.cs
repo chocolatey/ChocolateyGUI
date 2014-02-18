@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Autofac;
 using Chocolatey.Gui.ChocolateyFeedService;
 using Chocolatey.Gui.Models;
@@ -67,6 +68,12 @@ namespace Chocolatey.Gui.Views.Windows
                 }
 
             });
+        }
+
+        private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            SettingsFlyout.Width = Width/3;
+            SettingsFlyout.IsOpen = !SettingsFlyout.IsOpen;
         }
     }
 }

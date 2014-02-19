@@ -443,7 +443,7 @@
     <Style x:Key="EntypoIconStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="/Resources/#Entypo"></Setter>
         <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"></Setter>
-        <Setter Property="Margin" Value="0,-15,0,15"></Setter>
+        <Setter Property="Margin" Value="0,-15,0,0"></Setter>
     </Style>
 
     <Style x:Key="EntypoIconLargeStyle" BasedOn="{StaticResource EntypoIconStyle}" TargetType="{x:Type TextBlock}">

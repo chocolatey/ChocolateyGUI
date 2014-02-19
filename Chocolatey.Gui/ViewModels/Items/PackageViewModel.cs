@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Autofac;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Services;
@@ -15,10 +11,12 @@ namespace Chocolatey.Gui.ViewModels.Items
     {
         private readonly IPackageService _packageService;
         private readonly IChocolateyService _chocolateyService;
-        public PackageViewModel(IPackageService packageService, IChocolateyService chocolateyService)
+        private readonly INavigationService _navigationService;
+        public PackageViewModel(IPackageService packageService, IChocolateyService chocolateyService, INavigationService navigationService)
         {
             _packageService = packageService;
             _chocolateyService = chocolateyService;
+            _navigationService = navigationService;
             PackagesChangedEventManager.AddListener(_chocolateyService, this);
         }
 
@@ -250,21 +248,13 @@ namespace Chocolatey.Gui.ViewModels.Items
 
         public bool CanGoBack()
         {
-            using (var scope = App.Container.BeginLifetimeScope())
-            {
-                var nav = scope.Resolve<INavigationService>();
-                return nav.CanGoBack;
-            }
+            return _navigationService.CanGoBack;
         }
 
         public void GoBack()
         {
-            using (var scope = App.Container.BeginLifetimeScope())
-            {
-                var nav = scope.Resolve<INavigationService>();
-                if (nav.CanGoBack)
-                    nav.GoBack();
-            }
+            if (_navigationService.CanGoBack)
+                _navigationService.GoBack();
         }
         #endregion
 

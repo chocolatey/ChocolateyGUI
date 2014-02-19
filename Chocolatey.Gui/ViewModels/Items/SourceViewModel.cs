@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autofac;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Services;
@@ -11,16 +8,22 @@ namespace Chocolatey.Gui.ViewModels.Items
     public class SourceViewModel : ObservableBase
     {
         private readonly IPackageService _packageService;
-        public SourceViewModel(IPackageService packageService)
+        private IComponentContext _componentContext;
+        public SourceViewModel(IPackageService packageService, IComponentContext componentContext, string name, Uri url, Type pageType)
         {
             _packageService = packageService;
+            _componentContext = componentContext;
+
+            Name = name;
+            Url = url;
+            PageType = pageType;
         }
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
-        public string Url { get; set; }
+        public Uri Url { get; private set; }
 
-        public Type PageType { get; set; }
+        public Type PageType { get; private set; }
 
         private bool _isSelected;
         public bool IsSelected
@@ -36,7 +39,8 @@ namespace Chocolatey.Gui.ViewModels.Items
 
                 if (_content == null)
                 {
-                    Content = App.Container.Resolve(PageType);
+                    Content = _componentContext.Resolve(PageType);
+                    _componentContext = null;
                 }
             }
         }

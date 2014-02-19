@@ -24,9 +24,9 @@
                   AutoGenerateColumns="False" IsReadOnly="True"
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Title}" MinWidth="200"></DataGridTextColumn>
-                <DataGridTextColumn Header="Authors" Binding="{Binding Authors}" MinWidth="300"></DataGridTextColumn>
-                <DataGridTextColumn Header="Version" Binding="{Binding Version}" MinWidth="200"></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Title}" Width="2*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Authors" Binding="{Binding Authors}" Width="1*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Version" Binding="{Binding Version}" Width="1*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

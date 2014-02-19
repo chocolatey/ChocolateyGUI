@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using Autofac;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Services;
@@ -20,14 +19,16 @@ namespace Chocolatey.Gui.ViewModels.Controls
             set { SetPropertyValue(ref _packageViewModels, value); }
         }
 
-        private IPackageService _packageService;
+        private readonly IPackageService _packageService;
 
-        public RemoteSourceControlViewModel()
+        public RemoteSourceControlViewModel(IPackageService packageService)
         {
+            _packageService = packageService;
             Packages = new ObservableCollection<IPackageViewModel>();
             LoadPackages();
-            
-            var immediateProperties = new [] {
+
+            var immediateProperties = new[]
+            {
                 "IncludeAllVersions", "IncludePrerelease", "MatchWord",
                 "SortColumn", "SortDescending"
             };
@@ -55,8 +56,6 @@ namespace Chocolatey.Gui.ViewModels.Controls
 
         private async void LoadPackages()
         {
-            if(_packageService == null)
-                _packageService = App.Container.Resolve<IPackageService>();
             var result = await _packageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord));
             PageCount = result.TotalCount / PageSize;
             Packages.Clear();

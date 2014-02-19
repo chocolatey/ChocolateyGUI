@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Configuration;
-using System.Linq;
 using System.Windows;
 using Autofac;
-using Chocolatey.Gui.ChocolateyFeedService;
 using Chocolatey.Gui.IoC;
-using Chocolatey.Gui.Models;
-using Chocolatey.Gui.Properties;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.Utilities.Extensions;
-using Chocolatey.Gui.ViewModels.Items;
-using log4net;
+using Chocolatey.Gui.Views.Windows;
 
 namespace Chocolatey.Gui
 {
@@ -33,6 +27,13 @@ namespace Chocolatey.Gui
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             Log.Info("Starting...");
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var mainWindow = Container.Resolve<MainWindow>();
+            MainWindow = mainWindow;
+            MainWindow.Show();
         }
 
         protected override void OnExit(ExitEventArgs e)

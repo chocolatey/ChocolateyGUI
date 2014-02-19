@@ -9,9 +9,11 @@ namespace Chocolatey.Gui.Services
     public class NavigationService : INavigationService
     {
         private readonly IProgressService _progressService;
-        public NavigationService(IProgressService progressService)
+        private readonly IComponentContext _pageFactory;
+        public NavigationService(IProgressService progressService, IComponentContext pageFactory)
         {
             _progressService = progressService;
+            _pageFactory = pageFactory;
         }
 
         private ContentControl _frame;
@@ -24,14 +26,14 @@ namespace Chocolatey.Gui.Services
 
         public void Navigate(Type pageType)
         {
-            var page = App.Container.Resolve(pageType);
+            var page = _pageFactory.Resolve(pageType);
             Navigate(page);
         }
 
         public void Navigate(Type pageType, params object[] args)
         {
             var parameters = args.Select(param => new TypedParameter(param.GetType(), param)).ToList();
-            var page = App.Container.Resolve(pageType, parameters);
+            var page = _pageFactory.Resolve(pageType, parameters);
             Navigate(page);
         }
 

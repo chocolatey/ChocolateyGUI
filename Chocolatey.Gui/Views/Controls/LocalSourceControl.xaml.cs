@@ -1,5 +1,5 @@
-﻿using System.Windows.Input;
-using Autofac;
+﻿using System;
+using System.Windows.Input;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Controls;
 using Chocolatey.Gui.ViewModels.Items;
@@ -8,10 +8,13 @@ namespace Chocolatey.Gui.Views.Controls
 {
     public partial class LocalSourceControl
     {
-        public LocalSourceControl(ILocalSourceControlViewModel vm)
+        private readonly Lazy<INavigationService> _navigationService; 
+        public LocalSourceControl(ILocalSourceControlViewModel vm, Lazy<INavigationService> navigationService)
         {
             InitializeComponent();
             DataContext = vm;
+
+            _navigationService = navigationService;
 
             Loaded += vm.Loaded;
         }
@@ -22,11 +25,7 @@ namespace Chocolatey.Gui.Views.Controls
             var item = source.DataContext as IPackageViewModel;
 
             await item.EnsureIsLoaded();
-            using (var scope = App.Container.BeginLifetimeScope())
-            {
-                var navigationService = scope.Resolve<INavigationService>();
-                navigationService.Navigate(typeof(PackageControl), item);
-            }
+            _navigationService.Value.Navigate(typeof(PackageControl), item);
         }
     }
 }

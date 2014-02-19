@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Autofac;
 using Chocolatey.Gui.ChocolateyFeedService;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Properties;
@@ -18,23 +17,14 @@ namespace Chocolatey.Gui.Views.Windows
     /// </summary>
     public partial class MainWindow
     {
-        
-        public MainWindow()
+        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService)
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
-
-            var progressService = App.Container.Resolve<IProgressService>();
+            DataContext = vm;
             LoadingOverlay.DataContext = progressService;
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
             AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
 
-            var navigationService = App.Container.Resolve<INavigationService>();
             navigationService.SetNavigationItem(GlobalFrame);
             navigationService.Navigate(typeof(SourcesControl));
 

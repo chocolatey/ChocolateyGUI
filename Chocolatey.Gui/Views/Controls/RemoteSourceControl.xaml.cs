@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Reactive.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Autofac;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Controls;
 using Chocolatey.Gui.ViewModels.Items;
@@ -15,10 +14,13 @@ namespace Chocolatey.Gui.Views.Controls
     public partial class RemoteSourceControl
     {
         public const string PageTitle = "Remote Packages";
-        public RemoteSourceControl(IRemoteSourceControlViewModel vm)
+        private readonly Lazy<INavigationService> _navigationService; 
+        public RemoteSourceControl(IRemoteSourceControlViewModel vm, Lazy<INavigationService> navigationService)
         {
             InitializeComponent();
             DataContext = vm;
+
+            _navigationService = navigationService;
 
             Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(vm.Packages, "CollectionChanged")
                 .Throttle(TimeSpan.FromMilliseconds(50))
@@ -51,11 +53,7 @@ namespace Chocolatey.Gui.Views.Controls
             var item = source.DataContext as IPackageViewModel;
             if (item != null)
             {
-                using (var scope = App.Container.BeginLifetimeScope())
-                {
-                    var navigationService = scope.Resolve<INavigationService>();
-                    navigationService.Navigate(typeof(PackageControl), item);
-                }
+                _navigationService.Value.Navigate(typeof(PackageControl), item);
             }
         }
 

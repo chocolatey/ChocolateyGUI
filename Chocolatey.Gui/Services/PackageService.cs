@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Autofac;
 using Chocolatey.Gui.ChocolateyFeedService;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Properties;
 using Chocolatey.Gui.ViewModels.Items;
 using Chocolatey.Gui.Utilities.Extensions;
-using Chocolatey.Gui.Views.Controls;
 
 namespace Chocolatey.Gui.Services
 {
     public class PackageService : IPackageService
     {
-        private IProgressService _progressService;
-        public PackageService(IProgressService progressService)
+        private readonly IProgressService _progressService;
+        private readonly Func<IPackageViewModel> _packageFactory;
+        public PackageService(IProgressService progressService, Func<IPackageViewModel> packageFactory)
         {
             _progressService = progressService;
+            _packageFactory = packageFactory;
         }
 
         private FeedContext_x0060_1 _service;
@@ -56,7 +55,7 @@ namespace Chocolatey.Gui.Services
             feedQuery = (DataServiceQuery<V2FeedPackage>)feedQuery.Skip(options.CurrentPage * options.PageSize).Take(options.PageSize);
             var result = await Task.Factory.FromAsync((cb, o) => feedQuery.BeginExecute(cb, o), ar => feedQuery.EndExecute(ar), null);
 
-            var packages = result.Select(package => AutoMapper.Mapper.Map(package, App.Container.Resolve<IPackageViewModel>(new TypedParameter(typeof(IPackageService), this))));
+            var packages = result.Select(package => AutoMapper.Mapper.Map(package ,_packageFactory()));
 
             _progressService.StopLoading();
 
@@ -85,7 +84,7 @@ namespace Chocolatey.Gui.Services
             return _service.Packages.Where(
                 package =>
                     (package.IsPrerelease == includePrerelease || package.IsPrerelease == false) && package.Id == id)
-                .Select(package => AutoMapper.Mapper.Map(package, App.Container.Resolve<IPackageViewModel>())).SingleOrDefault();
+                .Select(package => AutoMapper.Mapper.Map(package, _packageFactory())).SingleOrDefault();
         }
 
         public async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm)

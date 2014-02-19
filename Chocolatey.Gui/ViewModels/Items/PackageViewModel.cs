@@ -18,6 +18,8 @@ namespace Chocolatey.Gui.ViewModels.Items
             _chocolateyService = chocolateyService;
             _navigationService = navigationService;
             PackagesChangedEventManager.AddListener(_chocolateyService, this);
+
+            _isInstalled  = new Lazy<bool>(() => _chocolateyService.IsPackageInstalled(Id, Version));
         }
 
         #region Properties
@@ -96,16 +98,10 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _isAbsoluteLatestVersion, value); }
         }
 
-        private bool? _isInstalled;
+        private Lazy<bool> _isInstalled;
         public bool IsInstalled
         {
-            get
-            {
-                if (!_isInstalled.HasValue)
-                    _isInstalled = _chocolateyService.IsPackageInstalled(Id, Version);
-
-                return _isInstalled.Value;
-            }
+            get { return _isInstalled.Value;}
         }
 
         private bool _isLatestVersion;
@@ -242,6 +238,13 @@ namespace Chocolatey.Gui.ViewModels.Items
             get { return _versionDownloadCount; }
             set { SetPropertyValue(ref _versionDownloadCount, value); }
         }
+
+        private string _source;
+        public string Source
+        {
+            get { return _source; }
+            set { SetPropertyValue(ref _source, value); }
+        }
 #endregion
 
         #region Commands
@@ -262,7 +265,7 @@ namespace Chocolatey.Gui.ViewModels.Items
         {
             if (sender is IChocolateyService && e is PackagesChangedEventArgs)
             {
-                _isInstalled = (sender as IChocolateyService).IsPackageInstalled(Id, Version);
+                _isInstalled = new Lazy<bool>(() => _chocolateyService.IsPackageInstalled(Id, Version));
                 NotifyPropertyChanged("IsInstalled");
                 NotifyPropertyChanged("CanUpdate");
             }
@@ -272,7 +275,11 @@ namespace Chocolatey.Gui.ViewModels.Items
         public async Task EnsureIsLoaded()
         {
             if (Published == DateTime.MinValue)
+            {
+                if(!string.IsNullOrWhiteSpace(Source))
+                    _packageService.SetSource(Source);
                 await _packageService.EnsureIsLoaded(this);
+            }
         }
 
 

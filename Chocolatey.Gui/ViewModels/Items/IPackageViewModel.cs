@@ -73,5 +73,7 @@ namespace Chocolatey.Gui.ViewModels.Items
         SemanticVersion LatestVersion { get; }
 
         int VersionDownloadCount { get; set; }
+
+        string Source { get; set; }
     }
 }

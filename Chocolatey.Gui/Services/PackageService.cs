@@ -32,16 +32,16 @@ namespace Chocolatey.Gui.Services
             _progressService.StartLoading();
 
             var queryString = query;
-            var feedQuery = (DataServiceQuery<V2FeedPackage>)_service.Packages.Where(package => package.IsPrerelease == options.IncludePrerelease || package.IsPrerelease == false);
+            IQueryable<V2FeedPackage> feedQuery = _service.Packages.Where(package => package.IsPrerelease == options.IncludePrerelease || package.IsPrerelease == false);
 
             if (!options.IncludeAllVersions)
-                feedQuery = (DataServiceQuery<V2FeedPackage>)feedQuery.Where(package => package.IsLatestVersion || package.IsAbsoluteLatestVersion);
+                feedQuery = feedQuery.Where(package => package.IsLatestVersion || package.IsAbsoluteLatestVersion);
 
             if (!string.IsNullOrWhiteSpace(queryString))
             {
                 feedQuery = options.MatchQuery ?
-                    (DataServiceQuery<V2FeedPackage>)feedQuery.Where(package => package.Id == queryString || package.Title == queryString) :
-                    (DataServiceQuery<V2FeedPackage>)feedQuery.Where(package => package.Id.Contains(queryString) || package.Title.Contains(queryString));
+                    feedQuery.Where(package => package.Id == queryString || package.Title == queryString) :
+                    feedQuery.Where(package => package.Id.Contains(queryString) || package.Title.Contains(queryString));
             }
 
             var totalCount = feedQuery.Count();
@@ -49,11 +49,12 @@ namespace Chocolatey.Gui.Services
             if (!string.IsNullOrWhiteSpace(options.SortColumn))
             {
 
-                feedQuery = !options.SortDescending ? (DataServiceQuery<V2FeedPackage>)feedQuery.OrderBy(options.SortColumn) : (DataServiceQuery<V2FeedPackage>)feedQuery.OrderByDescending(options.SortColumn);
+                feedQuery = !options.SortDescending ? feedQuery.OrderBy(options.SortColumn) : feedQuery.OrderByDescending(options.SortColumn);
             }
 
-            feedQuery = (DataServiceQuery<V2FeedPackage>)feedQuery.Skip(options.CurrentPage * options.PageSize).Take(options.PageSize);
-            var result = await Task.Factory.FromAsync((cb, o) => feedQuery.BeginExecute(cb, o), ar => feedQuery.EndExecute(ar), null);
+            feedQuery = feedQuery.Skip(options.CurrentPage * options.PageSize).Take(options.PageSize);
+            var feedDataServiceQuery = (DataServiceQuery<V2FeedPackage>) feedQuery;
+            var result = await Task.Factory.FromAsync(feedDataServiceQuery.BeginExecute, ar => feedDataServiceQuery.EndExecute(ar), null);
 
             var packages = result.Select(package => AutoMapper.Mapper.Map(package ,_packageFactory()));
 

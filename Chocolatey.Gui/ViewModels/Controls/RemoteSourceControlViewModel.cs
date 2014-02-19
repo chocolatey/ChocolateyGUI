@@ -20,10 +20,12 @@ namespace Chocolatey.Gui.ViewModels.Controls
         }
 
         private readonly IPackageService _packageService;
+        private readonly Uri _source;
 
-        public RemoteSourceControlViewModel(IPackageService packageService)
+        public RemoteSourceControlViewModel(IPackageService packageService, Uri source)
         {
             _packageService = packageService;
+            _source = source;
             Packages = new ObservableCollection<IPackageViewModel>();
             LoadPackages();
 
@@ -56,7 +58,7 @@ namespace Chocolatey.Gui.ViewModels.Controls
 
         private async void LoadPackages()
         {
-            var result = await _packageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord));
+            var result = await _packageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord), _source);
             PageCount = result.TotalCount / PageSize;
             Packages.Clear();
             result.Packages.ToList().ForEach(Packages.Add);

@@ -55,7 +55,7 @@ namespace Chocolatey.Gui.ViewModels.Controls
             _packages.Clear();
             Packages.Clear();
 
-            var packages = await _chocolateyService.GetPackages();
+            var packages = await _chocolateyService.GetInstalledPackages();
             foreach (var packageViewModel in packages)
             {
                 _packages.Add(packageViewModel);

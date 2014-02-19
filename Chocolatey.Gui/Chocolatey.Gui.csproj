@@ -154,6 +154,8 @@
     <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\Log4NetLoggingService.cs" />
+    <Compile Include="Services\PackageServices\FileSystemPackageService.cs" />
+    <Compile Include="Services\PackageServices\ODataPackageService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\LogExtensions.cs" />
@@ -166,9 +168,9 @@
     </Compile>
     <Compile Include="Services\IChocolateyService.cs" />
     <Compile Include="Services\INavigationService.cs" />
-    <Compile Include="Services\IPackageService.cs" />
+    <Compile Include="Services\PackageServices\IPackageService.cs" />
     <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="Services\PackageService.cs" />
+    <Compile Include="Services\PackageServices\PackageService.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />

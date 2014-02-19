@@ -1,17 +1,14 @@
 ﻿using System;
 using Autofac;
 using Chocolatey.Gui.Base;
-using Chocolatey.Gui.Services;
 
 namespace Chocolatey.Gui.ViewModels.Items
 {
     public class SourceViewModel : ObservableBase
     {
-        private readonly IPackageService _packageService;
         private IComponentContext _componentContext;
-        public SourceViewModel(IPackageService packageService, IComponentContext componentContext, string name, Uri url, Type pageType)
+        public SourceViewModel(IComponentContext componentContext, string name, Uri url, Type pageType)
         {
-            _packageService = packageService;
             _componentContext = componentContext;
 
             Name = name;
@@ -32,16 +29,12 @@ namespace Chocolatey.Gui.ViewModels.Items
             set
             {
                 SetPropertyValue(ref _isSelected, value);
-                if (Url != null)
-                {
-                    _packageService.SetSource(Url);
-                }
 
-                if (_content == null)
-                {
-                    Content = _componentContext.Resolve(PageType);
-                    _componentContext = null;
-                }
+                if (_content != null)
+                    return;
+
+                Content = _componentContext.Resolve(PageType, new TypedParameter(typeof(Uri), Url));
+                _componentContext = null;
             }
         }
 

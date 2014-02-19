@@ -45,7 +45,7 @@ namespace Chocolatey.Gui.Services
             _ss = new SemaphoreSlim(1);
             _progressService = progressService;
         }    
-        public async Task<IEnumerable<IPackageViewModel>> GetPackages(bool force = false)
+        public async Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false)
         {
             // Ensure that we only retrieve the packages one at a to refresh the Cache.
             _ss.Wait(200);
@@ -120,7 +120,7 @@ namespace Chocolatey.Gui.Services
         /// Executes a PowerShell command and returns whether or not there was a result. Optionally calls <see cref="RefreshPackages"/>.
         /// </summary>
         /// <param name="commandString">The PowerShell command string.</param>
-        /// <param name="refreshPackages">Whether to force <see cref="GetPackages"/>.</param>
+        /// <param name="refreshPackages">Whether to force <see cref="GetInstalledPackages"/>.</param>
         /// <returns>Whether or not a result was returned from <see cref="RunPackageCommand"/>.</returns>
         public async Task<bool> ExecutePackageCommand(string commandString, bool refreshPackages = true)
         {
@@ -131,7 +131,7 @@ namespace Chocolatey.Gui.Services
         /// Executes a PowerShell Command. 
         /// </summary>
         /// <param name="commandString">The PowerShell command string.</param>
-        /// <param name="refreshPackages">Whether to force <see cref="GetPackages"/>.</param>
+        /// <param name="refreshPackages">Whether to force <see cref="GetInstalledPackages"/>.</param>
         /// <param name="logOutput">Whether the output should be logged to the faux PowerShell console or returned as results.</param>
         /// <param name="clearBuffer">Whether the faux PowerShell console should be cleared.</param>
         /// <returns>A collection of the ouptut of the PowerShell runspace. Will be empty if <paramref cref="logOuput"/> is true.</returns>
@@ -181,7 +181,7 @@ namespace Chocolatey.Gui.Services
             }
 
             if (refreshPackages)
-                await GetPackages(true);
+                await GetInstalledPackages(force: true);
 
             _progressService.StopLoading();
             return results;

@@ -276,9 +276,7 @@ namespace Chocolatey.Gui.ViewModels.Items
         {
             if (Published == DateTime.MinValue)
             {
-                if(!string.IsNullOrWhiteSpace(Source))
-                    _packageService.SetSource(Source);
-                await _packageService.EnsureIsLoaded(this);
+                await _packageService.EnsureIsLoaded(this, string.IsNullOrWhiteSpace(Source) ? null : new Uri(Source));
             }
         }
 

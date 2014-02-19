@@ -35,7 +35,8 @@ namespace Chocolatey.Gui.IoC
             builder.RegisterType<MainWindow>();
             builder.RegisterType<SourcesControl>();
             builder.RegisterType<LocalSourceControl>();
-            builder.RegisterType<RemoteSourceControl>();
+            builder.Register((c, parameters) => 
+                new RemoteSourceControl(c.Resolve<IRemoteSourceControlViewModel>(parameters), c.Resolve<Lazy<INavigationService>>()));
             builder.Register((c,pvm) => new PackageControl(c.Resolve<IPackageControlViewModel>(), pvm.TypedAs<PackageViewModel>()));
 
 

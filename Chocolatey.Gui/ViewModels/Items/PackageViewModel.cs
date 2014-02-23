@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.Caching;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using Chocolatey.Gui.Base;
@@ -9,6 +11,18 @@ namespace Chocolatey.Gui.ViewModels.Items
 {
     public class PackageViewModel : ObservableBase, IPackageViewModel, IWeakEventListener
     {
+        private readonly MemoryCache _cache = MemoryCache.Default;
+
+        private string MemoryCacheKey
+        {
+            get { return string.Format("PackageViewModel.{0}{1}", Id, Version); }
+        }
+
+        private string MemoryCachePropertyKey([CallerMemberName] string propertyName = "")
+        {
+            return MemoryCacheKey + "." + propertyName;
+        }
+
         private readonly IPackageService _packageService;
         private readonly IChocolateyService _chocolateyService;
         private readonly INavigationService _navigationService;
@@ -32,7 +46,7 @@ namespace Chocolatey.Gui.ViewModels.Items
 
         public bool CanUpdate
         {
-            get { return IsInstalled && !IsLatestVersion; }
+            get { return IsInstalled && LatestVersion > Version; }
         }
 
         private string _copyright;
@@ -227,8 +241,14 @@ namespace Chocolatey.Gui.ViewModels.Items
         {
             get
             {
-                var latest = _packageService.GetLatest(Id);
-                return latest != null ? latest.Version : Version;
+                SemanticVersion version;
+                if ((version = (SemanticVersion) _cache.Get(MemoryCachePropertyKey())) != null)
+                    return version;
+
+                var latest = _packageService.GetLatest(Id, IsPrerelease, Source);
+                version = latest != null ? latest.Version : Version;
+                _cache.Set(MemoryCachePropertyKey(), version, DateTime.Now.AddHours(1));
+                return version;
             }
         }
 
@@ -239,8 +259,8 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _versionDownloadCount, value); }
         }
 
-        private string _source;
-        public string Source
+        private Uri _source;
+        public Uri Source
         {
             get { return _source; }
             set { SetPropertyValue(ref _source, value); }
@@ -276,24 +296,28 @@ namespace Chocolatey.Gui.ViewModels.Items
         {
             if (Published == DateTime.MinValue)
             {
-                await _packageService.EnsureIsLoaded(this, string.IsNullOrWhiteSpace(Source) ? null : new Uri(Source));
+                await _packageService.EnsureIsLoaded(this, Source);
             }
         }
 
 
         public void Install()
         {
-            _chocolateyService.InstallPackage(Id, Version);
+            _chocolateyService.InstallPackage(Id, Version, Source);
         }
 
         public void Update()
         {
-            _chocolateyService.UpdatePackage(Id);
+            _chocolateyService.UpdatePackage(Id, Source);
+            if(CanGoBack())
+                _navigationService.GoBack();
         }
 
         public void Uninstall()
         {
             _chocolateyService.UninstallPackage(Id, Version, true);
+            if (CanGoBack())
+                _navigationService.GoBack();
         }
     }
 }

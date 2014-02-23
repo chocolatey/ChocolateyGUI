@@ -74,6 +74,6 @@ namespace Chocolatey.Gui.ViewModels.Items
 
         int VersionDownloadCount { get; set; }
 
-        string Source { get; set; }
+        Uri Source { get; set; }
     }
 }

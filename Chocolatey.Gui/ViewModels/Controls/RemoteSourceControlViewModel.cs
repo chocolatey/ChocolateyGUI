@@ -61,7 +61,11 @@ namespace Chocolatey.Gui.ViewModels.Controls
             var result = await _packageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord), _source);
             PageCount = result.TotalCount / PageSize;
             Packages.Clear();
-            result.Packages.ToList().ForEach(Packages.Add);
+            result.Packages.ToList().ForEach(p =>
+            {
+                p.Source = _source;
+                Packages.Add(p);
+            });
 
             if (PageCount < CurrentPage)
                 CurrentPage = PageCount == 0 ? 1 : PageCount;

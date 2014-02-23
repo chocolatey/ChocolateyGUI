@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -8,6 +9,7 @@ namespace Chocolatey.Gui.Utilities.Extensions
 {
     public static class LinqExtensions
     {
+        #region Expression Builder Linq Extensions
         private static readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, PropertyInfo>> CachedTypes =
             new ConcurrentDictionary<Type, ConcurrentDictionary<string, PropertyInfo>>();
 
@@ -126,6 +128,35 @@ namespace Chocolatey.Gui.Utilities.Extensions
 
                 return node.CanReduce ? base.VisitMethodCall(node) : node;
             }
+        }
+        #endregion
+
+        /// <remarks>
+        /// From http://stackoverflow.com/a/13503860 | Thanks sehe!
+        /// </remarks>
+        internal static IList<TR> FullOuterJoin<TA, TB, TK, TR>(
+            this IEnumerable<TA> a,
+            IEnumerable<TB> b,
+            Func<TA, TK> selectKeyA,
+            Func<TB, TK> selectKeyB,
+            Func<TA, TB, TK, TR> projection,
+            TA defaultA = default(TA),
+            TB defaultB = default(TB),
+            IEqualityComparer<TK> cmp = null)
+        {
+            cmp = cmp ?? EqualityComparer<TK>.Default;
+            var alookup = a.ToLookup(selectKeyA, cmp);
+            var blookup = b.ToLookup(selectKeyB, cmp);
+
+            var keys = new HashSet<TK>(alookup.Select(p => p.Key), cmp);
+            keys.UnionWith(blookup.Select(p => p.Key));
+
+            var join = from key in keys
+                       from xa in alookup[key].DefaultIfEmpty(defaultA)
+                       from xb in blookup[key].DefaultIfEmpty(defaultB)
+                       select projection(xa, xb, key);
+
+            return join.ToList();
         }
 
     }

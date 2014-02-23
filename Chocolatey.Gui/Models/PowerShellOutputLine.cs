@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Chocolatey.Gui.Models
+﻿namespace Chocolatey.Gui.Models
 {
     public class PowerShellOutputLine
     {
-        public string Text { get; set; }
-        public PowerShellLineType Type { get; set; }
+        public PowerShellOutputLine(string text, PowerShellLineType type)
+        {
+            Text = text;
+            Type = type;
+        }
+        public string Text { get; private set; }
+        public PowerShellLineType Type { get; private set; }
     }
 
     public enum PowerShellLineType
     {
         Output,
-        Error
+        Error,
+        Debug,
+        OutputNoNewLine,
+        ErrorNoNewLine,
+        DebugNoNewLine,
     }
 }

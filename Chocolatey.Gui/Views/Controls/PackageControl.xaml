@@ -15,7 +15,6 @@
     <UserControl.Resources>
         <converters:UriToVisibility x:Key="UriToVisibilty"/>
         <converters:NullToVisibility x:Key="NullToVisibility"/>
-        <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString"/>
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString"/>
         <xaml:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" Markdown="{StaticResource Markdown}"/>

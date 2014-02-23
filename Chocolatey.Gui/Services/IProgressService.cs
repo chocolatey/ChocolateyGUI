@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using Chocolatey.Gui.Controls;
 using Chocolatey.Gui.Models;
 
 namespace Chocolatey.Gui.Services
 {
-    public interface IProgressService : INotifyPropertyChanged
+    public interface IProgressService : INotifyPropertyChanged, IProgress<int>
     {
         bool IsLoading { get; }
         void StartLoading();

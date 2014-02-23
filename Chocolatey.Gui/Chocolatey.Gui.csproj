@@ -71,6 +71,10 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>packages\Microsoft.Bcl.Async.1.0.165\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -144,8 +148,10 @@
     <Compile Include="Commands\RoutedCommandMonitor.cs" />
     <Compile Include="Controls\FauxPowerShellConsole.cs" />
     <Compile Include="Controls\ObservableRingBuffer.cs" />
+    <Compile Include="Controls\PowershellHostComponents.cs" />
     <Compile Include="IoC\AutoFacConfiguration.cs" />
     <Compile Include="Models\NuspecPackage.cs" />
+    <Compile Include="Models\PackageConfig.cs" />
     <Compile Include="Models\PackagesChangedEvent.cs" />
     <Compile Include="Models\PackageSearchOptions.cs" />
     <Compile Include="Models\PackageSearchResults.cs" />
@@ -159,6 +165,7 @@
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\LogExtensions.cs" />
+    <Compile Include="Utilities\Extensions\PowershellExtensions.cs" />
     <Compile Include="Utilities\Nuspec\NupkgReader.cs" />
     <Compile Include="ViewModels\Items\SourceViewModel.cs" />
     <Compile Include="Service References\ChocolateyFeedService\Reference.cs">

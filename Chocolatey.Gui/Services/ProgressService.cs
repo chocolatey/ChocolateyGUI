@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Controls;
 using Chocolatey.Gui.Models;
@@ -13,6 +14,16 @@ namespace Chocolatey.Gui.Services
             _loadingItems = 0;
 
             _output = new ObservableRingBuffer<PowerShellOutputLine>(100);
+            _output.CollectionChanged += (sender, args) =>
+            {
+                if (args.NewItems != null && args.NewItems.Count > 0)
+                {
+                    foreach (PowerShellOutputLine newItem in args.NewItems)
+                    {
+                        Console.WriteLine(newItem.Text);
+                    }
+                }
+            };
         }
 
         private bool _isLoading;
@@ -43,6 +54,7 @@ namespace Chocolatey.Gui.Services
                 {
                     _isLoading = false;
                     _output.Clear();
+                    Report(0);
                     NotifyPropertyChanged("IsLoading");
                 }
             }
@@ -52,6 +64,18 @@ namespace Chocolatey.Gui.Services
         public ObservableRingBuffer<PowerShellOutputLine> Output
         {
             get { return _output; }
+        }
+
+        private int _progress;
+        public int Progress
+        {
+            get { return _progress; }
+        }
+
+        public void Report(int value)
+        {
+            Interlocked.Exchange(ref _progress, value);
+            NotifyPropertyChanged("Progress");
         }
     }
 }

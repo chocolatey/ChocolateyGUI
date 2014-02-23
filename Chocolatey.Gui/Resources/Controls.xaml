@@ -6,10 +6,16 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:xaml="clr-namespace:Markdown.Xaml"
                     xmlns:custom="http://metro.mahapps.com/winfx/xaml/shared"
+                    xmlns:converters="clr-namespace:Chocolatey.Gui.Utilities.Converters"
+                    xmlns:commands="clr-namespace:Chocolatey.Gui.Commands"
                     mc:Ignorable="d">
+
+
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ControlStyles/Flyout.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+    
+    <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
 
     <Style x:Key="BaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular"/>
@@ -585,6 +591,12 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <ContextMenu x:Key="PackagesGridContextMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+        <MenuItem Header="Install" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}" Command="{commands:DataContextCommandAdapter Install}"></MenuItem>
+        <MenuItem Header="Uninstall" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}" Command="{commands:DataContextCommandAdapter Uninstall}"></MenuItem>
+        <MenuItem Header="Update" Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}" Command="{commands:DataContextCommandAdapter Update}"></MenuItem>
+    </ContextMenu>
     
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}">
         <Setter Property="GridLinesVisibility" Value="None"/>
@@ -795,6 +807,7 @@
                     <Setter Property="Foreground" Value="{DynamicResource BlackBrush}"/>
                     <Setter Property="MinHeight" Value="25"/>
                     <Setter Property="Margin" Value="0"/>
+                    <Setter Property="ContextMenu" Value="{StaticResource PackagesGridContextMenu}"/>
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>

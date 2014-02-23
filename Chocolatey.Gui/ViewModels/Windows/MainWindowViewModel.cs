@@ -153,7 +153,13 @@ namespace Chocolatey.Gui.ViewModels.Windows
         {
             if (SelectedSource == null)
             {
-                _progressService.ShowMessage("New Source", "There's no selected source.");
+                _progressService.ShowMessage("Remove Source", "There's no selected source.");
+                return;
+            }
+
+            if (Sources.Count < 2)
+            {
+                _progressService.ShowMessage("Remove Source", "You must have at least one source.");
                 return;
             }
 

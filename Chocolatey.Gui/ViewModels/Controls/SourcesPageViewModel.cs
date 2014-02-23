@@ -31,7 +31,7 @@ namespace Chocolatey.Gui.ViewModels.Controls
 
             Sources = new ObservableCollection<SourceViewModel>
             {
-                sourceVmFactory("Local", null, typeof(LocalSourceControl))
+                sourceVmFactory("This PC", null, typeof(LocalSourceControl))
             };
 
             var sources = Settings.Default.sources;
@@ -39,6 +39,8 @@ namespace Chocolatey.Gui.ViewModels.Controls
             {
                 Sources.Add(sourceVmFactory(parts[0], new Uri(parts[1]), typeof (RemoteSourceControl)));
             }
+
+            SelectedSource = Sources[0];
         }
     }
 }

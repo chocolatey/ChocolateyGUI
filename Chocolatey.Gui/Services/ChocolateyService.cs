@@ -96,7 +96,7 @@ namespace Chocolatey.Gui.Services
                 }
             }
 
-            _progressService.StartLoading();
+            _progressService.StartLoading("Chocolatey Service", "Getting Installed Packages...");
 
             var chocoPath = Settings.Default.chocolateyInstall;
             if(string.IsNullOrWhiteSpace(chocoPath) || !Directory.Exists(chocoPath))
@@ -260,7 +260,7 @@ namespace Chocolatey.Gui.Services
         public async Task<Collection<PSObject>> RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true,
             bool logOutput = true, bool clearBuffer = true)
         {
-            _progressService.StartLoading();
+            _progressService.StartLoading("Chocolatey", "Processing chocolatey command...");
 
             var pipeline = _runspace.CreatePipeline();
 
@@ -313,7 +313,7 @@ namespace Chocolatey.Gui.Services
         public async Task<Collection<PSObject>> RunIndirectChocolateyCommand(string commandString, bool refreshPackages = true,
             bool logOutput = true, bool clearBuffer = true)
         {
-            _progressService.StartLoading();
+            _progressService.StartLoading("Chocolatey", "Processing chocolatey command...");
 
             var pipeline = _runspace.CreatePipeline();
 

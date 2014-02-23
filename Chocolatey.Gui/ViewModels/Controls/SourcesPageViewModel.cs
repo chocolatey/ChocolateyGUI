@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using Chocolatey.Gui.Base;
-using Chocolatey.Gui.Properties;
+using Chocolatey.Gui.Models;
+using Chocolatey.Gui.Services;
+using Chocolatey.Gui.Utilities;
 using Chocolatey.Gui.ViewModels.Items;
 using Chocolatey.Gui.Views.Controls;
 
 namespace Chocolatey.Gui.ViewModels.Controls
 {
-    public class SourcesControlViewModel : ObservableBase, ISourcesControlViewModel
+    public class SourcesControlViewModel : ObservableBase, ISourcesControlViewModel, IWeakEventListener
     {
-        public ObservableCollection<SourceViewModel> Sources { get; set; }
+        public ObservableCollection<SourceTabViewModel> Sources { get; set; }
 
-        private SourceViewModel _selectedSource;
+        private SourceTabViewModel _selectedSource;
 
-        public SourceViewModel SelectedSource
+        public SourceTabViewModel SelectedSource
         {
             get { return _selectedSource; }
             set
@@ -26,21 +29,49 @@ namespace Chocolatey.Gui.ViewModels.Controls
             }
         }
 
-        public SourcesControlViewModel(Func<string, Uri, Type, SourceViewModel> sourceVmFactory)
-        {
+        private readonly Func<string, Uri, Type, SourceTabViewModel> _sourceVmFactory;
 
-            Sources = new ObservableCollection<SourceViewModel>
+        public SourcesControlViewModel(ISourceService sourceService, Func<string, Uri, Type, SourceTabViewModel> sourceVmFactory)
+        {
+            _sourceVmFactory = sourceVmFactory;
+            Sources = new ObservableCollection<SourceTabViewModel>
             {
                 sourceVmFactory("This PC", null, typeof(LocalSourceControl))
             };
 
-            var sources = Settings.Default.sources;
-            foreach (var parts in from string source in sources select source.Split('|'))
+            foreach (var source in sourceService.GetSources())
             {
-                Sources.Add(sourceVmFactory(parts[0], new Uri(parts[1]), typeof (RemoteSourceControl)));
+                Sources.Add(_sourceVmFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
             }
 
             SelectedSource = Sources[0];
+
+            SourcesChangedEventManager.AddListener(sourceService, this);
+        }
+
+        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        {
+            if (sender is ISourceService)
+            {
+                var eventArgs = e as SourcesChangedEventArgs;
+                if (eventArgs.AddedSources != null && eventArgs.AddedSources.Count > 0)
+                {
+                    foreach (var source in eventArgs.AddedSources)
+                    {
+                        Sources.Add(_sourceVmFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
+                    }
+                }
+                if (eventArgs.RemovedSources != null && eventArgs.RemovedSources.Count > 0)
+                {
+                    foreach (var targetPackage in eventArgs.RemovedSources
+                        .Select(source => Sources.FirstOrDefault(p => String.Equals(p.Name, source.Name, StringComparison.CurrentCultureIgnoreCase)))
+                        .Where(targetPackage => targetPackage != null))
+                    {
+                        Sources.Remove(targetPackage);
+                    }
+                }
+            }
+            return true;
         }
     }
 }

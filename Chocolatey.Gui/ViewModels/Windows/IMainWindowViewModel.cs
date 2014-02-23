@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using Chocolatey.Gui.Models;
+﻿using System.Collections.ObjectModel;
+using Chocolatey.Gui.ViewModels.Items;
 
 namespace Chocolatey.Gui.ViewModels.Windows
 {
     public interface IMainWindowViewModel
     {
+        ObservableCollection<SourceViewModel> Sources { get; set; }
     }
 }

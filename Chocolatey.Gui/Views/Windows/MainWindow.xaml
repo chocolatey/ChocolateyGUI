@@ -7,11 +7,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:services="clr-namespace:Chocolatey.Gui.Services"
         xmlns:converters="clr-namespace:Chocolatey.Gui.Utilities.Converters"
+        xmlns:commands="clr-namespace:Chocolatey.Gui.Commands"
         mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
     
     <Window.Resources>
-        <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
+        <converters:NullToVisibility x:Key="NullToVisibility"/>
     </Window.Resources>
     
     <metro:MetroWindow.WindowCommands>
@@ -24,9 +25,27 @@
         <metro:FlyoutsControl>
             <metro:Flyout x:Name="SettingsFlyout" Header="Settings" Position="Right" Width="500" Theme="Accent">
                 <StackPanel>
-                    <Button HorizontalAlignment="Stretch" Style="{StaticResource SetttingsButtonStyle}">
+                    <Button x:Name="SourcesButton" HorizontalAlignment="Stretch" Style="{StaticResource SetttingsButtonStyle}" Click="SourcesButton_OnClick">
                         Sources
                     </Button>
+                </StackPanel>
+            </metro:Flyout>
+            <metro:Flyout x:Name="SourcesFlyout" Header="Settings" Position="Right" Width="500" Theme="Accent">
+                <StackPanel Margin="10,0">
+                    <DataGrid x:Name="SourcesDataGrid" AutoGenerateColumns="False"
+                              ItemsSource="{Binding Sources}" IsReadOnly="True"
+                              SelectedItem="{Binding SelectedSource}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="1*"/>
+                            <DataGridTextColumn Header="Url" Binding="{Binding Url}" Width="1*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Command="{commands:DataContextCommandAdapter RemoveSource, CanRemoveSource}">Remove Source</Button>
+                    <TextBlock Margin="0,10,0,0">Name:</TextBlock>
+                    <TextBox Text="{Binding NewSourceName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock>Url:</TextBlock>
+                    <TextBox Text="{Binding NewSourceUrl, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <Button Command="{commands:DataContextCommandAdapter AddSource, CanAddSource}">Add Source</Button>
                 </StackPanel>
             </metro:Flyout>
         </metro:FlyoutsControl>

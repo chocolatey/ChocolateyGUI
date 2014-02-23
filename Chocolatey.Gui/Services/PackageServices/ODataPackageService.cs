@@ -103,5 +103,20 @@ namespace Chocolatey.Gui.Services.PackageServices
             var packageInfo = v2FeedPackages.Single();
             return AutoMapper.Mapper.Map(packageInfo, vm);
         }
+
+        public static async Task<Exception> TestPath(Uri source)
+        {
+            try
+            {
+                var service = new FeedContext_x0060_1(source);
+                var query = (DataServiceQuery<V2FeedPackage>) service.Packages.Take(1);
+                await Task.Factory.FromAsync(query.BeginExecute, ar => query.EndExecute(ar), null);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+        }
     }
 }

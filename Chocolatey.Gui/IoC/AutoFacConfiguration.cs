@@ -18,6 +18,7 @@ namespace Chocolatey.Gui.IoC
             // Register View Models
             builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>();
             builder.RegisterType<SourceViewModel>();
+            builder.RegisterType<SourceTabViewModel>();
             builder.RegisterType<SourcesControlViewModel>().As<ISourcesControlViewModel>();
             builder.RegisterType<LocalSourceControlViewModel>().As<ILocalSourceControlViewModel>();
             builder.RegisterType<RemoteSourceControlViewModel>().As<IRemoteSourceControlViewModel>();
@@ -26,6 +27,7 @@ namespace Chocolatey.Gui.IoC
 
             // Register Services
             builder.Register((c,parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
+            builder.RegisterType<SettingsSourceService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<PackageService>().As<IPackageService>().SingleInstance();
             builder.RegisterType<ChocolateyService>().As<IChocolateyService>().SingleInstance();

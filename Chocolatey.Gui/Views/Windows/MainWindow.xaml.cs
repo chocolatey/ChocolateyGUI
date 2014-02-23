@@ -9,6 +9,7 @@ using Chocolatey.Gui.Services;
 using Chocolatey.Gui.ViewModels.Items;
 using Chocolatey.Gui.ViewModels.Windows;
 using Chocolatey.Gui.Views.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace Chocolatey.Gui.Views.Windows
 {
@@ -22,6 +23,10 @@ namespace Chocolatey.Gui.Views.Windows
             InitializeComponent();
             DataContext = vm;
             LoadingOverlay.DataContext = progressService;
+
+            if (progressService is ProgressService)
+                (progressService as ProgressService).MainWindow = this;
+
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
             AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
 
@@ -64,6 +69,22 @@ namespace Chocolatey.Gui.Views.Windows
         {
             SettingsFlyout.Width = Width/3;
             SettingsFlyout.IsOpen = !SettingsFlyout.IsOpen;
+        }
+
+        private void SourcesButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            SettingsFlyout.IsOpen = false;
+            SourcesFlyout.IsOpen = true;
+            SourcesFlyout.IsOpenChanged += SourcesFlyout_IsOpenChanged;
+        }
+
+        void SourcesFlyout_IsOpenChanged(object sender, EventArgs e)
+        {
+            if (SourcesFlyout.IsOpen == false)
+            {
+                SettingsFlyout.IsOpen = true;
+                SourcesFlyout.IsOpenChanged -= SourcesFlyout_IsOpenChanged;
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows;
 using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Services;
+using Chocolatey.Gui.Utilities;
 using Chocolatey.Gui.ViewModels.Items;
 
 namespace Chocolatey.Gui.ViewModels.Controls

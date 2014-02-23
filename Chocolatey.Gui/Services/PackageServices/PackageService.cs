@@ -18,11 +18,13 @@ namespace Chocolatey.Gui.Services
     {
         private readonly IProgressService _progressService;
         private readonly Func<IPackageViewModel> _packageFactory;
+        private readonly ILogService _logService;
 
-        public PackageService(IProgressService progressService, Func<IPackageViewModel> packageFactory)
+        public PackageService(IProgressService progressService, Func<IPackageViewModel> packageFactory, Func<Type, ILogService> logFunc)
         {
             _progressService = progressService;
             _packageFactory = packageFactory;
+            _logService = logFunc(typeof (PackageService));
         }
 
         public async Task<PackageSearchResults> Search(string query, Uri source = null)
@@ -32,7 +34,7 @@ namespace Chocolatey.Gui.Services
 
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options, Uri source = null)
         {
-            _progressService.StartLoading();
+            _progressService.StartLoading("Search", "Searching for matching packages...");
             if (source == null)
             {
                 var currentSource = Settings.Default.currentSource;
@@ -85,7 +87,7 @@ namespace Chocolatey.Gui.Services
 
         public async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source = null)
         {
-            _progressService.StartLoading();
+            _progressService.StartLoading("", "Loading package information.");
             if (source == null)
             {
                 var currentSource = Settings.Default.currentSource;
@@ -111,6 +113,26 @@ namespace Chocolatey.Gui.Services
             }
             _progressService.StopLoading();
             return null;
+        }
+
+        public async Task<bool> TestSourceUrl(Uri source)
+        {
+
+            if (source.Scheme == "http" || source.Scheme == "https")
+            {
+                var exception =  await ODataPackageService.TestPath(source);
+                if (exception == null)
+                    return true;
+
+                _logService.Debug("TestSourceUrl failed.", exception);
+                return false;
+            }
+
+            if (source.IsFile || source.IsUnc)
+            {
+                return false;
+            }
+            return false;
         }
     }
 }

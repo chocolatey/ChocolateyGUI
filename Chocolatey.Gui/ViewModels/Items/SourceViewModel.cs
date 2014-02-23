@@ -1,48 +1,24 @@
 ﻿using System;
-using Autofac;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Chocolatey.Gui.Base;
 
 namespace Chocolatey.Gui.ViewModels.Items
 {
     public class SourceViewModel : ObservableBase
     {
-        private IComponentContext _componentContext;
-        public SourceViewModel(IComponentContext componentContext, string name, Uri url, Type pageType)
+        private string _url;
+        public string Url
         {
-            _componentContext = componentContext;
-
-            Name = name;
-            Url = url;
-            PageType = pageType;
+            get { return _url; }
+            set { SetPropertyValue(ref _url, value); }
         }
-
-        public string Name { get; private set; }
-
-        public Uri Url { get; private set; }
-
-        public Type PageType { get; private set; }
-
-        private bool _isSelected;
-        public bool IsSelected
+        private string _name;
+        public string Name
         {
-            get { return _isSelected; }
-            set
-            {
-                SetPropertyValue(ref _isSelected, value);
-
-                if (_content != null)
-                    return;
-
-                Content = _componentContext.Resolve(PageType, new TypedParameter(typeof(Uri), Url));
-                _componentContext = null;
-            }
-        }
-
-        private object _content;
-        public object Content
-        {
-            get { return _content; }
-            set { SetPropertyValue(ref _content, value); }
+            get { return _name; }
+            set { SetPropertyValue(ref _name, value); }
         }
     }
 }

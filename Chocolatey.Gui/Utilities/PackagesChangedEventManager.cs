@@ -3,7 +3,7 @@ using System.Windows;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Services;
 
-namespace Chocolatey.Gui.ViewModels
+namespace Chocolatey.Gui.Utilities
 {
     public class PackagesChangedEventManager : WeakEventManager
     {

@@ -153,6 +153,13 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _licenseUrl, value); }
         }
 
+        private string _owners;
+        public string Owners
+        {
+            get { return _owners; }
+            set { SetPropertyValue(ref _owners, value); }
+        }
+
         private string _packageHash;
         public string PackageHash
         {

@@ -46,6 +46,8 @@ namespace Chocolatey.Gui.ViewModels.Items
 
         string LicenseUrl { get; set; }
 
+        string Owners { get; set; }
+
         string PackageHash { get; set; }
 
         string PackageHashAlgorithm { get; set; }

@@ -453,12 +453,12 @@
     </Style>
 
     <Style x:Key="EntypoIconLargeStyle" BasedOn="{StaticResource EntypoIconStyle}" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="72"/>
+        <Setter Property="FontSize" Value="58"/>
     </Style>
 
     <Style x:Key="BigEntypeIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroCircleButtonStyle}">
-        <Setter Property="Width" Value="80"/>
-        <Setter Property="Height" Value="80"/>
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Height" Value="60"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
         <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"/>

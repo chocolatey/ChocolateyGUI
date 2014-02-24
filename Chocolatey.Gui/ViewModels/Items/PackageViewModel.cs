@@ -318,21 +318,21 @@ namespace Chocolatey.Gui.ViewModels.Items
         }
 
 
-        public void Install()
+        public async Task Install()
         {
-            _chocolateyService.InstallPackage(Id, Version, Source);
+            await _chocolateyService.InstallPackage(Id, Version, Source);
         }
 
-        public void Update()
+        public async Task Update()
         {
-            _chocolateyService.UpdatePackage(Id, Source);
+            await _chocolateyService.UpdatePackage(Id, Source);
             if(CanGoBack())
                 _navigationService.GoBack();
         }
 
-        public void Uninstall()
+        public async Task Uninstall()
         {
-            _chocolateyService.UninstallPackage(Id, Version, true);
+            await _chocolateyService.UninstallPackage(Id, Version, true);
             if (CanGoBack())
                 _navigationService.GoBack();
         }

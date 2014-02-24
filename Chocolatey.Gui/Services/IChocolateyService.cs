@@ -12,9 +12,9 @@ namespace Chocolatey.Gui.Services
     {
         Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false);
         Task<IEnumerable<IPackageViewModel>> GetPackagesFromLocalDirectory(Dictionary<string, string> requestedPackages, string directoryPath);
-        void InstallPackage(string id, SemanticVersion version = null, Uri source = null);
-        void UninstallPackage(string id, SemanticVersion version, bool force = false);
-        void UpdatePackage(string id, Uri source = null);
+        Task InstallPackage(string id, SemanticVersion version = null, Uri source = null);
+        Task UninstallPackage(string id, SemanticVersion version, bool force = false);
+        Task UpdatePackage(string id, Uri source = null);
         bool IsPackageInstalled(string id, SemanticVersion version);
 
         Task<bool> ExecutePackageCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true);

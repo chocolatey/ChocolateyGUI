@@ -164,7 +164,7 @@ namespace Chocolatey.Gui.Services
         }
 
         #region Package Commands
-        public async void InstallPackage(string id, SemanticVersion version = null, Uri source = null)
+        public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null)
         {
             var arguments = new Dictionary<string, object>
             {
@@ -188,7 +188,7 @@ namespace Chocolatey.Gui.Services
             NotifyPackagesChanged(PackagesChangedEventType.Installed, id, version == null ? "" : version.ToString());
         }
 
-        public async void UninstallPackage(string id, SemanticVersion version, bool force = false)
+        public async Task UninstallPackage(string id, SemanticVersion version, bool force = false)
         {
             var arguments = new Dictionary<string, object>
             {
@@ -202,7 +202,7 @@ namespace Chocolatey.Gui.Services
             NotifyPackagesChanged(PackagesChangedEventType.Uninstalled, id, version.ToString());
         }
 
-        public async void UpdatePackage(string id, Uri source = null)
+        public async Task UpdatePackage(string id, Uri source = null)
         {
             var currentPackages = PackageConfigEntries().Where(p => String.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0).ToList();
 

@@ -7,7 +7,7 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace Chocolatey.Gui.Services
 {
-    public interface IProgressService : INotifyPropertyChanged, IProgress<int>
+    public interface IProgressService : INotifyPropertyChanged, IProgress<double>
     {
         bool IsLoading { get; }
         void StartLoading(string title = "", string message = "");

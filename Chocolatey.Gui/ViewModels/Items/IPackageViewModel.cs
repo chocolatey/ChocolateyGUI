@@ -8,9 +8,11 @@ namespace Chocolatey.Gui.ViewModels.Items
     {
         Task EnsureIsLoaded();
 
-        void Install();
-        void Update();
-        void Uninstall();
+        Task Install();
+
+        Task Update();
+
+        Task Uninstall();
 
         string Authors { get; set; }
 

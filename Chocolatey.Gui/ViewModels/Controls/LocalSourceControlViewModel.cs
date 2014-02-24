@@ -18,7 +18,7 @@ namespace Chocolatey.Gui.ViewModels.Controls
     public class LocalSourceControlViewModel : ObservableBase, ILocalSourceControlViewModel, IWeakEventListener
     {
         private readonly List<IPackageViewModel> _packages;
-        private bool _hasLoaded = false;
+        private bool _hasLoaded;
 
         private ObservableCollection<IPackageViewModel> _packageViewModels; 
         public ObservableCollection<IPackageViewModel> Packages
@@ -129,6 +129,24 @@ namespace Chocolatey.Gui.ViewModels.Controls
                 LoadPackages();
             }
             return true;
+        }
+
+        public bool CanUpdateAll()
+        {
+            return Packages.Any(p => p.CanUpdate);
+        }
+
+        public async void UpdateAll()
+        {
+            _progressService.StartLoading("Packages", "Updating all packages.");
+            var packages = Packages.Where(p => p.CanUpdate).ToList();
+            double current = 0.0f; 
+            foreach (var package in packages)
+            {
+                _progressService.Report(Math.Min((current++) / packages.Count, 100));
+                await package.Update();
+            }
+            _progressService.StopLoading();
         }
     }
 }

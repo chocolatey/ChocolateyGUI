@@ -15,5 +15,8 @@ namespace Chocolatey.Gui.ViewModels.Controls
         bool SortDescending { get; set; }
 
         void Loaded(object sender, EventArgs e);
+
+        bool CanUpdateAll();
+        void UpdateAll();
     }
 }

@@ -76,10 +76,12 @@ namespace Chocolatey.Gui.Services.PackageServices
                 Cache.Set(GetMemoryCacheKey(source), service, new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMinutes(20) });
             }
 
-            var package = service.Packages.Where(
-                pckge =>
-                    (pckge.IsPrerelease == includePrerelease || pckge.IsPrerelease == false) && pckge.Id == id && (includePrerelease && pckge.IsAbsoluteLatestVersion) && pckge.IsLatestVersion )
-                    .FirstOrDefault();
+            var packageQuery = service.Packages.Where(p => p.IsPrerelease == includePrerelease || p.IsPrerelease == false)
+                .Where(p => p.Id == id);
+
+            packageQuery = includePrerelease ? packageQuery.Where(p => p.IsAbsoluteLatestVersion) : packageQuery.Where(p => p.IsLatestVersion);
+
+            var package = packageQuery.FirstOrDefault();
 
             return package == null ? null : AutoMapper.Mapper.Map(package, packageFactory());
         }

@@ -100,18 +100,21 @@ namespace Chocolatey.Gui.Services
             get { return _output; }
         }
 
-        private int _progress;
-        public int Progress
+        private double _progress;
+        public double Progress
         {
             get { return _progress; }
         }
 
-        public void Report(int value)
+        public void Report(double value)
         {
-            Interlocked.Exchange(ref _progress, value);
+            _progress = value;
             if (_progressController != null)
             {
-                 _progressController.SetProgress(((double)_progress)/100.0f);
+                if(value < 0)
+                    _progressController.SetIndeterminate();
+                else
+                    _progressController.SetProgress(Math.Min((_progress)/100.0f, 100));
             }
             NotifyPropertyChanged("Progress");
         }

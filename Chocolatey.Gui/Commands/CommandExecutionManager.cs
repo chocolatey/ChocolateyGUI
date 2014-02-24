@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
+using System.Windows;
 using Expression = System.Linq.Expressions.Expression;
 
 // Big thanks to Doug Schott @ Code Project | http://www.codeproject.com/Articles/101881/Executing-Command-Logic-in-a-View-Model
@@ -263,30 +266,33 @@ namespace Chocolatey.Gui.Commands
                 if (canExecuteMethodInfo != null && canExecuteMethodInfo.ReturnType == typeof(bool))
                 {
                     if (canExecuteMethodInfo.GetParameters().Length == 0)
-                        this._canExecute = Expression.Lambda<Func<TTarget, bool>>(Expression.Call(targetParameter, canExecuteMethodInfo), targetParameter).Compile();
+                        _canExecute = Expression.Lambda<Func<TTarget, bool>>(Expression.Call(targetParameter, canExecuteMethodInfo), targetParameter).Compile();
                     else
-                        this._canExecuteWithParam = Expression.Lambda<Func<TTarget, object, bool>>(Expression.Call(targetParameter, canExecuteMethodInfo, paramParamater), targetParameter, paramParamater).Compile();
+                        _canExecuteWithParam = Expression.Lambda<Func<TTarget, object, bool>>(Expression.Call(targetParameter, canExecuteMethodInfo, paramParamater), targetParameter, paramParamater).Compile();
                 }
-                if (this._canExecute == null && this._canExecuteWithParam == null)
+                if (_canExecute == null && this._canExecuteWithParam == null)
                 {
-                    this._canExecute = Expression.Lambda<Func<TTarget, bool>>(Expression.Constant(true), targetParameter).Compile();
+                    _canExecute = Expression.Lambda<Func<TTarget, bool>>(Expression.Constant(true), targetParameter).Compile();
                     //throw new Exception(string.Format(
                     //    "Method {0} on type {1} does not have a valid method signature. The method must have one of the following signatures: 'public bool CanExecute()' or 'public bool CanExecute(object parameter)'",
                     //    CanExecuteMethodName, typeof(TTarget)));
                 }
 
                 var executedMethodInfo = GetMethodInfo(ExecutedMethodName);
-                if (executedMethodInfo != null && executedMethodInfo.ReturnType == typeof(void))
+                if (executedMethodInfo != null && (executedMethodInfo.ReturnType == typeof(void) || executedMethodInfo.ReturnType == typeof(Task)))
                 {
                     if (executedMethodInfo.GetParameters().Length == 0)
-                        this._executed = Expression.Lambda<Action<TTarget>>(Expression.Call(targetParameter, executedMethodInfo), targetParameter).Compile();
+                        _executed = Expression.Lambda<Action<TTarget>>(Expression.Call(targetParameter, executedMethodInfo), targetParameter).Compile();
                     else
-                        this._executedWithParam = Expression.Lambda<Action<TTarget, object>>(Expression.Call(targetParameter, executedMethodInfo, paramParamater), targetParameter, paramParamater).Compile();
+                        _executedWithParam = Expression.Lambda<Action<TTarget, object>>(Expression.Call(targetParameter, executedMethodInfo, paramParamater), targetParameter, paramParamater).Compile();
                 }
-                if (this._executed == null && this._executedWithParam == null)
+                if (_executed == null && _executedWithParam == null)
+                {
                     throw new Exception(string.Format(
-                        "Method {0} on type {1} does not have a valid method signature. The method must have one of the following signatures: 'public void " + executedMethodName + "()' or 'public void " + executedMethodName + "(object parameter)'",
-                        ExecutedMethodName, typeof(TTarget)));
+                        "Method {0} on type {1} does not have a valid method signature. The method must have one of the following signatures: 'public void " +
+                        executedMethodName + "()' or 'public void " + executedMethodName + "(object parameter)'",
+                        ExecutedMethodName, typeof (TTarget)));
+                }
             }
 
             private MethodInfo GetMethodInfo(string methodName)

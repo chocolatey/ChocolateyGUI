@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controlVms="clr-namespace:Chocolatey.Gui.ViewModels.Controls"
-        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
       xmlns:commands="clr-namespace:Chocolatey.Gui.Commands"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1366"
@@ -19,6 +18,9 @@
             <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}">Search: </Label>
             <TextBox x:Name="SearchTextBox" Width="300" Padding="0,2,0,-2" FontSize="14" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <CheckBox Name="MatchCheckBox" Margin="5" Content="Match Word Exactly" IsChecked="{Binding MatchWord}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,5">
+            <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}" Style="{StaticResource SquareButtonStyle}" Content="Update All"/>
         </StackPanel>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Packages}" Background="{StaticResource LightBackgroundColorBrush}"
                   AutoGenerateColumns="False" IsReadOnly="True"

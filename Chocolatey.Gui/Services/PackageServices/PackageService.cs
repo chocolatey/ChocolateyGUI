@@ -66,8 +66,12 @@ namespace Chocolatey.Gui.Services
 
                 if (defaultSource.Scheme == "http" || defaultSource.Scheme == "https")
                 {
-                    var results = ODataPackageService.GetLatest(id, _packageFactory, defaultSource, includePrerelease);
-                    return results;
+                    var result = ODataPackageService.GetLatest(id, _packageFactory, defaultSource, includePrerelease);
+                    if (result != null)
+                    {
+                        result.Source = defaultSource;
+                        return result;
+                    }
                 }
                 
 

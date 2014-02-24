@@ -28,9 +28,11 @@ namespace Chocolatey.Gui.ViewModels.Controls
         }
 
         private readonly IChocolateyService _chocolateyService;
-        public LocalSourceControlViewModel(IChocolateyService chocolateyService)
+        private readonly IProgressService _progressService;
+        public LocalSourceControlViewModel(IChocolateyService chocolateyService, IProgressService progressService)
         {
             _chocolateyService = chocolateyService;
+            _progressService = progressService;
             PackagesChangedEventManager.AddListener(_chocolateyService, this);
 
             Packages = new ObservableCollection<IPackageViewModel>();
@@ -43,12 +45,17 @@ namespace Chocolatey.Gui.ViewModels.Controls
                 return;
 
             await LoadPackages();
+
             Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                 .Where(e => e.EventArgs.PropertyName == "MatchWord" || e.EventArgs.PropertyName == "SearchQuery")
                 .ObserveOnDispatcher()
                 .Subscribe(e => FilterPackages());
 
             _hasLoaded = true;
+
+            var chocoPackage = _packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
+            if (chocoPackage != null && chocoPackage.CanUpdate)
+                _progressService.ShowMessage("Chocolatey", "There's an update available for chocolatey.");
         }
 
         private async Task LoadPackages()

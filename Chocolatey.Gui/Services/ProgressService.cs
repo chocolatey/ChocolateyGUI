@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,7 +14,8 @@ namespace Chocolatey.Gui.Services
 {
     public class ProgressService : ObservableBase, IProgressService
     {
-        public  MainWindow MainWindow;
+        public MainWindow MainWindow;
+
         public ProgressService()
         {
             _isLoading = false;
@@ -29,6 +32,28 @@ namespace Chocolatey.Gui.Services
                     }
                 }
             };
+
+            Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                .Where(p => p.EventArgs.PropertyName == "IsLoading")
+                .Select(_ => IsLoading)
+                .Delay(TimeSpan.FromMilliseconds(500))
+                .ObserveOnDispatcher()
+                .Subscribe(async isLoading =>
+                {
+                    if (isLoading && IsLoading &&
+                        MainWindow != null && _progressController == null)
+                    {
+                        _progressController = await MainWindow.ShowProgressAsync(ProgressTitle, ProgressMessage);
+                        _progressController.SetIndeterminate();
+                        return;
+                    }
+
+                    if (!isLoading && _progressController != null)
+                    {
+                        await _progressController.CloseAsync();
+                        _progressController = null;
+                    }
+                });
         }
 
         private bool _isLoading;
@@ -37,31 +62,35 @@ namespace Chocolatey.Gui.Services
             get { return _isLoading; }
         }
 
+
         private int _loadingItems;
+        private ProgressDialogController _progressController;
+
+        private string ProgressTitle { get; set; }
+        private string ProgressMessage { get; set; }
+
         public void StartLoading(string title = "", string message = "")
         {
-            lock (this)
+            var currentCount = Interlocked.Increment(ref _loadingItems);
+            if (currentCount == 1)
             {
-                Interlocked.Increment(ref _loadingItems);
-                if (_isLoading == false)
-                {
-                    _isLoading = true;
-                    NotifyPropertyChanged("IsLoading");
-                }
+                ProgressTitle = title;
+                ProgressMessage = message;
+
+                _isLoading = true;
+                NotifyPropertyChanged("IsLoading");
             }
         }
 
         public void StopLoading()
         {
-            lock (this)
+            var currentCount = Interlocked.Decrement(ref _loadingItems);
+            if (currentCount == 0)
             {
-                if (_isLoading && Interlocked.Decrement(ref _loadingItems) < 1)
-                {
-                    _isLoading = false;
-                    _output.Clear();
-                    Report(0);
-                    NotifyPropertyChanged("IsLoading");
-                }
+                _isLoading = false;
+                _output.Clear();
+                Report(0);
+                NotifyPropertyChanged("IsLoading");
             }
         }
 
@@ -80,6 +109,10 @@ namespace Chocolatey.Gui.Services
         public void Report(int value)
         {
             Interlocked.Exchange(ref _progress, value);
+            if (_progressController != null)
+            {
+                 _progressController.SetProgress(((double)_progress)/100.0f);
+            }
             NotifyPropertyChanged("Progress");
         }
 

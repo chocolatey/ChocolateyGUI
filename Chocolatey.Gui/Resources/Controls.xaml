@@ -13,6 +13,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ControlStyles/Flyout.xaml"/>
+        <ResourceDictionary Source="ControlStyles/Dialog.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
     <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>

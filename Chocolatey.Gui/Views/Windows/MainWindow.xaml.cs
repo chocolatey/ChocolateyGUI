@@ -22,7 +22,6 @@ namespace Chocolatey.Gui.Views.Windows
         {
             InitializeComponent();
             DataContext = vm;
-            LoadingOverlay.DataContext = progressService;
 
             if (progressService is ProgressService)
                 (progressService as ProgressService).MainWindow = this;

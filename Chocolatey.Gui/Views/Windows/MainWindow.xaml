@@ -54,11 +54,6 @@
     <Border Background="{StaticResource LightBackgroundColorBrush}"> 
         <Grid>
             <ContentControl x:Name="GlobalFrame"></ContentControl>
-
-            <Border x:Name="LoadingOverlay" Background="#44000000" d:DataContext="{d:DesignInstance services:ProgressService}" 
-                   Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibility}, Mode=OneWay}">
-                <metro:ProgressRing IsActive="{Binding IsLoading, Mode=OneWay}"></metro:ProgressRing>
-            </Border>
         </Grid>
     </Border>
 </metro:MetroWindow>

@@ -17,12 +17,15 @@ namespace Chocolatey.Gui.Services
     public class PackageService : IPackageService
     {
         private readonly IProgressService _progressService;
+        private readonly ISourceService _sourceService;
         private readonly Func<IPackageViewModel> _packageFactory;
         private readonly ILogService _logService;
 
-        public PackageService(IProgressService progressService, Func<IPackageViewModel> packageFactory, Func<Type, ILogService> logFunc)
+        public PackageService(IProgressService progressService, ISourceService sourceService,
+            Func<IPackageViewModel> packageFactory, Func<Type, ILogService> logFunc)
         {
             _progressService = progressService;
+            _sourceService = sourceService;
             _packageFactory = packageFactory;
             _logService = logFunc(typeof (PackageService));
         }
@@ -37,12 +40,7 @@ namespace Chocolatey.Gui.Services
             _progressService.StartLoading("Search", "Searching for matching packages...");
             if (source == null)
             {
-                var currentSource = Settings.Default.currentSource;
-                var sources = Settings.Default.sources;
-                foreach (var parts in (from string sourceString in sources select sourceString.Split('|')).Where(parts => parts[0] == currentSource))
-                {
-                    source = new Uri(parts[1]);
-                }
+                source = new Uri(_sourceService.GetDefaultSource().Url);
             }
 
             if (source.Scheme == "http" || source.Scheme == "https")
@@ -64,12 +62,7 @@ namespace Chocolatey.Gui.Services
         {
             if (source == null)
             {
-                var currentSource = Settings.Default.currentSource;
-                var sources = Settings.Default.sources;
-                foreach (var parts in (from string sourceString in sources select sourceString.Split('|')).Where(parts => parts[0] == currentSource))
-                {
-                    source = new Uri(parts[1]);
-                }
+                source = new Uri(_sourceService.GetDefaultSource().Url);
             }
 
             if (source.Scheme == "http" || source.Scheme == "https")
@@ -88,28 +81,36 @@ namespace Chocolatey.Gui.Services
         public async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source = null)
         {
             _progressService.StartLoading("", "Loading package information.");
+
+            // If we don't have a source, iterate through our source until we find one that matches.
             if (source == null)
             {
-                var currentSource = Settings.Default.currentSource;
-                var sources = Settings.Default.sources;
-                foreach (var parts in (from string sourceString in sources select sourceString.Split('|')).Where(parts => parts[0] == currentSource))
+                foreach (var sourceViewModel in _sourceService.GetSources())
                 {
-                    source = new Uri(parts[1]);
+                    if (source.Scheme == "http" || source.Scheme == "https")
+                    {
+                        var result = await ODataPackageService.EnsureIsLoaded(vm, new Uri(sourceViewModel.Url));
+                        if(result == null)
+                            continue;
+                        _progressService.StopLoading();
+                        return result;
+                    }
                 }
             }
-
-
-            if (source.Scheme == "http" || source.Scheme == "https")
+            else
             {
-                var results = await ODataPackageService.EnsureIsLoaded(vm, source);
-                _progressService.StopLoading();
-                return results;
-            }
+                if (source.Scheme == "http" || source.Scheme == "https")
+                {
+                    var result = await ODataPackageService.EnsureIsLoaded(vm, source);
+                    _progressService.StopLoading();
+                    return result;
+                }
 
-            if (source.IsFile || source.IsUnc)
-            {
-                _progressService.StopLoading();
-                return null;
+                if (source.IsFile || source.IsUnc)
+                {
+                    _progressService.StopLoading();
+                    return null;
+                }
             }
             _progressService.StopLoading();
             return null;

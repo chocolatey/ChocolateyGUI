@@ -98,7 +98,7 @@ namespace Chocolatey.Gui.Services.PackageServices
             var result = await Task.Factory.FromAsync(feedQuery.BeginExecute, ar => feedQuery.EndExecute(ar), null);
             var v2FeedPackages = result as IList<V2FeedPackage> ?? result.ToList();
             if (result == null || !v2FeedPackages.Any())
-                return vm;
+                return null;
 
             var packageInfo = v2FeedPackages.Single();
             return AutoMapper.Mapper.Map(packageInfo, vm);

@@ -7,6 +7,7 @@ namespace Chocolatey.Gui.Services
     public interface ISourceService
     {
         IEnumerable<SourceViewModel> GetSources();
+        SourceViewModel GetDefaultSource();
         void AddSource(SourceViewModel svm);
         void RemoveSource(SourceViewModel svm);
 

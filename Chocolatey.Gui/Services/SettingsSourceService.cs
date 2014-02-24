@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Properties;
@@ -13,6 +14,17 @@ namespace Chocolatey.Gui.Services
             var sources = Settings.Default.sources;
             return (from string source in sources select source.Split('|'))
                 .Select(parts => new SourceViewModel {Name = parts[0], Url = parts[1]});
+        }
+
+        public SourceViewModel GetDefaultSource()
+        {
+            var defaultSourceName = Settings.Default.currentSource;
+            var defaultSource =
+                GetSources()
+                    .FirstOrDefault(
+                        s => string.Compare(defaultSourceName, s.Name, StringComparison.InvariantCultureIgnoreCase) == 0);
+
+            return defaultSource ?? GetSources().First();
         }
 
         public void AddSource(SourceViewModel svm)

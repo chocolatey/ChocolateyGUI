@@ -122,6 +122,9 @@
       <Component Id="System.Windows.Interactivity.dll" Guid="C3AEADB7-B6E3-4952-9969-8C56F92E6470">
         <File Id="System.Windows.Interactivity.dll" Source="$(var.Chocolatey.Gui.TargetDir)\System.Windows.Interactivity.dll" KeyPath="yes"/>
       </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="28267AA6-C039-4C3E-8869-056E98CD2C37">
+        <File Id="Newtonsoft.Json.dll" Source="$(var.Chocolatey.Gui.TargetDir)\Newtonsoft.Json.dll" KeyPath="yes"/>
+      </Component>
     </ComponentGroup>
   </Fragment>
 </Wix>

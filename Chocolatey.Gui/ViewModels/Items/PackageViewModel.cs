@@ -254,7 +254,16 @@ namespace Chocolatey.Gui.ViewModels.Items
                     return version;
 
                 var latest = _packageService.GetLatest(Id, IsPrerelease, Source);
-                version = latest != null ? latest.Version : Version;
+                if(latest != null)
+                {
+                    version = latest.Version;
+                    if (latest.Source != null)
+                        Source = latest.Source;
+                }
+                else
+                {
+                    version = Version;
+                }
                 _cache.Set(MemoryCachePropertyKey(), version, DateTime.Now.AddHours(1));
                 return version;
             }

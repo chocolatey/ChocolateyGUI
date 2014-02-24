@@ -62,18 +62,44 @@ namespace Chocolatey.Gui.Services
         {
             if (source == null)
             {
-                source = new Uri(_sourceService.GetDefaultSource().Url);
-            }
+                var defaultSource = new Uri(_sourceService.GetDefaultSource().Url);
 
-            if (source.Scheme == "http" || source.Scheme == "https")
-            {
-                var results = ODataPackageService.GetLatest(id, _packageFactory, source, includePrerelease);
-                return results;
-            }
+                if (defaultSource.Scheme == "http" || defaultSource.Scheme == "https")
+                {
+                    var results = ODataPackageService.GetLatest(id, _packageFactory, defaultSource, includePrerelease);
+                    return results;
+                }
+                
 
-            if (source.IsFile || source.IsUnc)
+                foreach (var sourceViewModel in _sourceService.GetSources())
+                {
+                    var currentSource = new Uri(sourceViewModel.Url);
+                    if (currentSource.Scheme == "http" || currentSource.Scheme == "https")
+                    {
+                        var result = ODataPackageService.GetLatest(id, _packageFactory, currentSource, includePrerelease);
+                        if (result == null)
+                            continue;
+
+                        result.Source = currentSource;
+                        _progressService.StopLoading();
+                        return result;
+                    }
+                }
+            }
+            else
             {
-                return null;
+                if (source.Scheme == "http" || source.Scheme == "https")
+                {
+                    var result = ODataPackageService.GetLatest(id, _packageFactory, source, includePrerelease);
+                    if(result != null)
+                        result.Source = source;
+                    return result;
+                }
+
+                if (source.IsFile || source.IsUnc)
+                {
+                    return null;
+                }
             }
             return null;
         }
@@ -85,14 +111,30 @@ namespace Chocolatey.Gui.Services
             // If we don't have a source, iterate through our source until we find one that matches.
             if (source == null)
             {
+                var defaultSourceVm = _sourceService.GetDefaultSource();
+                var defaultSource = new Uri(defaultSourceVm.Url);
+                if (defaultSource.Scheme == "http" || defaultSource.Scheme == "https")
+                {
+                    var result = await ODataPackageService.EnsureIsLoaded(vm, defaultSource);
+                    if (result != null)
+                    {
+                        _progressService.StopLoading();
+                        result.Source = defaultSource;
+                        return result;
+                    }
+                }
+
                 foreach (var sourceViewModel in _sourceService.GetSources())
                 {
-                    if (source.Scheme == "http" || source.Scheme == "https")
+                    var currentSource = new Uri(sourceViewModel.Url);
+                    if (currentSource.Scheme == "http" || currentSource.Scheme == "https")
                     {
-                        var result = await ODataPackageService.EnsureIsLoaded(vm, new Uri(sourceViewModel.Url));
+                        var result = await ODataPackageService.EnsureIsLoaded(vm, currentSource);
                         if(result == null)
                             continue;
+
                         _progressService.StopLoading();
+                        result.Source = currentSource;
                         return result;
                     }
                 }
@@ -103,6 +145,8 @@ namespace Chocolatey.Gui.Services
                 {
                     var result = await ODataPackageService.EnsureIsLoaded(vm, source);
                     _progressService.StopLoading();
+                    if (result != null)
+                        result.Source = source;
                     return result;
                 }
 

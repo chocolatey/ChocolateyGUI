@@ -141,10 +141,26 @@ namespace Chocolatey.Gui.Services
         /// </summary>
         /// <param name="directoryPath">The file system directory.</param>
         /// <returns>List of packages in directory.</returns>
-        [Obsolete]
-        public Task<IEnumerable<IPackageViewModel>> GetPackagesFromLocalDirectory(string directoryPath)
+        public async Task<IEnumerable<IPackageViewModel>> GetPackagesFromLocalDirectory(Dictionary<string, string> requestedPackages, string directoryPath)
         {
-            throw new NotImplementedException();
+            var packages = new List<IPackageViewModel>();
+            foreach (var nupkgFile in Directory.EnumerateFiles(directoryPath, "*.nupkg", SearchOption.AllDirectories))
+            {
+                var packageInfo = await NupkgReader.GetPackageInformation(nupkgFile);
+
+                if (!requestedPackages.Any(e => String.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase) && new SemanticVersion(e.Value) == packageInfo.Version))
+                    continue;
+
+                var packageConfigEntry =
+                    PackageConfigEntries().SingleOrDefault(
+                        entry => String.Compare(entry.Id, packageInfo.Id, StringComparison.OrdinalIgnoreCase) == 0 && entry.Version == packageInfo.Version);
+
+                if (packageConfigEntry != null)
+                    packageInfo.Source = packageConfigEntry.Source;
+
+                packages.Add(packageInfo);
+            }
+            return packages;
         }
 
         #region Package Commands
@@ -257,7 +273,7 @@ namespace Chocolatey.Gui.Services
         /// <param name="logOutput">Whether the output should be logged to the faux PowerShell console or returned as results.</param>
         /// <param name="clearBuffer">Whether the faux PowerShell console should be cleared.</param>
         /// <returns>A collection of the ouptut of the PowerShell runspace. Will be empty if <paramref cref="logOutput"/> is true.</returns>
-        public async Task<Collection<PSObject>> RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true,
+        public async Task RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true,
             bool logOutput = true, bool clearBuffer = true)
         {
             _progressService.StartLoading("Chocolatey", "Processing chocolatey command...");
@@ -277,11 +293,10 @@ namespace Chocolatey.Gui.Services
 
             pipeline.Commands.Add(psCommand);
 
-            Collection<PSObject> results = null;
 
             try
             {
-                results = await Task.Factory.StartNew(() => pipeline.Invoke());
+                await Task.Factory.StartNew(() => pipeline.Invoke());
             }
             catch (Exception e)
             {
@@ -299,7 +314,6 @@ namespace Chocolatey.Gui.Services
                 await GetInstalledPackages(force: true);
 
             _progressService.StopLoading();
-            return results;
         } 
         
         /// <summary>

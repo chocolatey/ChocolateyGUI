@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Services.Client;
 using System.IO;
-using System.Linq;
-using System.Runtime.Caching;
 using System.Threading.Tasks;
-using Chocolatey.Gui.ChocolateyFeedService;
 using Chocolatey.Gui.Models;
-using Chocolatey.Gui.Properties;
 using Chocolatey.Gui.Services.PackageServices;
 using Chocolatey.Gui.ViewModels.Items;
-using Chocolatey.Gui.Utilities.Extensions;
 
 namespace Chocolatey.Gui.Services
 {

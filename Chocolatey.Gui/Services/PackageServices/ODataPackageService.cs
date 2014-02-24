@@ -30,7 +30,11 @@ namespace Chocolatey.Gui.Services.PackageServices
             FeedContext_x0060_1 service;
             if ((service = (FeedContext_x0060_1)Cache.Get(GetMemoryCacheKey(source))) == null)
             {
-                service = new FeedContext_x0060_1(source);
+                service = new FeedContext_x0060_1(source)
+                {
+                    IgnoreMissingProperties = true,
+                    IgnoreResourceNotFoundException = true
+                };
                 Cache.Set(GetMemoryCacheKey(source), service, new CacheItemPolicy {SlidingExpiration = TimeSpan.FromMinutes(20)});
             }
             var queryString = query;
@@ -72,7 +76,11 @@ namespace Chocolatey.Gui.Services.PackageServices
             FeedContext_x0060_1 service;
             if ((service = (FeedContext_x0060_1)Cache.Get(GetMemoryCacheKey(source))) == null)
             {
-                service = new FeedContext_x0060_1(source);
+                service = new FeedContext_x0060_1(source)
+                {
+                    IgnoreMissingProperties = true,
+                    IgnoreResourceNotFoundException = true
+                };
                 Cache.Set(GetMemoryCacheKey(source), service, new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMinutes(20) });
             }
 
@@ -91,7 +99,11 @@ namespace Chocolatey.Gui.Services.PackageServices
             FeedContext_x0060_1 service;
             if ((service = (FeedContext_x0060_1)Cache.Get(GetMemoryCacheKey(source))) == null)
             {
-                service = new FeedContext_x0060_1(source);
+                service = new FeedContext_x0060_1(source)
+                {
+                    IgnoreMissingProperties = true,
+                    IgnoreResourceNotFoundException = true
+                };
                 Cache.Set(GetMemoryCacheKey(source), service, new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMinutes(20) });
             }
 
@@ -112,6 +124,7 @@ namespace Chocolatey.Gui.Services.PackageServices
             {
                 var service = new FeedContext_x0060_1(source);
                 var query = (DataServiceQuery<V2FeedPackage>) service.Packages.Take(1);
+                var result = query.FirstOrDefault();
                 await Task.Factory.FromAsync(query.BeginExecute, ar => query.EndExecute(ar), null);
                 return null;
             }

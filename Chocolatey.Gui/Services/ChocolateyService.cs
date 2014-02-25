@@ -6,6 +6,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Runtime.Caching;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Chocolatey.Gui.Controls;
@@ -33,7 +34,7 @@ namespace Chocolatey.Gui.Services
         /// <summary>
         /// Cache for this servce where out installed packages list is stored.
         /// </summary>
-        private readonly MemoryCache _cache = MemoryCache.Default;
+        private static readonly MemoryCache Cache = MemoryCache.Default;
 
         /// <summary>
         /// Allows the Chocolatey Service to report progress to listeners.
@@ -46,12 +47,12 @@ namespace Chocolatey.Gui.Services
         private readonly ILogService _logService;
 
         /// <summary>
-        /// The key in the <see cref="_cache">Service's Memory Cache</see> for this service's packages./>
+        /// The key in the <see cref="Cache">Service's Memory Cache</see> for this service's packages./>
         /// </summary>
         private const string LocalPackagesCacheKeyName = "LocalChocolateyService.Packages";
 
         /// <summary>
-        /// The key in the <see cref="_cache">Service's Memory Cache</see> for this service's packages json./>
+        /// The key in the <see cref="Cache">Service's Memory Cache</see> for this service's packages json./>
         /// </summary>
         private const string LocalPackagesJsonCacheKeyName = "LocalChocolateyService.PackagesJson";
 
@@ -72,7 +73,10 @@ namespace Chocolatey.Gui.Services
             _packagesJsonPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "ChocolateyGUI", "packages.json");
-        }    
+        }
+
+        private static readonly Regex PackageRegex = new Regex(@"^(?<Name>[a-zA-Z\.]*) (?<VersionString>(\d+(\s*\.\s*\d+){0,3})(-[a-z][0-9a-z-]*)?)$");
+
         /// <summary>
         /// Retrives the currently installed packages.
         /// If the package list is cached, retrive it from there.
@@ -83,12 +87,12 @@ namespace Chocolatey.Gui.Services
         public async Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false)
         {
             // Ensure that we only retrieve the packages one at a to refresh the Cache.
-            _getInstalledSemaphoreSlim.Wait(200);
+            _getInstalledSemaphoreSlim.Wait(2000);
 
             List<IPackageViewModel> packages;
             if (!force)
             {
-                packages = (List<IPackageViewModel>) _cache.Get(LocalPackagesCacheKeyName);
+                packages = (List<IPackageViewModel>) Cache.Get(LocalPackagesCacheKeyName);
                 if (packages != null)
                 {
                     _getInstalledSemaphoreSlim.Release();
@@ -105,14 +109,16 @@ namespace Chocolatey.Gui.Services
             var libPath = Path.Combine(chocoPath, "lib");
 
             var chocoPackageList = (await RunIndirectChocolateyCommand("list -lo", false))
-                .ToDictionary(o => o.ToString().Split(' ')[0], o => o.ToString().Split(' ')[1]);
+                .Where(p => PackageRegex.IsMatch(p.ToString()))
+                .Select(p => PackageRegex.Match(p.ToString()))
+                .ToDictionary(m => m.Groups["Name"].Value, m => new SemanticVersion(m.Groups["VersionString"].Value));
 
             packages = new List<IPackageViewModel>();
             foreach (var nupkgFile in Directory.EnumerateFiles(libPath, "*.nupkg", SearchOption.AllDirectories))
             {
                 var packageInfo = await NupkgReader.GetPackageInformation(nupkgFile);
 
-                if (!chocoPackageList.Any(e => String.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase) && new SemanticVersion(e.Value) == packageInfo.Version))
+                if (!chocoPackageList.Any(e => String.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase) && e.Value == packageInfo.Version))
                     continue;
 
                 var packageConfigEntry =
@@ -125,7 +131,7 @@ namespace Chocolatey.Gui.Services
                  packages.Add(packageInfo);
             }
 
-            _cache.Set(LocalPackagesCacheKeyName, packages, new CacheItemPolicy
+            Cache.Set(LocalPackagesCacheKeyName, packages, new CacheItemPolicy
             {
                 AbsoluteExpiration = DateTime.Now.AddHours(1)
             });
@@ -235,9 +241,9 @@ namespace Chocolatey.Gui.Services
 
         public bool IsPackageInstalled(string id, SemanticVersion version)
         {
-            if (_cache.Contains(LocalPackagesCacheKeyName))
+            if (Cache.Contains(LocalPackagesCacheKeyName))
             {
-                return ((List<IPackageViewModel>)_cache.Get(LocalPackagesCacheKeyName))
+                return ((List<IPackageViewModel>)Cache.Get(LocalPackagesCacheKeyName))
                     .Any(package => string.Compare(package.Id, id, StringComparison.InvariantCultureIgnoreCase) == 0 && package.Version == version);
             }
             return false;
@@ -385,7 +391,7 @@ namespace Chocolatey.Gui.Services
         private List<PackageConfigEntry> PackageConfigEntries()
         {
             // Check to see if we already have a cached version of the packages.json.
-            var configEntries = _cache.Get(LocalPackagesJsonCacheKeyName) as List<PackageConfigEntry>;
+            var configEntries = Cache.Get(LocalPackagesJsonCacheKeyName) as List<PackageConfigEntry>;
             if (configEntries != null)
                 return configEntries;
 
@@ -398,7 +404,7 @@ namespace Chocolatey.Gui.Services
             // If there is, deserialize and cache it.
             var packageJson = File.ReadAllText(_packagesJsonPath);
             var packages = JsonConvert.DeserializeObject<List<PackageConfigEntry>>(packageJson);
-            _cache.Set(LocalPackagesJsonCacheKeyName, packages, DateTime.Now.AddHours(1));
+            Cache.Set(LocalPackagesJsonCacheKeyName, packages, DateTime.Now.AddHours(1));
             return packages;
         }
 
@@ -437,7 +443,7 @@ namespace Chocolatey.Gui.Services
             File.WriteAllText(_packagesJsonPath, packageJson);
 
             // Invalidate the package cache.
-            _cache.Remove(LocalPackagesJsonCacheKeyName);
+            Cache.Remove(LocalPackagesJsonCacheKeyName);
 
             // Throw in this comment for fun.
         }
@@ -463,7 +469,7 @@ namespace Chocolatey.Gui.Services
             File.WriteAllText(_packagesJsonPath, packageJson);
 
             // Invalidate the package cache.
-            _cache.Remove(LocalPackagesJsonCacheKeyName);
+            Cache.Remove(LocalPackagesJsonCacheKeyName);
 
             // Throw in this comment for fun too :D
 

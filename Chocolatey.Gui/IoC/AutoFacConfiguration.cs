@@ -18,7 +18,10 @@ namespace Chocolatey.Gui.IoC
             // Register View Models
             builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>();
             builder.RegisterType<SourceViewModel>();
-            builder.RegisterType<SourceTabViewModel>();
+            builder.Register((c, parameters) =>
+                new SourceTabViewModel(c.Resolve(typeof(Lazy<>).MakeGenericType(parameters.TypedAs<Type>()),
+                    new TypedParameter(typeof(Uri), parameters.TypedAs<Uri>())),
+                    parameters.TypedAs<String>()));
             builder.RegisterType<SourcesControlViewModel>().As<ISourcesControlViewModel>();
             builder.RegisterType<LocalSourceControlViewModel>().As<ILocalSourceControlViewModel>();
             builder.RegisterType<RemoteSourceControlViewModel>().As<IRemoteSourceControlViewModel>();

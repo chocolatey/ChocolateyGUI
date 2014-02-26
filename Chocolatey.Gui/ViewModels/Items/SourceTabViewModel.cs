@@ -1,26 +1,21 @@
 ﻿using System;
-using Autofac;
 using Chocolatey.Gui.Base;
 
 namespace Chocolatey.Gui.ViewModels.Items
 {
     public class SourceTabViewModel : ObservableBase
     {
-        private IComponentContext _componentContext;
-        public SourceTabViewModel(IComponentContext componentContext, string name, Uri url, Type pageType)
+        private readonly dynamic _lazyPage;
+        public SourceTabViewModel(dynamic lazyPageContent, string name)
         {
-            _componentContext = componentContext;
+            _lazyPage = lazyPageContent;
 
             Name = name;
-            Url = url;
-            PageType = pageType;
         }
 
         public string Name { get; private set; }
 
         public Uri Url { get; private set; }
-
-        public Type PageType { get; private set; }
 
         private bool _isSelected;
         public bool IsSelected
@@ -33,8 +28,7 @@ namespace Chocolatey.Gui.ViewModels.Items
                 if (_content != null)
                     return;
 
-                Content = _componentContext.Resolve(PageType, new TypedParameter(typeof(Uri), Url));
-                _componentContext = null;
+                Content = _lazyPage.Value;
             }
         }
 

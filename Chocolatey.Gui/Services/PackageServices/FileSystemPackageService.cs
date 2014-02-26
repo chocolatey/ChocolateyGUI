@@ -66,7 +66,7 @@ namespace Chocolatey.Gui.Services.PackageServices
 
         public static Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source)
         {
-            return Task.Factory.StartNew(() => vm);
+            return TaskEx.Run(() => vm);
         }
 
         public static async Task<bool> TestPath(Uri source, IChocolateyService chocolateyService)

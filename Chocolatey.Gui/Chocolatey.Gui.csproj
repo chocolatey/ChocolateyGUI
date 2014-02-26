@@ -167,6 +167,8 @@
     <Compile Include="Services\PackageServices\ODataPackageService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Services\SettingsSourceService.cs" />
+    <Compile Include="Utilities\AsyncLock.cs" />
+    <Compile Include="Utilities\AsyncSemaphore.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\LogExtensions.cs" />
     <Compile Include="Utilities\Extensions\PowershellExtensions.cs" />

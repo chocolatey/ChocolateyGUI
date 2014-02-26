@@ -320,19 +320,19 @@ namespace Chocolatey.Gui.ViewModels.Items
 
         public async Task Install()
         {
-            await _chocolateyService.InstallPackage(Id, Version, Source);
+            await _chocolateyService.InstallPackage(Id, Version, Source).ConfigureAwait(false);
         }
 
         public async Task Update()
         {
-            await _chocolateyService.UpdatePackage(Id, Source);
+            await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
             if(CanGoBack())
                 _navigationService.GoBack();
         }
 
         public async Task Uninstall()
         {
-            await _chocolateyService.UninstallPackage(Id, Version, true);
+            await _chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
             if (CanGoBack())
                 _navigationService.GoBack();
         }

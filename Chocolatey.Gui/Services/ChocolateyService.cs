@@ -7,11 +7,11 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Runtime.Caching;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using Chocolatey.Gui.Controls;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Properties;
+using Chocolatey.Gui.Utilities;
 using Chocolatey.Gui.Utilities.Extensions;
 using Chocolatey.Gui.Utilities.Nuspec;
 using Chocolatey.Gui.ViewModels.Items;
@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 
 namespace Chocolatey.Gui.Services
 {
-    public class ChocolateyService : IChocolateyService, IDisposable
+    public class ChocolateyService : IChocolateyService
     {        
         /// <summary>
         /// The PowerShell runspace for this service.
@@ -29,7 +29,7 @@ namespace Chocolatey.Gui.Services
         /// <summary>
         /// Synchornizes the GetPackages method.
         /// </summary>
-        private readonly SemaphoreSlim _getInstalledSemaphoreSlim;
+        private readonly AsyncLock _getInstalledLock;
 
         /// <summary>
         /// Cache for this servce where out installed packages list is stored.
@@ -66,7 +66,7 @@ namespace Chocolatey.Gui.Services
             _runspace = RunspaceFactory.CreateRunspace(new ChocolateyHost(progressService));
             _runspace.Open();
 
-            _getInstalledSemaphoreSlim = new SemaphoreSlim(1);
+            _getInstalledLock = new AsyncLock();
             _progressService = progressService;
             _logService = logServiceFunc(typeof(ChocolateyService));
 
@@ -87,59 +87,64 @@ namespace Chocolatey.Gui.Services
         public async Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false)
         {
             // Ensure that we only retrieve the packages one at a to refresh the Cache.
-            _getInstalledSemaphoreSlim.Wait(2000);
-
-            List<IPackageViewModel> packages;
-            if (!force)
+            using (await _getInstalledLock.LockAsync())
             {
-                packages = (List<IPackageViewModel>) Cache.Get(LocalPackagesCacheKeyName);
-                if (packages != null)
+                List<IPackageViewModel> packages;
+                if (!force)
                 {
-                    _getInstalledSemaphoreSlim.Release();
-                    return packages;
+                    packages = (List<IPackageViewModel>) Cache.Get(LocalPackagesCacheKeyName);
+                    if (packages != null)
+                    {
+                        return packages;
+                    }
                 }
+
+                _progressService.StartLoading("Chocolatey Service", "Getting Installed Packages...");
+
+                var chocoPath = Settings.Default.chocolateyInstall;
+                if (string.IsNullOrWhiteSpace(chocoPath) || !Directory.Exists(chocoPath))
+                    throw new InvalidDataException(
+                        "Invalid Chocolatey Path. Check that chocolateyInstall is correct in the app.config.");
+
+                var libPath = Path.Combine(chocoPath, "lib");
+
+                var chocoPackageList = (await RunIndirectChocolateyCommand("list -lo", false))
+                    .Where(p => PackageRegex.IsMatch(p.ToString()))
+                    .Select(p => PackageRegex.Match(p.ToString()))
+                    .ToDictionary(m => m.Groups["Name"].Value, m => new SemanticVersion(m.Groups["VersionString"].Value));
+
+                packages = new List<IPackageViewModel>();
+                foreach (var nupkgFile in Directory.EnumerateFiles(libPath, "*.nupkg", SearchOption.AllDirectories))
+                {
+                    var packageInfo = await NupkgReader.GetPackageInformation(nupkgFile);
+
+                    if (
+                        !chocoPackageList.Any(
+                            e =>
+                                String.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase) &&
+                                e.Value == packageInfo.Version))
+                        continue;
+
+                    var packageConfigEntry =
+                        PackageConfigEntries().SingleOrDefault(
+                            entry =>
+                                String.Compare(entry.Id, packageInfo.Id, StringComparison.OrdinalIgnoreCase) == 0 &&
+                                entry.Version == packageInfo.Version);
+
+                    if (packageConfigEntry != null)
+                        packageInfo.Source = packageConfigEntry.Source;
+
+                    packages.Add(packageInfo);
+                }
+
+                Cache.Set(LocalPackagesCacheKeyName, packages, new CacheItemPolicy
+                {
+                    AbsoluteExpiration = DateTime.Now.AddHours(1)
+                });
+
+                _progressService.StopLoading();
+                return packages;
             }
-
-            _progressService.StartLoading("Chocolatey Service", "Getting Installed Packages...");
-
-            var chocoPath = Settings.Default.chocolateyInstall;
-            if(string.IsNullOrWhiteSpace(chocoPath) || !Directory.Exists(chocoPath))
-                throw new InvalidDataException("Invalid Chocolatey Path. Check that chocolateyInstall is correct in the app.config.");
-
-            var libPath = Path.Combine(chocoPath, "lib");
-
-            var chocoPackageList = (await RunIndirectChocolateyCommand("list -lo", false))
-                .Where(p => PackageRegex.IsMatch(p.ToString()))
-                .Select(p => PackageRegex.Match(p.ToString()))
-                .ToDictionary(m => m.Groups["Name"].Value, m => new SemanticVersion(m.Groups["VersionString"].Value));
-
-            packages = new List<IPackageViewModel>();
-            foreach (var nupkgFile in Directory.EnumerateFiles(libPath, "*.nupkg", SearchOption.AllDirectories))
-            {
-                var packageInfo = await NupkgReader.GetPackageInformation(nupkgFile);
-
-                if (!chocoPackageList.Any(e => String.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase) && e.Value == packageInfo.Version))
-                    continue;
-
-                var packageConfigEntry =
-                    PackageConfigEntries().SingleOrDefault(
-                        entry => String.Compare(entry.Id, packageInfo.Id, StringComparison.OrdinalIgnoreCase) == 0 && entry.Version == packageInfo.Version);
-
-                if (packageConfigEntry != null)
-                    packageInfo.Source = packageConfigEntry.Source;
-
-                 packages.Add(packageInfo);
-            }
-
-            Cache.Set(LocalPackagesCacheKeyName, packages, new CacheItemPolicy
-            {
-                AbsoluteExpiration = DateTime.Now.AddHours(1)
-            });
-
-            _progressService.StopLoading();
-            _getInstalledSemaphoreSlim.Release();
-
-            return packages;
         }
 
         /// <summary>
@@ -222,7 +227,7 @@ namespace Chocolatey.Gui.Services
             var newPackages = (await GetInstalledPackages()).Where(p => String.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0).ToList();
 
             var results = newPackages
-                .FullOuterJoin(currentPackages, p => p.Version, cp => cp.Version, (p, cp, version) => new { Id = p.Id ?? cp.Id, Version = version});
+                .FullOuterJoin(currentPackages, p => p.Version, cp => cp.Version, (p, cp, version) => new { Id = p != null ? p.Id ?? cp.Id : cp.Id , Version = version});
 
             foreach (var result in results)
             {
@@ -302,7 +307,7 @@ namespace Chocolatey.Gui.Services
 
             try
             {
-                await Task.Factory.StartNew(() => pipeline.Invoke());
+                await TaskEx.Run(() => pipeline.Invoke());
             }
             catch (Exception e)
             {
@@ -345,7 +350,7 @@ namespace Chocolatey.Gui.Services
 
             try
             {
-                results = await Task.Factory.StartNew(() => pipeline.Invoke());
+                results = await TaskEx.Run(() => pipeline.Invoke());
             }
             catch (Exception e)
             {
@@ -484,32 +489,5 @@ namespace Chocolatey.Gui.Services
         }
 
         public event PackagesChangedEventHandler PackagesUpdated;
-
-        #region IDisposable
-        ~ChocolateyService()
-        {
-            Dispose(false);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
-
-            if (disposing)
-            {
-                _getInstalledSemaphoreSlim.Dispose();
-            }
-
-            _disposed = true;
-        }
-
-        private bool _disposed;
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

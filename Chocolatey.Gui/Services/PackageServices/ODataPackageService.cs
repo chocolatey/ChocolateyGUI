@@ -20,6 +20,28 @@ namespace Chocolatey.Gui.Services.PackageServices
             return string.Format("ODataPackageService.Feeds.{0}", feed);
         }
 
+        private static readonly object _feedLockObject = new object();
+
+        private static FeedContext_x0060_1 GetFeed(Uri source)
+        {
+            lock (_feedLockObject)
+            {
+                FeedContext_x0060_1 service;
+                if ((service = (FeedContext_x0060_1) Cache.Get(GetMemoryCacheKey(source))) == null)
+                {
+                    service = new FeedContext_x0060_1(source)
+                    {
+                        IgnoreMissingProperties = true,
+                        IgnoreResourceNotFoundException = true,
+                        MergeOption = MergeOption.NoTracking
+                    };
+                    Cache.Set(GetMemoryCacheKey(source), service,
+                        new CacheItemPolicy {SlidingExpiration = TimeSpan.FromMinutes(20)});
+                }
+                return service;
+            }
+        }
+
         public static async Task<PackageSearchResults> Search(string query, Func<IPackageViewModel> packageFactory, Uri source)
         {
             return await Search(query, packageFactory, new PackageSearchOptions(), source);
@@ -27,16 +49,7 @@ namespace Chocolatey.Gui.Services.PackageServices
 
         public static async Task<PackageSearchResults> Search(string query, Func<IPackageViewModel> packageFactory, PackageSearchOptions options, Uri source)
         {
-            FeedContext_x0060_1 service;
-            if ((service = (FeedContext_x0060_1)Cache.Get(GetMemoryCacheKey(source))) == null)
-            {
-                service = new FeedContext_x0060_1(source)
-                {
-                    IgnoreMissingProperties = true,
-                    IgnoreResourceNotFoundException = true
-                };
-                Cache.Set(GetMemoryCacheKey(source), service, new CacheItemPolicy {SlidingExpiration = TimeSpan.FromMinutes(20)});
-            }
+            var service = GetFeed(source);
             var queryString = query;
             IQueryable<V2FeedPackage> feedQuery = service.Packages.Where(package => package.IsPrerelease == options.IncludePrerelease || package.IsPrerelease == false);
 
@@ -73,16 +86,7 @@ namespace Chocolatey.Gui.Services.PackageServices
 
         public static IPackageViewModel GetLatest(string id, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
         {
-            FeedContext_x0060_1 service;
-            if ((service = (FeedContext_x0060_1)Cache.Get(GetMemoryCacheKey(source))) == null)
-            {
-                service = new FeedContext_x0060_1(source)
-                {
-                    IgnoreMissingProperties = true,
-                    IgnoreResourceNotFoundException = true
-                };
-                Cache.Set(GetMemoryCacheKey(source), service, new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMinutes(20) });
-            }
+            var service = GetFeed(source);
 
             var packageQuery = service.Packages.Where(p => p.IsPrerelease == includePrerelease || p.IsPrerelease == false)
                 .Where(p => p.Id == id);
@@ -96,16 +100,7 @@ namespace Chocolatey.Gui.Services.PackageServices
 
         public static async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source)
         {
-            FeedContext_x0060_1 service;
-            if ((service = (FeedContext_x0060_1)Cache.Get(GetMemoryCacheKey(source))) == null)
-            {
-                service = new FeedContext_x0060_1(source)
-                {
-                    IgnoreMissingProperties = true,
-                    IgnoreResourceNotFoundException = true
-                };
-                Cache.Set(GetMemoryCacheKey(source), service, new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMinutes(20) });
-            }
+            var service = GetFeed(source);
 
             var feedQuery =
                     (DataServiceQuery<V2FeedPackage>)service.Packages.Where(package => package.Id == vm.Id && package.Version == vm.Version.ToString());

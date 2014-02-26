@@ -37,7 +37,7 @@ namespace Chocolatey.Gui.Views.Windows
 
         private async void InitializeChocoDirectory()
         {
-            await Task.Factory.StartNew(() =>
+            await TaskEx.Run(() =>
             {
                 if (string.IsNullOrWhiteSpace(Settings.Default.chocolateyInstall))
                 {

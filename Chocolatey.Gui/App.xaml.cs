@@ -44,13 +44,15 @@ namespace Chocolatey.Gui
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if(e.IsTerminating)
+            if (e.IsTerminating)
+            {
                 Log.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
-            else 
+                MessageBox.Show(e.ExceptionObject.ToString(), "First Chance Exception", MessageBoxButton.OK, MessageBoxImage.Error,
+                    MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+            }
+            else
                 Log.Error("Unhandled Exception", e.ExceptionObject as Exception);
 
-            MessageBox.Show(e.ExceptionObject.ToString(), "First Chance Exception", MessageBoxButton.OK, MessageBoxImage.Error,
-                MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
         }
 
         static void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)

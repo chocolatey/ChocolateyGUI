@@ -1,5 +1,4 @@
-﻿using System;
-using Chocolatey.Gui.Base;
+﻿using Chocolatey.Gui.Base;
 
 namespace Chocolatey.Gui.ViewModels.Items
 {
@@ -15,21 +14,9 @@ namespace Chocolatey.Gui.ViewModels.Items
 
         public string Name { get; private set; }
 
-        public Uri Url { get; private set; }
-
-        private bool _isSelected;
-        public bool IsSelected
+        public void LoadContent()
         {
-            get { return _isSelected; }
-            set
-            {
-                SetPropertyValue(ref _isSelected, value);
-
-                if (_content != null)
-                    return;
-
-                Content = _lazyPage.Value;
-            }
+           Content = _lazyPage.Value;
         }
 
         private object _content;

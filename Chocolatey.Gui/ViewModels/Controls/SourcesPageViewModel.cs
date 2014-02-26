@@ -22,9 +22,8 @@ namespace Chocolatey.Gui.ViewModels.Controls
             get { return _selectedSource; }
             set
             {
-                if (_selectedSource != null && _selectedSource != value)
-                    _selectedSource.IsSelected = false;
-                value.IsSelected = true;
+                if (value != null && value.Content == null)
+                    value.LoadContent();
                 SetPropertyValue(ref _selectedSource, value);
             }
         }

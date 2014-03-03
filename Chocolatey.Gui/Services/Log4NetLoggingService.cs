@@ -5,6 +5,7 @@ using System.Text;
 using log4net;
 using log4net.Appender;
 using log4net.Repository.Hierarchy;
+using Mindscape.Raygun4Net;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
@@ -13,6 +14,9 @@ namespace Chocolatey.Gui.Services
     public class Log4NetLoggingService : ILogService
     {
         private readonly ILog _log;
+#if !DEBUG
+        private readonly RaygunClient _client = new RaygunClient("qDY2sdfKNrPcwaZJf3FELA==");
+#endif
 
         public Log4NetLoggingService(Type logSourceType)
         {
@@ -57,6 +61,9 @@ namespace Chocolatey.Gui.Services
         public void Info(object message, Exception exception)
         {
             _log.Info(message, exception);
+#if !DEBUG
+            _client.Send(exception);
+#endif
         }
 
 
@@ -88,6 +95,9 @@ namespace Chocolatey.Gui.Services
         public void Warn(object message, Exception exception)
         {
             _log.Warn(message, exception);
+#if !DEBUG
+            _client.Send(exception);
+#endif
         }
 
 
@@ -120,6 +130,9 @@ namespace Chocolatey.Gui.Services
         public void Error(object message, Exception exception)
         {
             _log.Error(message, exception);
+#if !DEBUG
+            _client.Send(exception);
+#endif
             FlushBuffer();
         }
 
@@ -157,6 +170,9 @@ namespace Chocolatey.Gui.Services
         public void Fatal(object message, Exception exception)
         {
             _log.Fatal(message, exception);
+#if !DEBUG
+            _client.Send(exception);
+#endif
             FlushBuffer();
         }
 

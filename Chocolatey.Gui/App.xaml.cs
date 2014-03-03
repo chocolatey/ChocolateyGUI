@@ -47,7 +47,7 @@ namespace Chocolatey.Gui
             if (e.IsTerminating)
             {
                 Log.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
-                MessageBox.Show(e.ExceptionObject.ToString(), "First Chance Exception", MessageBoxButton.OK, MessageBoxImage.Error,
+                MessageBox.Show(e.ExceptionObject.ToString(), "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error,
                     MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
             }
             else

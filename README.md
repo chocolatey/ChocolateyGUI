@@ -30,6 +30,9 @@ If you find any problems with ChocolateyGUI, please raise an issue [here](https:
 
 If you want to ask any questions about ChocolateyGUI, please issue the forum [here](https://groups.google.com/forum/#!forum/chocolateygui)
 
+Or, you can come and chat to the development team here:
+[![Gitter chat](https://badges.gitter.im/chocolatey/ChocolateyGUI.png)](https://gitter.im/chocolatey/ChocolateyGUI)
+
 ## Features:
 * View all **installed** and **available** packages
 * **Update** installed but outdated packages

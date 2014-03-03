@@ -21,10 +21,10 @@ namespace Chocolatey.Gui.Services
 
         Task RunDirectChocolateyCommand(Dictionary<string, object> commandArgs,
             bool refreshPackages = true,
-            bool logOutput = true, bool clearBuffer = true);
+            bool logOutput = true);
 
         Task<Collection<PSObject>> RunIndirectChocolateyCommand(string commandString, bool refreshPackages = true,
-            bool logOutput = true, bool clearBuffer = true);
+            bool logOutput = true);
 
         event PackagesChangedEventHandler PackagesUpdated;
     }

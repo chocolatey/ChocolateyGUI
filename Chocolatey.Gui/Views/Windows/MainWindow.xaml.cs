@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using Chocolatey.Gui.ChocolateyFeedService;
+﻿using Chocolatey.Gui.ChocolateyFeedService;
+using Chocolatey.Gui.Controls.Dialogs;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Properties;
 using Chocolatey.Gui.Services;
@@ -10,6 +7,10 @@ using Chocolatey.Gui.ViewModels.Items;
 using Chocolatey.Gui.ViewModels.Windows;
 using Chocolatey.Gui.Views.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace Chocolatey.Gui.Views.Windows
 {
@@ -18,6 +19,8 @@ namespace Chocolatey.Gui.Views.Windows
     /// </summary>
     public partial class MainWindow
     {
+        private readonly IProgressService _progressService;
+
         public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService)
         {
             InitializeComponent();
@@ -25,6 +28,7 @@ namespace Chocolatey.Gui.Views.Windows
 
             if (progressService is ProgressService)
                 (progressService as ProgressService).MainWindow = this;
+            _progressService = progressService;
 
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
             AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
@@ -33,6 +37,29 @@ namespace Chocolatey.Gui.Views.Windows
             navigationService.Navigate(typeof(SourcesControl));
 
             InitializeChocoDirectory();
+        }
+
+        public Task<ChocolateyDialogController> ShowChocolateyDialogAsync(string title, bool isCancelable = false, MetroDialogSettings settings = null)
+        {
+            return ((Task<ChocolateyDialogController>)Dispatcher.Invoke(new Func<Task<ChocolateyDialogController>>(async () =>
+            {
+                //create the dialog control
+                var dialog = new ChocolateyDialog(this);
+                dialog.Title = title;
+                dialog.IsCancelable = isCancelable;
+                dialog.OutputBuffer = _progressService.Output;
+
+                if (settings == null)
+                    settings = MetroDialogOptions;
+
+                dialog.NegativeButtonText = settings.NegativeButtonText;
+
+                await this.ShowMetroDialogAsync(dialog);
+                return new ChocolateyDialogController(dialog, () =>
+                {
+                    return this.HideMetroDialogAsync(dialog);
+                });
+            })));
         }
 
         private async void InitializeChocoDirectory()
@@ -60,13 +87,12 @@ namespace Chocolatey.Gui.Views.Windows
                         Settings.Default.Save();
                     }
                 }
-
             });
         }
 
         private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            SettingsFlyout.Width = Width/3;
+            SettingsFlyout.Width = Width / 3;
             SettingsFlyout.IsOpen = !SettingsFlyout.IsOpen;
         }
 
@@ -77,7 +103,7 @@ namespace Chocolatey.Gui.Views.Windows
             SourcesFlyout.IsOpenChanged += SourcesFlyout_IsOpenChanged;
         }
 
-        void SourcesFlyout_IsOpenChanged(object sender, EventArgs e)
+        private void SourcesFlyout_IsOpenChanged(object sender, EventArgs e)
         {
             if (SourcesFlyout.IsOpen == false)
             {

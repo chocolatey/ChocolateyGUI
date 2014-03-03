@@ -99,7 +99,8 @@ namespace Chocolatey.Gui.Services
                     }
                 }
 
-                _progressService.StartLoading("Chocolatey Service", "Getting Installed Packages...");
+                await _progressService.StartLoading("Chocolatey Service");
+                _progressService.WriteMessage("Retrieving installed packages...");
 
                 var chocoPath = Settings.Default.chocolateyInstall;
                 if (string.IsNullOrWhiteSpace(chocoPath) || !Directory.Exists(chocoPath))
@@ -142,7 +143,7 @@ namespace Chocolatey.Gui.Services
                     AbsoluteExpiration = DateTime.Now.AddHours(1)
                 });
 
-                _progressService.StopLoading();
+                await _progressService.StopLoading();
                 return packages;
             }
         }
@@ -177,6 +178,8 @@ namespace Chocolatey.Gui.Services
         #region Package Commands
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null)
         {
+            await _progressService.StartLoading(string.Format("Installing {0}...", id));
+            _progressService.WriteMessage("Building chocolatey command...");
             var arguments = new Dictionary<string, object>
             {
                 {"command", "install"},
@@ -197,10 +200,13 @@ namespace Chocolatey.Gui.Services
             if (newPackage != null) AddPackageEntry(newPackage.Id, newPackage.Version, source);
 
             NotifyPackagesChanged(PackagesChangedEventType.Installed, id, version == null ? "" : version.ToString());
+            await _progressService.StopLoading();
         }
 
         public async Task UninstallPackage(string id, SemanticVersion version, bool force = false)
         {
+            await _progressService.StartLoading(string.Format("Uninstalling {0}...", id));
+            _progressService.WriteMessage("Building chocolatey command...");
             var arguments = new Dictionary<string, object>
             {
                 {"command", "uninstall"},
@@ -211,10 +217,13 @@ namespace Chocolatey.Gui.Services
 
             RemovePackageEntry(id, version);
             NotifyPackagesChanged(PackagesChangedEventType.Uninstalled, id, version.ToString());
+            await _progressService.StopLoading();
         }
 
         public async Task UpdatePackage(string id, Uri source = null)
         {
+            await _progressService.StartLoading(string.Format("Updating {0}...", id));
+            _progressService.WriteMessage("Building chocolatey command...");
             var currentPackages = PackageConfigEntries().Where(p => String.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0).ToList();
 
             var arguments = new Dictionary<string, object>
@@ -242,6 +251,7 @@ namespace Chocolatey.Gui.Services
             }
 
             NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
+            await _progressService.StopLoading();
         }
 
         public bool IsPackageInstalled(string id, SemanticVersion version)
@@ -285,14 +295,12 @@ namespace Chocolatey.Gui.Services
         /// <param name="clearBuffer">Whether the faux PowerShell console should be cleared.</param>
         /// <returns>A collection of the ouptut of the PowerShell runspace. Will be empty if <paramref cref="logOutput"/> is true.</returns>
         public async Task RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true,
-            bool logOutput = true, bool clearBuffer = true)
+            bool logOutput = true)
         {
-            _progressService.StartLoading("Chocolatey", "Processing chocolatey command...");
+            await _progressService.StartLoading("Chocolatey");
+            _progressService.WriteMessage("Processing chocolatey command...");
 
             var pipeline = _runspace.CreatePipeline();
-
-            if(clearBuffer)
-                _progressService.Output.Clear();
 
             var chocoPath = Path.Combine(Settings.Default.chocolateyInstall, "chocolateyinstall", "chocolatey.ps1");
 
@@ -311,20 +319,20 @@ namespace Chocolatey.Gui.Services
             }
             catch (Exception e)
             {
-                WriteError(e.ToString());
+                _progressService.WriteMessage(e.ToString(), PowerShellLineType.Error);
                 _progressService.StopLoading();
                 throw;
             }
 
             if (logOutput)
             {
-                WriteOutput("Executed successfully...");
+                _progressService.WriteMessage("Executed successfully.");
             }
 
             if (refreshPackages)
                 await GetInstalledPackages(force: true);
 
-            _progressService.StopLoading();
+            await _progressService.StopLoading();
         } 
         
         /// <summary>
@@ -336,14 +344,12 @@ namespace Chocolatey.Gui.Services
         /// <param name="clearBuffer">Whether the faux PowerShell console should be cleared.</param>
         /// <returns>A collection of the ouptut of the PowerShell runspace. Will be empty if <paramref cref="logOutput"/> is true.</returns>
         public async Task<Collection<PSObject>> RunIndirectChocolateyCommand(string commandString, bool refreshPackages = true,
-            bool logOutput = true, bool clearBuffer = true)
+            bool logOutput = true)
         {
-            _progressService.StartLoading("Chocolatey", "Processing chocolatey command...");
+            await _progressService.StartLoading("Chocolatey");
+            _progressService.WriteMessage("Processing chocolatey command...");
 
             var pipeline = _runspace.CreatePipeline();
-
-            if (clearBuffer)
-                _progressService.Output.Clear();
 
             pipeline.Commands.AddScript("chocolatey " + commandString);
             Collection<PSObject> results;
@@ -354,41 +360,21 @@ namespace Chocolatey.Gui.Services
             }
             catch (Exception e)
             {
-                WriteError(e.ToString());
+                _progressService.WriteMessage(e.ToString(), PowerShellLineType.Error);
                 _progressService.StopLoading();
                 throw;
             }
 
             if (logOutput)
             {
-                WriteOutput("Executed successfully...");
+                _progressService.WriteMessage("Executed successfully.");
             }
 
             if (refreshPackages)
                 await GetInstalledPackages(force: true);
 
-            _progressService.StopLoading();
+            await _progressService.StopLoading();
             return results;
-        }
-        #endregion
-
-        #region Progress Logging
-        /// <summary>
-        /// Helper function to write output messages to the faux PowerShell console.
-        /// </summary>
-        /// <param name="message">Message to be written.</param>
-        private void WriteOutput(string message)
-        {
-            _progressService.Output.Add(new PowerShellOutputLine (message, PowerShellLineType.Output ));
-        }
-
-        /// <summary>
-        /// Helper function to write error messages to the faux PowerShell console.
-        /// </summary>
-        /// <param name="message">Message to be written.</param>
-        private void WriteError(string message)
-        {
-            _progressService.Output.Add(new PowerShellOutputLine (message, PowerShellLineType.Error));
         }
         #endregion
 

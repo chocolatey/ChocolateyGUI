@@ -9,6 +9,8 @@ using Chocolatey.Gui.Controls;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Views.Windows;
 using MahApps.Metro.Controls.Dialogs;
+using Chocolatey.Gui.Controls.Dialogs;
+using Chocolatey.Gui.Utilities;
 
 namespace Chocolatey.Gui.Services
 {
@@ -16,44 +18,14 @@ namespace Chocolatey.Gui.Services
     {
         public MainWindow MainWindow;
 
+        private readonly AsyncLock _lock;
+
         public ProgressService()
         {
             _isLoading = false;
             _loadingItems = 0;
-
             _output = new ObservableRingBuffer<PowerShellOutputLine>(100);
-            _output.CollectionChanged += (sender, args) =>
-            {
-                if (args.NewItems != null && args.NewItems.Count > 0)
-                {
-                    foreach (PowerShellOutputLine newItem in args.NewItems)
-                    {
-                        Console.WriteLine(newItem.Text);
-                    }
-                }
-            };
-
-            Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                .Where(p => p.EventArgs.PropertyName == "IsLoading")
-                .Select(_ => IsLoading)
-                .Delay(TimeSpan.FromMilliseconds(500))
-                .ObserveOnDispatcher()
-                .Subscribe(async isLoading =>
-                {
-                    if (isLoading && IsLoading &&
-                        MainWindow != null && _progressController == null)
-                    {
-                        _progressController = await MainWindow.ShowProgressAsync(ProgressTitle, ProgressMessage);
-                        _progressController.SetIndeterminate();
-                        return;
-                    }
-
-                    if (!isLoading && _progressController != null)
-                    {
-                        await _progressController.CloseAsync();
-                        _progressController = null;
-                    }
-                });
+            _lock = new AsyncLock();
         }
 
         private bool _isLoading;
@@ -62,42 +34,73 @@ namespace Chocolatey.Gui.Services
             get { return _isLoading; }
         }
 
-
         private int _loadingItems;
-        private ProgressDialogController _progressController;
+        private ChocolateyDialogController _progressController;
+        private CancellationTokenSource _cst = null;
 
-        private string ProgressTitle { get; set; }
-        private string ProgressMessage { get; set; }
-
-        public void StartLoading(string title = "", string message = "")
+        public async Task StartLoading(string title = null, bool isCancelable = false)
         {
-            var currentCount = Interlocked.Increment(ref _loadingItems);
-            if (currentCount == 1)
+            using (await _lock.LockAsync())
             {
-                ProgressTitle = title;
-                ProgressMessage = message;
+                var currentCount = Interlocked.Increment(ref _loadingItems);
+                if (currentCount == 1)
+                {
+                    var chocoDialg = new ChocolateyDialog(MainWindow);
 
-                _isLoading = true;
-                NotifyPropertyChanged("IsLoading");
+                    _progressController = await MainWindow.ShowChocolateyDialogAsync(title, isCancelable);
+                    _progressController.SetIndeterminate();
+                    if (isCancelable)
+                    {
+                        _cst = new CancellationTokenSource();
+                        _progressController.OnCancelled += dialog =>
+                        {
+                            if (_cst != null)
+                                _cst.Cancel();
+                        };
+                    }
+
+                    _output.Clear();
+
+                    _isLoading = true;
+                    NotifyPropertyChanged("IsLoading");
+                }
             }
         }
 
-        public void StopLoading()
+        public async Task StopLoading()
         {
-            var currentCount = Interlocked.Decrement(ref _loadingItems);
-            if (currentCount == 0)
+            using (await _lock.LockAsync())
             {
-                _isLoading = false;
-                _output.Clear();
-                Report(0);
-                NotifyPropertyChanged("IsLoading");
+                var currentCount = Interlocked.Decrement(ref _loadingItems);
+                if (currentCount == 0)
+                {
+                    await _progressController.CloseAsync();
+                    _progressController = null;
+                    Report(0);
+
+                    _isLoading = false;
+                    NotifyPropertyChanged("IsLoading");
+                }
             }
+        }
+
+        public CancellationToken GetCancellationToken()
+        {
+            if (!IsLoading)
+                throw new InvalidOperationException("There's no current operation in process.");
+            return _cst.Token;
         }
 
         private readonly ObservableRingBuffer<PowerShellOutputLine> _output;
         public ObservableRingBuffer<PowerShellOutputLine> Output
         {
             get { return _output; }
+        }
+
+
+        public void WriteMessage(string message, PowerShellLineType type = PowerShellLineType.Output, bool newLine = true)
+        {
+            _output.Add(new PowerShellOutputLine(message, type, newLine));
         }
 
         private double _progress;
@@ -119,7 +122,7 @@ namespace Chocolatey.Gui.Services
             NotifyPropertyChanged("Progress");
         }
 
-        public async Task<MessageDialogResult> ShowMessage(string title, string message)
+        public async Task<MessageDialogResult> ShowMessageAsync(string title, string message)
         {
             if (MainWindow != null)
             {

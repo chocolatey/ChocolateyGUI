@@ -1,5 +1,6 @@
 ﻿using Chocolatey.Gui.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Security.Cryptography;
@@ -9,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Chocolatey.Gui.Controls
 {
@@ -23,7 +25,6 @@ namespace Chocolatey.Gui.Controls
         public static readonly DependencyProperty BufferProperty = DependencyProperty.Register("Buffer", typeof(ObservableRingBuffer<PowerShellOutputLine>), typeof(FauxPowerShellConsole),
             new FrameworkPropertyMetadata { DefaultValue = null, PropertyChangedCallback = OnBufferChanged, BindsTwoWayByDefault = true, DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
 
-        private ObservableRingBuffer<PowerShellOutputLine> _oldBuffer;
         public ObservableRingBuffer<PowerShellOutputLine> Buffer
         {
             get { return GetValue<ObservableRingBuffer<PowerShellOutputLine>>(BufferProperty); }
@@ -39,6 +40,8 @@ namespace Chocolatey.Gui.Controls
         /// The container paragraph for all the console's text.
         /// </summary>
         private readonly Paragraph _backingParagraph;
+
+        private readonly Dispatcher _windowDispatcher;
 
         public FauxPowerShellConsole() : base(new FlowDocument())
         {
@@ -59,12 +62,20 @@ namespace Chocolatey.Gui.Controls
 
         private void OnBufferChanged(DependencyPropertyChangedEventArgs args)
         {
-            if (_oldBuffer != null)
-                _oldBuffer.CollectionChanged -= OnBufferUpdated;
+            // If we had a previous buffer, clear our event holder.
+            if (args.OldValue != null)
+                ((ObservableRingBuffer<PowerShellOutputLine>)args.OldValue).CollectionChanged -= OnBufferUpdated;
 
-            _oldBuffer = Buffer;
-            Buffer.CollectionChanged += OnBufferUpdated;
+            var newBuffer = (ObservableRingBuffer<PowerShellOutputLine>)args.NewValue;
+            newBuffer.CollectionChanged += OnBufferUpdated;
+            
+            // Reset the current console.
             OnBufferUpdated(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+
+            var bufferItems = newBuffer.ToList();
+
+            // Add in any lines written to the buffer.
+            OnBufferUpdated(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, bufferItems));
         }
 
 
@@ -76,43 +87,23 @@ namespace Chocolatey.Gui.Controls
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Reset:
-                    Application.Current.Dispatcher.Invoke(new RunOnUI(() => _backingParagraph.Inlines.Clear()));
+                    Application.Current.Dispatcher.BeginInvoke(new RunOnUI(() => _backingParagraph.Inlines.Clear()));
                     break;
                 case NotifyCollectionChangedAction.Add:
-                    if (args.NewItems.Count == 1 && args.NewStartingIndex > 0)
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(new RunStringOnUI(item =>
-                        {
-                            var run = new Run
-                            {
-                                Text = item.Text + Environment.NewLine,
-                                Name = _getNameHash(item.Text),
-                                Foreground = item.Type == PowerShellLineType.Output ? Brushes.White : Brushes.Red,
-                                Background = item.Type == PowerShellLineType.Output ? Brushes.Transparent : Brushes.Black
-                            };
-
-                            var beforeString = Buffer[args.NewStartingIndex - 1].Text;
-                            var key = _getNameHash(beforeString);
-                            var beforeRun = _backingParagraph.Inlines.FirstOrDefault(inline => inline.Name == key);
-                            if (beforeRun != null)
-                                _backingParagraph.Inlines.InsertAfter(beforeRun, run);
-                            else
-                                _backingParagraph.Inlines.Add(run);
-
-                            Selection.Select(run.ContentStart, run.ContentEnd);
-                        }), args.NewItems[0]);
-                    }
                     foreach (PowerShellOutputLine item in args.NewItems)
                     {
-                        Application.Current.Dispatcher.BeginInvoke(new RunStringOnUI(line =>
+                        Dispatcher.BeginInvoke(new RunStringOnUI(line =>
                         {
                             var run = new Run
                             {
-                                Text = line.Text + Environment.NewLine,
+                                Text = item.Text,
                                 Name = _getNameHash(line.Text),
                                 Foreground = line.Type == PowerShellLineType.Output ? Brushes.White : Brushes.Red,
                                 Background = line.Type == PowerShellLineType.Output ? Brushes.Transparent : Brushes.Black
                             };
+
+                            if (item.NewLine)
+                                run.Text += Environment.NewLine;
 
                             _backingParagraph.Inlines.Add(run);
                             Selection.Select(run.ContentStart, run.ContentEnd);
@@ -122,7 +113,7 @@ namespace Chocolatey.Gui.Controls
                 case NotifyCollectionChangedAction.Remove:
                     foreach (PowerShellOutputLine item in args.OldItems)
                     {
-                        Application.Current.Dispatcher.BeginInvoke(new RunStringOnUI(line =>
+                        Dispatcher.BeginInvoke(new RunStringOnUI(line =>
                         {
                             var key = _getNameHash(line.Text);
                             var run = _backingParagraph.Inlines.FirstOrDefault(inline => inline.Name == key);

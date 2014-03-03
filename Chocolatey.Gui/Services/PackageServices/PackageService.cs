@@ -30,7 +30,9 @@ namespace Chocolatey.Gui.Services
 
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options, Uri source = null)
         {
-            _progressService.StartLoading("Search", "Searching for matching packages...");
+            await _progressService.StartLoading("Search");
+            _progressService.WriteMessage(string.Format("Searching for {0}", query));
+
             if (source == null)
             {
                 source = new Uri(_sourceService.GetDefaultSource().Url);
@@ -39,27 +41,28 @@ namespace Chocolatey.Gui.Services
             if (source.Scheme == "http" || source.Scheme == "https")
             {
                 var results = await ODataPackageService.Search(query, _packageFactory, options, source);
-                _progressService.StopLoading();
+                await _progressService.StopLoading();
                 return results;
             }
 
             if(source.IsFile || source.IsUnc)
             {
-                _progressService.StopLoading();
+                await _progressService.StopLoading();
                 return null;
             }
             throw new InvalidDataException("Invalid Source Uri. Double check that you current source is a valid endpoint.");
         }
 
-        public IPackageViewModel GetLatest(string id, bool includePrerelease = false, Uri source = null)
+        public async Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false, Uri source = null)
         {
+            _progressService.WriteMessage(string.Format("Getting latest version of {0}...", id));
             if (source == null)
             {
                 var defaultSource = new Uri(_sourceService.GetDefaultSource().Url);
 
                 if (defaultSource.Scheme == "http" || defaultSource.Scheme == "https")
                 {
-                    var result = ODataPackageService.GetLatest(id, _packageFactory, defaultSource, includePrerelease);
+                    var result = await ODataPackageService.GetLatest(id, _packageFactory, defaultSource, includePrerelease);
                     if (result != null)
                     {
                         result.Source = defaultSource;
@@ -73,12 +76,12 @@ namespace Chocolatey.Gui.Services
                     var currentSource = new Uri(sourceViewModel.Url);
                     if (currentSource.Scheme == "http" || currentSource.Scheme == "https")
                     {
-                        var result = ODataPackageService.GetLatest(id, _packageFactory, currentSource, includePrerelease);
+                        var result = await ODataPackageService.GetLatest(id, _packageFactory, currentSource, includePrerelease);
                         if (result == null)
                             continue;
 
                         result.Source = currentSource;
-                        _progressService.StopLoading();
+                        await _progressService.StopLoading();
                         return result;
                     }
                 }
@@ -87,7 +90,7 @@ namespace Chocolatey.Gui.Services
             {
                 if (source.Scheme == "http" || source.Scheme == "https")
                 {
-                    var result = ODataPackageService.GetLatest(id, _packageFactory, source, includePrerelease);
+                    var result = await ODataPackageService.GetLatest(id, _packageFactory, source, includePrerelease);
                     if(result != null)
                         result.Source = source;
                     return result;
@@ -103,7 +106,8 @@ namespace Chocolatey.Gui.Services
 
         public async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source = null)
         {
-            _progressService.StartLoading("", "Loading package information.");
+            await _progressService.StartLoading("Loading Package Information");
+            _progressService.WriteMessage("Loading remote package information...");
 
             // If we don't have a source, iterate through our source until we find one that matches.
             if (source == null)
@@ -115,7 +119,7 @@ namespace Chocolatey.Gui.Services
                     var result = await ODataPackageService.EnsureIsLoaded(vm, defaultSource);
                     if (result != null)
                     {
-                        _progressService.StopLoading();
+                        await _progressService.StopLoading();
                         result.Source = defaultSource;
                         return result;
                     }
@@ -130,7 +134,7 @@ namespace Chocolatey.Gui.Services
                         if(result == null)
                             continue;
 
-                        _progressService.StopLoading();
+                        await _progressService.StopLoading();
                         result.Source = currentSource;
                         return result;
                     }
@@ -141,7 +145,7 @@ namespace Chocolatey.Gui.Services
                 if (source.Scheme == "http" || source.Scheme == "https")
                 {
                     var result = await ODataPackageService.EnsureIsLoaded(vm, source);
-                    _progressService.StopLoading();
+                    await _progressService.StopLoading();
                     if (result != null)
                         result.Source = source;
                     return result;
@@ -149,11 +153,11 @@ namespace Chocolatey.Gui.Services
 
                 if (source.IsFile || source.IsUnc)
                 {
-                    _progressService.StopLoading();
+                    await _progressService.StopLoading();
                     return null;
                 }
             }
-            _progressService.StopLoading();
+            await _progressService.StopLoading();
             return null;
         }
 

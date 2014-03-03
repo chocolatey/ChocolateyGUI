@@ -146,6 +146,9 @@
     <Compile Include="Commands\DataContextCommandBinding.cs" />
     <Compile Include="Commands\RoutedCommandBinding.cs" />
     <Compile Include="Commands\RoutedCommandMonitor.cs" />
+    <Compile Include="Controls\Dialogs\ChocolateyDialog.xaml.cs">
+      <DependentUpon>ChocolateyDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FauxPowerShellConsole.cs" />
     <Compile Include="Controls\ObservableRingBuffer.cs" />
     <Compile Include="Controls\PowershellHostComponents.cs" />
@@ -194,6 +197,10 @@
     <Compile Include="Utilities\Markdown\Markdown.cs" />
     <Compile Include="Utilities\Markdown\TextToFlowDocumentConverter.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
+    <Page Include="Controls\Dialogs\ChocolateyDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

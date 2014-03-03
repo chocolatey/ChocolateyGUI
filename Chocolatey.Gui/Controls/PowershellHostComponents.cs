@@ -141,7 +141,7 @@ namespace Chocolatey.Gui.Controls
 
         public override void Write(string value)
         {
-            _progressService.Output.Add(new PowerShellOutputLine(value, PowerShellLineType.OutputNoNewLine));
+            _progressService.Output.Add(new PowerShellOutputLine(value, PowerShellLineType.Output, newLine: false));
         }
 
         public override void Write(
@@ -150,7 +150,7 @@ namespace Chocolatey.Gui.Controls
                                    string value)
         {
             // Colors are ignored.
-            _progressService.Output.Add(new PowerShellOutputLine(value, PowerShellLineType.OutputNoNewLine));
+            _progressService.Output.Add(new PowerShellOutputLine(value, PowerShellLineType.Output, newLine: false));
         }
 
         public override void WriteDebugLine(string message)
@@ -186,12 +186,12 @@ namespace Chocolatey.Gui.Controls
 
         public override void WriteVerboseLine(string message)
         {
-            Console.WriteLine(String.Format(CultureInfo.CurrentCulture, "VERBOSE: {0}", message));
+            _progressService.Output.Add(new PowerShellOutputLine(message, PowerShellLineType.Warning));
         }
 
         public override void WriteWarningLine(string message)
         {
-            Console.WriteLine(String.Format(CultureInfo.CurrentCulture, "WARNING: {0}", message));
+            _progressService.Output.Add(new PowerShellOutputLine(message, PowerShellLineType.Warning));
         }
     }
     internal class ChocolateyHostRawUserInterface : PSHostRawUserInterface

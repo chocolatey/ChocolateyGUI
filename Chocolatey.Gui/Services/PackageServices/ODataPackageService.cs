@@ -84,7 +84,7 @@ namespace Chocolatey.Gui.Services.PackageServices
             };
         }
 
-        public static IPackageViewModel GetLatest(string id, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
+        public static async Task<IPackageViewModel> GetLatest(string id, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
         {
             var service = GetFeed(source);
 
@@ -93,7 +93,9 @@ namespace Chocolatey.Gui.Services.PackageServices
 
             packageQuery = includePrerelease ? packageQuery.Where(p => p.IsAbsoluteLatestVersion) : packageQuery.Where(p => p.IsLatestVersion);
 
-            var package = packageQuery.FirstOrDefault();
+            var feedDataServiceQuery = (DataServiceQuery<V2FeedPackage>)packageQuery;
+            var packages = await Task.Factory.FromAsync(feedDataServiceQuery.BeginExecute, ar => feedDataServiceQuery.EndExecute(ar), null);
+            var package = packages.FirstOrDefault();
 
             return package == null ? null : AutoMapper.Mapper.Map(package, packageFactory());
         }

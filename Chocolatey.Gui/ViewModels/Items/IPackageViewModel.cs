@@ -14,6 +14,8 @@ namespace Chocolatey.Gui.ViewModels.Items
 
         Task Uninstall();
 
+        Task RetriveLatestVersion();
+
         string Authors { get; set; }
 
         bool CanUpdate { get; }

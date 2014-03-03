@@ -4,17 +4,21 @@ using System.Threading.Tasks;
 using Chocolatey.Gui.Controls;
 using Chocolatey.Gui.Models;
 using MahApps.Metro.Controls.Dialogs;
+using System.Threading;
 
 namespace Chocolatey.Gui.Services
 {
     public interface IProgressService : INotifyPropertyChanged, IProgress<double>
     {
         bool IsLoading { get; }
-        void StartLoading(string title = "", string message = "");
-        void StopLoading();
+        Task StartLoading(string title = null, bool isCancelable = false);
+        Task StopLoading();
+        CancellationToken GetCancellationToken();
 
         ObservableRingBuffer<PowerShellOutputLine> Output { get; }
 
-        Task<MessageDialogResult> ShowMessage(string title, string message);
+        void WriteMessage(string message, PowerShellLineType type = PowerShellLineType.Output, bool newLine = true);
+
+        Task<MessageDialogResult> ShowMessageAsync(string title, string message);
     }
 }

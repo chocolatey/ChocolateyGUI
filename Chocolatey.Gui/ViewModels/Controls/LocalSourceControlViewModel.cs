@@ -29,10 +29,12 @@ namespace Chocolatey.Gui.ViewModels.Controls
 
         private readonly IChocolateyService _chocolateyService;
         private readonly IProgressService _progressService;
-        public LocalSourceControlViewModel(IChocolateyService chocolateyService, IProgressService progressService)
+        private readonly ILogService _logService;
+        public LocalSourceControlViewModel(IChocolateyService chocolateyService, IProgressService progressService, Func<Type, ILogService> logFactory)
         {
             _chocolateyService = chocolateyService;
             _progressService = progressService;
+            _logService = logFactory(typeof(LocalSourceControlViewModel));
             PackagesChangedEventManager.AddListener(_chocolateyService, this);
 
             Packages = new ObservableCollection<IPackageViewModel>();
@@ -41,33 +43,52 @@ namespace Chocolatey.Gui.ViewModels.Controls
 
         public async void Loaded(object sender, EventArgs args)
         {
-            if (_hasLoaded)
-                return;
+            try
+            {
+                if (_hasLoaded)
+                    return;
 
-            await LoadPackages();
+                await LoadPackages();
 
-            Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                .Where(e => e.EventArgs.PropertyName == "MatchWord" || e.EventArgs.PropertyName == "SearchQuery")
-                .ObserveOnDispatcher()
-                .Subscribe(e => FilterPackages());
+                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                    .Where(e => e.EventArgs.PropertyName == "MatchWord" || e.EventArgs.PropertyName == "SearchQuery")
+                    .ObserveOnDispatcher()
+                    .Subscribe(e => FilterPackages());
 
-            _hasLoaded = true;
+                _hasLoaded = true;
 
-            var chocoPackage = _packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
-            if (chocoPackage != null && chocoPackage.CanUpdate)
-                _progressService.ShowMessage("Chocolatey", "There's an update available for chocolatey.");
+                var chocoPackage = _packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
+                if (chocoPackage != null && chocoPackage.CanUpdate)
+                    _progressService.ShowMessageAsync("Chocolatey", "There's an update available for chocolatey.");
+            }
+            catch (Exception ex)
+            {
+                _logService.Fatal("Local source control view model failed to load.", ex);
+                throw;
+            }
         }
 
         private async Task LoadPackages()
         {
-            _packages.Clear();
-            Packages.Clear();
-
-            var packages = await _chocolateyService.GetInstalledPackages();
-            foreach (var packageViewModel in packages)
+            try
             {
-                _packages.Add(packageViewModel);
-                Packages.Add(packageViewModel);
+                _packages.Clear();
+                Packages.Clear();
+
+                var packages = await _chocolateyService.GetInstalledPackages();
+                foreach (var packageViewModel in packages)
+                {
+                    _packages.Add(packageViewModel);
+                    Packages.Add(packageViewModel);
+
+                    if (packageViewModel.LatestVersion == null)
+                        packageViewModel.RetriveLatestVersion();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logService.Fatal("Packages failed to load", ex);
+                throw;
             }
         }
 
@@ -138,15 +159,26 @@ namespace Chocolatey.Gui.ViewModels.Controls
 
         public async void UpdateAll()
         {
-            _progressService.StartLoading("Packages", "Updating all packages.");
-            var packages = Packages.Where(p => p.CanUpdate).ToList();
-            double current = 0.0f; 
-            foreach (var package in packages)
+            try
             {
-                _progressService.Report(Math.Min((current++) / packages.Count, 100));
-                await package.Update();
+                await _progressService.StartLoading("Packages", true);
+                var token = _progressService.GetCancellationToken();
+                var packages = Packages.Where(p => p.CanUpdate).ToList();
+                double current = 0.0f;
+                foreach (var package in packages)
+                {
+                    if (token.IsCancellationRequested)
+                        return;
+                    _progressService.Report(Math.Min((current++) / packages.Count, 100));
+                    await package.Update();
+                }
+                await _progressService.StopLoading();
             }
-            _progressService.StopLoading();
+            catch (Exception ex)
+            {
+                _logService.Fatal("Updated all has failed.", ex);
+                throw;
+            }
         }
     }
 }

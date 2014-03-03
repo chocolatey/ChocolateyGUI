@@ -7,9 +7,11 @@ using Chocolatey.Gui.Base;
 using Chocolatey.Gui.Models;
 using Chocolatey.Gui.Services;
 using Chocolatey.Gui.Utilities;
+using System.Diagnostics;
 
 namespace Chocolatey.Gui.ViewModels.Items
 {
+    [DebuggerDisplay("Id = {Id}, Version = {Version}")]
     public class PackageViewModel : ObservableBase, IPackageViewModel, IWeakEventListener
     {
         private readonly MemoryCache _cache = MemoryCache.Default;
@@ -47,7 +49,7 @@ namespace Chocolatey.Gui.ViewModels.Items
 
         public bool CanUpdate
         {
-            get { return IsInstalled && LatestVersion > Version; }
+            get { return IsInstalled && LatestVersion != null && LatestVersion > Version; }
         }
 
         private string _copyright;
@@ -245,28 +247,11 @@ namespace Chocolatey.Gui.ViewModels.Items
             set { SetPropertyValue(ref _version, value); }
         }
 
+        private SemanticVersion _latestVersion;
         public SemanticVersion LatestVersion
         {
-            get
-            {
-                SemanticVersion version;
-                if ((version = (SemanticVersion) _cache.Get(MemoryCachePropertyKey())) != null)
-                    return version;
-
-                var latest = _packageService.GetLatest(Id, IsPrerelease, Source);
-                if(latest != null)
-                {
-                    version = latest.Version;
-                    if (latest.Source != null)
-                        Source = latest.Source;
-                }
-                else
-                {
-                    version = Version;
-                }
-                _cache.Set(MemoryCachePropertyKey(), version, DateTime.Now.AddHours(1));
-                return version;
-            }
+            get { return _latestVersion; }
+            set { SetPropertyValue(ref _latestVersion, value); }
         }
 
         private int _versionDownloadCount;
@@ -307,6 +292,33 @@ namespace Chocolatey.Gui.ViewModels.Items
                 NotifyPropertyChanged("CanUpdate");
             }
             return true;
+        }
+
+        public async Task RetriveLatestVersion()
+        {
+            SemanticVersion version;
+            if ((version = (SemanticVersion)_cache.Get(string.Format("LatestVersion_{0}", Id))) != null)
+            {
+                LatestVersion = version;
+                return;
+            }
+
+            var latest = await _packageService.GetLatest(Id, IsPrerelease, Source);
+            if (latest != null)
+            {
+                version = latest.Version;
+                if (latest.Source != null)
+                    Source = latest.Source;
+            }
+            else
+            {
+                version = Version;
+            }
+            _cache.Set(string.Format("LatestVersion_{0}", Id), version, new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTime.Now.AddHours(1)
+            });
+            LatestVersion = version;
         }
 
         public async Task EnsureIsLoaded()

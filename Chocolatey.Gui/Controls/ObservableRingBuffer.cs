@@ -11,12 +11,13 @@ namespace Chocolatey.Gui.Controls
    /// </summary>
    /// <typeparam name="T">The generic type of the items stored within the ring buffer.</typeparam>
    [DebuggerDisplay("Count = {Count}")]
-    public sealed class ObservableRingBuffer<T> : INotifyCollectionChanged, IList<T> {
+    public sealed class ObservableRingBuffer<T> : INotifyCollectionChanged, ICollection<T>
+    {
       /// <summary>
       /// Creates a new instance of a <see cref="RingBuffer&lt;T&gt;"/> with a 
       /// specified cache size.
       /// </summary>
-      /// <param name="capacity">The maximal count of items to be stored within 
+      /// <param name="capacity">The maxium count of items to be stored within 
       /// the ring buffer.</param>
        public ObservableRingBuffer(int capacity)
        {
@@ -32,6 +33,7 @@ namespace Chocolatey.Gui.Controls
       /// the internal buffer
       /// </summary>
       T[] _buffer;
+
       /// <summary>
       /// The all-over position within the ring buffer. The position 
       /// increases continously by adding new items to the buffer. This 
@@ -39,31 +41,12 @@ namespace Chocolatey.Gui.Controls
       /// buffer.
       /// </summary>
       int _position;
+
       /// <summary>
       /// The current version of the buffer, this is required for a correct 
       /// exception handling while enumerating over the items of the buffer.
       /// </summary>
       long _version;
-
-      /// <summary>
-      /// Gets or sets an item for a specified position within the ring buffer.
-      /// </summary>
-      /// <param name="index">The position to get or set an item.</param>
-      /// <returns>The fond item at the specified position within the ring buffer.
-      /// </returns>
-      /// <exception cref="IndexOutOfRangeException"></exception>
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
-      public T this[int index] {
-         get {
-            // validate the index
-            if (index < 0 || index >= Count)
-               throw new IndexOutOfRangeException();
-            // calculate the relative position within the rolling base array
-            int index2 = (_position - Count + index) % Capacity;
-            return _buffer[index2]; 
-         }
-         set { Insert(index, value); }
-      }
 
       /// <summary>
       /// Gets the maximal count of items within the ring buffer.
@@ -143,7 +126,7 @@ namespace Chocolatey.Gui.Controls
          for (int i = 0; i < Count; i++) {
             if (version != _version)
                throw new InvalidOperationException("Collection changed");
-            yield return this[i];
+            yield return _buffer[(_position - Count + i) % Capacity];
          }
       }
 
@@ -154,7 +137,7 @@ namespace Chocolatey.Gui.Controls
       /// <returns>The zero based index of the found item within the 
       /// buffer. If the item was not present within the buffer, this
       /// method returns -1.</returns>
-      public int IndexOf(T item) {
+      private int IndexOf(T item) {
          // loop over the current count of items
          for (int i = 0; i < Count; i++) {
             // get the item at the relative position within the internal array
@@ -168,58 +151,6 @@ namespace Chocolatey.Gui.Controls
          }
          // nothing found
          return -1;
-      }
-
-      /// <summary>
-      /// Inserts an item at a specified position into the buffer.
-      /// </summary>
-      /// <param name="index">The position within the buffer to add 
-      /// the new item.</param>
-      /// <param name="item">The new item to be added to the buffer.</param>
-      /// <exception cref="IndexOutOfRangeException"></exception>
-      /// <remarks>
-      /// If the specified index is equal to the current count of items
-      /// within the buffer, the specified item will be added.
-      /// 
-      /// <b>Warning</b>
-      /// Frequent usage of this method might become a bad idea if you are 
-      /// working with a large buffer capacity. The insertion of an item
-      /// at a specified position within the buffer causes causes all present 
-      /// items below the specified position to be moved one position.
-      /// </remarks>
-      public void Insert(int index, T item) {
-         // validate index
-         if (index < 0 || index > Count)
-            throw new IndexOutOfRangeException();
-         // add if index equals to count
-         if (index == Count) {
-            Add(item);
-            return;
-         }
-
-         // get the maximal count of items to be moved
-         int count = Math.Min(Count, Capacity - 1) - index;
-         // get the relative position of the new item within the buffer
-         int index2 = (_position - Count + index) % Capacity;
-
-         // move all items below the specified position
-         for (int i = index2 + count; i > index2; i--) {
-            int to = i % Capacity;
-            int from = (i - 1) % Capacity;
-            _buffer[to] = _buffer[from];
-         }
-
-         // set the new item
-         _buffer[index2] = item;
-
-         // adjust storage information
-         if (Count < Capacity) {
-            Count++;
-            _position++;
-         }
-         // buffer changed; next version
-         _version++;
-         NotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
       }
 
       /// <summary>
@@ -247,8 +178,8 @@ namespace Chocolatey.Gui.Controls
          NotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item));
          return true;
       }
-
-      /// <summary>
+       
+       /// <summary>
       /// Removes an item at a specified position within the buffer.
       /// </summary>
       /// <param name="index">The position of the item to be removed.</param>
@@ -259,32 +190,34 @@ namespace Chocolatey.Gui.Controls
       /// working with a large buffer capacity. The deletion requires a move 
       /// of all items stored abouve the found position.
       /// </remarks>
-      public void RemoveAt(int index) {
-         // validate the index
-         if (index < 0 || index >= Count)
-            throw new IndexOutOfRangeException();
+      private void RemoveAt(int index)
+      {
+          // validate the index
+          if (index < 0 || index >= Count)
+              throw new IndexOutOfRangeException();
 
-         // move all items above the specified position one step
-         // closer to zeri
-         for (int i = index; i < Count - 1; i++) {
-            // get the next relative target position of the item
-            int to = (_position - Count + i) % Capacity;
-            // get the next relative source position of the item
-            int from = (_position - Count + i + 1) % Capacity;
-            // move the item
-            _buffer[to] = _buffer[from];
-         }
-         // get the relative position of the last item, which becomes empty
-         // after deletion and set the item as empty
-         int last = (_position - 1) % Capacity;
-         _buffer[last] = default(T);
-         // adjust storage information
-         _position--;
-         Count--;
-         // buffer changed; next version
-         _version++;
+          // move all items above the specified position one step
+          // closer to zeri
+          for (int i = index; i < Count - 1; i++)
+          {
+              // get the next relative target position of the item
+              int to = (_position - Count + i) % Capacity;
+              // get the next relative source position of the item
+              int from = (_position - Count + i + 1) % Capacity;
+              // move the item
+              _buffer[to] = _buffer[from];
+          }
+          // get the relative position of the last item, which becomes empty
+          // after deletion and set the item as empty
+          int last = (_position - 1) % Capacity;
+          _buffer[last] = default(T);
+          // adjust storage information
+          _position--;
+          Count--;
+          // buffer changed; next version
+          _version++;
 
-         NotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
+          NotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
       }
 
       /// <summary>

@@ -104,38 +104,38 @@ namespace Chocolatey.Gui.ViewModels.Windows
         {
             if (string.IsNullOrWhiteSpace(NewSourceName))
             {
-                _progressService.ShowMessage("New Source", "Source must have a name.");
+                _progressService.ShowMessageAsync("New Source", "Source must have a name.");
                 return;
             }
 
             if (Sources.Any(s => String.Compare(s.Name, NewSourceName, StringComparison.InvariantCultureIgnoreCase) == 0))
             {
-                _progressService.ShowMessage("New Source", "There's already a source with that name.");
+                _progressService.ShowMessageAsync("New Source", "There's already a source with that name.");
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(NewSourceUrl))
             {
-                _progressService.ShowMessage("New Source", "Source must have a Url.");
+                _progressService.ShowMessageAsync("New Source", "Source must have a Url.");
                 return;
             }
 
             if (Sources.Any(s => String.Compare(s.Url, NewSourceUrl, StringComparison.InvariantCultureIgnoreCase) == 0))
             {
-                _progressService.ShowMessage("New Source", "There's already a source with that url.");
+                _progressService.ShowMessageAsync("New Source", "There's already a source with that url.");
                 return;
             }
 
             Uri url;
             if (!Uri.TryCreate(NewSourceUrl, UriKind.Absolute, out url))
             {
-                _progressService.ShowMessage("New Source", "Source url is malformed.");
+                _progressService.ShowMessageAsync("New Source", "Source url is malformed.");
                 return;
             }
 
             if (!(await _packageService.Value.TestSourceUrl(url)))
             {
-                _progressService.ShowMessage("New Source", "Failed to query source.");
+                _progressService.ShowMessageAsync("New Source", "Failed to query source.");
                 return;
             }
 
@@ -153,13 +153,13 @@ namespace Chocolatey.Gui.ViewModels.Windows
         {
             if (SelectedSource == null)
             {
-                _progressService.ShowMessage("Remove Source", "There's no selected source.");
+                _progressService.ShowMessageAsync("Remove Source", "There's no selected source.");
                 return;
             }
 
             if (Sources.Count < 2)
             {
-                _progressService.ShowMessage("Remove Source", "You must have at least one source.");
+                _progressService.ShowMessageAsync("Remove Source", "You must have at least one source.");
                 return;
             }
 

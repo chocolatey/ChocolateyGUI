@@ -95,6 +95,9 @@
       <Component Id="Microsoft.Threading.Tasks.Extensions.dll" Guid="12FE8573-4364-450D-9CDB-2E114E237CB6">
         <File Id="Microsoft.Threading.Tasks.Extensions.dll" Source="$(var.Chocolatey.Gui.TargetDir)\Microsoft.Threading.Tasks.Extensions.dll" KeyPath="yes"/>
       </Component>
+      <Component Id="Mindscape.Raygun4Net.dll" Guid="C17C5A82-CA98-4702-94EB-DA01839D891E">
+        <File Id="Mindscape.Raygun4Net.dll" Source="$(var.Chocolatey.Gui.TargetDir)\Mindscape.Raygun4Net.dll" KeyPath="yes"/>
+      </Component>
       <Component Id="System.Reactive.Core.dll" Guid="11AFB91C-B27E-4212-B963-9580FE7C07DA">
         <File Id="System.Reactive.Core.dll" Source="$(var.Chocolatey.Gui.TargetDir)\System.Reactive.Core.dll" KeyPath="yes"/>
       </Component>

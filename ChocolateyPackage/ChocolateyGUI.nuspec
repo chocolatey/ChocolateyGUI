@@ -24,7 +24,7 @@ Server 2008 SP2 and above.
 	<releaseNotes>
 See all - https://github.com/chocolatey/ChocolateyGUI/releases
 	
-## 0.11.3
+## 0.11.4
 	
  * Fix - Correct releasenotes in Chocolatey nuspec file - https://github.com/chocolatey/ChocolateyGUI/issues/136
 	
@@ -36,12 +36,12 @@ See all - https://github.com/chocolatey/ChocolateyGUI/releases
  * Fix - Include the chocolateyUninstall.ps1 in the nuspec file - https://github.com/chocolatey/ChocolateyGUI/issues/63
  * Fix - There's no uninstall script in the 0.0.5 package - https://github.com/chocolatey/ChocolateyGUI/issues/3
 	
- ## 0.11.1
+## 0.11.1
 	
  * bugfix - uninstall should now work
  * bugfix - program crashing when packages came out of cache.
 	
- ## 0.11.0
+## 0.11.0
 	
  * Enhancement - Many new features, including UI enhancements and auto building from MyGet.
  * Enhancement - Better logging and Log form so you can find those log files more easily.

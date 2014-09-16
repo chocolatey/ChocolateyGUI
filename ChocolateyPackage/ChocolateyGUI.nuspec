@@ -4,16 +4,16 @@
     <id>ChocolateyGUI</id>
     <version>$version$</version>
     <title>ChocolateyGUI</title>
-    <authors>Christiaan Baes</authors>
-    <owners>Christiaan Baes</owners>
+    <authors>Chocolatey</authors>
+    <owners>Chocolatey</owners>
 	<iconUrl>https://github.com/chocolatey/chocolatey/raw/master/docs/logo/chocolateyicon.gif</iconUrl>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-    <projectUrl>https://github.com/chrissie1/chocolatey-Explorer</projectUrl>
+    <projectUrl>https://github.com/chocolatey/ChocolateyGUI</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-ChocolateyGUI is a nice GUI on top of the chocolatey commanline tool. 
+ChocolateyGUI is a nice GUI on top of the Chocolatey command line tool. 
 It let's you install, upgrade and uninstall packages.
-It shows you the available packages and it shows the installed packeges.
+It shows you the available packages and it shows the installed packages.
 It shows all the information about a package.
 
 Due to a dependency on the Windows Management Framework, this package will 
@@ -88,8 +88,6 @@ See all - https://github.com/chocolatey/ChocolateyGUI/releases
   <files>
     <file src="chocolateyInstall.ps1" target="tools"/>
 	<file src="chocolateyUninstall.ps1" target="tools"/>
-	<file src="install.ps1" target="tools"/>
-    <file src="..\BuildArtifacts\cab1.cab" target="tools"/>
-	<file src="..\BuildArtifacts\Setup_ChocolateyGUI.msi" target="tools"/>
+	<file src="..\BuildArtifacts\ChocolateyGUI.msi" target="tools"/>
   </files>  
 </package>

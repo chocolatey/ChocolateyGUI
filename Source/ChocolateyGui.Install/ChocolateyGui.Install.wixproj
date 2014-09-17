@@ -37,11 +37,6 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\SharedSource\Common\CommonWixInfo.wxi">
-      <Link>CommonWixInfo.wxi</Link>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <WixExtension Include="WixNetFxExtension">
       <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
       <Name>WixNetFxExtension</Name>

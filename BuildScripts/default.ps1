@@ -7,8 +7,8 @@ $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
 	$nugetExe = "./../Tools/Nuget/NuGet.exe";
+	$gitVersionExe = "./../Tools/GitVersion/GitVersion.exe";
 	$projectName = "ChocolateyGUI";
-	$preversion = '14.15.16-pre00017'
 }
 
 $private = "This is a private task not meant for external use!";
@@ -19,6 +19,10 @@ function get-buildArtifactsDirectory {
 
 function get-sourceDirectory {
 	return "." | Resolve-Path | Join-Path -ChildPath "../Source";
+}
+
+function get-rootDirectory {
+	return "." | Resolve-Path | Join-Path -ChildPath "../";
 }
 
 function create-PackageDirectory( [Parameter(ValueFromPipeline=$true)]$packageDirectory ) {
@@ -63,39 +67,27 @@ Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Descript
 
 # build tasks
 
+Task -Name RunGitVersion -Description "Execute the GitVersion Command Line Tool, to figure out what the current semantic version of the repository is" -Action {
+	$rootDirectory = get-rootDirectory;
+	
+	exec {
+		$output = . $gitVersionExe /UpdateAssemblyInfo true
+		$joined = $output -join "`n"
+		$versionInfo = $joined | ConvertFrom-Json
+		$script:version = $versionInfo.LegacySemVer
+		Write-Host $script:version
+	}
+}
+
 Task -Name NugetPackageRestore -Description "Restores all the required nuget packages for this solution, before running the build" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	
 	exec {
-		.$nugetExe restore "$sourceDirectory\ChocolateyGui.sln"
+		. $nugetExe restore "$sourceDirectory\ChocolateyGui.sln"
 	}
 }
 
-Task -Name VersionFiles -Description "Stamps the common file with the version" -Action {	
-	$version = $preversion |  % {$_ -replace '-pre', '.' }
-	
-	if ($version -Match '(\d{1,3}).(\d{1,3}).(\d{1,3}).(\d{1,5})') {  
-		$major = $matches[1] 
-		$minor = $matches[2] 
-		$build = $matches[3] 
-		$revision = $matches[4] 
-	}
-	
-	$assemblyVersionPattern = 'AssemblyVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
-	$assemblyVersion = 'AssemblyVersion("' + $major + "." + $minor + "." + $build + '")'
-	
-	$assemblyFileVersionPattern = 'AssemblyFileVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
-	$assemblyFileVersion = 'AssemblyFileVersion("' + $version + '")'
-	
-	$assemblyInformationalVersionPattern = 'AssemblyInformationalVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
-	$assemblyInformationalVersion = 'AssemblyInformationalVersion("' + $major + "." + $minor + "." + $build + " Build " + $revision + '")'
-	
-    (Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyVersionPattern, $assemblyVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs" )
-	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyFileVersionPattern, $assemblyFileVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs" )
-	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyInformationalVersionPattern, $assemblyInformationalVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs" )
-}
-
-Task -Name BuildSolution -Depends __VerifyConfiguration, VersionFiles, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
+Task -Name BuildSolution -Depends __VerifyConfiguration, RunGitVersion, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	exec { 
 		msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Build /p:Configuration=$config
@@ -120,6 +112,6 @@ Task -Name PackageChocolatey -Description "Packs the module and example package"
 	$buildArtifactsDirectory = get-buildArtifactsDirectory;
     
     exec { 
-		.$nugetExe pack "$sourceDirectory\..\ChocolateyPackage\ChocolateyGUI.nuspec" -OutputDirectory "$buildArtifactsDirectory" -NoPackageAnalysis -version $preversion 
+		.$nugetExe pack "$sourceDirectory\..\ChocolateyPackage\ChocolateyGUI.nuspec" -OutputDirectory "$buildArtifactsDirectory" -NoPackageAnalysis -version $script:version 
 	}
 }

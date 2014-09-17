@@ -138,12 +138,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\..\SharedSource\Common\CommonAssemblyVersion.cs">
-      <Link>Properties\CommonAssemblyVersion.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SharedSource\Common\CommonCopyrightInfo.cs">
-      <Link>Properties\CommonCopyrightInfo.cs</Link>
-    </Compile>
     <Compile Include="Commands\CommandExecutionManager.cs" />
     <Compile Include="Commands\DataContextCommandAdapter.cs" />
     <Compile Include="Commands\DataContextCommandBinding.cs" />

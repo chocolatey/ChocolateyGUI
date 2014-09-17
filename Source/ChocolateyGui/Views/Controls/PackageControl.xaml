@@ -1,0 +1,117 @@
+﻿<UserControl x:Class="ChocolateyGui.Views.Controls.PackageControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
+      xmlns:controlVms="clr-namespace:ChocolateyGui.ViewModels.Controls"
+      xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
+      xmlns:xaml="clr-namespace:Markdown.Xaml"
+      xmlns:commands="clr-namespace:ChocolateyGui.Commands"
+      mc:Ignorable="d" 
+      d:DesignHeight="786" d:DesignWidth="1366"
+	d:DataContext="{d:DesignInstance controlVms:PackageControlViewModel}">
+
+    <UserControl.Resources>
+        <converters:UriToVisibility x:Key="UriToVisibilty"/>
+        <converters:NullToVisibility x:Key="NullToVisibility"/>
+        <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString"/>
+        <converters:PackageDependenciesToString x:Key="PackageDependenciesToString"/>
+        <xaml:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" Markdown="{StaticResource Markdown}"/>
+     </UserControl.Resources>
+
+    <DockPanel x:Name="PackageViewGrid" LastChildFill="True" DataContext="{Binding Package}" d:DataContext="{d:DesignInstance items:PackageViewModel}"
+                          Background="{StaticResource LightBackgroundColorBrush}"
+                          Visibility="{Binding DataContext, RelativeSource={RelativeSource Self}, FallbackValue=Collapsed, Converter={StaticResource NullToVisibility}}">
+        <StackPanel DockPanel.Dock="Top" Margin="20,0,0,0">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Command="{commands:DataContextCommandAdapter GoBack, CanGoBack}"></Button>
+                <TextBlock Style="{StaticResource TitleTextStyle}" AutomationProperties.Name="{Binding Title}"><Run Text="{Binding Title}" /></TextBlock>
+                <TextBlock AutomationProperties.Name="{Binding Version}" VerticalAlignment="Bottom">  <Run Text="{Binding Version}" Style="{StaticResource SubtitleRunTextStyle}" /></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Authors}"><Run Text="Authors: "/> <Run Text="{Binding Authors}" /></TextBlock>
+                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Owners}"><Run Text=" | Maintainers: "/> <Run Text="{Binding Owners}" /></TextBlock>
+            </StackPanel>
+        </StackPanel>
+
+        <Grid DockPanel.Dock="Bottom">
+            <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource AccentColorBrush4}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,20,10">
+                    <Button Style="{StaticResource InstallButtonStyle}" Command="{commands:DataContextCommandAdapter Install}"  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
+                    <Button Style="{StaticResource UninstallButtonStyle}" Command="{commands:DataContextCommandAdapter Uninstall}" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"/>
+                    <Button Style="{StaticResource UpdateButtonStyle}" Command="{commands:DataContextCommandAdapter Update}" Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        
+        <StackPanel DockPanel.Dock="Left" Margin="20,0,0,0">
+            <Label Style="{StaticResource PackageResourceLabel}" Content="Downloads" Target="{Binding ElementName=VersionDownloadCount}"/>
+            <TextBlock x:Name="VersionDownloadCount" Text="{Binding VersionDownloadCount}" Style="{StaticResource PackageResourceValue}"></TextBlock>
+            <Label Style="{StaticResource PackageResourceLabel}" Content="Total Downloads" Target="{Binding ElementName=DownloadCount}"/>
+            <TextBlock x:Name="DownloadCount" Text="{Binding DownloadCount}" Style="{StaticResource PackageResourceValue}"></TextBlock>
+            <Label Style="{StaticResource PackageResourceLabel}" Content="Created" Target="{Binding ElementName=Created}"/>
+            <TextBlock x:Name="Created" Text="{Binding Created}" Style="{StaticResource PackageResourceValue}"></TextBlock>
+            <Label Style="{StaticResource PackageResourceLabel}" Content="Last Updated" Target="{Binding ElementName=LastUpdated}"/>
+            <TextBlock x:Name="LastUpdated" Text="{Binding LastUpdated}" Style="{StaticResource PackageResourceValue}"></TextBlock>
+            <Label Style="{StaticResource PackageResourceLabel}" Content="Package Size" Target="{Binding ElementName=PackageSize}"/>
+            <TextBlock x:Name="PackageSize" Text="{Binding PackageSize, Converter={StaticResource LongSizeToFileSizeString}}" Style="{StaticResource PackageResourceValue}"></TextBlock>
+
+            <StackPanel Margin="5,5,0,40">
+                <TextBlock Visibility="{Binding ProjectUrl, FallbackValue=Collapsed, Converter={StaticResource UriToVisibilty}}">
+                                    <Hyperlink NavigateUri="{Binding ProjectUrl}" RequestNavigate="HandleLinkClick"><Run Text="Project Site" /></Hyperlink>
+                </TextBlock>
+                <TextBlock Visibility="{Binding LicenseUrl, FallbackValue=Collapsed, Converter={StaticResource UriToVisibilty}}">
+                                    <Hyperlink NavigateUri="{Binding LicenseUrl}" RequestNavigate="HandleLinkClick"><Run Text="License" /></Hyperlink>
+                </TextBlock>
+                <TextBlock Visibility="{Binding GalleryDetailsUrl, FallbackValue=Collapsed, Converter={StaticResource UriToVisibilty}}">
+                                    <Hyperlink NavigateUri="{Binding GalleryDetailsUrl}" RequestNavigate="HandleLinkClick"><Run Text="Gallery" /></Hyperlink>
+                </TextBlock>
+                <TextBlock Visibility="{Binding ReportAbuseUrl, FallbackValue=Collapsed, Converter={StaticResource UriToVisibilty}}">
+                                    <Hyperlink NavigateUri="{Binding ReportAbuseUrl}" RequestNavigate="HandleLinkClick"><Run Text="Report Abuse" /></Hyperlink>
+                </TextBlock>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Grid DockPanel.Dock="Right">
+            <Image AutomationProperties.Name="Package Icon" Source="{Binding IconUrl, IsAsync=True}" 
+                   Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="0,0,20,0" />
+        </Grid>
+
+        <Grid Margin="25,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Summary" Style="{StaticResource SectionHeaderTextStyle}" Visibility="{Binding Summary, Converter={StaticResource NullToVisibility}}"/>
+            <TextBlock Grid.Row="1" Text="{Binding Summary}" ScrollViewer.CanContentScroll="True" TextWrapping="Wrap" Style="{StaticResource PageTextBlockStyle}" Visibility="{Binding Summary, Converter={StaticResource NullToVisibility}}"/>
+            <TextBlock Grid.Row="2" Text="Description" Style="{StaticResource SectionHeaderTextStyle}"/>
+            <FlowDocumentScrollViewer 
+                                    Name="AvailablePackageDescription" AutomationProperties.Name="Package Description"
+                                    Grid.Row="3"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch"
+                                  Margin="5"
+                                  Document="{Binding Description, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
+            <StackPanel Grid.Row="4" Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
+                <TextBlock Text="Dependencies" Style="{StaticResource SectionHeaderTextStyle}"/>
+                <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"  Margin="5" Style="{StaticResource PageTextBlockStyle}" AutomationProperties.Name="Package Dependencies"/>
+            </StackPanel>
+            <TextBlock Grid.Row="5" Text="Release Notes" Style="{StaticResource SectionHeaderTextStyle}" Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}"/>
+            <FlowDocumentScrollViewer Grid.Row="6"
+                                Name="AvailablePackageReleaseNotes" AutomationProperties.Name="Package Release Notes"
+                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                Margin="5" Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}"
+                                Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}" />
+
+        </Grid>
+    </DockPanel>
+</UserControl>

@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using System.Resources;
-using System.Runtime.CompilerServices;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -10,7 +8,14 @@ using System.Windows;
 [assembly: AssemblyTitle("ChocolateyGui")]
 [assembly: AssemblyDescription("GUI for Chocolatey")]
 [assembly: AssemblyProduct("ChocolateyGui")]
-
+[assembly: AssemblyFileVersion("0.12.0")]
+[assembly: AssemblyVersion("0.12.0.0")]
+[assembly: AssemblyInformationalVersion("0.12.0-unstable.4+4.Branch.feature/Issue-140.Sha.c1b38c7e84ca14e8c6da3d2ceab01bcddbb83adb")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Chocolatey")]
+[assembly: AssemblyCopyright("Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

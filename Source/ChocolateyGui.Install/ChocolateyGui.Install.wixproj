@@ -5,7 +5,7 @@
     <Name>ChocolateyGui.Install</Name>
   </PropertyGroup>
   <PropertyGroup>
-    <WIXRoot>..\SharedBinaries\WiX\3.8\</WIXRoot>
+    <WIXRoot>..\Tools\WiX\</WIXRoot>
     <WIX Condition="'$(SolutionRoot)' == ''">.\..\$(WIXRoot)</WIX>
     <WIX Condition="'$(SolutionRoot)' != ''">$(SolutionRoot)\$(WIXRoot)</WIX>
     <WixTargetsPath Condition="'$(WixTargetsPath)' == ''">$(WIX)Wix.targets</WixTargetsPath>

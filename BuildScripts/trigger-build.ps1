@@ -11,7 +11,7 @@ param (
 )
 
 $here = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$psakePath = Join-Path $here -Child "..\SharedBinaries\psake\psake.psm1";
+$psakePath = Join-Path $here -Child "..\Tools\psake\psake.psm1";
 Import-Module $psakePath;
 
 if($Help){ 

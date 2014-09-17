@@ -6,7 +6,7 @@
 $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
-	$nugetExe = "./../SharedBinaries/NuGet.exe";
+	$nugetExe = "./../Tools/Nuget/NuGet.exe";
 	$projectName = "ChocolateyGUI";
 	$preversion = '14.15.16-pre00017'
 }

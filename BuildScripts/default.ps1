@@ -18,7 +18,7 @@ function get-buildArtifactsDirectory {
 }
 
 function get-sourceDirectory {
-	return "." | Resolve-Path | Join-Path -ChildPath "../";
+	return "." | Resolve-Path | Join-Path -ChildPath "../Source";
 }
 
 function create-PackageDirectory( [Parameter(ValueFromPipeline=$true)]$packageDirectory ) {
@@ -67,7 +67,7 @@ Task -Name NugetPackageRestore -Description "Restores all the required nuget pac
 	$sourceDirectory = get-sourceDirectory;
 	
 	exec {
-		.$nugetExe restore "$sourceDirectory\Chocolatey.Gui\Chocolatey.Gui.sln"
+		.$nugetExe restore "$sourceDirectory\ChocolateyGui.sln"
 	}
 }
 
@@ -90,15 +90,15 @@ Task -Name VersionFiles -Description "Stamps the common file with the version" -
 	$assemblyInformationalVersionPattern = 'AssemblyInformationalVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
 	$assemblyInformationalVersion = 'AssemblyInformationalVersion("' + $major + "." + $minor + "." + $build + " Build " + $revision + '")'
 	
-    (Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyVersionPattern, $assemblyVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs" )
-	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyFileVersionPattern, $assemblyFileVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs" )
-	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyInformationalVersionPattern, $assemblyInformationalVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "SharedSource\Common\CommonAssemblyVersion.cs" )
+    (Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyVersionPattern, $assemblyVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs" )
+	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyFileVersionPattern, $assemblyFileVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs" )
+	(Get-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs")) | % {$_ -replace $assemblyInformationalVersionPattern, $assemblyInformationalVersion  } | Set-Content (Join-Path -Path ( get-sourceDirectory ) -ChildPath "..\SharedSource\Common\CommonAssemblyVersion.cs" )
 }
 
 Task -Name BuildSolution -Depends __VerifyConfiguration, VersionFiles, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	exec { 
-		msbuild "$sourceDirectory\Chocolatey.Gui\Chocolatey.Gui.sln" /t:Build /p:Configuration=$config
+		msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Build /p:Configuration=$config
 	}
 }
 
@@ -109,7 +109,7 @@ Task -Name RebuildSolution -Depends CleanSolution, __CreateBuildArtifactsDirecto
 Task -Name CleanSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfiguration -Description "Deletes all build artifacts" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	exec {
-		msbuild "$sourceDirectory\Chocolatey.Gui\Chocolatey.Gui.sln" /t:Clean /p:Configuration=$config
+		msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Clean /p:Configuration=$config
 	}
 }
 
@@ -120,6 +120,6 @@ Task -Name PackageChocolatey -Description "Packs the module and example package"
 	$buildArtifactsDirectory = get-buildArtifactsDirectory;
     
     exec { 
-		.$nugetExe pack "$sourceDirectory\ChocolateyPackage\ChocolateyGUI.nuspec" -OutputDirectory "$buildArtifactsDirectory" -NoPackageAnalysis -version $preversion 
+		.$nugetExe pack "$sourceDirectory\..\ChocolateyPackage\ChocolateyGUI.nuspec" -OutputDirectory "$buildArtifactsDirectory" -NoPackageAnalysis -version $preversion 
 	}
 }

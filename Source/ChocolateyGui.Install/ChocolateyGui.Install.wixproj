@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SuppressValidation>true</SuppressValidation>
+    <Name>ChocolateyGui.Install</Name>
+  </PropertyGroup>
+  <PropertyGroup>
+    <WIXRoot>..\SharedBinaries\WiX\3.8\</WIXRoot>
+    <WIX Condition="'$(SolutionRoot)' == ''">.\..\$(WIXRoot)</WIX>
+    <WIX Condition="'$(SolutionRoot)' != ''">$(SolutionRoot)\$(WIXRoot)</WIX>
+    <WixTargetsPath Condition="'$(WixTargetsPath)' == ''">$(WIX)Wix.targets</WixTargetsPath>
+    <WixCATargetsPath Condition="'$(WixCATargetsPath)' == ''">$(WIX)Wix.ca.targets</WixCATargetsPath>
+    <WixToolPath Condition="'$(WixToolPath)' == ''">$(WIX)tools\</WixToolPath>
+    <!-- Relative to the targets file that defines the UsingTask element is defined -->
+    <WixTasksPath>tools\WixTasks.dll</WixTasksPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.8</ProductVersion>
+    <ProjectGuid>411c7212-286f-4f26-994a-568e943d0e60</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>ChocolateyGUI</OutputName>
+    <OutputType>Package</OutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>..\..\BuildArtifacts\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>..\..\BuildArtifacts\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <SuppressPdbOutput>True</SuppressPdbOutput>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\SharedSource\Common\CommonWixInfo.wxi">
+      <Link>CommonWixInfo.wxi</Link>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChocolateyGui\ChocolateyGui.csproj">
+      <Name>ChocolateyGui</Name>
+      <Project>{851fc2f6-afb0-4153-8520-bf68e1bea3cb}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

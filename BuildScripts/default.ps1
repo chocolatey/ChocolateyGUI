@@ -6,8 +6,8 @@
 $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
-	$nugetExe = "./../Tools/Nuget/NuGet.exe";
-	$gitVersionExe = "./../Tools/GitVersion/GitVersion.exe";
+	$nugetExe = "../Tools/NuGet/NuGet.exe";
+	$gitVersionExe = "../Tools/GitVersion/GitVersion.exe";
 	$projectName = "ChocolateyGUI";
 }
 
@@ -70,27 +70,52 @@ Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Descript
 Task -Name RunGitVersion -Description "Execute the GitVersion Command Line Tool, to figure out what the current semantic version of the repository is" -Action {
 	$rootDirectory = get-rootDirectory;
 	
-	exec {
-		$output = . $gitVersionExe /UpdateAssemblyInfo true
-		$joined = $output -join "`n"
-		$versionInfo = $joined | ConvertFrom-Json
-		$script:version = $versionInfo.LegacySemVer
-		Write-Host $script:version
+	try {
+		Write-Output "Running RunGitVersion..."
+		exec {
+			$output = & $gitVersionExe /UpdateAssemblyInfo true
+			$joined = $output -join "`n"
+			$versionInfo = $joined | ConvertFrom-Json
+			$script:version = $versionInfo.LegacySemVer
+			Write-Host $script:version
+		}
+		Write-Host ("************ RunGitVersion Successful ************")
 	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ RunGitVersion Failed ************")
+	}	
 }
 
 Task -Name NugetPackageRestore -Description "Restores all the required nuget packages for this solution, before running the build" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	
-	exec {
-		. $nugetExe restore "$sourceDirectory\ChocolateyGui.sln"
+	try {
+		Write-Output "Running NugetPackageRestore..."
+		exec {
+			& $nugetExe restore "$sourceDirectory\ChocolateyGui.sln"
+		}
+		Write-Host ("************ NugetPackageRestore Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ NugetPackageRestore Failed ************")
 	}
 }
 
 Task -Name BuildSolution -Depends __VerifyConfiguration, RunGitVersion, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
 	$sourceDirectory = get-sourceDirectory;
-	exec { 
-		msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Build /p:Configuration=$config
+	
+	try {
+		Write-Output "Running BuildSolution..."
+		exec { 
+			msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Build /p:Configuration=$config
+		}
+		Write-Host ("************ BuildSolution Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ BuildSolution Failed ************")
 	}
 }
 
@@ -100,8 +125,17 @@ Task -Name RebuildSolution -Depends CleanSolution, __CreateBuildArtifactsDirecto
 
 Task -Name CleanSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfiguration -Description "Deletes all build artifacts" -Action {
 	$sourceDirectory = get-sourceDirectory;
-	exec {
-		msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Clean /p:Configuration=$config
+	
+	try {
+		Write-Output "Running CleanSolution..."
+		exec {
+			msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Clean /p:Configuration=$config
+		}
+		Write-Host ("************ CleanSolution Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ CleanSolution Failed ************")
 	}
 }
 
@@ -111,7 +145,15 @@ Task -Name PackageChocolatey -Description "Packs the module and example package"
 	$sourceDirectory = get-sourceDirectory;
 	$buildArtifactsDirectory = get-buildArtifactsDirectory;
     
-    exec { 
-		.$nugetExe pack "$sourceDirectory\..\ChocolateyPackage\ChocolateyGUI.nuspec" -OutputDirectory "$buildArtifactsDirectory" -NoPackageAnalysis -version $script:version 
+	try {
+		Write-Output "Running PackageChocolatey..."
+		exec { 
+			.$nugetExe pack "$sourceDirectory\..\ChocolateyPackage\ChocolateyGUI.nuspec" -OutputDirectory "$buildArtifactsDirectory" -NoPackageAnalysis -version $script:version 
+		}
+		Write-Host ("************ PackageChocolatey Successful ************")
 	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ PackageChocolatey Failed ************")
+	}	
 }

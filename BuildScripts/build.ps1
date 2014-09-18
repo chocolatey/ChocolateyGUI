@@ -23,3 +23,9 @@ if($Help){
 }
 
 invoke-psake "$here/default.ps1" -task $Action -properties @{ 'config'=$Config; 'preversion'=$PackageVersion}
+  
+if ($psake.build_success -eq $false) { 
+  exit 1 
+} else { 
+  exit 0 
+}

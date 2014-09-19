@@ -25,3 +25,14 @@ build_script:
   - cmd: build.bat PackageSolution
   
 test: off
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+  - path: BuildArtifacts\ChocolateyGUI.msi
+    name: ChocolateyGUI Installer
+
+  - path: BuildArtifacts\ChocolateyGUI.*.nupkg
+    name: ChocolateyGUI Chocolatey Package	

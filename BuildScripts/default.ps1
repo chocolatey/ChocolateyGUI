@@ -73,7 +73,8 @@ Task -Name RunGitVersion -Description "Execute the GitVersion Command Line Tool,
 	try {
 		Write-Output "Running RunGitVersion..."
 		exec {
-			$output = & $gitVersionExe /UpdateAssemblyInfo true
+			& $gitVersionExe /output buildserver /UpdateAssemblyInfo true
+			$output = & $gitVersionExe
 			$joined = $output -join "`n"
 			$versionInfo = $joined | ConvertFrom-Json
 			$script:version = $versionInfo.LegacySemVer

@@ -44,25 +44,25 @@ ELSE (
 	IF "%APPVEYOR_REPO_BRANCH%"=="develop" IF "%APPVEYOR_PULL_REQUEST_NUMBER%"=="" (
 		ECHO Since we are on develop branch with no pull request number, we are ready to deploy to MyGet
 		::powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 DeploySolutionToMyGet"
-		::GOTO :eof
+		GOTO :eof
 	)
 
 	IF "%APPVEYOR_REPO_BRANCH%"=="develop" IF "%APPVEYOR_PULL_REQUEST_NUMBER%" NEQ "" (
 		ECHO Since we are on develop branch with a pull request number, we are just going to package the solution, with no deployment
-		::powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 PackageSolution"
-		::GOTO :eof
+		powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 PackageSolution"
+		GOTO :eof
 	)
 
 	IF "%APPVEYOR_REPO_BRANCH%"=="master" IF "%APPVEYOR_PULL_REQUEST_NUMBER%"=="" (
 		ECHO Since we are on develop branch with no pull request number, we are ready to deploy to Chocolatey
 		::powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 DeploySolutionToChocolatey"
-		::GOTO :eof
+		GOTO :eof
 	)
 
 	IF "%APPVEYOR_REPO_BRANCH%"=="master" IF "%APPVEYOR_PULL_REQUEST_NUMBER%" NEQ "" (
 		ECHO Since we are on develop branch with a pull request number, we are just going to package the solution, with no deployment
 		::powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 PackageSolution"
-		::GOTO :eof
+		GOTO :eof
 	)
 )
 

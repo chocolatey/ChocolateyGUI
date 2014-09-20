@@ -45,6 +45,10 @@ function remove-PackageDirectory( [Parameter(ValueFromPipeline=$true)]$packageDi
 	}
 }
 
+function isAppVeyor() {
+	Test-Path -Path env:\APPVEYOR
+}
+
 Task -Name Default -Depends BuildSolution
 
 # private tasks
@@ -72,14 +76,21 @@ Task -Name RunGitVersion -Description "Execute the GitVersion Command Line Tool,
 	
 	try {
 		Write-Output "Running RunGitVersion..."
+
 		exec {
-			& $gitVersionExe /output buildserver /UpdateAssemblyInfo true
+			if(isAppVeyor) {
+				Write-Host "Running on AppVeyor, so UpdateAssemblyInfo will be called."
+				& $gitVersionExe /output buildserver /UpdateAssemblyInfo true
+			}
+
 			$output = & $gitVersionExe
 			$joined = $output -join "`n"
 			$versionInfo = $joined | ConvertFrom-Json
-			$script:version = $versionInfo.LegacySemVer
-			Write-Host $script:version
+			$script:version = $versionInfo.LegacySemVerPadded
+
+			Write-Host "Calculated Legacy SemVer Padded Version Number: $script:version"
 		}
+
 		Write-Host ("************ RunGitVersion Successful ************")
 	}
 	catch {
@@ -93,9 +104,11 @@ Task -Name NugetPackageRestore -Description "Restores all the required nuget pac
 	
 	try {
 		Write-Output "Running NugetPackageRestore..."
+
 		exec {
 			& $nugetExe restore "$sourceDirectory\ChocolateyGui.sln"
 		}
+
 		Write-Host ("************ NugetPackageRestore Successful ************")
 	}
 	catch {
@@ -109,9 +122,11 @@ Task -Name BuildSolution -Depends __VerifyConfiguration, RunGitVersion, NugetPac
 	
 	try {
 		Write-Output "Running BuildSolution..."
+
 		exec { 
 			msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Build /p:Configuration=$config
 		}
+
 		Write-Host ("************ BuildSolution Successful ************")
 	}
 	catch {
@@ -129,9 +144,11 @@ Task -Name CleanSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfi
 	
 	try {
 		Write-Output "Running CleanSolution..."
+
 		exec {
 			msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Clean /p:Configuration=$config
 		}
+
 		Write-Host ("************ CleanSolution Successful ************")
 	}
 	catch {
@@ -148,9 +165,11 @@ Task -Name PackageChocolatey -Description "Packs the module and example package"
     
 	try {
 		Write-Output "Running PackageChocolatey..."
+
 		exec { 
 			.$nugetExe pack "$sourceDirectory\..\ChocolateyPackage\ChocolateyGUI.nuspec" -OutputDirectory "$buildArtifactsDirectory" -NoPackageAnalysis -version $script:version 
 		}
+
 		Write-Host ("************ PackageChocolatey Successful ************")
 	}
 	catch {

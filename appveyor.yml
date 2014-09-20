@@ -36,3 +36,10 @@ artifacts:
 
   - path: BuildArtifacts\ChocolateyGUI.*.nupkg
     name: ChocolateyGUI Chocolatey Package	
+
+#---------------------------------#
+#      caching configuration      #
+#---------------------------------#
+
+cache:
+  - Source\packages

@@ -1,0 +1,38 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: 1.0.{build}
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# clone directory
+clone_folder: C:\projects\ChocolateyGUI
+
+# environment variables
+environment:
+  MyGetApiKey:
+    secure: LeTveN6ryggcXR4fgZcaMOdvVHFxR6NNZZpaaxCG83D8waN4D1eEoLRv+5ZvLKLF
+   
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+build_script:
+  - cmd: build.bat PackageSolution
+  
+test: off
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+  - path: BuildArtifacts\ChocolateyGUI.msi
+    name: ChocolateyGUI Installer
+
+  - path: BuildArtifacts\ChocolateyGUI.*.nupkg
+    name: ChocolateyGUI Chocolatey Package	

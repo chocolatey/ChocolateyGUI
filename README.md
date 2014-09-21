@@ -1,8 +1,8 @@
 # ChocolateyGUI
-ChocolateyGUI is a user interface for Chocolatey NuGet (a Machine Package Manager for Windows - see http://chocolatey.org).
+ChocolateyGUI is a user interface for [Chocolatey NuGet](http://chocolatey.org) (a Machine Package Manager for Windows).
 
 ##Installation
-You can install ChocolateyGUI via Chocolatey by executing:
+You can install ChocolateyGUI via Chocolatey itself by executing:
  
 ```choco install ChocolateyGUI```
 
@@ -14,12 +14,12 @@ This uses the public ChocolateyGUI feed which is hosed on [MyGet.org](https://ww
 
 ##Build Status
 ###ChocolateyGUI Master Branch
-[![ChocolateyGUI Build Status](https://www.myget.org/BuildSource/Badge/chocolateygui?identifier=124190bb-ec73-4776-bfb3-e07bc6658e35)](https://www.myget.org/F/chocolateygui)
+[![Build status](https://ci.appveyor.com/api/projects/status/21psh7flvro8buhm)](https://ci.appveyor.com/project/GaryEwanPark/chocolateygui)
 
 ## Support
 If you find any problems with ChocolateyGUI, please raise an issue [here](https://github.com/chocolatey/ChocolateyGUI/issues/new).
 
-If you want to ask any questions about ChocolateyGUI, please issue the forum [here](https://groups.google.com/forum/#!forum/chocolateygui)
+If you want to ask any questions about ChocolateyGUI, please use the forum [here](https://groups.google.com/forum/#!forum/chocolateygui)
 
 Or, you can come and chat to the development team here:
 [![Gitter chat](https://badges.gitter.im/chocolatey/ChocolateyGUI.png)](https://gitter.im/chocolatey/ChocolateyGUI)
@@ -30,8 +30,11 @@ Or, you can come and chat to the development team here:
 * **Install** and **uninstall** packages
 * See detailed **package information**
 
-![ChocolateyGUI screenshot](http://blogs.lessthandot.com/wp-content/uploads/users/chrissie1/chocolatey/ChocoGUI1.png?mtime=1360428609)
+![image](https://cloud.githubusercontent.com/assets/1271146/4349077/4a3e3cbc-41a7-11e4-8806-63048ea626f3.png)
+
 ## Blog Posts and external articles
+
+**NOTE:** Some of these articles refer to an older, Windows Forms, implementation of ChocolateyGUI, but they are still relevant.
 
 * [All new ChocolateyGUI](http://blogs.lessthandot.com/index.php/SysAdmins/OS/Windows/all-new-chocolateygui) by chrissie1
 * [Making a chocolatey package for ChocolateyGUI.](http://blogs.lessthandot.com/index.php/DesktopDev/MSTech/making-a-chocolatey-package) by chrissie1

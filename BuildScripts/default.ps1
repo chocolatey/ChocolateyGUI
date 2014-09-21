@@ -69,9 +69,9 @@ Task -Name __RemoveBuildArtifactsDirectory -Description $private -Action {
 
 Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Description "Complete build, including creation of Chocolatey Package."
 
-Task -Name DeploySolutionToMyGet - Depends PackageSolution -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
+Task -Name DeploySolutionToMyGet -Depends PackageSolution -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
-Task -Name DeploySolutionToChocolatey - Depends PackageSolution -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
+Task -Name DeploySolutionToChocolatey -Depends PackageSolution -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
 
 # build tasks
 

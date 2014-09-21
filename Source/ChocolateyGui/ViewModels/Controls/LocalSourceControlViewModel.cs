@@ -1,20 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using ChocolateyGui.Base;
-using ChocolateyGui.Models;
-using ChocolateyGui.Services;
-using ChocolateyGui.Utilities;
-using ChocolateyGui.ViewModels.Items;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="LocalSourceControlViewModel.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.ViewModels.Controls
 {
+    using ChocolateyGui.Base;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.Utilities;
+    using ChocolateyGui.ViewModels.Items;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Linq;
+    using System.Reactive.Linq;
+    using System.Threading.Tasks;
+    using System.Windows;
+
     public class LocalSourceControlViewModel : ObservableBase, ILocalSourceControlViewModel, IWeakEventListener
     {
         private readonly List<IPackageViewModel> _packages;

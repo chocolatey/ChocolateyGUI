@@ -1,12 +1,18 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using ChocolateyGui.Models;
-using ChocolateyGui.Services.PackageServices;
-using ChocolateyGui.ViewModels.Items;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="CommandExecutionManagerPackageService.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Services
 {
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services.PackageServices;
+    using ChocolateyGui.ViewModels.Items;
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
+
     public class PackageService : IPackageService
     {
         private readonly IProgressService _progressService;
@@ -17,78 +23,81 @@ namespace ChocolateyGui.Services
         public PackageService(IProgressService progressService, ISourceService sourceService,
             Func<IPackageViewModel> packageFactory, Func<Type, ILogService> logFunc)
         {
-            _progressService = progressService;
-            _sourceService = sourceService;
-            _packageFactory = packageFactory;
-            _logService = logFunc(typeof (PackageService));
+            this._progressService = progressService;
+            this._sourceService = sourceService;
+            this._packageFactory = packageFactory;
+            this._logService = logFunc(typeof(PackageService));
         }
 
         public async Task<PackageSearchResults> Search(string query, Uri source = null)
         {
-            return await Search(query, new PackageSearchOptions(), source);
+            return await this.Search(query, new PackageSearchOptions(), source);
         }
 
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options, Uri source = null)
         {
-            await _progressService.StartLoading("Search");
+            await this._progressService.StartLoading("Search");
             if (string.IsNullOrWhiteSpace(query))
             {
-                _progressService.WriteMessage("Loading data...");
+                this._progressService.WriteMessage("Loading data...");
             }
             else
             {
-                _progressService.WriteMessage(string.Format("Searching for {0}", query));
+                this._progressService.WriteMessage(string.Format("Searching for {0}", query));
             }
 
             if (source == null)
             {
-                source = new Uri(_sourceService.GetDefaultSource().Url);
+                source = new Uri(this._sourceService.GetDefaultSource().Url);
             }
 
             if (source.Scheme == "http" || source.Scheme == "https")
             {
-                var results = await ODataPackageService.Search(query, _packageFactory, options, source);
-                await _progressService.StopLoading();
+                var results = await ODataPackageService.Search(query, this._packageFactory, options, source);
+                await this._progressService.StopLoading();
                 return results;
             }
 
-            if(source.IsFile || source.IsUnc)
+            if (source.IsFile || source.IsUnc)
             {
-                await _progressService.StopLoading();
+                await this._progressService.StopLoading();
                 return null;
             }
+
             throw new InvalidDataException("Invalid Source Uri. Double check that you current source is a valid endpoint.");
         }
 
         public async Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false, Uri source = null)
         {
-            _progressService.WriteMessage(string.Format("Getting latest version of {0}...", id));
+            this._progressService.WriteMessage(string.Format("Getting latest version of {0}...", id));
             if (source == null)
             {
-                var defaultSource = new Uri(_sourceService.GetDefaultSource().Url);
+                var defaultSource = new Uri(this._sourceService.GetDefaultSource().Url);
 
                 if (defaultSource.Scheme == "http" || defaultSource.Scheme == "https")
                 {
-                    var result = await ODataPackageService.GetLatest(id, _packageFactory, defaultSource, includePrerelease);
+                    var result = await ODataPackageService.GetLatest(id, this._packageFactory, defaultSource, includePrerelease);
                     if (result != null)
                     {
                         result.Source = defaultSource;
                         return result;
                     }
                 }
-                
 
-                foreach (var sourceViewModel in _sourceService.GetSources())
+
+                foreach (var sourceViewModel in this._sourceService.GetSources())
                 {
                     var currentSource = new Uri(sourceViewModel.Url);
                     if (currentSource.Scheme == "http" || currentSource.Scheme == "https")
                     {
-                        var result = await ODataPackageService.GetLatest(id, _packageFactory, currentSource, includePrerelease);
+                        var result = await ODataPackageService.GetLatest(id, this._packageFactory, currentSource, includePrerelease);
                         if (result == null)
+                        {
                             continue;
+                        }
 
                         result.Source = currentSource;
-                        await _progressService.StopLoading();
+                        await this._progressService.StopLoading();
                         return result;
                     }
                 }
@@ -97,9 +106,12 @@ namespace ChocolateyGui.Services
             {
                 if (source.Scheme == "http" || source.Scheme == "https")
                 {
-                    var result = await ODataPackageService.GetLatest(id, _packageFactory, source, includePrerelease);
-                    if(result != null)
+                    var result = await ODataPackageService.GetLatest(id, this._packageFactory, source, includePrerelease);
+                    if (result != null)
+                    {
                         result.Source = source;
+                    }
+
                     return result;
                 }
 
@@ -108,40 +120,43 @@ namespace ChocolateyGui.Services
                     return null;
                 }
             }
+
             return null;
         }
 
         public async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source = null)
         {
-            await _progressService.StartLoading("Loading Package Information");
-            _progressService.WriteMessage("Loading remote package information...");
+            await this._progressService.StartLoading("Loading Package Information");
+            this._progressService.WriteMessage("Loading remote package information...");
 
             // If we don't have a source, iterate through our source until we find one that matches.
             if (source == null)
             {
-                var defaultSourceVm = _sourceService.GetDefaultSource();
+                var defaultSourceVm = this._sourceService.GetDefaultSource();
                 var defaultSource = new Uri(defaultSourceVm.Url);
                 if (defaultSource.Scheme == "http" || defaultSource.Scheme == "https")
                 {
                     var result = await ODataPackageService.EnsureIsLoaded(vm, defaultSource);
                     if (result != null)
                     {
-                        await _progressService.StopLoading();
+                        await this._progressService.StopLoading();
                         result.Source = defaultSource;
                         return result;
                     }
                 }
 
-                foreach (var sourceViewModel in _sourceService.GetSources())
+                foreach (var sourceViewModel in this._sourceService.GetSources())
                 {
                     var currentSource = new Uri(sourceViewModel.Url);
                     if (currentSource.Scheme == "http" || currentSource.Scheme == "https")
                     {
                         var result = await ODataPackageService.EnsureIsLoaded(vm, currentSource);
-                        if(result == null)
+                        if (result == null)
+                        {
                             continue;
+                        }
 
-                        await _progressService.StopLoading();
+                        await this._progressService.StopLoading();
                         result.Source = currentSource;
                         return result;
                     }
@@ -152,32 +167,37 @@ namespace ChocolateyGui.Services
                 if (source.Scheme == "http" || source.Scheme == "https")
                 {
                     var result = await ODataPackageService.EnsureIsLoaded(vm, source);
-                    await _progressService.StopLoading();
+                    await this._progressService.StopLoading();
                     if (result != null)
+                    {
                         result.Source = source;
+                    }
+
                     return result;
                 }
 
                 if (source.IsFile || source.IsUnc)
                 {
-                    await _progressService.StopLoading();
+                    await this._progressService.StopLoading();
                     return null;
                 }
             }
-            await _progressService.StopLoading();
+
+            await this._progressService.StopLoading();
             return null;
         }
 
         public async Task<bool> TestSourceUrl(Uri source)
         {
-
             if (source.Scheme == "http" || source.Scheme == "https")
             {
-                var exception =  await ODataPackageService.TestPath(source);
+                var exception = await ODataPackageService.TestPath(source);
                 if (exception == null)
+                {
                     return true;
+                }
 
-                _logService.Debug("TestSourceUrl failed.", exception);
+                this._logService.Debug("TestSourceUrl failed.", exception);
                 return false;
             }
 
@@ -185,6 +205,7 @@ namespace ChocolateyGui.Services
             {
                 return false;
             }
+
             return false;
         }
     }

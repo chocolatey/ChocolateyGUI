@@ -1,10 +1,15 @@
-﻿using System;
-using System.Windows;
-using ChocolateyGui.Models;
-using ChocolateyGui.Services;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="PackagesChangedEventManager.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Utilities
 {
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services;
+    using System.Windows;
+
     public class PackagesChangedEventManager : WeakEventManager
     {
         public static void AddListener(IChocolateyService serivce, IWeakEventListener listener)

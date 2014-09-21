@@ -94,9 +94,10 @@ namespace ChocolateyGui.Commands
         {
             var target = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
             if (target == null)
+            {
                 throw new Exception("IProvideValueTarget could not be resolved.");
+            }
 
-            
             this._target = 
                 target.TargetObject is InputBinding
                 ? GetInputBindingsCollectionOwner(target)
@@ -163,6 +164,7 @@ namespace ChocolateyGui.Commands
             {
                 return;
             }
+
             bool canExecute;
             CommandExecutionManager.TryExecuteCommand(target, parameter, true, Executed, CanExecute, out canExecute);
         }
@@ -171,7 +173,9 @@ namespace ChocolateyGui.Commands
         {
             var fe = element as FrameworkElement;
             if (fe != null)
+            {
                 return fe.DataContext;
+            }
 
             var fce = element as FrameworkContentElement;
             return fce == null ? null : fce.DataContext;

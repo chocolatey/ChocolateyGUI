@@ -1,45 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Services.Client;
-using System.Linq;
-using System.Runtime.Caching;
-using System.Threading.Tasks;
-using ChocolateyGui.ChocolateyFeedService;
-using ChocolateyGui.Models;
-using ChocolateyGui.Utilities.Extensions;
-using ChocolateyGui.ViewModels.Items;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ODataPackageService.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Services.PackageServices
 {
+    using ChocolateyGui.ChocolateyFeedService;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Utilities.Extensions;
+    using ChocolateyGui.ViewModels.Items;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Services.Client;
+    using System.Linq;
+    using System.Runtime.Caching;
+    using System.Threading.Tasks;
+
     public static class ODataPackageService
     {
-        private static readonly MemoryCache Cache = MemoryCache.Default;
-
-        private static string GetMemoryCacheKey(Uri feed)
-        {
-            return string.Format("ODataPackageService.Feeds.{0}", feed);
-        }
-
         private static readonly object _feedLockObject = new object();
 
-        private static FeedContext_x0060_1 GetFeed(Uri source)
+        private static readonly MemoryCache Cache = MemoryCache.Default;
+
+        public static async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source)
         {
-            lock (_feedLockObject)
-            {
-                FeedContext_x0060_1 service;
-                if ((service = (FeedContext_x0060_1) Cache.Get(GetMemoryCacheKey(source))) == null)
-                {
-                    service = new FeedContext_x0060_1(source)
-                    {
-                        IgnoreMissingProperties = true,
-                        IgnoreResourceNotFoundException = true,
-                        MergeOption = MergeOption.NoTracking
-                    };
-                    Cache.Set(GetMemoryCacheKey(source), service,
-                        new CacheItemPolicy {SlidingExpiration = TimeSpan.FromMinutes(20)});
-                }
-                return service;
-            }
+            var service = GetFeed(source);
+
+            var feedQuery =
+                    (DataServiceQuery<V2FeedPackage>)service.Packages.Where(package => package.Id == vm.Id && package.Version == vm.Version.ToString());
+            var result = await Task.Factory.FromAsync(feedQuery.BeginExecute, ar => feedQuery.EndExecute(ar), null);
+            var v2FeedPackages = result as IList<V2FeedPackage> ?? result.ToList();
+            if (result == null || !v2FeedPackages.Any())
+                return null;
+
+            var packageInfo = v2FeedPackages.Single();
+            return AutoMapper.Mapper.Map(packageInfo, vm);
+        }
+
+        public static async Task<IPackageViewModel> GetLatest(string id, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
+        {
+            var service = GetFeed(source);
+
+            var packageQuery = service.Packages.Where(p => p.IsPrerelease == includePrerelease || p.IsPrerelease == false)
+                .Where(p => p.Id == id);
+
+            packageQuery = includePrerelease ? packageQuery.Where(p => p.IsAbsoluteLatestVersion) : packageQuery.Where(p => p.IsLatestVersion);
+
+            var feedDataServiceQuery = (DataServiceQuery<V2FeedPackage>)packageQuery;
+            var packages = await Task.Factory.FromAsync(feedDataServiceQuery.BeginExecute, ar => feedDataServiceQuery.EndExecute(ar), null);
+            var package = packages.FirstOrDefault();
+
+            return package == null ? null : AutoMapper.Mapper.Map(package, packageFactory());
         }
 
         public static async Task<PackageSearchResults> Search(string query, Func<IPackageViewModel> packageFactory, Uri source)
@@ -54,7 +66,9 @@ namespace ChocolateyGui.Services.PackageServices
             IQueryable<V2FeedPackage> feedQuery = service.Packages.Where(package => package.IsPrerelease == options.IncludePrerelease || package.IsPrerelease == false);
 
             if (!options.IncludeAllVersions)
+            {
                 feedQuery = feedQuery.Where(package => package.IsLatestVersion || package.IsAbsoluteLatestVersion);
+            }
 
             if (!string.IsNullOrWhiteSpace(queryString))
             {
@@ -84,43 +98,12 @@ namespace ChocolateyGui.Services.PackageServices
             };
         }
 
-        public static async Task<IPackageViewModel> GetLatest(string id, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
-        {
-            var service = GetFeed(source);
-
-            var packageQuery = service.Packages.Where(p => p.IsPrerelease == includePrerelease || p.IsPrerelease == false)
-                .Where(p => p.Id == id);
-
-            packageQuery = includePrerelease ? packageQuery.Where(p => p.IsAbsoluteLatestVersion) : packageQuery.Where(p => p.IsLatestVersion);
-
-            var feedDataServiceQuery = (DataServiceQuery<V2FeedPackage>)packageQuery;
-            var packages = await Task.Factory.FromAsync(feedDataServiceQuery.BeginExecute, ar => feedDataServiceQuery.EndExecute(ar), null);
-            var package = packages.FirstOrDefault();
-
-            return package == null ? null : AutoMapper.Mapper.Map(package, packageFactory());
-        }
-
-        public static async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source)
-        {
-            var service = GetFeed(source);
-
-            var feedQuery =
-                    (DataServiceQuery<V2FeedPackage>)service.Packages.Where(package => package.Id == vm.Id && package.Version == vm.Version.ToString());
-            var result = await Task.Factory.FromAsync(feedQuery.BeginExecute, ar => feedQuery.EndExecute(ar), null);
-            var v2FeedPackages = result as IList<V2FeedPackage> ?? result.ToList();
-            if (result == null || !v2FeedPackages.Any())
-                return null;
-
-            var packageInfo = v2FeedPackages.Single();
-            return AutoMapper.Mapper.Map(packageInfo, vm);
-        }
-
         public static async Task<Exception> TestPath(Uri source)
         {
             try
             {
                 var service = new FeedContext_x0060_1(source);
-                var query = (DataServiceQuery<V2FeedPackage>) service.Packages.Take(1);
+                var query = (DataServiceQuery<V2FeedPackage>)service.Packages.Take(1);
                 var result = query.FirstOrDefault();
                 await Task.Factory.FromAsync(query.BeginExecute, ar => query.EndExecute(ar), null);
                 return null;
@@ -129,6 +112,33 @@ namespace ChocolateyGui.Services.PackageServices
             {
                 return ex;
             }
+        }
+
+        private static FeedContext_x0060_1 GetFeed(Uri source)
+        {
+            lock (_feedLockObject)
+            {
+                FeedContext_x0060_1 service;
+                if ((service = (FeedContext_x0060_1)Cache.Get(GetMemoryCacheKey(source))) == null)
+                {
+                    service = new FeedContext_x0060_1(source)
+                    {
+                        IgnoreMissingProperties = true,
+                        IgnoreResourceNotFoundException = true,
+                        MergeOption = MergeOption.NoTracking
+                    };
+
+                    Cache.Set(GetMemoryCacheKey(source), service,
+                        new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMinutes(20) });
+                }
+
+                return service;
+            }
+        }
+
+        private static string GetMemoryCacheKey(Uri feed)
+        {
+            return string.Format("ODataPackageService.Feeds.{0}", feed);
         }
     }
 }

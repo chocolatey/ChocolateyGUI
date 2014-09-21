@@ -1,134 +1,154 @@
-﻿using System;
-using System.ComponentModel;
-using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using ChocolateyGui.Base;
-using ChocolateyGui.Controls;
-using ChocolateyGui.Models;
-using ChocolateyGui.Views.Windows;
-using MahApps.Metro.Controls.Dialogs;
-using ChocolateyGui.Controls.Dialogs;
-using ChocolateyGui.Utilities;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ProgressService.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Services
 {
+    using ChocolateyGui.Base;
+    using ChocolateyGui.Controls;
+    using ChocolateyGui.Controls.Dialogs;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Utilities;
+    using ChocolateyGui.Views.Windows;
+    using MahApps.Metro.Controls.Dialogs;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows;
+
     public class ProgressService : ObservableBase, IProgressService
     {
         public MainWindow MainWindow;
 
         private readonly AsyncLock _lock;
 
-        public ProgressService()
-        {
-            _isLoading = false;
-            _loadingItems = 0;
-            _output = new ObservableRingBuffer<PowerShellOutputLine>(100);
-            _lock = new AsyncLock();
-        }
+        private readonly ObservableRingBuffer<PowerShellOutputLine> _output;
+
+        private CancellationTokenSource _cst = null;
 
         private bool _isLoading;
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-        }
 
         private int _loadingItems;
+
+        private double _progress;
+
         private ChocolateyDialogController _progressController;
-        private CancellationTokenSource _cst = null;
+
+        public ProgressService()
+        {
+            this._isLoading = false;
+            this._loadingItems = 0;
+            this._output = new ObservableRingBuffer<PowerShellOutputLine>(100);
+            this._lock = new AsyncLock();
+        }
+
+        public bool IsLoading
+        {
+            get { return this._isLoading; }
+        }
+
+        public ObservableRingBuffer<PowerShellOutputLine> Output
+        {
+            get { return this._output; }
+        }
+
+        public double Progress
+        {
+            get { return this._progress; }
+        }
+
+        public CancellationToken GetCancellationToken()
+        {
+            if (!this.IsLoading)
+            {
+                throw new InvalidOperationException("There's no current operation in process.");
+            }
+
+            return this._cst.Token;
+        }
+
+        public void Report(double value)
+        {
+            this._progress = value;
+
+            if (this._progressController != null)
+            {
+                if (value < 0)
+                {
+                    this._progressController.SetIndeterminate();
+                }
+                else
+                {
+                    this._progressController.SetProgress(Math.Min((this._progress) / 100.0f, 100));
+                }
+            }
+
+            this.NotifyPropertyChanged("Progress");
+        }
+
+        public async Task<MessageDialogResult> ShowMessageAsync(string title, string message)
+        {
+            if (this.MainWindow != null)
+            {
+                return await this.MainWindow.ShowMessageAsync(title, message);
+            }
+
+            return MessageBox.Show(message, title) == MessageBoxResult.OK ? MessageDialogResult.Affirmative : MessageDialogResult.Negative;
+        }
 
         public async Task StartLoading(string title = null, bool isCancelable = false)
         {
-            using (await _lock.LockAsync())
+            using (await this._lock.LockAsync())
             {
-                var currentCount = Interlocked.Increment(ref _loadingItems);
+                var currentCount = Interlocked.Increment(ref this._loadingItems);
                 if (currentCount == 1)
                 {
-                    var chocoDialg = new ChocolateyDialog(MainWindow);
+                    var chocoDialg = new ChocolateyDialog(this.MainWindow);
 
-                    _progressController = await MainWindow.ShowChocolateyDialogAsync(title, isCancelable);
-                    _progressController.SetIndeterminate();
+                    this._progressController = await this.MainWindow.ShowChocolateyDialogAsync(title, isCancelable);
+                    this._progressController.SetIndeterminate();
                     if (isCancelable)
                     {
-                        _cst = new CancellationTokenSource();
-                        _progressController.OnCancelled += dialog =>
+                        this._cst = new CancellationTokenSource();
+                        this._progressController.OnCancelled += dialog =>
                         {
-                            if (_cst != null)
+                            if (this._cst != null)
+                            {
                                 _cst.Cancel();
+                            }
                         };
                     }
 
-                    _output.Clear();
+                    this._output.Clear();
 
-                    _isLoading = true;
-                    NotifyPropertyChanged("IsLoading");
+                    this._isLoading = true;
+                    this.NotifyPropertyChanged("IsLoading");
                 }
             }
         }
 
         public async Task StopLoading()
         {
-            using (await _lock.LockAsync())
+            using (await this._lock.LockAsync())
             {
-                var currentCount = Interlocked.Decrement(ref _loadingItems);
+                var currentCount = Interlocked.Decrement(ref this._loadingItems);
                 if (currentCount == 0)
                 {
-                    await _progressController.CloseAsync();
-                    _progressController = null;
-                    Report(0);
+                    await this._progressController.CloseAsync();
+                    this._progressController = null;
+                    this.Report(0);
 
-                    _isLoading = false;
-                    NotifyPropertyChanged("IsLoading");
+                    this._isLoading = false;
+                    this.NotifyPropertyChanged("IsLoading");
                 }
             }
         }
 
-        public CancellationToken GetCancellationToken()
-        {
-            if (!IsLoading)
-                throw new InvalidOperationException("There's no current operation in process.");
-            return _cst.Token;
-        }
-
-        private readonly ObservableRingBuffer<PowerShellOutputLine> _output;
-        public ObservableRingBuffer<PowerShellOutputLine> Output
-        {
-            get { return _output; }
-        }
-
-
         public void WriteMessage(string message, PowerShellLineType type = PowerShellLineType.Output, bool newLine = true)
         {
-            _output.Add(new PowerShellOutputLine(message, type, newLine));
-        }
-
-        private double _progress;
-        public double Progress
-        {
-            get { return _progress; }
-        }
-
-        public void Report(double value)
-        {
-            _progress = value;
-            if (_progressController != null)
-            {
-                if(value < 0)
-                    _progressController.SetIndeterminate();
-                else
-                    _progressController.SetProgress(Math.Min((_progress)/100.0f, 100));
-            }
-            NotifyPropertyChanged("Progress");
-        }
-
-        public async Task<MessageDialogResult> ShowMessageAsync(string title, string message)
-        {
-            if (MainWindow != null)
-            {
-                return await MainWindow.ShowMessageAsync(title, message);
-            }
-            return MessageBox.Show(message, title) == MessageBoxResult.OK ? MessageDialogResult.Affirmative : MessageDialogResult.Negative;
+            this._output.Add(new PowerShellOutputLine(message, type, newLine));
         }
     }
 }

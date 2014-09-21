@@ -12,12 +12,13 @@ namespace ChocolateyGui.Utilities.Converters
         /// </summary>
         /// <param name="filesize">The numeric value to be converted.</param>
         /// <returns>the converted string</returns>
-        public static string StrFormatByteSize (long filesize) {
-             var sb = new StringBuilder(16);
-             NativeMethods.StrFormatByteSize(filesize, sb, sb.Capacity);
-             return sb.ToString();
+        public static string StrFormatByteSize(long filesize)
+        {
+            var sb = new StringBuilder(16);
+            NativeMethods.StrFormatByteSize(filesize, sb, sb.Capacity);
+            return sb.ToString();
         }
- 
+
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (!(value is long))

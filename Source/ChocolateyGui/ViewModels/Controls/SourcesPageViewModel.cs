@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using ChocolateyGui.Base;
-using ChocolateyGui.Models;
-using ChocolateyGui.Services;
-using ChocolateyGui.Utilities;
-using ChocolateyGui.ViewModels.Items;
-using ChocolateyGui.Views.Controls;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="SourcesControlViewModel.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.ViewModels.Controls
 {
+    using ChocolateyGui.Base;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.Utilities;
+    using ChocolateyGui.ViewModels.Items;
+    using ChocolateyGui.Views.Controls;
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows;
+
     public class SourcesControlViewModel : ObservableBase, ISourcesControlViewModel, IWeakEventListener
     {
         public ObservableCollection<SourceTabViewModel> Sources { get; set; }

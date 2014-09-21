@@ -1,9 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="AsyncSemaphore.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Utilities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     internal class AsyncSemaphore
     {
         private readonly static Task<bool> Completed = TaskEx.FromResult(true);
@@ -13,39 +19,50 @@ namespace ChocolateyGui.Utilities
         public AsyncSemaphore(int initialCount)
         {
             if (initialCount < 0)
-                throw new ArgumentOutOfRangeException("initialCount");
-            _currentCount = initialCount; 
-        }
-        public Task WaitAsync()
-        {
-            lock (_waiters)
             {
-                if (_currentCount > 0)
-                {
-                    --_currentCount;
-                    return Completed;
-                }
-                else
-                {
-                    var waiter = new TaskCompletionSource<bool>();
-                    _waiters.Enqueue(waiter);
-                    return waiter.Task;
-                }
+                throw new ArgumentOutOfRangeException("initialCount");
             }
+
+            this._currentCount = initialCount;
         }
 
         public void Release()
         {
             TaskCompletionSource<bool> toRelease = null;
-            lock (_waiters)
+            lock (this._waiters)
             {
-                if (_waiters.Count > 0)
-                    toRelease = _waiters.Dequeue();
+                if (this._waiters.Count > 0)
+                {
+                    toRelease = this._waiters.Dequeue();
+                }
                 else
-                    ++_currentCount;
+                {
+                    ++this._currentCount;
+                }
             }
+
             if (toRelease != null)
+            {
                 toRelease.SetResult(true);
+            }
+        }
+
+        public Task WaitAsync()
+        {
+            lock (this._waiters)
+            {
+                if (this._currentCount > 0)
+                {
+                    --this._currentCount;
+                    return Completed;
+                }
+                else
+                {
+                    var waiter = new TaskCompletionSource<bool>();
+                    this._waiters.Enqueue(waiter);
+                    return waiter.Task;
+                }
+            }
         }
     }
 }

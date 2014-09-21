@@ -29,7 +29,7 @@ namespace ChocolateyGui.IoC
             builder.Register(c => new PackageViewModel(c.Resolve<IPackageService>(), c.Resolve<IChocolateyService>(), c.Resolve<INavigationService>())).As<IPackageViewModel>();
 
             // Register Services
-            builder.Register((c,parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
+            builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
             builder.RegisterType<SettingsSourceService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<PackageService>().As<IPackageService>().SingleInstance();
@@ -40,9 +40,9 @@ namespace ChocolateyGui.IoC
             builder.RegisterType<MainWindow>();
             builder.RegisterType<SourcesControl>();
             builder.RegisterType<LocalSourceControl>();
-            builder.Register((c, parameters) => 
+            builder.Register((c, parameters) =>
                 new RemoteSourceControl(c.Resolve<IRemoteSourceControlViewModel>(parameters), c.Resolve<Lazy<INavigationService>>()));
-            builder.Register((c,pvm) => new PackageControl(c.Resolve<IPackageControlViewModel>(), pvm.TypedAs<PackageViewModel>()));
+            builder.Register((c, pvm) => new PackageControl(c.Resolve<IPackageControlViewModel>(), pvm.TypedAs<PackageViewModel>()));
 
 
             return builder.Build();

@@ -1,12 +1,16 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using ChocolateyGui.ViewModels.Controls;
-using ChocolateyGui.ViewModels.Items;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="PackageControl.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Views.Controls
 {
+    using ChocolateyGui.ViewModels.Controls;
+    using ChocolateyGui.ViewModels.Items;
+    using System.Diagnostics;
+    using System.Windows;
+    using System.Windows.Documents;
     /// <summary>
     /// Interaction logic for PackageControl.xaml
     /// </summary>

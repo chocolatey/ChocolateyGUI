@@ -1,19 +1,25 @@
-﻿using ChocolateyGui.ChocolateyFeedService;
-using ChocolateyGui.Controls.Dialogs;
-using ChocolateyGui.Models;
-using ChocolateyGui.Properties;
-using ChocolateyGui.Services;
-using ChocolateyGui.ViewModels.Items;
-using ChocolateyGui.ViewModels.Windows;
-using ChocolateyGui.Views.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="MainWindow.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Views.Windows
 {
+    using ChocolateyGui.ChocolateyFeedService;
+    using ChocolateyGui.Controls.Dialogs;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Properties;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.ViewModels.Items;
+    using ChocolateyGui.ViewModels.Windows;
+    using ChocolateyGui.Views.Controls;
+    using MahApps.Metro.Controls.Dialogs;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -29,10 +35,12 @@ namespace ChocolateyGui.Views.Windows
             DataContext = vm;
 
             if (progressService is ProgressService)
+            {
                 (progressService as ProgressService).MainWindow = this;
+            }
 
-            _progressService = progressService;
-            _logService = logService;
+            this._progressService = progressService;
+            this._logService = logService;
 
             // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
@@ -41,14 +49,14 @@ namespace ChocolateyGui.Views.Windows
             navigationService.SetNavigationItem(GlobalFrame);
             navigationService.Navigate(typeof(SourcesControl));
 
-            InitializeChocoDirectory();
+            this.InitializeChocoDirectory();
         }
 
         public Task<ChocolateyDialogController> ShowChocolateyDialogAsync(string title, bool isCancelable = false, MetroDialogSettings settings = null)
         {
             return ((Task<ChocolateyDialogController>)Dispatcher.Invoke(new Func<Task<ChocolateyDialogController>>(async () =>
             {
-                //create the dialog control
+                // create the dialog control
                 var dialog = new ChocolateyDialog(this)
                 {
                     Title = title,
@@ -108,7 +116,7 @@ namespace ChocolateyGui.Views.Windows
         {
             SettingsFlyout.IsOpen = false;
             SourcesFlyout.IsOpen = true;
-            SourcesFlyout.IsOpenChanged += SourcesFlyout_IsOpenChanged;
+            SourcesFlyout.IsOpenChanged += this.SourcesFlyout_IsOpenChanged;
         }
 
         private void SourcesFlyout_IsOpenChanged(object sender, EventArgs e)
@@ -116,7 +124,7 @@ namespace ChocolateyGui.Views.Windows
             if (SourcesFlyout.IsOpen == false)
             {
                 SettingsFlyout.IsOpen = true;
-                SourcesFlyout.IsOpenChanged -= SourcesFlyout_IsOpenChanged;
+                SourcesFlyout.IsOpenChanged -= this.SourcesFlyout_IsOpenChanged;
             }
         }
     }

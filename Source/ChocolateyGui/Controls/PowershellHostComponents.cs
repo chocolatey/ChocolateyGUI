@@ -213,7 +213,7 @@ namespace ChocolateyGui.Controls
         public override Size BufferSize
         {
             get { return new Size(0, 0); }
-            set {  }
+            set { }
         }
 
         /// <summary>

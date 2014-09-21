@@ -1,9 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
-using ChocolateyGui.Models;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="IPackageViewModel.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.ViewModels.Items
 {
+    using ChocolateyGui.Models;
+    using System;
+    using System.Threading.Tasks;
+    
     public interface IPackageViewModel
     {
         Task EnsureIsLoaded();

@@ -1,13 +1,19 @@
-﻿using ChocolateyGui.Models;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using System;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ChocolateyDialog.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Controls.Dialogs
 {
+    using ChocolateyGui.Models;
+    using MahApps.Metro.Controls;
+    using MahApps.Metro.Controls.Dialogs;
+    using System;
+    using System.Threading.Tasks;
+    using System.Windows;
+
+    using System.Windows.Media;
     /// <summary>
     /// Interaction logic for ChocolateyDialog.xaml
     /// </summary>
@@ -93,40 +99,44 @@ namespace ChocolateyGui.Controls.Dialogs
 
         internal ChocolateyDialogController(ChocolateyDialog dialog, Func<Task> closeCallBack)
         {
-            WrappedDialog = dialog;
-            CloseCallback = closeCallBack;
+            this.WrappedDialog = dialog;
+            this.CloseCallback = closeCallBack;
 
-            IsOpen = dialog.IsVisible;
+            this.IsOpen = dialog.IsVisible;
 
-            WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() =>
+            this.WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() =>
             {
-                WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
+                this.WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
             }));
         }
 
         void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (WrappedDialog.Dispatcher.CheckAccess())
+            if (this.WrappedDialog.Dispatcher.CheckAccess())
             {
-                IsCanceled = true;
-                WrappedDialog.PART_NegativeButton.IsEnabled = false;
-                var cancelled = OnCancelled;
+                this.IsCanceled = true;
+                this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
+                var cancelled = this.OnCancelled;
                 if (cancelled != null)
-                    cancelled(WrappedDialog);
+                {
+                    cancelled(this.WrappedDialog);
+                }
             }
             else
             {
-                WrappedDialog.Dispatcher.Invoke(new Action(() =>
+                this.WrappedDialog.Dispatcher.Invoke(new Action(() =>
                 {
                     IsCanceled = true;
-                    WrappedDialog.PART_NegativeButton.IsEnabled = false;
+                    this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
                     var cancelled = OnCancelled;
                     if (cancelled != null)
-                        cancelled(WrappedDialog);
+                    {
+                        cancelled(this.WrappedDialog);
+                    }
                 }));
             }
 
-            //Close();
+            // Close();
         }
 
         /// <summary>
@@ -134,11 +144,11 @@ namespace ChocolateyGui.Controls.Dialogs
         /// </summary>
         public void SetIndeterminate()
         {
-            if (WrappedDialog.Dispatcher.CheckAccess())
-                WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
+            if (this.WrappedDialog.Dispatcher.CheckAccess())
+                this.WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
             else
             {
-                WrappedDialog.Dispatcher.Invoke(new Action(() =>
+                this.WrappedDialog.Dispatcher.Invoke(new Action(() =>
                                                 {
                                                     WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
                                                 }));
@@ -151,10 +161,10 @@ namespace ChocolateyGui.Controls.Dialogs
         /// <param name="value"></param>
         public void SetCancelable(bool value)
         {
-            if (WrappedDialog.Dispatcher.CheckAccess())
-                WrappedDialog.IsCancelable = value;
+            if (this.WrappedDialog.Dispatcher.CheckAccess())
+                this.WrappedDialog.IsCancelable = value;
             else
-                WrappedDialog.Dispatcher.Invoke(new Action(() =>
+                this.WrappedDialog.Dispatcher.Invoke(new Action(() =>
                 {
                     WrappedDialog.IsCancelable = value;
                 }));
@@ -176,13 +186,13 @@ namespace ChocolateyGui.Controls.Dialogs
                 WrappedDialog.PART_ProgressBar.ApplyTemplate();
             };
 
-            if (WrappedDialog.Dispatcher.CheckAccess())
+            if (this.WrappedDialog.Dispatcher.CheckAccess())
             {
                 action();
             }
             else
             {
-                WrappedDialog.Dispatcher.Invoke(action);
+                this.WrappedDialog.Dispatcher.Invoke(action);
             }
 
       
@@ -194,13 +204,13 @@ namespace ChocolateyGui.Controls.Dialogs
         /// <param name="message">The title to be set.</param>
         public void SetTitle(string title)
         {
-            if (WrappedDialog.Dispatcher.CheckAccess())
+            if (this.WrappedDialog.Dispatcher.CheckAccess())
             {
-                WrappedDialog.Title = title;
+                this.WrappedDialog.Title = title;
             }
             else
             {
-                WrappedDialog.Dispatcher.Invoke(new Action(() => { WrappedDialog.Title = title; }));
+                this.WrappedDialog.Dispatcher.Invoke(new Action(() => { WrappedDialog.Title = title; }));
             }
         }
 
@@ -222,24 +232,23 @@ namespace ChocolateyGui.Controls.Dialogs
                 WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
             };
 
-            if (WrappedDialog.Dispatcher.CheckAccess())
+            if (this.WrappedDialog.Dispatcher.CheckAccess())
             {
                 action();
             }
             else
             {
-                WrappedDialog.Dispatcher.Invoke(action);
+                this.WrappedDialog.Dispatcher.Invoke(action);
               
             }
 
-            await CloseCallback();
+            await this.CloseCallback();
 
-            WrappedDialog.Dispatcher.Invoke(new Action(() =>
+            this.WrappedDialog.Dispatcher.Invoke(new Action(() =>
             {
                 IsOpen = false;
             }));
             return;
         }
     }
-
 }

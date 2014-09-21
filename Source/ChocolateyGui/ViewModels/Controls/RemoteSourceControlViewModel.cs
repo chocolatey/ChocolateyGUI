@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Reactive.Linq;
-using ChocolateyGui.Base;
-using ChocolateyGui.Models;
-using ChocolateyGui.Services;
-using ChocolateyGui.ViewModels.Items;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="RemoteSourceControlViewModel.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.ViewModels.Controls
 {
+    using ChocolateyGui.Base;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.ViewModels.Items;
+    using System;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Reactive.Linq;
+
     public class RemoteSourceControlViewModel : ObservableBase, IRemoteSourceControlViewModel
     {
         private ObservableCollection<IPackageViewModel> _packageViewModels;

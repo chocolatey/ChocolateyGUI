@@ -18,7 +18,7 @@ namespace ChocolateyGui.Commands
         ///     Indicates whether or not the methods associated with this
         ///     <see cref="RoutedCommandBinding"/> will be executed when the Handled property
         ///     of the <see cref="RoutedEventArgs"/> is set to true during the bubbling or
-        ///     tunneling of the command's <see cref="RoutedEvent"/>.
+        ///     tunnelling of the command's <see cref="RoutedEvent"/>.
         /// </summary>
         public bool ViewHandledEvents { get; set; }
 

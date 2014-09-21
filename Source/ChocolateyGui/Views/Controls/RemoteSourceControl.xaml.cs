@@ -1,17 +1,22 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reactive.Linq;
-using System.Windows.Controls;
-using System.Windows.Input;
-using ChocolateyGui.Services;
-using ChocolateyGui.ViewModels.Controls;
-using ChocolateyGui.ViewModels.Items;
-using ChocoPM.Extensions;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="RemoteSourceControl.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Views.Controls
 {
+    using ChocolateyGui.Services;
+    using ChocolateyGui.ViewModels.Controls;
+    using ChocolateyGui.ViewModels.Items;
+    using ChocoPM.Extensions;
+    using System;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
+    using System.Reactive.Linq;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+
     public partial class RemoteSourceControl
     {
         public const string PageTitle = "Remote Packages";
@@ -25,13 +30,13 @@ namespace ChocolateyGui.Views.Controls
             DataContext = vm;
             _viewModel = vm;
 
-            _navigationService = navigationService;
+            this._navigationService = navigationService;
 
             Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(vm.Packages, "CollectionChanged")
                 .Throttle(TimeSpan.FromMilliseconds(50))
                 .Distinct()
                 .ObserveOnDispatcher()
-                .Subscribe(ev => Packages_CollectionChanged());
+                .Subscribe(ev => this.Packages_CollectionChanged());
         }
 
         void Packages_CollectionChanged()
@@ -48,7 +53,9 @@ namespace ChocolateyGui.Views.Controls
                     column.SortDirection = _viewModel.SortDescending ? ListSortDirection.Descending : ListSortDirection.Ascending;
                 }
                 else
+                {
                     column.SortDirection = null;
+                }
             }
         }
 
@@ -61,7 +68,7 @@ namespace ChocolateyGui.Views.Controls
                 return;
             }
 
-            _navigationService.Value.Navigate(typeof(PackageControl), item);
+            this._navigationService.Value.Navigate(typeof(PackageControl), item);
         }
 
         private void DataGrid_OnSorting(object sender, DataGridSortingEventArgs e)

@@ -1,11 +1,17 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using Expression = System.Linq.Expressions.Expression;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="RoutedCommandMonitor.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Commands
 {
+    using System;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Input;
+    using Expression = System.Linq.Expressions.Expression;
+
     /// <summary>
     ///     This class listens to WPF's <see cref="RoutedEvent"/> system for
     ///     <see cref="RoutedCommand"/> events and invokes the appropriate methods of the
@@ -13,7 +19,6 @@ namespace ChocolateyGui.Commands
     /// </summary>
     internal static class RoutedCommandMonitor
     {
-        //
         // The three objects below provide access to an internal property named
         // CommandBindingsInternal that is defined in each of the three types: UIElement,
         // UIElement3D and ContentElement.
@@ -42,13 +47,11 @@ namespace ChocolateyGui.Commands
 
         private static void RegisterClassHandlers(Type type)
         {
-            //
             // Register handlers to listen for the RoutedEvents of RoutedCommands so that
             // we can look for RoutedCommandBinding when the command/event fires.
             // Although using the RegisterClassHandler method is generally frowned upon due
             // to memory leak concerns (i.e. there is not UnregisterClassHandler), it is ok here
             // because the 4 handlers are only referenced by the RoutedCommandBinding type.
-
             EventManager.RegisterClassHandler(type, CommandManager.PreviewCanExecuteEvent,
                 new CanExecuteRoutedEventHandler(OnCommandCanExecute), true);
 
@@ -80,17 +83,23 @@ namespace ChocolateyGui.Commands
             CommandBindingCollection commandBindings = null;
             var uie = sender as UIElement;
             if (uie != null)
+            {
                 commandBindings = UIElementCommandBindingsProvider.GetCommandBindings(uie);
+            }
             else
             {
                 var uie3D = sender as UIElement3D;
                 if (uie3D != null)
+                {
                     commandBindings = UIElement3DCommandBindingsProvider.GetCommandBindings(uie3D);
+                }
                 else
                 {
                     var ce = sender as ContentElement;
                     if (ce != null)
+                    {
                         commandBindings = ContentElementCommandBindingsProvider.GetCommandBindings(ce);
+                    }
                 }
             }
 
@@ -104,17 +113,28 @@ namespace ChocolateyGui.Commands
                                         .Where(binding => binding.Command == command && (!e.Handled || binding.ViewHandledEvents)))
             {
                 if (e.RoutedEvent == CommandManager.PreviewCanExecuteEvent)
+                {
                     binding.OnPreviewCanExecute(sender, (CanExecuteRoutedEventArgs)e);
+                }
                 else if (e.RoutedEvent == CommandManager.CanExecuteEvent)
+                {
                     binding.OnCanExecute(sender, (CanExecuteRoutedEventArgs)e);
+                }
                 else if (e.RoutedEvent == CommandManager.PreviewExecutedEvent)
+                {
                     binding.OnPreviewExecuted(sender, (ExecutedRoutedEventArgs)e);
+                }
                 else if (e.RoutedEvent == CommandManager.ExecutedEvent)
+                {
                     binding.OnExecuted(sender, (ExecutedRoutedEventArgs)e);
+                }
 
                 if (e.Handled)
+                {
                     return true;
+                }
             }
+
             return false;
         }
 
@@ -124,17 +144,16 @@ namespace ChocolateyGui.Commands
         /// <typeparam name="TElementType"></typeparam>
         private class CommandBindingsProvider<TElementType>
         {
-            //
             // _GetCommandBindings is an Func that is used to access the
             // CommandBindingsInternal property of UIElements, UIElement3D sand ContentElements.
             private static Func<TElementType, CommandBindingCollection> _getCommandBindings;
-                //Delegate.CreateDelegate(typeof(CommandBindingsInternalGetter), null,
-                //typeof(TElementType).GetProperty("CommandBindingsInternal", BindingFlags.Instance | BindingFlags.NonPublic)
-                //.GetGetMethod(true));
+                ////Delegate.CreateDelegate(typeof(CommandBindingsInternalGetter), null,
+                ////typeof(TElementType).GetProperty("CommandBindingsInternal", BindingFlags.Instance | BindingFlags.NonPublic)
+                ////.GetGetMethod(true));
 
             /// <summary>
             ///     Returns the collection of CommandBindings or null the collection is not
-            ///     instanciated.
+            ///     instantiated.
             /// </summary>
             /// <returns>The collection of CommandBindings</returns>
             internal Func<TElementType, CommandBindingCollection> GetCommandBindings
@@ -146,6 +165,7 @@ namespace ChocolateyGui.Commands
                         var param = Expression.Parameter(typeof(TElementType));
                         _getCommandBindings = Expression.Lambda<Func<TElementType, CommandBindingCollection>>(Expression.Property(param, "CommandBindingsInternal"), param).Compile();
                     }
+
                     return _getCommandBindings;
                 }
             }

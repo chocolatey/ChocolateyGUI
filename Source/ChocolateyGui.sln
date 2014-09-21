@@ -7,6 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocolateyGui", "Chocolatey
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "ChocolateyGui.Install", "ChocolateyGui.Install\ChocolateyGui.Install.wixproj", "{411C7212-286F-4F26-994A-568E943D0E60}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScripts", "{AFAE232A-E667-4E11-8E01-083E2547DAB7}"
+	ProjectSection(SolutionItems) = preProject
+		..\build.bat = ..\build.bat
+		..\BuildScripts\build.ps1 = ..\BuildScripts\build.ps1
+		..\BuildScripts\default.ps1 = ..\BuildScripts\default.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppVeyor", "AppVeyor", "{C6760D8F-E01B-4F26-9B0C-4E2D825509D2}"
+	ProjectSection(SolutionItems) = preProject
+		..\appveyor.yml = ..\appveyor.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

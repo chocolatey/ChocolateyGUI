@@ -71,7 +71,7 @@ Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Descript
 
 Task -Name DeploySolutionToMyGet -Depends PackageSolution, DeployPacakgeToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
-Task -Name DeploySolutionToChocolatey -Depends PackageSolution -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
+Task -Name DeploySolutionToChocolatey -Depends PackageSolution, DeployPackageToChocolatey -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
 
 # build tasks
 
@@ -197,5 +197,23 @@ Task -Name DeployPacakgeToMyGet -Description "Takes the packaged Chocolatey pack
 	catch {
 		Write-Error $_
 		Write-Host ("************ MyGet Deployment Failed ************")
+	}
+}
+
+Task -Name DeployPackageToChocolatey -Description "Takes the packaged Chocolatey package and deploys to Chocolatey.org" -Action {
+	$buildArtifactsDirectory = get-buildArtifactsDirectory;
+	
+	try {
+		Write-Output "Deploying to Chocolatey..."
+
+		exec {
+			& $nugetExe push "$buildArtifactsDirectory\*.nupkg" $env:ChocolateyApiKey -source $env:ChocolateyFeedUrl
+		}
+
+		Write-Host ("************ Chocolatey Deployment Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ Chocolatey Deployment Failed ************")
 	}
 }

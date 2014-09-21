@@ -16,6 +16,7 @@ clone_folder: C:\projects\ChocolateyGUI
 environment:
   MyGetApiKey:
     secure: LeTveN6ryggcXR4fgZcaMOdvVHFxR6NNZZpaaxCG83D8waN4D1eEoLRv+5ZvLKLF
+  MyGetFeedUrl: https://www.myget.org/F/chocolateygui
    
 #---------------------------------#
 #       build configuration       #

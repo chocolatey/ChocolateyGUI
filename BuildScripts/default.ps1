@@ -69,7 +69,7 @@ Task -Name __RemoveBuildArtifactsDirectory -Description $private -Action {
 
 Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Description "Complete build, including creation of Chocolatey Package."
 
-Task -Name DeploySolutionToMyGet -Depends PackageSolution -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
+Task -Name DeploySolutionToMyGet -Depends PackageSolution, DeployPacakgeToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
 Task -Name DeploySolutionToChocolatey -Depends PackageSolution -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
 
@@ -180,4 +180,22 @@ Task -Name PackageChocolatey -Description "Packs the module and example package"
 		Write-Error $_
 		Write-Host ("************ PackageChocolatey Failed ************")
 	}	
+}
+
+Task -Name DeployPacakgeToMyGet -Description "Takes the packaged Chocolatey package and deploys to MyGet.org" -Action {
+	$buildArtifactsDirectory = get-buildArtifactsDirectory;
+	
+	try {
+		Write-Output "Deploying to MyGet..."
+
+		exec {
+			& $nugetExe push "$buildArtifactsDirectory\*.nupkg" $env:MyGetApiKey -source $env:MyGetFeedUrl
+		}
+
+		Write-Host ("************ MyGet Deployment Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ MyGet Deployment Failed ************")
+	}
 }

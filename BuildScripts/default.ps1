@@ -69,6 +69,10 @@ Task -Name __RemoveBuildArtifactsDirectory -Description $private -Action {
 
 Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Description "Complete build, including creation of Chocolatey Package."
 
+Task -Name DeploySolutionToMyGet - Depends PackageSolution -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
+
+Task -Name DeploySolutionToChocolatey - Depends PackageSolution -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
+
 # build tasks
 
 Task -Name RunGitVersion -Description "Execute the GitVersion Command Line Tool, to figure out what the current semantic version of the repository is" -Action {

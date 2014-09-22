@@ -22,7 +22,8 @@ namespace ChocolateyGui.Views.Windows
         private readonly IProgressService _progressService;
         private readonly ILogService _logService;
 
-        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService)
+        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, 
+            IProgressService progressService, ILogService logService)
         {
             InitializeComponent();
             DataContext = vm;
@@ -31,6 +32,7 @@ namespace ChocolateyGui.Views.Windows
                 (progressService as ProgressService).MainWindow = this;
 
             _progressService = progressService;
+            _logService = logService;
 
             // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();

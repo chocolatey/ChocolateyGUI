@@ -1,9 +1,15 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Data;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="BooleanToVisibility.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Utilities.Converters
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Data;
+
     public class BooleanToVisibility : DependencyObject, IValueConverter
     {
 

@@ -1,8 +1,14 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="RoutedCommandBinding.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Commands
 {
+    using System.Windows;
+    using System.Windows.Input;
+
     /// <summary>
     ///     The base class for <see cref="CommandBinding"/> types that invoke command logic in
     ///     locations other than the code behind file.
@@ -18,7 +24,7 @@ namespace ChocolateyGui.Commands
         ///     Indicates whether or not the methods associated with this
         ///     <see cref="RoutedCommandBinding"/> will be executed when the Handled property
         ///     of the <see cref="RoutedEventArgs"/> is set to true during the bubbling or
-        ///     tunnelling of the command's <see cref="RoutedEvent"/>.
+        ///     tunneling of the command's <see cref="RoutedEvent"/>.
         /// </summary>
         public bool ViewHandledEvents { get; set; }
 

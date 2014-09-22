@@ -1,29 +1,36 @@
-﻿using ChocolateyGui.Base;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="SourceTabViewModel.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.ViewModels.Items
 {
+    using ChocolateyGui.Base;
+
     public class SourceTabViewModel : ObservableBase
     {
         private readonly dynamic _lazyPage;
+        private object _content;
+
         public SourceTabViewModel(dynamic lazyPageContent, string name)
         {
-            _lazyPage = lazyPageContent;
+            this._lazyPage = lazyPageContent;
 
-            Name = name;
+            this.Name = name;
+        }
+
+        public object Content
+        {
+            get { return this._content; }
+            set { this.SetPropertyValue(ref this._content, value); }
         }
 
         public string Name { get; private set; }
 
         public void LoadContent()
         {
-           Content = _lazyPage.Value;
-        }
-
-        private object _content;
-        public object Content
-        {
-            get { return _content; }
-            set { SetPropertyValue(ref _content, value); }
+            this.Content = this._lazyPage.Value;
         }
     }
 }

@@ -69,7 +69,7 @@ namespace ChocolateyGui.ViewModels.Controls
                 if (eventArgs.RemovedSources != null && eventArgs.RemovedSources.Count > 0)
                 {
                     foreach (var targetPackage in eventArgs.RemovedSources
-                        .Select(source => Sources.FirstOrDefault(p => String.Equals(p.Name, source.Name, StringComparison.CurrentCultureIgnoreCase)))
+                        .Select(source => Sources.FirstOrDefault(p => string.Equals(p.Name, source.Name, StringComparison.CurrentCultureIgnoreCase)))
                         .Where(targetPackage => targetPackage != null))
                     {
                         Sources.Remove(targetPackage);

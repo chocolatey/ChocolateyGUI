@@ -391,8 +391,8 @@ namespace Markdown.Xaml
             }
 
             string span = match.Groups[2].Value;
-            span = Regex.Replace(span, @"^[ ]*", ""); // leading whitespace
-            span = Regex.Replace(span, @"[ ]*$", ""); // trailing whitespace
+            span = Regex.Replace(span, @"^[ ]*", string.Empty); // leading whitespace
+            span = Regex.Replace(span, @"[ ]*$", string.Empty); // trailing whitespace
 
             var result = new Run(span);
             if (CodeStyle != null)
@@ -602,7 +602,7 @@ namespace Markdown.Xaml
             }
 
             // split on two or more newlines
-            var grafs = NewlinesMultiple.Split(NewlinesLeadingTrailing.Replace(text, ""));
+            var grafs = NewlinesMultiple.Split(NewlinesLeadingTrailing.Replace(text, string.Empty));
 
             return grafs.Select(g => Create<Paragraph, Inline>(RunSpanGamut(g)));
         }
@@ -649,7 +649,7 @@ namespace Markdown.Xaml
             string item = match.Groups[4].Value;
             string leadingLine = match.Groups[1].Value;
 
-            if (!String.IsNullOrEmpty(leadingLine) || Regex.IsMatch(item, @"\n{2,}"))
+            if (!string.IsNullOrEmpty(leadingLine) || Regex.IsMatch(item, @"\n{2,}"))
                 // we could correct any bad indentation here..
                 return Create<ListItem, Block>(RunBlockGamut(item));
             else
@@ -682,7 +682,10 @@ namespace Markdown.Xaml
                 {
                     case '\n':
                         if (valid)
+                        {
                             output.Append(line);
+                        }
+
                         output.Append('\n');
                         line.Length = 0;
                         valid = false;
@@ -691,29 +694,42 @@ namespace Markdown.Xaml
                         if ((i < text.Length - 1) && (text[i + 1] != '\n'))
                         {
                             if (valid)
+                            {
                                 output.Append(line);
+                            }
+
                             output.Append('\n');
                             line.Length = 0;
                             valid = false;
                         }
                         break;
                     case '\t':
-                        int width = (TabWidth - line.Length % TabWidth);
+                        int width = TabWidth - line.Length % TabWidth;
+
                         for (int k = 0; k < width; k++)
+                        {
                             line.Append(' ');
+                        }
+
                         break;
                     case '\x1A':
                         break;
                     default:
                         if (!valid && text[i] != ' ')
+                        {
                             valid = true;
+                        }
+
                         line.Append(text[i]);
                         break;
                 }
             }
 
             if (valid)
+            {
                 output.Append(line);
+            }
+
             output.Append('\n');
 
             // add two newlines to the end before return
@@ -725,7 +741,7 @@ namespace Markdown.Xaml
         /// </summary>
         private string Outdent(string block)
         {
-            return OutDent.Replace(block, "");
+            return OutDent.Replace(block, string.Empty);
         }
 
         /// <summary>

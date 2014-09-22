@@ -81,7 +81,7 @@ namespace ChocolateyGui.Services
                 }
                 else
                 {
-                    this._progressController.SetProgress(Math.Min((this._progress) / 100.0f, 100));
+                    this._progressController.SetProgress(Math.Min(this._progress / 100.0f, 100));
                 }
             }
 

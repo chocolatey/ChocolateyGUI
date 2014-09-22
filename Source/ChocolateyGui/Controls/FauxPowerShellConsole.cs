@@ -1,19 +1,24 @@
-﻿using ChocolateyGui.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Threading;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="FauxPowerShellConsole.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Controls
 {
+    using ChocolateyGui.Models;
+    using System;
+    using System.Collections.Specialized;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+    using System.Windows.Threading;
+
     /// <summary>
     /// Fake PowerShell Output Console
     /// </summary>

@@ -6,22 +6,12 @@
 
 namespace ChocolateyGui.ViewModels.Items
 {
-    using ChocolateyGui.Models;
     using System;
     using System.Threading.Tasks;
+    using ChocolateyGui.Models;
     
     public interface IPackageViewModel
     {
-        Task EnsureIsLoaded();
-
-        Task Install();
-
-        Task Update();
-
-        Task Uninstall();
-
-        Task RetriveLatestVersion();
-
         string Authors { get; set; }
 
         bool CanUpdate { get; }
@@ -54,6 +44,8 @@ namespace ChocolateyGui.ViewModels.Items
 
         DateTime LastUpdated { get; set; }
 
+        SemanticVersion LatestVersion { get; }
+
         string LicenseUrl { get; set; }
 
         string Owners { get; set; }
@@ -74,6 +66,8 @@ namespace ChocolateyGui.ViewModels.Items
 
         string RequireLicenseAcceptance { get; set; }
 
+        Uri Source { get; set; }
+
         string Summary { get; set; }
 
         string Tags { get; set; }
@@ -82,10 +76,16 @@ namespace ChocolateyGui.ViewModels.Items
 
         SemanticVersion Version { get; set; }
 
-        SemanticVersion LatestVersion { get; }
-
         int VersionDownloadCount { get; set; }
 
-        Uri Source { get; set; }
+        Task EnsureIsLoaded();
+
+        Task Install();
+
+        Task RetriveLatestVersion();
+
+        Task Uninstall();
+
+        Task Update();
     }
 }

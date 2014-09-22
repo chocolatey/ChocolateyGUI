@@ -6,17 +6,17 @@
 
 namespace ChocolateyGui.ViewModels.Items
 {
-    using ChocolateyGui.Base;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Services;
-    using ChocolateyGui.Utilities;
     using System;
     using System.Diagnostics;
     using System.Runtime.Caching;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using System.Windows;
-
+    using ChocolateyGui.Base;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.Utilities;
+    
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
     public class PackageViewModel : ObservableBase, IPackageViewModel, IWeakEventListener
     {
@@ -30,40 +30,41 @@ namespace ChocolateyGui.ViewModels.Items
 
         public PackageViewModel(IPackageService packageService, IChocolateyService chocolateyService, INavigationService navigationService)
         {
-            _packageService = packageService;
-            _chocolateyService = chocolateyService;
-            _navigationService = navigationService;
-            PackagesChangedEventManager.AddListener(_chocolateyService, this);
+            this._packageService = packageService;
+            this._chocolateyService = chocolateyService;
+            this._navigationService = navigationService;
+            PackagesChangedEventManager.AddListener(this._chocolateyService, this);
 
-            _isInstalled = new Lazy<bool>(() => _chocolateyService.IsPackageInstalled(Id, Version));
+            this._isInstalled = new Lazy<bool>(() => this._chocolateyService.IsPackageInstalled(this.Id, this.Version));
         }
 
         private string MemoryCacheKey
         {
-            get { return string.Format("PackageViewModel.{0}{1}", Id, Version); }
+            get { return string.Format("PackageViewModel.{0}{1}", this.Id, this.Version); }
         }
 
         public async Task EnsureIsLoaded()
         {
-            if (Published == DateTime.MinValue)
+            if (this.Published == DateTime.MinValue)
             {
-                await _packageService.EnsureIsLoaded(this, Source);
+                await this._packageService.EnsureIsLoaded(this, this.Source);
             }
         }
 
         public async Task Install()
         {
-            await _chocolateyService.InstallPackage(Id, Version, Source).ConfigureAwait(false);
+            await this._chocolateyService.InstallPackage(this.Id, this.Version, this.Source).ConfigureAwait(false);
         }
 
         public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             if (sender is IChocolateyService && e is PackagesChangedEventArgs)
             {
-                _isInstalled = new Lazy<bool>(() => _chocolateyService.IsPackageInstalled(Id, Version));
-                NotifyPropertyChanged("IsInstalled");
-                NotifyPropertyChanged("CanUpdate");
+                this._isInstalled = new Lazy<bool>(() => this._chocolateyService.IsPackageInstalled(this.Id, this.Version));
+                this.NotifyPropertyChanged("IsInstalled");
+                this.NotifyPropertyChanged("CanUpdate");
             }
+
             return true;
         }
 
@@ -72,48 +73,61 @@ namespace ChocolateyGui.ViewModels.Items
             SemanticVersion version;
             if ((version = (SemanticVersion)_cache.Get(string.Format("LatestVersion_{0}", Id))) != null)
             {
-                LatestVersion = version;
+                this.LatestVersion = version;
                 return;
             }
 
-            var latest = await _packageService.GetLatest(Id, IsPrerelease, Source);
+            var latest = await this._packageService.GetLatest(this.Id, this.IsPrerelease, this.Source);
+
             if (latest != null)
             {
                 version = latest.Version;
+
                 if (latest.Source != null)
-                    Source = latest.Source;
+                {
+                    this.Source = latest.Source;
+                }
             }
             else
             {
-                version = Version;
+                version = this.Version;
             }
-            _cache.Set(string.Format("LatestVersion_{0}", Id), version, new CacheItemPolicy
+
+            this._cache.Set(string.Format("LatestVersion_{0}", Id), version, new CacheItemPolicy
             {
                 AbsoluteExpiration = DateTime.Now.AddHours(1)
             });
-            LatestVersion = version;
+
+            this.LatestVersion = version;
         }
 
         public async Task Uninstall()
         {
-            await _chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
-            if (CanGoBack())
-                _navigationService.GoBack();
+            await this._chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
+
+            if (this.CanGoBack())
+            {
+                this._navigationService.GoBack();
+            }
         }
 
         public async Task Update()
         {
-            await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
-            if (CanGoBack())
-                _navigationService.GoBack();
+            await this._chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
+
+            if (this.CanGoBack())
+            {
+                this._navigationService.GoBack();
+            }
         }
 
         private string MemoryCachePropertyKey([CallerMemberName] string propertyName = "")
         {
-            return MemoryCacheKey + "." + propertyName;
+            return this.MemoryCacheKey + "." + propertyName;
         }
-        #region Properties
+
         private string _authors;
+
         private string _copyright;
 
         private DateTime _created;
@@ -126,7 +140,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private string _galleryDetailsUrl;
 
-        private string _iconUrl = "";
+        private string _iconUrl = string.Empty;
 
         private string _id;
 
@@ -144,7 +158,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private SemanticVersion _latestVersion;
 
-        private string _licenseUrl = "";
+        private string _licenseUrl = string.Empty;
 
         private string _owners;
 
@@ -154,13 +168,13 @@ namespace ChocolateyGui.ViewModels.Items
 
         private long _packageSize;
 
-        private string _projectUrl = "";
+        private string _projectUrl = string.Empty;
 
         private DateTime _published;
 
         private string _releaseNotes;
 
-        private string _reportAbuseUrl = "";
+        private string _reportAbuseUrl = string.Empty;
 
         private string _requireLicenseAcceptance;
 
@@ -178,184 +192,211 @@ namespace ChocolateyGui.ViewModels.Items
 
         public string Authors
         {
-            get { return _authors; }
-            set { SetPropertyValue(ref _authors, value); }
+            get { return this._authors; }
+            set { this.SetPropertyValue(ref this._authors, value); }
         }
 
         public bool CanUpdate
         {
-            get { return IsInstalled && LatestVersion != null && LatestVersion > Version; }
+            get { return this.IsInstalled && this.LatestVersion != null && this.LatestVersion > this.Version; }
         }
+
         public string Copyright
         {
-            get { return _copyright; }
-            set { SetPropertyValue(ref _copyright, value); }
+            get { return this._copyright; }
+            set { this.SetPropertyValue(ref this._copyright, value); }
         }
+
         public DateTime Created
         {
-            get { return _created; }
-            set { SetPropertyValue(ref _created, value); }
+            get { return this._created; }
+            set { this.SetPropertyValue(ref this._created, value); }
         }
+
         public string Dependencies
         {
-            get { return _dependencies; }
-            set { SetPropertyValue(ref _dependencies, value); }
+            get { return this._dependencies; }
+            set { this.SetPropertyValue(ref this._dependencies, value); }
         }
+
         public string Description
         {
-            get { return _description; }
-            set { SetPropertyValue(ref _description, value); }
+            get { return this._description; }
+            set { this.SetPropertyValue(ref this._description, value); }
         }
+
         public int DownloadCount
         {
-            get { return _downloadCount; }
-            set { SetPropertyValue(ref _downloadCount, value); }
+            get { return this._downloadCount; }
+            set { this.SetPropertyValue(ref this._downloadCount, value); }
         }
+
         public string GalleryDetailsUrl
         {
-            get { return _galleryDetailsUrl; }
-            set { SetPropertyValue(ref _galleryDetailsUrl, value); }
+            get { return this._galleryDetailsUrl; }
+            set { this.SetPropertyValue(ref this._galleryDetailsUrl, value); }
         }
+
         public string IconUrl
         {
-            get { return _iconUrl; }
-            set { SetPropertyValue(ref _iconUrl, value); }
+            get { return this._iconUrl; }
+            set { this.SetPropertyValue(ref this._iconUrl, value); }
         }
+
         public string Id
         {
-            get { return _id; }
-            set { SetPropertyValue(ref _id, value); }
+            get { return this._id; }
+            set { this.SetPropertyValue(ref this._id, value); }
         }
+
         public bool IsAbsoluteLatestVersion
         {
-            get { return _isAbsoluteLatestVersion; }
-            set { SetPropertyValue(ref _isAbsoluteLatestVersion, value); }
+            get { return this._isAbsoluteLatestVersion; }
+            set { this.SetPropertyValue(ref this._isAbsoluteLatestVersion, value); }
         }
+
         public bool IsInstalled
         {
-            get { return _isInstalled.Value; }
+            get { return this._isInstalled.Value; }
         }
+
         public bool IsLatestVersion
         {
-            get { return _isLatestVersion; }
-            set { SetPropertyValue(ref _isLatestVersion, value); }
+            get { return this._isLatestVersion; }
+            set { this.SetPropertyValue(ref this._isLatestVersion, value); }
         }
+
         public bool IsPrerelease
         {
-            get { return _isPrerelease; }
-            set { SetPropertyValue(ref _isPrerelease, value); }
+            get { return this._isPrerelease; }
+            set { this.SetPropertyValue(ref this._isPrerelease, value); }
         }
+
         public string Language
         {
-            get { return _language; }
-            set { SetPropertyValue(ref _language, value); }
+            get { return this._language; }
+            set { this.SetPropertyValue(ref this._language, value); }
         }
+
         public DateTime LastUpdated
         {
-            get { return _lastUpdated; }
-            set { SetPropertyValue(ref _lastUpdated, value); }
+            get { return this._lastUpdated; }
+            set { this.SetPropertyValue(ref this._lastUpdated, value); }
         }
+
         public SemanticVersion LatestVersion
         {
-            get { return _latestVersion; }
-            set { SetPropertyValue(ref _latestVersion, value); }
+            get { return this._latestVersion; }
+            set { this.SetPropertyValue(ref this._latestVersion, value); }
         }
 
         public string LicenseUrl
         {
-            get { return _licenseUrl; }
-            set { SetPropertyValue(ref _licenseUrl, value); }
+            get { return this._licenseUrl; }
+            set { this.SetPropertyValue(ref this._licenseUrl, value); }
         }
+
         public string Owners
         {
-            get { return _owners; }
-            set { SetPropertyValue(ref _owners, value); }
+            get { return this._owners; }
+            set { this.SetPropertyValue(ref this._owners, value); }
         }
+
         public string PackageHash
         {
-            get { return _packageHash; }
-            set { SetPropertyValue(ref _packageHash, value); }
+            get { return this._packageHash; }
+            set { this.SetPropertyValue(ref this._packageHash, value); }
         }
+
         public string PackageHashAlgorithm
         {
-            get { return _packageHashAlgorithm; }
-            set { SetPropertyValue(ref _packageHashAlgorithm, value); }
+            get { return this._packageHashAlgorithm; }
+            set { this.SetPropertyValue(ref this._packageHashAlgorithm, value); }
         }
+
         public long PackageSize
         {
-            get { return _packageSize; }
-            set { SetPropertyValue(ref _packageSize, value); }
+            get { return this._packageSize; }
+            set { this.SetPropertyValue(ref this._packageSize, value); }
         }
+
         public string ProjectUrl
         {
-            get { return _projectUrl; }
-            set { SetPropertyValue(ref _projectUrl, value); }
+            get { return this._projectUrl; }
+            set { this.SetPropertyValue(ref this._projectUrl, value); }
         }
+
         public DateTime Published
         {
-            get { return _published; }
-            set { SetPropertyValue(ref _published, value); }
+            get { return this._published; }
+            set { this.SetPropertyValue(ref this._published, value); }
         }
+
         public string ReleaseNotes
         {
-            get { return _releaseNotes; }
-            set { SetPropertyValue(ref _releaseNotes, value); }
+            get { return this._releaseNotes; }
+            set { this.SetPropertyValue(ref this._releaseNotes, value); }
         }
+
         public string ReportAbuseUrl
         {
-            get { return _reportAbuseUrl; }
-            set { SetPropertyValue(ref _reportAbuseUrl, value); }
+            get { return this._reportAbuseUrl; }
+            set { this.SetPropertyValue(ref this._reportAbuseUrl, value); }
         }
+
         public string RequireLicenseAcceptance
         {
-            get { return _requireLicenseAcceptance; }
-            set { SetPropertyValue(ref _requireLicenseAcceptance, value); }
+            get { return this._requireLicenseAcceptance; }
+            set { this.SetPropertyValue(ref this._requireLicenseAcceptance, value); }
         }
+
         public Uri Source
         {
-            get { return _source; }
-            set { SetPropertyValue(ref _source, value); }
+            get { return this._source; }
+            set { this.SetPropertyValue(ref this._source, value); }
         }
 
         public string Summary
         {
-            get { return _summary; }
-            set { SetPropertyValue(ref _summary, value); }
+            get { return this._summary; }
+            set { this.SetPropertyValue(ref this._summary, value); }
         }
+
         public string Tags
         {
-            get { return _tags; }
-            set { SetPropertyValue(ref _tags, value); }
+            get { return this._tags; }
+            set { this.SetPropertyValue(ref this._tags, value); }
         }
+
         public string Title
         {
-            get { return string.IsNullOrWhiteSpace(_title) ? Id : _title; }
-            set { SetPropertyValue(ref _title, value); }
+            get { return string.IsNullOrWhiteSpace(this._title) ? Id : this._title; }
+            set { this.SetPropertyValue(ref this._title, value); }
         }
+
         public SemanticVersion Version
         {
-            get { return _version; }
-            set { SetPropertyValue(ref _version, value); }
+            get { return this._version; }
+            set { this.SetPropertyValue(ref this._version, value); }
         }
+
         public int VersionDownloadCount
         {
-            get { return _versionDownloadCount; }
-            set { SetPropertyValue(ref _versionDownloadCount, value); }
+            get { return this._versionDownloadCount; }
+            set { this.SetPropertyValue(ref this._versionDownloadCount, value); }
         }
-        #endregion
-
-        #region Commands
 
         public bool CanGoBack()
         {
-            return _navigationService.CanGoBack;
+            return this._navigationService.CanGoBack;
         }
 
         public void GoBack()
         {
-            if (_navigationService.CanGoBack)
-                _navigationService.GoBack();
+            if (this._navigationService.CanGoBack)
+            {
+                this._navigationService.GoBack();
+            }
         }
-        #endregion
     }
 }

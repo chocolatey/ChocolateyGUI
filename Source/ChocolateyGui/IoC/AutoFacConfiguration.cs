@@ -1,14 +1,20 @@
-﻿using System;
-using Autofac;
-using ChocolateyGui.Services;
-using ChocolateyGui.ViewModels.Controls;
-using ChocolateyGui.ViewModels.Items;
-using ChocolateyGui.ViewModels.Windows;
-using ChocolateyGui.Views.Controls;
-using ChocolateyGui.Views.Windows;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="AutoFacConfiguration.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.IoC
 {
+    using Autofac;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.ViewModels.Controls;
+    using ChocolateyGui.ViewModels.Items;
+    using ChocolateyGui.ViewModels.Windows;
+    using ChocolateyGui.Views.Controls;
+    using ChocolateyGui.Views.Windows;
+    using System;
+
     public class AutoFacConfiguration
     {
         public static IContainer RegisterAutoFac()
@@ -21,7 +27,7 @@ namespace ChocolateyGui.IoC
             builder.Register((c, parameters) =>
                 new SourceTabViewModel(c.Resolve(typeof(Lazy<>).MakeGenericType(parameters.TypedAs<Type>()),
                     new TypedParameter(typeof(Uri), parameters.TypedAs<Uri>())),
-                    parameters.TypedAs<String>()));
+                    parameters.TypedAs<string>()));
             builder.RegisterType<SourcesControlViewModel>().As<ISourcesControlViewModel>();
             builder.RegisterType<LocalSourceControlViewModel>().As<ILocalSourceControlViewModel>();
             builder.RegisterType<RemoteSourceControlViewModel>().As<IRemoteSourceControlViewModel>();

@@ -23,54 +23,153 @@ namespace ChocolateyGui.ViewModels.Controls
 
     public class LocalSourceControlViewModel : ObservableBase, ILocalSourceControlViewModel, IWeakEventListener
     {
+        private readonly IChocolateyService _chocolateyService;
+        private readonly ILogService _logService;
         private readonly List<IPackageViewModel> _packages;
+        private readonly IProgressService _progressService;
         private bool _hasLoaded;
 
-        private ObservableCollection<IPackageViewModel> _packageViewModels; 
-        public ObservableCollection<IPackageViewModel> Packages
-        {
-            get { return _packageViewModels; }
-            set { SetPropertyValue(ref _packageViewModels, value); }
-        }
+        private bool _matchWord;
+        private ObservableCollection<IPackageViewModel> _packageViewModels;
 
-        private readonly IChocolateyService _chocolateyService;
-        private readonly IProgressService _progressService;
-        private readonly ILogService _logService;
+        private string _searchQuery;
+
+        private string _sortColumn;
+
+        private bool _sortDescending;
+
         public LocalSourceControlViewModel(IChocolateyService chocolateyService, IProgressService progressService, Func<Type, ILogService> logFactory)
         {
-            _chocolateyService = chocolateyService;
-            _progressService = progressService;
-            _logService = logFactory(typeof(LocalSourceControlViewModel));
+            this._chocolateyService = chocolateyService;
+            this._progressService = progressService;
+            this._logService = logFactory(typeof(LocalSourceControlViewModel));
             PackagesChangedEventManager.AddListener(_chocolateyService, this);
 
-            Packages = new ObservableCollection<IPackageViewModel>();
-            _packages = new List<IPackageViewModel>();
+            this.Packages = new ObservableCollection<IPackageViewModel>();
+            this._packages = new List<IPackageViewModel>();
+        }
+
+        public bool MatchWord
+        {
+            get { return this._matchWord; }
+            set { this.SetPropertyValue(ref this._matchWord, value); }
+        }
+
+        public ObservableCollection<IPackageViewModel> Packages
+        {
+            get { return this._packageViewModels; }
+            set { this.SetPropertyValue(ref this._packageViewModels, value); }
+        }
+
+        public string SearchQuery
+        {
+            get { return this._searchQuery; }
+            set { this.SetPropertyValue(ref this._searchQuery, value); }
+        }
+
+        public string SortColumn
+        {
+            get { return this._sortColumn; }
+            set { this.SetPropertyValue(ref this._sortColumn, value); }
+        }
+
+        public bool SortDescending
+        {
+            get { return this._sortDescending; }
+            set { this.SetPropertyValue(ref this._sortDescending, value); }
+        }
+
+        public bool CanUpdateAll()
+        {
+            return this.Packages.Any(p => p.CanUpdate);
         }
 
         public async void Loaded(object sender, EventArgs args)
         {
             try
             {
-                if (_hasLoaded)
+                if (this._hasLoaded)
+                {
                     return;
+                }
 
-                await LoadPackages();
+                await this.LoadPackages();
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                     .Where(e => e.EventArgs.PropertyName == "MatchWord" || e.EventArgs.PropertyName == "SearchQuery")
                     .ObserveOnDispatcher()
-                    .Subscribe(e => FilterPackages());
+                    .Subscribe(e => this.FilterPackages());
 
-                _hasLoaded = true;
+                this._hasLoaded = true;
 
-                var chocoPackage = _packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
+                var chocoPackage = this._packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
                 if (chocoPackage != null && chocoPackage.CanUpdate)
-                    _progressService.ShowMessageAsync("Chocolatey", "There's an update available for chocolatey.").ConfigureAwait(false);
+                {
+                    this._progressService.ShowMessageAsync("Chocolatey", "There's an update available for chocolatey.").ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
-                _logService.Fatal("Local source control view model failed to load.", ex);
+                this._logService.Fatal("Local source control view model failed to load.", ex);
                 throw;
+            }
+        }
+
+        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        {
+            if (sender is IChocolateyService && e is PackagesChangedEventArgs)
+            {
+                this.LoadPackages();
+            }
+
+            return true;
+        }
+
+        public async void UpdateAll()
+        {
+            try
+            {
+                await this._progressService.StartLoading("Packages", true);
+                var token = this._progressService.GetCancellationToken();
+                var packages = this.Packages.Where(p => p.CanUpdate).ToList();
+                double current = 0.0f;
+                foreach (var package in packages)
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                }
+                await _progressService.StopLoading();
+            }
+            catch (Exception ex)
+            {
+                this._logService.Fatal("Updated all has failed.", ex);
+                throw;
+            }
+        }
+
+        private void FilterPackages()
+        {
+            this.Packages.Clear();
+            if (!string.IsNullOrWhiteSpace(this.SearchQuery))
+            {
+                var query = this.MatchWord
+                     ? this._packages.Where(
+                         package =>
+                             string.Compare(package.Title ?? package.Id, SearchQuery,
+                                 StringComparison.OrdinalIgnoreCase) == 0)
+                     : this._packages.Where(
+                         package =>
+                             CultureInfo.CurrentCulture.CompareInfo.IndexOf((package.Title ?? package.Id), SearchQuery,
+                                 CompareOptions.OrdinalIgnoreCase) >= 0);
+
+                query.ToList().ForEach(Packages.Add);
+            }
+            else
+            {
+                this.Packages = new ObservableCollection<IPackageViewModel>(this._packages);
             }
         }
 
@@ -78,111 +177,24 @@ namespace ChocolateyGui.ViewModels.Controls
         {
             try
             {
-                _packages.Clear();
-                Packages.Clear();
+                this._packages.Clear();
+                this.Packages.Clear();
 
-                var packages = await _chocolateyService.GetInstalledPackages();
+                var packages = await this._chocolateyService.GetInstalledPackages();
                 foreach (var packageViewModel in packages)
                 {
-                    _packages.Add(packageViewModel);
-                    Packages.Add(packageViewModel);
+                    this._packages.Add(packageViewModel);
+                    this.Packages.Add(packageViewModel);
 
                     if (packageViewModel.LatestVersion == null)
-                        packageViewModel.RetriveLatestVersion().ConfigureAwait(false);
+                    {
+                        packageViewModel.RetriveLatestVersion();
+                    }
                 }
             }
             catch (Exception ex)
             {
-                _logService.Fatal("Packages failed to load", ex);
-                throw;
-            }
-        }
-
-        private void FilterPackages()
-        {
-            Packages.Clear();
-            if (!string.IsNullOrWhiteSpace(SearchQuery))
-            {
-               var query = MatchWord
-                    ? _packages.Where(
-                        package =>
-                            String.Compare((package.Title ?? package.Id), SearchQuery,
-                                StringComparison.OrdinalIgnoreCase) == 0)
-                    : _packages.Where(
-                        package =>
-                            CultureInfo.CurrentCulture.CompareInfo.IndexOf((package.Title ?? package.Id), SearchQuery,
-                                CompareOptions.OrdinalIgnoreCase) >= 0);
-
-                query.ToList().ForEach(Packages.Add);
-            }
-            else
-            {
-                Packages = new ObservableCollection<IPackageViewModel>(_packages);
-            }
-        }
-
-        private string _searchQuery;
-        public string SearchQuery
-        {
-            get { return _searchQuery; }
-            set { SetPropertyValue(ref _searchQuery, value); }
-        }
-
-        private bool _matchWord;
-        public bool MatchWord
-        {
-            get { return _matchWord; }
-            set { SetPropertyValue(ref _matchWord, value); }
-        }
-
-        private string _sortColumn;
-        public string SortColumn
-        {
-            get { return _sortColumn; }
-            set { SetPropertyValue(ref _sortColumn, value); }
-        }
-
-        private bool _sortDescending;
-        public bool SortDescending
-        {
-            get { return _sortDescending; }
-            set { SetPropertyValue(ref _sortDescending, value); }
-        }
-
-        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
-        {
-            if (sender is IChocolateyService && e is PackagesChangedEventArgs)
-            {
-                LoadPackages();
-            }
-            return true;
-        }
-
-        public bool CanUpdateAll()
-        {
-            return Packages.Any(p => p.CanUpdate);
-        }
-
-        public async void UpdateAll()
-        {
-            try
-            {
-                await _progressService.StartLoading("Packages", true);
-                var token = _progressService.GetCancellationToken();
-                var packages = Packages.Where(p => p.CanUpdate).ToList();
-                double current = 0.0f;
-                foreach (var package in packages)
-                {
-                    if (token.IsCancellationRequested)
-                        return;
-                    _progressService.Report(Math.Min((current++) / packages.Count, 100));
-                    await package.Update();
-                }
-                await _progressService.StopLoading();
-            }
-            catch (Exception ex)
-            {
-                _logService.Fatal("Updated all has failed.", ex);
+                this._logService.Fatal("Packages failed to load", ex);
                 throw;
             }
         }

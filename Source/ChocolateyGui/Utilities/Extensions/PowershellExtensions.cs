@@ -1,9 +1,15 @@
-﻿using System;
-using System.Management.Automation.Runspaces;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="PowershellExtensions.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Utilities.Extensions
 {
+    using System;
+    using System.Management.Automation.Runspaces;
+    using System.Threading.Tasks;
+
     public static class PowershellExtensions
     {
         public static Task RunCommandsAsync(this Pipeline pipeline)

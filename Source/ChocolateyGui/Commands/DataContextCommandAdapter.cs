@@ -1,11 +1,17 @@
-﻿using System;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Input;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="DataContextCommandAdapter.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Commands
 {
+    using System;
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Input;
+    using System.Windows.Markup;
+
     /// <summary>
     ///     A markup extension that returns an <see cref="ICommand"/> that is capable of executing
     ///     methods of the DataContext of a target FrameworkElement.
@@ -19,10 +25,46 @@ namespace ChocolateyGui.Commands
     /// </remarks>
     public sealed class DataContextCommandAdapter : MarkupExtension, ICommand
     {
-        private object _target; 
+        private object _target;
 
         /// <summary>
-        ///     Name of the method of the target object's DataContext that determines whether the
+        ///     Initializes a new instance of the DataContextCommandAdapter class.
+        /// </summary>
+        public DataContextCommandAdapter()
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DataContextCommandAdapter"/> class by
+        ///     using the specified method name for the <see cref="Executed"/> property.
+        /// </summary>
+        /// <param name="executed">
+        ///     The name of the <see cref="Executed"/> method.
+        /// </param>
+        public DataContextCommandAdapter(string executed)
+        {
+            this.Executed = executed;
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DataContextCommandAdapter"/> class by
+        ///     using the specified method names for the <see cref="Executed"/> and
+        ///     <see cref="CanExecute"/> properties.
+        /// </summary>
+        /// <param name="executed">
+        ///     The name of the <see cref="Executed"/> method.
+        /// </param>
+        /// <param name="canExecute">
+        ///     The name of the <see cref="CanExecute"/> method.
+        /// </param>
+        public DataContextCommandAdapter(string executed, string canExecute)
+        {
+            this.Executed = executed;
+            this.CanExecute = canExecute;
+        }
+
+        /// <summary>
+        ///     Gets or sets the name of the method of the target object's DataContext that determines whether the
         ///     command can execute in its current state.
         /// </summary>
         /// <remarks>
@@ -45,40 +87,6 @@ namespace ChocolateyGui.Commands
         ///     <code>void MyExecutedMethod();</code>
         /// </remarks>
         public string Executed { get; set; }
-
-        /// <summary>
-        ///     Initializes a new instance of the DataContextCommandAdapter class.
-        /// </summary>
-        public DataContextCommandAdapter() { }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="DataContextCommandAdapter"/> class by
-        ///     using the specified method name for the <see cref="Executed"/> property.
-        /// </summary>
-        /// <param name="executed">
-        ///     The name of the <see cref="Executed"/> method.
-        /// </param>
-        public DataContextCommandAdapter(string executed)
-        {
-            Executed = executed;
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="DataContextCommandAdapter"/> class by
-        ///     using the specified method names for the <see cref="Executed"/> and
-        ///     <see cref="CanExecute"/> properties.
-        /// </summary>
-        /// <param name="executed">
-        ///     The name of the <see cref="Executed"/> method.
-        /// </param>
-        /// <param name="canExecute">
-        ///     The name of the <see cref="CanExecute"/> method.
-        /// </param>
-        public DataContextCommandAdapter(string executed, string canExecute)
-        {
-            Executed = executed;
-            CanExecute = canExecute;
-        }
 
         /// <summary>
         ///     Returns an <see cref="ICommand"/> that is capable of executing methods of the
@@ -106,7 +114,6 @@ namespace ChocolateyGui.Commands
             return this;
         }
 
-        //
         // This method only works with the C# 4.0 XamlParser.
         // If there was another way to do this without reflection... I would do it that way
         // Regardless, this method will only be called once when the xaml is initially parsed, so its

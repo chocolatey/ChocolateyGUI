@@ -1,16 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Caching;
-using System.Threading.Tasks;
-using ChocolateyGui.Utilities.Extensions;
-using ChocolateyGui.Models;
-using ChocolateyGui.Utilities.Nuspec;
-using ChocolateyGui.ViewModels.Items;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="FileSystemPackageService.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Services.PackageServices
 {
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Utilities.Extensions;
+    using ChocolateyGui.ViewModels.Items;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Caching;
+    using System.Threading.Tasks;
+
     public static class FileSystemPackageService
     {
         private static readonly MemoryCache Cache = MemoryCache.Default;
@@ -31,7 +35,7 @@ namespace ChocolateyGui.Services.PackageServices
             if ((packages = (List<IPackageViewModel>)Cache.Get(GetMemoryCacheKey(source, queryString, options))) == null)
             {
                 var queryCommand = string.Format("list {0} {1} {2} -source \"{3}\"", queryString,
-                    options.IncludePrerelease ? "-pre" : "", options.IncludeAllVersions ? "-all" : "", source);
+                    options.IncludePrerelease ? "-pre" : "", options.IncludeAllVersions ? "-all" : string.Empty, source);
 
                 var chocoPackageList = (await chocolateyService.RunIndirectChocolateyCommand(queryCommand, false))
                     .ToDictionary(o => o.ToString().Split(' ')[0], o => o.ToString().Split(' ')[1]);

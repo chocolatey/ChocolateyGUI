@@ -18,22 +18,29 @@ namespace ChocolateyGui.ViewModels.Controls
 
     public class RemoteSourceControlViewModel : ObservableBase, IRemoteSourceControlViewModel
     {
-        private ObservableCollection<IPackageViewModel> _packageViewModels;
-        public ObservableCollection<IPackageViewModel> Packages
-        {
-            get { return _packageViewModels; }
-            set { SetPropertyValue(ref _packageViewModels, value); }
-        }
-
         private readonly IPackageService _packageService;
         private readonly Uri _source;
+        private int _currentPage = 1;
+        private bool _includeAllVersions;
+        private bool _includePrerelease;
+        private bool _matchWord;
+        private ObservableCollection<IPackageViewModel> _packageViewModels;
+        private int _pageCount = 1;
+
+        private int _pageSize = 50;
+
+        private string _searchQuery;
+
+        private string _sortColumn;
+
+        private bool _sortDescending;
 
         public RemoteSourceControlViewModel(IPackageService packageService, Uri source)
         {
-            _packageService = packageService;
-            _source = source;
-            Packages = new ObservableCollection<IPackageViewModel>();
-            LoadPackages();
+            this._packageService = packageService;
+            this._source = source;
+            this.Packages = new ObservableCollection<IPackageViewModel>();
+            this.LoadPackages();
 
             var immediateProperties = new[]
             {
@@ -46,140 +53,141 @@ namespace ChocolateyGui.ViewModels.Controls
                 .Throttle(TimeSpan.FromMilliseconds(500))
                 .DistinctUntilChanged()
                 .ObserveOnDispatcher()
-                .Subscribe(e => LoadPackages());
+                .Subscribe(e => this.LoadPackages());
 
             Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                 .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
                 .ObserveOnDispatcher()
-                .Subscribe(e => LoadPackages());
-
-
+                .Subscribe(e => this.LoadPackages());
+            
             Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                 .Where(e => e.EventArgs.PropertyName == "CurrentPage")
                 .Throttle(TimeSpan.FromMilliseconds(300))
                 .DistinctUntilChanged()
                 .ObserveOnDispatcher()
-                .Subscribe(e => LoadPackages());
+                .Subscribe(e => this.LoadPackages());
         }
 
-        private async void LoadPackages()
-        {
-            var result = await _packageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord), _source);
-            PageCount = result.TotalCount / PageSize;
-            Packages.Clear();
-            result.Packages.ToList().ForEach(p =>
-            {
-                p.Source = _source;
-                Packages.Add(p);
-            });
-
-            if (PageCount < CurrentPage)
-                CurrentPage = PageCount == 0 ? 1 : PageCount;
-        }
-
-        private int _pageCount = 1;
-        public int PageCount
-        {
-            get { return _pageCount; }
-            set { SetPropertyValue(ref _pageCount, value); }
-        }
-
-        private int _pageSize = 50;
-        public int PageSize
-        {
-            get { return _pageSize; }
-            set { SetPropertyValue(ref _pageSize, value); }
-        }
-
-        private int _currentPage = 1;
         public int CurrentPage
         {
-            get { return _currentPage; }
-            set { SetPropertyValue(ref _currentPage, value); }
+            get { return this._currentPage; }
+            set { this.SetPropertyValue(ref this._currentPage, value); }
+        }
+
+        public bool IncludeAllVersions
+        {
+            get { return this._includeAllVersions; }
+            set { this.SetPropertyValue(ref this._includeAllVersions, value); }
+        }
+
+        public bool IncludePrerelease
+        {
+            get { return this._includePrerelease; }
+            set { this.SetPropertyValue(ref this._includePrerelease, value); }
+        }
+
+        public bool MatchWord
+        {
+            get { return this._matchWord; }
+            set { this.SetPropertyValue(ref this._matchWord, value); }
+        }
+
+        public ObservableCollection<IPackageViewModel> Packages
+        {
+            get { return this._packageViewModels; }
+            set { this.SetPropertyValue(ref this._packageViewModels, value); }
+        }
+        public int PageCount
+        {
+            get { return this._pageCount; }
+            set { this.SetPropertyValue(ref this._pageCount, value); }
+        }
+
+        public int PageSize
+        {
+            get { return this._pageSize; }
+            set { this.SetPropertyValue(ref this._pageSize, value); }
+        }
+
+        public string SearchQuery
+        {
+            get { return this._searchQuery; }
+            set { this.SetPropertyValue(ref this._searchQuery, value); }
+        }
+
+        public string SortColumn
+        {
+            get { return this._sortColumn; }
+            set { this.SetPropertyValue(ref this._sortColumn, value); }
+        }
+
+        public bool SortDescending
+        {
+            get { return this._sortDescending; }
+            set { this.SetPropertyValue(ref this._sortDescending, value); }
         }
 
         public bool CanGoToFirst()
         {
-            return CurrentPage > 1;
-        }
-
-        public void GoToFirst()
-        {
-            CurrentPage = 1;
-        }
-
-        public bool CanGoToPrevious()
-        {
-            return CurrentPage > 1;
-        }
-
-        public void GoToPrevious()
-        {
-            if (CurrentPage > 1)
-                CurrentPage--;
-        }
-
-        public bool CanGoToNext()
-        {
-            return CurrentPage < PageCount;
-        }
-
-        public void GoToNext()
-        {
-            if (CurrentPage < PageCount)
-                CurrentPage++;
+            return this.CurrentPage > 1;
         }
 
         public bool CanGoToLast()
         {
-            return CurrentPage < PageCount;
+            return this.CurrentPage < this.PageCount;
+        }
+
+        public bool CanGoToNext()
+        {
+            return this.CurrentPage < this.PageCount;
+        }
+
+        public bool CanGoToPrevious()
+        {
+            return this.CurrentPage > 1;
+        }
+
+        public void GoToFirst()
+        {
+            this.CurrentPage = 1;
         }
 
         public void GoToLast()
         {
-            CurrentPage = PageCount;
+            this.CurrentPage = this.PageCount;
         }
 
-        private string _searchQuery;
-        public string SearchQuery
+        public void GoToNext()
         {
-            get { return _searchQuery; }
-            set { SetPropertyValue(ref _searchQuery, value); }
+            if (this.CurrentPage < this.PageCount)
+            {
+                this.CurrentPage++;
+            }
         }
 
-        private bool _includePrerelease;
-        public bool IncludePrerelease
+        public void GoToPrevious()
         {
-            get { return _includePrerelease; }
-            set { SetPropertyValue(ref _includePrerelease, value); }
+            if (this.CurrentPage > 1)
+            {
+                this.CurrentPage--;
+            }
         }
 
-        private bool _includeAllVersions;
-        public bool IncludeAllVersions
+        private async void LoadPackages()
         {
-            get { return _includeAllVersions; }
-            set { SetPropertyValue(ref _includeAllVersions, value); }
-        }
+            var result = await this._packageService.Search(this.SearchQuery, new PackageSearchOptions(this.PageSize, this.CurrentPage - 1, this.SortColumn, this.SortDescending, this.IncludePrerelease, this.IncludeAllVersions, this.MatchWord), this._source);
+            this.PageCount = result.TotalCount / this.PageSize;
+            this.Packages.Clear();
+            result.Packages.ToList().ForEach(p =>
+            {
+                p.Source = _source;
+                this.Packages.Add(p);
+            });
 
-        private bool _matchWord;
-        public bool MatchWord
-        {
-            get { return _matchWord; }
-            set { SetPropertyValue(ref _matchWord, value); }
-        }
-
-        private string _sortColumn;
-        public string SortColumn
-        {
-            get { return _sortColumn; }
-            set { SetPropertyValue(ref _sortColumn, value); }
-        }
-
-        private bool _sortDescending;
-        public bool SortDescending
-        {
-            get { return _sortDescending; }
-            set { SetPropertyValue(ref _sortDescending, value); }
+            if (this.PageCount < this.CurrentPage)
+            {
+                this.CurrentPage = this.PageCount == 0 ? 1 : this.PageCount;
+            }
         }
     }
 }

@@ -81,7 +81,7 @@ namespace ChocolateyGui.ViewModels.Windows
                 return;
             }
 
-            if (this.Sources.Any(s => String.Compare(s.Name, this.NewSourceName, StringComparison.InvariantCultureIgnoreCase) == 0))
+            if (this.Sources.Any(s => string.Compare(s.Name, this.NewSourceName, StringComparison.InvariantCultureIgnoreCase) == 0))
             {
                 this._progressService.ShowMessageAsync("New Source", "There's already a source with that name.");
                 return;
@@ -93,7 +93,7 @@ namespace ChocolateyGui.ViewModels.Windows
                 return;
             }
 
-            if (this.Sources.Any(s => String.Compare(s.Url, this.NewSourceUrl, StringComparison.InvariantCultureIgnoreCase) == 0))
+            if (this.Sources.Any(s => string.Compare(s.Url, this.NewSourceUrl, StringComparison.InvariantCultureIgnoreCase) == 0))
             {
                 this._progressService.ShowMessageAsync("New Source", "There's already a source with that url.");
                 return;
@@ -113,8 +113,8 @@ namespace ChocolateyGui.ViewModels.Windows
             }
 
             this._sourceService.AddSource(new SourceViewModel { Name = this.NewSourceName, Url = this.NewSourceUrl });
-            this.NewSourceName = "";
-            this.NewSourceUrl = "";
+            this.NewSourceName = string.Empty;
+            this.NewSourceUrl = string.Empty;
         }
 
         public bool CanAddSource()

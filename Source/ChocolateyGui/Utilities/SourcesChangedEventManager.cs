@@ -1,15 +1,23 @@
-﻿using System.Windows;
-using ChocolateyGui.Models;
-using ChocolateyGui.Services;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="SourcesChangedEventManager.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Utilities
 {
+    using System.Windows;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services;
+
+
     public class SourcesChangedEventManager : WeakEventManager
     {
         public static void AddListener(ISourceService serivce, IWeakEventListener listener)
         {
             CurrentManager.ProtectedAddListener(serivce, listener);
         }
+
         public static void RemoveListener(ISourceService serivce, IWeakEventListener listener)
         {
             CurrentManager.ProtectedRemoveListener(serivce, listener);

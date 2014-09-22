@@ -1,10 +1,15 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows.Controls;
-using System.Windows.Data;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="DataGridExtensions.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocoPM.Extensions
 {
+    using System.ComponentModel;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+
     internal static class DataGridExtensions
     {
         public static string GetSortMemberPath(this DataGridColumn column)
@@ -44,7 +49,7 @@ namespace ChocoPM.Extensions
             var i = 0;
             foreach (var sortDesc in sortDescriptions)
             {
-                if (String.CompareOrdinal(sortDesc.PropertyName, sortPropertyName) == 0)
+                if (string.CompareOrdinal(sortDesc.PropertyName, sortPropertyName) == 0)
                 {
                     index = i;
                     break;
@@ -54,6 +59,5 @@ namespace ChocoPM.Extensions
 
             return index;
         }
-    }
-    
+    }   
 }

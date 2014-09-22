@@ -1,9 +1,15 @@
-﻿using System;
-using System.Text;
-using System.Windows.Data;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="LongSizeToFileSizeString.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Utilities.Converters
 {
+    using System;
+    using System.Text;
+    using System.Windows.Data;
+
     public sealed class LongSizeToFileSizeString : IValueConverter
     {
 
@@ -22,7 +28,10 @@ namespace ChocolateyGui.Utilities.Converters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (!(value is long))
-                return "";
+            {
+                return string.Empty;
+            }
+
             return StrFormatByteSize((long)value);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,11 +15,15 @@ namespace ChocolateyGui.Views.Controls
     public partial class RemoteSourceControl
     {
         public const string PageTitle = "Remote Packages";
-        private readonly Lazy<INavigationService> _navigationService; 
+
+        private readonly Lazy<INavigationService> _navigationService;
+        private readonly IRemoteSourceControlViewModel _viewModel;
+
         public RemoteSourceControl(IRemoteSourceControlViewModel vm, Lazy<INavigationService> navigationService)
         {
             InitializeComponent();
             DataContext = vm;
+            _viewModel = vm;
 
             _navigationService = navigationService;
 
@@ -31,16 +36,16 @@ namespace ChocolateyGui.Views.Controls
 
         void Packages_CollectionChanged()
         {
-            var _vm = DataContext as IRemoteSourceControlViewModel;
+            // When our collection is updated, reset the DataTable's sort descriptions.
             PackagesGrid.Items.SortDescriptions.Clear();
-            if (!string.IsNullOrWhiteSpace(_vm.SortColumn))
-                PackagesGrid.Items.SortDescriptions.Add(new SortDescription(_vm.SortColumn, _vm.SortDescending ? ListSortDirection.Descending : ListSortDirection.Ascending));
+            if (!string.IsNullOrWhiteSpace(_viewModel.SortColumn))
+                PackagesGrid.Items.SortDescriptions.Add(new SortDescription(_viewModel.SortColumn, _viewModel.SortDescending ? ListSortDirection.Descending : ListSortDirection.Ascending));
 
             foreach (var column in PackagesGrid.Columns)
             {
-                if (column.GetSortMemberPath() == _vm.SortColumn)
+                if (column.GetSortMemberPath() == _viewModel.SortColumn)
                 {
-                    column.SortDirection = _vm.SortDescending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+                    column.SortDirection = _viewModel.SortDescending ? ListSortDirection.Descending : ListSortDirection.Ascending;
                 }
                 else
                     column.SortDirection = null;
@@ -51,31 +56,34 @@ namespace ChocolateyGui.Views.Controls
         {
             dynamic source = e.OriginalSource;
             var item = source.DataContext as IPackageViewModel;
-            if (item != null)
+            if (item == null)
             {
-                _navigationService.Value.Navigate(typeof(PackageControl), item);
+                return;
             }
+
+            _navigationService.Value.Navigate(typeof(PackageControl), item);
         }
 
         private void DataGrid_OnSorting(object sender, DataGridSortingEventArgs e)
         {
-            var _vm = DataContext as IRemoteSourceControlViewModel;
-            string sortPropertyName = e.Column.GetSortMemberPath();
-            if (!string.IsNullOrEmpty(sortPropertyName))
+            var sortPropertyName = e.Column.GetSortMemberPath();
+            if (string.IsNullOrEmpty(sortPropertyName))
             {
-                bool sortDescending;
-                if (!e.Column.SortDirection.HasValue || (e.Column.SortDirection.Value == ListSortDirection.Ascending))
-                {
-                    sortDescending = true;
-                }
-                else
-                {
-                    sortDescending = false;
-                }
-                _vm.SortDescending = sortDescending;
-                _vm.SortColumn = sortPropertyName;
-                e.Handled = true;
+                return;
             }
+
+            bool sortDescending;
+            if (!e.Column.SortDirection.HasValue || (e.Column.SortDirection.Value == ListSortDirection.Ascending))
+            {
+                sortDescending = true;
+            }
+            else
+            {
+                sortDescending = false;
+            }
+            _viewModel.SortDescending = sortDescending;
+            _viewModel.SortColumn = sortPropertyName;
+            e.Handled = true;
         }
     }
 }

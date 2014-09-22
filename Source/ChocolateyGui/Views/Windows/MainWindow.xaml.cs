@@ -20,6 +20,7 @@ namespace ChocolateyGui.Views.Windows
     public partial class MainWindow
     {
         private readonly IProgressService _progressService;
+        private readonly ILogService _logService;
 
         public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService)
         {
@@ -28,8 +29,10 @@ namespace ChocolateyGui.Views.Windows
 
             if (progressService is ProgressService)
                 (progressService as ProgressService).MainWindow = this;
+
             _progressService = progressService;
 
+            // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
             AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
 
@@ -44,10 +47,12 @@ namespace ChocolateyGui.Views.Windows
             return ((Task<ChocolateyDialogController>)Dispatcher.Invoke(new Func<Task<ChocolateyDialogController>>(async () =>
             {
                 //create the dialog control
-                var dialog = new ChocolateyDialog(this);
-                dialog.Title = title;
-                dialog.IsCancelable = isCancelable;
-                dialog.OutputBuffer = _progressService.Output;
+                var dialog = new ChocolateyDialog(this)
+                {
+                    Title = title,
+                    IsCancelable = isCancelable,
+                    OutputBuffer = _progressService.Output
+                };
 
                 if (settings == null)
                     settings = MetroDialogOptions;
@@ -55,16 +60,13 @@ namespace ChocolateyGui.Views.Windows
                 dialog.NegativeButtonText = settings.NegativeButtonText;
 
                 await this.ShowMetroDialogAsync(dialog);
-                return new ChocolateyDialogController(dialog, () =>
-                {
-                    return this.HideMetroDialogAsync(dialog);
-                });
+                return new ChocolateyDialogController(dialog, () => this.HideMetroDialogAsync(dialog));
             })));
         }
 
-        private async void InitializeChocoDirectory()
+        private void InitializeChocoDirectory()
         {
-            await TaskEx.Run(() =>
+            TaskEx.Run(() =>
             {
                 if (string.IsNullOrWhiteSpace(Settings.Default.chocolateyInstall))
                 {
@@ -86,8 +88,12 @@ namespace ChocolateyGui.Views.Windows
                         Settings.Default.chocolateyInstall = chocoDirectoryPath;
                         Settings.Default.Save();
                     }
+                    else
+                    {
+                        _logService.Warn("Unable to find chocolatey install directory!");
+                    }
                 }
-            });
+            }).ConfigureAwait(false);
         }
 
         private void SettingsButton_OnClick(object sender, RoutedEventArgs e)

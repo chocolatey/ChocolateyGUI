@@ -59,7 +59,7 @@ namespace ChocolateyGui.ViewModels.Controls
 
                 var chocoPackage = _packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
                 if (chocoPackage != null && chocoPackage.CanUpdate)
-                    _progressService.ShowMessageAsync("Chocolatey", "There's an update available for chocolatey.");
+                    _progressService.ShowMessageAsync("Chocolatey", "There's an update available for chocolatey.").ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -82,7 +82,7 @@ namespace ChocolateyGui.ViewModels.Controls
                     Packages.Add(packageViewModel);
 
                     if (packageViewModel.LatestVersion == null)
-                        packageViewModel.RetriveLatestVersion();
+                        packageViewModel.RetriveLatestVersion().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)

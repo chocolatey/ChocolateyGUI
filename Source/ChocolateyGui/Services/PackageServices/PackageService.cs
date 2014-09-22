@@ -31,7 +31,14 @@ namespace ChocolateyGui.Services
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options, Uri source = null)
         {
             await _progressService.StartLoading("Search");
-            _progressService.WriteMessage(string.Format("Searching for {0}", query));
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                _progressService.WriteMessage("Loading data...");
+            }
+            else
+            {
+                _progressService.WriteMessage(string.Format("Searching for {0}", query));
+            }
 
             if (source == null)
             {

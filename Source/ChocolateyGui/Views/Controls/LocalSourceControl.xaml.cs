@@ -23,6 +23,10 @@ namespace ChocolateyGui.Views.Controls
         {
             dynamic source = e.OriginalSource;
             var item = source.DataContext as IPackageViewModel;
+            if (item == null)
+            {
+                return;
+            }
 
             await item.EnsureIsLoaded();
             _navigationService.Value.Navigate(typeof(PackageControl), item);

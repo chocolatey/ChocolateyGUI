@@ -6,6 +6,10 @@
 
 namespace ChocolateyGui.Services
 {
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows;
     using ChocolateyGui.Base;
     using ChocolateyGui.Controls;
     using ChocolateyGui.Controls.Dialogs;
@@ -13,28 +17,17 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.Utilities;
     using ChocolateyGui.Views.Windows;
     using MahApps.Metro.Controls.Dialogs;
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Windows;
 
     public class ProgressService : ObservableBase, IProgressService
     {
-        public MainWindow MainWindow;
-
         private readonly AsyncLock _lock;
-
         private readonly ObservableRingBuffer<PowerShellOutputLine> _output;
-
         private CancellationTokenSource _cst = null;
-
         private bool _isLoading;
-
         private int _loadingItems;
-
         private double _progress;
-
         private ChocolateyDialogController _progressController;
+        private MainWindow mainWindow;
 
         public ProgressService()
         {
@@ -46,17 +39,39 @@ namespace ChocolateyGui.Services
 
         public bool IsLoading
         {
-            get { return this._isLoading; }
+            get
+            {
+                return this._isLoading;
+            }
+        }
+
+        public MainWindow MainWindow
+        {
+            get
+            {
+                return this.mainWindow;
+            }
+
+            set
+            {
+                this.mainWindow = value;
+            }
         }
 
         public ObservableRingBuffer<PowerShellOutputLine> Output
         {
-            get { return this._output; }
+            get
+            {
+                return this._output;
+            }
         }
 
         public double Progress
         {
-            get { return this._progress; }
+            get
+            {
+                return this._progress;
+            }
         }
 
         public CancellationToken GetCancellationToken()

@@ -12,7 +12,6 @@ namespace ChocolateyGui.Utilities.Converters
 
     public sealed class LongSizeToFileSizeString : IValueConverter
     {
-
         /// <summary>
         /// Converts a numeric value into a string that represents the number expressed as a size value in bytes, kilobytes, megabytes, or gigabytes, depending on the size.
         /// </summary>

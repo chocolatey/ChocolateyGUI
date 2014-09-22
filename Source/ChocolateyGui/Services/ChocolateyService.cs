@@ -17,6 +17,7 @@ namespace ChocolateyGui.Services
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using ChocolateyGui.Controls;
+    using ChocolateyGui.Enums;
     using ChocolateyGui.Models;
     using ChocolateyGui.Properties;
     using ChocolateyGui.Utilities;
@@ -133,9 +134,11 @@ namespace ChocolateyGui.Services
                     if (
                         !chocoPackageList.Any(
                             e =>
-                                string.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase) &&
-                                e.Value == packageInfo.Version))
+                            string.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase)
+                            && e.Value == packageInfo.Version))
+                    {
                         continue;
+                    }
 
                     var packageConfigEntry =
                         this.PackageConfigEntries().SingleOrDefault(
@@ -151,9 +154,12 @@ namespace ChocolateyGui.Services
                     packages.Add(packageInfo);
                 }
 
-                Cache.Set(LocalPackagesCacheKeyName, packages, new CacheItemPolicy
-                {
-                    AbsoluteExpiration = DateTime.Now.AddHours(1)
+                Cache.Set(
+                    LocalPackagesCacheKeyName,
+                    packages,
+                    new CacheItemPolicy
+                        {
+                            AbsoluteExpiration = DateTime.Now.AddHours(1)
                 });
 
                 await this._progressService.StopLoading();
@@ -164,8 +170,15 @@ namespace ChocolateyGui.Services
         /// <summary>
         /// Placeholder. Will eventually allow one to call Chocolatey and list all the packages from a specified file system source.
         /// </summary>
-        /// <param name="directoryPath">The file system directory.</param>
-        /// <returns>List of packages in directory.</returns>
+        /// <param name="requestedPackages">
+        /// The requested Packages.
+        /// </param>
+        /// <param name="directoryPath">
+        /// The file system directory.
+        /// </param>
+        /// <returns>
+        /// List of packages in directory.
+        /// </returns>
         public async Task<IEnumerable<IPackageViewModel>> GetPackagesFromLocalDirectory(Dictionary<string, string> requestedPackages, string directoryPath)
         {
             var packages = new List<IPackageViewModel>();
@@ -319,13 +332,19 @@ namespace ChocolateyGui.Services
         /// <summary>
         /// Executes a PowerShell Command by directly calling chocolatey.ps1. 
         /// </summary>
-        /// <param name="commandArgs">The chocolatey command arguments.</param>
-        /// <param name="refreshPackages">Whether to force <see cref="GetInstalledPackages"/>.</param>
-        /// <param name="logOutput">Whether the output should be logged to the faux PowerShell console or returned as results.</param>
-        /// <param name="clearBuffer">Whether the faux PowerShell console should be cleared.</param>
-        /// <returns>A collection of the ouptut of the PowerShell runspace. Will be empty if <paramref cref="logOutput"/> is true.</returns>
-        public async Task RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true,
-            bool logOutput = true)
+        /// <param name="commandArgs">
+        /// The Chocolatey command arguments.
+        /// </param>
+        /// <param name="refreshPackages">
+        /// Whether to force <see cref="GetInstalledPackages"/>.
+        /// </param>
+        /// <param name="logOutput">
+        /// Whether the output should be logged to the faux PowerShell console or returned as results.
+        /// </param>
+        /// <returns>
+        /// A collection of the output of the PowerShell runspace. Will be empty if <paramref cref="logOutput"/> is true.
+        /// </returns>
+        public async Task RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true, bool logOutput = true)
         {
             await this._progressService.StartLoading("Chocolatey");
             this._progressService.WriteMessage("Processing chocolatey command...");
@@ -334,14 +353,14 @@ namespace ChocolateyGui.Services
 
             var chocoPath = Path.Combine(Settings.Default.chocolateyInstall, "chocolateyinstall", "chocolatey.ps1");
 
-            var psCommand = new Command(chocoPath);
+            var powerShellCommand = new Command(chocoPath);
+
             foreach (var commandArg in commandArgs)
             {
-                psCommand.Parameters.Add(commandArg.Key, commandArg.Value);
+                powerShellCommand.Parameters.Add(commandArg.Key, commandArg.Value);
             }
 
-            pipeline.Commands.Add(psCommand);
-
+            pipeline.Commands.Add(powerShellCommand);
 
             try
             {
@@ -368,15 +387,21 @@ namespace ChocolateyGui.Services
         }
 
         /// <summary>
-        /// Executes a PowerShell Command by calling chocolatey through the PowerShell command line. 
+        /// Executes a PowerShell Command by calling Chocolatey through the PowerShell command line. 
         /// </summary>
-        /// <param name="commandString">The chocolatey command arguments.</param>
-        /// <param name="refreshPackages">Whether to force <see cref="GetInstalledPackages"/>.</param>
-        /// <param name="logOutput">Whether the output should be logged to the faux PowerShell console or returned as results.</param>
-        /// <param name="clearBuffer">Whether the faux PowerShell console should be cleared.</param>
-        /// <returns>A collection of the ouptut of the PowerShell runspace. Will be empty if <paramref cref="logOutput"/> is true.</returns>
-        public async Task<Collection<PSObject>> RunIndirectChocolateyCommand(string commandString, bool refreshPackages = true,
-            bool logOutput = true)
+        /// <param name="commandString">
+        /// The Chocolatey command arguments.
+        /// </param>
+        /// <param name="refreshPackages">
+        /// Whether to force <see cref="GetInstalledPackages"/>.
+        /// </param>
+        /// <param name="logOutput">
+        /// Whether the output should be logged to the faux PowerShell console or returned as results.
+        /// </param>
+        /// <returns>
+        /// A collection of the output of the PowerShell runspace. Will be empty if <paramref cref="logOutput"/> is true.
+        /// </returns>
+        public async Task<Collection<PSObject>> RunIndirectChocolateyCommand(string commandString, bool refreshPackages = true, bool logOutput = true)
         {
             await this._progressService.StartLoading("Chocolatey");
             this._progressService.WriteMessage("Processing chocolatey command...");
@@ -435,8 +460,6 @@ namespace ChocolateyGui.Services
                     packages.Add(new PackageConfigEntry(id, version, source));
                 }
             }
-
-                // No? Add our new guy in.
             else
             {
                 packages.Add(new PackageConfigEntry(id, version, source));
@@ -513,7 +536,7 @@ namespace ChocolateyGui.Services
         }
         #endregion
 
-        void NotifyPackagesChanged(PackagesChangedEventType command, string packageId = "", string packageVersion = "")
+        private void NotifyPackagesChanged(PackagesChangedEventType command, string packageId = "", string packageVersion = "")
         {
             var packagesUpdated = this.PackagesUpdated;
             if (packagesUpdated != null)

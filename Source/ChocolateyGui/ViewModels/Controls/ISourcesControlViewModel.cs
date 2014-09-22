@@ -6,11 +6,11 @@
 
 namespace ChocolateyGui.ViewModels.Controls
 {
-    using ChocolateyGui.ViewModels.Items;
     using System.Collections.ObjectModel;
+    using ChocolateyGui.ViewModels.Items;
 
     public interface ISourcesControlViewModel
     {
-        ObservableCollection<SourceTabViewModel> Sources { get; set; } 
+        ObservableCollection<SourceTabViewModel> Sources { get; set; }
     }
 }

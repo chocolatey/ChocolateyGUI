@@ -15,7 +15,6 @@ namespace ChocolateyGui.Utilities.Extensions
 
     public static class LinqExtensions
     {
-        #region Expression Builder Linq Extensions
         private static readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, PropertyInfo>> CachedTypes =
             new ConcurrentDictionary<Type, ConcurrentDictionary<string, PropertyInfo>>();
 
@@ -33,14 +32,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] {
-                Expression.Parameter(query.ElementType, "query") 
-            };
+            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
 
             var queryExpr = query.Expression;
             queryExpr = Expression.Call(
                 typeof(Queryable),
-                "OrderBy", new[] { query.ElementType, targetProp.PropertyType },
+                "OrderBy",
+                new[] { query.ElementType, targetProp.PropertyType },
                 queryExpr,
                 Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
 
@@ -61,12 +59,15 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] {
-                Expression.Parameter(query.ElementType, "query") 
-            };
+            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
 
             var queryExpr = query.Expression;
-            queryExpr = Expression.Call(typeof(Queryable), "OrderByDescending", new[] { query.ElementType, targetProp.PropertyType }, queryExpr, Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
+            queryExpr = Expression.Call(
+                typeof(Queryable),
+                "OrderByDescending",
+                new[] { query.ElementType, targetProp.PropertyType },
+                queryExpr,
+                Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
             return query.Provider.CreateQuery<T>(queryExpr);
         }
 
@@ -84,12 +85,15 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] {
-                Expression.Parameter(query.ElementType, "query")
-            };
+            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
 
             var queryExpr = query.Expression;
-            queryExpr = Expression.Call(typeof(Queryable), "ThenBy", new[] { query.ElementType, targetProp.PropertyType }, queryExpr, Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
+            queryExpr = Expression.Call(
+                typeof(Queryable),
+                "ThenBy",
+                new[] { query.ElementType, targetProp.PropertyType },
+                queryExpr,
+                Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
             return query.Provider.CreateQuery<T>(queryExpr);
         }
 
@@ -107,13 +111,42 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] {
-                Expression.Parameter(query.ElementType, "query")
-            };
+            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
 
             var queryExpr = query.Expression;
-            queryExpr = Expression.Call(typeof(Queryable), "ThenByDescending", new[] { query.ElementType, targetProp.PropertyType }, queryExpr, Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
+            queryExpr = Expression.Call(
+                typeof(Queryable),
+                "ThenByDescending",
+                new[] { query.ElementType, targetProp.PropertyType },
+                queryExpr,
+                Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
             return query.Provider.CreateQuery<T>(queryExpr);
+        }
+
+        // From http://stackoverflow.com/a/13503860 | Thanks sehe!
+        internal static IList<TR> FullOuterJoin<TA, TB, TK, TR>(
+            this IEnumerable<TA> a,
+            IEnumerable<TB> b,
+            Func<TA, TK> selectKeyA,
+            Func<TB, TK> selectKeyB,
+            Func<TA, TB, TK, TR> projection,
+            TA defaultA = default(TA),
+            TB defaultB = default(TB),
+            IEqualityComparer<TK> cmp = null)
+        {
+            cmp = cmp ?? EqualityComparer<TK>.Default;
+            var alookup = a.ToLookup(selectKeyA, cmp);
+            var blookup = b.ToLookup(selectKeyB, cmp);
+
+            var keys = new HashSet<TK>(alookup.Select(p => p.Key), cmp);
+            keys.UnionWith(blookup.Select(p => p.Key));
+
+            var join = from key in keys
+                       from xa in alookup[key].DefaultIfEmpty(defaultA)
+                       from xb in blookup[key].DefaultIfEmpty(defaultB)
+                       select projection(xa, xb, key);
+
+            return join.ToList();
         }
 
         private static PropertyInfo GetProperty<T>(string propertyName)
@@ -143,10 +176,9 @@ namespace ChocolateyGui.Utilities.Extensions
 
         internal sealed class OrderByVistor : ExpressionVisitor
         {
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
             public OrderByVistor(Expression queryExpr)
             {
-                Visit(queryExpr);
+                this.Visit(queryExpr);
             }
 
             public bool HasOrderBy { get; set; }
@@ -154,40 +186,12 @@ namespace ChocolateyGui.Utilities.Extensions
             protected override Expression VisitMethodCall(MethodCallExpression node)
             {
                 if (node.Method.Name == "OrderByDescending" || node.Method.Name == "OrderBy")
-                    HasOrderBy = true;
+                {
+                    this.HasOrderBy = true;
+                }
 
                 return node.CanReduce ? base.VisitMethodCall(node) : node;
             }
         }
-        #endregion
-
-        /// <remarks>
-        /// From http://stackoverflow.com/a/13503860 | Thanks sehe!
-        /// </remarks>
-        internal static IList<TR> FullOuterJoin<TA, TB, TK, TR>(
-            this IEnumerable<TA> a,
-            IEnumerable<TB> b,
-            Func<TA, TK> selectKeyA,
-            Func<TB, TK> selectKeyB,
-            Func<TA, TB, TK, TR> projection,
-            TA defaultA = default(TA),
-            TB defaultB = default(TB),
-            IEqualityComparer<TK> cmp = null)
-        {
-            cmp = cmp ?? EqualityComparer<TK>.Default;
-            var alookup = a.ToLookup(selectKeyA, cmp);
-            var blookup = b.ToLookup(selectKeyB, cmp);
-
-            var keys = new HashSet<TK>(alookup.Select(p => p.Key), cmp);
-            keys.UnionWith(blookup.Select(p => p.Key));
-
-            var join = from key in keys
-                       from xa in alookup[key].DefaultIfEmpty(defaultA)
-                       from xb in blookup[key].DefaultIfEmpty(defaultB)
-                       select projection(xa, xb, key);
-
-            return join.ToList();
-        }
-
     }
 }

@@ -1,22 +1,25 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="RemoteSourceControl.cs">
+// <copyright company="Chocolatey" file="RemoteSourceControl.xaml.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Views.Controls
 {
-    using ChocolateyGui.Services;
-    using ChocolateyGui.ViewModels.Controls;
-    using ChocolateyGui.ViewModels.Items;
-    using ChocoPM.Extensions;
     using System;
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Reactive.Linq;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.ViewModels.Controls;
+    using ChocolateyGui.ViewModels.Items;
+    using ChocoPM.Extensions;
 
+    /// <summary>
+    /// Interaction logic for RemoteSourceControl.xaml
+    /// </summary>
     public partial class RemoteSourceControl
     {
         public const string PageTitle = "Remote Packages";
@@ -39,7 +42,7 @@ namespace ChocolateyGui.Views.Controls
                 .Subscribe(ev => this.Packages_CollectionChanged());
         }
 
-        void Packages_CollectionChanged()
+        private void Packages_CollectionChanged()
         {
             // When our collection is updated, reset the DataTable's sort descriptions.
             PackagesGrid.Items.SortDescriptions.Clear();

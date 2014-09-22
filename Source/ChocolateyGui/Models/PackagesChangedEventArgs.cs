@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="NuspecPackage.cs">
+// <copyright company="Chocolatey" file="PackagesChangedEventArgs.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,13 +7,16 @@
 namespace ChocolateyGui.Models
 {
     using System;
-    using System.Xml.Serialization;
+    using ChocolateyGui.Enums;
 
-    [Serializable]
-    [XmlRoot(ElementName = "package")]
-    public class NuspecPackage
+    public delegate void PackagesChangedEventHandler(object sender, PackagesChangedEventArgs e);
+
+    public class PackagesChangedEventArgs : EventArgs
     {
-        [XmlElement("metadata")]
-        public PackageMetadata Metadata { get; set; }
+        public PackagesChangedEventType EventType { get; set; }
+
+        public string PackageId { get; set; }
+
+        public string PackageVersion { get; set; }
     }
 }

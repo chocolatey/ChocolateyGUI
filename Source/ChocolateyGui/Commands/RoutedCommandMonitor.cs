@@ -28,8 +28,10 @@ namespace ChocolateyGui.Commands
         // an element handling the command.
         private static readonly CommandBindingsProvider<UIElement> UIElementCommandBindingsProvider
             = new CommandBindingsProvider<UIElement>();
+
         private static readonly CommandBindingsProvider<UIElement3D> UIElement3DCommandBindingsProvider
             = new CommandBindingsProvider<UIElement3D>();
+        
         private static readonly CommandBindingsProvider<ContentElement> ContentElementCommandBindingsProvider
             = new CommandBindingsProvider<ContentElement>();
 
@@ -52,17 +54,29 @@ namespace ChocolateyGui.Commands
             // Although using the RegisterClassHandler method is generally frowned upon due
             // to memory leak concerns (i.e. there is not UnregisterClassHandler), it is ok here
             // because the 4 handlers are only referenced by the RoutedCommandBinding type.
-            EventManager.RegisterClassHandler(type, CommandManager.PreviewCanExecuteEvent,
-                new CanExecuteRoutedEventHandler(OnCommandCanExecute), true);
+            EventManager.RegisterClassHandler(
+                type,
+                CommandManager.PreviewCanExecuteEvent,
+                new CanExecuteRoutedEventHandler(OnCommandCanExecute),
+                true);
 
-            EventManager.RegisterClassHandler(type, CommandManager.CanExecuteEvent,
-                new CanExecuteRoutedEventHandler(OnCommandCanExecute), true);
+            EventManager.RegisterClassHandler(
+                type,
+                CommandManager.CanExecuteEvent,
+                new CanExecuteRoutedEventHandler(OnCommandCanExecute),
+                true);
 
-            EventManager.RegisterClassHandler(type, CommandManager.PreviewExecutedEvent,
-                new ExecutedRoutedEventHandler(OnCommandExecuted), true);
+            EventManager.RegisterClassHandler(
+                type,
+                CommandManager.PreviewExecutedEvent,
+                new ExecutedRoutedEventHandler(OnCommandExecuted),
+                true);
 
-            EventManager.RegisterClassHandler(type, CommandManager.ExecutedEvent,
-                new ExecutedRoutedEventHandler(OnCommandExecuted), true);
+            EventManager.RegisterClassHandler(
+                type,
+                CommandManager.ExecutedEvent,
+                new ExecutedRoutedEventHandler(OnCommandExecuted),
+                true);
         }
 
         private static void OnCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -78,7 +92,6 @@ namespace ChocolateyGui.Commands
         // ReSharper disable once UnusedMethodReturnValue.Local
         private static bool TryExecuteRoutedCommandBinding(ICommand command, object sender, RoutedEventArgs e)
         {
-            //
             // Look for a matching RoutedCommandBinding on the sender and execute it if found.
             CommandBindingCollection commandBindings = null;
             var uie = sender as UIElement;
@@ -139,9 +152,11 @@ namespace ChocolateyGui.Commands
         }
 
         /// <summary>
-        ///     Provides access to the CommandBindingsInternal property for a target type.
+        /// Provides access to the CommandBindingsInternal property for a target type.
         /// </summary>
-        /// <typeparam name="TElementType"></typeparam>
+        /// <typeparam name="TElementType">
+        /// Specified Target Type
+        /// </typeparam>
         private class CommandBindingsProvider<TElementType>
         {
             // _GetCommandBindings is an Func that is used to access the
@@ -152,7 +167,7 @@ namespace ChocolateyGui.Commands
                 ////.GetGetMethod(true));
 
             /// <summary>
-            ///     Returns the collection of CommandBindings or null the collection is not
+            ///     Gets the collection of CommandBindings or null the collection is not
             ///     instantiated.
             /// </summary>
             /// <returns>The collection of CommandBindings</returns>

@@ -6,53 +6,60 @@
 
 namespace ChocolateyGui.ViewModels.Controls
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows;
     using ChocolateyGui.Base;
     using ChocolateyGui.Models;
     using ChocolateyGui.Services;
     using ChocolateyGui.Utilities;
     using ChocolateyGui.ViewModels.Items;
     using ChocolateyGui.Views.Controls;
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.Windows;
 
     public class SourcesControlViewModel : ObservableBase, ISourcesControlViewModel, IWeakEventListener
     {
-        public ObservableCollection<SourceTabViewModel> Sources { get; set; }
+        private readonly Func<string, Uri, Type, SourceTabViewModel> _sourceVmFactory;
 
         private SourceTabViewModel _selectedSource;
 
-        public SourceTabViewModel SelectedSource
-        {
-            get { return _selectedSource; }
-            set
-            {
-                if (value != null && value.Content == null)
-                    value.LoadContent();
-                SetPropertyValue(ref _selectedSource, value);
-            }
-        }
-
-        private readonly Func<string, Uri, Type, SourceTabViewModel> _sourceVmFactory;
-
         public SourcesControlViewModel(ISourceService sourceService, Func<string, Uri, Type, SourceTabViewModel> sourceVmFactory)
         {
-            _sourceVmFactory = sourceVmFactory;
-            Sources = new ObservableCollection<SourceTabViewModel>
+            this._sourceVmFactory = sourceVmFactory;
+            this.Sources = new ObservableCollection<SourceTabViewModel>
             {
                 sourceVmFactory("This PC", null, typeof(LocalSourceControl))
             };
 
             foreach (var source in sourceService.GetSources())
             {
-                Sources.Add(_sourceVmFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
+                this.Sources.Add(this._sourceVmFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
             }
 
-            SelectedSource = Sources[0];
+            this.SelectedSource = this.Sources[0];
 
             SourcesChangedEventManager.AddListener(sourceService, this);
         }
+
+        public SourceTabViewModel SelectedSource
+        {
+            get
+            {
+                return this._selectedSource;
+            }
+
+            set
+            {
+                if (value != null && value.Content == null)
+                {
+                    value.LoadContent();
+                }
+
+                this.SetPropertyValue(ref this._selectedSource, value);
+            }
+        }
+
+        public ObservableCollection<SourceTabViewModel> Sources { get; set; }
 
         public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
@@ -63,19 +70,21 @@ namespace ChocolateyGui.ViewModels.Controls
                 {
                     foreach (var source in eventArgs.AddedSources)
                     {
-                        Sources.Add(_sourceVmFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
+                        this.Sources.Add(this._sourceVmFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
                     }
                 }
+
                 if (eventArgs.RemovedSources != null && eventArgs.RemovedSources.Count > 0)
                 {
                     foreach (var targetPackage in eventArgs.RemovedSources
-                        .Select(source => Sources.FirstOrDefault(p => string.Equals(p.Name, source.Name, StringComparison.CurrentCultureIgnoreCase)))
+                        .Select(source => this.Sources.FirstOrDefault(p => string.Equals(p.Name, source.Name, StringComparison.CurrentCultureIgnoreCase)))
                         .Where(targetPackage => targetPackage != null))
                     {
-                        Sources.Remove(targetPackage);
+                        this.Sources.Remove(targetPackage);
                     }
                 }
             }
+
             return true;
         }
     }

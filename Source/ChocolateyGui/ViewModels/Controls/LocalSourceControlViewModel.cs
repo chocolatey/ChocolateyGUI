@@ -6,11 +6,6 @@
 
 namespace ChocolateyGui.ViewModels.Controls
 {
-    using ChocolateyGui.Base;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Services;
-    using ChocolateyGui.Utilities;
-    using ChocolateyGui.ViewModels.Items;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -20,6 +15,11 @@ namespace ChocolateyGui.ViewModels.Controls
     using System.Reactive.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+    using ChocolateyGui.Base;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.Utilities;
+    using ChocolateyGui.ViewModels.Items;
 
     public class LocalSourceControlViewModel : ObservableBase, ILocalSourceControlViewModel, IWeakEventListener
     {
@@ -43,7 +43,7 @@ namespace ChocolateyGui.ViewModels.Controls
             this._chocolateyService = chocolateyService;
             this._progressService = progressService;
             this._logService = logFactory(typeof(LocalSourceControlViewModel));
-            PackagesChangedEventManager.AddListener(_chocolateyService, this);
+            PackagesChangedEventManager.AddListener(this._chocolateyService, this);
 
             this.Packages = new ObservableCollection<IPackageViewModel>();
             this._packages = new List<IPackageViewModel>();
@@ -141,7 +141,8 @@ namespace ChocolateyGui.ViewModels.Controls
                     }
 
                 }
-                await _progressService.StopLoading();
+
+                await this._progressService.StopLoading();
             }
             catch (Exception ex)
             {
@@ -158,14 +159,18 @@ namespace ChocolateyGui.ViewModels.Controls
                 var query = this.MatchWord
                      ? this._packages.Where(
                          package =>
-                             string.Compare(package.Title ?? package.Id, SearchQuery,
-                                 StringComparison.OrdinalIgnoreCase) == 0)
-                     : this._packages.Where(
+                         string.Compare(
+                             package.Title ?? package.Id,
+                             this.SearchQuery,
+                             StringComparison.OrdinalIgnoreCase) == 0)
+                                : this._packages.Where(
                          package =>
-                             CultureInfo.CurrentCulture.CompareInfo.IndexOf((package.Title ?? package.Id), SearchQuery,
-                                 CompareOptions.OrdinalIgnoreCase) >= 0);
+                         CultureInfo.CurrentCulture.CompareInfo.IndexOf(
+                             package.Title ?? package.Id,
+                             this.SearchQuery,
+                             CompareOptions.OrdinalIgnoreCase) >= 0);
 
-                query.ToList().ForEach(Packages.Add);
+                query.ToList().ForEach(this.Packages.Add);
             }
             else
             {

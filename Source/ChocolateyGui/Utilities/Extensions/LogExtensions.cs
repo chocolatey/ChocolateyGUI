@@ -6,9 +6,9 @@
 
 namespace ChocolateyGui.Utilities.Extensions
 {
+    using System;
     using Autofac;
     using ChocolateyGui.Services;
-    using System;
 
     public static class LogExtensions
     {

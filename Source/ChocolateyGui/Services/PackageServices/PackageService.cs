@@ -1,18 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="CommandExecutionManagerPackageService.cs">
+// <copyright company="Chocolatey" file="PackageService.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Services
 {
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Services.PackageServices;
-    using ChocolateyGui.ViewModels.Items;
     using System;
     using System.IO;
     using System.Threading.Tasks;
-
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services.PackageServices;
+    using ChocolateyGui.ViewModels.Items;
+    
     public class PackageService : IPackageService
     {
         private readonly IProgressService _progressService;
@@ -20,8 +20,11 @@ namespace ChocolateyGui.Services
         private readonly Func<IPackageViewModel> _packageFactory;
         private readonly ILogService _logService;
 
-        public PackageService(IProgressService progressService, ISourceService sourceService,
-            Func<IPackageViewModel> packageFactory, Func<Type, ILogService> logFunc)
+        public PackageService(
+            IProgressService progressService,
+            ISourceService sourceService,
+            Func<IPackageViewModel> packageFactory,
+            Func<Type, ILogService> logFunc)
         {
             this._progressService = progressService;
             this._sourceService = sourceService;
@@ -83,7 +86,6 @@ namespace ChocolateyGui.Services
                         return result;
                     }
                 }
-
 
                 foreach (var sourceViewModel in this._sourceService.GetSources())
                 {

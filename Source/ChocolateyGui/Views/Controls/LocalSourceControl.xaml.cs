@@ -1,17 +1,20 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="LocalSourceControl.cs">
+// <copyright company="Chocolatey" file="LocalSourceControl.xaml.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Views.Controls
 {
+    using System;
+    using System.Windows.Input;
     using ChocolateyGui.Services;
     using ChocolateyGui.ViewModels.Controls;
     using ChocolateyGui.ViewModels.Items;
-    using System;
-    using System.Windows.Input;
 
+    /// <summary>
+    /// Interaction logic for LocalSourceControl.xaml
+    /// </summary>
     public partial class LocalSourceControl
     {
         private readonly Lazy<INavigationService> _navigationService; 

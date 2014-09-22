@@ -1,11 +1,15 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="MainWindow.cs">
+// <copyright company="Chocolatey" file="MainWindow.xaml.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Views.Windows
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows;
     using ChocolateyGui.ChocolateyFeedService;
     using ChocolateyGui.Controls.Dialogs;
     using ChocolateyGui.Models;
@@ -15,10 +19,6 @@ namespace ChocolateyGui.Views.Windows
     using ChocolateyGui.ViewModels.Windows;
     using ChocolateyGui.Views.Controls;
     using MahApps.Metro.Controls.Dialogs;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using System.Windows;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -64,10 +64,12 @@ namespace ChocolateyGui.Views.Windows
                     OutputBuffer = _progressService.Output
                 };
 
-                if (settings == null)
-                    settings = MetroDialogOptions;
+                    if (settings == null)
+                    {
+                        settings = MetroDialogOptions;
+                    }
 
-                dialog.NegativeButtonText = settings.NegativeButtonText;
+                    dialog.NegativeButtonText = settings.NegativeButtonText;
 
                 await this.ShowMetroDialogAsync(dialog);
                 return new ChocolateyDialogController(dialog, () => this.HideMetroDialogAsync(dialog));

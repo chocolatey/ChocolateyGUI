@@ -15,7 +15,9 @@ namespace ChocolateyGui.Utilities.Extensions
         public static Task RunCommandsAsync(this Pipeline pipeline)
         {
             if (pipeline.PipelineStateInfo.State == PipelineState.Completed)
+            {
                 return TaskEx.FromResult(0);
+            }
              
             var tcs = new TaskCompletionSource<object>();
             EventHandler<PipelineStateEventArgs> stateHandler = null;

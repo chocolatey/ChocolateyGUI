@@ -13,15 +13,17 @@ namespace Markdown.Xaml
 
     public class TextToFlowDocumentConverter : DependencyObject, IValueConverter
     {
-        public Markdown Markdown
-        {
-            get { return (Markdown)GetValue(MarkdownProperty); }
-            set { SetValue(MarkdownProperty, value); }
-        }
-
         // Using a DependencyProperty as the backing store for Markdown.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MarkdownProperty =
             DependencyProperty.Register("Markdown", typeof(Markdown), typeof(TextToFlowDocumentConverter), new PropertyMetadata(null));
+
+        private readonly Lazy<Markdown> markdown = new Lazy<Markdown>(() => new Markdown());
+
+        public Markdown Markdown
+        {
+            get { return (Markdown)GetValue(MarkdownProperty); }
+            set { this.SetValue(MarkdownProperty, value); }
+        }
 
         /// <summary>
         /// Converts a value. 
@@ -42,7 +44,7 @@ namespace Markdown.Xaml
 
             var text = (string)value;
 
-            var engine = Markdown ?? this._mMarkdown.Value;
+            var engine = Markdown ?? this.markdown.Value;
 
             return engine.Transform(text);
         }
@@ -61,8 +63,5 @@ namespace Markdown.Xaml
         {
             throw new NotImplementedException();
         }
-
-        private readonly Lazy<Markdown> _mMarkdown
-            = new Lazy<Markdown>(() => new Markdown());
     }
 }

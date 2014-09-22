@@ -6,13 +6,13 @@
 
 namespace ChocolateyGui
 {
+    using System;
+    using System.Windows;
     using Autofac;
     using ChocolateyGui.IoC;
     using ChocolateyGui.Services;
     using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.Views.Windows;
-    using System;
-    using System.Windows;
 
     /// <summary>
     /// Interaction logic for App.xaml
@@ -48,22 +48,28 @@ namespace ChocolateyGui
             MainWindow.Show();
         }
 
-        static void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
+        private static void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
         {
             Log.Debug("First Chance Exception", e.Exception);
         }
 
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             if (e.IsTerminating)
             {
                 Log.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
-                MessageBox.Show(e.ExceptionObject.ToString(), "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error,
-                    MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                MessageBox.Show(
+                    e.ExceptionObject.ToString(),
+                    "Unhandled Exception",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.ServiceNotification);
             }
             else
+            {
                 Log.Error("Unhandled Exception", e.ExceptionObject as Exception);
-
+            }
         }
     }
 }

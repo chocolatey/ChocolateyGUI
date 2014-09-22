@@ -6,12 +6,13 @@
 
 namespace ChocolateyGui.Models
 {
-    // Full credit to the Nuget team for this implemenation!
+    // Full credit to the NuGet team for this implementation!
     using System;
     using System.ComponentModel;
     using System.Globalization;
     using System.Text.RegularExpressions;
     using ChocolateyGui.Properties;
+    using ChocolateyGui.Utilities.TypeConverters;
 
     [TypeConverter(typeof(SemanticVersionTypeConverter))]
     [Serializable]
@@ -20,14 +21,17 @@ namespace ChocolateyGui.Models
         private const long BaseCombinedHash64 = 5381L;
 
         private static readonly Regex SemanticVersionRegex =
-            new Regex("^(?<Version>\\d+(\\s*\\.\\s*\\d+){0,3})(?<Release>-[a-z][0-9a-z-]*)?$",
+            new Regex(
+                "^(?<Version>\\d+(\\s*\\.\\s*\\d+){0,3})(?<Release>-[a-z][0-9a-z-]*)?$",
                 RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
         private static readonly Regex StrictSemanticVersionRegex =
-            new Regex("^(?<Version>\\d+(\\.\\d+){2})(?<Release>-[a-z][0-9a-z-]*)?$",
+            new Regex(
+                "^(?<Version>\\d+(\\.\\d+){2})(?<Release>-[a-z][0-9a-z-]*)?$",
                 RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
         private readonly Func<object, long, long> _addIntToHash = (obj, hashCode) => (hashCode << 5) + hashCode ^ (long)(obj != null ? obj.GetHashCode() : 0);
+
         private readonly string _originalString;
 
         public SemanticVersion(string version)
@@ -157,10 +161,11 @@ namespace ChocolateyGui.Models
             }
 
             throw new ArgumentException(
-                string.Format(CultureInfo.CurrentCulture, Resources.InvalidVersionString, new object[1]
-                {
-                    version
-                }), "version");
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.InvalidVersionString,
+                    new object[1] { version }),
+                "version");
         }
 
         public static SemanticVersion ParseOptionalVersion(string version)
@@ -283,27 +288,6 @@ namespace ChocolateyGui.Models
                 version.Replace(" ", string.Empty));
 
             return true;
-        }
-    }
-
-    public class SemanticVersionTypeConverter : TypeConverter
-    {
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            return sourceType == typeof(string);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            var version = value as string;
-            SemanticVersion semanticVersion;
-
-            if (version != null && SemanticVersion.TryParse(version, out semanticVersion))
-            {
-                return semanticVersion;
-            }
-
-            return null;
         }
     }
 }

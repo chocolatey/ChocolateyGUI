@@ -6,9 +6,6 @@
 
 namespace ChocolateyGui.Utilities.Nuspec
 {
-    using Autofac;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.ViewModels.Items;
     using System;
     using System.IO;
     using System.IO.Packaging;
@@ -16,6 +13,9 @@ namespace ChocolateyGui.Utilities.Nuspec
     using System.Threading.Tasks;
     using System.Xml;
     using System.Xml.Serialization;
+    using Autofac;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.ViewModels.Items;
 
     public static class NupkgReader
     {

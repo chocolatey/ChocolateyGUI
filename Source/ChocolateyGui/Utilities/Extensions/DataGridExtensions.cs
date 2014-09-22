@@ -38,7 +38,9 @@ namespace ChocoPM.Extensions
                 sortPropertyName = binding.Path.Path;
             }
             else
+            {
                 sortPropertyName = null;
+            }
 
             return sortPropertyName;
         }
@@ -54,6 +56,7 @@ namespace ChocoPM.Extensions
                     index = i;
                     break;
                 }
+
                 i++;
             }
 

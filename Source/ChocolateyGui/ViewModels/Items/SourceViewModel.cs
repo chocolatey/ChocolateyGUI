@@ -10,17 +10,19 @@ namespace ChocolateyGui.ViewModels.Items
 
     public class SourceViewModel : ObservableBase
     {
-        private string _url;
-        public string Url
-        {
-            get { return _url; }
-            set { SetPropertyValue(ref _url, value); }
-        }
         private string _name;
+        private string _url;
+
         public string Name
         {
-            get { return _name; }
-            set { SetPropertyValue(ref _name, value); }
+            get { return this._name; }
+            set { this.SetPropertyValue(ref this._name, value); }
+        }
+
+        public string Url
+        {
+            get { return this._url; }
+            set { this.SetPropertyValue(ref this._url, value); }
         }
     }
 }

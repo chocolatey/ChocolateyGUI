@@ -6,49 +6,52 @@
 
 namespace ChocolateyGui.Utilities
 {
+    using System.Windows;
     using ChocolateyGui.Models;
     using ChocolateyGui.Services;
-    using System.Windows;
-
+    
     public class PackagesChangedEventManager : WeakEventManager
     {
-        public static void AddListener(IChocolateyService serivce, IWeakEventListener listener)
-        {
-            CurrentManager.ProtectedAddListener(serivce, listener);
-        }
-        public static void RemoveListener(IChocolateyService serivce, IWeakEventListener listener)
-        {
-            CurrentManager.ProtectedRemoveListener(serivce, listener);
-        }
-
         private static PackagesChangedEventManager CurrentManager
         {
             get
             {
                 var managerType = typeof(PackagesChangedEventManager);
                 var manager = (PackagesChangedEventManager)GetCurrentManager(managerType);
-                if (manager != null) 
+                if (manager != null)
+                {
                     return manager;
+                }
 
                 manager = new PackagesChangedEventManager();
-                SetCurrentManager(managerType, manager);
+                PackagesChangedEventManager.SetCurrentManager(managerType, manager);
                 return manager;
             }
         }
 
+        public static void AddListener(IChocolateyService serivce, IWeakEventListener listener)
+        {
+            CurrentManager.ProtectedAddListener(serivce, listener);
+        }
+
+        public static void RemoveListener(IChocolateyService serivce, IWeakEventListener listener)
+        {
+            CurrentManager.ProtectedRemoveListener(serivce, listener);
+        }
+
         protected override void StartListening(object source)
         {
-            (source as IChocolateyService).PackagesUpdated += OnPackagedUpdated;
+            (source as IChocolateyService).PackagesUpdated += this.OnPackagedUpdated;
         }
 
         protected override void StopListening(object source)
         {
-            (source as IChocolateyService).PackagesUpdated -= OnPackagedUpdated;
+            (source as IChocolateyService).PackagesUpdated -= this.OnPackagedUpdated;
         }
 
-        void OnPackagedUpdated(object sender, PackagesChangedEventArgs e)
+        private void OnPackagedUpdated(object sender, PackagesChangedEventArgs e)
         {
-            DeliverEvent(sender, e);
+            this.DeliverEvent(sender, e);
         }
     }
 }

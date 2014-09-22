@@ -147,18 +147,24 @@
     <Compile Include="Commands\DataContextCommandBinding.cs" />
     <Compile Include="Commands\RoutedCommandBinding.cs" />
     <Compile Include="Commands\RoutedCommandMonitor.cs" />
+    <Compile Include="Controls\ChocolateyHostRawUserInterface.cs" />
+    <Compile Include="Controls\ChocolateyHostUserInterface.cs" />
     <Compile Include="Controls\Dialogs\ChocolateyDialog.xaml.cs">
       <DependentUpon>ChocolateyDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Dialogs\ChocolateyDialogController.cs" />
     <Compile Include="Controls\FauxPowerShellConsole.cs" />
     <Compile Include="Controls\ObservableRingBuffer.cs" />
-    <Compile Include="Controls\PowershellHostComponents.cs" />
+    <Compile Include="Controls\ChocolateyHost.cs" />
+    <Compile Include="Enums\PackagesChangedEventType.cs" />
     <Compile Include="IoC\AutoFacConfiguration.cs" />
-    <Compile Include="Models\ShowMessageEvent.cs" />
-    <Compile Include="Models\SourcesChangedEvent.cs" />
+    <Compile Include="Models\PackageConfigEntry.cs" />
+    <Compile Include="Models\PackageMetadata.cs" />
+    <Compile Include="Models\ShowMessageEventArgs.cs" />
+    <Compile Include="Models\SourcesChangedEventArgs.cs" />
     <Compile Include="Models\NuspecPackage.cs" />
     <Compile Include="Models\PackageConfig.cs" />
-    <Compile Include="Models\PackagesChangedEvent.cs" />
+    <Compile Include="Models\PackagesChangedEventArgs.cs" />
     <Compile Include="Models\PackageSearchOptions.cs" />
     <Compile Include="Models\PackageSearchResults.cs" />
     <Compile Include="Models\PowerShellOutputLine.cs" />
@@ -183,6 +189,7 @@
     <Compile Include="Utilities\Extensions\PowershellExtensions.cs" />
     <Compile Include="Utilities\Nuspec\NupkgReader.cs" />
     <Compile Include="Utilities\SourcesChangedEventManager.cs" />
+    <Compile Include="Utilities\TypeConverters\SemanticVersionTypeConverter.cs" />
     <Compile Include="ViewModels\Items\SourceTabViewModel.cs" />
     <Compile Include="Services\IChocolateyService.cs" />
     <Compile Include="Services\INavigationService.cs" />
@@ -241,10 +248,10 @@
     <Compile Include="Base\ObservableBase.cs" />
     <Compile Include="ViewModels\Items\IPackageViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
-    <Compile Include="ViewModels\Controls\ISourcesPagesViewModel.cs" />
+    <Compile Include="ViewModels\Controls\ISourcesControlViewModel.cs" />
     <Compile Include="ViewModels\Controls\IPackageControlViewModel.cs" />
     <Compile Include="ViewModels\Controls\IRemoteSourceControlViewModel.cs" />
-    <Compile Include="ViewModels\Controls\SourcesPageViewModel.cs" />
+    <Compile Include="ViewModels\Controls\SourcesControlViewModel.cs" />
     <Compile Include="ViewModels\Controls\PackageControlViewModel.cs" />
     <Compile Include="ViewModels\Controls\RemoteSourceControlViewModel.cs" />
     <Compile Include="ViewModels\Controls\ILocalSourceControlViewModel.cs" />

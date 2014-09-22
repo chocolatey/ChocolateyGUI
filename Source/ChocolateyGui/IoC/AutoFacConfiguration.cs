@@ -6,6 +6,7 @@
 
 namespace ChocolateyGui.IoC
 {
+    using System;
     using Autofac;
     using ChocolateyGui.Services;
     using ChocolateyGui.ViewModels.Controls;
@@ -13,7 +14,6 @@ namespace ChocolateyGui.IoC
     using ChocolateyGui.ViewModels.Windows;
     using ChocolateyGui.Views.Controls;
     using ChocolateyGui.Views.Windows;
-    using System;
 
     public class AutoFacConfiguration
     {
@@ -24,10 +24,14 @@ namespace ChocolateyGui.IoC
             // Register View Models
             builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>();
             builder.RegisterType<SourceViewModel>();
-            builder.Register((c, parameters) =>
-                new SourceTabViewModel(c.Resolve(typeof(Lazy<>).MakeGenericType(parameters.TypedAs<Type>()),
-                    new TypedParameter(typeof(Uri), parameters.TypedAs<Uri>())),
+            builder.Register(
+                (c, parameters) =>
+                new SourceTabViewModel(
+                    c.Resolve(
+                        typeof(Lazy<>).MakeGenericType(parameters.TypedAs<Type>()),
+                        new TypedParameter(typeof(Uri), parameters.TypedAs<Uri>())),
                     parameters.TypedAs<string>()));
+
             builder.RegisterType<SourcesControlViewModel>().As<ISourcesControlViewModel>();
             builder.RegisterType<LocalSourceControlViewModel>().As<ILocalSourceControlViewModel>();
             builder.RegisterType<RemoteSourceControlViewModel>().As<IRemoteSourceControlViewModel>();
@@ -49,7 +53,6 @@ namespace ChocolateyGui.IoC
             builder.Register((c, parameters) =>
                 new RemoteSourceControl(c.Resolve<IRemoteSourceControlViewModel>(parameters), c.Resolve<Lazy<INavigationService>>()));
             builder.Register((c, pvm) => new PackageControl(c.Resolve<IPackageControlViewModel>(), pvm.TypedAs<PackageViewModel>()));
-
 
             return builder.Build();
         }

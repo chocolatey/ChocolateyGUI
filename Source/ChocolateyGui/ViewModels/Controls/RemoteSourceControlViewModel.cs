@@ -6,15 +6,15 @@
 
 namespace ChocolateyGui.ViewModels.Controls
 {
-    using ChocolateyGui.Base;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Services;
-    using ChocolateyGui.ViewModels.Items;
     using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Reactive.Linq;
+    using ChocolateyGui.Base;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.ViewModels.Items;
 
     public class RemoteSourceControlViewModel : ObservableBase, IRemoteSourceControlViewModel
     {
@@ -97,6 +97,7 @@ namespace ChocolateyGui.ViewModels.Controls
             get { return this._packageViewModels; }
             set { this.SetPropertyValue(ref this._packageViewModels, value); }
         }
+
         public int PageCount
         {
             get { return this._pageCount; }

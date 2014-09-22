@@ -28,104 +28,6 @@ namespace ChocolateyGui.ViewModels.Items
 
         private readonly IPackageService _packageService;
 
-        public PackageViewModel(IPackageService packageService, IChocolateyService chocolateyService, INavigationService navigationService)
-        {
-            this._packageService = packageService;
-            this._chocolateyService = chocolateyService;
-            this._navigationService = navigationService;
-            PackagesChangedEventManager.AddListener(this._chocolateyService, this);
-
-            this._isInstalled = new Lazy<bool>(() => this._chocolateyService.IsPackageInstalled(this.Id, this.Version));
-        }
-
-        private string MemoryCacheKey
-        {
-            get { return string.Format("PackageViewModel.{0}{1}", this.Id, this.Version); }
-        }
-
-        public async Task EnsureIsLoaded()
-        {
-            if (this.Published == DateTime.MinValue)
-            {
-                await this._packageService.EnsureIsLoaded(this, this.Source);
-            }
-        }
-
-        public async Task Install()
-        {
-            await this._chocolateyService.InstallPackage(this.Id, this.Version, this.Source).ConfigureAwait(false);
-        }
-
-        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
-        {
-            if (sender is IChocolateyService && e is PackagesChangedEventArgs)
-            {
-                this._isInstalled = new Lazy<bool>(() => this._chocolateyService.IsPackageInstalled(this.Id, this.Version));
-                this.NotifyPropertyChanged("IsInstalled");
-                this.NotifyPropertyChanged("CanUpdate");
-            }
-
-            return true;
-        }
-
-        public async Task RetriveLatestVersion()
-        {
-            SemanticVersion version;
-            if ((version = (SemanticVersion)_cache.Get(string.Format("LatestVersion_{0}", Id))) != null)
-            {
-                this.LatestVersion = version;
-                return;
-            }
-
-            var latest = await this._packageService.GetLatest(this.Id, this.IsPrerelease, this.Source);
-
-            if (latest != null)
-            {
-                version = latest.Version;
-
-                if (latest.Source != null)
-                {
-                    this.Source = latest.Source;
-                }
-            }
-            else
-            {
-                version = this.Version;
-            }
-
-            this._cache.Set(string.Format("LatestVersion_{0}", Id), version, new CacheItemPolicy
-            {
-                AbsoluteExpiration = DateTime.Now.AddHours(1)
-            });
-
-            this.LatestVersion = version;
-        }
-
-        public async Task Uninstall()
-        {
-            await this._chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
-
-            if (this.CanGoBack())
-            {
-                this._navigationService.GoBack();
-            }
-        }
-
-        public async Task Update()
-        {
-            await this._chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
-
-            if (this.CanGoBack())
-            {
-                this._navigationService.GoBack();
-            }
-        }
-
-        private string MemoryCachePropertyKey([CallerMemberName] string propertyName = "")
-        {
-            return this.MemoryCacheKey + "." + propertyName;
-        }
-
         private string _authors;
 
         private string _copyright;
@@ -189,6 +91,16 @@ namespace ChocolateyGui.ViewModels.Items
         private SemanticVersion _version;
 
         private int _versionDownloadCount;
+
+        public PackageViewModel(IPackageService packageService, IChocolateyService chocolateyService, INavigationService navigationService)
+        {
+            this._packageService = packageService;
+            this._chocolateyService = chocolateyService;
+            this._navigationService = navigationService;
+            PackagesChangedEventManager.AddListener(this._chocolateyService, this);
+
+            this._isInstalled = new Lazy<bool>(() => this._chocolateyService.IsPackageInstalled(this.Id, this.Version));
+        }
 
         public string Authors
         {
@@ -370,7 +282,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         public string Title
         {
-            get { return string.IsNullOrWhiteSpace(this._title) ? Id : this._title; }
+            get { return string.IsNullOrWhiteSpace(this._title) ? this.Id : this._title; }
             set { this.SetPropertyValue(ref this._title, value); }
         }
 
@@ -386,9 +298,22 @@ namespace ChocolateyGui.ViewModels.Items
             set { this.SetPropertyValue(ref this._versionDownloadCount, value); }
         }
 
+        private string MemoryCacheKey
+        {
+            get { return string.Format("PackageViewModel.{0}{1}", this.Id, this.Version); }
+        }
+
         public bool CanGoBack()
         {
             return this._navigationService.CanGoBack;
+        }
+
+        public async Task EnsureIsLoaded()
+        {
+            if (this.Published == DateTime.MinValue)
+            {
+                await this._packageService.EnsureIsLoaded(this, this.Source);
+            }
         }
 
         public void GoBack()
@@ -397,6 +322,84 @@ namespace ChocolateyGui.ViewModels.Items
             {
                 this._navigationService.GoBack();
             }
+        }
+
+        public async Task Install()
+        {
+            await this._chocolateyService.InstallPackage(this.Id, this.Version, this.Source).ConfigureAwait(false);
+        }
+
+        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        {
+            if (sender is IChocolateyService && e is PackagesChangedEventArgs)
+            {
+                this._isInstalled = new Lazy<bool>(() => this._chocolateyService.IsPackageInstalled(this.Id, this.Version));
+                this.NotifyPropertyChanged("IsInstalled");
+                this.NotifyPropertyChanged("CanUpdate");
+            }
+
+            return true;
+        }
+
+        public async Task RetriveLatestVersion()
+        {
+            SemanticVersion version;
+            if ((version = (SemanticVersion)this._cache.Get(string.Format("LatestVersion_{0}", this.Id))) != null)
+            {
+                this.LatestVersion = version;
+                return;
+            }
+
+            var latest = await this._packageService.GetLatest(this.Id, this.IsPrerelease, this.Source);
+
+            if (latest != null)
+            {
+                version = latest.Version;
+
+                if (latest.Source != null)
+                {
+                    this.Source = latest.Source;
+                }
+            }
+            else
+            {
+                version = this.Version;
+            }
+
+            this._cache.Set(
+                string.Format("LatestVersion_{0}", this.Id),
+                version,
+                new CacheItemPolicy
+                    {
+                        AbsoluteExpiration = DateTime.Now.AddHours(1)
+                    });
+
+            this.LatestVersion = version;
+        }
+
+        public async Task Uninstall()
+        {
+            await this._chocolateyService.UninstallPackage(this.Id, this.Version, true).ConfigureAwait(false);
+
+            if (this.CanGoBack())
+            {
+                this._navigationService.GoBack();
+            }
+        }
+
+        public async Task Update()
+        {
+            await this._chocolateyService.UpdatePackage(this.Id, this.Source).ConfigureAwait(false);
+
+            if (this.CanGoBack())
+            {
+                this._navigationService.GoBack();
+            }
+        }
+
+        private string MemoryCachePropertyKey([CallerMemberName] string propertyName = "")
+        {
+            return this.MemoryCacheKey + "." + propertyName;
         }
     }
 }

@@ -12,14 +12,14 @@ namespace ChocolateyGui.Services
 
     public interface ISourceService
     {
-        IEnumerable<SourceViewModel> GetSources();
-
-        SourceViewModel GetDefaultSource();
+        event SourcesChangedEventHandler SourcesChanged;
 
         void AddSource(SourceViewModel svm);
 
-        void RemoveSource(SourceViewModel svm);
+        SourceViewModel GetDefaultSource();
 
-        event SourcesChangedEventHandler SourcesChanged;
+        IEnumerable<SourceViewModel> GetSources();
+
+        void RemoveSource(SourceViewModel svm);
     }
 }

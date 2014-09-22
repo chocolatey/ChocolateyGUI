@@ -8,11 +8,11 @@
 
 namespace ChocolateyGui.Services
 {
+    using System;
+    using System.Linq;
     using log4net;
     using log4net.Appender;
     using log4net.Repository.Hierarchy;
-    using System;
-    using System.Linq;
 
     public class Log4NetLoggingService : ILogService
     {

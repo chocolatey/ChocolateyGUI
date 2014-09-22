@@ -12,7 +12,7 @@ namespace ChocolateyGui.Utilities
 
     internal class AsyncSemaphore
     {
-        private readonly static Task<bool> Completed = TaskEx.FromResult(true);
+        private static readonly Task<bool> Completed = TaskEx.FromResult(true);
         private readonly Queue<TaskCompletionSource<bool>> _waiters = new Queue<TaskCompletionSource<bool>>();
         private int _currentCount;
 

@@ -6,15 +6,15 @@
 
 namespace ChocolateyGui.ViewModels.Windows
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows;
     using ChocolateyGui.Base;
     using ChocolateyGui.Models;
     using ChocolateyGui.Services;
     using ChocolateyGui.Utilities;
     using ChocolateyGui.ViewModels.Items;
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.Windows;
 
     public class MainWindowViewModel : ObservableBase, IMainWindowViewModel, IWeakEventListener
     {
@@ -87,7 +87,7 @@ namespace ChocolateyGui.ViewModels.Windows
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(NewSourceUrl))
+            if (string.IsNullOrWhiteSpace(this.NewSourceUrl))
             {
                 this._progressService.ShowMessageAsync("New Source", "Source must have a Url.");
                 return;
@@ -119,7 +119,7 @@ namespace ChocolateyGui.ViewModels.Windows
 
         public bool CanAddSource()
         {
-            if (string.IsNullOrWhiteSpace(NewSourceName))
+            if (string.IsNullOrWhiteSpace(this.NewSourceName))
             {
                 return false;
             }

@@ -6,9 +6,9 @@
 
 namespace ChocolateyGui.Models
 {
-    using ChocolateyGui.ViewModels.Items;
     using System.Collections.Generic;
-
+    using ChocolateyGui.ViewModels.Items;
+    
     public class PackageSearchResults
     {
         public IEnumerable<IPackageViewModel> Packages { get; set; }

@@ -63,6 +63,12 @@ namespace ChocolateyGui.Commands
             this.CanExecute = canExecute;
         }
 
+        event EventHandler ICommand.CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
         /// <summary>
         ///     Gets or sets the name of the method of the target object's DataContext that determines whether the
         ///     command can execute in its current state.
@@ -75,9 +81,8 @@ namespace ChocolateyGui.Commands
         /// </remarks>
         public string CanExecute { get; set; }
 
-
         /// <summary>
-        ///     Name of the method of the target object's DataContext to be called when the command
+        ///     Gets or sets the Name of the method of the target object's DataContext to be called when the command
         ///     is invoked.
         /// </summary>
         /// <remarks>
@@ -87,6 +92,30 @@ namespace ChocolateyGui.Commands
         ///     <code>void MyExecutedMethod();</code>
         /// </remarks>
         public string Executed { get; set; }
+
+        bool ICommand.CanExecute(object parameter)
+        {
+            var target = GetDataContext(this._target);
+            if (this._target == null)
+            {
+                return false;
+            }
+
+            bool canExecute;
+            return CommandExecutionManager.TryExecuteCommand(target, parameter, false, this.Executed, this.CanExecute, out canExecute) && canExecute;
+        }
+
+        void ICommand.Execute(object parameter)
+        {
+            var target = GetDataContext(this._target);
+            if (this._target == null)
+            {
+                return;
+            }
+
+            bool canExecute;
+            CommandExecutionManager.TryExecuteCommand(target, parameter, true, this.Executed, this.CanExecute, out canExecute);
+        }
 
         /// <summary>
         ///     Returns an <see cref="ICommand"/> that is capable of executing methods of the
@@ -112,6 +141,18 @@ namespace ChocolateyGui.Commands
                 : target.TargetObject;
 
             return this;
+        }
+
+        private static object GetDataContext(object element)
+        {
+            var fe = element as FrameworkElement;
+            if (fe != null)
+            {
+                return fe.DataContext;
+            }
+
+            var fce = element as FrameworkContentElement;
+            return fce == null ? null : fce.DataContext;
         }
 
         // This method only works with the C# 4.0 XamlParser.
@@ -143,51 +184,5 @@ namespace ChocolateyGui.Commands
             var owner = ownerField.GetValue(inputBindingsCollection);
             return owner;
         }
-
-        #region ICommand Implementation
-
-        event EventHandler ICommand.CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        bool ICommand.CanExecute(object parameter)
-        {
-            var target = GetDataContext(this._target);
-            if (this._target == null)
-            {
-                return false;
-            }
-
-            bool canExecute;
-            return CommandExecutionManager.TryExecuteCommand(target, parameter, false, Executed, CanExecute, out canExecute) && canExecute;
-        }
-
-        void ICommand.Execute(object parameter)
-        {
-            var target = GetDataContext(this._target);
-            if (this._target == null)
-            {
-                return;
-            }
-
-            bool canExecute;
-            CommandExecutionManager.TryExecuteCommand(target, parameter, true, Executed, CanExecute, out canExecute);
-        }
-
-        private static object GetDataContext(object element)
-        {
-            var fe = element as FrameworkElement;
-            if (fe != null)
-            {
-                return fe.DataContext;
-            }
-
-            var fce = element as FrameworkContentElement;
-            return fce == null ? null : fce.DataContext;
-        }
-
-        #endregion
     }
 }

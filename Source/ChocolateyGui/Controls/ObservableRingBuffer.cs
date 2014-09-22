@@ -13,7 +13,7 @@ namespace ChocolateyGui.Controls
     using System.Diagnostics;
 
     /// <summary>
-    /// Represents a fixted length ring buffer to store a specified maximal count of items within.
+    /// Represents a fixed length ring buffer to store a specified maximal count of items within.
     /// </summary>
     /// <typeparam name="T">The generic type of the items stored within the ring buffer.</typeparam>
     [DebuggerDisplay("Count = {Count}")]
@@ -22,28 +22,30 @@ namespace ChocolateyGui.Controls
         /// <summary>
         /// the internal buffer
         /// </summary>
-        T[] _buffer;
+        private T[] _buffer;
 
         /// <summary>
         /// The all-over position within the ring buffer. The position 
-        /// increases continously by adding new items to the buffer. This 
+        /// increases continuously by adding new items to the buffer. This 
         /// value is needed to calculate the current relative position within the 
         /// buffer.
         /// </summary>
-        int _position;
+        private int _position;
 
         /// <summary>
         /// The current version of the buffer, this is required for a correct 
         /// exception handling while enumerating over the items of the buffer.
         /// </summary>
-        long _version;
+        private long _version;
 
         /// <summary>
-        /// Creates a new instance of a <see cref="RingBuffer&lt;T&gt;"/> with a 
-        /// specified cache size.
+        /// Initializes a new instance of the <see cref="ObservableRingBuffer{T}"/> class with a 
+        /// specified cache size. 
         /// </summary>
-        /// <param name="capacity">The maximum count of items to be stored within 
-        /// the ring buffer.</param>
+        /// <param name="capacity">
+        /// The maximum count of items to be stored within 
+        /// the ring buffer.
+        /// </param>
         public ObservableRingBuffer(int capacity)
         {
             // validate capacity
@@ -56,6 +58,7 @@ namespace ChocolateyGui.Controls
             this.Capacity = capacity;
             this._buffer = new T[capacity];
         }
+
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         /// <summary>
@@ -64,14 +67,20 @@ namespace ChocolateyGui.Controls
         public int Capacity { get; private set; }
 
         /// <summary>
-        /// Get the current count of items within the ring buffer.
+        /// Gets the current count of items within the ring buffer.
         /// </summary>
         public int Count { get; private set; }
 
         /// <summary>
-        /// Gets if the buffer is read-only. This method always returns false.
+        /// Gets a value indicating whether the buffer is read-only. This method always returns false.
         /// </summary>
-        bool ICollection<T>.IsReadOnly { get { return false; } }
+        bool ICollection<T>.IsReadOnly
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Adds a new item to the buffer.
@@ -136,7 +145,7 @@ namespace ChocolateyGui.Controls
         /// </summary>
         /// <param name="array">The target array to copy the items of 
         /// the buffer to.</param>
-        /// <param name="arrayIndex">The start position witihn the target
+        /// <param name="arrayIndex">The start position within the target
         /// array to start copying.</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
@@ -168,7 +177,8 @@ namespace ChocolateyGui.Controls
         /// <summary>
         /// See generic implementation of <see cref="GetEnumerator"/>.
         /// </summary>
-        /// <returns>See generic implementation of <see cref="GetEnumerator"/>.
+        /// <returns>
+        /// The <see cref="IEnumerator"/>.
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -187,7 +197,7 @@ namespace ChocolateyGui.Controls
         /// working with a large buffer capacity. The removing of an item 
         /// requires a scan of the buffer to get the position of the specified
         /// item. If the item was found, the deletion requires a move of all 
-        /// items stored abouve the found position.
+        /// items stored above the found position.
         /// </remarks>
         public bool Remove(T item)
         {
@@ -250,12 +260,12 @@ namespace ChocolateyGui.Controls
         /// Removes an item at a specified position within the buffer.
         /// </summary>
         /// <param name="index">The position of the item to be removed.</param>
-        /// <exception cref="IndexOutOfRangeException"></exception>
+        /// <exception cref="IndexOutOfRangeException">Thrown when incorrect argument passed in.</exception>
         /// <remarks>
         /// <b>Warning</b>
         /// Frequent usage of this method might become a bad idea if you are 
         /// working with a large buffer capacity. The deletion requires a move 
-        /// of all items stored abouve the found position.
+        /// of all items stored above the found position.
         /// </remarks>
         private void RemoveAt(int index)
         {
@@ -266,7 +276,7 @@ namespace ChocolateyGui.Controls
             }
 
             // move all items above the specified position one step
-            // closer to zeri
+            // closer to zero
             for (int i = index; i < this.Count - 1; i++)
             {
                 // get the next relative target position of the item

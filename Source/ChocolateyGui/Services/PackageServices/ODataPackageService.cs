@@ -6,20 +6,20 @@
 
 namespace ChocolateyGui.Services.PackageServices
 {
-    using ChocolateyGui.ChocolateyFeedService;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Utilities.Extensions;
-    using ChocolateyGui.ViewModels.Items;
     using System;
     using System.Collections.Generic;
     using System.Data.Services.Client;
     using System.Linq;
     using System.Runtime.Caching;
     using System.Threading.Tasks;
+    using ChocolateyGui.ChocolateyFeedService;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Utilities.Extensions;
+    using ChocolateyGui.ViewModels.Items;
 
     public static class ODataPackageService
     {
-        private static readonly object _feedLockObject = new object();
+        private static readonly object FeedLockObject = new object();
 
         private static readonly MemoryCache Cache = MemoryCache.Default;
 
@@ -31,8 +31,11 @@ namespace ChocolateyGui.Services.PackageServices
                     (DataServiceQuery<V2FeedPackage>)service.Packages.Where(package => package.Id == vm.Id && package.Version == vm.Version.ToString());
             var result = await Task.Factory.FromAsync(feedQuery.BeginExecute, ar => feedQuery.EndExecute(ar), null);
             var v2FeedPackages = result as IList<V2FeedPackage> ?? result.ToList();
+
             if (result == null || !v2FeedPackages.Any())
+            {
                 return null;
+            }
 
             var packageInfo = v2FeedPackages.Single();
             return AutoMapper.Mapper.Map(packageInfo, vm);
@@ -81,7 +84,6 @@ namespace ChocolateyGui.Services.PackageServices
 
             if (!string.IsNullOrWhiteSpace(options.SortColumn))
             {
-
                 feedQuery = !options.SortDescending ? feedQuery.OrderBy(options.SortColumn) : feedQuery.OrderByDescending(options.SortColumn);
             }
 
@@ -116,7 +118,7 @@ namespace ChocolateyGui.Services.PackageServices
 
         private static FeedContext_x0060_1 GetFeed(Uri source)
         {
-            lock (_feedLockObject)
+            lock (FeedLockObject)
             {
                 FeedContext_x0060_1 service;
                 if ((service = (FeedContext_x0060_1)Cache.Get(GetMemoryCacheKey(source))) == null)
@@ -128,7 +130,9 @@ namespace ChocolateyGui.Services.PackageServices
                         MergeOption = MergeOption.NoTracking
                     };
 
-                    Cache.Set(GetMemoryCacheKey(source), service,
+                    Cache.Set(
+                        GetMemoryCacheKey(source),
+                        service,
                         new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMinutes(20) });
                 }
 

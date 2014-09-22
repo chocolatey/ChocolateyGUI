@@ -2,11 +2,14 @@
   <GlobalSettings>
     <CollectionProperty Name="RecognizedWords">
       <Value>Chocolatey</Value>
+      <Value>em</Value>
       <Value>Friedl's</Value>
       <Value>hr</Value>
       <Value>li</Value>
       <Value>ol</Value>
       <Value>runspace</Value>
+      <Value>sehe</Value>
+      <Value>stackoverflow</Value>
       <Value>tunnelling</Value>
       <Value>ul</Value>
       <Value>xaml</Value>
@@ -16,6 +19,11 @@
     <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
       <Rules>
         <Rule Name="ElementsMustBeDocumented">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="EnumerationItemsMustBeDocumented">
           <RuleSettings>
             <BooleanProperty Name="Enabled">False</BooleanProperty>
           </RuleSettings>
@@ -34,7 +42,11 @@
           </RuleSettings>
         </Rule>
       </Rules>
-      <AnalyzerSettings />
+      <AnalyzerSettings>
+        <CollectionProperty Name="Hungarian">
+          <Value>v2</Value>
+        </CollectionProperty>
+      </AnalyzerSettings>
     </Analyzer>
   </Analyzers>
 </StyleCopSettings>

@@ -13,6 +13,7 @@ namespace ChocolateyGui.Services
     using log4net;
     using log4net.Appender;
     using log4net.Repository.Hierarchy;
+    using Mindscape.Raygun4Net;
 
     public class Log4NetLoggingService : ILogService
     {
@@ -66,7 +67,7 @@ namespace ChocolateyGui.Services
         {
             this._log.Error(message, exception);
 #if !DEBUG
-            _client.Send(exception);
+            this._client.Send(exception);
 #endif
             this.FlushBuffer();
         }
@@ -105,7 +106,7 @@ namespace ChocolateyGui.Services
         {
             this._log.Fatal(message, exception);
 #if !DEBUG
-            _client.Send(exception);
+            this._client.Send(exception);
 #endif
             this.FlushBuffer();
         }
@@ -155,7 +156,7 @@ namespace ChocolateyGui.Services
         {
             this._log.Info(message, exception);
 #if !DEBUG
-            _client.Send(exception);
+            this._client.Send(exception);
 #endif
         }
 
@@ -188,7 +189,7 @@ namespace ChocolateyGui.Services
         {
             this._log.Warn(message, exception);
 #if !DEBUG
-            _client.Send(exception);
+            this._client.Send(exception);
 #endif
         }
 

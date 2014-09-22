@@ -5,7 +5,7 @@
 
 $psake.use_exit_on_error = $true
 properties {
-	$config = 'Debug';
+	$config = 'Release';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
 	$gitVersionExe = "..\Tools\GitVersion\GitVersion.exe";
 	$projectName = "ChocolateyGUI";

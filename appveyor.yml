@@ -28,10 +28,10 @@ environment:
 build_script:
   - cmd: build.bat PackageSolution
   
-after_build:
-  - ps: Write-Host "Uploading StyleCop results for build."
-  - ps: $wc = New-Object 'System.Net.WebClient'
-  - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/stylecop/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\BuildArtifacts\StyleCopReport.xml))
+#after_build:
+#  - ps: Write-Host "Uploading StyleCop results for build."
+#  - ps: $wc = New-Object 'System.Net.WebClient'
+#  - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/stylecop/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\BuildArtifacts\StyleCopReport.xml))
 
 test: off
 
@@ -45,6 +45,9 @@ artifacts:
 
   - path: BuildArtifacts\ChocolateyGUI.*.nupkg
     name: ChocolateyGUI Chocolatey Package	
+
+  - path: BuildArtifacts\StyleCopReport.xml
+    name: StyleCop Report
 
 #---------------------------------#
 #      caching configuration      #

@@ -26,7 +26,7 @@ environment:
 #---------------------------------#
 
 build_script:
-  - cmd: build.bat PackageSolution
+  - cmd: build.bat
   
 test: off
 
@@ -43,6 +43,12 @@ artifacts:
 
   - path: BuildArtifacts\StyleCopReport.xml
     name: StyleCop Report
+
+  - path: BuildArtifacts\inspectcode.xml
+    name: Inspect Code Report
+
+  - path: BuildArtifacts\dupfinder.xml
+    name: DupFinder Report
 
 #---------------------------------#
 #      caching configuration      #

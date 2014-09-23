@@ -26,9 +26,9 @@ namespace ChocolateyGui.Views.Windows
     public partial class MainWindow
     {
         private readonly IProgressService _progressService;
-        private readonly ILogService _logService;
+        ////private readonly ILogService _logService;
 
-        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService)
+        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService/*, ILogService logService*/)
         {
             InitializeComponent();
             DataContext = vm;
@@ -39,7 +39,8 @@ namespace ChocolateyGui.Views.Windows
             }
 
             this._progressService = progressService;
-
+            ////this._logService = logService;
+            
             // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
             AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
@@ -62,12 +63,12 @@ namespace ChocolateyGui.Views.Windows
                     OutputBuffer = _progressService.Output
                 };
 
-                    if (settings == null)
-                    {
-                        settings = MetroDialogOptions;
-                    }
+                if (settings == null)
+                {
+                    settings = MetroDialogOptions;
+                }
 
-                    dialog.NegativeButtonText = settings.NegativeButtonText;
+                dialog.NegativeButtonText = settings.NegativeButtonText;
 
                 await this.ShowMetroDialogAsync(dialog);
                 return new ChocolateyDialogController(dialog, () => this.HideMetroDialogAsync(dialog));
@@ -100,7 +101,7 @@ namespace ChocolateyGui.Views.Windows
                     }
                     else
                     {
-                        _logService.Warn("Unable to find chocolatey install directory!");
+                        ////this._logService.Warn("Unable to find chocolatey install directory!");
                     }
                 }
             }).ConfigureAwait(false);

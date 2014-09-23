@@ -192,7 +192,7 @@ namespace ChocolateyGui.ViewModels.Controls
 
                     if (packageViewModel.LatestVersion == null)
                     {
-                        packageViewModel.RetriveLatestVersion();
+                        packageViewModel.RetriveLatestVersion().ConfigureAwait(false);
                     }
                 }
             }

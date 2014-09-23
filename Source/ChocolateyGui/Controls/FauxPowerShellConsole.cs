@@ -59,8 +59,6 @@ namespace ChocolateyGui.Controls
             Document.Blocks.Add(this._backingParagraph);
         }
 
-        private delegate void RunOnUI();
-
         private delegate void RunStringOnUI(PowerShellOutputLine line);
 
         public ObservableRingBuffer<PowerShellOutputLine> Buffer
@@ -79,7 +77,7 @@ namespace ChocolateyGui.Controls
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Reset:
-                    Application.Current.Dispatcher.BeginInvoke(new RunOnUI(() => this._backingParagraph.Inlines.Clear()));
+                    Application.Current.Dispatcher.InvokeAsync(() => _backingParagraph.Inlines.Clear());
                     break;
                 case NotifyCollectionChangedAction.Add:
                     foreach (PowerShellOutputLine item in args.NewItems)

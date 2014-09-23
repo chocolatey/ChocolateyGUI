@@ -15,8 +15,7 @@ IF "%APPVEYOR%"=="" (
 	
 	powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 %*"
 	GOTO :eof
-) 
-ELSE (
+) ELSE (
 	ECHO APPVEYOR: %APPVEYOR%
 	IF "%CI%"=="" (ECHO CI: Not Defined) ELSE (ECHO CI: %CI%)
 	IF "%APPVEYOR_API_URL%"=="" (ECHO APPVEYOR_API_URL: Not Defined) ELSE (ECHO APPVEYOR_API_URL: %APPVEYOR_API_URL%)

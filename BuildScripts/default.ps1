@@ -5,7 +5,7 @@
 
 $psake.use_exit_on_error = $true
 properties {
-	$config = 'Release';
+	$config = 'Debug';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
 	$gitVersionExe = "..\Tools\GitVersion\GitVersion.exe";
 	$projectName = "ChocolateyGUI";
@@ -26,22 +26,22 @@ function get-rootDirectory {
 }
 
 function create-PackageDirectory( [Parameter(ValueFromPipeline=$true)]$packageDirectory ) {
-    process {
-        Write-Verbose "checking for package path $packageDirectory...";
-        if( !(Test-Path $packageDirectory ) ) {
-    		Write-Verbose "creating package directory at $packageDirectory...";
-    		mkdir $packageDirectory | Out-Null;
-    	}
-    }    
+	process {
+		Write-Verbose "checking for package path $packageDirectory...";
+		if( !(Test-Path $packageDirectory ) ) {
+			Write-Verbose "creating package directory at $packageDirectory...";
+			mkdir $packageDirectory | Out-Null;
+		}
+	}    
 }
 
 function remove-PackageDirectory( [Parameter(ValueFromPipeline=$true)]$packageDirectory ) {
 	process {
 		Write-Verbose "Checking directory at $packageDirectory...";
-        if(Test-Path $packageDirectory) {
-    		Write-Verbose "Removing directory at $packageDirectory...";
-    		Remove-Item $packageDirectory -recurse -force;
-    	}
+		if(Test-Path $packageDirectory) {
+			Write-Verbose "Removing directory at $packageDirectory...";
+			Remove-Item $packageDirectory -recurse -force;
+		}
 	}
 }
 
@@ -63,6 +63,11 @@ Task -Name __CreateBuildArtifactsDirectory -Description $private -Action {
 
 Task -Name __RemoveBuildArtifactsDirectory -Description $private -Action {
 	get-buildArtifactsDirectory | remove-packageDirectory;
+}
+
+Task -Name __InstallPSBuild -Description $private -Action {
+	# Need a test here to see if this is actually required
+	(new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
 }
 
 # primary targets
@@ -119,7 +124,7 @@ Task -Name OutputNugetVersion -Description "So that we are clear which version o
 	}
 }
 
-Task -Name NugetPackageRestore -Depends OutputNugetVersion -Description "Restores all the required nuget packages for this solution, before running the build" -Action {
+Task -Name NugetPackageRestore -Depends OutputNugetVersion -Description "Restores all the required NuGet packages for this solution, before running the build" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	
 	try {
@@ -137,14 +142,14 @@ Task -Name NugetPackageRestore -Depends OutputNugetVersion -Description "Restore
 	}
 }
 
-Task -Name BuildSolution -Depends __VerifyConfiguration, RunGitVersion, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
+Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfiguration, __InstallPSBuild, RunGitVersion, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	
 	try {
 		Write-Output "Running BuildSolution..."
 
 		exec { 
-			msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Build /p:Configuration=$config
+			Invoke-MSBuild "$sourceDirectory\ChocolateyGui.sln" -NoLogo -Configuration $config -Targets Build -DetailedSummary -VisualStudioVersion 12.0 -Properties (@{'Platform'='Mixed Platforms'})
 		}
 
 		Write-Host ("************ BuildSolution Successful ************")
@@ -159,14 +164,14 @@ Task -Name RebuildSolution -Depends CleanSolution, __CreateBuildArtifactsDirecto
 
 # clean tasks
 
-Task -Name CleanSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfiguration -Description "Deletes all build artifacts" -Action {
+Task -Name CleanSolution -Depends __InstallPSBuild, __RemoveBuildArtifactsDirectory, __VerifyConfiguration -Description "Deletes all build artifacts" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	
 	try {
 		Write-Output "Running CleanSolution..."
 
 		exec {
-			msbuild "$sourceDirectory\ChocolateyGui.sln" /t:Clean /p:Configuration=$config
+			Invoke-MSBuild "$sourceDirectory\ChocolateyGui.sln" -NoLogo -Configuration $config -Targets Clean -DetailedSummary -VisualStudioVersion 12.0 -Properties (@{'Platform'='Mixed Platforms'})
 		}
 
 		Write-Host ("************ CleanSolution Successful ************")
@@ -182,7 +187,7 @@ Task -Name CleanSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfi
 Task -Name PackageChocolatey -Description "Packs the module and example package" -Action { 
 	$sourceDirectory = get-sourceDirectory;
 	$buildArtifactsDirectory = get-buildArtifactsDirectory;
-    
+	
 	try {
 		Write-Output "Running PackageChocolatey..."
 

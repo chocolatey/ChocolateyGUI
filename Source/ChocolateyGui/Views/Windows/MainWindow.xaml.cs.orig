@@ -28,11 +28,8 @@ namespace ChocolateyGui.Views.Windows
         private readonly IProgressService _progressService;
         private readonly ILogService _logService;
 
-        public MainWindow(
-            IMainWindowViewModel vm,
-            INavigationService navigationService,
-            IProgressService progressService,
-            ILogService logService)
+        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, 
+            IProgressService progressService, ILogService logService)
         {
             InitializeComponent();
             DataContext = vm;
@@ -57,7 +54,8 @@ namespace ChocolateyGui.Views.Windows
 
         public Task<ChocolateyDialogController> ShowChocolateyDialogAsync(string title, bool isCancelable = false, MetroDialogSettings settings = null)
         {
-            return (Task<ChocolateyDialogController>)Dispatcher.Invoke(new Func<Task<ChocolateyDialogController>>(async () =>
+<<<<<<< HEAD
+            return ((Task<ChocolateyDialogController>)Dispatcher.Invoke(new Func<Task<ChocolateyDialogController>>(async () =>
             {
                 // create the dialog control
                 var dialog = new ChocolateyDialog(this)
@@ -66,6 +64,15 @@ namespace ChocolateyGui.Views.Windows
                     IsCancelable = isCancelable,
                     OutputBuffer = _progressService.Output
                 };
+=======
+            return (Task<ChocolateyDialogController>)Dispatcher.Invoke(new Func<Task<ChocolateyDialogController>>(async () =>
+                {
+                    // create the dialog control
+                    var dialog = new ChocolateyDialog(this);
+                    dialog.Title = title;
+                    dialog.IsCancelable = isCancelable;
+                    dialog.OutputBuffer = _progressService.Output;
+>>>>>>> (#157) No more StyleCop Errors :-)
 
                     if (settings == null)
                     {
@@ -74,9 +81,15 @@ namespace ChocolateyGui.Views.Windows
 
                     dialog.NegativeButtonText = settings.NegativeButtonText;
 
+<<<<<<< HEAD
                 await this.ShowMetroDialogAsync(dialog);
                 return new ChocolateyDialogController(dialog, () => this.HideMetroDialogAsync(dialog));
-            }));
+            })));
+=======
+                    await this.ShowMetroDialogAsync(dialog);
+                    return new ChocolateyDialogController(dialog, () => { return this.HideMetroDialogAsync(dialog); });
+                }));
+>>>>>>> (#157) No more StyleCop Errors :-)
         }
 
         private void InitializeChocoDirectory()

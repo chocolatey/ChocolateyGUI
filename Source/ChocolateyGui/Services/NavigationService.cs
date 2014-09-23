@@ -1,97 +1,109 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls;
-using Autofac;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="NavigationService.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Controls;
+    using Autofac;
+
     public class NavigationService : INavigationService
     {
-        private readonly IProgressService _progressService;
+        private readonly Stack<object> _backStack = new Stack<object>();
+        private readonly Stack<object> _forwardStack = new Stack<object>();
         private readonly IComponentContext _pageFactory;
-        public NavigationService(IProgressService progressService, IComponentContext pageFactory)
+        private ContentControl _frame;
+
+        public NavigationService(IComponentContext pageFactory)
         {
-            _progressService = progressService;
-            _pageFactory = pageFactory;
+            this._pageFactory = pageFactory;
         }
 
-        private ContentControl _frame;
-        public void SetNavigationItem(ContentControl frame)
+        public bool CanGoBack
         {
-            if(frame == null)
-                throw new ArgumentNullException("frame", @"Frame can't be null");
-            _frame = frame;
+            get { return this._backStack.Count > 0; }
+        }
+
+        public bool CanGoForward
+        {
+            get { return this._forwardStack.Count > 0; }
+        }
+
+        public void ClearNavigationStack()
+        {
+            this._backStack.Clear();
+            this._forwardStack.Clear();
+        }
+
+        public void GoBack()
+        {
+            this._forwardStack.Push(this._frame.Content);
+            this._frame.Content = this._backStack.Pop();
+        }
+
+        public void GoForward()
+        {
+            this._backStack.Push(this._frame.Content);
+            this._frame.Content = this._forwardStack.Pop();
+        }
+
+        public void GoHome()
+        {
+            while (this.CanGoBack)
+            {
+                this.GoBack();
+            }
         }
 
         public void Navigate(Type pageType)
         {
-            var page = _pageFactory.Resolve(pageType);
-            Navigate(page);
+            var page = this._pageFactory.Resolve(pageType);
+            this.Navigate(page);
         }
 
         public void Navigate(Type pageType, params object[] args)
         {
             var parameters = args.Select(param => new TypedParameter(param.GetType(), param)).ToList();
-            var page = _pageFactory.Resolve(pageType, parameters);
-            Navigate(page);
+            var page = this._pageFactory.Resolve(pageType, parameters);
+            this.Navigate(page);
         }
 
         public void Navigate(object page)
         {
-            if(_frame.Content != null)
-                _backStack.Push(_frame.Content);
-            _frame.Content = page;
-            _forwardStack.Clear();
-        }
+            if (this._frame.Content != null)
+            {
+                this._backStack.Push(this._frame.Content);
+            }
 
-        public void GoHome()
-        {
-            while(CanGoBack)
-               GoBack();
-        }
-
-        public void GoBack()
-        {
-            _forwardStack.Push(_frame.Content);
-            _frame.Content = _backStack.Pop();
-        }
-
-        public void GoForward()
-        {
-            _backStack.Push(_frame.Content);
-                _frame.Content = _forwardStack.Pop();
-        }
-
-        public void ClearNavigationStack()
-        {
-            _backStack.Clear();
-            _forwardStack.Clear();
+            this._frame.Content = page;
+            this._forwardStack.Clear();
         }
 
         public void SetHome(Type pageType)
         {
-            ClearNavigationStack();
-            Navigate(pageType);
+            this.ClearNavigationStack();
+            this.Navigate(pageType);
         }
 
         public void SetHome(object page)
         {
-            ClearNavigationStack();
-            Navigate(page);
+            this.ClearNavigationStack();
+            this.Navigate(page);
         }
 
-        public bool CanGoBack
+        public void SetNavigationItem(ContentControl frame)
         {
-            get { return _backStack.Count > 0; }
-        }
+            if (frame == null)
+            {
+                throw new ArgumentNullException("frame", @"Frame can't be null");
+            }
 
-        public bool CanGoForward
-        {
-            get { return _forwardStack.Count > 0; }
+            this._frame = frame;
         }
-
-        private readonly Stack<object> _backStack = new Stack<object>();
-        private readonly Stack<object> _forwardStack = new Stack<object>();
     }
 }

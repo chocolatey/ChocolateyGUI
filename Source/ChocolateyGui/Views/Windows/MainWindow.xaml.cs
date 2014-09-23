@@ -1,39 +1,46 @@
-﻿using ChocolateyGui.ChocolateyFeedService;
-using ChocolateyGui.Controls.Dialogs;
-using ChocolateyGui.Models;
-using ChocolateyGui.Properties;
-using ChocolateyGui.Services;
-using ChocolateyGui.ViewModels.Items;
-using ChocolateyGui.ViewModels.Windows;
-using ChocolateyGui.Views.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="MainWindow.xaml.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Views.Windows
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using ChocolateyGui.ChocolateyFeedService;
+    using ChocolateyGui.Controls.Dialogs;
+    using ChocolateyGui.Models;
+    using ChocolateyGui.Properties;
+    using ChocolateyGui.Services;
+    using ChocolateyGui.ViewModels.Items;
+    using ChocolateyGui.ViewModels.Windows;
+    using ChocolateyGui.Views.Controls;
+    using MahApps.Metro.Controls.Dialogs;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
         private readonly IProgressService _progressService;
-        private readonly ILogService _logService;
+        ////private readonly ILogService _logService;
 
-        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, 
-            IProgressService progressService, ILogService logService)
+        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService/*, ILogService logService*/)
         {
             InitializeComponent();
             DataContext = vm;
 
             if (progressService is ProgressService)
+            {
                 (progressService as ProgressService).MainWindow = this;
+            }
 
-            _progressService = progressService;
-            _logService = logService;
-
+            this._progressService = progressService;
+            ////this._logService = logService;
+            
             // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
             AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
@@ -41,14 +48,14 @@ namespace ChocolateyGui.Views.Windows
             navigationService.SetNavigationItem(GlobalFrame);
             navigationService.Navigate(typeof(SourcesControl));
 
-            InitializeChocoDirectory();
+            this.InitializeChocoDirectory();
         }
 
         public Task<ChocolateyDialogController> ShowChocolateyDialogAsync(string title, bool isCancelable = false, MetroDialogSettings settings = null)
         {
-            return ((Task<ChocolateyDialogController>)Dispatcher.Invoke(new Func<Task<ChocolateyDialogController>>(async () =>
+            return (Task<ChocolateyDialogController>)Dispatcher.Invoke(new Func<Task<ChocolateyDialogController>>(async () =>
             {
-                //create the dialog control
+                // create the dialog control
                 var dialog = new ChocolateyDialog(this)
                 {
                     Title = title,
@@ -57,13 +64,15 @@ namespace ChocolateyGui.Views.Windows
                 };
 
                 if (settings == null)
+                {
                     settings = MetroDialogOptions;
+                }
 
                 dialog.NegativeButtonText = settings.NegativeButtonText;
 
                 await this.ShowMetroDialogAsync(dialog);
                 return new ChocolateyDialogController(dialog, () => this.HideMetroDialogAsync(dialog));
-            })));
+            }));
         }
 
         private void InitializeChocoDirectory()
@@ -92,7 +101,7 @@ namespace ChocolateyGui.Views.Windows
                     }
                     else
                     {
-                        _logService.Warn("Unable to find chocolatey install directory!");
+                        ////this._logService.Warn("Unable to find chocolatey install directory!");
                     }
                 }
             }).ConfigureAwait(false);
@@ -108,7 +117,7 @@ namespace ChocolateyGui.Views.Windows
         {
             SettingsFlyout.IsOpen = false;
             SourcesFlyout.IsOpen = true;
-            SourcesFlyout.IsOpenChanged += SourcesFlyout_IsOpenChanged;
+            SourcesFlyout.IsOpenChanged += this.SourcesFlyout_IsOpenChanged;
         }
 
         private void SourcesFlyout_IsOpenChanged(object sender, EventArgs e)
@@ -116,7 +125,7 @@ namespace ChocolateyGui.Views.Windows
             if (SourcesFlyout.IsOpen == false)
             {
                 SettingsFlyout.IsOpen = true;
-                SourcesFlyout.IsOpenChanged -= SourcesFlyout_IsOpenChanged;
+                SourcesFlyout.IsOpenChanged -= this.SourcesFlyout_IsOpenChanged;
             }
         }
     }

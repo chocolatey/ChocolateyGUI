@@ -5,7 +5,7 @@
 
 $psake.use_exit_on_error = $true
 properties {
-	$config = 'Debug';
+	$config = 'Release';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
 	$gitVersionExe = "..\Tools\GitVersion\GitVersion.exe";
 	$projectName = "ChocolateyGUI";
@@ -103,7 +103,23 @@ Task -Name RunGitVersion -Description "Execute the GitVersion Command Line Tool,
 	}	
 }
 
-Task -Name NugetPackageRestore -Description "Restores all the required nuget packages for this solution, before running the build" -Action {
+Task -Name OutputNugetVersion -Description "So that we are clear which version of NuGet is being used, call NuGet" -Action {
+	try {
+		Write-Output "Running NuGet..."
+
+		exec {
+			& $nugetExe;
+		}
+
+		Write-Host ("************ NuGet Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ NuGet Failed ************")
+	}
+}
+
+Task -Name NugetPackageRestore -Depends OutputNugetVersion -Description "Restores all the required nuget packages for this solution, before running the build" -Action {
 	$sourceDirectory = get-sourceDirectory;
 	
 	try {

@@ -1,11 +1,17 @@
-﻿using System;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Input;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="DataContextCommandAdapter.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Commands
 {
+    using System;
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Input;
+    using System.Windows.Markup;
+
     /// <summary>
     ///     A markup extension that returns an <see cref="ICommand"/> that is capable of executing
     ///     methods of the DataContext of a target FrameworkElement.
@@ -19,37 +25,14 @@ namespace ChocolateyGui.Commands
     /// </remarks>
     public sealed class DataContextCommandAdapter : MarkupExtension, ICommand
     {
-        private object _target; 
-
-        /// <summary>
-        ///     Name of the method of the target object's DataContext that determines whether the
-        ///     command can execute in its current state.
-        /// </summary>
-        /// <remarks>
-        ///     The corresponding method must have one of two signatures below, with the first
-        ///     taking precedence over the other:
-        ///     <code>void MyCanExecuteMethod(object parameter);</code>
-        ///     <code>void MyCanExecuteMethod();</code>
-        /// </remarks>
-        public string CanExecute { get; set; }
-
-
-        /// <summary>
-        ///     Name of the method of the target object's DataContext to be called when the command
-        ///     is invoked.
-        /// </summary>
-        /// <remarks>
-        ///     The corresponding method must have one of two signatures below, with the first
-        ///     taking precedence over the other:
-        ///     <code>void MyExecutedMethod(object parameter);</code>
-        ///     <code>void MyExecutedMethod();</code>
-        /// </remarks>
-        public string Executed { get; set; }
+        private object _target;
 
         /// <summary>
         ///     Initializes a new instance of the DataContextCommandAdapter class.
         /// </summary>
-        public DataContextCommandAdapter() { }
+        public DataContextCommandAdapter()
+        {
+        }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="DataContextCommandAdapter"/> class by
@@ -60,7 +43,7 @@ namespace ChocolateyGui.Commands
         /// </param>
         public DataContextCommandAdapter(string executed)
         {
-            Executed = executed;
+            this.Executed = executed;
         }
 
         /// <summary>
@@ -76,8 +59,62 @@ namespace ChocolateyGui.Commands
         /// </param>
         public DataContextCommandAdapter(string executed, string canExecute)
         {
-            Executed = executed;
-            CanExecute = canExecute;
+            this.Executed = executed;
+            this.CanExecute = canExecute;
+        }
+
+        event EventHandler ICommand.CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        /// <summary>
+        ///     Gets or sets the name of the method of the target object's DataContext that determines whether the
+        ///     command can execute in its current state.
+        /// </summary>
+        /// <remarks>
+        ///     The corresponding method must have one of two signatures below, with the first
+        ///     taking precedence over the other:
+        ///     <code>void MyCanExecuteMethod(object parameter);</code>
+        ///     <code>void MyCanExecuteMethod();</code>
+        /// </remarks>
+        public string CanExecute { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the Name of the method of the target object's DataContext to be called when the command
+        ///     is invoked.
+        /// </summary>
+        /// <remarks>
+        ///     The corresponding method must have one of two signatures below, with the first
+        ///     taking precedence over the other:
+        ///     <code>void MyExecutedMethod(object parameter);</code>
+        ///     <code>void MyExecutedMethod();</code>
+        /// </remarks>
+        public string Executed { get; set; }
+
+        bool ICommand.CanExecute(object parameter)
+        {
+            var target = GetDataContext(this._target);
+            if (this._target == null)
+            {
+                return false;
+            }
+
+            bool canExecute;
+            return CommandExecutionManager.TryExecuteCommand(target, parameter, false, this.Executed, this.CanExecute, out canExecute) && canExecute;
+        }
+
+        void ICommand.Execute(object parameter)
+        {
+            var target = GetDataContext(this._target);
+            if (this._target == null)
+            {
+                return;
+            }
+
+            bool canExecute;
+            CommandExecutionManager.TryExecuteCommand(target, parameter, true, this.Executed, this.CanExecute, out canExecute);
         }
 
         /// <summary>
@@ -94,9 +131,10 @@ namespace ChocolateyGui.Commands
         {
             var target = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
             if (target == null)
+            {
                 throw new Exception("IProvideValueTarget could not be resolved.");
+            }
 
-            
             this._target = 
                 target.TargetObject is InputBinding
                 ? GetInputBindingsCollectionOwner(target)
@@ -105,7 +143,18 @@ namespace ChocolateyGui.Commands
             return this;
         }
 
-        //
+        private static object GetDataContext(object element)
+        {
+            var fe = element as FrameworkElement;
+            if (fe != null)
+            {
+                return fe.DataContext;
+            }
+
+            var fce = element as FrameworkContentElement;
+            return fce == null ? null : fce.DataContext;
+        }
+
         // This method only works with the C# 4.0 XamlParser.
         // If there was another way to do this without reflection... I would do it that way
         // Regardless, this method will only be called once when the xaml is initially parsed, so its
@@ -135,48 +184,5 @@ namespace ChocolateyGui.Commands
             var owner = ownerField.GetValue(inputBindingsCollection);
             return owner;
         }
-
-        #region ICommand Implementation
-
-        event EventHandler ICommand.CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        bool ICommand.CanExecute(object parameter)
-        {
-            var target = GetDataContext(this._target);
-            if (this._target == null)
-            {
-                return false;
-            }
-
-            bool canExecute;
-            return CommandExecutionManager.TryExecuteCommand(target, parameter, false, Executed, CanExecute, out canExecute) && canExecute;
-        }
-
-        void ICommand.Execute(object parameter)
-        {
-            var target = GetDataContext(this._target);
-            if (this._target == null)
-            {
-                return;
-            }
-            bool canExecute;
-            CommandExecutionManager.TryExecuteCommand(target, parameter, true, Executed, CanExecute, out canExecute);
-        }
-
-        private static object GetDataContext(object element)
-        {
-            var fe = element as FrameworkElement;
-            if (fe != null)
-                return fe.DataContext;
-
-            var fce = element as FrameworkContentElement;
-            return fce == null ? null : fce.DataContext;
-        }
-
-        #endregion
     }
 }

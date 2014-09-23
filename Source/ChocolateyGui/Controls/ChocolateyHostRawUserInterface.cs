@@ -1,199 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Management.Automation;
-using System.Management.Automation.Host;
-using System.Reflection;
-using ChocolateyGui.Models;
-using ChocolateyGui.Services;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ChocolateyHostRawUserInterface.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ChocolateyGui.Controls
 {
-    internal class ChocolateyHost : PSHost
-    {
-        private readonly CultureInfo _originalCultureInfo =
-            System.Threading.Thread.CurrentThread.CurrentCulture;
+    using System;
+    using System.Management.Automation.Host;
 
-        public ChocolateyHost(IProgressService progressService)
-        {
-            _chocolateyHostUserInterface = new ChocolateyHostUserInterface(progressService);
-        }
-
-        public override CultureInfo CurrentCulture
-        {
-            get { return _originalCultureInfo; }
-        }
-
-        private readonly CultureInfo _originalUiCultureInfo =
-            System.Threading.Thread.CurrentThread.CurrentUICulture;
-
-        public override CultureInfo CurrentUICulture
-        {
-            get { return _originalUiCultureInfo; }
-        }
-
-        private readonly Guid _hostInstanceId = Guid.NewGuid();
-
-        public override Guid InstanceId
-        {
-            get { return _hostInstanceId; }
-        }
-
-        public override string Name
-        {
-            get { return @"ChocolateyGUI PowerShell Host"; }
-        }
-
-        public override void SetShouldExit(int exitCode)
-        {
-            throw new NotImplementedException();
-        }
-
-        private readonly ChocolateyHostUserInterface _chocolateyHostUserInterface;
-        public override PSHostUserInterface UI
-        {
-            get { return _chocolateyHostUserInterface; }
-        }
-
-        public override Version Version
-        {
-            get { return Assembly.GetExecutingAssembly().GetName().Version; }
-        }
-
-        public override void NotifyBeginApplication()
-        {
-        }
-
-
-        public override void NotifyEndApplication()
-        {
-        }
-
-        public override void EnterNestedPrompt()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ExitNestedPrompt()
-        {
-            throw new NotImplementedException();
-        }
-    }
-    internal class ChocolateyHostUserInterface : PSHostUserInterface
-    {
-        private readonly IProgressService _progressService;
-        public ChocolateyHostUserInterface(IProgressService progressService)
-        {
-            _progressService = progressService;
-        }
-
-        private readonly ChocolateyHostRawUserInterface _chocoRawUI = new ChocolateyHostRawUserInterface();
-
-        public override PSHostRawUserInterface RawUI
-        {
-            get { return _chocoRawUI; }
-        }
-
-        public override Dictionary<string, PSObject> Prompt(
-                                                            string caption,
-                                                            string message,
-                                                            System.Collections.ObjectModel.Collection<FieldDescription> descriptions)
-        {
-            throw new NotImplementedException(
-                "Propmt is not implemented.");
-        }
-
-        public override int PromptForChoice(string caption, string message, System.Collections.ObjectModel.Collection<ChoiceDescription> choices, int defaultChoice)
-        {
-            throw new NotImplementedException("PromptForChoice is not implemented.");
-        }
-
-        public override PSCredential PromptForCredential(
-                                                         string caption,
-                                                         string message,
-                                                         string userName,
-                                                         string targetName)
-        {
-            throw new NotImplementedException("PromptForCredential is not implemented.");
-        }
-
-        public override PSCredential PromptForCredential(
-                                                         string caption,
-                                                         string message,
-                                                         string userName,
-                                                         string targetName,
-                                                         PSCredentialTypes allowedCredentialTypes,
-                                                         PSCredentialUIOptions options)
-        {
-            Console.WriteLine("ReadLine");
-            throw new NotImplementedException("PromptForCredential is not implemented.");
-        }
-
-        public override string ReadLine()
-        {
-            throw new NotImplementedException("ReadLine is not implemented.");
-        }
-
-        public override System.Security.SecureString ReadLineAsSecureString()
-        {
-            throw new NotImplementedException("ReadLineAsSecureString is not implemented.");
-        }
-
-        public override void Write(string value)
-        {
-            _progressService.Output.Add(new PowerShellOutputLine(value, PowerShellLineType.Output, newLine: false));
-        }
-
-        public override void Write(
-                                   ConsoleColor foregroundColor,
-                                   ConsoleColor backgroundColor,
-                                   string value)
-        {
-            // Colors are ignored.
-            _progressService.Output.Add(new PowerShellOutputLine(value, PowerShellLineType.Output, newLine: false));
-        }
-
-        public override void WriteDebugLine(string message)
-        {
-            _progressService.Output.Add(new PowerShellOutputLine(message, PowerShellLineType.Debug));
-        }
-
-        public override void WriteErrorLine(string value)
-        {
-            _progressService.Output.Add(new PowerShellOutputLine(value, PowerShellLineType.Error));
-        }
-
-        public override void WriteLine()
-        {
-            _progressService.Output.Add(new PowerShellOutputLine("", PowerShellLineType.Output));
-        }
-
-        public override void WriteLine(string value)
-        {
-            _progressService.Output.Add(new PowerShellOutputLine(value, PowerShellLineType.Output));
-        }
-
-        public override void WriteLine(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
-        {
-            // Write to the output stream, ignore the colors
-            _progressService.Output.Add(new PowerShellOutputLine(value, PowerShellLineType.Output));
-        }
-
-        public override void WriteProgress(long sourceId, ProgressRecord record)
-        {
-            _progressService.Report(record.PercentComplete);
-        }
-
-        public override void WriteVerboseLine(string message)
-        {
-            _progressService.Output.Add(new PowerShellOutputLine(message, PowerShellLineType.Warning));
-        }
-
-        public override void WriteWarningLine(string message)
-        {
-            _progressService.Output.Add(new PowerShellOutputLine(message, PowerShellLineType.Warning));
-        }
-    }
     internal class ChocolateyHostRawUserInterface : PSHostRawUserInterface
     {
         /// <summary>
@@ -213,7 +28,7 @@ namespace ChocolateyGui.Controls
         public override Size BufferSize
         {
             get { return new Size(0, 0); }
-            set {  }
+            set { }
         }
 
         /// <summary>
@@ -228,6 +43,7 @@ namespace ChocolateyGui.Controls
                 throw new NotImplementedException(
                      "CursorPosition is not implemented.");
             }
+
             set
             {
                 throw new NotImplementedException(
@@ -248,7 +64,7 @@ namespace ChocolateyGui.Controls
 
         /// <summary>
         /// Gets or sets the foreground color of the displayed text.
-        /// This maps to the corresponding Console.ForgroundColor property.
+        /// This maps to the corresponding Console.ForegroundColor property.
         /// </summary>
         public override ConsoleColor ForegroundColor
         {
@@ -278,7 +94,7 @@ namespace ChocolateyGui.Controls
         }
 
         /// <summary>
-        /// Gets the dimentions of the largest window size that can be 
+        /// Gets the dimensions of the largest window size that can be 
         /// displayed. This example uses the Console.LargestWindowWidth and 
         /// console.LargestWindowHeight properties to determine the returned 
         /// value of this property.
@@ -380,8 +196,7 @@ namespace ChocolateyGui.Controls
         /// </summary>
         /// <param name="origin">The parameter is not used.</param>
         /// <param name="contents">The parameter is not used.</param>
-        public override void SetBufferContents(Coordinates origin,
-                                               BufferCell[,] contents)
+        public override void SetBufferContents(Coordinates origin, BufferCell[,] contents)
         {
             throw new NotImplementedException(
                       "SetBufferContents is not implemented.");

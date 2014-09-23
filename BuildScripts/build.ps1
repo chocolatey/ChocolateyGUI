@@ -5,7 +5,7 @@
 
 param (
     [string]$Action="default",
-	[string]$Config="release",
+	[string]$Config="Release",
     [switch]$Help
 )
 
@@ -22,7 +22,7 @@ if($Help){
   return
 }
 
-invoke-psake "$here/default.ps1" -task $Action -properties @{ 'config'=$Config; 'preversion'=$PackageVersion}
+invoke-psake "$here/default.ps1" -task $Action -properties @{ 'config'=$Config; }
   
 if ($psake.build_success -eq $false) { 
   exit 1 

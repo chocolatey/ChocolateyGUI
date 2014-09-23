@@ -41,9 +41,12 @@ artifacts:
   - path: BuildArtifacts\ChocolateyGUI.*.nupkg
     name: ChocolateyGUI Chocolatey Package	
 
+  - path: BuildArtifacts\StyleCopReport.xml
+    name: StyleCop Report
+
 #---------------------------------#
 #      caching configuration      #
 #---------------------------------#
 
-cache:
-  - Source\packages
+#cache:
+#  - Source\packages

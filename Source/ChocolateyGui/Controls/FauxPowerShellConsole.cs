@@ -49,8 +49,6 @@ namespace ChocolateyGui.Controls
         /// </summary>
         private readonly Func<string, string> _getNameHash;
 
-        private readonly Dispatcher _windowDispatcher;
-
         public FauxPowerShellConsole()
             : base(new FlowDocument())
         {

@@ -90,15 +90,6 @@
       <Component Id="Microsoft.Data.Services.Client.dll" Guid="5099E03B-295A-4091-897C-7E68B7E76D17">
         <File Id="Microsoft.Data.Services.Client.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Data.Services.Client.dll" KeyPath="yes"/>
       </Component>
-      <Component Id="Microsoft.Threading.Tasks.dll" Guid="86A8E14F-D894-4D4E-B6BE-1C4D29367CFA">
-        <File Id="Microsoft.Threading.Tasks.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Threading.Tasks.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Microsoft.Threading.Tasks.Extensions.Desktop.dll" Guid="49B299BD-2EB9-4C52-BED3-2AC07B203B28">
-        <File Id="Microsoft.Threading.Tasks.Extensions.Desktop.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Threading.Tasks.Extensions.Desktop.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Microsoft.Threading.Tasks.Extensions.dll" Guid="12FE8573-4364-450D-9CDB-2E114E237CB6">
-        <File Id="Microsoft.Threading.Tasks.Extensions.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Threading.Tasks.Extensions.dll" KeyPath="yes"/>
-      </Component>
       <Component Id="Mindscape.Raygun4Net.dll" Guid="C17C5A82-CA98-4702-94EB-DA01839D891E">
         <File Id="Mindscape.Raygun4Net.dll" Source="$(var.ChocolateyGui.TargetDir)\Mindscape.Raygun4Net.dll" KeyPath="yes"/>
       </Component>
@@ -117,14 +108,8 @@
       <Component Id="System.Reactive.Windows.Threading.dll" Guid="50F1967D-B04C-4C18-A5EF-DFE6E43DB7B1">
         <File Id="System.Reactive.Windows.Threading.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Windows.Threading.dll" KeyPath="yes"/>
       </Component>
-      <Component Id="System.Runtime.dll" Guid="425A1993-A570-4973-8E5F-CA6B74C0DA47">
-        <File Id="System.Runtime.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Runtime.dll" KeyPath="yes"/>
-      </Component>
       <Component Id="System.Spatial.dll" Guid="0FEE0EEE-5D77-48F6-AB4C-BB616E00C76A">
         <File Id="System.Spatial.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Spatial.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="System.Threading.Tasks.dll" Guid="5064F23B-FBDF-45BC-926F-E1DFD10FFB10">
-        <File Id="System.Threading.Tasks.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Threading.Tasks.dll" KeyPath="yes"/>
       </Component>
       <Component Id="System.Windows.Interactivity.dll" Guid="C3AEADB7-B6E3-4952-9969-8C56F92E6470">
         <File Id="System.Windows.Interactivity.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Windows.Interactivity.dll" KeyPath="yes"/>

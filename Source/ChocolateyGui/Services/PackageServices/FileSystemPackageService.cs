@@ -21,7 +21,7 @@ namespace ChocolateyGui.Services.PackageServices
 
         public static Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source)
         {
-            return TaskEx.Run(() => vm);
+            return Task.Run(() => vm);
         }
 
         public static IPackageViewModel GetLatest(string id, IChocolateyService chocolateyService, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)

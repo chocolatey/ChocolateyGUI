@@ -22,7 +22,9 @@ namespace ChocolateyGui.Models
 
         private readonly bool _sortDescending;
 
+#pragma warning disable 649
         private readonly string[] _tagsQuery;
+#pragma warning restore 649
 
         public PackageSearchOptions(int pageSize, int currentPage)
             : this()

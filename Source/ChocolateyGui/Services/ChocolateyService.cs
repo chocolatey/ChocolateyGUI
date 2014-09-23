@@ -364,12 +364,12 @@ namespace ChocolateyGui.Services
 
             try
             {
-                await TaskEx.Run(() => pipeline.Invoke());
+                await Task.Run(() => pipeline.Invoke());
             }
             catch (Exception e)
             {
                 this._progressService.WriteMessage(e.ToString(), PowerShellLineType.Error);
-                this._progressService.StopLoading();
+                this._progressService.StopLoading().ConfigureAwait(false);
                 throw;
             }
 
@@ -413,12 +413,12 @@ namespace ChocolateyGui.Services
 
             try
             {
-                results = await TaskEx.Run(() => pipeline.Invoke());
+                results = await Task.Run(() => pipeline.Invoke());
             }
             catch (Exception e)
             {
                 this._progressService.WriteMessage(e.ToString(), PowerShellLineType.Error);
-                this._progressService.StopLoading();
+                this._progressService.StopLoading().ConfigureAwait(false);
                 throw;
             }
 

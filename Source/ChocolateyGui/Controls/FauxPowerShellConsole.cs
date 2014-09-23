@@ -77,7 +77,7 @@ namespace ChocolateyGui.Controls
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Reset:
-                    Application.Current.Dispatcher.InvokeAsync(() => _backingParagraph.Inlines.Clear());
+                    Application.Current.Dispatcher.InvokeAsync(() => this._backingParagraph.Inlines.Clear());
                     break;
                 case NotifyCollectionChangedAction.Add:
                     foreach (PowerShellOutputLine item in args.NewItems)

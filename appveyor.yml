@@ -26,7 +26,7 @@ environment:
 #---------------------------------#
 
 build_script:
-  - cmd: build.bat PackageSolution
+  - cmd: build.bat
   
 test: off
 

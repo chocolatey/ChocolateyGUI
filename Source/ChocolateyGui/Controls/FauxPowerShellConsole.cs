@@ -49,8 +49,6 @@ namespace ChocolateyGui.Controls
         /// </summary>
         private readonly Func<string, string> _getNameHash;
 
-        private readonly Dispatcher _windowDispatcher;
-
         public FauxPowerShellConsole()
             : base(new FlowDocument())
         {
@@ -60,8 +58,6 @@ namespace ChocolateyGui.Controls
             this._backingParagraph = new Paragraph();
             Document.Blocks.Add(this._backingParagraph);
         }
-
-        private delegate void RunOnUI();
 
         private delegate void RunStringOnUI(PowerShellOutputLine line);
 
@@ -81,7 +77,7 @@ namespace ChocolateyGui.Controls
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Reset:
-                    Application.Current.Dispatcher.BeginInvoke(new RunOnUI(() => this._backingParagraph.Inlines.Clear()));
+                    Application.Current.Dispatcher.InvokeAsync(() => this._backingParagraph.Inlines.Clear());
                     break;
                 case NotifyCollectionChangedAction.Add:
                     foreach (PowerShellOutputLine item in args.NewItems)

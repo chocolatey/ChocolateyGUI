@@ -119,7 +119,7 @@ namespace ChocolateyGui.ViewModels.Controls
         {
             if (sender is IChocolateyService && e is PackagesChangedEventArgs)
             {
-                this.LoadPackages();
+                this.LoadPackages().ConfigureAwait(false);
             }
 
             return true;
@@ -132,7 +132,6 @@ namespace ChocolateyGui.ViewModels.Controls
                 await this._progressService.StartLoading("Packages", true);
                 var token = this._progressService.GetCancellationToken();
                 var packages = this.Packages.Where(p => p.CanUpdate).ToList();
-                double current = 0.0f;
                 foreach (var package in packages)
                 {
                     if (token.IsCancellationRequested)

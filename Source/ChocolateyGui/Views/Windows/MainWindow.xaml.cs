@@ -26,9 +26,9 @@ namespace ChocolateyGui.Views.Windows
     public partial class MainWindow
     {
         private readonly IProgressService _progressService;
-        ////private readonly ILogService _logService;
+        private readonly ILogService _logService;
 
-        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService/*, ILogService logService*/)
+        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService, Func<Type, ILogService> logService)
         {
             InitializeComponent();
             DataContext = vm;
@@ -39,7 +39,7 @@ namespace ChocolateyGui.Views.Windows
             }
 
             this._progressService = progressService;
-            ////this._logService = logService;
+            this._logService = logService(typeof(MainWindow));
             
             // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
@@ -77,7 +77,7 @@ namespace ChocolateyGui.Views.Windows
 
         private void InitializeChocoDirectory()
         {
-            TaskEx.Run(() =>
+            Task.Run(() =>
             {
                 if (string.IsNullOrWhiteSpace(Settings.Default.chocolateyInstall))
                 {
@@ -101,7 +101,7 @@ namespace ChocolateyGui.Views.Windows
                     }
                     else
                     {
-                        ////this._logService.Warn("Unable to find chocolatey install directory!");
+                        this._logService.Warn("Unable to find chocolatey install directory!");
                     }
                 }
             }).ConfigureAwait(false);

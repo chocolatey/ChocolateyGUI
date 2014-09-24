@@ -77,38 +77,38 @@ namespace ChocolateyGui.ViewModels.Windows
         {
             if (string.IsNullOrWhiteSpace(this.NewSourceName))
             {
-                this._progressService.ShowMessageAsync("New Source", "Source must have a name.");
+                this._progressService.ShowMessageAsync("New Source", "Source must have a name.").ConfigureAwait(false);
                 return;
             }
 
             if (this.Sources.Any(s => string.Compare(s.Name, this.NewSourceName, StringComparison.InvariantCultureIgnoreCase) == 0))
             {
-                this._progressService.ShowMessageAsync("New Source", "There's already a source with that name.");
+                this._progressService.ShowMessageAsync("New Source", "There's already a source with that name.").ConfigureAwait(false);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(this.NewSourceUrl))
             {
-                this._progressService.ShowMessageAsync("New Source", "Source must have a Url.");
+                this._progressService.ShowMessageAsync("New Source", "Source must have a Url.").ConfigureAwait(false);
                 return;
             }
 
             if (this.Sources.Any(s => string.Compare(s.Url, this.NewSourceUrl, StringComparison.InvariantCultureIgnoreCase) == 0))
             {
-                this._progressService.ShowMessageAsync("New Source", "There's already a source with that url.");
+                this._progressService.ShowMessageAsync("New Source", "There's already a source with that url.").ConfigureAwait(false);
                 return;
             }
 
             Uri url;
             if (!Uri.TryCreate(this.NewSourceUrl, UriKind.Absolute, out url))
             {
-                this._progressService.ShowMessageAsync("New Source", "Source url is malformed.");
+                this._progressService.ShowMessageAsync("New Source", "Source url is malformed.").ConfigureAwait(false);
                 return;
             }
 
             if (!(await this._packageService.Value.TestSourceUrl(url)))
             {
-                this._progressService.ShowMessageAsync("New Source", "Failed to query source.");
+                this._progressService.ShowMessageAsync("New Source", "Failed to query source.").ConfigureAwait(false);
                 return;
             }
 

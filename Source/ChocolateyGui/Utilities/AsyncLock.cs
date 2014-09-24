@@ -13,12 +13,12 @@ namespace ChocolateyGui.Utilities
     internal class AsyncLock
     {
         private readonly Task<Releaser> _releaser;
-        private readonly AsyncSemaphore _semaphore;
+        private readonly SemaphoreSlim _semaphore;
 
         public AsyncLock()
         {
-            this._semaphore = new AsyncSemaphore(1);
-            this._releaser = TaskEx.FromResult(new Releaser(this));
+            this._semaphore = new SemaphoreSlim(1);
+            this._releaser = Task.FromResult(new Releaser(this));
         }
 
         public Task<Releaser> LockAsync()

@@ -16,7 +16,7 @@ namespace ChocolateyGui.Utilities.Extensions
         {
             if (pipeline.PipelineStateInfo.State == PipelineState.Completed)
             {
-                return TaskEx.FromResult(0);
+                return Task.FromResult<object>(null);
             }
              
             var tcs = new TaskCompletionSource<object>();

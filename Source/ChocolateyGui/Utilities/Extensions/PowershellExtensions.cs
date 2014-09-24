@@ -14,6 +14,11 @@ namespace ChocolateyGui.Utilities.Extensions
     {
         public static Task RunCommandsAsync(this Pipeline pipeline)
         {
+            if (pipeline == null)
+            {
+                throw new ArgumentNullException("pipeline");
+            }
+
             if (pipeline.PipelineStateInfo.State == PipelineState.Completed)
             {
                 return Task.FromResult<object>(null);

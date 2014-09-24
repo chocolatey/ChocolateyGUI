@@ -40,6 +40,11 @@ namespace ChocolateyGui.ViewModels.Controls
 
         public LocalSourceControlViewModel(IChocolateyService chocolateyService, IProgressService progressService, Func<Type, ILogService> logFactory)
         {
+            if (logFactory == null)
+            {
+                throw new ArgumentNullException("logFactory");
+            }
+
             this._chocolateyService = chocolateyService;
             this._progressService = progressService;
             this._logService = logFactory(typeof(LocalSourceControlViewModel));

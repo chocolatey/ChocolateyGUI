@@ -9,6 +9,7 @@
 namespace ChocolateyGui.Services
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using log4net;
     using log4net.Appender;
@@ -54,7 +55,7 @@ namespace ChocolateyGui.Services
 
         public void DebugFormat(string message, params object[] paramaters)
         {
-            this._log.DebugFormat(message, paramaters);
+            this._log.DebugFormat(CultureInfo.CurrentCulture, message, paramaters);
         }
 
         public void Error(object message)
@@ -92,7 +93,7 @@ namespace ChocolateyGui.Services
 
         public void ErrorFormat(string message, params object[] paramaters)
         {
-            this._log.ErrorFormat(message, paramaters);
+            this._log.ErrorFormat(CultureInfo.CurrentCulture, message, paramaters);
             this.FlushBuffer();
         }
 
@@ -131,7 +132,7 @@ namespace ChocolateyGui.Services
 
         public void FatalFormat(string message, params object[] paramaters)
         {
-            this._log.FatalFormat(message, paramaters);
+            this._log.FatalFormat(CultureInfo.CurrentCulture, message, paramaters);
             this.FlushBuffer();
         }
 
@@ -177,7 +178,7 @@ namespace ChocolateyGui.Services
 
         public void InfoFormat(string message, params object[] paramaters)
         {
-            this._log.InfoFormat(message, paramaters);
+            this._log.InfoFormat(CultureInfo.CurrentCulture, message, paramaters);
         }
 
         public void Warn(object message)
@@ -210,7 +211,7 @@ namespace ChocolateyGui.Services
 
         public void WarnFormat(string message, params object[] paramaters)
         {
-            this._log.WarnFormat(message, paramaters);
+            this._log.WarnFormat(CultureInfo.CurrentCulture, message, paramaters);
         }
 
         private void FlushBuffer()

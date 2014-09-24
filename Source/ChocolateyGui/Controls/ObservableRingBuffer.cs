@@ -149,6 +149,11 @@ namespace ChocolateyGui.Controls
         /// array to start copying.</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException("array");
+            }
+
             for (int i = 0; i < this.Count; i++)
             {
                 array[i + arrayIndex] = this._buffer[(this._position - this.Count + i) % this.Capacity];

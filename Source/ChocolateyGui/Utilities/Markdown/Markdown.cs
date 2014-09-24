@@ -8,6 +8,7 @@ namespace Markdown.Xaml
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -60,6 +61,7 @@ namespace Markdown.Xaml
 
         private static readonly Regex AnchorInline = new Regex(
             string.Format(
+                CultureInfo.CurrentCulture, 
                 @"
                 (                           # wrap whole match in $1
                     \[
@@ -158,6 +160,7 @@ namespace Markdown.Xaml
             RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled);
 
         private static readonly string WholeList = string.Format(
+            CultureInfo.CurrentCulture, 
             @"
             (                               # $1 = whole list
               (                             # $2
@@ -1043,7 +1046,7 @@ namespace Markdown.Xaml
             }
 
             string header = match.Groups[1].Value;
-            int level = match.Groups[2].Value.StartsWith("=") ? 1 : 2;
+            int level = match.Groups[2].Value.StartsWith("=", StringComparison.CurrentCulture) ? 1 : 2;
 
             // TODO: Style the paragraph based on the header level
             return this.CreateHeader(level, this.RunSpanGamut(header.Trim()));

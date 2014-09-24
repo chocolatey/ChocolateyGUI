@@ -9,6 +9,7 @@ namespace ChocolateyGui.Commands
     using System;
     using System.Collections.Concurrent;
     using System.Diagnostics;
+    using System.Globalization;
     using System.Reflection;
     using System.Threading.Tasks;
     using Expression = System.Linq.Expressions.Expression;
@@ -306,6 +307,7 @@ namespace ChocolateyGui.Commands
                 {
                     throw new Exception(
                         string.Format(
+                        CultureInfo.CurrentCulture, 
                         "Method {0} on type {1} does not have a valid method signature. The method must have one of the following signatures: 'public void {2}()' or 'public void {2}(object parameter)'",
                         this.ExecutedMethodName, 
                         typeof(TTarget), 

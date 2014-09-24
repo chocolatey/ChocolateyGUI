@@ -251,7 +251,7 @@ namespace ChocolateyGui.Services
             if (Cache.Contains(LocalPackagesCacheKeyName))
             {
                 return ((List<IPackageViewModel>)Cache.Get(LocalPackagesCacheKeyName))
-                    .Any(package => string.Compare(package.Id, id, StringComparison.InvariantCultureIgnoreCase) == 0 && package.Version == version);
+                    .Any(package => string.Compare(package.Id, id, StringComparison.OrdinalIgnoreCase) == 0 && package.Version == version);
             }
 
             return false;
@@ -389,7 +389,7 @@ namespace ChocolateyGui.Services
         /// <summary>
         /// Executes a PowerShell Command by calling Chocolatey through the PowerShell command line. 
         /// </summary>
-        /// <param name="commandString">
+        /// <param name="command">
         /// The Chocolatey command arguments.
         /// </param>
         /// <param name="refreshPackages">
@@ -401,14 +401,14 @@ namespace ChocolateyGui.Services
         /// <returns>
         /// A collection of the output of the PowerShell runspace. Will be empty if <paramref cref="logOutput"/> is true.
         /// </returns>
-        public async Task<Collection<PSObject>> RunIndirectChocolateyCommand(string commandString, bool refreshPackages = true, bool logOutput = true)
+        public async Task<Collection<PSObject>> RunIndirectChocolateyCommand(string command, bool refreshPackages = true, bool logOutput = true)
         {
             await this._progressService.StartLoading("Chocolatey");
             this._progressService.WriteMessage("Processing chocolatey command...");
 
             var pipeline = this._runspace.CreatePipeline();
 
-            pipeline.Commands.AddScript("chocolatey " + commandString);
+            pipeline.Commands.AddScript("chocolatey " + command);
             Collection<PSObject> results;
 
             try

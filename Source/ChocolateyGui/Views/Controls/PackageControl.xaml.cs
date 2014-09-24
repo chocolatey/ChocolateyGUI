@@ -6,6 +6,7 @@
 
 namespace ChocolateyGui.Views.Controls
 {
+    using System;
     using System.Diagnostics;
     using System.Windows;
     using System.Windows.Documents;
@@ -17,11 +18,16 @@ namespace ChocolateyGui.Views.Controls
     /// </summary>
     public partial class PackageControl
     {
-        public PackageControl(IPackageControlViewModel vm, IPackageViewModel packageViewModel)
+        public PackageControl(IPackageControlViewModel viewModel, IPackageViewModel packageViewModel)
         {
+            if (viewModel == null)
+            {
+                throw new ArgumentNullException("viewModel");
+            }
+
             InitializeComponent();
-            vm.Package = packageViewModel;
-            DataContext = vm;
+            viewModel.Package = packageViewModel;
+            DataContext = viewModel;
         }
 
         private void HandleLinkClick(object sender, RoutedEventArgs e)

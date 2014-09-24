@@ -9,6 +9,7 @@ namespace ChocolateyGui.Services.PackageServices
     using System;
     using System.Collections.Generic;
     using System.Data.Services.Client;
+    using System.Globalization;
     using System.Linq;
     using System.Runtime.Caching;
     using System.Threading.Tasks;
@@ -142,7 +143,7 @@ namespace ChocolateyGui.Services.PackageServices
 
         private static string GetMemoryCacheKey(Uri feed)
         {
-            return string.Format("ODataPackageService.Feeds.{0}", feed);
+            return string.Format(CultureInfo.CurrentCulture, "ODataPackageService.Feeds.{0}", feed);
         }
     }
 }

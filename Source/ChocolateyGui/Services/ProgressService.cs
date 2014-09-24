@@ -127,7 +127,7 @@ namespace ChocolateyGui.Services
                     if (isCancelable)
                     {
                         this._cst = new CancellationTokenSource();
-                        this._progressController.OnCancelled += dialog =>
+                        this._progressController.OnCanceled += dialog =>
                         {
                             if (this._cst != null)
                             {

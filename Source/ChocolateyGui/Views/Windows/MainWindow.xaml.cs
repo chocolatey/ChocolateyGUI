@@ -30,6 +30,16 @@ namespace ChocolateyGui.Views.Windows
 
         public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService, Func<Type, ILogService> logService)
         {
+            if (navigationService == null)
+            {
+                throw new ArgumentNullException("navigationService");
+            }
+
+            if (logService == null)
+            {
+                throw new ArgumentNullException("logService");
+            }
+
             InitializeComponent();
             DataContext = vm;
 

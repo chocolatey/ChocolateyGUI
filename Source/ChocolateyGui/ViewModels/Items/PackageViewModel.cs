@@ -8,6 +8,7 @@ namespace ChocolateyGui.ViewModels.Items
 {
     using System;
     using System.Diagnostics;
+    using System.Globalization;
     using System.Runtime.Caching;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
@@ -300,7 +301,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private string MemoryCacheKey
         {
-            get { return string.Format("PackageViewModel.{0}{1}", this.Id, this.Version); }
+            get { return string.Format(CultureInfo.CurrentCulture, "PackageViewModel.{0}{1}", this.Id, this.Version); }
         }
 
         public bool CanGoBack()

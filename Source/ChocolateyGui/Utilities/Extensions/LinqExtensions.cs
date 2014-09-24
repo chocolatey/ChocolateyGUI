@@ -20,6 +20,11 @@ namespace ChocolateyGui.Utilities.Extensions
 
         public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, string propertyName)
         {
+            if (query == null)
+            {
+                throw new ArgumentNullException("query");
+            }
+
             if ((new OrderByVistor(query.Expression)).HasOrderBy)
             {
                 throw new InvalidOperationException(
@@ -47,6 +52,11 @@ namespace ChocolateyGui.Utilities.Extensions
 
         public static IQueryable<T> OrderByDescending<T>(this IQueryable<T> query, string propertyName)
         {
+            if (query == null)
+            {
+                throw new ArgumentNullException("query");
+            }
+
             if ((new OrderByVistor(query.Expression)).HasOrderBy)
             {
                 throw new InvalidOperationException(
@@ -73,6 +83,11 @@ namespace ChocolateyGui.Utilities.Extensions
 
         public static IQueryable<T> ThenBy<T>(this IQueryable<T> query, string propertyName)
         {
+            if (query == null)
+            {
+                throw new ArgumentNullException("query");
+            }
+
             if (!(new OrderByVistor(query.Expression)).HasOrderBy)
             {
                 throw new InvalidOperationException(
@@ -99,6 +114,11 @@ namespace ChocolateyGui.Utilities.Extensions
 
         public static IQueryable<T> ThenByDescending<T>(this IQueryable<T> query, string propertyName)
         {
+            if (query == null)
+            {
+                throw new ArgumentNullException("query");
+            }
+
             if (!(new OrderByVistor(query.Expression)).HasOrderBy)
             {
                 throw new InvalidOperationException(
@@ -185,6 +205,11 @@ namespace ChocolateyGui.Utilities.Extensions
 
             protected override Expression VisitMethodCall(MethodCallExpression node)
             {
+                if (node == null)
+                {
+                    throw new ArgumentNullException("node");
+                }
+
                 if (node.Method.Name == "OrderByDescending" || node.Method.Name == "OrderBy")
                 {
                     this.HasOrderBy = true;

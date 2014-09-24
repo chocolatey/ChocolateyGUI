@@ -8,6 +8,7 @@ namespace ChocolateyGui.Services.PackageServices
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Runtime.Caching;
     using System.Threading.Tasks;
@@ -19,9 +20,9 @@ namespace ChocolateyGui.Services.PackageServices
     {
         private static readonly MemoryCache Cache = MemoryCache.Default;
 
-        public static Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source)
+        public static Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel, Uri source)
         {
-            return Task.Run(() => vm);
+            return Task.Run(() => viewModel);
         }
 
         public static IPackageViewModel GetLatest(string id, IChocolateyService chocolateyService, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
@@ -84,7 +85,7 @@ namespace ChocolateyGui.Services.PackageServices
 
         private static string GetMemoryCacheKey(Uri source, string query, PackageSearchOptions options)
         {
-            return string.Format("FileSystemPackageService.QueryResult.{0}|{1}|{2}|{3}", source, query, options.IncludeAllVersions, options.IncludePrerelease);
+            return string.Format(CultureInfo.CurrentCulture, "FileSystemPackageService.QueryResult.{0}|{1}|{2}|{3}", source, query, options.IncludeAllVersions, options.IncludePrerelease);
         }
     }
 }

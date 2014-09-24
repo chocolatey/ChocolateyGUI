@@ -26,6 +26,11 @@ namespace ChocolateyGui.Services
             Func<IPackageViewModel> packageFactory,
             Func<Type, ILogService> logFunc)
         {
+            if (logFunc == null)
+            {
+                throw new ArgumentNullException("logFunc");
+            }
+
             this._progressService = progressService;
             this._sourceService = sourceService;
             this._packageFactory = packageFactory;

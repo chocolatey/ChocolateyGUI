@@ -30,7 +30,7 @@ namespace ChocolateyGui.Services
 
         Task RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true, bool logOutput = true);
 
-        Task<Collection<PSObject>> RunIndirectChocolateyCommand(string commandString, bool refreshPackages = true, bool logOutput = true);
+        Task<Collection<PSObject>> RunIndirectChocolateyCommand(string command, bool refreshPackages = true, bool logOutput = true);
 
         Task UninstallPackage(string id, SemanticVersion version, bool force = false);
 

@@ -29,9 +29,9 @@ namespace ChocolateyGui.Controls.Dialogs
             }));
         }
 
-        public delegate void DialogCancelledEventHandler(BaseMetroDialog dialog);
+        public delegate void DialogCanceledEventHandler(BaseMetroDialog dialog);
 
-        public event DialogCancelledEventHandler OnCancelled;
+        public event DialogCanceledEventHandler OnCanceled;
 
         /// <summary>
         /// Gets a value indicating whether the Cancel button has been pressed.
@@ -176,7 +176,7 @@ namespace ChocolateyGui.Controls.Dialogs
             {
                 this.IsCanceled = true;
                 this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
-                var cancelled = this.OnCancelled;
+                var cancelled = this.OnCanceled;
                 if (cancelled != null)
                 {
                     cancelled(this.WrappedDialog);
@@ -188,7 +188,7 @@ namespace ChocolateyGui.Controls.Dialogs
                 {
                     IsCanceled = true;
                     this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
-                    var cancelled = OnCancelled;
+                    var cancelled = this.OnCanceled;
                     if (cancelled != null)
                     {
                         cancelled(this.WrappedDialog);

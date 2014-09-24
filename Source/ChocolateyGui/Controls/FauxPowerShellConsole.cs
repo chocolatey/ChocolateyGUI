@@ -8,6 +8,7 @@ namespace ChocolateyGui.Controls
 {
     using System;
     using System.Collections.Specialized;
+    using System.Globalization;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
@@ -53,7 +54,7 @@ namespace ChocolateyGui.Controls
             : base(new FlowDocument())
         {
             var hashAlg = MD5.Create();
-            this._getNameHash = (unhashed) => "_" + hashAlg.ComputeHash(Encoding.UTF8.GetBytes(unhashed)).Aggregate(new StringBuilder(), (sb, piece) => sb.Append(piece.ToString("X2"))).ToString();
+            this._getNameHash = (unhashed) => "_" + hashAlg.ComputeHash(Encoding.UTF8.GetBytes(unhashed)).Aggregate(new StringBuilder(), (sb, piece) => sb.Append(piece.ToString("X2", CultureInfo.CurrentCulture))).ToString();
 
             this._backingParagraph = new Paragraph();
             Document.Blocks.Add(this._backingParagraph);
@@ -67,13 +68,18 @@ namespace ChocolateyGui.Controls
             set { this.SetValue(BufferProperty, value); }
         }
 
-        protected T GetValue<T>(DependencyProperty dp)
+        protected T GetValue<T>(DependencyProperty dependencyProperty)
         {
-            return (T)this.GetValue(dp);
+            return (T)this.GetValue(dependencyProperty);
         }
 
         protected void OnBufferUpdated(object sender, NotifyCollectionChangedEventArgs args)
         {
+            if (args == null)
+            {
+                throw new ArgumentNullException("args");
+            }
+
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Reset:

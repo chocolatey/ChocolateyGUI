@@ -15,7 +15,7 @@ namespace ChocolateyGui.Services
         void Debug(object message, Exception exception);
         
         void DebugFormat(string message, object obj);
-        
+
         void DebugFormat(string message, object obj1, object obj2);
         
         void DebugFormat(string message, object obj1, object obj2, object obj3);
@@ -65,7 +65,7 @@ namespace ChocolateyGui.Services
         void FatalFormat(string message, object obj);
         
         void FatalFormat(string message, object obj1, object obj2);
-        
+
         void FatalFormat(string message, object obj1, object obj2, object obj3);
         
         void FatalFormat(string message, params object[] paramaters);

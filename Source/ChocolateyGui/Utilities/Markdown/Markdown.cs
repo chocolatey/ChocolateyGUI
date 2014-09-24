@@ -18,6 +18,7 @@ namespace Markdown.Xaml
     using System.Windows.Markup;
     using System.Windows.Shapes;
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces", Justification = "Wouldn't make sense to do so")]
     public class Markdown : DependencyObject
     {
         // Using a DependencyProperty as the backing store for CodeStyle.  This enables animation, styling, binding, etc...
@@ -44,25 +45,7 @@ namespace Markdown.Xaml
         public static readonly DependencyProperty Heading4StyleProperty =
             DependencyProperty.Register("Heading4Style", typeof(Style), typeof(Markdown), new PropertyMetadata(null));
 
-        private const string MarkerOl = @"\d+[.]";
-
-        private const string MarkerUl = @"[*+-]";
-
-        /// <summary>
-        /// maximum nested depth of [] and () supported by the transform; implementation detail
-        /// </summary>
-        private const int NestDepth = 6;
-
-        /// <summary>
-        /// Tabs are automatically converted to spaces as part of the transform  
-        /// this constant determines how "wide" those tabs become in spaces  
-        /// </summary>
-        private const int TabWidth = 4;
-
-        private static readonly Regex AnchorInline = new Regex(
-            string.Format(
-                CultureInfo.CurrentCulture, 
-                @"
+        private const string AnchorLineStringFormat = @"
                 (                           # wrap whole match in $1
                     \[
                         ({0})               # link text = $2
@@ -78,10 +61,49 @@ namespace Markdown.Xaml
                         [ ]*                # ignore any spaces between closing quote and )
                         )?                  # title is optional
                     \)
-                )",
-                  GetNestedBracketsPattern(),
-                  GetNestedParensPattern()),
-                  RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
+                )";
+
+        private const string MarkerOl = @"\d+[.]";
+
+        private const string MarkerUl = @"[*+-]";
+
+        /// <summary>
+        /// maximum nested depth of [] and () supported by the transform; implementation detail
+        /// </summary>
+        private const int NestDepth = 6;
+
+        /// <summary>
+        /// Tabs are automatically converted to spaces as part of the transform  
+        /// this constant determines how "wide" those tabs become in spaces  
+        /// </summary>
+        private const int TabWidth = 4;
+        private const string WholeLineStringFormat = @"
+            (                               # $1 = whole list
+              (                             # $2
+                [ ]{{0,{1}}}
+                ({0})                       # $3 = first list item marker
+                [ ]+
+              )
+              (?s:.+?)
+              (                             # $4
+                  \z
+                |
+                  \n{{2,}}
+                  (?=\S)
+                  (?!                       # Negative lookahead for another list item marker
+                    [ ]*
+                    {0}[ ]+
+                  )
+              )
+            )";
+
+        private static readonly Regex AnchorInline = new Regex(
+            string.Format(
+                CultureInfo.CurrentCulture,
+                AnchorLineStringFormat,
+                GetNestedBracketsPattern(),
+                GetNestedParensPattern()),
+                RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
 
         private static readonly Regex Bold = new Regex(
             @"(\*\*|__) (?=\S) (.+?[*_]*) (?<=\S) \1",
@@ -160,30 +182,10 @@ namespace Markdown.Xaml
             RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled);
 
         private static readonly string WholeList = string.Format(
-            CultureInfo.CurrentCulture, 
-            @"
-            (                               # $1 = whole list
-              (                             # $2
-                [ ]{{0,{1}}}
-                ({0})                       # $3 = first list item marker
-                [ ]+
-              )
-              (?s:.+?)
-              (                             # $4
-                  \z
-                |
-                  \n{{2,}}
-                  (?=\S)
-                  (?!                       # Negative lookahead for another list item marker
-                    [ ]*
-                    {0}[ ]+
-                  )
-              )
-            )",
-              string.Format("(?:{0}|{1})", MarkerUl, MarkerOl),
+              CultureInfo.CurrentCulture,
+              WholeLineStringFormat,
+              string.Format(CultureInfo.CurrentCulture, "(?:{0}|{1})", MarkerUl, MarkerOl),
               TabWidth - 1);
-
-        private static Regex _leadingWhitespace = new Regex(@"^[ ]*", RegexOptions.Compiled);
 
         private static string _nestedBracketsPattern;
 
@@ -305,7 +307,7 @@ namespace Markdown.Xaml
                 throw new ArgumentNullException("text");
             }
 
-            text = this.Normalize(text);
+            text = Normalize(text);
             var document = Create<FlowDocument, Block>(this.RunBlockGamut(text));
 
             document.PagePadding = new Thickness(0);
@@ -315,6 +317,18 @@ namespace Markdown.Xaml
             }
 
             return document;
+        }
+
+        private static TResult Create<TResult, TContent>(IEnumerable<TContent> content)
+                            where TResult : IAddChild, new()
+        {
+            var result = new TResult();
+            foreach (var c in content)
+            {
+                result.AddChild(c);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -376,6 +390,104 @@ namespace Markdown.Xaml
         }
 
         /// <summary>
+        /// convert all tabs to _tabWidth spaces; 
+        /// standardizes line endings from DOS (CR LF) or Mac (CR) to UNIX (LF); 
+        /// makes sure text ends with a couple of newlines; 
+        /// removes any blank lines (only spaces) in the text
+        /// </summary>
+        /// <param name="text">
+        /// The text that is to be normalized.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/> which has been normalized.
+        /// </returns>
+        private static string Normalize(string text)
+        {
+            if (text == null)
+            {
+                throw new ArgumentNullException("text");
+            }
+
+            var output = new StringBuilder(text.Length);
+            var line = new StringBuilder();
+            bool valid = false;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                switch (text[i])
+                {
+                    case '\n':
+                        if (valid)
+                        {
+                            output.Append(line);
+                        }
+
+                        output.Append('\n');
+                        line.Length = 0;
+                        valid = false;
+                        break;
+                    case '\r':
+                        if ((i < text.Length - 1) && (text[i + 1] != '\n'))
+                        {
+                            if (valid)
+                            {
+                                output.Append(line);
+                            }
+
+                            output.Append('\n');
+                            line.Length = 0;
+                            valid = false;
+                        }
+
+                        break;
+                    case '\t':
+                        int width = (TabWidth - line.Length) % TabWidth;
+
+                        for (int k = 0; k < width; k++)
+                        {
+                            line.Append(' ');
+                        }
+
+                        break;
+                    case '\x1A':
+                        break;
+                    default:
+                        if (!valid && text[i] != ' ')
+                        {
+                            valid = true;
+                        }
+
+                        line.Append(text[i]);
+                        break;
+                }
+            }
+
+            if (valid)
+            {
+                output.Append(line);
+            }
+
+            output.Append('\n');
+
+            // add two newlines to the end before return
+            return output.Append("\n\n").ToString();
+        }
+
+        /// <summary>
+        /// Remove one level of line-leading spaces
+        /// </summary>
+        /// <param name="block">
+        /// The block of text which should be modified.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/> containing the modified text.
+        /// </returns>
+        private static string Outdent(string block)
+        {
+            return OutDent.Replace(block, string.Empty);
+        }
+
+        /// <summary>
         /// This is to emulate what's available in PHP
         /// </summary>
         /// <param name="text">
@@ -412,7 +524,6 @@ namespace Markdown.Xaml
 
             string linkText = match.Groups[2].Value;
             string url = match.Groups[3].Value;
-            string title = match.Groups[6].Value;
 
             var result = Create<Hyperlink, Inline>(this.RunSpanGamut(linkText));
             result.Command = this.HyperlinkCommand;
@@ -440,7 +551,7 @@ namespace Markdown.Xaml
             }
 
             var content = match.Groups[contentGroup].Value;
-            return this.Create<Bold, Inline>(this.RunSpanGamut(content));
+            return Markdown.Create<Bold, Inline>(this.RunSpanGamut(content));
         }
 
         private Inline CodeSpanEvaluator(Match match)
@@ -458,18 +569,6 @@ namespace Markdown.Xaml
             if (this.CodeStyle != null)
             {
                 result.Style = this.CodeStyle;
-            }
-
-            return result;
-        }
-
-        private TResult Create<TResult, TContent>(IEnumerable<TContent> content)
-                    where TResult : IAddChild, new()
-        {
-            var result = new TResult();
-            foreach (var c in content)
-            {
-                result.AddChild(c);
             }
 
             return result;
@@ -739,7 +838,7 @@ namespace Markdown.Xaml
             // split on two or more newlines
             var grafs = NewlinesMultiple.Split(NewlinesLeadingTrailing.Replace(text, string.Empty));
 
-            return grafs.Select(g => this.Create<Paragraph, Inline>(this.RunSpanGamut(g)));
+            return grafs.Select(g => Markdown.Create<Paragraph, Inline>(this.RunSpanGamut(g)));
         }
 
         private Inline ItalicEvaluator(Match match, int contentGroup)
@@ -750,7 +849,7 @@ namespace Markdown.Xaml
             }
 
             var content = match.Groups[contentGroup].Value;
-            return this.Create<Italic, Inline>(this.RunSpanGamut(content));
+            return Markdown.Create<Italic, Inline>(this.RunSpanGamut(content));
         }
 
         private Block ListEvaluator(Match match)
@@ -787,111 +886,13 @@ namespace Markdown.Xaml
             // we could correct any bad indentation here..
             if (!string.IsNullOrEmpty(leadingLine) || Regex.IsMatch(item, @"\n{2,}"))
             {
-                return this.Create<ListItem, Block>(this.RunBlockGamut(item));
+                return Markdown.Create<ListItem, Block>(this.RunBlockGamut(item));
             }
             else
             {
                 // recursion for sub-lists
-                return this.Create<ListItem, Block>(this.RunBlockGamut(item));
+                return Markdown.Create<ListItem, Block>(this.RunBlockGamut(item));
             }
-        }
-
-        /// <summary>
-        /// convert all tabs to _tabWidth spaces; 
-        /// standardizes line endings from DOS (CR LF) or Mac (CR) to UNIX (LF); 
-        /// makes sure text ends with a couple of newlines; 
-        /// removes any blank lines (only spaces) in the text
-        /// </summary>
-        /// <param name="text">
-        /// The text that is to be normalized.
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/> which has been normalized.
-        /// </returns>
-        private string Normalize(string text)
-        {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
-
-            var output = new StringBuilder(text.Length);
-            var line = new StringBuilder();
-            bool valid = false;
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                switch (text[i])
-                {
-                    case '\n':
-                        if (valid)
-                        {
-                            output.Append(line);
-                        }
-
-                        output.Append('\n');
-                        line.Length = 0;
-                        valid = false;
-                        break;
-                    case '\r':
-                        if ((i < text.Length - 1) && (text[i + 1] != '\n'))
-                        {
-                            if (valid)
-                            {
-                                output.Append(line);
-                            }
-
-                            output.Append('\n');
-                            line.Length = 0;
-                            valid = false;
-                        }
-                        
-                        break;
-                    case '\t':
-                        int width = (TabWidth - line.Length) % TabWidth;
-
-                        for (int k = 0; k < width; k++)
-                        {
-                            line.Append(' ');
-                        }
-
-                        break;
-                    case '\x1A':
-                        break;
-                    default:
-                        if (!valid && text[i] != ' ')
-                        {
-                            valid = true;
-                        }
-
-                        line.Append(text[i]);
-                        break;
-                }
-            }
-
-            if (valid)
-            {
-                output.Append(line);
-            }
-
-            output.Append('\n');
-
-            // add two newlines to the end before return
-            return output.Append("\n\n").ToString();
-        }
-
-        /// <summary>
-        /// Remove one level of line-leading spaces
-        /// </summary>
-        /// <param name="block">
-        /// The block of text which should be modified.
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/> containing the modified text.
-        /// </returns>
-        private string Outdent(string block)
-        {
-            return OutDent.Replace(block, string.Empty);
         }
 
         /// <summary>

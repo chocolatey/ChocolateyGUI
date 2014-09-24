@@ -53,9 +53,9 @@ namespace ChocolateyGui.Services
             this._log.DebugFormat(message, obj1, obj2, obj3);
         }
 
-        public void DebugFormat(string message, params object[] paramaters)
+        public void DebugFormat(string message, params object[] parameters)
         {
-            this._log.DebugFormat(CultureInfo.CurrentCulture, message, paramaters);
+            this._log.DebugFormat(CultureInfo.CurrentCulture, message, parameters);
         }
 
         public void Error(object message)
@@ -91,9 +91,9 @@ namespace ChocolateyGui.Services
             this.FlushBuffer();
         }
 
-        public void ErrorFormat(string message, params object[] paramaters)
+        public void ErrorFormat(string message, params object[] parameters)
         {
-            this._log.ErrorFormat(CultureInfo.CurrentCulture, message, paramaters);
+            this._log.ErrorFormat(CultureInfo.CurrentCulture, message, parameters);
             this.FlushBuffer();
         }
 
@@ -130,9 +130,9 @@ namespace ChocolateyGui.Services
             this.FlushBuffer();
         }
 
-        public void FatalFormat(string message, params object[] paramaters)
+        public void FatalFormat(string message, params object[] parameters)
         {
-            this._log.FatalFormat(CultureInfo.CurrentCulture, message, paramaters);
+            this._log.FatalFormat(CultureInfo.CurrentCulture, message, parameters);
             this.FlushBuffer();
         }
 
@@ -145,6 +145,7 @@ namespace ChocolateyGui.Services
             catch (Exception ex)
             {
                 this.Error("Error flushing buffer...", ex);
+                throw;
             }
         }
 
@@ -176,9 +177,9 @@ namespace ChocolateyGui.Services
             this._log.InfoFormat(message, obj1, obj2, obj3);
         }
 
-        public void InfoFormat(string message, params object[] paramaters)
+        public void InfoFormat(string message, params object[] parameters)
         {
-            this._log.InfoFormat(CultureInfo.CurrentCulture, message, paramaters);
+            this._log.InfoFormat(CultureInfo.CurrentCulture, message, parameters);
         }
 
         public void Warn(object message)
@@ -209,9 +210,9 @@ namespace ChocolateyGui.Services
             this._log.WarnFormat(message, obj1, obj2, obj3);
         }
 
-        public void WarnFormat(string message, params object[] paramaters)
+        public void WarnFormat(string message, params object[] parameters)
         {
-            this._log.WarnFormat(CultureInfo.CurrentCulture, message, paramaters);
+            this._log.WarnFormat(CultureInfo.CurrentCulture, message, parameters);
         }
 
         private void FlushBuffer()

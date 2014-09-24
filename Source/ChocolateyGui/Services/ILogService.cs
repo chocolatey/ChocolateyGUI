@@ -20,7 +20,7 @@ namespace ChocolateyGui.Services
         
         void DebugFormat(string message, object obj1, object obj2, object obj3);
         
-        void DebugFormat(string message, params object[] paramaters);
+        void DebugFormat(string message, params object[] parameters);
         
         void Info(object message);
         
@@ -32,7 +32,7 @@ namespace ChocolateyGui.Services
         
         void InfoFormat(string message, object obj1, object obj2, object obj3);
         
-        void InfoFormat(string message, params object[] paramaters);
+        void InfoFormat(string message, params object[] parameters);
         
         void Warn(object message);
         
@@ -44,10 +44,12 @@ namespace ChocolateyGui.Services
         
         void WarnFormat(string message, object obj1, object obj2, object obj3);
         
-        void WarnFormat(string message, params object[] paramaters);
-        
+        void WarnFormat(string message, params object[] parameters);
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Error", Justification = "This is what log4net calls them, so we won't change them")]
         void Error(object message);
-        
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Error", Justification = "This is what log4net calls them, so we won't change them")]
         void Error(object message, Exception exception);
         
         void ErrorFormat(string message, object obj);
@@ -56,7 +58,7 @@ namespace ChocolateyGui.Services
         
         void ErrorFormat(string message, object obj1, object obj2, object obj3);
         
-        void ErrorFormat(string message, params object[] paramaters);
+        void ErrorFormat(string message, params object[] parameters);
         
         void Fatal(object message);
         
@@ -68,7 +70,7 @@ namespace ChocolateyGui.Services
 
         void FatalFormat(string message, object obj1, object obj2, object obj3);
         
-        void FatalFormat(string message, params object[] paramaters);
+        void FatalFormat(string message, params object[] parameters);
 
         void ForceFlush();
     }

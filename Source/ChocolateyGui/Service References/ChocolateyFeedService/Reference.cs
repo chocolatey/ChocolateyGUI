@@ -16,6 +16,8 @@ namespace ChocolateyGui.ChocolateyFeedService
     /// <summary>
     /// There are no comments for FeedContext_x0060_1 in the schema.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores", Justification = "This comes directly from Chocolatey.org")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "x", Justification = "This comes directly from Chocolatey.org")]
     public partial class FeedContext_x0060_1 : global::System.Data.Services.Client.DataServiceContext
     {
         /// <summary>

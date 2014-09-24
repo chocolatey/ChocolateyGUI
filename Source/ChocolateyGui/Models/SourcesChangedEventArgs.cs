@@ -14,14 +14,14 @@ namespace ChocolateyGui.Models
 
     public class SourcesChangedEventArgs : EventArgs
     {
-        public SourcesChangedEventArgs(List<SourceViewModel> newSources, List<SourceViewModel> removedSources)
+        public SourcesChangedEventArgs(IList<SourceViewModel> newSources, IList<SourceViewModel> removedSources)
         {
             this.AddedSources = newSources;
             this.RemovedSources = removedSources;
         }
 
-        public List<SourceViewModel> AddedSources { get; private set; }
+        public IList<SourceViewModel> AddedSources { get; private set; }
 
-        public List<SourceViewModel> RemovedSources { get; private set; }
+        public IList<SourceViewModel> RemovedSources { get; private set; }
     }
 }

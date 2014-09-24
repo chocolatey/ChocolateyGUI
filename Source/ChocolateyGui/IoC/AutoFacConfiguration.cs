@@ -15,7 +15,7 @@ namespace ChocolateyGui.IoC
     using ChocolateyGui.Views.Controls;
     using ChocolateyGui.Views.Windows;
 
-    public class AutoFacConfiguration
+    public static class AutoFacConfiguration
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is the way that AutoFac works.")]
         public static IContainer RegisterAutoFac()

@@ -79,7 +79,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type must be a semantic version..
+        ///   Looks up a localized string similar to LineType must be a semantic version..
         /// </summary>
         internal static string TypeMustBeASemanticVersion {
             get {

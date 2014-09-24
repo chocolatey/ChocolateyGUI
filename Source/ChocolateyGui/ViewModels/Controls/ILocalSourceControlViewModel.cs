@@ -12,7 +12,7 @@ namespace ChocolateyGui.ViewModels.Controls
 
     public interface ILocalSourceControlViewModel
     {
-        ObservableCollection<IPackageViewModel> Packages { get; set; }
+        ObservableCollection<IPackageViewModel> Packages { get; }
 
         string SearchQuery { get; set; }
         

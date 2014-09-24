@@ -82,7 +82,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         Task Install();
 
-        Task RetriveLatestVersion();
+        Task RetrieveLatestVersion();
 
         Task Uninstall();
 

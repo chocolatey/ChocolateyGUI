@@ -171,7 +171,12 @@ namespace ChocolateyGui.Models
         public static SemanticVersion ParseOptionalVersion(string version)
         {
             SemanticVersion semanticVersion;
-            TryParse(version, out semanticVersion);
+            bool success = TryParse(version, out semanticVersion);
+            if (!success)
+            {
+                semanticVersion = null;
+            }
+
             return semanticVersion;
         }
 

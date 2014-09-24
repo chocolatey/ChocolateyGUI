@@ -16,8 +16,10 @@ namespace ChocolateyGui.Services
 
         void AddSource(SourceViewModel sourceViewModel);
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
         SourceViewModel GetDefaultSource();
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
         IEnumerable<SourceViewModel> GetSources();
 
         void RemoveSource(SourceViewModel viewModel);

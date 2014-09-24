@@ -20,11 +20,16 @@ namespace ChocolateyGui.Services.PackageServices
     {
         private static readonly MemoryCache Cache = MemoryCache.Default;
 
-        public static Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel, Uri source)
+        public static Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel)
         {
             return Task.Run(() => viewModel);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "chocolateyService", Justification = "Will be reviewed after being implemented")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "includePrerelease", Justification = "Will be reviewed after being implemented")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "id", Justification = "Will be reviewed after being implemented")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "packageFactory", Justification = "Will be reviewed after being implemented")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "source", Justification = "Will be reviewed after being implemented")]
         public static IPackageViewModel GetLatest(string id, IChocolateyService chocolateyService, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
         {
             throw new NotImplementedException();

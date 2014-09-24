@@ -33,7 +33,7 @@ namespace ChocolateyGui.Commands
 
         /// <summary>
         ///     Represents an object that is capable of executing a specific CanExecute method and
-        ///     Execute method for a specific Type on any object of the specific type.
+        ///     Execute method for a specific LineType on any object of the specific type.
         /// </summary>
         private interface ICommandExecutionProvider
         {
@@ -213,7 +213,7 @@ namespace ChocolateyGui.Commands
         }
 
         /// <summary>
-        ///     Represents a unique combination of target object Type, can execute name and executed
+        ///     Represents a unique combination of target object LineType, can execute name and executed
         ///     method name. This key is used to cache ICommandExecutionProvider implementations
         ///     that are specifically tailored to the combination these three values.
         /// </summary>
@@ -238,7 +238,7 @@ namespace ChocolateyGui.Commands
         ///     Represents an object that is capable of executing a specific CanExecute method and
         ///     Execute method for a specific type on any object of the specific type.
         /// </summary>
-        /// <typeparam name="TTarget">The target Type</typeparam>
+        /// <typeparam name="TTarget">The target LineType</typeparam>
         private class CommandExecutionProvider<TTarget> : ICommandExecutionProvider
         {
             private readonly Func<TTarget, bool> _canExecute;
@@ -255,7 +255,7 @@ namespace ChocolateyGui.Commands
                 var targetParameter = Expression.Parameter(targetType);
                 var paramParamater = Expression.Parameter(typeof(object));
 
-                var canExecuteMethodInfo = this.GetMethodInfo(this.CanExecuteMethodName);
+                var canExecuteMethodInfo = GetMethodInfo(this.CanExecuteMethodName);
                 if (canExecuteMethodInfo != null && canExecuteMethodInfo.ReturnType == typeof(bool))
                 {
                     if (canExecuteMethodInfo.GetParameters().Length == 0)
@@ -283,7 +283,7 @@ namespace ChocolateyGui.Commands
                     ////    CanExecuteMethodName, typeof(TTarget)));
                 }
 
-                var executedMethodInfo = this.GetMethodInfo(this.ExecutedMethodName);
+                var executedMethodInfo = GetMethodInfo(this.ExecutedMethodName);
                 if (executedMethodInfo != null && (executedMethodInfo.ReturnType == typeof(void) || executedMethodInfo.ReturnType == typeof(Task)))
                 {
                     if (executedMethodInfo.GetParameters().Length == 0)
@@ -348,7 +348,7 @@ namespace ChocolateyGui.Commands
                 }
             }
 
-            private MethodInfo GetMethodInfo(string methodName)
+            private static MethodInfo GetMethodInfo(string methodName)
             {
                 if (string.IsNullOrWhiteSpace(methodName))
                 {

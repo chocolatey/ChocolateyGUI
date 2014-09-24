@@ -342,7 +342,7 @@ namespace ChocolateyGui.ViewModels.Items
             return true;
         }
 
-        public async Task RetriveLatestVersion()
+        public async Task RetrieveLatestVersion()
         {
             SemanticVersion version;
             if ((version = (SemanticVersion)this._cache.Get(string.Format("LatestVersion_{0}", this.Id))) != null)

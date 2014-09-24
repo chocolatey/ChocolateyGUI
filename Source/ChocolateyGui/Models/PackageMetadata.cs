@@ -23,7 +23,7 @@ namespace ChocolateyGui.Models
         [XmlElement("owners")]
         public string Owners { get; set; }
         [XmlElement("licenseUrl")]
-        public string LicenceUrl { get; set; }
+        public string LicenseUrl { get; set; }
         [XmlElement("projectUrl")]
         public string ProjectUrl { get; set; }
         [XmlElement("iconUrl")]

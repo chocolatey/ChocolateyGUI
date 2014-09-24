@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="PowershellExtensions.cs">
+// <copyright company="Chocolatey" file="PowerShellExtensions.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ namespace ChocolateyGui.Utilities.Extensions
     using System.Management.Automation.Runspaces;
     using System.Threading.Tasks;
 
-    public static class PowershellExtensions
+    public static class PowerShellExtensions
     {
         public static Task RunCommandsAsync(this Pipeline pipeline)
         {

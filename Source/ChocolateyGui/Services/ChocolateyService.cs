@@ -72,6 +72,11 @@ namespace ChocolateyGui.Services
 
         public ChocolateyService(IProgressService progressService, Func<Type, ILogService> logServiceFunc)
         {
+            if (logServiceFunc == null)
+            {
+                throw new ArgumentNullException("logServiceFunc");
+            }
+
             this._runspace = RunspaceFactory.CreateRunspace(new ChocolateyHost(progressService));
             this._runspace.Open();
 

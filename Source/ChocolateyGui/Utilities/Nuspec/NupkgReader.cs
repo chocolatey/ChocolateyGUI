@@ -53,7 +53,7 @@ namespace ChocolateyGui.Utilities.Nuspec
             }
         }
 
-        public class NamespaceIgnorantXmlTextReader : XmlTextReader
+        private class NamespaceIgnorantXmlTextReader : XmlTextReader
         {
             public NamespaceIgnorantXmlTextReader(Stream reader)
                 : base(reader)

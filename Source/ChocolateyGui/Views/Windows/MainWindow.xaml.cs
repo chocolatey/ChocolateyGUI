@@ -28,7 +28,7 @@ namespace ChocolateyGui.Views.Windows
         private readonly IProgressService _progressService;
         private readonly ILogService _logService;
 
-        public MainWindow(IMainWindowViewModel vm, INavigationService navigationService, IProgressService progressService, Func<Type, ILogService> logService)
+        public MainWindow(IMainWindowViewModel viewModel, INavigationService navigationService, IProgressService progressService, Func<Type, ILogService> logService)
         {
             if (navigationService == null)
             {
@@ -41,7 +41,7 @@ namespace ChocolateyGui.Views.Windows
             }
 
             InitializeComponent();
-            DataContext = vm;
+            DataContext = viewModel;
 
             if (progressService is ProgressService)
             {
@@ -70,7 +70,7 @@ namespace ChocolateyGui.Views.Windows
                 {
                     Title = title,
                     IsCancelable = isCancelable,
-                    OutputBuffer = _progressService.Output
+                    OutputBufferCollection = _progressService.Output
                 };
 
                 if (settings == null)

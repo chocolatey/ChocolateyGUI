@@ -18,8 +18,9 @@ namespace ChocolateyGui.Services
     {
         bool IsLoading { get; }
 
-        ObservableRingBuffer<PowerShellOutputLine> Output { get; }
+        ObservableRingBufferCollection<PowerShellOutputLine> Output { get; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
         CancellationToken GetCancellationToken();
 
         Task<MessageDialogResult> ShowMessageAsync(string title, string message);

@@ -24,12 +24,12 @@ namespace ChocolateyGui.Services.PackageServices
 
         private static readonly MemoryCache Cache = MemoryCache.Default;
 
-        public static async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source)
+        public static async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel, Uri source)
         {
             var service = GetFeed(source);
 
             var feedQuery =
-                    (DataServiceQuery<V2FeedPackage>)service.Packages.Where(package => package.Id == vm.Id && package.Version == vm.Version.ToString());
+                    (DataServiceQuery<V2FeedPackage>)service.Packages.Where(package => package.Id == viewModel.Id && package.Version == viewModel.Version.ToString());
             var result = await Task.Factory.FromAsync(feedQuery.BeginExecute, ar => feedQuery.EndExecute(ar), null);
             var v2FeedPackages = result as IList<V2FeedPackage> ?? result.ToList();
 
@@ -39,7 +39,7 @@ namespace ChocolateyGui.Services.PackageServices
             }
 
             var packageInfo = v2FeedPackages.Single();
-            return AutoMapper.Mapper.Map(packageInfo, vm);
+            return AutoMapper.Mapper.Map(packageInfo, viewModel);
         }
 
         public static async Task<IPackageViewModel> GetLatest(string id, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)

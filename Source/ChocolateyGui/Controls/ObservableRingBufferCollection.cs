@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="ObservableRingBuffer.cs">
+// <copyright company="Chocolatey" file="ObservableRingBufferCollection.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ namespace ChocolateyGui.Controls
     /// </summary>
     /// <typeparam name="T">The generic type of the items stored within the ring buffer.</typeparam>
     [DebuggerDisplay("Count = {Count}")]
-    public sealed class ObservableRingBuffer<T> : INotifyCollectionChanged, ICollection<T>
+    public sealed class ObservableRingBufferCollection<T> : INotifyCollectionChanged, ICollection<T>
     {
         /// <summary>
         /// the internal buffer
@@ -39,14 +39,14 @@ namespace ChocolateyGui.Controls
         private long _version;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObservableRingBuffer{T}"/> class with a 
-        /// specified cache size. 
+        /// Initializes a new instance of the <see cref="ObservableRingBufferCollection{T}"/> class. 
+        /// The observable ring buffer collection.
         /// </summary>
         /// <param name="capacity">
         /// The maximum count of items to be stored within 
         /// the ring buffer.
         /// </param>
-        public ObservableRingBuffer(int capacity)
+        public ObservableRingBufferCollection(int capacity)
         {
             // validate capacity
             if (capacity <= 0)

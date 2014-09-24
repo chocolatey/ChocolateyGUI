@@ -21,7 +21,7 @@ namespace ChocolateyGui.Services
     public class ProgressService : ObservableBase, IProgressService
     {
         private readonly AsyncLock _lock;
-        private readonly ObservableRingBuffer<PowerShellOutputLine> _output;
+        private readonly ObservableRingBufferCollection<PowerShellOutputLine> _output;
         private CancellationTokenSource _cst = null;
         private bool _isLoading;
         private int _loadingItems;
@@ -33,7 +33,7 @@ namespace ChocolateyGui.Services
         {
             this._isLoading = false;
             this._loadingItems = 0;
-            this._output = new ObservableRingBuffer<PowerShellOutputLine>(100);
+            this._output = new ObservableRingBufferCollection<PowerShellOutputLine>(100);
             this._lock = new AsyncLock();
         }
 
@@ -58,7 +58,7 @@ namespace ChocolateyGui.Services
             }
         }
 
-        public ObservableRingBuffer<PowerShellOutputLine> Output
+        public ObservableRingBufferCollection<PowerShellOutputLine> Output
         {
             get
             {

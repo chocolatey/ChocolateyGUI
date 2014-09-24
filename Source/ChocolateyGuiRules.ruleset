@@ -2,6 +2,22 @@
 <RuleSet Name="ChocoolateyGUI Rules" Description="This rule set contains all rules. Running this rule set may result in a large number of warnings being reported. Use this rule set to get a comprehensive picture of all issues in your code. This can help you decide which of the more focused rule sets are most appropriate to run for your projects." ToolsVersion="12.0">
   <IncludeAll Action="Warning" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1001" Action="None" />
+    <Rule Id="CA1003" Action="None" />
+    <Rule Id="CA1006" Action="None" />
+    <Rule Id="CA1009" Action="None" />
+    <Rule Id="CA1026" Action="None" />
+    <Rule Id="CA1034" Action="None" />
+    <Rule Id="CA1045" Action="None" />
+    <Rule Id="CA1056" Action="None" />
+    <Rule Id="CA1303" Action="None" />
     <Rule Id="CA1720" Action="None" />
+    <Rule Id="CA1800" Action="None" />
+    <Rule Id="CA1811" Action="None" />
+    <Rule Id="CA1815" Action="None" />
+    <Rule Id="CA1819" Action="None" />
+    <Rule Id="CA2201" Action="None" />
+    <Rule Id="CA2210" Action="None" />
+    <Rule Id="CA2227" Action="None" />
   </Rules>
 </RuleSet>

@@ -4,31 +4,41 @@
       <Word />
     </Unrecognized>
     <Recognized>
+      <Word>Chocolatey</Word>
       <Word>CursorPosition</Word>
       <Word>Fac</Word>
-      <Word>Chocolatey</Word>
-      <Word>NotImplementedException</Word>
       <Word>GetBufferContents</Word>
-      <Word>SetBufferContents</Word>
-      <Word>ReadKey</Word>
-      <Word>ScrollBufferContents</Word>
+      <Word>Gui</Word>
+      <Word>Io</Word>
+      <Word>IProvideValueTarget</Word>
+      <Word>NotImplementedException</Word>
+      <Word>Nupkg</Word>
+      <Word>Nuspec</Word>
+      <Word>OrderBy</Word>
+      <Word>OrderByDescending</Word>
       <Word>PromptForChoice</Word>
       <Word>PromptForCredential</Word>
+      <Word>ReadKey</Word>
       <Word>ReadLine</Word>
       <Word>ReadLineAsSecureString</Word>
-      <Word>IProvideValueTarget</Word>
-      <Word>Gui</Word>
-      <Word>IoC</Word>
+      <Word>ScrollBufferContents</Word>
+      <Word>SetBufferContents</Word>
+      <Word>ThenBy</Word>
+      <Word>ThenByDescending</Word>
     </Recognized>
     <Deprecated>
       <Term />
     </Deprecated>
+    <DiscreteExceptions>
+      <Term>OrderBy</Term>
+      <Term>ThenBy</Term>
+      <Term>ThenByDescending</Term>
+    </DiscreteExceptions>
   </Words>
   <Acronyms>
     <CasingExceptions>
       <Acronym>Vm</Acronym>
       <Acronym>Gui</Acronym>
-      <Acronym>IoC</Acronym>
     </CasingExceptions>
   </Acronyms>
 </Dictionary>

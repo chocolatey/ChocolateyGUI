@@ -91,7 +91,7 @@ namespace ChocolateyGui.Utilities.Extensions
             if (!(new OrderByVistor(query.Expression)).HasOrderBy)
             {
                 throw new InvalidOperationException(
-                    "You can't call ThenBy on a query that isnt already ordered. First call OrderBy.");
+                    "You can't call ThenBy on a query that isn't already ordered. First call OrderBy.");
             }
 
             var targetProp = GetProperty<T>(propertyName);
@@ -122,7 +122,7 @@ namespace ChocolateyGui.Utilities.Extensions
             if (!(new OrderByVistor(query.Expression)).HasOrderBy)
             {
                 throw new InvalidOperationException(
-                    "You can't call ThenByDescending on a query that isnt already ordered. First call OrderByDescending.");
+                    "You can't call ThenByDescending on a query that isn't already ordered. First call OrderByDescending.");
             }
 
             var targetProp = GetProperty<T>(propertyName);

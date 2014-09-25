@@ -87,12 +87,23 @@ Task -Name __InstallChocolatey -Description $private -Action {
 		Write-Host "Chocolatey already installed";
 	}
 	else {
-		Write-Host "Chocolatey is not installed, installing Chocolatey...";
-		Invoke-Expression ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'));
-		
-		$script:chocolateyDir = Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey
-		if (-not (Test-Path $script:chocolateyDir)) {
-			throw "Error installing Chocolatey"
+		try {
+			Write-Host "Chocolatey is not installed, installing Chocolatey...";
+			
+			exec {
+				Invoke-Expression ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'));
+			}
+			
+			$script:chocolateyDir = Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey
+			if (-not (Test-Path $script:chocolateyDir)) {
+				throw "Error installing Chocolatey"
+			}
+
+			Write-Host ("************ Install PSBuild Successful ************")
+		}
+		catch {
+			Write-Error $_
+			Write-Host ("************ Install PSBuild Failed ************")
 		}
 	}
 }
@@ -100,41 +111,67 @@ Task -Name __InstallChocolatey -Description $private -Action {
 Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Description $private -Action {
 	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
 	$inspectCodeExe = Join-Path $chocolateyBinDir -ChildPath "inspectcode.exe";
-
 	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
-	Write-Output "Where is Choco: $choco";
 
-	if (-not (Test-Path $inspectCodeExe)) {
-		Invoke-Expression "$choco install resharper-clt";
-		if ($LASTEXITCODE -ne 0) {
-			throw "Error installing resharper-clt";
+	try {
+		Write-Output "Running Install Command Line Tools..."
+
+		if (-not (Test-Path $inspectCodeExe)) {
+			exec {
+				Invoke-Expression "$choco install resharper-clt";
+			}
+		} else {
+			Write-Host "resharper-clt already installed";
 		}
-	} else {
-		Write-Host "resharper-clt already installed";
+
+		Write-Host ("************ Install Command Line Tools Successful ************")
 	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ Install Command Line Tools Failed ************")
+	}	
 }
 
 Task -Name __InstallPSBuild -Description $private -Action {
-	# Need a test here to see if this is actually required
-	(new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
-}
+	try {
+		Write-Output "Running Install PSBuild..."
+
+		exec {
+			# Need a test here to see if this is actually required
+			(new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
+		}
+
+		Write-Host ("************ Install PSBuild Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ Install PSBuild Failed ************")
+	}	
+}	
 
 Task -Name __UpdateReSharperCommandLineTools -Description $private -Action {
 	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
 
-	Invoke-Expression "$choco update resharper-clt";
+	try {
+		Write-Output "Running Update Command Line Tools..."
 
-	if ($LASTEXITCODE -ne 0) {
-		throw "Error updating resharper-clt";
+		exec {
+			Invoke-Expression "$choco update resharper-clt";
+		}
+
+		Write-Host ("************ Update Command Line Tools Successful ************")
 	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ Update Command Line Tools Failed ************")
+	}	
 }
 
 # primary targets
 
 Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Description "Complete build, including creation of Chocolatey Package."
 
-
-Task -Name InspectCodeForProblems -Depends RunDupFinder, RunInspectCode -Description "Complete build, including running dupfinder, and inspectcode."
+Task -Name InspectCodeForProblems -Depends PackageSolution, RunDupFinder, RunInspectCode -Description "Complete build, including running dupfinder, and inspectcode."
 
 Task -Name DeploySolutionToMyGet -Depends InspectCodeForProblems, DeployPacakgeToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
@@ -176,10 +213,8 @@ Task -Name RunInspectCode -Depends __InstallReSharperCommandLineTools -Descripti
 	$buildScriptsDirectory = get-buildScriptsDirectory;
 	$inspectCodeConfigFile = Join-Path $buildScriptsDirectory -ChildPath "inspectcode.config";
 
-	Invoke-Expression "$inspectCodeExe /config=$inspectCodeConfigFile";
-
-	if ($LASTEXITCODE -ne 0) {
-		throw "Error running InspectCode";
+	exec {
+		Invoke-Expression "$inspectCodeExe /config=$inspectCodeConfigFile";
 	}
 }
 
@@ -189,10 +224,8 @@ Task -Name RunDupFinder -Depends __InstallReSharperCommandLineTools -Description
 	$buildScriptsDirectory = get-buildScriptsDirectory;
 	$dupFinderConfigFile = Join-Path $buildScriptsDirectory -ChildPath "dupfinder.config";
 	
-	Invoke-Expression "$dupFinderExe /config=$dupFinderConfigFile";
-
-	if ($LASTEXITCODE -ne 0) {
-		throw "Error running DupFinder";
+	exec {
+		Invoke-Expression "$dupFinderExe /config=$dupFinderConfigFile";
 	}
 }
 

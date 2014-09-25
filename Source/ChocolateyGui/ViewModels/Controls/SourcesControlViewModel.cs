@@ -19,21 +19,31 @@ namespace ChocolateyGui.ViewModels.Controls
 
     public class SourcesControlViewModel : ObservableBase, ISourcesControlViewModel, IWeakEventListener
     {
-        private readonly Func<string, Uri, Type, SourceTabViewModel> _sourceVmFactory;
+        private readonly Func<string, Uri, Type, SourceTabViewModel> sourceViewModelFactory;
 
         private SourceTabViewModel _selectedSource;
 
-        public SourcesControlViewModel(ISourceService sourceService, Func<string, Uri, Type, SourceTabViewModel> sourceVmFactory)
+        public SourcesControlViewModel(ISourceService sourceService, Func<string, Uri, Type, SourceTabViewModel> sourceViewModelFactory)
         {
-            this._sourceVmFactory = sourceVmFactory;
+            if (sourceService == null)
+            {
+                throw new ArgumentNullException("sourceService");
+            }
+
+            if (sourceViewModelFactory == null)
+            {
+                throw new ArgumentNullException("sourceViewModelFactory");
+            }
+
+            this.sourceViewModelFactory = sourceViewModelFactory;
             this.Sources = new ObservableCollection<SourceTabViewModel>
             {
-                sourceVmFactory("This PC", null, typeof(LocalSourceControl))
+                sourceViewModelFactory("This PC", null, typeof(LocalSourceControl))
             };
 
             foreach (var source in sourceService.GetSources())
             {
-                this.Sources.Add(this._sourceVmFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
+                this.Sources.Add(this.sourceViewModelFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
             }
 
             this.SelectedSource = this.Sources[0];
@@ -70,7 +80,7 @@ namespace ChocolateyGui.ViewModels.Controls
                 {
                     foreach (var source in eventArgs.AddedSources)
                     {
-                        this.Sources.Add(this._sourceVmFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
+                        this.Sources.Add(this.sourceViewModelFactory(source.Name, new Uri(source.Url), typeof(RemoteSourceControl)));
                     }
                 }
 

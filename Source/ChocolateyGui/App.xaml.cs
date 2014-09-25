@@ -37,6 +37,11 @@ namespace ChocolateyGui
 
         protected override void OnExit(ExitEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
+
             Log.InfoFormat("Exiting with code {0}.", e.ApplicationExitCode);
             Log.ForceFlush();
         }

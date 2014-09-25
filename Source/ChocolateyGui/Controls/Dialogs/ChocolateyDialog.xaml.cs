@@ -35,15 +35,15 @@ namespace ChocolateyGui.Controls.Dialogs
 
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(ChocolateyDialog), new PropertyMetadata("Cancel"));
 
-        public static readonly DependencyProperty OutputBufferProperty = DependencyProperty.Register(
-            "OutputBuffer",
-            typeof(ObservableRingBuffer<PowerShellOutputLine>),
+        public static readonly DependencyProperty OutputBufferCollectionProperty = DependencyProperty.Register(
+            "OutputBufferCollectionCollection",
+            typeof(ObservableRingBufferCollection<PowerShellOutputLine>),
             typeof(ChocolateyDialog),
             new PropertyMetadata(
-                default(ObservableRingBuffer<PowerShellOutputLine>),
+                default(ObservableRingBufferCollection<PowerShellOutputLine>),
                 new PropertyChangedCallback((s, e) =>
             {
-                ((ChocolateyDialog)s).PART_Console.Buffer = (ObservableRingBuffer<PowerShellOutputLine>)e.NewValue;
+                ((ChocolateyDialog)s).PART_Console.BufferCollection = (ObservableRingBufferCollection<PowerShellOutputLine>)e.NewValue;
             })));
 
         public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ChocolateyDialog), new PropertyMetadata(default(string)));
@@ -55,13 +55,7 @@ namespace ChocolateyGui.Controls.Dialogs
 
             if (parentWindow.MetroDialogOptions.ColorScheme == MetroDialogColorScheme.Theme)
             {
-                try
-                {
-                    this.ProgressBarForeground = this.FindResource("AccentColorBrush") as Brush;
-                }
-                catch (Exception)
-                {
-                }
+                this.ProgressBarForeground = this.FindResource("AccentColorBrush") as Brush;
             }
             else
             {
@@ -86,10 +80,10 @@ namespace ChocolateyGui.Controls.Dialogs
             set { this.SetValue(NegativeButtonTextProperty, value); }
         }
 
-        public ObservableRingBuffer<PowerShellOutputLine> OutputBuffer
+        public ObservableRingBufferCollection<PowerShellOutputLine> OutputBufferCollection
         {
-            get { return (ObservableRingBuffer<PowerShellOutputLine>)this.GetValue(OutputBufferProperty); }
-            set { this.SetValue(OutputBufferProperty, value); }
+            get { return (ObservableRingBufferCollection<PowerShellOutputLine>)this.GetValue(OutputBufferCollectionProperty); }
+            set { this.SetValue(OutputBufferCollectionProperty, value); }
         }
 
         public Brush ProgressBarForeground

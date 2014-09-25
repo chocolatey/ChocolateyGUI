@@ -27,15 +27,20 @@ namespace ChocolateyGui.Views.Controls
         private readonly Lazy<INavigationService> _navigationService;
         private readonly IRemoteSourceControlViewModel _viewModel;
 
-        public RemoteSourceControl(IRemoteSourceControlViewModel vm, Lazy<INavigationService> navigationService)
+        public RemoteSourceControl(IRemoteSourceControlViewModel viewModel, Lazy<INavigationService> navigationService)
         {
+            if (viewModel == null)
+            {
+                throw new ArgumentNullException("viewModel");
+            }
+
             InitializeComponent();
-            DataContext = vm;
-            this._viewModel = vm;
+            DataContext = viewModel;
+            this._viewModel = viewModel;
 
             this._navigationService = navigationService;
 
-            Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(vm.Packages, "CollectionChanged")
+            Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(viewModel.Packages, "CollectionChanged")
                 .Throttle(TimeSpan.FromMilliseconds(50))
                 .Distinct()
                 .ObserveOnDispatcher()

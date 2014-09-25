@@ -34,6 +34,7 @@
     <RunCodeAnalysis>False</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\ChocolateyGuiRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
     <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysisRestore>False</RunCodeAnalysisRestore>
   </PropertyGroup>
@@ -48,6 +49,7 @@
     <RunCodeAnalysis>True</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\ChocolateyGuiRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
     <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysisRestore>True</RunCodeAnalysisRestore>
   </PropertyGroup>
@@ -159,9 +161,10 @@
     </Compile>
     <Compile Include="Controls\Dialogs\ChocolateyDialogController.cs" />
     <Compile Include="Controls\FauxPowerShellConsole.cs" />
-    <Compile Include="Controls\ObservableRingBuffer.cs" />
+    <Compile Include="Controls\ObservableRingBufferCollection.cs" />
     <Compile Include="Controls\ChocolateyHost.cs" />
     <Compile Include="Enums\PackagesChangedEventType.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IoC\AutoFacConfiguration.cs" />
     <Compile Include="Models\PackageConfigEntry.cs" />
     <Compile Include="Models\PackageMetadata.cs" />
@@ -305,7 +308,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="CodeAnalysisRules.ruleset" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ChocolateyGui.ChocolateyFeedService.FeedContext_x0060_1.datasource" />
     <None Include="Properties\Settings.settings">
@@ -340,6 +342,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\BuildScripts\CodeAnalysis.props" Condition="Exists('..\..\BuildScripts\CodeAnalysis.props')" />

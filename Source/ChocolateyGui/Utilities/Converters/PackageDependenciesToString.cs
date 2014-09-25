@@ -46,7 +46,7 @@ namespace ChocolateyGui.Utilities.Converters
                 }
 
                 return result;
-            }).Where(dependecy => dependecy != string.Empty);
+            }).Where(dependecy => !string.IsNullOrEmpty(dependecy));
 
             return string.Join(", ", items);
         }

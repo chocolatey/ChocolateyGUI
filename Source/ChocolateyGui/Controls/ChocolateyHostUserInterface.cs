@@ -115,6 +115,11 @@ namespace ChocolateyGui.Controls
 
         public override void WriteProgress(long sourceId, ProgressRecord record)
         {
+            if (record == null)
+            {
+                throw new ArgumentNullException("record");
+            }
+
             this._progressService.Report(record.PercentComplete);
         }
 

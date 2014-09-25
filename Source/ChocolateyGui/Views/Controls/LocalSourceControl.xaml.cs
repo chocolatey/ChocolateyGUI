@@ -19,14 +19,14 @@ namespace ChocolateyGui.Views.Controls
     {
         private readonly Lazy<INavigationService> _navigationService; 
 
-        public LocalSourceControl(ILocalSourceControlViewModel vm, Lazy<INavigationService> navigationService)
+        public LocalSourceControl(ILocalSourceControlViewModel viewModel, Lazy<INavigationService> navigationService)
         {
             InitializeComponent();
-            DataContext = vm;
+            DataContext = viewModel;
 
             this._navigationService = navigationService;
 
-            Loaded += vm.Loaded;
+            Loaded += viewModel.Loaded;
         }
 
         private async void PackageDoubleClick(object sender, MouseButtonEventArgs e)

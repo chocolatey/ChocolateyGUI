@@ -4,7 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -22,6 +24,8 @@ using System.Windows;
 [assembly: AssemblyCopyright("Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en-US")]
+[assembly: CLSCompliant(true)]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

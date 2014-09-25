@@ -8,6 +8,7 @@ namespace ChocolateyGui.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using ChocolateyGui.Models;
     using ChocolateyGui.Properties;
@@ -17,15 +18,20 @@ namespace ChocolateyGui.Services
     {
         public event SourcesChangedEventHandler SourcesChanged;
 
-        public void AddSource(SourceViewModel svm)
+        public void AddSource(SourceViewModel sourceViewModel)
         {
-            Settings.Default.sources.Add(string.Format("{0}|{1}", svm.Name, svm.Url));
+            if (sourceViewModel == null)
+            {
+                throw new ArgumentNullException("sourceViewModel");
+            }
+
+            Settings.Default.sources.Add(string.Format(CultureInfo.CurrentCulture, "{0}|{1}", sourceViewModel.Name, sourceViewModel.Url));
             var sourcesChangedEvent = this.SourcesChanged;
             if (sourcesChangedEvent != null)
             {
                 sourcesChangedEvent(
                     this,
-                    new SourcesChangedEventArgs(new List<SourceViewModel> { svm }, new List<SourceViewModel>()));
+                    new SourcesChangedEventArgs(new List<SourceViewModel> { sourceViewModel }, new List<SourceViewModel>()));
             }
 
             Settings.Default.Save();
@@ -37,7 +43,7 @@ namespace ChocolateyGui.Services
             var defaultSource =
                 this.GetSources()
                     .FirstOrDefault(
-                        s => string.Compare(defaultSourceName, s.Name, StringComparison.InvariantCultureIgnoreCase) == 0);
+                        s => string.Compare(defaultSourceName, s.Name, StringComparison.OrdinalIgnoreCase) == 0);
 
             return defaultSource ?? this.GetSources().First();
         }
@@ -49,15 +55,20 @@ namespace ChocolateyGui.Services
                 .Select(parts => new SourceViewModel { Name = parts[0], Url = parts[1] });
         }
 
-        public void RemoveSource(SourceViewModel svm)
+        public void RemoveSource(SourceViewModel viewModel)
         {
-            Settings.Default.sources.Remove(string.Format("{0}|{1}", svm.Name, svm.Url));
+            if (viewModel == null)
+            {
+                throw new ArgumentNullException("viewModel");
+            }
+
+            Settings.Default.sources.Remove(string.Format(CultureInfo.CurrentCulture, "{0}|{1}", viewModel.Name, viewModel.Url));
             var sourcesChangedEvent = this.SourcesChanged;
             if (sourcesChangedEvent != null)
             {
                 sourcesChangedEvent(
                     this,
-                    new SourcesChangedEventArgs(new List<SourceViewModel>(), new List<SourceViewModel> { svm }));
+                    new SourcesChangedEventArgs(new List<SourceViewModel>(), new List<SourceViewModel> { viewModel }));
             }
 
             Settings.Default.Save();

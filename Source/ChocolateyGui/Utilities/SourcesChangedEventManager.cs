@@ -29,14 +29,14 @@ namespace ChocolateyGui.Utilities
             }
         }
 
-        public static void AddListener(ISourceService serivce, IWeakEventListener listener)
+        public static void AddListener(ISourceService service, IWeakEventListener listener)
         {
-            CurrentManager.ProtectedAddListener(serivce, listener);
+            CurrentManager.ProtectedAddListener(service, listener);
         }
 
-        public static void RemoveListener(ISourceService serivce, IWeakEventListener listener)
+        public static void RemoveListener(ISourceService service, IWeakEventListener listener)
         {
-            CurrentManager.ProtectedRemoveListener(serivce, listener);
+            CurrentManager.ProtectedRemoveListener(service, listener);
         }
 
         protected override void StartListening(object source)

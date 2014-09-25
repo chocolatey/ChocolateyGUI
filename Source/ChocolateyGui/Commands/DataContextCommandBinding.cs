@@ -6,6 +6,7 @@
 
 namespace ChocolateyGui.Commands
 {
+    using System;
     using System.Windows;
     using System.Windows.Input;
 
@@ -95,6 +96,11 @@ namespace ChocolateyGui.Commands
         /// <param name="e">The event data.</param>
         protected internal override void OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
+
             var target = GetDataContext(sender);
             bool canExecute;
             if (!CommandExecutionManager.TryExecuteCommand(target, e.Parameter, false, this.Executed, this.CanExecute, out canExecute))
@@ -115,6 +121,11 @@ namespace ChocolateyGui.Commands
         /// <param name="e">The event data.</param>
         protected internal override void OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
+
             var target = GetDataContext(sender);
             bool canExecute;
             if (CommandExecutionManager.TryExecuteCommand(
@@ -138,6 +149,11 @@ namespace ChocolateyGui.Commands
         /// <param name="e">The event data.</param>
         protected internal override void OnPreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
+
             var target = GetDataContext(sender);
             bool canExecute;
             if (!CommandExecutionManager.TryExecuteCommand(target, e.Parameter, false, this.PreviewExecuted, this.PreviewCanExecute, out canExecute))
@@ -158,6 +174,11 @@ namespace ChocolateyGui.Commands
         /// <param name="e">The event data.</param>
         protected internal override void OnPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
+
             var target = GetDataContext(sender);
             bool canExecute;
             if (CommandExecutionManager.TryExecuteCommand(

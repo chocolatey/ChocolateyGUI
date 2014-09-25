@@ -14,12 +14,14 @@ namespace ChocolateyGui.Services
     {
         event SourcesChangedEventHandler SourcesChanged;
 
-        void AddSource(SourceViewModel svm);
+        void AddSource(SourceViewModel sourceViewModel);
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
         SourceViewModel GetDefaultSource();
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
         IEnumerable<SourceViewModel> GetSources();
 
-        void RemoveSource(SourceViewModel svm);
+        void RemoveSource(SourceViewModel viewModel);
     }
 }

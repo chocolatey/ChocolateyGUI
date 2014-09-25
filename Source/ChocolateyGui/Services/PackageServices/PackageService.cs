@@ -26,6 +26,11 @@ namespace ChocolateyGui.Services
             Func<IPackageViewModel> packageFactory,
             Func<Type, ILogService> logFunc)
         {
+            if (logFunc == null)
+            {
+                throw new ArgumentNullException("logFunc");
+            }
+
             this._progressService = progressService;
             this._sourceService = sourceService;
             this._packageFactory = packageFactory;
@@ -126,7 +131,7 @@ namespace ChocolateyGui.Services
             return null;
         }
 
-        public async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel vm, Uri source = null)
+        public async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel, Uri source = null)
         {
             await this._progressService.StartLoading("Loading Package Information");
             this._progressService.WriteMessage("Loading remote package information...");
@@ -138,7 +143,7 @@ namespace ChocolateyGui.Services
                 var defaultSource = new Uri(defaultSourceVm.Url);
                 if (defaultSource.Scheme == "http" || defaultSource.Scheme == "https")
                 {
-                    var result = await ODataPackageService.EnsureIsLoaded(vm, defaultSource);
+                    var result = await ODataPackageService.EnsureIsLoaded(viewModel, defaultSource);
                     if (result != null)
                     {
                         await this._progressService.StopLoading();
@@ -152,7 +157,7 @@ namespace ChocolateyGui.Services
                     var currentSource = new Uri(sourceViewModel.Url);
                     if (currentSource.Scheme == "http" || currentSource.Scheme == "https")
                     {
-                        var result = await ODataPackageService.EnsureIsLoaded(vm, currentSource);
+                        var result = await ODataPackageService.EnsureIsLoaded(viewModel, currentSource);
                         if (result == null)
                         {
                             continue;
@@ -168,7 +173,7 @@ namespace ChocolateyGui.Services
             {
                 if (source.Scheme == "http" || source.Scheme == "https")
                 {
-                    var result = await ODataPackageService.EnsureIsLoaded(vm, source);
+                    var result = await ODataPackageService.EnsureIsLoaded(viewModel, source);
                     await this._progressService.StopLoading();
                     if (result != null)
                     {

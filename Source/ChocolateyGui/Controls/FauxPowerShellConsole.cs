@@ -8,6 +8,7 @@ namespace ChocolateyGui.Controls
 {
     using System;
     using System.Collections.Specialized;
+    using System.Globalization;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
@@ -27,9 +28,9 @@ namespace ChocolateyGui.Controls
         /// <summary>
         /// The input buffer the console writes to the text box
         /// </summary>
-        public static readonly DependencyProperty BufferProperty = DependencyProperty.Register(
-            "Buffer",
-            typeof(ObservableRingBuffer<PowerShellOutputLine>),
+        public static readonly DependencyProperty BufferCollectionProperty = DependencyProperty.Register(
+            "BufferCollectionCollection",
+            typeof(ObservableRingBufferCollection<PowerShellOutputLine>),
             typeof(FauxPowerShellConsole),
             new FrameworkPropertyMetadata
                 {
@@ -53,7 +54,7 @@ namespace ChocolateyGui.Controls
             : base(new FlowDocument())
         {
             var hashAlg = MD5.Create();
-            this._getNameHash = (unhashed) => "_" + hashAlg.ComputeHash(Encoding.UTF8.GetBytes(unhashed)).Aggregate(new StringBuilder(), (sb, piece) => sb.Append(piece.ToString("X2"))).ToString();
+            this._getNameHash = (unhashed) => "_" + hashAlg.ComputeHash(Encoding.UTF8.GetBytes(unhashed)).Aggregate(new StringBuilder(), (sb, piece) => sb.Append(piece.ToString("X2", CultureInfo.CurrentCulture))).ToString();
 
             this._backingParagraph = new Paragraph();
             Document.Blocks.Add(this._backingParagraph);
@@ -61,19 +62,24 @@ namespace ChocolateyGui.Controls
 
         private delegate void RunStringOnUI(PowerShellOutputLine line);
 
-        public ObservableRingBuffer<PowerShellOutputLine> Buffer
+        public ObservableRingBufferCollection<PowerShellOutputLine> BufferCollection
         {
-            get { return this.GetValue<ObservableRingBuffer<PowerShellOutputLine>>(BufferProperty); }
-            set { this.SetValue(BufferProperty, value); }
+            get { return this.GetValue<ObservableRingBufferCollection<PowerShellOutputLine>>(BufferCollectionProperty); }
+            set { this.SetValue(BufferCollectionProperty, value); }
         }
 
-        protected T GetValue<T>(DependencyProperty dp)
+        protected T GetValue<T>(DependencyProperty dependencyProperty)
         {
-            return (T)this.GetValue(dp);
+            return (T)this.GetValue(dependencyProperty);
         }
 
         protected void OnBufferUpdated(object sender, NotifyCollectionChangedEventArgs args)
         {
+            if (args == null)
+            {
+                throw new ArgumentNullException("args");
+            }
+
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Reset:
@@ -91,11 +97,11 @@ namespace ChocolateyGui.Controls
                                                   Text = item.Text,
                                                   Name = _getNameHash(line.Text),
                                                   Foreground =
-                                                      line.Type == PowerShellLineType.Output
+                                                      line.LineType == PowerShellLineType.Output
                                                           ? Brushes.White
                                                           : Brushes.Red,
                                                   Background =
-                                                      line.Type == PowerShellLineType.Output
+                                                      line.LineType == PowerShellLineType.Output
                                                           ? Brushes.Transparent
                                                           : Brushes.Black
                                               };
@@ -147,10 +153,10 @@ namespace ChocolateyGui.Controls
             // If we had a previous buffer, clear our event holder.
             if (args.OldValue != null)
             {
-                ((ObservableRingBuffer<PowerShellOutputLine>)args.OldValue).CollectionChanged -= this.OnBufferUpdated;
+                ((ObservableRingBufferCollection<PowerShellOutputLine>)args.OldValue).CollectionChanged -= this.OnBufferUpdated;
             }
 
-            var newBuffer = (ObservableRingBuffer<PowerShellOutputLine>)args.NewValue;
+            var newBuffer = (ObservableRingBufferCollection<PowerShellOutputLine>)args.NewValue;
             newBuffer.CollectionChanged += this.OnBufferUpdated;
             
             // Reset the current console.

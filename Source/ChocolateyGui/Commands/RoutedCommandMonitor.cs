@@ -155,13 +155,13 @@ namespace ChocolateyGui.Commands
         /// Provides access to the CommandBindingsInternal property for a target type.
         /// </summary>
         /// <typeparam name="TElementType">
-        /// Specified Target Type
+        /// Specified Target LineType
         /// </typeparam>
         private class CommandBindingsProvider<TElementType>
         {
             // _GetCommandBindings is an Func that is used to access the
             // CommandBindingsInternal property of UIElements, UIElement3D sand ContentElements.
-            private static Func<TElementType, CommandBindingCollection> _getCommandBindings;
+            private Func<TElementType, CommandBindingCollection> _getCommandBindings;
                 ////Delegate.CreateDelegate(typeof(CommandBindingsInternalGetter), null,
                 ////typeof(TElementType).GetProperty("CommandBindingsInternal", BindingFlags.Instance | BindingFlags.NonPublic)
                 ////.GetGetMethod(true));
@@ -175,13 +175,13 @@ namespace ChocolateyGui.Commands
             {
                 get 
                 {
-                    if (_getCommandBindings == null)
+                    if (this._getCommandBindings == null)
                     {
                         var param = Expression.Parameter(typeof(TElementType));
-                        _getCommandBindings = Expression.Lambda<Func<TElementType, CommandBindingCollection>>(Expression.Property(param, "CommandBindingsInternal"), param).Compile();
+                        this._getCommandBindings = Expression.Lambda<Func<TElementType, CommandBindingCollection>>(Expression.Property(param, "CommandBindingsInternal"), param).Compile();
                     }
 
-                    return _getCommandBindings;
+                    return this._getCommandBindings;
                 }
             }
         }

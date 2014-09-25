@@ -40,6 +40,11 @@ namespace ChocolateyGui.ViewModels.Controls
 
         public LocalSourceControlViewModel(IChocolateyService chocolateyService, IProgressService progressService, Func<Type, ILogService> logFactory)
         {
+            if (logFactory == null)
+            {
+                throw new ArgumentNullException("logFactory");
+            }
+
             this._chocolateyService = chocolateyService;
             this._progressService = progressService;
             this._logService = logFactory(typeof(LocalSourceControlViewModel));
@@ -84,7 +89,7 @@ namespace ChocolateyGui.ViewModels.Controls
             return this.Packages.Any(p => p.CanUpdate);
         }
 
-        public async void Loaded(object sender, EventArgs args)
+        public async void Loaded(object sender, EventArgs e)
         {
             try
             {
@@ -96,9 +101,9 @@ namespace ChocolateyGui.ViewModels.Controls
                 await this.LoadPackages();
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                    .Where(e => e.EventArgs.PropertyName == "MatchWord" || e.EventArgs.PropertyName == "SearchQuery")
+                    .Where(eventPattern => eventPattern.EventArgs.PropertyName == "MatchWord" || eventPattern.EventArgs.PropertyName == "SearchQuery")
                     .ObserveOnDispatcher()
-                    .Subscribe(e => this.FilterPackages());
+                    .Subscribe(eventPattern => this.FilterPackages());
 
                 this._hasLoaded = true;
 
@@ -191,7 +196,7 @@ namespace ChocolateyGui.ViewModels.Controls
 
                     if (packageViewModel.LatestVersion == null)
                     {
-                        packageViewModel.RetriveLatestVersion().ConfigureAwait(false);
+                        packageViewModel.RetrieveLatestVersion().ConfigureAwait(false);
                     }
                 }
             }

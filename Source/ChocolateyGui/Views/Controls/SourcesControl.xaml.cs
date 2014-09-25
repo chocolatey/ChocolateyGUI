@@ -13,10 +13,10 @@ namespace ChocolateyGui.Views.Controls
     /// </summary>
     public partial class SourcesControl
     {
-        public SourcesControl(ISourcesControlViewModel vm)
+        public SourcesControl(ISourcesControlViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = vm;
+            DataContext = viewModel;
         }
     }
 }

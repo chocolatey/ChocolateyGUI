@@ -32,6 +32,11 @@ namespace ChocolateyGui.ViewModels.Windows
 
         public MainWindowViewModel(ISourceService sourceService, IProgressService progressService, Lazy<IPackageService> packageServiceLazy)
         {
+            if (sourceService == null)
+            {
+                throw new ArgumentNullException("sourceService");
+            }
+
             this._sourceService = sourceService;
             this._progressService = progressService;
             this._packageService = packageServiceLazy;
@@ -126,7 +131,7 @@ namespace ChocolateyGui.ViewModels.Windows
 
             if (
                 this.Sources.Any(
-                    s => string.Compare(s.Name, this.NewSourceName, StringComparison.InvariantCultureIgnoreCase) == 0))
+                    s => string.Compare(s.Name, this.NewSourceName, StringComparison.OrdinalIgnoreCase) == 0))
             {
                 return false;
             }
@@ -138,7 +143,7 @@ namespace ChocolateyGui.ViewModels.Windows
 
             if (
                 this.Sources.Any(
-                    s => string.Compare(s.Url, this.NewSourceUrl, StringComparison.InvariantCultureIgnoreCase) == 0))
+                    s => string.Compare(s.Url, this.NewSourceUrl, StringComparison.OrdinalIgnoreCase) == 0))
             {
                 return false;
             }

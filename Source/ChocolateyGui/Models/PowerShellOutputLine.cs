@@ -17,10 +17,10 @@ namespace ChocolateyGui.Models
 
     public class PowerShellOutputLine
     {
-        public PowerShellOutputLine(string text, PowerShellLineType type, bool newLine = true)
+        public PowerShellOutputLine(string text, PowerShellLineType lineType, bool newLine = true)
         {
             this.Text = text;
-            this.Type = type;
+            this.LineType = lineType;
             this.NewLine = newLine;
         }
 
@@ -28,6 +28,6 @@ namespace ChocolateyGui.Models
 
         public string Text { get; private set; }
 
-        public PowerShellLineType Type { get; private set; }
+        public PowerShellLineType LineType { get; private set; }
     }
 }

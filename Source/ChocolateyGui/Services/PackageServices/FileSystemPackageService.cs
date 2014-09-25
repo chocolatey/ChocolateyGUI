@@ -40,6 +40,7 @@ namespace ChocolateyGui.Services.PackageServices
             return await Search(queryString, chocolateyService, packageFactory, new PackageSearchOptions(), source);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "packageFactory", Justification = "TODO: Needs to be reviewed")]
         public static async Task<PackageSearchResults> Search(string queryString, IChocolateyService chocolateyService, Func<IPackageViewModel> packageFactory, PackageSearchOptions options, Uri source)
         {
             List<IPackageViewModel> packages;

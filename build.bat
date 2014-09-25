@@ -48,7 +48,7 @@ IF "%APPVEYOR%"=="" (
 
 	IF "%APPVEYOR_REPO_BRANCH%"=="develop" IF "%APPVEYOR_PULL_REQUEST_NUMBER%" NEQ "" (
 		ECHO Since we are on develop branch with a pull request number, we are just going to package the solution, with no deployment
-		powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 PackageSolution Release"
+		powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 InspectCodeForProblems Release"
 		GOTO :eof
 	)
 
@@ -60,7 +60,7 @@ IF "%APPVEYOR%"=="" (
 
 	IF "%APPVEYOR_REPO_BRANCH%"=="master" IF "%APPVEYOR_PULL_REQUEST_NUMBER%" NEQ "" (
 		ECHO Since we are on develop branch with a pull request number, we are just going to package the solution, with no deployment
-		powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 PackageSolution Release"
+		powershell -NoProfile -ExecutionPolicy bypass -Command "%~dp0BuildScripts\build.ps1 InspectCodeForProblems Release"
 		GOTO :eof
 	)
 )

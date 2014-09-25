@@ -8,6 +8,7 @@
         xmlns:services="clr-namespace:ChocolateyGui.Services"
         xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
         xmlns:commands="clr-namespace:ChocolateyGui.Commands"
+        xmlns:xaml="clr-namespace:Markdown.Xaml"
         mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         TitleForeground="{StaticResource Brown1Brush}"
@@ -15,16 +16,32 @@
 
     <Window.Resources>
         <converters:NullToVisibility x:Key="NullToVisibility"/>
+        <xaml:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" Markdown="{StaticResource Markdown}"/>
     </Window.Resources>
 
     <metro:MetroWindow.WindowCommands>
         <metro:WindowCommands>
             <Button x:Name="SettingsButton" Content="settings" Click="SettingsButton_OnClick" ClickMode="Release"/>
+            <Button x:Name="AboutButton" Content="about" Click="AboutButton_OnClick" ClickMode="Release" />
         </metro:WindowCommands>
     </metro:MetroWindow.WindowCommands>
 
     <metro:MetroWindow.Flyouts>
         <metro:FlyoutsControl>
+            <metro:Flyout x:Name="AboutFlyout" Header="About" Position="Right" Width="500" Theme="Accent">
+                <metro:MetroAnimatedSingleRowTabControl>
+                    <TabItem Header="ChocolateyGUI">Tab1</TabItem>
+                    <TabItem Header="Release Notes">
+                        <FlowDocumentScrollViewer 
+                                    Name="AvailablePackageDescription" AutomationProperties.Name="Package Description"
+                                    Grid.Row="3"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch"
+                                  Margin="5"
+                                  Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
+                    </TabItem>
+                </metro:MetroAnimatedSingleRowTabControl>
+            </metro:Flyout>
             <metro:Flyout x:Name="SettingsFlyout" Header="Settings" Position="Right" Width="500" Theme="Accent">
                 <StackPanel>
                     <Button x:Name="SourcesButton" HorizontalAlignment="Stretch" Style="{StaticResource SetttingsButtonStyle}" Click="SourcesButton_OnClick">

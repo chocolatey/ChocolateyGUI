@@ -123,6 +123,12 @@ namespace ChocolateyGui.Views.Windows
             SettingsFlyout.IsOpen = !SettingsFlyout.IsOpen;
         }
 
+        private void AboutButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            AboutFlyout.Width = Width / 3;
+            AboutFlyout.IsOpen = !AboutFlyout.IsOpen;
+        }
+
         private void SourcesButton_OnClick(object sender, RoutedEventArgs e)
         {
             SettingsFlyout.IsOpen = false;

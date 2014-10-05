@@ -30,14 +30,20 @@
         <metro:FlyoutsControl>
             <metro:Flyout x:Name="AboutFlyout" Header="About" Position="Right" Width="500" Theme="Accent">
                 <metro:MetroAnimatedSingleRowTabControl>
-                    <TabItem Header="ChocolateyGUI">Tab1</TabItem>
-                    <TabItem Header="Release Notes">
+                    <TabItem Header="ChocolateyGUI">
                         <FlowDocumentScrollViewer 
-                                    Name="AvailablePackageDescription" AutomationProperties.Name="Package Description"
-                                    Grid.Row="3"
+                                    Name="AboutInformation" AutomationProperties.Name="About Information"
                                   VerticalAlignment="Stretch"
                                   HorizontalAlignment="Stretch"
-                                  Margin="5"
+                                  Margin="10"
+                                  Document="{Binding AboutInformation, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>                        
+                    </TabItem>
+                    <TabItem Header="Release Notes">
+                        <FlowDocumentScrollViewer 
+                                    Name="ReleaseInformation" AutomationProperties.Name="Release Information"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch"
+                                  Margin="10"
                                   Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
                     </TabItem>
                 </metro:MetroAnimatedSingleRowTabControl>

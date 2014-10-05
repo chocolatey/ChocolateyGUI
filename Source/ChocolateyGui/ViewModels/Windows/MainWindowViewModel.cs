@@ -62,31 +62,19 @@ namespace ChocolateyGui.ViewModels.Windows
             set { this.SetPropertyValue(ref this._newSourceUrl, value); }
         }
 
+        public string AboutInformation
+        {
+            get
+            {
+                return ResourceReader.GetFromResources(this.GetType().Assembly, "ChocolateyGui.Resources.ABOUT.md");
+            }
+        }
+
         public string ReleaseNotes
         {
             get
             {
-                return @"
-##0.11.1 (February 24, 2013)
-
-BUGS:
-
- * uninstall should now work
- * program crashing when packages came out of cache.
-
-##0.11.0 (February 24, 2013)
-
-ENHANCEMENTS:
-
- * Many new features, including UI enhancements and auto building from MyGet.
- * Better logging and Log form so you can find those log files more easily.
- * In the settings you can empty the cache, better caching of packages and list
- * better parsing of dependencies
- * selecting of sources from the sources.xml file. For now just 2 sources.
- * release notes and copyright information in seperate tab
- * chocolatey run information in seperate tab
-
-";
+                return ResourceReader.GetFromResources(this.GetType().Assembly, "ChocolateyGui.Resources.CHANGELOG.md");
             }
         }
 

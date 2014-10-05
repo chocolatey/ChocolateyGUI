@@ -9,11 +9,11 @@ The following issues have been worked on in this release:
 
 The following issues have been worked on in this release:
 
-[#78](https://github.com/chocolatey/ChocolateyGUI/issues/78) - ChocolateyVersionUnknownException incorrectly thrown
-[#75](https://github.com/chocolatey/ChocolateyGUI/issues/75) - Move settings to main menu strip
-[#64](https://github.com/chocolatey/ChocolateyGUI/issues/64) - Fix typo in release notes for 0.11.0
-[#63](https://github.com/chocolatey/ChocolateyGUI/issues/63) - Include the chocolateyUninstall.ps1 in the nuspec file
-[#3](https://github.com/chocolatey/ChocolateyGUI/issues/3) - There's no uninstall script in the 0.0.5 package
+* [#78](https://github.com/chocolatey/ChocolateyGUI/issues/78) - ChocolateyVersionUnknownException incorrectly thrown
+* [#75](https://github.com/chocolatey/ChocolateyGUI/issues/75) - Move settings to main menu strip
+* [#64](https://github.com/chocolatey/ChocolateyGUI/issues/64) - Fix typo in release notes for 0.11.0
+* [#63](https://github.com/chocolatey/ChocolateyGUI/issues/63) - Include the chocolateyUninstall.ps1 in the nuspec file
+* [#3](https://github.com/chocolatey/ChocolateyGUI/issues/3) - There's no uninstall script in the 0.0.5 package
 
 ##0.11.1 (February 24, 2013)
 

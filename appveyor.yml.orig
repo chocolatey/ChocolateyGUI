@@ -1,0 +1,42 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: 1.0.{build}
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# clone directory
+clone_folder: C:\projects\ChocolateyGUI
+
+# environment variables
+environment:
+  MyGetApiKey:
+    secure: LeTveN6ryggcXR4fgZcaMOdvVHFxR6NNZZpaaxCG83D8waN4D1eEoLRv+5ZvLKLF
+  MyGetFeedUrl: https://www.myget.org/F/chocolateygui
+  ChocolateyApiKey:
+    secure: 2Sbie8uhFjl1v+NtLuR1oGcWnQE2M87jq0fSEwFOYcnNEC5qdwCkgVOG0MmC2Ffv
+  ChocolateyFeedUrl: http://chocolatey.org/api/v2/
+   
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+build_script:
+  - cmd: build.bat
+  
+test: off
+
+#---------------------------------#
+#      caching configuration      #
+#---------------------------------#
+
+cache:
+<<<<<<< HEAD
+  - Source\packages
+=======
+  - Source\packages
+>>>>>>> (#172) Added nuget package caching

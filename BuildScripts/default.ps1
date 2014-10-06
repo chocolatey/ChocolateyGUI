@@ -7,7 +7,6 @@ $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
-	$gitVersionExe = "..\Tools\GitVersion\GitVersion.exe";
 	$projectName = "ChocolateyGUI";
 }
 
@@ -132,23 +131,6 @@ Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Desc
 	}	
 }
 
-Task -Name __InstallPSBuild -Description $private -Action {
-	try {
-		Write-Output "Running Install PSBuild..."
-
-		exec {
-			# Need a test here to see if this is actually required
-			(new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
-		}
-
-		Write-Host ("************ Install PSBuild Successful ************")
-	}
-	catch {
-		Write-Error $_
-		Write-Host ("************ Install PSBuild Failed ************")
-	}	
-}	
-
 Task -Name __UpdateReSharperCommandLineTools -Description $private -Action {
 	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
 
@@ -167,6 +149,65 @@ Task -Name __UpdateReSharperCommandLineTools -Description $private -Action {
 	}	
 }
 
+Task -Name __InstallPSBuild -Description $private -Action {
+	try {
+		Write-Output "Running Install PSBuild..."
+
+		exec {
+			# Need a test here to see if this is actually required
+			(new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
+		}
+
+		Write-Host ("************ Install PSBuild Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ Install PSBuild Failed ************")
+	}	
+}	
+
+Task -Name __InstallGitVersion -Depends __InstallChocolatey -Description $private -Action {
+	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+	$gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
+	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+
+	try {
+		Write-Output "Running Install GitVersion.Portable..."
+
+		if (-not (Test-Path $gitVersionExe)) {
+			exec {
+				Invoke-Expression "$choco install GitVersion.Portable";
+			}
+		} else {
+			Write-Host "GitVersion.Portable already installed";
+		}
+
+		Write-Host ("************ Install GitVersion.Portable Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ Install GitVersion.Portable Failed ************")
+	}	
+}
+
+Task -Name __UpdateGitVersion -Description $private -Action {
+	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+
+	try {
+		Write-Output "Running Update GitVersion.Portable..."
+
+		exec {
+			Invoke-Expression "$choco update GitVersion.Portable";
+		}
+
+		Write-Host ("************ Update GitVersion.Portable Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ Update GitVersion.Portable Failed ************")
+	}	
+}
+
 # primary targets
 
 Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Description "Complete build, including creation of Chocolatey Package."
@@ -179,8 +220,10 @@ Task -Name DeploySolutionToChocolatey -Depends InspectCodeForProblems, DeployPac
 
 # build tasks
 
-Task -Name RunGitVersion -Description "Execute the GitVersion Command Line Tool, to figure out what the current semantic version of the repository is" -Action {
+Task -Name RunGitVersion -Depends __InstallGitVersion -Description "Execute the GitVersion Command Line Tool, to figure out what the current semantic version of the repository is" -Action {
 	$rootDirectory = get-rootDirectory;
+	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+	$gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
 	
 	try {
 		Write-Output "Running RunGitVersion..."

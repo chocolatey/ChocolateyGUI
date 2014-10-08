@@ -98,9 +98,44 @@ function analyseCodeAnalysisResults( [Parameter(ValueFromPipeline=$true)]$codeAn
   }
 }
 
+function testEnvironmentVariable($envVariableName, $envVariableValue) {
+  if($envVariableValue -ne "") {
+    Write-Host "$envVariableName : $envVariableValue";
+  } else {
+    Write-Host "$envVariableName : Not Defined";
+  }
+}
+
 Task -Name Default -Depends BuildSolution
 
 # private tasks
+
+Task -Name __EchoAppVeyorEnvironmentVariables -Description $private -Action {
+  if(isAppVeyor) {
+    testEnvironmentVariable "CI" $env:CI;
+    testEnvironmentVariable "APPVEYOR_API_URL" $env:APPVEYOR_API_URL;
+    testEnvironmentVariable "APPVEYOR_PROJECT_ID" $env:APPVEYOR_PROJECT_ID;
+    testEnvironmentVariable "APPVEYOR_PROJECT_NAME" $env:APPVEYOR_PROJECT_NAME;
+    testEnvironmentVariable "APPVEYOR_PROJECT_SLUG" $env:APPVEYOR_PROJECT_SLUG;
+    testEnvironmentVariable "APPVEYOR_BUILD_FOLDER" $env:APPVEYOR_BUILD_FOLDER;
+    testEnvironmentVariable "APPVEYOR_BUILD_ID" $env:APPVEYOR_BUILD_ID;
+    testEnvironmentVariable "APPVEYOR_BUILD_NUMBER" $env:APPVEYOR_BUILD_NUMBER;
+    testEnvironmentVariable "APPVEYOR_BUILD_VERSION" $env:APPVEYOR_BUILD_VERSION;
+    testEnvironmentVariable "APPVEYOR_PULL_REQUEST_NUMBER" $env:APPVEYOR_PULL_REQUEST_NUMBER;
+    testEnvironmentVariable "APPVEYOR_PULL_REQUEST_TITLE" $env:APPVEYOR_PULL_REQUEST_TITLE;
+    testEnvironmentVariable "APPVEYOR_JOB_ID" $env:APPVEYOR_JOB_ID;
+    testEnvironmentVariable "APPVEYOR_REPO_PROVIDER" $env:APPVEYOR_REPO_PROVIDER;
+    testEnvironmentVariable "APPVEYOR_REPO_SCM" $env:APPVEYOR_REPO_SCM;
+    testEnvironmentVariable "APPVEYOR_REPO_NAME" $env:APPVEYOR_REPO_NAME;
+    testEnvironmentVariable "APPVEYOR_REPO_BRANCH" $env:APPVEYOR_REPO_BRANCH;
+    testEnvironmentVariable "APPVEYOR_REPO_COMMIT" $env:APPVEYOR_REPO_COMMIT;
+    testEnvironmentVariable "APPVEYOR_REPO_COMMIT_AUTHOR" $env:APPVEYOR_REPO_COMMIT_AUTHOR;
+    testEnvironmentVariable "APPVEYOR_REPO_COMMIT_TIMESTAMP" $env:APPVEYOR_REPO_COMMIT_TIMESTAMP;
+    testEnvironmentVariable "APPVEYOR_SCHEDULED_BUILD" $env:APPVEYOR_SCHEDULED_BUILD;
+    testEnvironmentVariable "PLATFORM" $env:PLATFORM;
+    testEnvironmentVariable "CONFIGURATION" $env:CONFIGURATION;
+  }
+}
 
 Task -Name __VerifyConfiguration -Description $private -Action {
   Assert ( @('Debug', 'Release') -contains $config ) "Unknown configuration, $config; expecting 'Debug' or 'Release'";
@@ -357,7 +392,7 @@ Task -Name TestCodeAnalysis -Description "Temp Task for testing CodeAnalysis" -A
   }
 }
 
-Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfiguration, __InstallPSBuild, RunGitVersion, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
+Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfiguration, __InstallPSBuild, __EchoAppVeyorEnvironmentVariables, RunGitVersion, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
   $sourceDirectory = get-sourceDirectory;
   $buildArtifactsDirectory = get-buildArtifactsDirectory;
         

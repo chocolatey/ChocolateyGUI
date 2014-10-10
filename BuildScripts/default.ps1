@@ -106,6 +106,16 @@ function testEnvironmentVariable($envVariableName, $envVariableValue) {
   }
 }
 
+function applyXslTransform($xmlFile, $xslFile, $outputFile) {
+  Write-Host "XML File: $xmlFile"
+  Write-Host "XSL File: $xslFile"
+  Write-Host "Output File: $outputFile"
+
+  $xslt = New-Object System.Xml.Xsl.XslCompiledTransform;
+  $xslt.Load($xslFile);
+  $xslt.Transform($xmlFile, $outputFile);
+}
+
 Task -Name Default -Depends BuildSolution
 
 # private tasks
@@ -395,7 +405,11 @@ Task -Name TestCodeAnalysis -Description "Temp Task for testing CodeAnalysis" -A
 Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfiguration, __InstallPSBuild, __EchoAppVeyorEnvironmentVariables, RunGitVersion, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
   $sourceDirectory = get-sourceDirectory;
   $buildArtifactsDirectory = get-buildArtifactsDirectory;
+  $buildScriptsDirectory = get-buildScriptsDirectory;
         
+  $styleCopXslFile = Join-Path -Path $buildScriptsDirectory -ChildPath "StyleCopReport.xsl";
+  $codeAnalysisXslFile = Join-Path -Path $buildScriptsDirectory -ChildPath "CodeAnalysisReport.xsl";
+
   try {
     Write-Output "Running BuildSolution..."
 
@@ -404,12 +418,34 @@ Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfi
             
       $styleCopResultsFiles = Get-ChildItem $buildArtifactsDirectory -Filter "StyleCop*.xml"
       foreach ($styleCopResultsFile in $styleCopResultsFiles) {
+        $reportXmlFile = Join-Path -Path $buildArtifactsDirectory -ChildPath $styleCopResultsFile | Resolve-Path;
+        $reportHtmlFile = $reportXmlFile -replace ".xml", ".html";
         Join-Path -Path $buildArtifactsDirectory -ChildPath $styleCopResultsFile | analyseStyleCopResults;
+        Write-Host "calling applyXslTransform";
+        applyXslTransform  $reportXmlFile $styleCopXslFile $reportHtmlFile;
+        Write-Host "called applyXslTransform";
+
+        if(isAppVeyor) {
+          if(Test-Path $reportHtmlFile) {
+            Push-AppveyorArtifact $reportHtmlFile;
+          }
+        }
       }
             
       $codeAnalysisFiles = Get-ChildItem $buildArtifactsDirectory -Filter "CodeAnalysis*.xml"
       foreach ($codeAnalysisFile in $codeAnalysisFiles) {
-          Join-Path -Path $buildArtifactsDirectory -ChildPath $codeAnalysisFile | analyseCodeAnalysisResults;
+        $reportXmlFile = Join-Path -Path $buildArtifactsDirectory -ChildPath $codeAnalysisFile | Resolve-Path;
+        $reportHtmlFile = $reportXmlFile -replace ".xml", ".html";
+        Join-Path -Path $buildArtifactsDirectory -ChildPath $codeAnalysisFile | analyseCodeAnalysisResults;
+        Write-Host "calling applyXslTransform";
+        applyXslTransform  $reportXmlFile $codeAnalysisXslFile $reportHtmlFile;
+        Write-Host "called applyXslTransform";
+
+        if(isAppVeyor) {
+          if(Test-Path $reportHtmlFile) {
+            Push-AppveyorArtifact $reportHtmlFile;
+          }
+        }
       }
 
       if(isAppVeyor) {

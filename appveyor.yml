@@ -54,5 +54,5 @@ artifacts:
 #      caching configuration      #
 #---------------------------------#
 
-#cache:
-#  - Source\packages
+cache:
+  - Source\packages

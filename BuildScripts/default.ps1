@@ -114,6 +114,8 @@ function applyXslTransform($xmlFile, $xslFile, $outputFile) {
   $xslt = New-Object System.Xml.Xsl.XslCompiledTransform;
   $xslt.Load($xslFile);
   $xslt.Transform($xmlFile, $outputFile);
+  
+  Write-Host "XSL Transform completed."
 }
 
 Task -Name Default -Depends BuildSolution
@@ -329,24 +331,48 @@ Task -Name RunGitVersion -Depends __InstallGitVersion -Description "Execute the 
 }
 
 Task -Name RunInspectCode -Depends __InstallReSharperCommandLineTools -Description "Execute the InspectCode Command Line Tool" -Action {
-  $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
-  $inspectCodeExe = Join-Path $chocolateyBinDir -ChildPath "inspectcode.exe";
+  $buildArtifactsDirectory = get-buildArtifactsDirectory;     
   $buildScriptsDirectory = get-buildScriptsDirectory;
+  $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+  
+  $inspectCodeExe = Join-Path $chocolateyBinDir -ChildPath "inspectcode.exe";
   $inspectCodeConfigFile = Join-Path $buildScriptsDirectory -ChildPath "inspectcode.config";
-
+  $inspectCodeXmlFile = Join-Path -Path $buildArtifactsDirectory -ChildPath "inspectcode.xml";
+  
   exec {
     Invoke-Expression "$inspectCodeExe /config=$inspectCodeConfigFile";
+	
+	if(isAppVeyor) {
+	  if(Test-Path $inspectCodeXmlFile) {
+	    Push-AppveyorArtifact $inspectCodeXmlFile;
+	  }	
+    }
   }
 }
 
 Task -Name RunDupFinder -Depends __InstallReSharperCommandLineTools -Description "Execute the DupFinder Command Line Tool" -Action {
-  $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
-  $dupFinderExe = Join-Path $chocolateyBinDir -ChildPath "dupfinder.exe";
+  $buildArtifactsDirectory = get-buildArtifactsDirectory;     
   $buildScriptsDirectory = get-buildScriptsDirectory;
+  $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    
+  $dupFinderExe = Join-Path $chocolateyBinDir -ChildPath "dupfinder.exe";
   $dupFinderConfigFile = Join-Path $buildScriptsDirectory -ChildPath "dupfinder.config";
-        
+  $dupFinderXmlFile = Join-Path -Path $buildArtifactsDirectory -ChildPath "dupfinder.xml";
+  $dupFinderXslFile = Join-Path -Path $buildScriptsDirectory -ChildPath "dupfinder.xsl";
+  $dupFinderHtmlFile = $dupFinderXmlFile -replace ".xml", ".html";
+  
   exec {
     Invoke-Expression "$dupFinderExe /config=$dupFinderConfigFile";
+	
+	if(Test-Path $dupFinderXmlFile) {
+	  applyXslTransform $dupFinderXmlFile $dupFinderXslFile $dupFinderHtmlFile;
+	}
+	
+	if(isAppVeyor) {
+	  if(Test-Path $dupFinderXmlFile) {
+	    Push-AppveyorArtifact $dupFinderXmlFile;
+	  }
+    }
   }
 }
 
@@ -384,24 +410,6 @@ Task -Name NugetPackageRestore -Depends OutputNugetVersion -Description "Restore
   }
 }
 
-Task -Name TestStyleCop -Description "Temp Task for testing StyleCop" -Action {
-  $buildArtifactsDirectory = get-buildArtifactsDirectory;
-    
-  $styleCopResultsFiles = Get-ChildItem $buildArtifactsDirectory -Filter "StyleCop*.xml"
-  foreach ($styleCopResultsFile in $styleCopResultsFiles) {
-    Join-Path -Path $buildArtifactsDirectory -ChildPath $styleCopResultsFile | analyseStyleCopResults;
-  }
-}
-
-Task -Name TestCodeAnalysis -Description "Temp Task for testing CodeAnalysis" -Action {
-  $buildArtifactsDirectory = get-buildArtifactsDirectory;
-    
-  $codeAnalysisFiles = Get-ChildItem $buildArtifactsDirectory -Filter "CodeAnalysis*.xml"
-  foreach ($codeAnalysisFile in $codeAnalysisFiles) {
-      Join-Path -Path $buildArtifactsDirectory -ChildPath $codeAnalysisFile | analyseCodeAnalysisResults;
-  }
-}
-
 Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfiguration, __InstallPSBuild, __EchoAppVeyorEnvironmentVariables, RunGitVersion, NugetPackageRestore -Description "Builds the main solution for the package" -Action {
   $sourceDirectory = get-sourceDirectory;
   $buildArtifactsDirectory = get-buildArtifactsDirectory;
@@ -421,9 +429,7 @@ Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfi
         $reportXmlFile = Join-Path -Path $buildArtifactsDirectory -ChildPath $styleCopResultsFile | Resolve-Path;
         $reportHtmlFile = $reportXmlFile -replace ".xml", ".html";
         Join-Path -Path $buildArtifactsDirectory -ChildPath $styleCopResultsFile | analyseStyleCopResults;
-        Write-Host "calling applyXslTransform";
-        applyXslTransform  $reportXmlFile $styleCopXslFile $reportHtmlFile;
-        Write-Host "called applyXslTransform";
+        applyXslTransform $reportXmlFile $styleCopXslFile $reportHtmlFile;
 
         if(isAppVeyor) {
           if(Test-Path $reportHtmlFile) {
@@ -437,9 +443,7 @@ Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfi
         $reportXmlFile = Join-Path -Path $buildArtifactsDirectory -ChildPath $codeAnalysisFile | Resolve-Path;
         $reportHtmlFile = $reportXmlFile -replace ".xml", ".html";
         Join-Path -Path $buildArtifactsDirectory -ChildPath $codeAnalysisFile | analyseCodeAnalysisResults;
-        Write-Host "calling applyXslTransform";
-        applyXslTransform  $reportXmlFile $codeAnalysisXslFile $reportHtmlFile;
-        Write-Host "called applyXslTransform";
+        applyXslTransform $reportXmlFile $codeAnalysisXslFile $reportHtmlFile;
 
         if(isAppVeyor) {
           if(Test-Path $reportHtmlFile) {

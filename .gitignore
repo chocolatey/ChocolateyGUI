@@ -183,4 +183,12 @@ Desktop.ini
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
+# =========================
+# Custom Additions
+# =========================
+
+# Where everything from the build is put
 BuildArtifacts
+
+# Temporary files that kdiff generates
+*.orig

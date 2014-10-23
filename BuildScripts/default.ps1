@@ -365,6 +365,7 @@ Task -Name RunInspectCode -Depends __InstallReSharperCommandLineTools -Descripti
 }
 
 Task -Name RunDupFinder -Depends __InstallReSharperCommandLineTools -Description "Execute the DupFinder Command Line Tool" -Action {
+  $rootDirectory = get-rootDirectory;
   $buildArtifactsDirectory = get-buildArtifactsDirectory;     
   $buildScriptsDirectory = get-buildScriptsDirectory;
   $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
@@ -374,6 +375,8 @@ Task -Name RunDupFinder -Depends __InstallReSharperCommandLineTools -Description
   $dupFinderXmlFile = Join-Path -Path $buildArtifactsDirectory -ChildPath "dupfinder.xml";
   $dupFinderXslFile = Join-Path -Path $buildScriptsDirectory -ChildPath "dupfinder.xsl";
   $dupFinderHtmlFile = $dupFinderXmlFile -replace ".xml", ".html";
+  
+  (Get-Content -path $dupFinderConfigFile) | % { $_ -Replace '%RootDirectory%', $rootDirectory } |  Out-File $dupFinderConfigFile
   
   exec {
     Invoke-Expression "$dupFinderExe /config=$dupFinderConfigFile";

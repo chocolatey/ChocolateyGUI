@@ -99,8 +99,30 @@ function analyseCodeAnalysisResults( [Parameter(ValueFromPipeline=$true)]$codeAn
 }
 
 function analyseDupFinderResults( [Parameter(ValueFromPipeline=$true)]$dupFinderResultsFile ) {
+  $dupFinderErrors = [xml](Get-Content $dupFinderResultsFile);
+  $anyFailures = $FALSE
+  
+  foreach ($duplicateCost in $dupFinderErrors.DuplicatesReport.Duplicates.Duplicate) {
+    Write-Host "Duplicate Located with a cost of $($duplicateCost.Cost), across $($duplicateCost.Fragment.Count) Fragments";
+	
+	foreach ($fragment in $duplicateCost.Fragment) {
+	  Write-Host "File Name: $($fragment.FileName) Line Numbers: $($fragment.LineRange.Start) - $($fragment.LineRange.End)";
+	  Write-Host "Offending Text: $($fragment.Text)";
+	}
+
+    if(isAppVeyor) {
+	  $anyFailures = $TRUE;
+      Add-AppveyorTest "Duplicate Located with a cost of $($duplicateCost.Cost), across $($duplicateCost.Fragment.Count) Fragments" -Outcome Failed -ErrorMessage "See dupFinder.html in build artifacts for full details of duplicates";
+    }
+  }
+  
   if(isAppVeyor) {
 	  Push-AppveyorArtifact $dupFinderResultsFile;
+  }
+  
+  if ($anyFailures -eq $TRUE){
+    Write-Host "Failing build as there are duplicates in the Code Base";
+    $host.SetShouldExit(1);
   }
 }
 

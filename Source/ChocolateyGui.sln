@@ -12,7 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 		..\build.bat = ..\build.bat
 		..\BuildScripts\build.ps1 = ..\BuildScripts\build.ps1
 		..\BuildScripts\CodeAnalysis.props = ..\BuildScripts\CodeAnalysis.props
+		..\BuildScripts\CodeAnalysisReport.xsl = ..\BuildScripts\CodeAnalysisReport.xsl
 		..\BuildScripts\default.ps1 = ..\BuildScripts\default.ps1
+		..\BuildScripts\dupfinder.config = ..\BuildScripts\dupfinder.config
+		..\BuildScripts\dupfinder.xsl = ..\BuildScripts\dupfinder.xsl
+		..\BuildScripts\inspectcode.config = ..\BuildScripts\inspectcode.config
+		..\BuildScripts\StyleCopReport.xsl = ..\BuildScripts\StyleCopReport.xsl
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppVeyor", "AppVeyor", "{C6760D8F-E01B-4F26-9B0C-4E2D825509D2}"

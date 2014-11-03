@@ -14,7 +14,7 @@
                     <h3>Duplicated Fragments:</h3>
                     <xsl:for-each select="Fragment">
                         <xsl:variable name="i" select="position()"/>
-                        <p>Fragment <xsl:value-of select="$i"/>  in file <xsl:value-of select="FileName"/></p>
+                        <p>Fragment <xsl:value-of select="$i"/> in file <xsl:value-of select="FileName"/> at line: <xsl:value-of select="LineRange/@Start"/></p>
                         <pre><xsl:value-of select="Text"/></pre>
                     </xsl:for-each>
                 </xsl:for-each>

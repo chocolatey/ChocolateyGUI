@@ -26,29 +26,9 @@ environment:
 #---------------------------------#
 
 build_script:
-  - cmd: build.bat
+  - ps: .\BuildScripts\build.ps1
   
 test: off
-
-#---------------------------------#
-#      artifacts configuration    #
-#---------------------------------#
-
-artifacts:
-  - path: BuildArtifacts\ChocolateyGUI.msi
-    name: ChocolateyGUI Installer
-
-  - path: BuildArtifacts\ChocolateyGUI.*.nupkg
-    name: ChocolateyGUI Chocolatey Package	
-
-  - path: BuildArtifacts\StyleCopReport.xml
-    name: StyleCop Report
-
-  - path: BuildArtifacts\inspectcode.xml
-    name: Inspect Code Report
-
-  - path: BuildArtifacts\dupfinder.xml
-    name: DupFinder Report
 
 #---------------------------------#
 #      caching configuration      #

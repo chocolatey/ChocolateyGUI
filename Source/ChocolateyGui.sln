@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 		..\BuildScripts\dupfinder.config = ..\BuildScripts\dupfinder.config
 		..\BuildScripts\dupfinder.xsl = ..\BuildScripts\dupfinder.xsl
 		..\BuildScripts\inspectcode.config = ..\BuildScripts\inspectcode.config
+		..\BuildScripts\StyleCop.props = ..\BuildScripts\StyleCop.props
 		..\BuildScripts\StyleCopReport.xsl = ..\BuildScripts\StyleCopReport.xsl
 	EndProjectSection
 EndProject

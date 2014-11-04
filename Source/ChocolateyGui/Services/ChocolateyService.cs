@@ -145,18 +145,7 @@ namespace ChocolateyGui.Services
                         continue;
                     }
 
-                    var packageConfigEntry =
-                        this.PackageConfigEntries().SingleOrDefault(
-                            entry =>
-                                string.Compare(entry.Id, packageInfo.Id, StringComparison.OrdinalIgnoreCase) == 0 &&
-                                entry.Version == packageInfo.Version);
-
-                    if (packageConfigEntry != null)
-                    {
-                        packageInfo.Source = packageConfigEntry.Source;
-                    }
-
-                    packages.Add(packageInfo);
+                    this.PopulatePackages(packageInfo, packages);
                 }
 
                 Cache.Set(
@@ -201,16 +190,7 @@ namespace ChocolateyGui.Services
                     continue;
                 }
 
-                var packageConfigEntry =
-                    this.PackageConfigEntries().SingleOrDefault(
-                        entry => string.Compare(entry.Id, packageInfo.Id, StringComparison.OrdinalIgnoreCase) == 0 && entry.Version == packageInfo.Version);
-
-                if (packageConfigEntry != null)
-                {
-                    packageInfo.Source = packageConfigEntry.Source;
-                }
-
-                packages.Add(packageInfo);
+                this.PopulatePackages(packageInfo, packages);
             }
 
             return packages;
@@ -470,23 +450,7 @@ namespace ChocolateyGui.Services
                 packages.Add(new PackageConfigEntry(id, version, source));
             }
 
-            // Serialize to the appropriate format.
-            var packageJson = JsonConvert.SerializeObject(packages);
-
-            // Make sure we have a ChocolateyGUI folder in the LocalApplicationData folder.
-            var directory = new DirectoryInfo(Path.GetDirectoryName(this._packagesJsonPath));
-            if (!directory.Exists)
-            {
-                directory.Create();
-            }
-
-            // Write the new package file.
-            File.WriteAllText(this._packagesJsonPath, packageJson);
-
-            // Invalidate the package cache.
-            Cache.Remove(LocalPackagesJsonCacheKeyName);
-
-            // Throw in this comment for fun.
+            this.SerializeJsonCache(packages);
         }
 
         private List<PackageConfigEntry> PackageConfigEntries()
@@ -520,24 +484,7 @@ namespace ChocolateyGui.Services
             packages.RemoveAll(pce =>
                 string.Compare(pce.Id, id, StringComparison.OrdinalIgnoreCase) == 0 && pce.Version == version);
 
-            // Serialize to the appropriate format.
-            var packageJson = JsonConvert.SerializeObject(packages);
-
-            // Make sure we have a ChocolateyGUI folder in the LocalApplicationData folder.
-            var directory = new DirectoryInfo(Path.GetDirectoryName(this._packagesJsonPath));
-
-            if (!directory.Exists)
-            {
-                directory.Create();
-            }
-
-            // Write the new package file.
-            File.WriteAllText(this._packagesJsonPath, packageJson);
-
-            // Invalidate the package cache.
-            Cache.Remove(LocalPackagesJsonCacheKeyName);
-
-            // Throw in this comment for fun too :D
+            this.SerializeJsonCache(packages);
         }
         #endregion
 
@@ -555,6 +502,44 @@ namespace ChocolateyGui.Services
                             PackageVersion = packageVersion
                         });
             }
+        }
+
+        private void PopulatePackages(IPackageViewModel packageInfo, List<IPackageViewModel> packages)
+        {
+            var packageConfigEntry =
+                this.PackageConfigEntries()
+                    .SingleOrDefault(
+                        entry =>
+                        string.Compare(entry.Id, packageInfo.Id, StringComparison.OrdinalIgnoreCase) == 0
+                        && entry.Version == packageInfo.Version);
+
+            if (packageConfigEntry != null)
+            {
+                packageInfo.Source = packageConfigEntry.Source;
+            }
+
+            packages.Add(packageInfo);
+        }
+
+        private void SerializeJsonCache(List<PackageConfigEntry> packages)
+        {
+            // Serialize to the appropriate format.
+            var packageJson = JsonConvert.SerializeObject(packages);
+
+            // Make sure we have a ChocolateyGUI folder in the LocalApplicationData folder.
+            var directory = new DirectoryInfo(Path.GetDirectoryName(this._packagesJsonPath));
+            if (!directory.Exists)
+            {
+                directory.Create();
+            }
+
+            // Write the new package file.
+            File.WriteAllText(this._packagesJsonPath, packageJson);
+
+            // Invalidate the package cache.
+            Cache.Remove(LocalPackagesJsonCacheKeyName);
+
+            // Throw in this comment for fun.
         }
     }
 }

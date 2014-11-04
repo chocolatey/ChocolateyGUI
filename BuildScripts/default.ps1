@@ -137,13 +137,13 @@ function analyseInspectCodeResults( [Parameter(ValueFromPipeline=$true)]$inspect
     $issueLookup = "/Report/Issues/Project/Issue[@TypeId='$($errorIssueType.Id)']";
     foreach ($errorIssue in $inspectCodeErrors.SelectNodes($issueLookup)) {
       Write-Host "File Name: $($errorIssue.File) Line Number: $($errorIssue.Line) Message: $($errorIssue.Message)";
+
+      if(isAppVeyor) {
+			  Add-AppveyorTest "Code Inspection Error: $($errorIssueType.Description) Line Number: $($errorIssue.Line)" -Outcome Failed -FileName "$($errorIssue.File)" -ErrorMessage $($errorIssue.Message);
+		  }
     }
 
     $anyFailures = $TRUE;
-
-		if(isAppVeyor) {
-			Add-AppveyorTest "Code Inspection Error: $($errorIssueType.Description) Line Number: $($errorIssue.Line)" -Outcome Failed -FileName "$($errorIssue.File)" -ErrorMessage $($errorIssue.Message);
-		}
   }
 
 	if(isAppVeyor) {
@@ -401,13 +401,16 @@ Task -Name RunInspectCode -Depends __InstallReSharperCommandLineTools -Descripti
 	$inspectCodeExe = Join-Path $chocolateyBinDir -ChildPath "inspectcode.exe";
 	$inspectCodeConfigFile = Join-Path $buildScriptsDirectory -ChildPath "inspectcode.config";
 	$inspectCodeXmlFile = Join-Path -Path $buildArtifactsDirectory -ChildPath "inspectcode.xml";
-	
+	$inspectCodeXslFile = Join-Path -Path $buildScriptsDirectory -ChildPath "inspectcode.xsl";
+  $inspectCodeHtmlFile = $inspectCodeXmlFile -replace ".xml", ".html";
+
   (Get-Content -path $inspectCodeConfigFile) | % { $_ -Replace '%RootDirectory%', $rootDirectory } |  Out-File $inspectCodeConfigFile
 	
 	exec {
 		Invoke-Expression "$inspectCodeExe /config=$inspectCodeConfigFile";
 		
 		if(Test-Path $inspectCodeXmlFile) {
+      applyXslTransform $inspectCodeXmlFile $inspectCodeXslFile $inspectCodeHtmlFile;
 			$inspectCodeXmlFile | analyseInspectCodeResults;
 		}
 	}

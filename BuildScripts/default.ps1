@@ -128,8 +128,31 @@ function analyseDupFinderResults( [Parameter(ValueFromPipeline=$true)]$dupFinder
 }
 
 function analyseInspectCodeResults( [Parameter(ValueFromPipeline=$true)]$inspectCodeResultsFile ) {
+  $inspectCodeErrors = [xml](Get-Content $inspectCodeResultsFile);
+	$anyFailures = $FALSE;
+
+  foreach ($errorIssueType in $inspectCodeErrors.SelectNodes("/Report/IssueTypes/IssueType[@Severity='ERROR']")) {
+    Write-Host "Code Inspection Error(s) Located. Description: $($errorIssueType.Description)";
+
+    $issueLookup = "/Report/Issues/Project/Issue[@TypeId='$($errorIssueType.Id)']";
+    foreach ($errorIssue in $inspectCodeErrors.SelectNodes($issueLookup)) {
+      Write-Host "File Name: $($errorIssue.File) Line Number: $($errorIssue.Line) Message: $($errorIssue.Message)";
+    }
+
+    $anyFailures = $TRUE;
+
+		if(isAppVeyor) {
+			Add-AppveyorTest "Code Inspection Error: $($errorIssueType.Description) Line Number: $($errorIssue.Line)" -Outcome Failed -FileName "$($errorIssue.File)" -ErrorMessage $($errorIssue.Message);
+		}
+  }
+
 	if(isAppVeyor) {
 			Push-AppveyorArtifact $inspectCodeResultsFile;
+	}
+
+	if ($anyFailures -eq $TRUE){
+		Write-Host "Failing build as there are code inspection errors in the Code Base";
+		throw "Code Inspection Errors found in code base";
 	}
 }
 

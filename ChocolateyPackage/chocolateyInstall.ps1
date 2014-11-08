@@ -1,9 +1,12 @@
+$packageName = 'ChocolateyGUI'
+$fileType = 'msi'
+$silentArgs = '/quiet'
+$filePath =  $(Split-Path $MyInvocation.MyCommand.Path)
+$fileFullPath = Join-Path $scriptPath 'ChocolateyGUI.msi'
+
 try { 
-  $scriptPath = $(Split-Path $MyInvocation.MyCommand.Path)
-  $nodePath = Join-Path $scriptPath 'ChocolateyGUI.msi'
-  Install-ChocolateyInstallPackage 'ChocolateyGUI' 'msi' '/quiet' $nodepath
-  Write-ChocolateySuccess 'ChocolateyGUI'
+  Install-ChocolateyInstallPackage $packageName $fileType $silentArgs $fileFullPath
 } catch {
-  Write-ChocolateyFailure 'ChocolateyGUI' "$($_.Exception.Message)"
+  Write-ChocolateyFailure $packageName $($_.Exception.Message)
   throw 
 }

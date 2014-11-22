@@ -597,6 +597,7 @@
         <MenuItem Header="Install" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}" Command="{commands:DataContextCommandAdapter Install}"></MenuItem>
         <MenuItem Header="Uninstall" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}" Command="{commands:DataContextCommandAdapter Uninstall}"></MenuItem>
         <MenuItem Header="Update" Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}" Command="{commands:DataContextCommandAdapter Update}"></MenuItem>
+        <MenuItem Header="Details"></MenuItem>
     </ContextMenu>
     
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}">

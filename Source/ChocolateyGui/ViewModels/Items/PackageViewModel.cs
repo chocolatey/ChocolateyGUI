@@ -17,6 +17,7 @@ namespace ChocolateyGui.ViewModels.Items
     using ChocolateyGui.Models;
     using ChocolateyGui.Services;
     using ChocolateyGui.Utilities;
+    using ChocolateyGui.Views.Controls;
     
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
     public class PackageViewModel : ObservableBase, IPackageViewModel, IWeakEventListener
@@ -396,6 +397,11 @@ namespace ChocolateyGui.ViewModels.Items
             {
                 this._navigationService.GoBack();
             }
+        }
+
+        public void ViewDetails()
+        {
+            this._navigationService.Navigate(typeof(PackageControl), this);
         }
 
         private string MemoryCachePropertyKey([CallerMemberName] string propertyName = "")

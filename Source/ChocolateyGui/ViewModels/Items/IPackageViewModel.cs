@@ -87,5 +87,7 @@ namespace ChocolateyGui.ViewModels.Items
         Task Uninstall();
 
         Task Update();
+
+        void ViewDetails();
     }
 }

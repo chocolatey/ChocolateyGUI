@@ -1,6 +1,3 @@
-# Support making Chocolatey better! [Kickstarter - The Chocolatey Experience](https://www.kickstarter.com/projects/ferventcoder/chocolatey-the-alternative-windows-store-like-yum)
-
-
 # ChocolateyGUI
 ChocolateyGUI is a user interface for [Chocolatey NuGet](http://chocolatey.org) (a Machine Package Manager for Windows).
 

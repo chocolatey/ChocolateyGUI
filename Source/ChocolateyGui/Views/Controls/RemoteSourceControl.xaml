@@ -13,8 +13,8 @@
         <DataGridTextColumn x:Key="NameColumn" Header="Name" Binding="{Binding Title}" Width="2*"></DataGridTextColumn>
         <DataGridTextColumn x:Key="VersionColumn" Header="Version" Binding="{Binding Version}" Width="1*"></DataGridTextColumn>
         <DataGridTextColumn x:Key="DownloadCountColumn" Header="Downloads" Binding="{Binding DownloadCount}" Width="1*" Visibility="{Binding DataContext.IncludeAllVersions, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True, Source={x:Reference PackagesGrid}}"></DataGridTextColumn>
-        <DataGridTextColumn x:Key="VersionDownloadCountColumn" Header="Version Downlaods" Binding="{Binding VersionDownloadCount}" Width="1*" Visibility="{Binding DataContext.IncludeAllVersions, Converter={StaticResource BooleanToVisibility}, Source={x:Reference PackagesGrid}}"></DataGridTextColumn>
-        <DataGridCheckBoxColumn x:Key="IsInstalledColumn" Header="Installed" Binding="{Binding IsInstalled, Mode=OneWay, IsAsync=True}" Width="1*"></DataGridCheckBoxColumn>
+        <DataGridTextColumn x:Key="VersionDownloadCountColumn" Header="Version Downloads" Binding="{Binding VersionDownloadCount}" Width="1*" Visibility="{Binding DataContext.IncludeAllVersions, Converter={StaticResource BooleanToVisibility}, Source={x:Reference PackagesGrid}}"></DataGridTextColumn>
+        <DataGridTextColumn x:Key="IsInstalledColumn" Header="Installed" Binding="{Binding IsInstalled, Mode=OneWay, IsAsync=True, Converter={StaticResource BooleanToTickString}}" Width="1*"></DataGridTextColumn>
     </UserControl.Resources>
 
     <DockPanel Background="{StaticResource AccentColorBrush}">

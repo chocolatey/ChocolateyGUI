@@ -14,11 +14,9 @@ namespace ChocolateyGui.Utilities.Converters
     {
         private const string Tick = "✓";
 
-        private const string Cross = "✗";
-
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return (bool)value ? Tick : Cross;
+            return (bool)value ? Tick : string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

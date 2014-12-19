@@ -17,6 +17,7 @@
     </ResourceDictionary.MergedDictionaries>
     
     <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
+    <converters:BooleanToTickString x:Key="BooleanToTickString"/>
 
     <Style x:Key="BaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular"/>

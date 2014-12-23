@@ -157,7 +157,7 @@ function analyseInspectCodeResults( [Parameter(ValueFromPipeline=$true)]$inspect
 }
 
 function testEnvironmentVariable($envVariableName, $envVariableValue) {
-	if($envVariableValue -ne "") {
+	if($envVariableValue -ne $null) {
 		Write-Host "$envVariableName : $envVariableValue";
 	} else {
 		Write-Host "$envVariableName : Not Defined";

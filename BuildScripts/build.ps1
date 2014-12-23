@@ -24,16 +24,16 @@ if($Help){
 }
 
 if(Test-Path -Path env:\APPVEYOR) {
-		if($env:APPVEYOR_REPO_BRANCH -eq "develop" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -eq "") {
+		if($env:APPVEYOR_REPO_BRANCH -eq "develop" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -eq $null) {
       Write-Host "Since we are on develop branch with no pull request number, we are ready to deploy to MyGet"
       invoke-psake "$here/default.ps1" -task DeploySolutionToMyGet -properties @{ 'config'='Release'; }
-		} elseif($env:APPVEYOR_REPO_BRANCH -eq "develop" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -ne "") {
+		} elseif($env:APPVEYOR_REPO_BRANCH -eq "develop" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null) {
       Write-Host "Since we are on develop branch with a pull request number, we are just going to package the solution, with no deployment"
       invoke-psake "$here/default.ps1" -task InspectCodeForProblems -properties @{ 'config'='Release'; }
-		} elseif($env:APPVEYOR_REPO_BRANCH -eq "master" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -ne "") {
+		} elseif($env:APPVEYOR_REPO_BRANCH -eq "master" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null) {
       Write-Host "Since we are on develop branch with no pull request number, we are ready to deploy to Chocolatey"
       invoke-psake "$here/default.ps1" -task DeploySolutionToChocolatey -properties @{ 'config'='Release'; }
-		} elseif($env:APPVEYOR_REPO_BRANCH -eq "master" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -ne "") {
+		} elseif($env:APPVEYOR_REPO_BRANCH -eq "master" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null) {
       Write-Host "Since we are on develop branch with a pull request number, we are just going to package the solution, with no deployment"
       invoke-psake "$here/default.ps1" -task InspectCodeForProblems -properties @{ 'config'='Release'; }
 		}

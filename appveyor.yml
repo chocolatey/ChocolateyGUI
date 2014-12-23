@@ -36,3 +36,13 @@ test: off
 
 cache:
   - Source\packages
+
+#---------------------------------#
+#  notifications configuration    #
+#---------------------------------#
+notifications:
+  - provider: Webhook
+    url: https://webhooks.gitter.im/e/9f474b9cb4345efe0bc3
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true

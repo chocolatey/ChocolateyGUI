@@ -43,7 +43,7 @@ namespace ChocolateyGui.Services
         /// </summary>
         private static readonly MemoryCache Cache = MemoryCache.Default;
 
-        private static readonly Regex PackageRegex = new Regex(@"^(?<Name>[a-zA-Z\.]*) (?<VersionString>(\d+(\s*\.\s*\d+){0,3})(-[a-z][0-9a-z-]*)?)$");
+        private static readonly Regex PackageRegex = new Regex(@"^(?<Name>[\w\.]*) (?<VersionString>(\d+(\s*\.\s*\d+){0,3})(-[a-z][0-9a-z-]*)?)$");
 
         /// <summary>
         /// Synchronizes the GetPackages method.

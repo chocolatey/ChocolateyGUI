@@ -1,16 +1,19 @@
-$package = "ChocolateyGUI"
+$packageName = "ChocolateyGUI";
+$fileType = 'msi';
+$silentArgs = '/qr /norestart'
+$validExitCodes = @(0)
 
 try {
   	$packageGuid = Get-ChildItem HKLM:\SOFTWARE\Classes\Installer\Products |
     	Get-ItemProperty -Name 'ProductName' |
-    	? { $_.ProductName -like $package + "*"} |
+    	? { $_.ProductName -like $packageName + "*"} |
     	Select -ExpandProperty PSChildName -First 1
 	
 	$properties = Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products\$packageGuid\InstallProperties
 	
-	$pkg = $properties.LocalPackage
+	$file = $properties.LocalPackage
 	
-	msiexec.exe /x $pkg /qr /norestart
+	Uninstall-ChocolateyPackage $packageName $fileType $silentArgs $file -validExitCodes $validExitCodes
 	
 	Write-ChocolateySuccess $package
 }

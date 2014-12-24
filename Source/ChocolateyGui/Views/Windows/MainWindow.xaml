@@ -9,12 +9,14 @@
         xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
         xmlns:commands="clr-namespace:ChocolateyGui.Commands"
         mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
-        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
-    
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+        TitleForeground="{StaticResource Brown1Brush}"
+        Title="ChocolateyGUI">
+
     <Window.Resources>
         <converters:NullToVisibility x:Key="NullToVisibility"/>
     </Window.Resources>
-    
+
     <metro:MetroWindow.WindowCommands>
         <metro:WindowCommands>
             <Button x:Name="SettingsButton" Content="settings" Click="SettingsButton_OnClick" ClickMode="Release"/>
@@ -50,8 +52,8 @@
             </metro:Flyout>
         </metro:FlyoutsControl>
     </metro:MetroWindow.Flyouts>
-    
-    <Border Background="{StaticResource LightBackgroundColorBrush}"> 
+
+    <Border Background="{StaticResource LightBackgroundColorBrush}">
         <Grid>
             <ContentControl x:Name="GlobalFrame"></ContentControl>
         </Grid>

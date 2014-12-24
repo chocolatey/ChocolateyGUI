@@ -1,7 +1,7 @@
 $packageName = 'ChocolateyGUI'
 $fileType = 'msi'
 $silentArgs = '/quiet'
-$filePath =  $(Split-Path $MyInvocation.MyCommand.Path)
+$scriptPath =  $(Split-Path $MyInvocation.MyCommand.Path)
 $fileFullPath = Join-Path $scriptPath 'ChocolateyGUI.msi'
 
 try { 

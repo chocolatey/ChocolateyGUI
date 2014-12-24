@@ -13,7 +13,12 @@ try {
 	
 	$file = $properties.LocalPackage
 	
-	Uninstall-ChocolateyPackage $packageName $fileType $silentArgs $file -validExitCodes $validExitCodes
+	# Would like to use the following, but looks like there is a bug in this method when uninstalling MSI's
+	# Uninstall-ChocolateyPackage $packageName $fileType $silentArgs $file -validExitCodes $validExitCodes
+	
+	# Use this instead
+	$msiArgs = "/x $file $silentArgs";
+	Start-ChocolateyProcessAsAdmin "$msiArgs" 'msiexec' -validExitCodes $validExitCodes
 	
 	Write-ChocolateySuccess $package
 }

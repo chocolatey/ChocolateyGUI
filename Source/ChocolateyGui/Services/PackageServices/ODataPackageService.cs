@@ -105,7 +105,7 @@ namespace ChocolateyGui.Services.PackageServices
         {
             try
             {
-                var service = new FeedContext_x0060_1(source);
+                var service = GetFeed(source);
                 var query = (DataServiceQuery<V2FeedPackage>)service.Packages.Take(1);
                 var result = query.FirstOrDefault();
                 await Task.Factory.FromAsync(query.BeginExecute, ar => query.EndExecute(ar), null);

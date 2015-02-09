@@ -51,7 +51,7 @@ Prerequisites:
 
  * The issue has to do with ChocolateyGUI itself and is not a package or website issue.
  * Please check to see if your issue already exists with a quick search of the issues. Start with one relevant term and then add if you get too many results.
- * You are not submitting an Enhancement. Enhancements should observe [CONTRIBUTING](https://github.com/chocolatey/chocolatey/blob/develop/CONTRIBUTING.md) guidlines.
+ * You are not submitting an Enhancement. Enhancements should observe [CONTRIBUTING](https://github.com/chocolatey/chocolateygui/blob/develop/CONTRIBUTING.md) guidlines.
 
 Submitting a ticket:
 

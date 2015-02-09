@@ -9,7 +9,7 @@ These are the committers to Chocolatey/Choco repositories:
  * [Rob Reynolds](https://github.com/ferventcoder) - Creator of Chocolatey, committer, vision, direction, community feed moderator
  * [Matt Wrock](https://github.com/mwrock) - Committer, Creator of BoxStarter, community feed moderator
  * [Rich Siegel](https://github.com/rismoney) - Committer, Creator of Puppet provider
- * [Gary Ewan Park](https://github.com/gep13) - Committer, Chocolatey GUI, community feed moderator
+ * [Gary Ewan Park](https://github.com/gep13) - Committer, ChocolateyGUI, community feed moderator
 
 ### Chocolatey Team
 

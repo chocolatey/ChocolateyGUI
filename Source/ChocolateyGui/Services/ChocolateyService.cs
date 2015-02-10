@@ -291,6 +291,12 @@ namespace ChocolateyGui.Services
             this.NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
             await this._progressService.StopLoading();
         }
+
+        public void ClearPackageCache()
+        {
+            Cache.Remove(LocalPackagesCacheKeyName);
+        }
+
         #endregion
 
         #region Chocolatey Interop Methods

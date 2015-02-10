@@ -148,6 +148,11 @@ namespace ChocolateyGui.ViewModels.Controls
             return this.CurrentPage > 1;
         }
 
+        public bool CanRefreshRemotePackages()
+        {
+            return true;
+        }
+
         public void GoToFirst()
         {
             this.CurrentPage = 1;
@@ -172,6 +177,11 @@ namespace ChocolateyGui.ViewModels.Controls
             {
                 this.CurrentPage--;
             }
+        }
+
+        public async void RefreshRemotePackages()
+        {
+            this.LoadPackages();
         }
 
         private async void LoadPackages()

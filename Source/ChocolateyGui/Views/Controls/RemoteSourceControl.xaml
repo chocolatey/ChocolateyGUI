@@ -17,7 +17,12 @@
         <DataGridTextColumn x:Key="IsInstalledColumn" Header="Installed" Binding="{Binding IsInstalled, Mode=OneWay, IsAsync=True, Converter={StaticResource BooleanToTickString}}" Width="1*"></DataGridTextColumn>
     </UserControl.Resources>
 
-    <DockPanel Background="{StaticResource AccentColorBrush}">
+    <Grid Background="{StaticResource AccentColorBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,5">
             <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}">Search:</Label>
             <TextBox x:Name="SearchTextBox" Width="300" Padding="0,2,0,-2" FontSize="14" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"></TextBox>
@@ -25,7 +30,11 @@
             <CheckBox Name="PrereleaseCheckBox" Margin="5" Content="Include Prerelease" IsChecked="{Binding IncludePrerelease}"/>
             <CheckBox Name="MatchCheckBox" Margin="5" Content="Match Word Exactly" IsChecked="{Binding MatchWord}"/>
         </StackPanel>
-        <Grid DockPanel.Dock="Bottom" Margin="4">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,5">
+            <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}" Style="{StaticResource SquareButtonStyle}" Content="Refresh Packages"></Button>
+        </StackPanel>
+
+        <Grid Grid.Row="2" DockPanel.Dock="Bottom" Margin="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -39,7 +48,8 @@
             <Button Grid.Column="3" Name="ForwardPage" AutomationProperties.Name="Go Forward a Page" ToolTip="Forward" Command="{commands:DataContextCommandAdapter Executed=GoToNext, CanExecute=CanGoToNext}" Style="{DynamicResource PaginationButtonStyle}">Next</Button>
             <Button Grid.Column="4" Name="LastPage" AutomationProperties.Name="Go to Last Page" ToolTip="Last" Command="{commands:DataContextCommandAdapter Executed=GoToLast, CanExecute=CanGoToLast}" Style="{DynamicResource PaginationButtonStyle}">Last</Button>
         </Grid>
-        <DataGrid x:Name="PackagesGrid" ItemsSource="{Binding Packages}" Background="{StaticResource LightBackgroundColorBrush}"
+
+        <DataGrid Grid.Row="1" x:Name="PackagesGrid" ItemsSource="{Binding Packages}" Background="{StaticResource LightBackgroundColorBrush}"
                   AutoGenerateColumns="False" IsReadOnly="True" Sorting="DataGrid_OnSorting"
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>
@@ -50,5 +60,5 @@
                 <StaticResource ResourceKey="IsInstalledColumn"></StaticResource>
             </DataGrid.Columns>
         </DataGrid>
-    </DockPanel>
+    </Grid>
 </UserControl>

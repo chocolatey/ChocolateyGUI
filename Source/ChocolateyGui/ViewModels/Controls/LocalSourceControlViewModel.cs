@@ -89,6 +89,11 @@ namespace ChocolateyGui.ViewModels.Controls
             return this.Packages.Any(p => p.CanUpdate);
         }
 
+        public bool CanRefreshPackages()
+        {
+            return this._hasLoaded;
+        }
+
         public async void Loaded(object sender, EventArgs e)
         {
             try
@@ -152,6 +157,12 @@ namespace ChocolateyGui.ViewModels.Controls
                 this._logService.Fatal("Updated all has failed.", ex);
                 throw;
             }
+        }
+
+        public async void RefreshPackages()
+        {
+            this._chocolateyService.ClearPackageCache();
+            await this.LoadPackages();
         }
 
         private void FilterPackages()

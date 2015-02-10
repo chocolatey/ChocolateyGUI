@@ -35,5 +35,7 @@ namespace ChocolateyGui.Services
         Task UninstallPackage(string id, SemanticVersion version, bool force = false);
 
         Task UpdatePackage(string id, Uri source = null);
+
+        void ClearPackageCache();
     }
 }

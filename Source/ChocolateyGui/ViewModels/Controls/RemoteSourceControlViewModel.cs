@@ -128,6 +128,11 @@ namespace ChocolateyGui.ViewModels.Controls
             set { this.SetPropertyValue(ref this._sortDescending, value); }
         }
 
+        public static bool CanRefreshRemotePackages()
+        {
+            return true;
+        }
+
         public bool CanGoToFirst()
         {
             return this.CurrentPage > 1;
@@ -146,11 +151,6 @@ namespace ChocolateyGui.ViewModels.Controls
         public bool CanGoToPrevious()
         {
             return this.CurrentPage > 1;
-        }
-
-        public bool CanRefreshRemotePackages()
-        {
-            return true;
         }
 
         public void GoToFirst()

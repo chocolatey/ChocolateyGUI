@@ -26,6 +26,8 @@ namespace ChocolateyGui.Services
 
         Task InstallPackage(string id, SemanticVersion version = null, Uri source = null);
 
+        Task ReinstallPackage(string id, SemanticVersion version = null, Uri source = null);
+
         bool IsPackageInstalled(string id, SemanticVersion version);
 
         Task RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true, bool logOutput = true);

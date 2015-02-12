@@ -231,6 +231,42 @@ namespace ChocolateyGui.Services
             await this._progressService.StopLoading();
         }
 
+        public async Task ReinstallPackage(string id, SemanticVersion version = null, Uri source = null)
+        {
+            await this._progressService.StartLoading(string.Format("Reinstalling {0}...", id));
+            this._progressService.WriteMessage("Building chocolatey command...");
+            var arguments = new Dictionary<string, object> { { "command", "install" }, { "packageNames", id } };
+
+            if (version != null)
+            {
+                arguments.Add("version", version.ToString());
+            }
+
+            if (source != null)
+            {
+                arguments.Add("source", source.ToString());
+            }
+
+            arguments.Add("force", true);
+
+            await this.ExecutePackageCommand(arguments);
+
+            var newPackage =
+                (await this.GetInstalledPackages()).OrderByDescending(p => p.Version)
+                    .FirstOrDefault(
+                        p =>
+                        string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0
+                        && (version == null || version == p.Version));
+
+            if (newPackage != null)
+            {
+                this.AddPackageEntry(newPackage.Id, newPackage.Version, source);
+            }
+
+            this.NotifyPackagesChanged(PackagesChangedEventType.Installed, id, version == null ? string.Empty : version.ToString());
+            await this._progressService.StopLoading();
+        }
+
         public bool IsPackageInstalled(string id, SemanticVersion version)
         {
             if (Cache.Contains(LocalPackagesCacheKeyName))

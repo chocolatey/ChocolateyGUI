@@ -379,6 +379,16 @@ namespace ChocolateyGui.ViewModels.Items
             this.LatestVersion = version;
         }
 
+        public async Task Reinstall()
+        {
+            await this._chocolateyService.ReinstallPackage(this.Id, this.Version, this.Source).ConfigureAwait(false);
+
+            if (this.CanGoBack())
+            {
+                this._navigationService.GoBack();
+            }
+        }
+
         public async Task Uninstall()
         {
             await this._chocolateyService.UninstallPackage(this.Id, this.Version, true).ConfigureAwait(false);

@@ -381,7 +381,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         public async Task Reinstall()
         {
-            await this._chocolateyService.ReinstallPackage(this.Id, this.Version, this.Source).ConfigureAwait(false);
+            await this._chocolateyService.InstallPackage(this.Id, this.Version, this.Source, true).ConfigureAwait(false);
 
             if (this.CanGoBack())
             {

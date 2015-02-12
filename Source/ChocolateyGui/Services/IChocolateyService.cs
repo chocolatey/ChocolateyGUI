@@ -24,9 +24,7 @@ namespace ChocolateyGui.Services
 
         Task<IEnumerable<IPackageViewModel>> GetPackagesFromLocalDirectory(Dictionary<string, string> requestedPackages, string directoryPath);
 
-        Task InstallPackage(string id, SemanticVersion version = null, Uri source = null);
-
-        Task ReinstallPackage(string id, SemanticVersion version = null, Uri source = null);
+        Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false);
 
         bool IsPackageInstalled(string id, SemanticVersion version);
 

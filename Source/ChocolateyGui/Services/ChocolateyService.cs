@@ -197,7 +197,7 @@ namespace ChocolateyGui.Services
         }
 
         #region Package Commands
-        public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null)
+        public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false)
         {
             await this._progressService.StartLoading(string.Format("Installing {0}...", id));
             this._progressService.WriteMessage("Building chocolatey command...");
@@ -213,41 +213,10 @@ namespace ChocolateyGui.Services
                 arguments.Add("source", source.ToString());
             }
 
-            await this.ExecutePackageCommand(arguments);
-
-            var newPackage =
-                (await this.GetInstalledPackages()).OrderByDescending(p => p.Version)
-                    .FirstOrDefault(
-                        p =>
-                        string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0
-                        && (version == null || version == p.Version));
-
-            if (newPackage != null)
+            if (force)
             {
-                this.AddPackageEntry(newPackage.Id, newPackage.Version, source);
+                arguments.Add("force", true);
             }
-
-            this.NotifyPackagesChanged(PackagesChangedEventType.Installed, id, version == null ? string.Empty : version.ToString());
-            await this._progressService.StopLoading();
-        }
-
-        public async Task ReinstallPackage(string id, SemanticVersion version = null, Uri source = null)
-        {
-            await this._progressService.StartLoading(string.Format("Reinstalling {0}...", id));
-            this._progressService.WriteMessage("Building chocolatey command...");
-            var arguments = new Dictionary<string, object> { { "command", "install" }, { "packageNames", id } };
-
-            if (version != null)
-            {
-                arguments.Add("version", version.ToString());
-            }
-
-            if (source != null)
-            {
-                arguments.Add("source", source.ToString());
-            }
-
-            arguments.Add("force", true);
 
             await this.ExecutePackageCommand(arguments);
 

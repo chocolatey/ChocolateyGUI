@@ -21,13 +21,10 @@
                                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                             BorderBrush="#FFEBEBEB" BorderThickness="5" Background="#FF012456" 
                                             Foreground="#FFEEEDF0" FontFamily="Lucida Console" FontSize="12"
-                                            IsReadOnly="True"/>
-
-            
+                                            IsReadOnly="True"/>           
                 <StackPanel Grid.Row="1"
                         Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        Height="85">
+                        HorizontalAlignment="Right">
                 <Button x:Name="PART_NegativeButton"
                         Height="35"
                         MinWidth="80"

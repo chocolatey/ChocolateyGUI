@@ -142,12 +142,17 @@ namespace ChocolateyGui.ViewModels.Controls
                 await this._progressService.StartLoading("Packages", true);
                 var token = this._progressService.GetCancellationToken();
                 var packages = this.Packages.Where(p => p.CanUpdate).ToList();
+                double current = 0.0f;
                 foreach (var package in packages)
                 {
                     if (token.IsCancellationRequested)
                     {
+                        await this._progressService.StopLoading();
                         return;
                     }
+
+                    this._progressService.Report(Math.Min((current++) / packages.Count, 100));
+                    await package.Update();
                 }
 
                 await this._progressService.StopLoading();

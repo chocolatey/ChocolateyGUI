@@ -128,7 +128,7 @@ namespace ChocolateyGui.ViewModels.Controls
             set { this.SetPropertyValue(ref this._sortDescending, value); }
         }
 
-        public static bool CanRefreshRemotePackages()
+        public bool CanRefreshRemotePackages()
         {
             return true;
         }

@@ -40,6 +40,7 @@
             <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource AccentColorBrush4}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,20,10">
                     <Button Style="{StaticResource InstallButtonStyle}" Command="{commands:DataContextCommandAdapter Install}"  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
+                    <Button Style="{StaticResource ReinstallButtonStyle}" Command="{commands:DataContextCommandAdapter Reinstall}" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"/>
                     <Button Style="{StaticResource UninstallButtonStyle}" Command="{commands:DataContextCommandAdapter Uninstall}" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"/>
                     <Button Style="{StaticResource UpdateButtonStyle}" Command="{commands:DataContextCommandAdapter Update}" Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"/>
                 </StackPanel>

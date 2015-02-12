@@ -478,6 +478,18 @@
         <Setter Property="ToolTip" Value="Install"/>
     </Style>
 
+    <Style x:Key="ReinstallButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <TextBlock Style="{StaticResource EntypoIconLargeStyle}">&#128257;</TextBlock>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="AutomationProperties.Name" Value="Reinstall"/>
+        <Setter Property="AutomationProperties.HelpText" Value="Reinstalls the Package"/>
+        <Setter Property="AutomationProperties.AcceleratorKey" Value="R"/>
+        <Setter Property="ToolTip" Value="Reinstall"/>
+    </Style>
+
     <Style x:Key="UninstallButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
         <Setter Property="Content">
             <Setter.Value>
@@ -597,6 +609,7 @@
     <ContextMenu x:Key="PackagesGridContextMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
         <MenuItem Header="Install" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}" Command="{commands:DataContextCommandAdapter Install}"></MenuItem>
         <MenuItem Header="Uninstall" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}" Command="{commands:DataContextCommandAdapter Uninstall}"></MenuItem>
+        <MenuItem Header="Reinstall" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}" Command="{commands:DataContextCommandAdapter Reinstall}"></MenuItem>
         <MenuItem Header="Update" Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}" Command="{commands:DataContextCommandAdapter Update}"></MenuItem>
         <MenuItem Header="Details" Command="{commands:DataContextCommandAdapter ViewDetails}"></MenuItem>
     </ContextMenu>

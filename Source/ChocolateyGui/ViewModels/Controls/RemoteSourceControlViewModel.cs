@@ -26,6 +26,7 @@ namespace ChocolateyGui.ViewModels.Controls
         private bool _matchWord;
         private ObservableCollection<IPackageViewModel> _packageViewModels;
         private int _pageCount = 1;
+        private bool _hasLoaded;
 
         private int _pageSize = 50;
 
@@ -130,7 +131,7 @@ namespace ChocolateyGui.ViewModels.Controls
 
         public bool CanRefreshRemotePackages()
         {
-            return true;
+            return this._hasLoaded;
         }
 
         public bool CanGoToFirst()
@@ -186,6 +187,8 @@ namespace ChocolateyGui.ViewModels.Controls
 
         private async void LoadPackages()
         {
+            this._hasLoaded = false;
+
             var result = await this._packageService.Search(this.SearchQuery, new PackageSearchOptions(this.PageSize, this.CurrentPage - 1, this.SortColumn, this.SortDescending, this.IncludePrerelease, this.IncludeAllVersions, this.MatchWord), this._source);
             this.PageCount = result.TotalCount / this.PageSize;
             this.Packages.Clear();
@@ -199,6 +202,8 @@ namespace ChocolateyGui.ViewModels.Controls
             {
                 this.CurrentPage = this.PageCount == 0 ? 1 : this.PageCount;
             }
+
+            this._hasLoaded = true;
         }
     }
 }

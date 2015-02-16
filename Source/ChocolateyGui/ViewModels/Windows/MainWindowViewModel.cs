@@ -78,6 +78,14 @@ namespace ChocolateyGui.ViewModels.Windows
             }
         }
 
+        public string Credits
+        {
+            get
+            {
+                return ResourceReader.GetFromResources(this.GetType().Assembly, "ChocolateyGui.Resources.CREDITS.md");
+            }
+        }
+
         public SourceViewModel SelectedSource
         {
             get

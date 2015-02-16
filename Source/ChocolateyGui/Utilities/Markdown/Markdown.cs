@@ -321,6 +321,7 @@ namespace Markdown.Xaml
             var result = Create<Hyperlink, Inline>(RunSpanGamut(linkText));
             result.Command = HyperlinkCommand;
             result.CommandParameter = url;
+            result.NavigateUri = new Uri(url);
             return result;
         }
 

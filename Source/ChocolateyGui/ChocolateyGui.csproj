@@ -315,6 +315,9 @@
     <EmbeddedResource Include="..\..\ABOUT.md">
       <Link>Resources\ABOUT.md</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\..\docs\legal\CREDITS.md">
+      <Link>Resources\CREDITS.md</Link>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />

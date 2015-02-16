@@ -31,20 +31,28 @@
             <metro:Flyout x:Name="AboutFlyout" Header="About" Position="Right" Width="500" Theme="Accent">
                 <metro:MetroAnimatedSingleRowTabControl>
                     <TabItem Header="ChocolateyGUI">
-                        <FlowDocumentScrollViewer 
+                        <FlowDocumentScrollViewer
                                     Name="AboutInformation" AutomationProperties.Name="About Information"
                                   VerticalAlignment="Stretch"
                                   HorizontalAlignment="Stretch"
-                                  Margin="10"
-                                  Document="{Binding AboutInformation, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>                        
+                                  Margin="10" Loaded="AboutInformation_OnLoaded"
+                                  Document="{Binding AboutInformation, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=False}"/>
                     </TabItem>
                     <TabItem Header="Release Notes">
                         <FlowDocumentScrollViewer 
                                     Name="ReleaseInformation" AutomationProperties.Name="Release Information"
                                   VerticalAlignment="Stretch"
                                   HorizontalAlignment="Stretch"
-                                  Margin="10"
-                                  Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
+                                  Margin="10" Loaded="ReleaseInformation_OnLoaded"
+                                  Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=False}"/>
+                    </TabItem>
+                    <TabItem Header="Credits">
+                        <FlowDocumentScrollViewer
+                            Name="Credits" AutomationProperties.Name="Credits"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Margin="10" Loaded="Credits_OnLoaded"
+                            Document="{Binding Credits, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=False}" />
                     </TabItem>
                 </metro:MetroAnimatedSingleRowTabControl>
             </metro:Flyout>

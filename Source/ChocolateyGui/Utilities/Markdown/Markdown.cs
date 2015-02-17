@@ -116,7 +116,7 @@ namespace Markdown.Xaml
 
         public Markdown()
         {
-            HyperlinkCommand = NavigationCommands.GoToPage;
+            ////HyperlinkCommand = NavigationCommands.GoToPage;
         }
 
         public FlowDocument Transform(string text)
@@ -319,8 +319,9 @@ namespace Markdown.Xaml
             string title = match.Groups[6].Value;
 
             var result = Create<Hyperlink, Inline>(RunSpanGamut(linkText));
-            result.Command = HyperlinkCommand;
-            result.CommandParameter = url;
+            ////result.Command = HyperlinkCommand;
+            ////result.CommandParameter = url;
+            result.NavigateUri = new Uri(url);
             return result;
         }
 

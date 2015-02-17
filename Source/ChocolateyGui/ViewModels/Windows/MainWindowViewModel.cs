@@ -62,6 +62,30 @@ namespace ChocolateyGui.ViewModels.Windows
             set { this.SetPropertyValue(ref this._newSourceUrl, value); }
         }
 
+        public string AboutInformation
+        {
+            get
+            {
+                return ResourceReader.GetFromResources(this.GetType().Assembly, "ChocolateyGui.Resources.ABOUT.md");
+            }
+        }
+
+        public string ReleaseNotes
+        {
+            get
+            {
+                return ResourceReader.GetFromResources(this.GetType().Assembly, "ChocolateyGui.Resources.CHANGELOG.md");
+            }
+        }
+
+        public string Credits
+        {
+            get
+            {
+                return ResourceReader.GetFromResources(this.GetType().Assembly, "ChocolateyGui.Resources.CREDITS.md");
+            }
+        }
+
         public SourceViewModel SelectedSource
         {
             get

@@ -7,9 +7,12 @@
 namespace ChocolateyGui.Views.Windows
 {
     using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Documents;
     using ChocolateyGui.ChocolateyFeedService;
     using ChocolateyGui.Controls.Dialogs;
     using ChocolateyGui.Models;
@@ -85,6 +88,18 @@ namespace ChocolateyGui.Views.Windows
             }));
         }
 
+        private static IEnumerable<DependencyObject> GetVisuals(DependencyObject root)
+        {
+            foreach (var child in LogicalTreeHelper.GetChildren(root).OfType<DependencyObject>())
+            {
+                yield return child;
+                foreach (var descendants in GetVisuals(child))
+                {
+                    yield return descendants;
+                }
+            }
+        }
+
         private void InitializeChocoDirectory()
         {
             Task.Run(() =>
@@ -123,6 +138,12 @@ namespace ChocolateyGui.Views.Windows
             SettingsFlyout.IsOpen = !SettingsFlyout.IsOpen;
         }
 
+        private void AboutButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            AboutFlyout.Width = Width / 3;
+            AboutFlyout.IsOpen = !AboutFlyout.IsOpen;
+        }
+
         private void SourcesButton_OnClick(object sender, RoutedEventArgs e)
         {
             SettingsFlyout.IsOpen = false;
@@ -137,6 +158,37 @@ namespace ChocolateyGui.Views.Windows
                 SettingsFlyout.IsOpen = true;
                 SourcesFlyout.IsOpenChanged -= this.SourcesFlyout_IsOpenChanged;
             }
+        }
+
+        private void SubscribeToAllHyperlinks(FlowDocument flowDocument)
+        {
+            var hyperlinks = GetVisuals(flowDocument).OfType<Hyperlink>();
+            foreach (var link in hyperlinks)
+            {
+                link.RequestNavigate += new System.Windows.Navigation.RequestNavigateEventHandler(this.Link_RequestNavigate);
+            }
+        }
+
+        private void Link_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            // http://stackoverflow.com/questions/2288999/how-can-i-get-a-flowdocument-hyperlink-to-launch-browser-and-go-to-url-in-a-wpf
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
+        private void AboutInformation_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.SubscribeToAllHyperlinks(this.AboutInformation.Document);
+        }
+
+        private void ReleaseInformation_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.SubscribeToAllHyperlinks(this.ReleaseInformation.Document);
+        }
+
+        private void Credits_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.SubscribeToAllHyperlinks(this.Credits.Document);
         }
     }
 }

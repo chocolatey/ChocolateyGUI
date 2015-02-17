@@ -13,7 +13,6 @@ namespace ChocolateyGui.Views.Windows
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Documents;
-
     using ChocolateyGui.ChocolateyFeedService;
     using ChocolateyGui.Controls.Dialogs;
     using ChocolateyGui.Models;
@@ -169,7 +168,7 @@ namespace ChocolateyGui.Views.Windows
                 link.RequestNavigate += new System.Windows.Navigation.RequestNavigateEventHandler(this.Link_RequestNavigate);
             }
         }
-        
+
         private void Link_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
             // http://stackoverflow.com/questions/2288999/how-can-i-get-a-flowdocument-hyperlink-to-launch-browser-and-go-to-url-in-a-wpf

@@ -12,6 +12,7 @@ namespace ChocolateyGui.ViewModels.Windows
     using System.Windows;
     using ChocolateyGui.Base;
     using ChocolateyGui.Models;
+    using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
     using ChocolateyGui.Utilities;
     using ChocolateyGui.ViewModels.Items;
@@ -19,18 +20,15 @@ namespace ChocolateyGui.ViewModels.Windows
     public class MainWindowViewModel : ObservableBase, IMainWindowViewModel, IWeakEventListener
     {
         private readonly Lazy<IPackageService> _packageService;
-
         private readonly IProgressService _progressService;
-
         private readonly ISourceService _sourceService;
+        private readonly IVersionNumberProvider _versionNumberProvider;
 
         private string _newSourceName;
-
         private string _newSourceUrl;
-
         private SourceViewModel _selectedSourceViewModel;
 
-        public MainWindowViewModel(ISourceService sourceService, IProgressService progressService, Lazy<IPackageService> packageServiceLazy)
+        public MainWindowViewModel(ISourceService sourceService, IProgressService progressService, Lazy<IPackageService> packageServiceLazy, IVersionNumberProvider versionNumberProvider)
         {
             if (sourceService == null)
             {
@@ -40,6 +38,7 @@ namespace ChocolateyGui.ViewModels.Windows
             this._sourceService = sourceService;
             this._progressService = progressService;
             this._packageService = packageServiceLazy;
+            this._versionNumberProvider = versionNumberProvider;
             this.Sources = new ObservableCollection<SourceViewModel>(this._sourceService.GetSources());
 
             SourcesChangedEventManager.AddListener(sourceService, this);
@@ -60,6 +59,38 @@ namespace ChocolateyGui.ViewModels.Windows
         {
             get { return this._newSourceUrl; }
             set { this.SetPropertyValue(ref this._newSourceUrl, value); }
+        }
+
+        public string AboutInformation
+        {
+            get
+            {
+                return ResourceReader.GetFromResources(this.GetType().Assembly, "ChocolateyGui.Resources.ABOUT.md");
+            }
+        }
+
+        public string ReleaseNotes
+        {
+            get
+            {
+                return ResourceReader.GetFromResources(this.GetType().Assembly, "ChocolateyGui.Resources.CHANGELOG.md");
+            }
+        }
+
+        public string Credits
+        {
+            get
+            {
+                return ResourceReader.GetFromResources(this.GetType().Assembly, "ChocolateyGui.Resources.CREDITS.md");
+            }
+        }
+
+        public string VersionNumber
+        {
+            get
+            {
+                return this._versionNumberProvider.Version;
+            }
         }
 
         public SourceViewModel SelectedSource

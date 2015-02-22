@@ -1,61 +1,104 @@
 ﻿<metro:MetroWindow x:Class="ChocolateyGui.Views.Windows.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:ChocolateyGui.ViewModels.Windows"
-        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:services="clr-namespace:ChocolateyGui.Services"
-        xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
-        xmlns:commands="clr-namespace:ChocolateyGui.Commands"
-        mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
-        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-        TitleForeground="{StaticResource Brown1Brush}"
-        Title="ChocolateyGUI">
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:local="clr-namespace:ChocolateyGui.ViewModels.Windows"
+		xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:commands="clr-namespace:ChocolateyGui.Commands"
+		xmlns:xaml="clr-namespace:Markdown.Xaml"
+		mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
+		d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+		TitleForeground="{StaticResource Brown1Brush}"
+		Title="ChocolateyGUI">
 
-    <Window.Resources>
-        <converters:NullToVisibility x:Key="NullToVisibility"/>
-    </Window.Resources>
+	<Window.Resources>
+		<xaml:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" Markdown="{StaticResource Markdown}"/>
+	</Window.Resources>
 
-    <metro:MetroWindow.WindowCommands>
-        <metro:WindowCommands>
-            <Button x:Name="SettingsButton" Content="settings" Click="SettingsButton_OnClick" ClickMode="Release"/>
-        </metro:WindowCommands>
-    </metro:MetroWindow.WindowCommands>
+	<Window.CommandBindings>
+		<CommandBinding
+			Command="NavigationCommands.GoToPage"
+			Executed="PerformGoToPage"
+			CanExecute="CanGoToPage" />
+	</Window.CommandBindings>
 
-    <metro:MetroWindow.Flyouts>
-        <metro:FlyoutsControl>
-            <metro:Flyout x:Name="SettingsFlyout" Header="Settings" Position="Right" Width="500" Theme="Accent">
-                <StackPanel>
-                    <Button x:Name="SourcesButton" HorizontalAlignment="Stretch" Style="{StaticResource SetttingsButtonStyle}" Click="SourcesButton_OnClick">
-                        Sources
-                    </Button>
-                </StackPanel>
-            </metro:Flyout>
-            <metro:Flyout x:Name="SourcesFlyout" Header="Settings" Position="Right" Width="500" Theme="Accent">
-                <StackPanel Margin="10,0">
-                    <DataGrid x:Name="SourcesDataGrid" AutoGenerateColumns="False"
-                              ItemsSource="{Binding Sources}" IsReadOnly="True"
-                              SelectedItem="{Binding SelectedSource}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="1*"/>
-                            <DataGridTextColumn Header="Url" Binding="{Binding Url}" Width="1*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Button Command="{commands:DataContextCommandAdapter RemoveSource, CanRemoveSource}">Remove Source</Button>
-                    <TextBlock Margin="0,10,0,0">Name:</TextBlock>
-                    <TextBox Text="{Binding NewSourceName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                    <TextBlock>Url:</TextBlock>
-                    <TextBox Text="{Binding NewSourceUrl, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                    <Button Command="{commands:DataContextCommandAdapter AddSource, CanAddSource}">Add Source</Button>
-                </StackPanel>
-            </metro:Flyout>
-        </metro:FlyoutsControl>
-    </metro:MetroWindow.Flyouts>
+	<metro:MetroWindow.WindowCommands>
+		<metro:WindowCommands>
+			<Button x:Name="SettingsButton" Content="settings" Click="SettingsButton_OnClick" ClickMode="Release"/>
+			<Button x:Name="AboutButton" Content="about" Click="AboutButton_OnClick" ClickMode="Release" />
+		</metro:WindowCommands>
+	</metro:MetroWindow.WindowCommands>
 
-    <Border Background="{StaticResource LightBackgroundColorBrush}">
-        <Grid>
-            <ContentControl x:Name="GlobalFrame"></ContentControl>
-        </Grid>
-    </Border>
+	<metro:MetroWindow.Flyouts>
+		<metro:FlyoutsControl>
+			<metro:Flyout x:Name="AboutFlyout" Header="About" Position="Right" Width="500" Theme="Accent">
+				<metro:MetroAnimatedSingleRowTabControl>
+					<TabItem Header="ChocolateyGUI">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Margin="10" Style="{StaticResource VersionNumberTextBlockStyle}" Text="{Binding VersionNumber}"></TextBlock>
+                            <FlowDocumentScrollViewer
+                                Grid.Row="1"
+                                Name="AboutInformation" AutomationProperties.Name="About Information"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Margin="10"
+                                Document="{Binding AboutInformation, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
+                        </Grid>
+                    </TabItem>
+					<TabItem Header="Release Notes">
+						<FlowDocumentScrollViewer
+                            Name="ReleaseInformation" AutomationProperties.Name="Release Information"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Margin="10"
+                            Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
+					</TabItem>
+					<TabItem Header="Credits">
+						<FlowDocumentScrollViewer
+							Name="Credits" AutomationProperties.Name="Credits"
+							VerticalAlignment="Stretch"
+							HorizontalAlignment="Stretch"
+							Margin="10"
+							Document="{Binding Credits, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}" />
+					</TabItem>
+				</metro:MetroAnimatedSingleRowTabControl>
+			</metro:Flyout>
+			<metro:Flyout x:Name="SettingsFlyout" Header="Settings" Position="Right" Width="500" Theme="Accent">
+				<StackPanel>
+					<Button x:Name="SourcesButton" HorizontalAlignment="Stretch" Style="{StaticResource SetttingsButtonStyle}" Click="SourcesButton_OnClick">
+						Sources
+					</Button>
+				</StackPanel>
+			</metro:Flyout>
+			<metro:Flyout x:Name="SourcesFlyout" Header="Settings" Position="Right" Width="500" Theme="Accent">
+				<StackPanel Margin="10,0">
+					<DataGrid x:Name="SourcesDataGrid" AutoGenerateColumns="False"
+							  ItemsSource="{Binding Sources}" IsReadOnly="True"
+							  SelectedItem="{Binding SelectedSource}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="1*"/>
+							<DataGridTextColumn Header="Url" Binding="{Binding Url}" Width="1*"/>
+						</DataGrid.Columns>
+					</DataGrid>
+					<Button Command="{commands:DataContextCommandAdapter RemoveSource, CanRemoveSource}">Remove Source</Button>
+					<TextBlock Margin="0,10,0,0">Name:</TextBlock>
+					<TextBox Text="{Binding NewSourceName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+					<TextBlock>Url:</TextBlock>
+					<TextBox Text="{Binding NewSourceUrl, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+					<Button Command="{commands:DataContextCommandAdapter AddSource, CanAddSource}">Add Source</Button>
+				</StackPanel>
+			</metro:Flyout>
+		</metro:FlyoutsControl>
+	</metro:MetroWindow.Flyouts>
+
+	<Border Background="{StaticResource LightBackgroundColorBrush}">
+		<Grid>
+			<ContentControl x:Name="GlobalFrame"></ContentControl>
+		</Grid>
+	</Border>
 </metro:MetroWindow>

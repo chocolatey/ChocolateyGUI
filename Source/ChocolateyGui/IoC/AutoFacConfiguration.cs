@@ -8,6 +8,8 @@ namespace ChocolateyGui.IoC
 {
     using System;
     using Autofac;
+
+    using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
     using ChocolateyGui.ViewModels.Controls;
     using ChocolateyGui.ViewModels.Items;
@@ -38,6 +40,9 @@ namespace ChocolateyGui.IoC
             builder.RegisterType<RemoteSourceControlViewModel>().As<IRemoteSourceControlViewModel>();
             builder.RegisterType<PackageControlViewModel>().As<IPackageControlViewModel>();
             builder.Register(c => new PackageViewModel(c.Resolve<IPackageService>(), c.Resolve<IChocolateyService>(), c.Resolve<INavigationService>())).As<IPackageViewModel>();
+
+            // Register Providers
+            builder.RegisterType<VersionNumberProvider>().As<IVersionNumberProvider>();
 
             // Register Services
             builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();

@@ -7,9 +7,12 @@
 namespace ChocolateyGui.Views.Windows
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
+
     using ChocolateyGui.ChocolateyFeedService;
     using ChocolateyGui.Controls.Dialogs;
     using ChocolateyGui.Models;
@@ -123,6 +126,12 @@ namespace ChocolateyGui.Views.Windows
             SettingsFlyout.IsOpen = !SettingsFlyout.IsOpen;
         }
 
+        private void AboutButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            AboutFlyout.Width = Width / 3;
+            AboutFlyout.IsOpen = !AboutFlyout.IsOpen;
+        }
+        
         private void SourcesButton_OnClick(object sender, RoutedEventArgs e)
         {
             SettingsFlyout.IsOpen = false;
@@ -138,5 +147,19 @@ namespace ChocolateyGui.Views.Windows
                 SourcesFlyout.IsOpenChanged -= this.SourcesFlyout_IsOpenChanged;
             }
         }
+        
+        private void CanGoToPage(object sender, CanExecuteRoutedEventArgs e)
+        {
+            // GEP: I can't think of any reason that we would want to prevent going to the linked
+            // page, so just going to default this to returning true
+            e.CanExecute = true;
+        }
+
+        private void PerformGoToPage(object sender, ExecutedRoutedEventArgs e)
+        {
+            // https://github.com/theunrepentantgeek/Markdown.XAML/issues/5
+            Process.Start(new ProcessStartInfo(e.Parameter.ToString()));
+            e.Handled = true;
+        }        
     }
 }

@@ -32,42 +32,44 @@
 
 	<metro:MetroWindow.Flyouts>
 		<metro:FlyoutsControl>
-			<metro:Flyout x:Name="AboutFlyout" Header="About" Position="Right" Width="500" Theme="Accent">
-				<metro:MetroAnimatedSingleRowTabControl>
-					<TabItem Header="ChocolateyGUI">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Margin="10" Style="{StaticResource VersionNumberTextBlockStyle}" Text="{Binding VersionNumber}"></TextBlock>
-                            <FlowDocumentScrollViewer
-                                Grid.Row="1"
-                                Name="AboutInformation" AutomationProperties.Name="About Information"
+            <metro:Flyout x:Name="AboutFlyout" Header="About" Position="Right" Width="500" Theme="Accent" >
+                <Border Background="{StaticResource LightBackgroundColorBrush}">
+                    <metro:MetroAnimatedSingleRowTabControl>
+					    <TabItem Header="ChocolateyGUI">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Margin="10" Style="{StaticResource VersionNumberTextBlockStyle}" Text="{Binding VersionNumber}"></TextBlock>
+                                <FlowDocumentScrollViewer
+                                    Grid.Row="1"
+                                    Name="AboutInformation" AutomationProperties.Name="About Information"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Margin="10"
+                                    Document="{Binding AboutInformation, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
+                            </Grid>
+                        </TabItem>
+					    <TabItem Header="Release Notes">
+						    <FlowDocumentScrollViewer
+                                Name="ReleaseInformation" AutomationProperties.Name="Release Information"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
                                 Margin="10"
-                                Document="{Binding AboutInformation, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
-                        </Grid>
-                    </TabItem>
-					<TabItem Header="Release Notes">
-						<FlowDocumentScrollViewer
-                            Name="ReleaseInformation" AutomationProperties.Name="Release Information"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                            Margin="10"
-                            Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
-					</TabItem>
-					<TabItem Header="Credits">
-						<FlowDocumentScrollViewer
-							Name="Credits" AutomationProperties.Name="Credits"
-							VerticalAlignment="Stretch"
-							HorizontalAlignment="Stretch"
-							Margin="10"
-							Document="{Binding Credits, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}" />
-					</TabItem>
-				</metro:MetroAnimatedSingleRowTabControl>
-			</metro:Flyout>
+                                Document="{Binding ReleaseNotes, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}"/>
+					    </TabItem>
+					    <TabItem Header="Credits">
+						    <FlowDocumentScrollViewer
+							    Name="Credits" AutomationProperties.Name="Credits"
+							    VerticalAlignment="Stretch"
+							    HorizontalAlignment="Stretch"
+							    Margin="10"
+							    Document="{Binding Credits, Converter={StaticResource TextToFlowDocumentConverter}, IsAsync=True}" />
+					    </TabItem>
+                    </metro:MetroAnimatedSingleRowTabControl>
+                </Border>
+            </metro:Flyout>
 			<metro:Flyout x:Name="SettingsFlyout" Header="Settings" Position="Right" Width="500" Theme="Accent">
 				<StackPanel>
 					<Button x:Name="SourcesButton" HorizontalAlignment="Stretch" Style="{StaticResource SetttingsButtonStyle}" Click="SourcesButton_OnClick">

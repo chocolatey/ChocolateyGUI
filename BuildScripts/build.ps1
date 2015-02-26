@@ -17,7 +17,7 @@ if($Help){
 	try {
     Get-Help "$($MyInvocation.MyCommand.Definition)" -full | Out-Host -paging
     Write-Host "Available build tasks:"
-    psake "$here/default.ps1" -nologo -docs | Out-Host -paging
+    invoke-psake "$here/default.ps1" -nologo -docs | Out-Host -paging
 	} catch {}
 
 	return
@@ -30,17 +30,19 @@ if(Test-Path -Path env:\APPVEYOR) {
 		} elseif($env:APPVEYOR_REPO_BRANCH -eq "develop" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null) {
       Write-Host "Since we are on develop branch with a pull request number, we are just going to package the solution, with no deployment"
       invoke-psake "$here/default.ps1" -task InspectCodeForProblems -properties @{ 'config'='Release'; }
-		} elseif($env:APPVEYOR_REPO_BRANCH -eq "master" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null) {
-      Write-Host "Since we are on develop branch with no pull request number, we are ready to deploy to Chocolatey"
+		} elseif($env:APPVEYOR_REPO_BRANCH -eq "master" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -eq $null) {
+      Write-Host "Since we are on master branch with no pull request number, we are ready to deploy to Chocolatey"
       invoke-psake "$here/default.ps1" -task DeploySolutionToChocolatey -properties @{ 'config'='Release'; }
 		} elseif($env:APPVEYOR_REPO_BRANCH -eq "master" -And $env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null) {
-      Write-Host "Since we are on develop branch with a pull request number, we are just going to package the solution, with no deployment"
+      Write-Host "Since we are on master branch with a pull request number, we are just going to package the solution, with no deployment"
       invoke-psake "$here/default.ps1" -task InspectCodeForProblems -properties @{ 'config'='Release'; }
 		}
 } else {
 		invoke-psake "$here/default.ps1" -task $Action -properties @{ 'config'=$Config; }
 }
 
+# If for some reason, the above if statement doesn't actually invoke-psake, the $psake.build_success will be false
+# so it will exit with a code of 1 below, which will fail the build.
 if ($psake.build_success -eq $false) { 
 	exit 1 
 } else { 

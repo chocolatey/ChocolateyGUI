@@ -87,7 +87,7 @@ function Invoke-Task
                         Assert ((test-path "variable:$variable") -and ((get-variable $variable).Value -ne $null)) ($msgs.required_variable_not_set -f $variable, $taskName)
                     }
 
-					& $task.Action
+                    & $task.Action
 
                     if ($task.PostAction) {
                         & $task.PostAction
@@ -141,7 +141,7 @@ function Exec
 
     do {
         try {
-            $global:lastexitcode = 0                 
+            $global:lastexitcode = 0
             & $cmd
             if ($lastexitcode -ne 0) {
                 throw ("Exec: " + $errorMessage)
@@ -296,7 +296,7 @@ function Framework {
         [Parameter(Position=0,Mandatory=1)][string]$framework
     )
     $psake.context.Peek().config.framework = $framework
-	ConfigureBuildEnvironment
+    ConfigureBuildEnvironment
 }
 
 # .ExternalHelp  psake.psm1-help.xml
@@ -310,11 +310,12 @@ function Invoke-psake {
         [Parameter(Position = 4, Mandatory = 0)][hashtable] $parameters = @{},
         [Parameter(Position = 5, Mandatory = 0)][hashtable] $properties = @{},
         [Parameter(Position = 6, Mandatory = 0)][alias("init")][scriptblock] $initialization = {},
-        [Parameter(Position = 7, Mandatory = 0)][switch] $nologo = $false
+        [Parameter(Position = 7, Mandatory = 0)][switch] $nologo = $false,
+        [Parameter(Position = 8, Mandatory = 0)][switch] $detailedDocs = $false
     )
     try {
         if (-not $nologo) {
-            "psake version {0}`nCopyright (c) 2010 James Kovacs`n" -f $psake.version
+            "psake version {0}`nCopyright (c) 2010-2014 James Kovacs & Contributors`n" -f $psake.version
         }
 
         if (!$buildFile) {
@@ -374,8 +375,8 @@ function Invoke-psake {
             . $includeFilename
         }
 
-        if ($docs) {
-            WriteDocumentation
+        if ($docs -or $detailedDocs) {
+            WriteDocumentation($detailedDocs)
             CleanupEnvironment
             return
         }
@@ -439,7 +440,7 @@ function Invoke-psake {
         $psake.build_success = $false
 
         # if we are running in a nested scope (i.e. running a psake script from a psake script) then we need to re-throw the exception
-        # so that the parent script will fail otherwise the parent script will report a successful build 
+        # so that the parent script will fail otherwise the parent script will report a successful build
         $inNestedScope = ($psake.context.count -gt 1)
         if ( $inNestedScope ) {
             throw $_
@@ -581,7 +582,7 @@ function ConfigureBuildEnvironment {
         }
         '4.5.1' {
             $versions = @('v4.0.30319')
-            $buildToolsVersions = @('12.0')
+            $buildToolsVersions = @('14.0', '12.0')
         }
         default {
             throw ($msgs.error_unknown_framework -f $versionPart, $framework)
@@ -622,10 +623,14 @@ function ConfigureBuildEnvironment {
     }
     $frameworkDirs = @()
     if ($buildToolsVersions -ne $null) {
-        $frameworkDirs = @($buildToolsVersions | foreach { (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSBuild\ToolsVersions\$_" -Name $buildToolsKey).$buildToolsKey })
+        foreach($ver in $buildToolsVersions) {
+            if (Test-Path "HKLM:\SOFTWARE\Microsoft\MSBuild\ToolsVersions\$ver") {
+                $frameworkDirs += (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSBuild\ToolsVersions\$ver" -Name $buildToolsKey).$buildToolsKey
+            }
+        }
     }
     $frameworkDirs = $frameworkDirs + @($versions | foreach { "$env:windir\Microsoft.NET\$bitness\$_\" })
-    
+
     for ($i = 0; $i -lt $frameworkDirs.Count; $i++) {
         $dir = $frameworkDirs[$i]
         if ($dir -Match "\$\(Registry:HKEY_LOCAL_MACHINE(.*?)@(.*)\)") {
@@ -635,7 +640,7 @@ function ConfigureBuildEnvironment {
             $frameworkDirs[$i] = $dir
         }
     }
-    
+
     $frameworkDirs | foreach { Assert (test-path $_ -pathType Container) ($msgs.error_no_framework_install_dir_found -f $_)}
 
     $env:path = ($frameworkDirs -join ";") + ";$env:path"
@@ -742,7 +747,7 @@ function ResolveError
     }
 }
 
-function WriteDocumentation {
+function WriteDocumentation($showDetailed) {
     $currentContext = $psake.context.Peek()
 
     if ($currentContext.tasks.default) {
@@ -751,7 +756,7 @@ function WriteDocumentation {
         $defaultTaskDependencies = @()
     }
 
-    $currentContext.tasks.Keys | foreach-object {
+    $docs = $currentContext.tasks.Keys | foreach-object {
         if ($_ -eq "default") {
             return
         }
@@ -764,33 +769,41 @@ function WriteDocumentation {
             "Depends On" = $task.DependsOn -join ", "
             Default = if ($defaultTaskDependencies -contains $task.Name) { $true }
         }
-    } | sort 'Name' | format-table -autoSize -wrap -property Name,Alias,"Depends On",Default,Description
+    }
+    if ($showDetailed) {
+        $docs | sort 'Name' | format-list -property Name,Alias,Description,"Depends On",Default
+    } else {
+        $docs | sort 'Name' | format-table -autoSize -wrap -property Name,Alias,"Depends On",Default,Description
+    }
+
 }
 
 function WriteTaskTimeSummary($invokePsakeDuration) {
-    "-" * 70
-    "Build Time Report"
-    "-" * 70
-    $list = @()
-    $currentContext = $psake.context.Peek()
-    while ($currentContext.executedTasks.Count -gt 0) {
-        $taskKey = $currentContext.executedTasks.Pop()
-        $task = $currentContext.tasks.$taskKey
-        if ($taskKey -eq "default") {
-            continue
+    if ($psake.context.count -gt 0) {
+        "-" * 70
+        "Build Time Report"
+        "-" * 70
+        $list = @()
+        $currentContext = $psake.context.Peek()
+        while ($currentContext.executedTasks.Count -gt 0) {
+            $taskKey = $currentContext.executedTasks.Pop()
+            $task = $currentContext.tasks.$taskKey
+            if ($taskKey -eq "default") {
+                continue
+            }
+            $list += new-object PSObject -property @{
+                Name = $task.Name;
+                Duration = $task.Duration
+            }
         }
+        [Array]::Reverse($list)
         $list += new-object PSObject -property @{
-            Name = $task.Name;
-            Duration = $task.Duration
+            Name = "Total:";
+            Duration = $invokePsakeDuration
         }
+        # using "out-string | where-object" to filter out the blank line that format-table prepends
+        $list | format-table -autoSize -property Name,Duration | out-string -stream | where-object { $_ }
     }
-    [Array]::Reverse($list)
-    $list += new-object PSObject -property @{
-        Name = "Total:";
-        Duration = $invokePsakeDuration
-    }
-    # using "out-string | where-object" to filter out the blank line that format-table prepends
-    $list | format-table -autoSize -property Name,Duration | out-string -stream | where-object { $_ }
 }
 
 DATA msgs {
@@ -825,7 +838,7 @@ convertfrom-stringdata @'
 import-localizeddata -bindingvariable msgs -erroraction silentlycontinue
 
 $script:psake = @{}
-$psake.version = "4.3.2" # contains the current version of psake
+$psake.version = "4.4.1" # contains the current version of psake
 $psake.context = new-object system.collections.stack # holds onto the current state of all variables
 $psake.run_by_psake_build_tester = $false # indicates that build is being run by psake-BuildTester
 $psake.config_default = new-object psobject -property @{

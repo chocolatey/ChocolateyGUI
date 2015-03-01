@@ -228,6 +228,14 @@ Task -Name __RemoveBuildArtifactsDirectory -Description $private -Action {
 Task -Name __InstallChocolatey -Description $private -Action {
 	if(isChocolateyInstalled) {
 		Write-Host "Chocolatey already installed";
+    Write-Host "Updating to latest Chocolatey..."
+    $choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+    
+    exec {
+			Invoke-Expression "$choco update chocolatey";
+		}
+    
+    Write-Host "Latest Chocolatey installed."
 	}	else {
 		try {
 			Write-Host "Chocolatey is not installed, installing Chocolatey...";
@@ -241,11 +249,11 @@ Task -Name __InstallChocolatey -Description $private -Action {
 				throw "Error installing Chocolatey"
 			}
 
-			Write-Host ("************ Install PSBuild Successful ************")
+			Write-Host ("************ Install Chocolatey Successful ************")
 		}
 		catch {
 			Write-Error $_
-			Write-Host ("************ Install PSBuild Failed ************")
+			Write-Host ("************ Install Chocolatey Failed ************")
 		}
 	}
 }
@@ -592,7 +600,7 @@ Task -Name DeployDevelopPackageToMyGet -Description "Takes the packaged Chocolat
 	}
 }
 
-Task -Name DeployMasterSolutionToMyGet -Description "Takes the packaged Chocolatey package from master branch and deploys to MyGet.org" -Action {
+Task -Name DeployMasterPackageToMyGet -Description "Takes the packaged Chocolatey package from master branch and deploys to MyGet.org" -Action {
 	$buildArtifactsDirectory = get-buildArtifactsDirectory;
 				
 	try {

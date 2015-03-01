@@ -69,7 +69,7 @@ function analyseStyleCopResults( [Parameter(ValueFromPipeline=$true)]$styleCopRe
 	$styleCopViolations = [xml](Get-Content $styleCopResultsFile);
 		
 	foreach ($styleCopViolation in $styleCopViolations.StyleCopViolations.Violation) {        
-		Write-Host "Violation of Rule $($styleCopViolation.RuleId): $($styleCopViolation.Rule) Line Number: $($styleCopViolation.LineNumber) FileName: $($styleCopViolation.Source) ErrorMessage: $($styleCopViolation.InnerXml)";       
+		Write-Output "Violation of Rule $($styleCopViolation.RuleId): $($styleCopViolation.Rule) Line Number: $($styleCopViolation.LineNumber) FileName: $($styleCopViolation.Source) ErrorMessage: $($styleCopViolation.InnerXml)";       
 
 		if(isAppVeyor) {
 			Add-AppveyorTest "Violation of Rule $($styleCopViolation.RuleId): $($styleCopViolation.Rule) Line Number: $($styleCopViolation.LineNumber)" -Outcome Failed -FileName $styleCopViolation.Source -ErrorMessage $styleCopViolation.InnerXml;
@@ -86,7 +86,7 @@ function analyseCodeAnalysisResults( [Parameter(ValueFromPipeline=$true)]$codeAn
 
 	foreach ($codeAnalysisError in $codeAnalysisErrors.SelectNodes("//Message")) {
 		$issueNode = $codeAnalysisError.SelectSingleNode("Issue");
-		Write-Host "Violation of Rule $($codeAnalysisError.CheckId): $($codeAnalysisError.TypeName) Line Number: $($issueNode.Line) FileName: $($issueNode.Path)\$($codeAnalysisError.Issue.File) ErrorMessage: $($issueNode.InnerXml)";
+		Write-Output "Violation of Rule $($codeAnalysisError.CheckId): $($codeAnalysisError.TypeName) Line Number: $($issueNode.Line) FileName: $($issueNode.Path)\$($codeAnalysisError.Issue.File) ErrorMessage: $($issueNode.InnerXml)";
 
 		if(isAppVeyor) {
 			Add-AppveyorTest "Violation of Rule $($codeAnalysisError.CheckId): $($codeAnalysisError.TypeName) Line Number: $($issueNode.Line)" -Outcome Failed -FileName "$($issueNode.Path)\$($codeAnalysisError.Issue.File)" -ErrorMessage $($issueNode.InnerXml);
@@ -103,11 +103,11 @@ function analyseDupFinderResults( [Parameter(ValueFromPipeline=$true)]$dupFinder
 	$anyFailures = $FALSE
 	
 	foreach ($duplicateCost in $dupFinderErrors.DuplicatesReport.Duplicates.Duplicate) {
-		Write-Host "Duplicate Located with a cost of $($duplicateCost.Cost), across $($duplicateCost.Fragment.Count) Fragments";
+		Write-Output "Duplicate Located with a cost of $($duplicateCost.Cost), across $($duplicateCost.Fragment.Count) Fragments";
 		
 		foreach ($fragment in $duplicateCost.Fragment) {
-			Write-Host "File Name: $($fragment.FileName) Line Numbers: $($fragment.LineRange.Start) - $($fragment.LineRange.End)";
-			Write-Host "Offending Text: $($fragment.Text)";
+			Write-Output "File Name: $($fragment.FileName) Line Numbers: $($fragment.LineRange.Start) - $($fragment.LineRange.End)";
+			Write-Output "Offending Text: $($fragment.Text)";
 		}
 
     $anyFailures = $TRUE;
@@ -122,7 +122,7 @@ function analyseDupFinderResults( [Parameter(ValueFromPipeline=$true)]$dupFinder
 	}
 	
 	if ($anyFailures -eq $TRUE){
-		Write-Host "Failing build as there are duplicates in the Code Base";
+		Write-Output "Failing build as there are duplicates in the Code Base";
 		throw "Duplicates found in code base";
 	}
 }
@@ -132,11 +132,11 @@ function analyseInspectCodeResults( [Parameter(ValueFromPipeline=$true)]$inspect
 	$anyFailures = $FALSE;
 
   foreach ($errorIssueType in $inspectCodeErrors.SelectNodes("/Report/IssueTypes/IssueType[@Severity='ERROR']")) {
-    Write-Host "Code Inspection Error(s) Located. Description: $($errorIssueType.Description)";
+    Write-Output "Code Inspection Error(s) Located. Description: $($errorIssueType.Description)";
 
     $issueLookup = "/Report/Issues/Project/Issue[@TypeId='$($errorIssueType.Id)']";
     foreach ($errorIssue in $inspectCodeErrors.SelectNodes($issueLookup)) {
-      Write-Host "File Name: $($errorIssue.File) Line Number: $($errorIssue.Line) Message: $($errorIssue.Message)";
+      Write-Output "File Name: $($errorIssue.File) Line Number: $($errorIssue.Line) Message: $($errorIssue.Message)";
 
       if(isAppVeyor) {
 			  Add-AppveyorTest "Code Inspection Error: $($errorIssueType.Description) Line Number: $($errorIssue.Line)" -Outcome Failed -FileName "$($errorIssue.File)" -ErrorMessage $($errorIssue.Message);
@@ -151,29 +151,29 @@ function analyseInspectCodeResults( [Parameter(ValueFromPipeline=$true)]$inspect
 	}
 
 	if ($anyFailures -eq $TRUE){
-		Write-Host "Failing build as there are code inspection errors in the Code Base";
+		Write-Output "Failing build as there are code inspection errors in the Code Base";
 		throw "Code Inspection Errors found in code base";
 	}
 }
 
 function testEnvironmentVariable($envVariableName, $envVariableValue) {
 	if($envVariableValue -ne $null) {
-		Write-Host "$envVariableName : $envVariableValue";
+		Write-Output "$envVariableName : $envVariableValue";
 	} else {
-		Write-Host "$envVariableName : Not Defined";
+		Write-Output "$envVariableName : Not Defined";
 	}
 }
 
 function applyXslTransform($xmlFile, $xslFile, $outputFile) {
-	Write-Host "XML File: $xmlFile"
-	Write-Host "XSL File: $xslFile"
-	Write-Host "Output File: $outputFile"
+	Write-Output "XML File: $xmlFile"
+	Write-Output "XSL File: $xslFile"
+	Write-Output "Output File: $outputFile"
 
 	$xslt = New-Object System.Xml.Xsl.XslCompiledTransform;
 	$xslt.Load($xslFile);
 	$xslt.Transform($xmlFile, $outputFile);
 	
-	Write-Host "XSL Transform completed."
+	Write-Output "XSL Transform completed."
 	
 	if(isAppVeyor) {
 			Push-AppveyorArtifact $outputFile;
@@ -227,18 +227,18 @@ Task -Name __RemoveBuildArtifactsDirectory -Description $private -Action {
 
 Task -Name __InstallChocolatey -Description $private -Action {
 	if(isChocolateyInstalled) {
-		Write-Host "Chocolatey already installed";
-    Write-Host "Updating to latest Chocolatey..."
+		Write-Output "Chocolatey already installed";
+    Write-Output "Updating to latest Chocolatey..."
     $choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
     
     exec {
 			Invoke-Expression "$choco update chocolatey";
 		}
     
-    Write-Host "Latest Chocolatey installed."
+    Write-Output "Latest Chocolatey installed."
 	}	else {
 		try {
-			Write-Host "Chocolatey is not installed, installing Chocolatey...";
+			Write-Output "Chocolatey is not installed, installing Chocolatey...";
 												
 			exec {
 				Invoke-Expression ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'));
@@ -249,11 +249,11 @@ Task -Name __InstallChocolatey -Description $private -Action {
 				throw "Error installing Chocolatey"
 			}
 
-			Write-Host ("************ Install Chocolatey Successful ************")
+			Write-Output ("************ Install Chocolatey Successful ************")
 		}
 		catch {
 			Write-Error $_
-			Write-Host ("************ Install Chocolatey Failed ************")
+			Write-Output ("************ Install Chocolatey Failed ************")
 		}
 	}
 }
@@ -271,14 +271,14 @@ Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Desc
 				Invoke-Expression "$choco install resharper-clt";
 			}
 		} else {
-			Write-Host "resharper-clt already installed";
+			Write-Output "resharper-clt already installed";
 		}
 
-		Write-Host ("************ Install Command Line Tools Successful ************")
+		Write-Output ("************ Install Command Line Tools Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ Install Command Line Tools Failed ************")
+		Write-Output ("************ Install Command Line Tools Failed ************")
 	}	
 }
 
@@ -292,11 +292,11 @@ Task -Name __UpdateReSharperCommandLineTools -Description $private -Action {
 			Invoke-Expression "$choco update resharper-clt";
 		}
 
-		Write-Host ("************ Update Command Line Tools Successful ************")
+		Write-Output ("************ Update Command Line Tools Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ Update Command Line Tools Failed ************")
+		Write-Output ("************ Update Command Line Tools Failed ************")
 	}	
 }
 
@@ -309,11 +309,11 @@ Task -Name __InstallPSBuild -Description $private -Action {
 			(new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
 		}
 
-		Write-Host ("************ Install PSBuild Successful ************")
+		Write-Output ("************ Install PSBuild Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ Install PSBuild Failed ************")
+		Write-Output ("************ Install PSBuild Failed ************")
 	}	
 }	
 
@@ -330,14 +330,14 @@ Task -Name __InstallGitVersion -Depends __InstallChocolatey -Description $privat
 							Invoke-Expression "$choco install GitVersion.Portable -pre";
 			}
 		} else {
-			Write-Host "GitVersion.Portable already installed";
+			Write-Output "GitVersion.Portable already installed";
 		}
 
-		Write-Host ("************ Install GitVersion.Portable Successful ************")
+		Write-Output ("************ Install GitVersion.Portable Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ Install GitVersion.Portable Failed ************")
+		Write-Output ("************ Install GitVersion.Portable Failed ************")
 	}	
 }
 
@@ -351,11 +351,11 @@ Task -Name __UpdateGitVersion -Description $private -Action {
 			Invoke-Expression "$choco update GitVersion.Portable";
 		}
 
-		Write-Host ("************ Update GitVersion.Portable Successful ************")
+		Write-Output ("************ Update GitVersion.Portable Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ Update GitVersion.Portable Failed ************")
+		Write-Output ("************ Update GitVersion.Portable Failed ************")
 	}	
 }
 
@@ -383,7 +383,7 @@ Task -Name RunGitVersion -Depends __InstallGitVersion -Description "Execute the 
 
 		exec {
 			if(isAppVeyor) {
-				Write-Host "Running on AppVeyor, so UpdateAssemblyInfo will be called."
+				Write-Output "Running on AppVeyor, so UpdateAssemblyInfo will be called."
 				& $gitVersionExe /output buildserver /UpdateAssemblyInfo true
 				$script:version = $env:GitVersion_LegacySemVerPadded
 			} else {
@@ -393,14 +393,14 @@ Task -Name RunGitVersion -Depends __InstallGitVersion -Description "Execute the 
 				$script:version = $versionInfo.LegacySemVerPadded
 			}
 
-			Write-Host "Calculated Legacy SemVer Padded Version Number: $script:version"
+			Write-Output "Calculated Legacy SemVer Padded Version Number: $script:version"
 		}
 
-		Write-Host ("************ RunGitVersion Successful ************")
+		Write-Output ("************ RunGitVersion Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ RunGitVersion Failed ************")
+		Write-Output ("************ RunGitVersion Failed ************")
 	}	
 }
 
@@ -460,11 +460,11 @@ Task -Name OutputNugetVersion -Description "So that we are clear which version o
 			& $nugetExe;
 		}
 
-		Write-Host ("************ NuGet Successful ************")
+		Write-Output ("************ NuGet Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ NuGet Failed ************")
+		Write-Output ("************ NuGet Failed ************")
 	}
 }
 
@@ -478,11 +478,11 @@ Task -Name NugetPackageRestore -Depends OutputNugetVersion -Description "Restore
 			& $nugetExe restore "$sourceDirectory\ChocolateyGui.sln"
 		}
 
-		Write-Host ("************ NugetPackageRestore Successful ************")
+		Write-Output ("************ NugetPackageRestore Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ NugetPackageRestore Failed ************")
+		Write-Output ("************ NugetPackageRestore Failed ************")
 	}
 }
 
@@ -524,11 +524,11 @@ Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfi
 			}
 		}
 
-		Write-Host ("************ BuildSolution Successful ************")
+		Write-Output ("************ BuildSolution Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ BuildSolution Failed ************")
+		Write-Output ("************ BuildSolution Failed ************")
 	}
 }
 
@@ -546,11 +546,11 @@ Task -Name CleanSolution -Depends __InstallPSBuild, __RemoveBuildArtifactsDirect
 			Invoke-MSBuild "$sourceDirectory\ChocolateyGui.sln" -NoLogo -Configuration $config -Targets Clean -DetailedSummary -VisualStudioVersion 12.0 -Properties (@{'Platform'='Mixed Platforms'})
 		}
 
-		Write-Host ("************ CleanSolution Successful ************")
+		Write-Output ("************ CleanSolution Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ CleanSolution Failed ************")
+		Write-Output ("************ CleanSolution Failed ************")
 	}
 }
 
@@ -574,11 +574,11 @@ Task -Name PackageChocolatey -Description "Packs the module and example package"
 			}
 		}
 
-		Write-Host ("************ PackageChocolatey Successful ************")
+		Write-Output ("************ PackageChocolatey Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ PackageChocolatey Failed ************")
+		Write-Output ("************ PackageChocolatey Failed ************")
 	}	
 }
 
@@ -592,11 +592,11 @@ Task -Name DeployDevelopPackageToMyGet -Description "Takes the packaged Chocolat
 			& $nugetExe push "$buildArtifactsDirectory\*.nupkg" $env:MyGetDevelopApiKey -source $env:MyGetDevelopFeedUrl
 		}
 
-		Write-Host ("************ MyGet Deployment Successful ************")
+		Write-Output ("************ MyGet Deployment Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ MyGet Deployment Failed ************")
+		Write-Output ("************ MyGet Deployment Failed ************")
 	}
 }
 
@@ -610,11 +610,11 @@ Task -Name DeployMasterPackageToMyGet -Description "Takes the packaged Chocolate
 			& $nugetExe push "$buildArtifactsDirectory\*.nupkg" $env:MyGetMasterApiKey -source $env:MyGetMasterFeedUrl
 		}
 
-		Write-Host ("************ MyGet Deployment Successful ************")
+		Write-Output ("************ MyGet Deployment Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ MyGet Deployment Failed ************")
+		Write-Output ("************ MyGet Deployment Failed ************")
 	}
 }
 
@@ -628,10 +628,10 @@ Task -Name DeployPackageToChocolatey -Description "Takes the packaged Chocolatey
 			& $nugetExe push "$buildArtifactsDirectory\*.nupkg" $env:ChocolateyApiKey -source $env:ChocolateyFeedUrl
 		}
 
-		Write-Host ("************ Chocolatey Deployment Successful ************")
+		Write-Output ("************ Chocolatey Deployment Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Host ("************ Chocolatey Deployment Failed ************")
+		Write-Output ("************ Chocolatey Deployment Failed ************")
 	}
 }

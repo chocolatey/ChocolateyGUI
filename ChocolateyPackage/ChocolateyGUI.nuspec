@@ -7,7 +7,7 @@
     <authors>Chocolatey</authors>
     <owners>Chocolatey</owners>
 	<iconUrl>https://github.com/chocolatey/chocolatey/raw/master/docs/logo/chocolateyicon.gif</iconUrl>
-    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE</licenseUrl>
     <projectUrl>https://github.com/chocolatey/ChocolateyGUI</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
@@ -22,63 +22,7 @@ Server 2008 SP2 and above.
 	</description>
     <summary>A GUI for Chocolatey</summary>
 	<releaseNotes>
-See all - https://github.com/chocolatey/ChocolateyGUI/releases
-	
-## 0.11.4
-	
- * Fix - Correct releasenotes in Chocolatey nuspec file - https://github.com/chocolatey/ChocolateyGUI/issues/136
-	
-## 0.11.2
-	
- * Fix - ChocolateyVersionUnknownException incorrectly thrown - https://github.com/chocolatey/ChocolateyGUI/issues/78
- * Fix - Move settings to main menu strip - https://github.com/chocolatey/ChocolateyGUI/issues/75
- * Fix - Fix typo in release notes for 0.11.0 - https://github.com/chocolatey/ChocolateyGUI/issues/64
- * Fix - Include the chocolateyUninstall.ps1 in the nuspec file - https://github.com/chocolatey/ChocolateyGUI/issues/63
- * Fix - There's no uninstall script in the 0.0.5 package - https://github.com/chocolatey/ChocolateyGUI/issues/3
-	
-## 0.11.1
-	
- * bugfix - uninstall should now work
- * bugfix - program crashing when packages came out of cache.
-	
-## 0.11.0
-	
- * Enhancement - Many new features, including UI enhancements and auto building from MyGet.
- * Enhancement - Better logging and Log form so you can find those log files more easily.
- * Enhancement - In the settings you can empty the cache, better caching of packages and list
- * Enhancement - better parsing of dependencies
- * Enhancement - selecting of sources from the sources.xml file. For now just 2 sources.
- * Enhancement - release notes and copyright information in seperate tab
- * Enhancement - chocolatey run information in seperate tab
-	
-## 0.1.4
-	
- * Enhancement - Better description for the package.
-	
-## 0.1.3
-	
- * Bugfix - Installer did not remove older version.
-	
-## 0.1.2
-	
- * Enhancement - package now has iconURL.
-	
-## 0.1.1
-
- * Enhancement - The installer should now check if .Net framework 4.0 is installed.
-	
-## 0.1.0
-	
- * Enhancement - More information about a package
- * Enhancement - Shows chocolatey as an installed package.
- * Enhancement - Performance improvement
- * Enhancement - You can search in the list. It is a StartsWith search.
- * Enhancement - You can install the available package by clicking on the checkbox.
- * Enhancement - You can uninstall a package.
-	
-## 0.0.5
-	
- * First working version
+All release notes for ChocolateyGUI can be found on the GitHub site - https://github.com/chocolatey/ChocolateyGUI/releases
 	</releaseNotes>
     <tags>ChocolateyGUI chocolatey admin</tags>
     <dependencies>

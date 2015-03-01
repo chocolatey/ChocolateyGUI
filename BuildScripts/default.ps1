@@ -202,6 +202,8 @@ Task -Name __EchoAppVeyorEnvironmentVariables -Description $private -Action {
 		testEnvironmentVariable "APPVEYOR_REPO_SCM" $env:APPVEYOR_REPO_SCM;
 		testEnvironmentVariable "APPVEYOR_REPO_NAME" $env:APPVEYOR_REPO_NAME;
 		testEnvironmentVariable "APPVEYOR_REPO_BRANCH" $env:APPVEYOR_REPO_BRANCH;
+    testEnvironmentVariable "APPVEYOR_REPO_TAG" $env:APPVEYOR_REPO_TAG;
+    testEnvironmentVariable "APPVEYOR_REPO_TAG_NAME" $env:APPVEYOR_REPO_TAG_NAME;
 		testEnvironmentVariable "APPVEYOR_REPO_COMMIT" $env:APPVEYOR_REPO_COMMIT;
 		testEnvironmentVariable "APPVEYOR_REPO_COMMIT_AUTHOR" $env:APPVEYOR_REPO_COMMIT_AUTHOR;
 		testEnvironmentVariable "APPVEYOR_REPO_COMMIT_TIMESTAMP" $env:APPVEYOR_REPO_COMMIT_TIMESTAMP;
@@ -355,7 +357,9 @@ Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Descript
 
 Task -Name InspectCodeForProblems -Depends PackageSolution, RunDupFinder, RunInspectCode -Description "Complete build, including running dupfinder, and inspectcode."
 
-Task -Name DeploySolutionToMyGet -Depends InspectCodeForProblems, DeployPacakgeToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
+Task -Name DeployDevelopSolutionToMyGet -Depends InspectCodeForProblems, DeployDevelopPackageToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
+
+Task -Name DeployMasterSolutionToMyGet -Depends InspectCodeForProblems, DeployMasterPackageToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
 Task -Name DeploySolutionToChocolatey -Depends InspectCodeForProblems, DeployPackageToChocolatey -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
 
@@ -570,14 +574,32 @@ Task -Name PackageChocolatey -Description "Packs the module and example package"
 	}	
 }
 
-Task -Name DeployPacakgeToMyGet -Description "Takes the packaged Chocolatey package and deploys to MyGet.org" -Action {
+Task -Name DeployDevelopPackageToMyGet -Description "Takes the packaged Chocolatey package from develop branch and deploys to MyGet.org" -Action {
 	$buildArtifactsDirectory = get-buildArtifactsDirectory;
 				
 	try {
 		Write-Output "Deploying to MyGet..."
 
 		exec {
-			& $nugetExe push "$buildArtifactsDirectory\*.nupkg" $env:MyGetApiKey -source $env:MyGetFeedUrl
+			& $nugetExe push "$buildArtifactsDirectory\*.nupkg" $env:MyGetDevelopApiKey -source $env:MyGetDevelopFeedUrl
+		}
+
+		Write-Host ("************ MyGet Deployment Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Host ("************ MyGet Deployment Failed ************")
+	}
+}
+
+Task -Name DeployMasterSolutionToMyGet -Description "Takes the packaged Chocolatey package from master branch and deploys to MyGet.org" -Action {
+	$buildArtifactsDirectory = get-buildArtifactsDirectory;
+				
+	try {
+		Write-Output "Deploying to MyGet..."
+
+		exec {
+			& $nugetExe push "$buildArtifactsDirectory\*.nupkg" $env:MyGetMasterApiKey -source $env:MyGetMasterFeedUrl
 		}
 
 		Write-Host ("************ MyGet Deployment Successful ************")

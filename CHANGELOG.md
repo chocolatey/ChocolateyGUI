@@ -1,3 +1,19 @@
+## 0.12.1
+
+As part of this release we had [4 issues](https://github.com/chocolatey/ChocolateyGUI/issues?milestone=7&state=closed) closed.
+
+Correcting a few minor problems that were noticed after the initial release of 0.12.0, including issues with the release process.
+
+__Improvements__
+
+- [__#220__](https://github.com/chocolatey/ChocolateyGUI/issues/220) Make all Write-Host's Write-Output's
+- [__#218__](https://github.com/chocolatey/ChocolateyGUI/issues/218) Enhance default.ps1 to install latest Chocolatey on Build Worker
+- [__#217__](https://github.com/chocolatey/ChocolateyGUI/issues/217) Create another MyGet Feed for packages pushed from AppVeyor Master Branch
+
+__Bug__
+
+- [__#216__](https://github.com/chocolatey/ChocolateyGUI/issues/216) Fix Project and License Urls
+
 ## 0.12.0
 
 As part of this release we had [74 issues](https://github.com/chocolatey/ChocolateyGUI/issues?milestone=2&state=closed) closed.

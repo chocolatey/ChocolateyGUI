@@ -1,3 +1,12 @@
+## 0.12.2
+As part of this release we had [3 issues](https://github.com/chocolatey/ChocolateyGUI/issues?milestone=8&state=closed) closed.
+
+__Improvements__
+
+- [__#224__](https://github.com/chocolatey/ChocolateyGUI/issues/224) Show package name in details
+- [__#223__](https://github.com/chocolatey/ChocolateyGUI/issues/223) Highlight packages where update is available
+- [__#222__](https://github.com/chocolatey/ChocolateyGUI/issues/222) Update appveyor.yml configuration
+
 ## 0.12.1
 
 As part of this release we had [4 issues](https://github.com/chocolatey/ChocolateyGUI/issues?milestone=7&state=closed) closed.

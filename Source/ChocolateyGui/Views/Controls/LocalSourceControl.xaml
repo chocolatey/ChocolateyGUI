@@ -18,6 +18,8 @@
             <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}">Search: </Label>
             <TextBox x:Name="SearchTextBox" Width="300" Padding="0,2,0,-2" FontSize="14" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <CheckBox Name="MatchCheckBox" Margin="5" Content="Match Word Exactly" IsChecked="{Binding MatchWord}"/>
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            <CheckBox Name="UpdatesCheckBox" Margin="5" Content="Show Only Packages with Updates" IsChecked="{Binding ShowOnlyPackagesWithUpdate}"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,5">
             <Button Command="{commands:DataContextCommandAdapter RefreshPackages, CanRefreshPackages}" Style="{StaticResource SquareButtonStyle}" Content="Refresh Packages"></Button>

@@ -49,6 +49,26 @@ function remove-PackageDirectory( [Parameter(ValueFromPipeline=$true)]$packageDi
 	}
 }
 
+function test-CommandExists {
+  Param ($command);
+  $oldPreference = $ErrorActionPreference;
+
+  $ErrorActionPreference = 'stop';
+
+  try 
+  {
+    Write-Output "Testing command...";
+    if(Get-Command $command){
+      RETURN $true;
+    }
+  } catch {
+    Write-Output "$command does not exist"; 
+    RETURN $false;
+  } finally {
+    $ErrorActionPreference=$oldPreference;
+  }
+}
+
 function isAppVeyor() {
 	Test-Path -Path env:\APPVEYOR
 }
@@ -230,10 +250,10 @@ Task -Name __InstallChocolatey -Description $private -Action {
 	if(isChocolateyInstalled) {
 		Write-Output "Chocolatey already installed";
     Write-Output "Updating to latest Chocolatey..."
-    $choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+    $choco = Join-Path $script:chocolateyDir -ChildPath "choco.exe";
     
     exec {
-			Invoke-Expression "$choco update chocolatey";
+			Invoke-Expression "$choco upgrade chocolatey";
 		}
     
     Write-Output "Latest Chocolatey installed."
@@ -262,7 +282,7 @@ Task -Name __InstallChocolatey -Description $private -Action {
 Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Description $private -Action {
 	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
 	$inspectCodeExe = Join-Path $chocolateyBinDir -ChildPath "inspectcode.exe";
-	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+	$choco = Join-Path $script:chocolateyDir -ChildPath "choco.exe";
 
 	try {
 		Write-Output "Running Install Command Line Tools..."
@@ -284,20 +304,20 @@ Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Desc
 }
 
 Task -Name __UpdateReSharperCommandLineTools -Description $private -Action {
-	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+	$choco = Join-Path $script:chocolateyDir -ChildPath "choco.exe";
 
 	try {
-		Write-Output "Running Update Command Line Tools..."
+		Write-Output "Running Upgrade Command Line Tools..."
 
 		exec {
-			Invoke-Expression "$choco update resharper-clt";
+			Invoke-Expression "$choco upgrade resharper-clt";
 		}
 
-		Write-Output ("************ Update Command Line Tools Successful ************")
+		Write-Output ("************ Upgrade Command Line Tools Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Output ("************ Update Command Line Tools Failed ************")
+		Write-Output ("************ Upgrade Command Line Tools Failed ************")
 	}	
 }
 
@@ -306,8 +326,12 @@ Task -Name __InstallPSBuild -Description $private -Action {
 		Write-Output "Running Install PSBuild..."
 
 		exec {
-			# Need a test here to see if this is actually required
-			(new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
+			if (-not (test-CommandExists Invoke-MSBuild)) {
+        Write-Output "PSBuild is not already installed";
+        (new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
+      } else {
+        Write-Output "PSBuild is already installed";
+      }
 		}
 
 		Write-Output ("************ Install PSBuild Successful ************")
@@ -321,14 +345,14 @@ Task -Name __InstallPSBuild -Description $private -Action {
 Task -Name __InstallGitVersion -Depends __InstallChocolatey -Description $private -Action {
 	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
 	$gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
-	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+	$choco = Join-Path $script:chocolateyDir -ChildPath "choco.exe";
 
 	try {
 		Write-Output "Running Install GitVersion.Portable..."
 
 		if (-not (Test-Path $gitVersionExe)) {
 			exec {
-							Invoke-Expression "$choco install GitVersion.Portable -pre";
+							Invoke-Expression "$choco install GitVersion.Portable -pre -y";
 			}
 		} else {
 			Write-Output "GitVersion.Portable already installed";
@@ -343,20 +367,20 @@ Task -Name __InstallGitVersion -Depends __InstallChocolatey -Description $privat
 }
 
 Task -Name __UpdateGitVersion -Description $private -Action {
-	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+	$choco = Join-Path $script:chocolateyDir -ChildPath "choco.exe";
 
 	try {
-		Write-Output "Running Update GitVersion.Portable..."
+		Write-Output "Running Upgrade GitVersion.Portable..."
 
 		exec {
-			Invoke-Expression "$choco update GitVersion.Portable";
+			Invoke-Expression "$choco upgrade GitVersion.Portable";
 		}
 
-		Write-Output ("************ Update GitVersion.Portable Successful ************")
+		Write-Output ("************ Upgrade GitVersion.Portable Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Output ("************ Update GitVersion.Portable Failed ************")
+		Write-Output ("************ Upgrade GitVersion.Portable Failed ************")
 	}	
 }
 

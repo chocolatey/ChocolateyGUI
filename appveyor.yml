@@ -27,7 +27,7 @@ environment:
   MyGetMasterFeedUrl: https://www.myget.org/F/chocolateygui_master/
   ChocolateyApiKey:
     secure: 2Sbie8uhFjl1v+NtLuR1oGcWnQE2M87jq0fSEwFOYcnNEC5qdwCkgVOG0MmC2Ffv
-  ChocolateyFeedUrl: http://chocolatey.org/api/v2/
+  ChocolateyFeedUrl: https://chocolatey.org/
    
 #---------------------------------#
 #       build configuration       #

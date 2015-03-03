@@ -7,6 +7,7 @@ $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
+  $gitHubReleaseNotesExe = "..\Tools\GitHubReleaseNotes\ReleaseNotesCompiler.CLI.exe"
 	$projectName = "ChocolateyGUI";
 }
 
@@ -367,7 +368,7 @@ Task -Name InspectCodeForProblems -Depends PackageSolution, RunDupFinder, RunIns
 
 Task -Name DeployDevelopSolutionToMyGet -Depends InspectCodeForProblems, DeployDevelopPackageToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
-Task -Name DeployMasterSolutionToMyGet -Depends InspectCodeForProblems, DeployMasterPackageToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
+Task -Name DeployMasterSolutionToMyGet -Depends InspectCodeForProblems, DeployMasterPackageToMyGet, CreateGitHubReleaseNotes -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
 Task -Name DeploySolutionToChocolatey -Depends InspectCodeForProblems, DeployPackageToChocolatey -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
 
@@ -615,6 +616,22 @@ Task -Name DeployMasterPackageToMyGet -Description "Takes the packaged Chocolate
 	catch {
 		Write-Error $_
 		Write-Output ("************ MyGet Deployment Failed ************")
+	}
+}
+
+Task -Name CreateGitHubReleaseNotes -Description "Using the generated version number, create a draft release on GitHub" -Action {
+	try {
+		Write-Output "Creating GitHub Release Notes..."
+
+		exec {
+			& $gitHubReleaseNotesExe create -t master -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -m $script:version 
+		}
+
+		Write-Output ("************ Create GitHub Release Notes Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Output ("************ Create GitHub Release Notes Failed ************")
 	}
 }
 

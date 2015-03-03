@@ -28,6 +28,10 @@ environment:
   ChocolateyApiKey:
     secure: 2Sbie8uhFjl1v+NtLuR1oGcWnQE2M87jq0fSEwFOYcnNEC5qdwCkgVOG0MmC2Ffv
   ChocolateyFeedUrl: https://chocolatey.org/
+  GitHubUserName:
+    secure: 9zbEIVfl69s/qhei6qkdeA==
+  GitHubPassword:
+    secure: XSuLygmr83zEpWcXIXMXGocN0QbooLud1eIMA3mQWKkT9LAU4TyrijLBcJIo7bD7
    
 #---------------------------------#
 #       build configuration       #

@@ -1,3 +1,13 @@
+As part of this release we had [4 commits](https://github.com/chocolatey/chocolateygui/compare/0.12.2...0.12.3) which resulted in [2 issues](https://github.com/chocolatey/ChocolateyGUI/issues?milestone=9&state=closed) being closed.
+
+__Improvement__
+
+- [__#219__](https://github.com/chocolatey/ChocolateyGUI/issues/219) Add GitHubReleaseNotes to Build Script
+
+__Bug__
+
+- [__#227__](https://github.com/chocolatey/ChocolateyGUI/issues/227) Correct deployment url when deploying to Chocolatey.org
+
 ## 0.12.2
 As part of this release we had [3 issues](https://github.com/chocolatey/ChocolateyGUI/issues?milestone=8&state=closed) closed.
 

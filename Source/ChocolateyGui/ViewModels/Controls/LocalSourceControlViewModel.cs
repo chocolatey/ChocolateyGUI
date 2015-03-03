@@ -28,14 +28,11 @@ namespace ChocolateyGui.ViewModels.Controls
         private readonly List<IPackageViewModel> _packages;
         private readonly IProgressService _progressService;
         private bool _hasLoaded;
-
         private bool _matchWord;
+        private bool _showOnlyPackagesWithUpdate;
         private ObservableCollection<IPackageViewModel> _packageViewModels;
-
         private string _searchQuery;
-
         private string _sortColumn;
-
         private bool _sortDescending;
 
         public LocalSourceControlViewModel(IChocolateyService chocolateyService, IProgressService progressService, Func<Type, ILogService> logFactory)
@@ -56,8 +53,22 @@ namespace ChocolateyGui.ViewModels.Controls
 
         public bool MatchWord
         {
-            get { return this._matchWord; }
-            set { this.SetPropertyValue(ref this._matchWord, value); }
+            get
+            {
+                return this._matchWord;
+            }
+
+            set
+            {
+                this.SetPropertyValue(ref this._matchWord, value);
+                this.ShowOnlyPackagesWithUpdate = false;
+            }
+        }
+
+        public bool ShowOnlyPackagesWithUpdate
+        {
+            get { return this._showOnlyPackagesWithUpdate; }
+            set { this.SetPropertyValue(ref this._showOnlyPackagesWithUpdate, value); }
         }
 
         public ObservableCollection<IPackageViewModel> Packages
@@ -68,8 +79,16 @@ namespace ChocolateyGui.ViewModels.Controls
 
         public string SearchQuery
         {
-            get { return this._searchQuery; }
-            set { this.SetPropertyValue(ref this._searchQuery, value); }
+            get
+            {
+                return this._searchQuery;
+            }
+
+            set
+            {
+                this.SetPropertyValue(ref this._searchQuery, value);
+                this.ShowOnlyPackagesWithUpdate = false;
+            }
         }
 
         public string SortColumn
@@ -106,7 +125,7 @@ namespace ChocolateyGui.ViewModels.Controls
                 await this.LoadPackages();
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                    .Where(eventPattern => eventPattern.EventArgs.PropertyName == "MatchWord" || eventPattern.EventArgs.PropertyName == "SearchQuery")
+                    .Where(eventPattern => eventPattern.EventArgs.PropertyName == "MatchWord" || eventPattern.EventArgs.PropertyName == "SearchQuery" || eventPattern.EventArgs.PropertyName == "ShowOnlyPackagesWithUpdate")
                     .ObserveOnDispatcher()
                     .Subscribe(eventPattern => this.FilterPackages());
 
@@ -189,6 +208,11 @@ namespace ChocolateyGui.ViewModels.Controls
                              this.SearchQuery,
                              CompareOptions.OrdinalIgnoreCase) >= 0);
 
+                query.ToList().ForEach(this.Packages.Add);
+            }
+            else if (this.ShowOnlyPackagesWithUpdate)
+            {
+                var query = this._packages.Where(p => p.CanUpdate == true);
                 query.ToList().ForEach(this.Packages.Add);
             }
             else

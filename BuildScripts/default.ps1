@@ -7,7 +7,7 @@ $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
-  $gitHubReleaseNotesExe = "..\Tools\GitHubReleaseNotes\ReleaseNotesCompiler.CLI.exe"
+  $gitHubReleaseManagerExe = "..\Tools\GitHubReleaseManager\GitHubReleaseManager.Cli.exe"
 	$projectName = "ChocolateyGUI";
 }
 
@@ -49,6 +49,26 @@ function remove-PackageDirectory( [Parameter(ValueFromPipeline=$true)]$packageDi
 	}
 }
 
+function test-CommandExists {
+  Param ($command);
+  $oldPreference = $ErrorActionPreference;
+
+  $ErrorActionPreference = 'stop';
+
+  try 
+  {
+    Write-Output "Testing command...";
+    if(Get-Command $command){
+      RETURN $true;
+    }
+  } catch {
+    Write-Output "$command does not exist"; 
+    RETURN $false;
+  } finally {
+    $ErrorActionPreference=$oldPreference;
+  }
+}
+
 function isAppVeyor() {
 	Test-Path -Path env:\APPVEYOR
 }
@@ -62,7 +82,7 @@ function isChocolateyInstalled() {
 	} elseif (Test-Path (Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey)) {
 		$script:chocolateyDir = Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey;
 	}
-
+  
 	Test-Path -Path $script:chocolateyDir;
 }
 
@@ -230,10 +250,15 @@ Task -Name __InstallChocolatey -Description $private -Action {
 	if(isChocolateyInstalled) {
 		Write-Output "Chocolatey already installed";
     Write-Output "Updating to latest Chocolatey..."
-    $choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+    
+    if(Test-Path -Path (Join-Path -Path $script:chocolateyDir -ChildPath "choco.exe")) {
+      $script:chocolateyCommand = Join-Path $script:chocolateyDir -ChildPath "choco.exe"
+    } else {
+      $script:chocolateyCommand = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
+    }
     
     exec {
-			Invoke-Expression "$choco update chocolatey";
+			Invoke-Expression "$script:chocolateyCommand upgrade chocolatey";
 		}
     
     Write-Output "Latest Chocolatey installed."
@@ -262,14 +287,13 @@ Task -Name __InstallChocolatey -Description $private -Action {
 Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Description $private -Action {
 	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
 	$inspectCodeExe = Join-Path $chocolateyBinDir -ChildPath "inspectcode.exe";
-	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
 
 	try {
 		Write-Output "Running Install Command Line Tools..."
 
 		if (-not (Test-Path $inspectCodeExe)) {
 			exec {
-				Invoke-Expression "$choco install resharper-clt";
+				Invoke-Expression "$script:chocolateyCommand install resharper-clt -y";
 			}
 		} else {
 			Write-Output "resharper-clt already installed";
@@ -284,20 +308,18 @@ Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Desc
 }
 
 Task -Name __UpdateReSharperCommandLineTools -Description $private -Action {
-	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
-
 	try {
-		Write-Output "Running Update Command Line Tools..."
+		Write-Output "Running Upgrade Command Line Tools..."
 
 		exec {
-			Invoke-Expression "$choco update resharper-clt";
+			Invoke-Expression "$script:chocolateyCommand upgrade resharper-clt";
 		}
 
-		Write-Output ("************ Update Command Line Tools Successful ************")
+		Write-Output ("************ Upgrade Command Line Tools Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Output ("************ Update Command Line Tools Failed ************")
+		Write-Output ("************ Upgrade Command Line Tools Failed ************")
 	}	
 }
 
@@ -306,8 +328,13 @@ Task -Name __InstallPSBuild -Description $private -Action {
 		Write-Output "Running Install PSBuild..."
 
 		exec {
-			# Need a test here to see if this is actually required
-			(new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
+      # This test works locally, but not on AppVeyor
+			# if (-not (test-CommandExists Invoke-MSBuild)) {
+      # Write-Output "PSBuild is not already installed";
+        (new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
+      # } else {
+      #   Write-Output "PSBuild is already installed";
+      # }
 		}
 
 		Write-Output ("************ Install PSBuild Successful ************")
@@ -321,14 +348,13 @@ Task -Name __InstallPSBuild -Description $private -Action {
 Task -Name __InstallGitVersion -Depends __InstallChocolatey -Description $private -Action {
 	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
 	$gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
-	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
 
 	try {
 		Write-Output "Running Install GitVersion.Portable..."
 
 		if (-not (Test-Path $gitVersionExe)) {
 			exec {
-							Invoke-Expression "$choco install GitVersion.Portable -pre";
+							Invoke-Expression "$script:chocolateyCommand install GitVersion.Portable -pre -y";
 			}
 		} else {
 			Write-Output "GitVersion.Portable already installed";
@@ -343,20 +369,18 @@ Task -Name __InstallGitVersion -Depends __InstallChocolatey -Description $privat
 }
 
 Task -Name __UpdateGitVersion -Description $private -Action {
-	$choco = Join-Path (Join-Path $script:chocolateyDir "chocolateyInstall") -ChildPath "chocolatey.cmd";
-
 	try {
-		Write-Output "Running Update GitVersion.Portable..."
+		Write-Output "Running Upgrade GitVersion.Portable..."
 
 		exec {
-			Invoke-Expression "$choco update GitVersion.Portable";
+			Invoke-Expression "$script:chocolateyCommand upgrade GitVersion.Portable";
 		}
 
-		Write-Output ("************ Update GitVersion.Portable Successful ************")
+		Write-Output ("************ Upgrade GitVersion.Portable Successful ************")
 	}
 	catch {
 		Write-Error $_
-		Write-Output ("************ Update GitVersion.Portable Failed ************")
+		Write-Output ("************ Upgrade GitVersion.Portable Failed ************")
 	}	
 }
 
@@ -370,7 +394,7 @@ Task -Name DeployDevelopSolutionToMyGet -Depends InspectCodeForProblems, DeployD
 
 Task -Name DeployMasterSolutionToMyGet -Depends InspectCodeForProblems, DeployMasterPackageToMyGet, CreateGitHubReleaseNotes -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
-Task -Name DeploySolutionToChocolatey -Depends InspectCodeForProblems, DeployPackageToChocolatey -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
+Task -Name DeploySolutionToChocolatey -Depends ExportGitHubReleaseNotes, InspectCodeForProblems, DeployPackageToChocolatey, AddAssetsToGitHubRelease, CloseMilestone -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
 
 # build tasks
 
@@ -624,7 +648,7 @@ Task -Name CreateGitHubReleaseNotes -Description "Using the generated version nu
 		Write-Output "Creating GitHub Release Notes..."
 
 		exec {
-			& $gitHubReleaseNotesExe create -t master -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -m $script:version 
+			& $gitHubReleaseManagerExe create -t master -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -m $script:version 
 		}
 
 		Write-Output ("************ Create GitHub Release Notes Successful ************")
@@ -632,6 +656,58 @@ Task -Name CreateGitHubReleaseNotes -Description "Using the generated version nu
 	catch {
 		Write-Error $_
 		Write-Output ("************ Create GitHub Release Notes Failed ************")
+	}
+}
+
+Task -Name ExportGitHubReleaseNotes -Description "Using the Release Notes stored on GitHub, generate a new CHANGELOG.md file" -Action {
+	try {
+		Write-Output "Exporting GitHub Release Notes..."
+    $rootDirectory = get-rootDirectory;
+    $changeLogFilePath = Join-Path -Path $rootDirectory -ChildPath "CHANGELOG.md";
+    
+		exec {
+			& $gitHubReleaseManagerExe export -f $changeLogFilePath -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui 
+		}
+
+		Write-Output ("************ Export GitHub Release Notes Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Output ("************ Export GitHub Release Notes Failed ************")
+	}
+}
+
+Task -Name AddAssetsToGitHubRelease -Description "Now that we know all is well, upload msi and Chocolatey Package to release." -Action {
+try {
+		Write-Output "Adding assets to GitHub Release..."
+    $buildArtifactsDirectory = get-buildArtifactsDirectory;
+    
+		exec {
+			& $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\ChocolateyGUI.msi" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui
+      & $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\*.nupkg" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui
+		}
+
+		Write-Output ("************ Adding assets Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Output ("************ Adding assets Failed ************")
+	}
+}
+
+Task -Name CloseMilestone -Description "Now that all work is done, let's close the milestone associated with this release." -Action {
+try {
+		Write-Output "Closing GitHub Milestone..."
+    
+		exec {
+			& $gitHubReleaseManagerExe close -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui
+		}
+
+		Write-Output ("************ Closing GitHub Milestone Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Output ("************ Closing GitHub Milestone Failed ************")
 	}
 }
 

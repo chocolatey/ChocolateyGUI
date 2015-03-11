@@ -47,6 +47,7 @@ ChocolateyGUI uses the following awesome frameworks (in no particular order):
  * [Raygun](https://raygun.io/)
  * [Json.NET](http://www.newtonsoft.com/json)
  * [Rx](http://rx.codeplex.com/)
+ * [Octokit.net](https://github.com/octokit/octokit.net)
 
 ChocolateyGUI is built, with the following fantastic frameworks and services (in no particular order):
 
@@ -54,14 +55,16 @@ ChocolateyGUI is built, with the following fantastic frameworks and services (in
  * [NuGet.exe](https://www.nuget.org/)
  * [TeamCity CodeBetter](http://teamcity.codebetter.com/)
  * [AppVeyor](http://www.appveyor.com/)
+ * [MyGet](http://www.myget.org/)
 
 ChocolateyGUI is tested and analyzed with the following rockstar frameworks (in no particular order):
 
  * [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx)
  * [StyleCop](http://stylecop.codeplex.com/)
+ * [InspectCode](https://confluence.jetbrains.com/display/NETCOM/Introducing+InspectCode)
+ * [DupFinder](https://confluence.jetbrains.com/display/NETCOM/Introducing+dupFinder)
 
 We would like to credit other super sweet tools/frameworks that aid in the development of ChocolateyGUI:
 
  * [ReSharper](https://www.jetbrains.com/resharper/)
  * [NuGet Framework](https://www.nuget.org/)
- 

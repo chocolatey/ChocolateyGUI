@@ -394,7 +394,7 @@ Task -Name DeployDevelopSolutionToMyGet -Depends InspectCodeForProblems, DeployD
 
 Task -Name DeployMasterSolutionToMyGet -Depends InspectCodeForProblems, DeployMasterPackageToMyGet, CreateGitHubReleaseNotes -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
-Task -Name DeploySolutionToChocolatey -Depends ExportGitHubReleaseNotes, InspectCodeForProblems, DeployPackageToChocolatey, AddAssetsToGitHubRelease -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
+Task -Name DeploySolutionToChocolatey -Depends ExportGitHubReleaseNotes, InspectCodeForProblems, DeployPackageToChocolatey, AddAssetsToGitHubRelease, CloseMilestone -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
 
 # build tasks
 
@@ -692,6 +692,22 @@ try {
 	catch {
 		Write-Error $_
 		Write-Output ("************ Adding assets Failed ************")
+	}
+}
+
+Task -Name CloseMilestone -Description "Now that all work is done, let's close the milestone associated with this release." -Action {
+try {
+		Write-Output "Closing GitHub Milestone..."
+    
+		exec {
+			& $gitHubReleaseManagerExe close -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui
+		}
+
+		Write-Output ("************ Closing GitHub Milestone Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Output ("************ Closing GitHub Milestone Failed ************")
 	}
 }
 

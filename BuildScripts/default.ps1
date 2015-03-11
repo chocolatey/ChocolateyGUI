@@ -394,7 +394,7 @@ Task -Name DeployDevelopSolutionToMyGet -Depends InspectCodeForProblems, DeployD
 
 Task -Name DeployMasterSolutionToMyGet -Depends InspectCodeForProblems, DeployMasterPackageToMyGet, CreateGitHubReleaseNotes -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 
-Task -Name DeploySolutionToChocolatey -Depends InspectCodeForProblems, DeployPackageToChocolatey -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
+Task -Name DeploySolutionToChocolatey -Depends ExportGitHubReleaseNotes, InspectCodeForProblems, DeployPackageToChocolatey, AddAssetsToGitHubRelease -Description "Complete build, including creation of Chocolatey Package and Deployment to Chocolatey.org."
 
 # build tasks
 
@@ -656,6 +656,42 @@ Task -Name CreateGitHubReleaseNotes -Description "Using the generated version nu
 	catch {
 		Write-Error $_
 		Write-Output ("************ Create GitHub Release Notes Failed ************")
+	}
+}
+
+Task -Name ExportGitHubReleaseNotes -Description "Using the Release Notes stored on GitHub, generate a new CHANGELOG.md file" -Action {
+	try {
+		Write-Output "Exporting GitHub Release Notes..."
+    $rootDirectory = get-rootDirectory;
+    $changeLogFilePath = Join-Path -Path $rootDirectory -ChildPath "CHANGELOG.md";
+    
+		exec {
+			& $gitHubReleaseManagerExe export -f $changeLogFilePath -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui 
+		}
+
+		Write-Output ("************ Export GitHub Release Notes Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Output ("************ Export GitHub Release Notes Failed ************")
+	}
+}
+
+Task -Name AddAssetsToGitHubRelease -Description "Now that we know all is well, upload msi and Chocolatey Package to release." -Action {
+try {
+		Write-Output "Adding assets to GitHub Release..."
+    $buildArtifactsDirectory = get-buildArtifactsDirectory;
+    
+		exec {
+			& $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\ChocolateyGUI.msi" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui
+      & $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\*.nupkg" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui
+		}
+
+		Write-Output ("************ Adding assets Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Output ("************ Adding assets Failed ************")
 	}
 }
 

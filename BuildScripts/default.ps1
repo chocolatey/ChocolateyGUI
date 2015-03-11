@@ -7,7 +7,7 @@ $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
-  $gitHubReleaseNotesExe = "..\Tools\GitHubReleaseNotes\ReleaseNotesCompiler.CLI.exe"
+  $gitHubReleaseManagerExe = "..\Tools\GitHubReleaseManager\GitHubReleaseManager.Cli.exe"
 	$projectName = "ChocolateyGUI";
 }
 
@@ -648,7 +648,7 @@ Task -Name CreateGitHubReleaseNotes -Description "Using the generated version nu
 		Write-Output "Creating GitHub Release Notes..."
 
 		exec {
-			& $gitHubReleaseNotesExe create -t master -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -m $script:version 
+			& $gitHubReleaseManagerExe create -t master -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -m $script:version 
 		}
 
 		Write-Output ("************ Create GitHub Release Notes Successful ************")

@@ -289,7 +289,7 @@ Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Desc
 
 		if (-not (Test-Path $inspectCodeExe)) {
 			exec {
-				Invoke-Expression "$choco install resharper-clt";
+				Invoke-Expression "$choco install resharper-clt -y";
 			}
 		} else {
 			Write-Output "resharper-clt already installed";

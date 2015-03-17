@@ -7,7 +7,6 @@ $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
-  $gitHubReleaseManagerExe = "..\Tools\GitHubReleaseManager\GitHubReleaseManager.Cli.exe"
 	$projectName = "ChocolateyGUI";
 }
 
@@ -368,6 +367,29 @@ Task -Name __InstallGitVersion -Depends __InstallChocolatey -Description $privat
 	}	
 }
 
+Task -Name __InstallGitHubReleaseManager -Depends __InstallChocolatey -Description $private -Action {
+	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+	$gitHubReleaseManagerExe = Join-Path $chocolateyBinDir -ChildPath "GitHubReleaseManager.Cli.exe";
+
+	try {
+		Write-Output "Running Install GitHubReleaseManager.Portable..."
+
+		if (-not (Test-Path $gitHubReleaseManagerExe)) {
+			exec {
+							Invoke-Expression "$script:chocolateyCommand install GitHubReleaseManager.Portable -pre -y -s https://www.myget.org/F/ghrm_develop/";
+			}
+		} else {
+			Write-Output "GitHubReleaseManager.Portable already installed";
+		}
+
+		Write-Output ("************ Install GitHubReleaseManager.Portable Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Output ("************ Install GitHubReleaseManager.Portable Failed ************")
+	}	
+}
+
 Task -Name __UpdateGitVersion -Description $private -Action {
 	try {
 		Write-Output "Running Upgrade GitVersion.Portable..."
@@ -643,12 +665,15 @@ Task -Name DeployMasterPackageToMyGet -Description "Takes the packaged Chocolate
 	}
 }
 
-Task -Name CreateGitHubReleaseNotes -Description "Using the generated version number, create a draft release on GitHub" -Action {
+Task -Name CreateGitHubReleaseNotes -Depends __InstallGitHubReleaseManager -Description "Using the generated version number, create a draft release on GitHub" -Action {
 	try {
 		Write-Output "Creating GitHub Release Notes..."
+    $rootDirectory = get-rootDirectory;
+    $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    $gitHubReleaseManagerExe = Join-Path $chocolateyBinDir -ChildPath "GitHubReleaseManager.Cli.exe";
 
 		exec {
-			& $gitHubReleaseManagerExe create -t master -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -m $script:version 
+			& $gitHubReleaseManagerExe create -t master -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -m $script:version -t $rootDirectory
 		}
 
 		Write-Output ("************ Create GitHub Release Notes Successful ************")
@@ -659,14 +684,16 @@ Task -Name CreateGitHubReleaseNotes -Description "Using the generated version nu
 	}
 }
 
-Task -Name ExportGitHubReleaseNotes -Description "Using the Release Notes stored on GitHub, generate a new CHANGELOG.md file" -Action {
+Task -Name ExportGitHubReleaseNotes -Depends __InstallGitHubReleaseManager -Description "Using the Release Notes stored on GitHub, generate a new CHANGELOG.md file" -Action {
 	try {
 		Write-Output "Exporting GitHub Release Notes..."
     $rootDirectory = get-rootDirectory;
     $changeLogFilePath = Join-Path -Path $rootDirectory -ChildPath "CHANGELOG.md";
+    $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    $gitHubReleaseManagerExe = Join-Path $chocolateyBinDir -ChildPath "GitHubReleaseManager.Cli.exe";
     
 		exec {
-			& $gitHubReleaseManagerExe export -f $changeLogFilePath -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui 
+			& $gitHubReleaseManagerExe export -f $changeLogFilePath -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -t $rootDirectory
 		}
 
 		Write-Output ("************ Export GitHub Release Notes Successful ************")
@@ -677,14 +704,17 @@ Task -Name ExportGitHubReleaseNotes -Description "Using the Release Notes stored
 	}
 }
 
-Task -Name AddAssetsToGitHubRelease -Description "Now that we know all is well, upload msi and Chocolatey Package to release." -Action {
+Task -Name AddAssetsToGitHubRelease -Depends __InstallGitHubReleaseManager -Description "Now that we know all is well, upload msi and Chocolatey Package to release." -Action {
 try {
 		Write-Output "Adding assets to GitHub Release..."
+    $rootDirectory = get-rootDirectory;
     $buildArtifactsDirectory = get-buildArtifactsDirectory;
+    $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    $gitHubReleaseManagerExe = Join-Path $chocolateyBinDir -ChildPath "GitHubReleaseManager.Cli.exe";
     
 		exec {
-			& $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\ChocolateyGUI.msi" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui
-      & $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\*.nupkg" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui
+			& $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\ChocolateyGUI.msi" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -t $rootDirectory
+      & $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\*.nupkg" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -t $rootDirectory
 		}
 
 		Write-Output ("************ Adding assets Successful ************")
@@ -695,12 +725,15 @@ try {
 	}
 }
 
-Task -Name CloseMilestone -Description "Now that all work is done, let's close the milestone associated with this release." -Action {
+Task -Name CloseMilestone -Depends __InstallGitHubReleaseManager -Description "Now that all work is done, let's close the milestone associated with this release." -Action {
 try {
 		Write-Output "Closing GitHub Milestone..."
-    
+    $rootDirectory = get-rootDirectory;
+    $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    $gitHubReleaseManagerExe = Join-Path $chocolateyBinDir -ChildPath "GitHubReleaseManager.Cli.exe";
+  
 		exec {
-			& $gitHubReleaseManagerExe close -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui
+			& $gitHubReleaseManagerExe close -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -t $rootDirectory
 		}
 
 		Write-Output ("************ Closing GitHub Milestone Successful ************")

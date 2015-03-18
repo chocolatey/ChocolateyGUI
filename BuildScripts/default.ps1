@@ -472,6 +472,9 @@ Task -Name RunInspectCode -Depends __InstallReSharperCommandLineTools -Descripti
       applyXslTransform $inspectCodeXmlFile $inspectCodeXslFile $inspectCodeHtmlFile;
 			$inspectCodeXmlFile | analyseInspectCodeResults;
 		}
+
+		# Reset the inspectcode.config file
+		git checkout $inspectCodeConfigFile;
 	}
 }
 
@@ -496,6 +499,9 @@ Task -Name RunDupFinder -Depends __InstallReSharperCommandLineTools -Description
 			applyXslTransform $dupFinderXmlFile $dupFinderXslFile $dupFinderHtmlFile;
       $dupFinderXmlFile | analyseDupFinderResults;
 		}
+
+		# Reset the dupfinder.config file
+		git checkout $dupFinderConfigFile;
 	}
 }
 

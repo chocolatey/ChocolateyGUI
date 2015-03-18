@@ -713,8 +713,14 @@ try {
     $gitHubReleaseManagerExe = Join-Path $chocolateyBinDir -ChildPath "GitHubReleaseManager.Cli.exe";
 
 		exec {
+			Get-ChildItem $buildArtifactsDirectory -Filter *.nupkg | Foreach-Object {
+				$nugetPath = ($_ | Resolve-Path).Path;
+	      $convertedPath = Convert-Path $nugetPath;
+
+				& $gitHubReleaseManagerExe addasset -a $convertedPath -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -t $rootDirectory
+			}
+
 			& $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\ChocolateyGUI.msi" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -t $rootDirectory
-      & $gitHubReleaseManagerExe addasset -a "$buildArtifactsDirectory\*.nupkg" -m $script:version -u $env:GitHubUserName -p $env:GitHubPassword -o chocolatey -r chocolateygui -t $rootDirectory
 		}
 
 		Write-Output ("************ Adding assets Successful ************")

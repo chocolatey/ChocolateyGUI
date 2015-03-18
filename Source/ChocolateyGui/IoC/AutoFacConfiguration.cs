@@ -8,7 +8,6 @@ namespace ChocolateyGui.IoC
 {
     using System;
     using Autofac;
-
     using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
     using ChocolateyGui.ViewModels.Controls;
@@ -42,7 +41,8 @@ namespace ChocolateyGui.IoC
             builder.Register(c => new PackageViewModel(c.Resolve<IPackageService>(), c.Resolve<IChocolateyService>(), c.Resolve<INavigationService>())).As<IPackageViewModel>();
 
             // Register Providers
-            builder.RegisterType<VersionNumberProvider>().As<IVersionNumberProvider>();
+            builder.RegisterType<VersionNumberProvider>().As<IVersionNumberProvider>().SingleInstance();
+            builder.RegisterType<ChocolateyConfigurationProvider>().As<IChocolateyConfigurationProvider>().SingleInstance();
 
             // Register Services
             builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();

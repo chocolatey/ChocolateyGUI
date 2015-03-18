@@ -60,8 +60,6 @@ namespace ChocolateyGui.Views.Windows
 
             navigationService.SetNavigationItem(GlobalFrame);
             navigationService.Navigate(typeof(SourcesControl));
-
-            this.InitializeChocoDirectory();
         }
 
         public Task<ChocolateyDialogController> ShowChocolateyDialogAsync(string title, bool isCancelable = false, MetroDialogSettings settings = null)
@@ -86,38 +84,6 @@ namespace ChocolateyGui.Views.Windows
                 await this.ShowMetroDialogAsync(dialog);
                 return new ChocolateyDialogController(dialog, () => this.HideMetroDialogAsync(dialog));
             }));
-        }
-
-        private void InitializeChocoDirectory()
-        {
-            Task.Run(() =>
-            {
-                if (string.IsNullOrWhiteSpace(Settings.Default.chocolateyInstall))
-                {
-                    var chocoDirectoryPath = Environment.GetEnvironmentVariable("ChocolateyInstall");
-                    if (string.IsNullOrWhiteSpace(chocoDirectoryPath))
-                    {
-                        var pathVar = Environment.GetEnvironmentVariable("PATH");
-                        if (!string.IsNullOrWhiteSpace(pathVar))
-                        {
-                            chocoDirectoryPath =
-                                pathVar.Split(';')
-                                    .SingleOrDefault(
-                                        path => path.IndexOf("Chocolatey", StringComparison.OrdinalIgnoreCase) > -1);
-                        }
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(chocoDirectoryPath))
-                    {
-                        Settings.Default.chocolateyInstall = chocoDirectoryPath;
-                        Settings.Default.Save();
-                    }
-                    else
-                    {
-                        this._logService.Warn("Unable to find chocolatey install directory!");
-                    }
-                }
-            }).ConfigureAwait(false);
         }
 
         private void SettingsButton_OnClick(object sender, RoutedEventArgs e)

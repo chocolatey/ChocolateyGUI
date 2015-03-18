@@ -20,6 +20,7 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.Enums;
     using ChocolateyGui.Models;
     using ChocolateyGui.Properties;
+    using ChocolateyGui.Providers;
     using ChocolateyGui.Utilities;
     using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.Utilities.Nuspec;
@@ -65,12 +66,14 @@ namespace ChocolateyGui.Services
         /// </summary>
         private readonly IProgressService _progressService;
 
+        private readonly IChocolateyConfigurationProvider _chocolateyConfigurationProvider;
+
         /// <summary>
         /// The PowerShell runspace for this service.
         /// </summary>
         private readonly Runspace _runspace;
 
-        public ChocolateyService(IProgressService progressService, Func<Type, ILogService> logServiceFunc)
+        public ChocolateyService(IProgressService progressService, Func<Type, ILogService> logServiceFunc, IChocolateyConfigurationProvider chocolateyConfigurationProvider)
         {
             if (logServiceFunc == null)
             {
@@ -83,6 +86,7 @@ namespace ChocolateyGui.Services
             this._getInstalledLock = new AsyncLock();
             this._progressService = progressService;
             this._logService = logServiceFunc(typeof(ChocolateyService));
+            this._chocolateyConfigurationProvider = chocolateyConfigurationProvider;
 
             this._packagesJsonPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -117,7 +121,7 @@ namespace ChocolateyGui.Services
                 await this._progressService.StartLoading("Chocolatey Service");
                 this._progressService.WriteMessage("Retrieving installed packages...");
 
-                var chocoPath = Settings.Default.chocolateyInstall;
+                var chocoPath = this._chocolateyConfigurationProvider.ChocolateyInstall;
                 if (string.IsNullOrWhiteSpace(chocoPath) || !Directory.Exists(chocoPath))
                 {
                     throw new InvalidDataException(
@@ -347,7 +351,7 @@ namespace ChocolateyGui.Services
 
             var pipeline = this._runspace.CreatePipeline();
 
-            var chocoPath = Path.Combine(Settings.Default.chocolateyInstall, "chocolateyinstall", "chocolatey.ps1");
+            var chocoPath = Path.Combine(this._chocolateyConfigurationProvider.ChocolateyInstall, "chocolateyinstall", "chocolatey.ps1");
 
             var powerShellCommand = new Command(chocoPath);
 

@@ -176,6 +176,8 @@
     <Compile Include="Models\PackageSearchOptions.cs" />
     <Compile Include="Models\PackageSearchResults.cs" />
     <Compile Include="Models\PowerShellOutputLine.cs" />
+    <Compile Include="Providers\ChocolateyConfigurationProvider.cs" />
+    <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IVersionNumberProvider.cs" />
     <Compile Include="Providers\VersionNumberProvider.cs" />
     <Compile Include="Service References\ChocolateyFeedService\Reference.cs">

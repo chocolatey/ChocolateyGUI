@@ -9,5 +9,7 @@ namespace ChocolateyGui.Providers
     public interface IChocolateyConfigurationProvider
     {
         string ChocolateyInstall { get; }
+
+        bool IsChocolateyExecutableBeingUsed { get; }
     }
 }

@@ -7,48 +7,65 @@
 namespace ChocolateyGui.Providers
 {
     using System;
+    using System.IO;
     using System.Linq;
-    using ChocolateyGui.Services;
 
     public class ChocolateyConfigurationProvider : IChocolateyConfigurationProvider
     {
-        private readonly ILogService _logService;
+        private string _chocolateyInstallLocation;
+        private bool _isChocolateyExecutableBeingUsed;
 
-        public ChocolateyConfigurationProvider(Func<Type, ILogService> logServiceFunc)
+        public ChocolateyConfigurationProvider()
         {
-            this._logService = logServiceFunc(typeof(ChocolateyService));
+            this.GetChocolateyInstallLocation();
+            this.DetermineIfChocolateyExecutableIsBeingUsed();
         }
 
         public string ChocolateyInstall
         {
             get
             {
-                return this.GetChocolateyInstallLocation();
+                return this._chocolateyInstallLocation;
             }
         }
 
-        private string GetChocolateyInstallLocation()
+        public bool IsChocolateyExecutableBeingUsed
         {
-            var chocolateyInstallLocation = Environment.GetEnvironmentVariable("ChocolateyInstall");
-            if (string.IsNullOrWhiteSpace(chocolateyInstallLocation))
+            get
+            {
+                return this._isChocolateyExecutableBeingUsed;
+            }
+        }
+
+        private void GetChocolateyInstallLocation()
+        {
+            this._chocolateyInstallLocation = Environment.GetEnvironmentVariable("ChocolateyInstall");
+            if (string.IsNullOrWhiteSpace(this._chocolateyInstallLocation))
             {
                 var pathVar = Environment.GetEnvironmentVariable("PATH");
                 if (!string.IsNullOrWhiteSpace(pathVar))
                 {
-                    chocolateyInstallLocation =
+                    this._chocolateyInstallLocation =
                         pathVar.Split(';')
                             .SingleOrDefault(
                                 path => path.IndexOf("Chocolatey", StringComparison.OrdinalIgnoreCase) > -1);
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(chocolateyInstallLocation))
+            if (string.IsNullOrWhiteSpace(this._chocolateyInstallLocation))
             {
-                return chocolateyInstallLocation;
+                this._chocolateyInstallLocation = string.Empty;
             }
+        }
 
-            this._logService.Warn("Unable to find chocolatey install directory!");
-            return string.Empty;
+        private void DetermineIfChocolateyExecutableIsBeingUsed()
+        {
+            var exePath = Path.Combine(this._chocolateyInstallLocation, "choco.exe");
+
+            if (File.Exists(exePath))
+            {
+                this._isChocolateyExecutableBeingUsed = true;
+            }
         }
     }
 }

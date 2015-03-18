@@ -185,13 +185,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
-    <Compile Include="Services\ChocolateyService.cs" />
+    <Compile Include="Services\BasePackageService.cs" />
+    <Compile Include="Services\CSharpChocolateyPackageService.cs" />
+    <Compile Include="Services\IBasePackageService.cs" />
+    <Compile Include="Services\IChocolateyPackageService.cs" />
     <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\ISourceService.cs" />
     <Compile Include="Services\Log4NetLoggingService.cs" />
     <Compile Include="Services\PackageServices\FileSystemPackageService.cs" />
     <Compile Include="Services\PackageServices\ODataPackageService.cs" />
+    <Compile Include="Services\PowerShellChocolateyPackageService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Services\SettingsSourceService.cs" />
     <Compile Include="Utilities\AsyncLock.cs" />
@@ -204,7 +208,6 @@
     <Compile Include="Utilities\SourcesChangedEventManager.cs" />
     <Compile Include="Utilities\TypeConverters\SemanticVersionTypeConverter.cs" />
     <Compile Include="ViewModels\Items\SourceTabViewModel.cs" />
-    <Compile Include="Services\IChocolateyService.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\PackageServices\IPackageService.cs" />
     <Compile Include="Services\NavigationService.cs" />

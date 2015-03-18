@@ -29,24 +29,24 @@ namespace ChocolateyGui.Utilities
             }
         }
 
-        public static void AddListener(IChocolateyService service, IWeakEventListener listener)
+        public static void AddListener(IChocolateyPackageService service, IWeakEventListener listener)
         {
             CurrentManager.ProtectedAddListener(service, listener);
         }
 
-        public static void RemoveListener(IChocolateyService service, IWeakEventListener listener)
+        public static void RemoveListener(IChocolateyPackageService service, IWeakEventListener listener)
         {
             CurrentManager.ProtectedRemoveListener(service, listener);
         }
 
         protected override void StartListening(object source)
         {
-            (source as IChocolateyService).PackagesUpdated += this.OnPackagedUpdated;
+            (source as IChocolateyPackageService).PackagesUpdated += this.OnPackagedUpdated;
         }
 
         protected override void StopListening(object source)
         {
-            (source as IChocolateyService).PackagesUpdated -= this.OnPackagedUpdated;
+            (source as IChocolateyPackageService).PackagesUpdated -= this.OnPackagedUpdated;
         }
 
         private void OnPackagedUpdated(object sender, PackagesChangedEventArgs e)

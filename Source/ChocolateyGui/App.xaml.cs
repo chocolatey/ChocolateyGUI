@@ -10,6 +10,7 @@ namespace ChocolateyGui
     using System.Windows;
     using Autofac;
     using ChocolateyGui.IoC;
+    using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
     using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.Views.Windows;
@@ -21,7 +22,20 @@ namespace ChocolateyGui
     {
         static App()
         {
-            Container = AutoFacConfiguration.RegisterAutoFac();
+            Container = AutoFacConfiguration.InitialRegistration();
+
+            var configurationProvider = Container.Resolve<IChocolateyConfigurationProvider>();
+
+            if (configurationProvider.IsChocolateyExecutableBeingUsed)
+            {
+                AutoFacConfiguration.RegisterCSharpService(Container);
+            }
+            else
+            {
+                AutoFacConfiguration.RegisterPowerShellService(Container);
+            }
+
+            AutoFacConfiguration.RegisterRemainingTypes(Container);
 
             Log = typeof(App).GetLogger();
 

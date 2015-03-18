@@ -30,18 +30,18 @@ namespace ChocolateyGui.Services.PackageServices
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "id", Justification = "Will be reviewed after being implemented")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "packageFactory", Justification = "Will be reviewed after being implemented")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "source", Justification = "Will be reviewed after being implemented")]
-        public static IPackageViewModel GetLatest(string id, IChocolateyService chocolateyService, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
+        public static IPackageViewModel GetLatest(string id, IChocolateyPackageService chocolateyService, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
         {
             throw new NotImplementedException();
         }
 
-        public static async Task<PackageSearchResults> Search(string queryString, IChocolateyService chocolateyService, Func<IPackageViewModel> packageFactory, Uri source)
+        public static async Task<PackageSearchResults> Search(string queryString, IChocolateyPackageService chocolateyService, Func<IPackageViewModel> packageFactory, Uri source)
         {
             return await Search(queryString, chocolateyService, packageFactory, new PackageSearchOptions(), source);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "packageFactory", Justification = "TODO: Needs to be reviewed")]
-        public static async Task<PackageSearchResults> Search(string queryString, IChocolateyService chocolateyService, Func<IPackageViewModel> packageFactory, PackageSearchOptions options, Uri source)
+        public static async Task<PackageSearchResults> Search(string queryString, IChocolateyPackageService chocolateyService, Func<IPackageViewModel> packageFactory, PackageSearchOptions options, Uri source)
         {
             List<IPackageViewModel> packages;
             if ((packages = (List<IPackageViewModel>)Cache.Get(GetMemoryCacheKey(source, queryString, options))) == null)
@@ -82,7 +82,7 @@ namespace ChocolateyGui.Services.PackageServices
             };
         }
 
-        public static async Task<bool> TestPath(Uri source, IChocolateyService chocolateyService)
+        public static async Task<bool> TestPath(Uri source, IChocolateyPackageService chocolateyService)
         {
             return
                 (await

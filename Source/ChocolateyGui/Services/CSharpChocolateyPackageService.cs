@@ -111,22 +111,17 @@ namespace ChocolateyGui.Services
             throw new NotImplementedException();
         }
 
-        public Task RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true, bool logOutput = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Collection<PSObject>> RunIndirectChocolateyCommand(string command, bool refreshPackages = true, bool logOutput = true)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task UninstallPackage(string id, SemanticVersion version, bool force = false)
         {
             throw new NotImplementedException();
         }
 
         public Task UpdatePackage(string id, Uri source = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Dictionary<string, string>> SearchPackages(string queryString, bool includePreRelease, bool includeAllVersions, Uri source)
         {
             throw new NotImplementedException();
         }

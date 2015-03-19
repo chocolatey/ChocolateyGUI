@@ -8,8 +8,6 @@ namespace ChocolateyGui.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Management.Automation;
     using System.Threading.Tasks;
     using ChocolateyGui.Models;
     using ChocolateyGui.ViewModels.Items;
@@ -22,14 +20,10 @@ namespace ChocolateyGui.Services
 
         Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false);
 
-        bool IsPackageInstalled(string id, SemanticVersion version);
-
-        Task RunDirectChocolateyCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true, bool logOutput = true);
-
-        Task<Collection<PSObject>> RunIndirectChocolateyCommand(string command, bool refreshPackages = true, bool logOutput = true);
-
         Task UninstallPackage(string id, SemanticVersion version, bool force = false);
 
         Task UpdatePackage(string id, Uri source = null);
+
+        Task<Dictionary<string, string>> SearchPackages(string queryString, bool includePreRelease, bool includeAllVersions, Uri source);
     }
 }

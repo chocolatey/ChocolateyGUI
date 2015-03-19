@@ -46,15 +46,7 @@ namespace ChocolateyGui.Services.PackageServices
             List<IPackageViewModel> packages;
             if ((packages = (List<IPackageViewModel>)Cache.Get(GetMemoryCacheKey(source, queryString, options))) == null)
             {
-                var queryCommand = string.Format(
-                    "list {0} {1} {2} -source \"{3}\"",
-                    queryString,
-                    options.IncludePrerelease ? "-pre" : string.Empty,
-                    options.IncludeAllVersions ? "-all" : string.Empty,
-                    source);
-
-                var chocoPackageList = (await chocolateyService.RunIndirectChocolateyCommand(queryCommand, false))
-                    .ToDictionary(o => o.ToString().Split(' ')[0], o => o.ToString().Split(' ')[1]);
+                var chocoPackageList = await chocolateyService.SearchPackages(queryString, options.IncludePrerelease, options.IncludeAllVersions, source);
 
                 packages = (await chocolateyService.GetPackagesFromLocalDirectory(chocoPackageList, source.ToString())).ToList();
 
@@ -80,13 +72,6 @@ namespace ChocolateyGui.Services.PackageServices
                 Packages = query.Skip(options.CurrentPage * options.PageSize).Take(options.PageSize),
                 TotalCount = packages.Count
             };
-        }
-
-        public static async Task<bool> TestPath(Uri source, IChocolateyPackageService chocolateyService)
-        {
-            return
-                (await
-                    chocolateyService.RunIndirectChocolateyCommand(string.Format("list -source \"{0}\"", source), false)).Count > 0;
         }
 
         private static string GetMemoryCacheKey(Uri source, string query, PackageSearchOptions options)

@@ -22,20 +22,7 @@ namespace ChocolateyGui
     {
         static App()
         {
-            Container = AutoFacConfiguration.InitialRegistration();
-
-            var configurationProvider = Container.Resolve<IChocolateyConfigurationProvider>();
-
-            if (configurationProvider.IsChocolateyExecutableBeingUsed)
-            {
-                AutoFacConfiguration.RegisterCSharpService(Container);
-            }
-            else
-            {
-                AutoFacConfiguration.RegisterPowerShellService(Container);
-            }
-
-            AutoFacConfiguration.RegisterRemainingTypes(Container);
+            Container = AutoFacConfiguration.RegisterAutoFac();
 
             Log = typeof(App).GetLogger();
 

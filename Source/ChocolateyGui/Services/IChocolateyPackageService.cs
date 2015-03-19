@@ -24,6 +24,6 @@ namespace ChocolateyGui.Services
 
         Task UpdatePackage(string id, Uri source = null);
 
-        Task<Dictionary<string, string>> SearchPackages(string queryString, bool includePreRelease, bool includeAllVersions, Uri source);
+        Task<Dictionary<string, string>> SearchPackages(string queryString, bool includePrerelease, bool includeAllVersions, Uri source);
     }
 }

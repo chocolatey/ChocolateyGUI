@@ -180,6 +180,7 @@ namespace ChocolateyGui.Services
             var packageJson = File.ReadAllText(this.PackagesJsonPath);
             var packages = JsonConvert.DeserializeObject<List<PackageConfigEntry>>(packageJson);
             Cache.Set(LocalPackagesJsonCacheKeyName, packages, DateTime.Now.AddHours(1));
+
             return packages;
         }
 
@@ -219,6 +220,11 @@ namespace ChocolateyGui.Services
 
         public void PopulatePackages(IPackageViewModel packageInfo, List<IPackageViewModel> packages)
         {
+            if (packages == null)
+            {
+                throw new ArgumentNullException("packages");
+            }
+
             var packageConfigEntry =
                 this.PackageConfigEntries()
                     .SingleOrDefault(

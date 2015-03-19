@@ -18,6 +18,7 @@ namespace ChocolateyGui.IoC
 
     public static class AutoFacConfiguration
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is really a requirement due to required registrations.")]
         public static IContainer RegisterAutoFac()
         {
             var builder = new ContainerBuilder();

@@ -121,7 +121,7 @@ namespace ChocolateyGui.Services
             throw new NotImplementedException();
         }
 
-        public Task<Dictionary<string, string>> SearchPackages(string queryString, bool includePreRelease, bool includeAllVersions, Uri source)
+        public Task<Dictionary<string, string>> SearchPackages(string queryString, bool includePrerelease, bool includeAllVersions, Uri source)
         {
             throw new NotImplementedException();
         }

@@ -16,14 +16,10 @@ namespace ChocolateyGui.Services
     {
         Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false);
 
-        Task<bool> ExecutePackageCommand(Dictionary<string, object> commandArgs, bool refreshPackages = true);
-
         Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false);
 
         Task UninstallPackage(string id, SemanticVersion version, bool force = false);
 
         Task UpdatePackage(string id, Uri source = null);
-
-        Task<Dictionary<string, string>> SearchPackages(string queryString, bool includePrerelease, bool includeAllVersions, Uri source);
     }
 }

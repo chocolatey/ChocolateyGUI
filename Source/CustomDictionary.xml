@@ -4,11 +4,13 @@
       <Word />
     </Unrecognized>
     <Recognized>
+      <Word>aspx</Word>
       <Word>Chocolatey</Word>
       <Word>CursorPosition</Word>
       <Word>Fac</Word>
       <Word>GetBufferContents</Word>
       <Word>Gui</Word>
+      <Word>msdn</Word>
       <Word>Io</Word>
       <Word>IProvideValueTarget</Word>
       <Word>NotImplementedException</Word>

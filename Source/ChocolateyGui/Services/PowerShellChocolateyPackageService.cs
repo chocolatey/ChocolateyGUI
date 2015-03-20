@@ -195,20 +195,6 @@ namespace ChocolateyGui.Services
             await this.ProgressService.StopLoading();
         }
 
-        public async Task<Dictionary<string, string>> SearchPackages(string queryString, bool includePrerelease, bool includeAllVersions, Uri source)
-        {
-            var queryCommand = string.Format(
-                "list {0} {1} {2} -source \"{3}\"",
-                queryString,
-                includePrerelease ? "-pre" : string.Empty,
-                includeAllVersions ? "-all" : string.Empty,
-                source);
-
-            var result = await this.RunIndirectChocolateyCommand(queryCommand, false);
-
-            return result.ToDictionary(o => o.ToString().Split(' ')[0], o => o.ToString().Split(' ')[1]);
-        }
-
         #endregion
 
         #region Chocolatey Interop Methods

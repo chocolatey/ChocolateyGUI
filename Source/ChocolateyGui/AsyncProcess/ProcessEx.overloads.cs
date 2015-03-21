@@ -1,6 +1,11 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="ProcessEx.overloads.cs">
-//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// <copyright company="James Manning" file="ProcessEx.cs">
+//   Copyright (c) 2013 James Manning
+//   This file was taken from here:
+//   https://github.com/jamesmanning/RunProcessAsTask
+//   and adapted under the MIT licensing rules.  Original copyright is in tact.
+//   Modifications:
+//     - prevent the creation of a new window when executing task
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 

@@ -9,6 +9,7 @@ namespace ChocolateyGui.Services
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.IO.Packaging;
     using System.Linq;
     using System.Runtime.Caching;
     using System.Text.RegularExpressions;
@@ -35,34 +36,18 @@ namespace ChocolateyGui.Services
         /// </summary>
         public const string LocalPackagesJsonCacheKeyName = "LocalChocolateyService.PackagesJson";
 
-        /// <summary>
-        /// Cache for this service where out installed packages list is stored.
-        /// </summary>
-        public static readonly MemoryCache Cache = MemoryCache.Default;
-
         public static readonly Regex PackageRegex = new Regex(@"^(?<Name>[\w\.]*) (?<VersionString>(\d+(\s*\.\s*\d+){0,3})(-[a-z][0-9a-z-]*)?)$");
-
-        /// <summary>
-        /// The path of the packages description JSON file.
-        /// </summary>
-        public readonly string PackagesJsonPath;
-
-        /// <summary>
-        /// Logs things.
-        /// </summary>
-        public readonly ILogService LogService;
-
-        /// <summary>
-        /// Allows the Chocolatey Service to report progress to listeners.
-        /// </summary>
-        public readonly IProgressService ProgressService;
-
-        public readonly IChocolateyConfigurationProvider ChocolateyConfigurationProvider;
 
         /// <summary>
         /// Synchronizes the GetPackages method.
         /// </summary>
         internal readonly AsyncLock GetInstalledLock;
+      
+        private static MemoryCache cache = MemoryCache.Default;
+        private string packagesJsonPath;
+        private ILogService logService;
+        private IProgressService progressService;
+        private IChocolateyConfigurationProvider chocolateyConfigurationProvider;
 
         protected BasePackageService(IProgressService progressService, Func<Type, ILogService> logServiceFunc, IChocolateyConfigurationProvider chocolateyConfigurationProvider)
         {
@@ -72,9 +57,9 @@ namespace ChocolateyGui.Services
             }
 
             this.GetInstalledLock = new AsyncLock();
-            this.ProgressService = progressService;
-            this.LogService = logServiceFunc(typeof(IChocolateyPackageService));
-            this.ChocolateyConfigurationProvider = chocolateyConfigurationProvider;
+            this.progressService = progressService;
+            this.logService = logServiceFunc(typeof(IChocolateyPackageService));
+            this.chocolateyConfigurationProvider = chocolateyConfigurationProvider;
 
             this.PackagesJsonPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -83,6 +68,65 @@ namespace ChocolateyGui.Services
         }
 
         public event PackagesChangedEventHandler PackagesUpdated;
+
+        /// <summary>
+        /// Gets or sets the Cache for this service where out installed packages list is stored.
+        /// </summary>
+        public static MemoryCache Cache
+        {
+            get
+            {
+                return cache;
+            }
+
+            set
+            {
+                cache = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the path of the packages description JSON file.
+        /// </summary>
+        public string PackagesJsonPath
+        {
+            get
+            {
+                return this.packagesJsonPath;
+            }
+
+            set
+            {
+                this.packagesJsonPath = value;
+            }
+        }
+
+        public ILogService LogService
+        {
+            get
+            {
+                return this.logService;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Progress Service used to report progress to listeners.
+        /// </summary>
+        public IProgressService ProgressService
+        {
+            get
+            {
+                return this.progressService;
+            }
+        }
+
+        public IChocolateyConfigurationProvider ChocolateyConfigurationProvider
+        {
+            get
+            {
+                return this.chocolateyConfigurationProvider;
+            }
+        }
 
         /// <summary>
         /// Placeholder. Will eventually allow one to call Chocolatey and list all the packages from a specified file system source.
@@ -161,7 +205,7 @@ namespace ChocolateyGui.Services
             this.SerializeJsonCache(packages);
         }
 
-        public List<PackageConfigEntry> PackageConfigEntries()
+        public ICollection<PackageConfigEntry> PackageConfigEntries()
         {
             // Check to see if we already have a cached version of the packages.json.
             var configEntries = Cache.Get(LocalPackagesJsonCacheKeyName) as List<PackageConfigEntry>;
@@ -189,10 +233,17 @@ namespace ChocolateyGui.Services
             // Grab the current packages.
             var packages = this.PackageConfigEntries();
 
-            // Remove all matching entries.
-            packages.RemoveAll(pce =>
-                string.Compare(pce.Id, id, StringComparison.OrdinalIgnoreCase) == 0 && pce.Version == version);
+            var packagesToRemove = new List<PackageConfigEntry>();
+            foreach (var package in packages.Where(package => string.Compare(package.Id, id, StringComparison.OrdinalIgnoreCase) == 0 && package.Version == version))
+            {
+                packagesToRemove.Add(package);
+            }
 
+            foreach (var package in packagesToRemove)
+            {
+                packages.Remove(package);
+            }
+            
             this.SerializeJsonCache(packages);
         }
         #endregion
@@ -218,7 +269,7 @@ namespace ChocolateyGui.Services
             }
         }
 
-        public void PopulatePackages(IPackageViewModel packageInfo, List<IPackageViewModel> packages)
+        public void PopulatePackages(IPackageViewModel packageInfo, ICollection<IPackageViewModel> packages)
         {
             if (packages == null)
             {
@@ -240,7 +291,7 @@ namespace ChocolateyGui.Services
             packages.Add(packageInfo);
         }
 
-        public void SerializeJsonCache(List<PackageConfigEntry> packages)
+        public void SerializeJsonCache(ICollection<PackageConfigEntry> packages)
         {
             // Serialize to the appropriate format.
             var packageJson = JsonConvert.SerializeObject(packages);

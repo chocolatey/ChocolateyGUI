@@ -7,19 +7,14 @@
 namespace ChocolateyGui.Services.PackageServices
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
-    using System.Linq;
     using System.Runtime.Caching;
     using System.Threading.Tasks;
     using ChocolateyGui.Models;
-    using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.ViewModels.Items;
     
     public static class FileSystemPackageService
     {
-        private static readonly MemoryCache Cache = MemoryCache.Default;
-
         public static Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel)
         {
             return Task.Run(() => viewModel);

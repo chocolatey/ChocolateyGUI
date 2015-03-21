@@ -34,7 +34,7 @@ namespace ChocolateyGui.Services
 
         public async Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false)
         {
-            // Ensure that we only retrieve the packages one at a to refresh the Cache.
+            // Ensure that we only retrieve the packages one at a time to refresh the Cache.
             using (await this.GetInstalledLock.LockAsync())
             {
                 List<IPackageViewModel> packages;
@@ -113,7 +113,7 @@ namespace ChocolateyGui.Services
             await ProcessEx.RunAsync(this.chocoExePath, arguments.ToString());
 
             var newPackage =
-                (await this.GetInstalledPackages()).OrderByDescending(p => p.Version)
+                (await this.GetInstalledPackages(true)).OrderByDescending(p => p.Version)
                     .FirstOrDefault(
                         p =>
                         string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0
@@ -125,8 +125,6 @@ namespace ChocolateyGui.Services
             }
 
             this.NotifyPackagesChanged(PackagesChangedEventType.Installed, id, version == null ? string.Empty : version.ToString());
-
-            await this.GetInstalledPackages(force: true);
 
             await this.ProgressService.StopLoading();
         }
@@ -145,11 +143,10 @@ namespace ChocolateyGui.Services
             }
 
             await ProcessEx.RunAsync(this.chocoExePath, arguments.ToString());
+            await this.GetInstalledPackages(force: true);
 
             this.RemovePackageEntry(id, version);
             this.NotifyPackagesChanged(PackagesChangedEventType.Uninstalled, id, version.ToString());
-
-            await this.GetInstalledPackages(force: true);
 
             await this.ProgressService.StopLoading();
         }

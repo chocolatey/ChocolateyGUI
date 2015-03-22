@@ -182,10 +182,5 @@ namespace ChocolateyGui.Services
             this.NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
             await this.ProgressService.StopLoading();
         }
-
-        public async Task<Dictionary<string, string>> SearchPackages(string queryString, bool includePrerelease, bool includeAllVersions, Uri source)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

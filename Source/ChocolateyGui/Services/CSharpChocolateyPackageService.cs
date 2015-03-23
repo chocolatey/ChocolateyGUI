@@ -8,6 +8,7 @@ namespace ChocolateyGui.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Runtime.Caching;
@@ -37,50 +38,30 @@ namespace ChocolateyGui.Services
             // Ensure that we only retrieve the packages one at a time to refresh the Cache.
             using (await this.GetInstalledLock.LockAsync())
             {
-                List<IPackageViewModel> packages;
+                ICollection<IPackageViewModel> packages;
                 if (!force)
                 {
-                    packages = (List<IPackageViewModel>)Cache.Get(LocalPackagesCacheKeyName);
+                    packages = BasePackageService.CachedPackages;
+                    
                     if (packages != null)
                     {
                         return packages;
                     }
                 }
 
-                await this.ProgressService.StartLoading("Chocolatey Service");
-                this.ProgressService.WriteMessage("Retrieving installed packages...");
+                this.StartProgressDialog("Chocolatey Service", "Retrieving installed packages...");
 
                 var result = await ProcessEx.RunAsync(this.chocoExePath, "list -lo");
 
-                var chocoPackageList = result.StandardOutput.Where(p => PackageRegex.IsMatch(p.ToString()))
-                    .Select(p => PackageRegex.Match(p.ToString()))
+                var chocoPackageList = result.StandardOutput.Where(p => PackageRegex.IsMatch(p.ToString(CultureInfo.InvariantCulture)))
+                    .Select(p => PackageRegex.Match(p.ToString(CultureInfo.InvariantCulture)))
                     .ToDictionary(m => m.Groups["Name"].Value, m => new SemanticVersion(m.Groups["VersionString"].Value));
 
                 var libPath = Path.Combine(this.ChocolateyConfigurationProvider.ChocolateyInstall, "lib");
+
                 packages = new List<IPackageViewModel>();
-                foreach (var nupkgFile in Directory.EnumerateFiles(libPath, "*.nupkg", SearchOption.AllDirectories))
-                {
-                    var packageInfo = await NupkgReader.GetPackageInformation(nupkgFile);
 
-                    if (
-                        !chocoPackageList.Any(
-                            e =>
-                            string.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase)
-                            && e.Value == packageInfo.Version))
-                    {
-                        continue;
-                    }
-
-                    this.PopulatePackages(packageInfo, packages);
-                }
-
-                Cache.Set(
-                    BasePackageService.LocalPackagesCacheKeyName,
-                    packages,
-                    new CacheItemPolicy
-                    {
-                        AbsoluteExpiration = DateTime.Now.AddHours(1)
-                    });
+                await this.EnumerateLocalPackagesAndSetCache(packages, chocoPackageList, libPath);
 
                 await this.ProgressService.StopLoading();
                 return packages;
@@ -89,8 +70,7 @@ namespace ChocolateyGui.Services
 
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false)
         {
-            await this.ProgressService.StartLoading(string.Format("Installing {0}...", id));
-            this.ProgressService.WriteMessage("Building chocolatey command...");
+            this.StartProgressDialog("Installing", "Building chocolatey command...", id);
 
             var arguments = new StringBuilder();
             arguments.AppendFormat("install {0} -y", id);
@@ -119,20 +99,12 @@ namespace ChocolateyGui.Services
                         string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0
                         && (version == null || version == p.Version));
 
-            if (newPackage != null)
-            {
-                this.AddPackageEntry(newPackage.Id, newPackage.Version, source);
-            }
-
-            this.NotifyPackagesChanged(PackagesChangedEventType.Installed, id, version == null ? string.Empty : version.ToString());
-
-            await this.ProgressService.StopLoading();
+            this.UpdatePackageLists(id, source, newPackage, version);
         }
 
         public async Task UninstallPackage(string id, SemanticVersion version, bool force = false)
         {
-            await this.ProgressService.StartLoading(string.Format("Uninstalling {0}...", id));
-            this.ProgressService.WriteMessage("Building chocolatey command...");
+            this.StartProgressDialog("Uninstalling", "Building chocolatey command...", id);
 
             var arguments = new StringBuilder();
             arguments.AppendFormat("uninstall {0} -y", id);
@@ -153,8 +125,8 @@ namespace ChocolateyGui.Services
 
         public async Task UpdatePackage(string id, Uri source = null)
         {
-            await this.ProgressService.StartLoading(string.Format("Updating {0}...", id));
-            this.ProgressService.WriteMessage("Building chocolatey command...");
+            this.StartProgressDialog("Updating", "Building chocolatey command...", id);
+
             var currentPackages = this.PackageConfigEntries().Where(p => string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0).ToList();
 
             var arguments = new StringBuilder();
@@ -162,25 +134,9 @@ namespace ChocolateyGui.Services
 
             await ProcessEx.RunAsync(this.chocoExePath, arguments.ToString());
 
-            var newPackages = (await this.GetInstalledPackages()).Where(p => string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0).ToList();
+            var newPackages = await this.GetInstalledPackages();
 
-            var results = newPackages
-                .FullOuterJoin(currentPackages, p => p.Version, cp => cp.Version, (p, cp, version) => new { Id = p != null ? p.Id ?? cp.Id : cp.Id, Version = version });
-
-            foreach (var result in results)
-            {
-                if (currentPackages.Any(p => string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0 && p.Version == result.Version) && !newPackages.Any(p => p.Id == result.Id && p.Version == result.Version))
-                {
-                    this.RemovePackageEntry(result.Id, result.Version);
-                }
-                else
-                {
-                    this.AddPackageEntry(result.Id, result.Version, source);
-                }
-            }
-
-            this.NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
-            await this.ProgressService.StopLoading();
+            this.UpdatePackageLists(id, source, currentPackages, newPackages);
         }
     }
 }

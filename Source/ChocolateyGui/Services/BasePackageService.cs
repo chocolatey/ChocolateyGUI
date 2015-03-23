@@ -19,6 +19,7 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.Models;
     using ChocolateyGui.Providers;
     using ChocolateyGui.Utilities;
+    using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.Utilities.Nuspec;
     using ChocolateyGui.ViewModels.Items;
 
@@ -82,6 +83,14 @@ namespace ChocolateyGui.Services
             set
             {
                 cache = value;
+            }
+        }
+
+        public static ICollection<IPackageViewModel> CachedPackages
+        {
+            get
+            {
+                return (ICollection<IPackageViewModel>)Cache.Get(LocalPackagesCacheKeyName);
             }
         }
 
@@ -310,6 +319,74 @@ namespace ChocolateyGui.Services
             Cache.Remove(LocalPackagesJsonCacheKeyName);
 
             // Throw in this comment for fun.
+        }
+
+        public async void UpdatePackageLists(string id, Uri source, IPackageViewModel newPackage, SemanticVersion version)
+        {
+            if (newPackage != null)
+            {
+                this.AddPackageEntry(newPackage.Id, newPackage.Version, source);
+            }
+
+            this.NotifyPackagesChanged(PackagesChangedEventType.Installed, id, version == null ? string.Empty : version.ToString());
+
+            await this.ProgressService.StopLoading();
+        }
+
+        public async void UpdatePackageLists(string id, Uri source, ICollection<PackageConfigEntry> currentPackages, IEnumerable<IPackageViewModel> newPackages)
+        {
+            var packageViewModels = newPackages as IList<IPackageViewModel> ?? newPackages.ToList();
+
+            var results = packageViewModels.Where(p => string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0).ToList()
+                .FullOuterJoin(currentPackages, p => p.Version, cp => cp.Version, (p, cp, version) => new { Id = p != null ? p.Id ?? cp.Id : cp.Id, Version = version });
+
+            foreach (var result in results)
+            {
+                if (currentPackages.Any(p => string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0 && p.Version == result.Version) && !packageViewModels.Any(p => p.Id == result.Id && p.Version == result.Version))
+                {
+                    this.RemovePackageEntry(result.Id, result.Version);
+                }
+                else
+                {
+                    this.AddPackageEntry(result.Id, result.Version, source);
+                }
+            }
+
+            this.NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
+            await this.ProgressService.StopLoading();
+        }
+
+        public async Task EnumerateLocalPackagesAndSetCache(ICollection<IPackageViewModel> packages, Dictionary<string, SemanticVersion> chocoPackageList, string libPath)
+        {
+            foreach (var nupkgFile in Directory.EnumerateFiles(libPath, "*.nupkg", SearchOption.AllDirectories))
+            {
+                var packageInfo = await NupkgReader.GetPackageInformation(nupkgFile);
+
+                if (
+                    !chocoPackageList.Any(
+                        e =>
+                        string.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase)
+                        && e.Value == packageInfo.Version))
+                {
+                    continue;
+                }
+
+                this.PopulatePackages(packageInfo, packages);
+            }
+
+            Cache.Set(
+                BasePackageService.LocalPackagesCacheKeyName,
+                packages,
+                new CacheItemPolicy
+                {
+                    AbsoluteExpiration = DateTime.Now.AddHours(1)
+                });
+        }
+
+        public async void StartProgressDialog(string commandString, string initialProgressText, string id = "")
+        {
+            await this.ProgressService.StartLoading(string.Format("{0} {1}...", commandString, id));
+            this.ProgressService.WriteMessage(initialProgressText);
         }
     }
 }

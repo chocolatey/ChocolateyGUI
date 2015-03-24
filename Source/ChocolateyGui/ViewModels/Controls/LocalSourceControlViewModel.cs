@@ -23,7 +23,7 @@ namespace ChocolateyGui.ViewModels.Controls
 
     public class LocalSourceControlViewModel : ObservableBase, ILocalSourceControlViewModel, IWeakEventListener
     {
-        private readonly IChocolateyService _chocolateyService;
+        private readonly IChocolateyPackageService _chocolateyService;
         private readonly ILogService _logService;
         private readonly List<IPackageViewModel> _packages;
         private readonly IProgressService _progressService;
@@ -35,7 +35,7 @@ namespace ChocolateyGui.ViewModels.Controls
         private string _sortColumn;
         private bool _sortDescending;
 
-        public LocalSourceControlViewModel(IChocolateyService chocolateyService, IProgressService progressService, Func<Type, ILogService> logFactory)
+        public LocalSourceControlViewModel(IChocolateyPackageService chocolateyService, IProgressService progressService, Func<Type, ILogService> logFactory)
         {
             if (logFactory == null)
             {
@@ -146,7 +146,7 @@ namespace ChocolateyGui.ViewModels.Controls
 
         public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
-            if (sender is IChocolateyService && e is PackagesChangedEventArgs)
+            if (sender is IChocolateyPackageService && e is PackagesChangedEventArgs)
             {
                 this.LoadPackages().ConfigureAwait(false);
             }

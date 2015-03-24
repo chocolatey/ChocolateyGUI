@@ -8,15 +8,12 @@ namespace ChocolateyGui.Views.Windows
 {
     using System;
     using System.Diagnostics;
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
-
     using ChocolateyGui.ChocolateyFeedService;
     using ChocolateyGui.Controls.Dialogs;
     using ChocolateyGui.Models;
-    using ChocolateyGui.Properties;
     using ChocolateyGui.Services;
     using ChocolateyGui.ViewModels.Items;
     using ChocolateyGui.ViewModels.Windows;
@@ -29,18 +26,12 @@ namespace ChocolateyGui.Views.Windows
     public partial class MainWindow
     {
         private readonly IProgressService _progressService;
-        private readonly ILogService _logService;
 
-        public MainWindow(IMainWindowViewModel viewModel, INavigationService navigationService, IProgressService progressService, Func<Type, ILogService> logService)
+        public MainWindow(IMainWindowViewModel viewModel, INavigationService navigationService, IProgressService progressService)
         {
             if (navigationService == null)
             {
                 throw new ArgumentNullException("navigationService");
-            }
-
-            if (logService == null)
-            {
-                throw new ArgumentNullException("logService");
             }
 
             InitializeComponent();
@@ -52,7 +43,6 @@ namespace ChocolateyGui.Views.Windows
             }
 
             this._progressService = progressService;
-            this._logService = logService(typeof(MainWindow));
             
             // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();

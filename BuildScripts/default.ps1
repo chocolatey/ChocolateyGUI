@@ -6,6 +6,7 @@
 $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
+	$platform = 'Mixed Platforms';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
 	$projectName = "ChocolateyGUI";
 }
@@ -551,7 +552,7 @@ Task -Name BuildSolution -Depends __RemoveBuildArtifactsDirectory, __VerifyConfi
 		Write-Output "Running BuildSolution..."
 
 		exec {
-			Invoke-MSBuild "$sourceDirectory\ChocolateyGui.sln" -NoLogo -Configuration $config -Targets Build -DetailedSummary -VisualStudioVersion 12.0 -Properties (@{'Platform'='Mixed Platforms'})
+			Invoke-MSBuild "$sourceDirectory\ChocolateyGui.sln" -NoLogo -Configuration $config -Platform $platform -Targets Build -DetailedSummary -VisualStudioVersion 12.0;
 
 			$styleCopResultsFiles = Get-ChildItem $buildArtifactsDirectory -Filter "StyleCop*.xml"
 			foreach ($styleCopResultsFile in $styleCopResultsFiles) {
@@ -596,7 +597,7 @@ Task -Name CleanSolution -Depends __InstallPSBuild, __RemoveBuildArtifactsDirect
 		Write-Output "Running CleanSolution..."
 
 		exec {
-			Invoke-MSBuild "$sourceDirectory\ChocolateyGui.sln" -NoLogo -Configuration $config -Targets Clean -DetailedSummary -VisualStudioVersion 12.0 -Properties (@{'Platform'='Mixed Platforms'})
+			Invoke-MSBuild "$sourceDirectory\ChocolateyGui.sln" -NoLogo -Configuration $config -Platform $platform -Targets Clean -DetailedSummary -VisualStudioVersion 12.0;
 		}
 
 		Write-Output ("************ CleanSolution Successful ************")

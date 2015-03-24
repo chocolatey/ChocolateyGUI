@@ -61,6 +61,7 @@ namespace ChocolateyGui.IoC
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<PackageService>().As<IPackageService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
+            builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
 
             // Register Views
             builder.RegisterType<MainWindow>();

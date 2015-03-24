@@ -196,11 +196,13 @@
     <Compile Include="Services\IBasePackageService.cs" />
     <Compile Include="Services\IChocolateyPackageService.cs" />
     <Compile Include="Services\ILogService.cs" />
+    <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\ISourceService.cs" />
     <Compile Include="Services\Log4NetLoggingService.cs" />
     <Compile Include="Services\PackageServices\FileSystemPackageService.cs" />
     <Compile Include="Services\PackageServices\ODataPackageService.cs" />
+    <Compile Include="Services\PersistenceService.cs" />
     <Compile Include="Services\PowerShellChocolateyPackageService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Services\SettingsSourceService.cs" />

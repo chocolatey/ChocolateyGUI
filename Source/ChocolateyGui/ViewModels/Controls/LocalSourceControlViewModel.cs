@@ -11,8 +11,10 @@ namespace ChocolateyGui.ViewModels.Controls
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
     using System.Reactive.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
     using ChocolateyGui.Base;
@@ -27,7 +29,9 @@ namespace ChocolateyGui.ViewModels.Controls
         private readonly ILogService _logService;
         private readonly List<IPackageViewModel> _packages;
         private readonly IProgressService _progressService;
+        private readonly IPersistenceService _persistenceService;
         private bool _hasLoaded;
+        private bool _exportAll = true;
         private bool _matchWord;
         private bool _showOnlyPackagesWithUpdate;
         private ObservableCollection<IPackageViewModel> _packageViewModels;
@@ -35,7 +39,11 @@ namespace ChocolateyGui.ViewModels.Controls
         private string _sortColumn;
         private bool _sortDescending;
 
-        public LocalSourceControlViewModel(IChocolateyPackageService chocolateyService, IProgressService progressService, Func<Type, ILogService> logFactory)
+        public LocalSourceControlViewModel(
+            IChocolateyPackageService chocolateyService,
+            IProgressService progressService,
+            IPersistenceService persistenceService,
+            Func<Type, ILogService> logFactory)
         {
             if (logFactory == null)
             {
@@ -44,6 +52,7 @@ namespace ChocolateyGui.ViewModels.Controls
 
             this._chocolateyService = chocolateyService;
             this._progressService = progressService;
+            this._persistenceService = persistenceService;
             this._logService = logFactory(typeof(LocalSourceControlViewModel));
             PackagesChangedEventManager.AddListener(this._chocolateyService, this);
 
@@ -106,6 +115,11 @@ namespace ChocolateyGui.ViewModels.Controls
         public bool CanUpdateAll()
         {
             return this.Packages.Any(p => p.CanUpdate);
+        }
+
+        public bool CanExportAll()
+        {
+            return this._exportAll;
         }
 
         public bool CanRefreshPackages()
@@ -179,6 +193,37 @@ namespace ChocolateyGui.ViewModels.Controls
             catch (Exception ex)
             {
                 this._logService.Fatal("Updated all has failed.", ex);
+                throw;
+            }
+        }
+
+        public async void ExportAll()
+        {
+            try
+            {
+                var fileStream = this._persistenceService.SaveFile("*.config", "Config Files (.config)|*.config");
+
+                if (fileStream == null)
+                {
+                    return;
+                }
+
+                using (StreamWriter sw = new StreamWriter(fileStream, Encoding.ASCII))
+                {
+                    sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+                    sw.WriteLine("<packages>");
+
+                    foreach (var package in this.Packages)
+                    {
+                        sw.WriteLine("{0}<package id=\"{1}\" version=\"{2}\" />", "\t", package.Id, package.Version);
+                    }
+
+                    sw.WriteLine("</packages>");
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logService.Fatal("Export all has failed.", ex);
                 throw;
             }
         }

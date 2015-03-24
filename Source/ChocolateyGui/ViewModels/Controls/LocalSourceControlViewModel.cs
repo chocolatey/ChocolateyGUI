@@ -17,6 +17,8 @@ namespace ChocolateyGui.ViewModels.Controls
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Xml;
+
     using ChocolateyGui.Base;
     using ChocolateyGui.Models;
     using ChocolateyGui.Services;
@@ -199,6 +201,8 @@ namespace ChocolateyGui.ViewModels.Controls
 
         public async void ExportAll()
         {
+            this._exportAll = false;
+
             try
             {
                 var fileStream = this._persistenceService.SaveFile("*.config", "Config Files (.config)|*.config");
@@ -208,23 +212,32 @@ namespace ChocolateyGui.ViewModels.Controls
                     return;
                 }
 
-                using (StreamWriter sw = new StreamWriter(fileStream, Encoding.ASCII))
+                XmlWriterSettings settings = new XmlWriterSettings { Indent = true };
+
+                using (var xw = XmlWriter.Create(fileStream, settings))
                 {
-                    sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-                    sw.WriteLine("<packages>");
+                    xw.WriteStartDocument();
+                    xw.WriteStartElement("packages");
 
                     foreach (var package in this.Packages)
                     {
-                        sw.WriteLine("{0}<package id=\"{1}\" version=\"{2}\" />", "\t", package.Id, package.Version);
+                        xw.WriteStartElement("package");
+                        xw.WriteAttributeString("id", package.Id);
+                        xw.WriteAttributeString("version", package.Version.ToString());
+                        xw.WriteEndElement();
                     }
 
-                    sw.WriteLine("</packages>");
+                    xw.WriteEndElement();
                 }
             }
             catch (Exception ex)
             {
                 this._logService.Fatal("Export all has failed.", ex);
                 throw;
+            }
+            finally
+            {
+                this._exportAll = true;
             }
         }
 

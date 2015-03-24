@@ -37,7 +37,7 @@ namespace ChocolateyGui.Services
         /// </summary>
         public const string LocalPackagesJsonCacheKeyName = "LocalChocolateyService.PackagesJson";
 
-        public static readonly Regex PackageRegex = new Regex(@"^(?<Name>[\w\.]*) (?<VersionString>(\d+(\s*\.\s*\d+){0,3})(-[a-z][0-9a-z-]*)?)$");
+        public static readonly Regex PackageRegex = new Regex(@"^(?<Name>[\w\.\-]*) (?<VersionString>(\d+(\s*\.\s*\d+){0,3})(-[a-z][0-9a-z-]*)?)$");
 
         /// <summary>
         /// Synchronizes the GetPackages method.

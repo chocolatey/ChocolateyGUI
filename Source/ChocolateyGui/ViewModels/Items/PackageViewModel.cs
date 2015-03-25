@@ -24,7 +24,7 @@ namespace ChocolateyGui.ViewModels.Items
     {
         private readonly MemoryCache _cache = MemoryCache.Default;
 
-        private readonly IChocolateyService _chocolateyService;
+        private readonly IChocolateyPackageService _chocolateyService;
 
         private readonly INavigationService _navigationService;
 
@@ -94,7 +94,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private int _versionDownloadCount;
 
-        public PackageViewModel(IPackageService packageService, IChocolateyService chocolateyService, INavigationService navigationService)
+        public PackageViewModel(IPackageService packageService, IChocolateyPackageService chocolateyService, INavigationService navigationService)
         {
             this._packageService = packageService;
             this._chocolateyService = chocolateyService;
@@ -333,7 +333,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
-            if (sender is IChocolateyService && e is PackagesChangedEventArgs)
+            if (sender is IChocolateyPackageService && e is PackagesChangedEventArgs)
             {
                 this._isInstalled = new Lazy<bool>(() => this._chocolateyService.IsPackageInstalled(this.Id, this.Version));
                 this.NotifyPropertyChanged("IsInstalled");

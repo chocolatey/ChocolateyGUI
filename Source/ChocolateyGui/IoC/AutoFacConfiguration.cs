@@ -8,7 +8,6 @@ namespace ChocolateyGui.IoC
 {
     using System;
     using Autofac;
-
     using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
     using ChocolateyGui.ViewModels.Controls;
@@ -19,10 +18,25 @@ namespace ChocolateyGui.IoC
 
     public static class AutoFacConfiguration
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is the way that AutoFac works.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is really a requirement due to required registrations.")]
         public static IContainer RegisterAutoFac()
         {
             var builder = new ContainerBuilder();
+
+            // Register Providers
+            builder.RegisterType<VersionNumberProvider>().As<IVersionNumberProvider>().SingleInstance();
+
+            var configurationProvider = new ChocolateyConfigurationProvider();
+            builder.RegisterInstance(configurationProvider).As<IChocolateyConfigurationProvider>().SingleInstance();
+
+            if (configurationProvider.IsChocolateyExecutableBeingUsed)
+            {
+                RegisterCSharpService(builder);
+            }
+            else
+            {
+                RegisterPowerShellService(builder);
+            }
 
             // Register View Models
             builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>();
@@ -39,18 +53,15 @@ namespace ChocolateyGui.IoC
             builder.RegisterType<LocalSourceControlViewModel>().As<ILocalSourceControlViewModel>();
             builder.RegisterType<RemoteSourceControlViewModel>().As<IRemoteSourceControlViewModel>();
             builder.RegisterType<PackageControlViewModel>().As<IPackageControlViewModel>();
-            builder.Register(c => new PackageViewModel(c.Resolve<IPackageService>(), c.Resolve<IChocolateyService>(), c.Resolve<INavigationService>())).As<IPackageViewModel>();
-
-            // Register Providers
-            builder.RegisterType<VersionNumberProvider>().As<IVersionNumberProvider>();
+            builder.Register(c => new PackageViewModel(c.Resolve<IPackageService>(), c.Resolve<IChocolateyPackageService>(), c.Resolve<INavigationService>())).As<IPackageViewModel>();
 
             // Register Services
             builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
             builder.RegisterType<SettingsSourceService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<PackageService>().As<IPackageService>().SingleInstance();
-            builder.RegisterType<ChocolateyService>().As<IChocolateyService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
+            builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
 
             // Register Views
             builder.RegisterType<MainWindow>();
@@ -61,6 +72,16 @@ namespace ChocolateyGui.IoC
             builder.Register((c, pvm) => new PackageControl(c.Resolve<IPackageControlViewModel>(), pvm.TypedAs<PackageViewModel>()));
 
             return builder.Build();
+        }
+
+        private static void RegisterPowerShellService(ContainerBuilder builder)
+        {
+            builder.RegisterType<PowerShellChocolateyPackageService>().As<IChocolateyPackageService>().SingleInstance();
+        }
+
+        private static void RegisterCSharpService(ContainerBuilder builder)
+        {
+            builder.RegisterType<CSharpChocolateyPackageService>().As<IChocolateyPackageService>().SingleInstance();
         }
     }
 }

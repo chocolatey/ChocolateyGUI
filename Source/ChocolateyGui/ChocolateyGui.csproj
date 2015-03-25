@@ -176,6 +176,14 @@
     <Compile Include="Models\PackageSearchOptions.cs" />
     <Compile Include="Models\PackageSearchResults.cs" />
     <Compile Include="Models\PowerShellOutputLine.cs" />
+    <Compile Include="AsyncProcess\ProcessEx.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="AsyncProcess\ProcessResults.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Providers\ChocolateyConfigurationProvider.cs" />
+    <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IVersionNumberProvider.cs" />
     <Compile Include="Providers\VersionNumberProvider.cs" />
     <Compile Include="Service References\ChocolateyFeedService\Reference.cs">
@@ -183,13 +191,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
-    <Compile Include="Services\ChocolateyService.cs" />
+    <Compile Include="Services\BasePackageService.cs" />
+    <Compile Include="Services\CSharpChocolateyPackageService.cs" />
+    <Compile Include="Services\IBasePackageService.cs" />
+    <Compile Include="Services\IChocolateyPackageService.cs" />
     <Compile Include="Services\ILogService.cs" />
+    <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\ISourceService.cs" />
     <Compile Include="Services\Log4NetLoggingService.cs" />
     <Compile Include="Services\PackageServices\FileSystemPackageService.cs" />
     <Compile Include="Services\PackageServices\ODataPackageService.cs" />
+    <Compile Include="Services\PersistenceService.cs" />
+    <Compile Include="Services\PowerShellChocolateyPackageService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Services\SettingsSourceService.cs" />
     <Compile Include="Utilities\AsyncLock.cs" />
@@ -202,7 +216,6 @@
     <Compile Include="Utilities\SourcesChangedEventManager.cs" />
     <Compile Include="Utilities\TypeConverters\SemanticVersionTypeConverter.cs" />
     <Compile Include="ViewModels\Items\SourceTabViewModel.cs" />
-    <Compile Include="Services\IChocolateyService.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\PackageServices\IPackageService.cs" />
     <Compile Include="Services\NavigationService.cs" />
@@ -323,6 +336,9 @@
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
+    <Compile Include="AsyncProcess\ProcessEx.overloads.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <None Include="Properties\DataSources\ChocolateyGui.ChocolateyFeedService.FeedContext_x0060_1.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

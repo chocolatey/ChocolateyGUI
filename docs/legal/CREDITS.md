@@ -52,6 +52,7 @@ ChocolateyGUI uses the following awesome frameworks (in no particular order):
 ChocolateyGUI is built, with the following fantastic frameworks and services (in no particular order):
 
  * [psake](https://github.com/psake/psake)
+ * [psbuild](https://github.com/ligershark/psbuild)
  * [NuGet.exe](https://www.nuget.org/)
  * [TeamCity CodeBetter](http://teamcity.codebetter.com/)
  * [AppVeyor](http://www.appveyor.com/)

@@ -15,11 +15,11 @@ namespace ChocolateyGui.ViewModels.Controls
         ObservableCollection<IPackageViewModel> Packages { get; }
 
         string SearchQuery { get; set; }
-        
+
         bool MatchWord { get; set; }
 
         string SortColumn { get; set; }
-        
+
         bool SortDescending { get; set; }
 
         void Loaded(object sender, EventArgs e);
@@ -27,5 +27,7 @@ namespace ChocolateyGui.ViewModels.Controls
         bool CanUpdateAll();
 
         void UpdateAll();
+
+        void ExportAll();
     }
 }

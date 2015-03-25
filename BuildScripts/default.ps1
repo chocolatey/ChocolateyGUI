@@ -328,13 +328,17 @@ Task -Name __InstallPSBuild -Description $private -Action {
 		Write-Output "Running Install PSBuild..."
 
 		exec {
-      # This test works locally, but not on AppVeyor
-			# if (-not (test-CommandExists Invoke-MSBuild)) {
-      # Write-Output "PSBuild is not already installed";
+			$psbuildLoaded = $false;
+			if(get-command invoke-msbuild -ErrorAction SilentlyContinue) {
+				$psbuildLoaded=$true
+			}
+
+			if($psbuildLoaded) {
+				Write-Output "PSBuild is already installed";
+			} else {
+      	Write-Output "PSBuild is not already installed";
         (new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
-      # } else {
-      #   Write-Output "PSBuild is already installed";
-      # }
+			}
 		}
 
 		Write-Output ("************ Install PSBuild Successful ************")

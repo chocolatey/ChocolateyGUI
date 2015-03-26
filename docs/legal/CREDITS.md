@@ -65,7 +65,9 @@ ChocolateyGUI is tested and analyzed with the following rockstar frameworks (in 
  * [InspectCode](https://confluence.jetbrains.com/display/NETCOM/Introducing+InspectCode)
  * [DupFinder](https://confluence.jetbrains.com/display/NETCOM/Introducing+dupFinder)
 
-We would like to credit other super sweet tools/frameworks that aid in the development of ChocolateyGUI:
+We would like to credit other super sweet tools/frameworks/services that aid in the development of ChocolateyGUI:
 
  * [ReSharper](https://www.jetbrains.com/resharper/)
  * [NuGet Framework](https://www.nuget.org/)
+ * [Gitter](https://gitter.im)
+ * [Raygun](https://raygun.io/)

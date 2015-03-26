@@ -14,7 +14,9 @@ namespace ChocolateyGui.Services
     using log4net;
     using log4net.Appender;
     using log4net.Repository.Hierarchy;
+#if !DEBUG
     using Mindscape.Raygun4Net;
+#endif
 
     public class Log4NetLoggingService : ILogService
     {

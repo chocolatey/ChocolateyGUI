@@ -8,7 +8,6 @@ namespace ChocolateyGui.Services.PackageServices
 {
     using System;
     using System.Globalization;
-    using System.Runtime.Caching;
     using System.Threading.Tasks;
     using ChocolateyGui.Models;
     using ChocolateyGui.ViewModels.Items;

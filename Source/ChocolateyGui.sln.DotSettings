@@ -3,4 +3,5 @@
 	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=851FC2F6_002DAFB0_002D4153_002D8520_002DBF68E1BEA3CB_002Fd_003AUtilities_002Fd_003AExtensions_002Ff_003ALinqExtensions_002Ecs/@EntryIndexRemoved">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=RedundantUsingDirective/@EntryIndexedValue">ERROR</s:String>
 	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/BLANK_LINES_BETWEEN_USING_GROUPS/@EntryValue">0</s:Int64>
-	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UI/@EntryIndexedValue">UI</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UI/@EntryIndexedValue">UI</s:String>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EMigrateBlankLinesAroundFieldToBlankLinesAroundProperty/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

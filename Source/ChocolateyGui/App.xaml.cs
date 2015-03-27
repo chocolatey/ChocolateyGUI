@@ -10,7 +10,6 @@ namespace ChocolateyGui
     using System.Windows;
     using Autofac;
     using ChocolateyGui.IoC;
-    using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
     using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.Views.Windows;

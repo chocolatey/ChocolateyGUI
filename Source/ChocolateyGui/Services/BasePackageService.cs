@@ -9,12 +9,10 @@ namespace ChocolateyGui.Services
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.IO.Packaging;
     using System.Linq;
     using System.Runtime.Caching;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-
     using ChocolateyGui.Enums;
     using ChocolateyGui.Models;
     using ChocolateyGui.Providers;
@@ -22,7 +20,6 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.Utilities.Nuspec;
     using ChocolateyGui.ViewModels.Items;
-
     using Newtonsoft.Json;
 
     public abstract class BasePackageService

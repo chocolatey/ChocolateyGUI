@@ -11,14 +11,11 @@ namespace ChocolateyGui.ViewModels.Controls
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
     using System.Reactive.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Xml;
-
     using ChocolateyGui.Base;
     using ChocolateyGui.Models;
     using ChocolateyGui.Services;

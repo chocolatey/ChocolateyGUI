@@ -13,14 +13,11 @@ namespace ChocolateyGui.Services
     using System.Linq;
     using System.Management.Automation;
     using System.Management.Automation.Runspaces;
-    using System.Runtime.Caching;
     using System.Threading.Tasks;
     using ChocolateyGui.Controls;
     using ChocolateyGui.Enums;
     using ChocolateyGui.Models;
     using ChocolateyGui.Providers;
-    using ChocolateyGui.Utilities.Extensions;
-    using ChocolateyGui.Utilities.Nuspec;
     using ChocolateyGui.ViewModels.Items;
 
     public class PowerShellChocolateyPackageService : BasePackageService, IChocolateyPackageService

@@ -9,6 +9,9 @@
       d:DesignHeight="768" d:DesignWidth="1366"
 	  d:DataContext="{d:DesignInstance controlVms:LocalSourceControlViewModel}">
 
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
     <Grid Background="{StaticResource AccentColorBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -23,7 +26,7 @@
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,5">
             <Button Command="{commands:DataContextCommandAdapter RefreshPackages, CanRefreshPackages}" Style="{StaticResource SquareButtonStyle}" Content="Refresh Packages"></Button>
-            <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}" Style="{StaticResource SquareButtonStyle}" Content="Update All"/>
+            <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}" Visibility="{Binding ShowOnlyPackagesWithUpdate, Converter={StaticResource BoolToVis}}" Style="{StaticResource SquareButtonStyle}" Content="Update All"/>
             <Button Command="{commands:DataContextCommandAdapter ExportAll, CanExportAll}" Style="{StaticResource SquareButtonStyle}" Content="Export"/>
         </StackPanel>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Packages}" Background="{StaticResource LightBackgroundColorBrush}"

@@ -9,6 +9,7 @@ namespace ChocolateyGui.ViewModels.Controls
     using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Globalization;
     using System.Linq;
     using System.Reactive.Linq;
     using System.Windows;
@@ -68,10 +69,10 @@ namespace ChocolateyGui.ViewModels.Controls
                     .ObserveOnDispatcher()
                     .Subscribe(e => this.LoadPackages());
             }
-            catch (Exception)
+            catch (InvalidOperationException)
             {
                 MessageBox.Show(
-                    string.Format("Unable to connect to feed with Url of {0}.  Please check that this feed is accessible, and try again.", source),
+                    string.Format(CultureInfo.InvariantCulture, "Unable to connect to feed with Url: {0}.  Please check that this feed is accessible, and try again.", source),
                     "Feed Search Error",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error,

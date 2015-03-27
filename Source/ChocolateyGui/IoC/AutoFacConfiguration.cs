@@ -31,11 +31,11 @@ namespace ChocolateyGui.IoC
 
             if (configurationProvider.IsChocolateyExecutableBeingUsed)
             {
-                RegisterCSharpService(builder);
+                RegisterCSharpServices(builder);
             }
             else
             {
-                RegisterPowerShellService(builder);
+                RegisterPowerShellServices(builder);
             }
 
             // Register View Models
@@ -56,8 +56,7 @@ namespace ChocolateyGui.IoC
             builder.Register(c => new PackageViewModel(c.Resolve<IPackageService>(), c.Resolve<IChocolateyPackageService>(), c.Resolve<INavigationService>())).As<IPackageViewModel>();
 
             // Register Services
-            builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
-            builder.RegisterType<SettingsSourceService>().As<ISourceService>().SingleInstance();
+            builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();           
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<PackageService>().As<IPackageService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
@@ -74,14 +73,16 @@ namespace ChocolateyGui.IoC
             return builder.Build();
         }
 
-        private static void RegisterPowerShellService(ContainerBuilder builder)
+        private static void RegisterPowerShellServices(ContainerBuilder builder)
         {
             builder.RegisterType<PowerShellChocolateyPackageService>().As<IChocolateyPackageService>().SingleInstance();
+            builder.RegisterType<SettingsSourceService>().As<ISourceService>().SingleInstance();
         }
 
-        private static void RegisterCSharpService(ContainerBuilder builder)
+        private static void RegisterCSharpServices(ContainerBuilder builder)
         {
             builder.RegisterType<CSharpChocolateyPackageService>().As<IChocolateyPackageService>().SingleInstance();
+            builder.RegisterType<ChocoSettingsSourceService>().As<ISourceService>().SingleInstance();
         }
     }
 }

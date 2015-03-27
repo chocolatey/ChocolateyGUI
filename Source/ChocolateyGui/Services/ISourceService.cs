@@ -22,6 +22,6 @@ namespace ChocolateyGui.Services
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
         IEnumerable<SourceViewModel> GetSources();
 
-        void RemoveSource(SourceViewModel viewModel);
+        void RemoveSource(SourceViewModel sourceViewModel);
     }
 }

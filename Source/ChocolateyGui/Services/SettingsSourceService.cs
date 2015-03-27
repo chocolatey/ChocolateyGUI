@@ -10,14 +10,11 @@ namespace ChocolateyGui.Services
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using ChocolateyGui.Models;
     using ChocolateyGui.Properties;
     using ChocolateyGui.ViewModels.Items;
 
-    internal class SettingsSourceService : ISourceService
+    internal class SettingsSourceService : BaseSourceService, ISourceService
     {
-        public event SourcesChangedEventHandler SourcesChanged;
-
         public void AddSource(SourceViewModel sourceViewModel)
         {
             if (sourceViewModel == null)
@@ -26,13 +23,7 @@ namespace ChocolateyGui.Services
             }
 
             Settings.Default.sources.Add(string.Format(CultureInfo.CurrentCulture, "{0}|{1}", sourceViewModel.Name, sourceViewModel.Url));
-            var sourcesChangedEvent = this.SourcesChanged;
-            if (sourcesChangedEvent != null)
-            {
-                sourcesChangedEvent(
-                    this,
-                    new SourcesChangedEventArgs(new List<SourceViewModel> { sourceViewModel }, new List<SourceViewModel>()));
-            }
+            this.RaiseSourceAddedEvent(sourceViewModel);
 
             Settings.Default.Save();
         }
@@ -63,13 +54,7 @@ namespace ChocolateyGui.Services
             }
 
             Settings.Default.sources.Remove(string.Format(CultureInfo.CurrentCulture, "{0}|{1}", viewModel.Name, viewModel.Url));
-            var sourcesChangedEvent = this.SourcesChanged;
-            if (sourcesChangedEvent != null)
-            {
-                sourcesChangedEvent(
-                    this,
-                    new SourcesChangedEventArgs(new List<SourceViewModel>(), new List<SourceViewModel> { viewModel }));
-            }
+            this.RaiseSourceRemovedEvent(viewModel);
 
             Settings.Default.Save();
         }

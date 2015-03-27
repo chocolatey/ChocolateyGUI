@@ -24,6 +24,9 @@ namespace ChocolateyGui.AsyncProcess
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = "Not our code.")]
     public static partial class ProcessEx
     {
+        // TODO: Usage of this class is really a stop gap until we get a working version of the Chocolatey.dll
+        // Shelling out a new Process each time we want to invoke choco.exe really isn't ideal, but for now, this works.
+        // Replace this code as soon as possible, and remove ALL calls to this class.
         public static Task<ProcessResults> RunAsync(ProcessStartInfo processStartInfo)
         {
             return RunAsync(processStartInfo, CancellationToken.None);
@@ -89,6 +92,47 @@ namespace ChocolateyGui.AsyncProcess
             process.BeginErrorReadLine();
 
             return tcs.Task;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Not required")]
+        public static ProcessResults Run(string fileName, string arguments)
+        {
+            var startInfo = new ProcessStartInfo(fileName)
+            {
+                Arguments = arguments,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            var process = new Process { StartInfo = startInfo };
+
+            var standardOutput = new List<string>();
+            var standardError = new List<string>();
+
+            process.OutputDataReceived += (sender, args) =>
+            {
+                if (args.Data != null)
+                {
+                    standardOutput.Add(args.Data);
+                }
+            };
+
+            process.ErrorDataReceived += (sender, args) =>
+            {
+                if (args.Data != null)
+                {
+                    standardError.Add(args.Data);
+                }
+            };
+
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+
+            return new ProcessResults(process, standardOutput, standardError);
         }
     }
 }

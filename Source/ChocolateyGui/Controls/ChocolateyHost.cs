@@ -7,12 +7,9 @@
 namespace ChocolateyGui.Controls
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
-    using System.Management.Automation;
     using System.Management.Automation.Host;
     using System.Reflection;
-    using ChocolateyGui.Models;
     using ChocolateyGui.Services;
 
     internal class ChocolateyHost : PSHost

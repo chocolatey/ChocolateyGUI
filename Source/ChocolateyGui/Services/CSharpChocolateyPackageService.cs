@@ -11,16 +11,12 @@ namespace ChocolateyGui.Services
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Runtime.Caching;
     using System.Text;
     using System.Threading.Tasks;
-
     using ChocolateyGui.AsyncProcess;
     using ChocolateyGui.Enums;
     using ChocolateyGui.Models;
     using ChocolateyGui.Providers;
-    using ChocolateyGui.Utilities.Extensions;
-    using ChocolateyGui.Utilities.Nuspec;
     using ChocolateyGui.ViewModels.Items;
     
     public class CSharpChocolateyPackageService : BasePackageService, IChocolateyPackageService

@@ -6,8 +6,6 @@
 
 namespace ChocolateyGui.Controls.Dialogs
 {
-    using System;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Media;
     using ChocolateyGui.Models;

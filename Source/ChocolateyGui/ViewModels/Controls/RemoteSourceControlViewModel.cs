@@ -9,8 +9,11 @@ namespace ChocolateyGui.ViewModels.Controls
     using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Globalization;
     using System.Linq;
     using System.Reactive.Linq;
+    using System.Windows;
+
     using ChocolateyGui.Base;
     using ChocolateyGui.Models;
     using ChocolateyGui.Services;
@@ -27,46 +30,55 @@ namespace ChocolateyGui.ViewModels.Controls
         private ObservableCollection<IPackageViewModel> _packageViewModels;
         private int _pageCount = 1;
         private bool _hasLoaded;
-
         private int _pageSize = 50;
-
         private string _searchQuery;
-
         private string _sortColumn;
-
         private bool _sortDescending;
 
         public RemoteSourceControlViewModel(IPackageService packageService, Uri source)
         {
-            this._packageService = packageService;
-            this._source = source;
-            this.Packages = new ObservableCollection<IPackageViewModel>();
-            this.LoadPackages();
-
-            var immediateProperties = new[]
+            try
             {
-                "IncludeAllVersions", "IncludePrerelease", "MatchWord",
-                "SortColumn", "SortDescending"
-            };
+                this._packageService = packageService;
+                this._source = source;
+                this.Packages = new ObservableCollection<IPackageViewModel>();
+                this.LoadPackages();
 
-            Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                .Where(e => e.EventArgs.PropertyName == "SearchQuery")
-                .Throttle(TimeSpan.FromMilliseconds(500))
-                .DistinctUntilChanged()
-                .ObserveOnDispatcher()
-                .Subscribe(e => this.LoadPackages());
+                var immediateProperties = new[]
+                                              {
+                                                  "IncludeAllVersions", "IncludePrerelease", "MatchWord", "SortColumn",
+                                                  "SortDescending"
+                                              };
 
-            Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
-                .ObserveOnDispatcher()
-                .Subscribe(e => this.LoadPackages());
-            
-            Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                .Where(e => e.EventArgs.PropertyName == "CurrentPage")
-                .Throttle(TimeSpan.FromMilliseconds(300))
-                .DistinctUntilChanged()
-                .ObserveOnDispatcher()
-                .Subscribe(e => this.LoadPackages());
+                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                    .Where(e => e.EventArgs.PropertyName == "SearchQuery")
+                    .Throttle(TimeSpan.FromMilliseconds(500))
+                    .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
+                    .Subscribe(e => this.LoadPackages());
+
+                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                    .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
+                    .ObserveOnDispatcher()
+                    .Subscribe(e => this.LoadPackages());
+
+                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                    .Where(e => e.EventArgs.PropertyName == "CurrentPage")
+                    .Throttle(TimeSpan.FromMilliseconds(300))
+                    .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
+                    .Subscribe(e => this.LoadPackages());
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show(
+                    string.Format(CultureInfo.InvariantCulture, "Unable to connect to feed with Url: {0}.  Please check that this feed is accessible, and try again.", source),
+                    "Feed Search Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.ServiceNotification);
+            }
         }
 
         public int CurrentPage

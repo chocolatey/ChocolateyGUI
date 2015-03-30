@@ -6,10 +6,15 @@
 
 namespace ChocolateyGui.Providers
 {
+    using System;
+    using System.Collections.Generic;
+
     public interface IChocolateyConfigurationProvider
     {
         string ChocolateyInstall { get; }
 
         bool IsChocolateyExecutableBeingUsed { get; }
+
+        IEnumerable<Tuple<string, string>> Sources { get; }
     }
 }

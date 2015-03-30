@@ -94,11 +94,16 @@ namespace ChocolateyGui.Services
 
             public int GetHashCode(Tuple<string, string> obj)
             {
+                if (object.ReferenceEquals(obj, null))
+                {
+                    throw new ArgumentNullException("obj");
+                }
+
                 // URIs are functionally equivalent with or without trailing slashes.
                 var url = obj.Item2.TrimEnd('/', '\\');
 
                 return unchecked(obj.Item1.ToUpperInvariant().GetHashCode() // Name
-                    + url.GetHashCode());                                   
+                    + url.GetHashCode());
             }
         }
     }

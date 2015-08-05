@@ -27,6 +27,8 @@ Come join in the conversation about ChocolateyGUI in our Gitter Chat Room
 
 Or, you can find us in IRC at #chocolatey.
 
+<a href="https://zenhub.io"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
+
 ## Information
 
  * [Community Feed aka Chocolatey.org](https://chocolatey.org) (if this is down, try the backup at http://chocolatey.apphb.com )

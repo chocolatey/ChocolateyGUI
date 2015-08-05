@@ -27,7 +27,7 @@ Come join in the conversation about ChocolateyGUI in our Gitter Chat Room
 
 Or, you can find us in IRC at #chocolatey.
 
-We use [ZenHub](https://www.zenhub.io/) to enable a rich team managment experience.
+<a href="https://zenhub.io"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 
 ## Information
 

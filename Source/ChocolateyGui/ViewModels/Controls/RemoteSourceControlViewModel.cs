@@ -3,7 +3,6 @@
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace ChocolateyGui.ViewModels.Controls
 {
     using System;
@@ -13,15 +12,14 @@ namespace ChocolateyGui.ViewModels.Controls
     using System.Linq;
     using System.Reactive.Linq;
     using System.Windows;
-
-    using ChocolateyGui.Base;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Services;
-    using ChocolateyGui.ViewModels.Items;
+    using Base;
+    using Items;
+    using Models;
+    using Services;
 
     public class RemoteSourceControlViewModel : ObservableBase, IRemoteSourceControlViewModel
     {
-        private readonly IPackageService _packageService;
+        private readonly IRemotePackageService _remotePackageService;
         private readonly Uri _source;
         private int _currentPage = 1;
         private bool _includeAllVersions;
@@ -35,18 +33,18 @@ namespace ChocolateyGui.ViewModels.Controls
         private string _sortColumn;
         private bool _sortDescending;
 
-        public RemoteSourceControlViewModel(IPackageService packageService, Uri source)
+        public RemoteSourceControlViewModel(IRemotePackageService remotePackageService, Uri source)
         {
             try
             {
-                this._packageService = packageService;
-                this._source = source;
-                this.Packages = new ObservableCollection<IPackageViewModel>();
-                this.LoadPackages();
+                _remotePackageService = remotePackageService;
+                _source = source;
+                Packages = new ObservableCollection<IPackageViewModel>();
+                LoadPackages();
 
                 var immediateProperties = new[]
                                               {
-                                                  "IncludeAllVersions", "IncludePrerelease", "MatchWord", "SortColumn",
+                                                  "IncludeAllVersions", "IncludePrerelease", "MatchWord", "SortColumn", 
                                                   "SortDescending"
                                               };
 
@@ -55,167 +53,167 @@ namespace ChocolateyGui.ViewModels.Controls
                     .Throttle(TimeSpan.FromMilliseconds(500))
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
-                    .Subscribe(e => this.LoadPackages());
+                    .Subscribe(e => LoadPackages());
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                     .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
                     .ObserveOnDispatcher()
-                    .Subscribe(e => this.LoadPackages());
+                    .Subscribe(e => LoadPackages());
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                     .Where(e => e.EventArgs.PropertyName == "CurrentPage")
                     .Throttle(TimeSpan.FromMilliseconds(300))
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
-                    .Subscribe(e => this.LoadPackages());
+                    .Subscribe(e => LoadPackages());
             }
             catch (InvalidOperationException)
             {
                 MessageBox.Show(
-                    string.Format(CultureInfo.InvariantCulture, "Unable to connect to feed with Url: {0}.  Please check that this feed is accessible, and try again.", source),
-                    "Feed Search Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error,
-                    MessageBoxResult.OK,
+                    string.Format(CultureInfo.InvariantCulture, "Unable to connect to feed with Url: {0}.  Please check that this feed is accessible, and try again.", source), 
+                    "Feed Search Error", 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Error, 
+                    MessageBoxResult.OK, 
                     MessageBoxOptions.ServiceNotification);
             }
         }
 
         public int CurrentPage
         {
-            get { return this._currentPage; }
-            set { this.SetPropertyValue(ref this._currentPage, value); }
+            get { return _currentPage; }
+            set { SetPropertyValue(ref _currentPage, value); }
         }
 
         public bool IncludeAllVersions
         {
-            get { return this._includeAllVersions; }
-            set { this.SetPropertyValue(ref this._includeAllVersions, value); }
+            get { return _includeAllVersions; }
+            set { SetPropertyValue(ref _includeAllVersions, value); }
         }
 
         public bool IncludePrerelease
         {
-            get { return this._includePrerelease; }
-            set { this.SetPropertyValue(ref this._includePrerelease, value); }
+            get { return _includePrerelease; }
+            set { SetPropertyValue(ref _includePrerelease, value); }
         }
 
         public bool MatchWord
         {
-            get { return this._matchWord; }
-            set { this.SetPropertyValue(ref this._matchWord, value); }
+            get { return _matchWord; }
+            set { SetPropertyValue(ref _matchWord, value); }
         }
 
         public ObservableCollection<IPackageViewModel> Packages
         {
-            get { return this._packageViewModels; }
-            set { this.SetPropertyValue(ref this._packageViewModels, value); }
+            get { return _packageViewModels; }
+            set { SetPropertyValue(ref _packageViewModels, value); }
         }
 
         public int PageCount
         {
-            get { return this._pageCount; }
-            set { this.SetPropertyValue(ref this._pageCount, value); }
+            get { return _pageCount; }
+            set { SetPropertyValue(ref _pageCount, value); }
         }
 
         public int PageSize
         {
-            get { return this._pageSize; }
-            set { this.SetPropertyValue(ref this._pageSize, value); }
+            get { return _pageSize; }
+            set { SetPropertyValue(ref _pageSize, value); }
         }
 
         public string SearchQuery
         {
-            get { return this._searchQuery; }
-            set { this.SetPropertyValue(ref this._searchQuery, value); }
+            get { return _searchQuery; }
+            set { SetPropertyValue(ref _searchQuery, value); }
         }
 
         public string SortColumn
         {
-            get { return this._sortColumn; }
-            set { this.SetPropertyValue(ref this._sortColumn, value); }
+            get { return _sortColumn; }
+            set { SetPropertyValue(ref _sortColumn, value); }
         }
 
         public bool SortDescending
         {
-            get { return this._sortDescending; }
-            set { this.SetPropertyValue(ref this._sortDescending, value); }
+            get { return _sortDescending; }
+            set { SetPropertyValue(ref _sortDescending, value); }
         }
 
         public bool CanRefreshRemotePackages()
         {
-            return this._hasLoaded;
+            return _hasLoaded;
         }
 
         public bool CanGoToFirst()
         {
-            return this.CurrentPage > 1;
+            return CurrentPage > 1;
         }
 
         public bool CanGoToLast()
         {
-            return this.CurrentPage < this.PageCount;
+            return CurrentPage < PageCount;
         }
 
         public bool CanGoToNext()
         {
-            return this.CurrentPage < this.PageCount;
+            return CurrentPage < PageCount;
         }
 
         public bool CanGoToPrevious()
         {
-            return this.CurrentPage > 1;
+            return CurrentPage > 1;
         }
 
         public void GoToFirst()
         {
-            this.CurrentPage = 1;
+            CurrentPage = 1;
         }
 
         public void GoToLast()
         {
-            this.CurrentPage = this.PageCount;
+            CurrentPage = PageCount;
         }
 
         public void GoToNext()
         {
-            if (this.CurrentPage < this.PageCount)
+            if (CurrentPage < PageCount)
             {
-                this.CurrentPage++;
+                CurrentPage++;
             }
         }
 
         public void GoToPrevious()
         {
-            if (this.CurrentPage > 1)
+            if (CurrentPage > 1)
             {
-                this.CurrentPage--;
+                CurrentPage--;
             }
         }
 
-        public async void RefreshRemotePackages()
+        public void RefreshRemotePackages()
         {
-            this.LoadPackages();
+            LoadPackages();
         }
 
         private async void LoadPackages()
         {
-            this._hasLoaded = false;
+            _hasLoaded = false;
 
-            var result = await this._packageService.Search(this.SearchQuery, new PackageSearchOptions(this.PageSize, this.CurrentPage - 1, this.SortColumn, this.SortDescending, this.IncludePrerelease, this.IncludeAllVersions, this.MatchWord), this._source);
-            this.PageCount = result.TotalCount / this.PageSize;
-            this.Packages.Clear();
+            var result = await _remotePackageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord), _source);
+            PageCount = result.TotalCount / PageSize;
+            Packages.Clear();
             result.Packages.ToList().ForEach(p =>
             {
                 p.Source = _source;
-                this.Packages.Add(p);
+                Packages.Add(p);
             });
 
-            if (this.PageCount < this.CurrentPage)
+            if (PageCount < CurrentPage)
             {
-                this.CurrentPage = this.PageCount == 0 ? 1 : this.PageCount;
+                CurrentPage = PageCount == 0 ? 1 : PageCount;
             }
 
-            this._hasLoaded = true;
+            _hasLoaded = true;
         }
     }
 }

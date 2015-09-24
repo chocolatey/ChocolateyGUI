@@ -1,9 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="PackageService.cs">
+// <copyright company="Chocolatey" file="RemoteRemotePackageService.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace ChocolateyGui.Services
 {
     using System;
@@ -12,18 +11,18 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.Models;
     using ChocolateyGui.Services.PackageServices;
     using ChocolateyGui.ViewModels.Items;
-    
-    public class PackageService : IPackageService
+
+    public class RemoteRemotePackageService : IRemotePackageService
     {
         private readonly IProgressService _progressService;
         private readonly ISourceService _sourceService;
         private readonly Func<IPackageViewModel> _packageFactory;
         private readonly ILogService _logService;
 
-        public PackageService(
-            IProgressService progressService,
-            ISourceService sourceService,
-            Func<IPackageViewModel> packageFactory,
+        public RemoteRemotePackageService(
+            IProgressService progressService, 
+            ISourceService sourceService, 
+            Func<IPackageViewModel> packageFactory, 
             Func<Type, ILogService> logFunc)
         {
             if (logFunc == null)
@@ -31,44 +30,44 @@ namespace ChocolateyGui.Services
                 throw new ArgumentNullException("logFunc");
             }
 
-            this._progressService = progressService;
-            this._sourceService = sourceService;
-            this._packageFactory = packageFactory;
-            this._logService = logFunc(typeof(PackageService));
+            _progressService = progressService;
+            _sourceService = sourceService;
+            _packageFactory = packageFactory;
+            _logService = logFunc(typeof(RemoteRemotePackageService));
         }
 
         public async Task<PackageSearchResults> Search(string query, Uri source = null)
         {
-            return await this.Search(query, new PackageSearchOptions(), source);
+            return await Search(query, new PackageSearchOptions(), source);
         }
 
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options, Uri source = null)
         {
-            await this._progressService.StartLoading("Search");
+            await _progressService.StartLoading("Search");
             if (string.IsNullOrWhiteSpace(query))
             {
-                this._progressService.WriteMessage("Loading data...");
+                _progressService.WriteMessage("Loading data...");
             }
             else
             {
-                this._progressService.WriteMessage(string.Format("Searching for {0}", query));
+                _progressService.WriteMessage(string.Format("Searching for {0}", query));
             }
 
             if (source == null)
             {
-                source = new Uri(this._sourceService.GetDefaultSource().Url);
+                source = new Uri(_sourceService.GetDefaultSource().Url);
             }
 
             if (source.Scheme == "http" || source.Scheme == "https")
             {
-                var results = await ODataPackageService.Search(query, this._packageFactory, options, source);
-                await this._progressService.StopLoading();
+                var results = await ODataRemotePackageService.Search(query, _packageFactory, options, source);
+                await _progressService.StopLoading();
                 return results;
             }
 
             if (source.IsFile || source.IsUnc)
             {
-                await this._progressService.StopLoading();
+                await _progressService.StopLoading();
                 return null;
             }
 
@@ -77,14 +76,14 @@ namespace ChocolateyGui.Services
 
         public async Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false, Uri source = null)
         {
-            this._progressService.WriteMessage(string.Format("Getting latest version of {0}...", id));
+            _progressService.WriteMessage(string.Format("Getting latest version of {0}...", id));
             if (source == null)
             {
-                var defaultSource = new Uri(this._sourceService.GetDefaultSource().Url);
+                var defaultSource = new Uri(_sourceService.GetDefaultSource().Url);
 
                 if (defaultSource.Scheme == "http" || defaultSource.Scheme == "https")
                 {
-                    var result = await ODataPackageService.GetLatest(id, this._packageFactory, defaultSource, includePrerelease);
+                    var result = await ODataRemotePackageService.GetLatest(id, _packageFactory, defaultSource, includePrerelease);
                     if (result != null)
                     {
                         result.Source = defaultSource;
@@ -92,19 +91,19 @@ namespace ChocolateyGui.Services
                     }
                 }
 
-                foreach (var sourceViewModel in this._sourceService.GetSources())
+                foreach (var sourceViewModel in _sourceService.GetSources())
                 {
                     var currentSource = new Uri(sourceViewModel.Url);
                     if (currentSource.Scheme == "http" || currentSource.Scheme == "https")
                     {
-                        var result = await ODataPackageService.GetLatest(id, this._packageFactory, currentSource, includePrerelease);
+                        var result = await ODataRemotePackageService.GetLatest(id, _packageFactory, currentSource, includePrerelease);
                         if (result == null)
                         {
                             continue;
                         }
 
                         result.Source = currentSource;
-                        await this._progressService.StopLoading();
+                        await _progressService.StopLoading();
                         return result;
                     }
                 }
@@ -113,7 +112,7 @@ namespace ChocolateyGui.Services
             {
                 if (source.Scheme == "http" || source.Scheme == "https")
                 {
-                    var result = await ODataPackageService.GetLatest(id, this._packageFactory, source, includePrerelease);
+                    var result = await ODataRemotePackageService.GetLatest(id, _packageFactory, source, includePrerelease);
                     if (result != null)
                     {
                         result.Source = source;
@@ -133,37 +132,37 @@ namespace ChocolateyGui.Services
 
         public async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel, Uri source = null)
         {
-            await this._progressService.StartLoading("Loading Package Information");
-            this._progressService.WriteMessage("Loading remote package information...");
+            await _progressService.StartLoading("Loading Package Information");
+            _progressService.WriteMessage("Loading remote package information...");
 
             // If we don't have a source, iterate through our source until we find one that matches.
             if (source == null)
             {
-                var defaultSourceVm = this._sourceService.GetDefaultSource();
+                var defaultSourceVm = _sourceService.GetDefaultSource();
                 var defaultSource = new Uri(defaultSourceVm.Url);
                 if (defaultSource.Scheme == "http" || defaultSource.Scheme == "https")
                 {
-                    var result = await ODataPackageService.EnsureIsLoaded(viewModel, defaultSource);
+                    var result = await ODataRemotePackageService.EnsureIsLoaded(viewModel, defaultSource);
                     if (result != null)
                     {
-                        await this._progressService.StopLoading();
+                        await _progressService.StopLoading();
                         result.Source = defaultSource;
                         return result;
                     }
                 }
 
-                foreach (var sourceViewModel in this._sourceService.GetSources())
+                foreach (var sourceViewModel in _sourceService.GetSources())
                 {
                     var currentSource = new Uri(sourceViewModel.Url);
                     if (currentSource.Scheme == "http" || currentSource.Scheme == "https")
                     {
-                        var result = await ODataPackageService.EnsureIsLoaded(viewModel, currentSource);
+                        var result = await ODataRemotePackageService.EnsureIsLoaded(viewModel, currentSource);
                         if (result == null)
                         {
                             continue;
                         }
 
-                        await this._progressService.StopLoading();
+                        await _progressService.StopLoading();
                         result.Source = currentSource;
                         return result;
                     }
@@ -173,8 +172,8 @@ namespace ChocolateyGui.Services
             {
                 if (source.Scheme == "http" || source.Scheme == "https")
                 {
-                    var result = await ODataPackageService.EnsureIsLoaded(viewModel, source);
-                    await this._progressService.StopLoading();
+                    var result = await ODataRemotePackageService.EnsureIsLoaded(viewModel, source);
+                    await _progressService.StopLoading();
                     if (result != null)
                     {
                         result.Source = source;
@@ -185,12 +184,12 @@ namespace ChocolateyGui.Services
 
                 if (source.IsFile || source.IsUnc)
                 {
-                    await this._progressService.StopLoading();
+                    await _progressService.StopLoading();
                     return null;
                 }
             }
 
-            await this._progressService.StopLoading();
+            await _progressService.StopLoading();
             return null;
         }
 
@@ -198,13 +197,13 @@ namespace ChocolateyGui.Services
         {
             if (source.Scheme == "http" || source.Scheme == "https")
             {
-                var exception = await ODataPackageService.TestPath(source);
+                var exception = await ODataRemotePackageService.TestPath(source);
                 if (exception == null)
                 {
                     return true;
                 }
 
-                this._logService.Debug("TestSourceUrl failed.", exception);
+                _logService.Debug("TestSourceUrl failed.", exception);
                 return false;
             }
 

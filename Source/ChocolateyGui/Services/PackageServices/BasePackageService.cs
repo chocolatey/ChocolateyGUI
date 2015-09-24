@@ -8,6 +8,7 @@ namespace ChocolateyGui.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Runtime.Caching;
@@ -353,8 +354,10 @@ namespace ChocolateyGui.Services
             await this.ProgressService.StopLoading();
         }
 
-        public async Task EnumerateLocalPackagesAndSetCache(ICollection<IPackageViewModel> packages, Dictionary<string, SemanticVersion> chocoPackageList, string libPath)
+        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "Reviewed. Suppression is OK here.")]
+        public async Task<ICollection<IPackageViewModel>> EnumerateLocalPackagesAndSetCache(Dictionary<string, SemanticVersion> chocoPackageList, string libPath)
         {
+            var packages = new List<IPackageViewModel>();
             foreach (var nupkgFile in Directory.EnumerateFiles(libPath, "*.nupkg", SearchOption.AllDirectories))
             {
                 var packageInfo = await NupkgReader.GetPackageInformation(nupkgFile);
@@ -368,16 +371,18 @@ namespace ChocolateyGui.Services
                     continue;
                 }
 
-                this.PopulatePackages(packageInfo, packages);
+                PopulatePackages(packageInfo, packages);
             }
 
             Cache.Set(
-                BasePackageService.LocalPackagesCacheKeyName,
+                LocalPackagesCacheKeyName,
                 packages,
                 new CacheItemPolicy
                 {
                     AbsoluteExpiration = DateTime.Now.AddHours(1)
                 });
+
+            return packages;
         }
 
         public async void StartProgressDialog(string commandString, string initialProgressText, string id = "")

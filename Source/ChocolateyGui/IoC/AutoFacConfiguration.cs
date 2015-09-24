@@ -28,15 +28,7 @@ namespace ChocolateyGui.IoC
 
             var configurationProvider = new ChocolateyConfigurationProvider();
             builder.RegisterInstance(configurationProvider).As<IChocolateyConfigurationProvider>().SingleInstance();
-
-            if (configurationProvider.IsChocolateyExecutableBeingUsed)
-            {
-                RegisterCSharpService(builder);
-            }
-            else
-            {
-                RegisterPowerShellService(builder);
-            }
+            builder.RegisterType<ChocolateyPackageService>().As<IChocolateyPackageService>().SingleInstance();
 
             // Register View Models
             builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>();
@@ -53,13 +45,13 @@ namespace ChocolateyGui.IoC
             builder.RegisterType<LocalSourceControlViewModel>().As<ILocalSourceControlViewModel>();
             builder.RegisterType<RemoteSourceControlViewModel>().As<IRemoteSourceControlViewModel>();
             builder.RegisterType<PackageControlViewModel>().As<IPackageControlViewModel>();
-            builder.Register(c => new PackageViewModel(c.Resolve<IPackageService>(), c.Resolve<IChocolateyPackageService>(), c.Resolve<INavigationService>())).As<IPackageViewModel>();
+            builder.Register(c => new PackageViewModel(c.Resolve<IRemotePackageService>(), c.Resolve<IChocolateyPackageService>(), c.Resolve<INavigationService>())).As<IPackageViewModel>();
 
             // Register Services
             builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
-            builder.RegisterType<SettingsSourceService>().As<ISourceService>().SingleInstance();
+            builder.RegisterType<ChocolateySourcesService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
-            builder.RegisterType<PackageService>().As<IPackageService>().SingleInstance();
+            builder.RegisterType<RemoteRemotePackageService>().As<IRemotePackageService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
 
@@ -72,16 +64,6 @@ namespace ChocolateyGui.IoC
             builder.Register((c, pvm) => new PackageControl(c.Resolve<IPackageControlViewModel>(), pvm.TypedAs<PackageViewModel>()));
 
             return builder.Build();
-        }
-
-        private static void RegisterPowerShellService(ContainerBuilder builder)
-        {
-            builder.RegisterType<PowerShellChocolateyPackageService>().As<IChocolateyPackageService>().SingleInstance();
-        }
-
-        private static void RegisterCSharpService(ContainerBuilder builder)
-        {
-            builder.RegisterType<CSharpChocolateyPackageService>().As<IChocolateyPackageService>().SingleInstance();
         }
     }
 }

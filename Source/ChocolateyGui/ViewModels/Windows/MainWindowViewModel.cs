@@ -19,7 +19,7 @@ namespace ChocolateyGui.ViewModels.Windows
 
     public class MainWindowViewModel : ObservableBase, IMainWindowViewModel, IWeakEventListener
     {
-        private readonly Lazy<IPackageService> _packageService;
+        private readonly Lazy<IRemotePackageService> _packageService;
         private readonly IProgressService _progressService;
         private readonly ISourceService _sourceService;
         private readonly IVersionNumberProvider _versionNumberProvider;
@@ -28,7 +28,7 @@ namespace ChocolateyGui.ViewModels.Windows
         private string _newSourceUrl;
         private SourceViewModel _selectedSourceViewModel;
 
-        public MainWindowViewModel(ISourceService sourceService, IProgressService progressService, Lazy<IPackageService> packageServiceLazy, IVersionNumberProvider versionNumberProvider)
+        public MainWindowViewModel(ISourceService sourceService, IProgressService progressService, Lazy<IRemotePackageService> packageServiceLazy, IVersionNumberProvider versionNumberProvider)
         {
             if (sourceService == null)
             {

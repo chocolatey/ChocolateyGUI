@@ -66,6 +66,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="chocolatey">
+      <HintPath>..\lib\chocolatey.lib.0.9.10-alpha-20150923\lib\chocolatey.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -154,15 +157,12 @@
     <Compile Include="Commands\DataContextCommandBinding.cs" />
     <Compile Include="Commands\RoutedCommandBinding.cs" />
     <Compile Include="Commands\RoutedCommandMonitor.cs" />
-    <Compile Include="Controls\ChocolateyHostRawUserInterface.cs" />
-    <Compile Include="Controls\ChocolateyHostUserInterface.cs" />
     <Compile Include="Controls\Dialogs\ChocolateyDialog.xaml.cs">
       <DependentUpon>ChocolateyDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Dialogs\ChocolateyDialogController.cs" />
     <Compile Include="Controls\FauxPowerShellConsole.cs" />
     <Compile Include="Controls\ObservableRingBufferCollection.cs" />
-    <Compile Include="Controls\ChocolateyHost.cs" />
     <Compile Include="Enums\PackagesChangedEventType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IoC\AutoFacConfiguration.cs" />
@@ -176,12 +176,6 @@
     <Compile Include="Models\PackageSearchOptions.cs" />
     <Compile Include="Models\PackageSearchResults.cs" />
     <Compile Include="Models\PowerShellOutputLine.cs" />
-    <Compile Include="AsyncProcess\ProcessEx.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="AsyncProcess\ProcessResults.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
     <Compile Include="Providers\ChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IVersionNumberProvider.cs" />
@@ -191,35 +185,36 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
-    <Compile Include="Services\BasePackageService.cs" />
-    <Compile Include="Services\CSharpChocolateyPackageService.cs" />
-    <Compile Include="Services\IBasePackageService.cs" />
-    <Compile Include="Services\IChocolateyPackageService.cs" />
+    <Compile Include="Services\ChocolateySourcesService.cs" />
+    <Compile Include="Services\PackageServices\BasePackageService.cs" />
+    <Compile Include="Services\PackageServices\ChocolateyPackageService.cs" />
+    <Compile Include="Services\PackageServices\IBasePackageService.cs" />
+    <Compile Include="Services\PackageServices\IChocolateyPackageService.cs" />
     <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\ISourceService.cs" />
     <Compile Include="Services\Log4NetLoggingService.cs" />
-    <Compile Include="Services\PackageServices\FileSystemPackageService.cs" />
-    <Compile Include="Services\PackageServices\ODataPackageService.cs" />
+    <Compile Include="Services\PackageServices\Remote\FileSystemPackageService.cs" />
+    <Compile Include="Services\PackageServices\Remote\ODataRemotePackageService.cs" />
     <Compile Include="Services\PersistenceService.cs" />
-    <Compile Include="Services\PowerShellChocolateyPackageService.cs" />
     <Compile Include="Services\ProgressService.cs" />
-    <Compile Include="Services\SettingsSourceService.cs" />
     <Compile Include="Utilities\AsyncLock.cs" />
     <Compile Include="Utilities\Converters\BooleanToTickString.cs" />
+    <Compile Include="Utilities\Extensions\ChocolateyExtensions.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\LogExtensions.cs" />
     <Compile Include="Utilities\Extensions\PowershellExtensions.cs" />
+    <Compile Include="Utilities\Extensions\StringExtensions.cs" />
     <Compile Include="Utilities\Nuspec\NupkgReader.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
     <Compile Include="Utilities\SourcesChangedEventManager.cs" />
     <Compile Include="Utilities\TypeConverters\SemanticVersionTypeConverter.cs" />
     <Compile Include="ViewModels\Items\SourceTabViewModel.cs" />
     <Compile Include="Services\INavigationService.cs" />
-    <Compile Include="Services\PackageServices\IPackageService.cs" />
+    <Compile Include="Services\PackageServices\Remote\IRemotePackageService.cs" />
     <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="Services\PackageServices\PackageService.cs" />
+    <Compile Include="Services\PackageServices\Remote\RemoteRemotePackageService.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
@@ -336,9 +331,6 @@
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
-    <Compile Include="AsyncProcess\ProcessEx.overloads.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
     <None Include="Properties\DataSources\ChocolateyGui.ChocolateyFeedService.FeedContext_x0060_1.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

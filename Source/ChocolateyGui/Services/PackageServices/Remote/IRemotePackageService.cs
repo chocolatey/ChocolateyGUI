@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="IPackageService.cs">
+// <copyright company="Chocolatey" file="IRemotePackageService.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,7 +11,7 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.Models;
     using ChocolateyGui.ViewModels.Items;
 
-    public interface IPackageService
+    public interface IRemotePackageService
     {
         Task<PackageSearchResults> Search(string query, Uri source = null);
 

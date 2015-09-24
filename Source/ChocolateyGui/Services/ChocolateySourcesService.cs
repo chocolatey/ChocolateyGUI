@@ -16,7 +16,9 @@ namespace ChocolateyGui.Services
 
     public class ChocolateySourcesService : ISourceService
     {
+#pragma warning disable CS0067 // The event 'ChocolateySourcesService.SourcesChanged' is never used
         public event SourcesChangedEventHandler SourcesChanged;
+#pragma warning restore CS0067 // The event 'ChocolateySourcesService.SourcesChanged' is never used
 
         public void AddSource(SourceViewModel sourceViewModel)
         {
@@ -62,7 +64,7 @@ namespace ChocolateyGui.Services
             choco.Run();
         }
 
-        private IEnumerable<ChocolateySource> GetSourcesImpl()
+        private static IEnumerable<ChocolateySource> GetSourcesImpl()
         {
             var choco = Lets.GetChocolatey();
             choco.Set(

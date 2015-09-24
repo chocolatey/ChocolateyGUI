@@ -147,7 +147,9 @@ namespace ChocolateyGui.ViewModels.Controls
                 var chocoPackage = this._packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
                 if (chocoPackage != null && chocoPackage.CanUpdate)
                 {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     this._progressService.ShowMessageAsync("Chocolatey", "There's an update available for chocolatey.").ConfigureAwait(false);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 }
             }
             catch (Exception ex)
@@ -196,7 +198,7 @@ namespace ChocolateyGui.ViewModels.Controls
             }
         }
 
-        public async void ExportAll()
+        public void ExportAll()
         {
             this._exportAll = false;
 
@@ -291,7 +293,9 @@ namespace ChocolateyGui.ViewModels.Controls
 
                     if (packageViewModel.LatestVersion == null)
                     {
+#pragma warning disable CS4014 // We want this to execute asynchrnously.
                         packageViewModel.RetrieveLatestVersion().ConfigureAwait(false);
+#pragma warning restore CS4014 
                     }
                 }
             }

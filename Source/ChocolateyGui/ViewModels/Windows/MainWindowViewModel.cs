@@ -109,6 +109,7 @@ namespace ChocolateyGui.ViewModels.Windows
 
         public ObservableCollection<SourceViewModel> Sources { get; set; }
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         public async void AddSource()
         {
             if (string.IsNullOrWhiteSpace(this.NewSourceName))
@@ -152,6 +153,7 @@ namespace ChocolateyGui.ViewModels.Windows
             this.NewSourceName = string.Empty;
             this.NewSourceUrl = string.Empty;
         }
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
         public bool CanAddSource()
         {

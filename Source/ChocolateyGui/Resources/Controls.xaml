@@ -469,6 +469,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
         <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
     </Style>
 
     <Style x:Key="InstallButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
@@ -523,6 +524,7 @@
         <Setter Property="Width" Value="55"/>
         <Setter Property="Height" Value="55"/>
         <Setter Property="Margin" Value="7"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
     </Style>
 
     <Style x:Key="BackButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigIconButton}">

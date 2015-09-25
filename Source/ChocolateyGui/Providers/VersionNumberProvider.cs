@@ -6,18 +6,29 @@
 
 namespace ChocolateyGui.Providers
 {
-    using System;
+    using System.Linq;
+    using System.Reflection;
 
     public class VersionNumberProvider : IVersionNumberProvider
     {
+        private string _version;
+
         public virtual string Version
         {
             get
             {
+                if (this._version != null)
+                {
+                    return this._version;
+                }
+
                 var assembly = this.GetType().Assembly;
-                var fullName = assembly.FullName;
-                var i = fullName.IndexOf("Version=", StringComparison.Ordinal);
-                return i < 0 ? fullName : fullName.Substring(i).Split(' ', ',')[0];
+                var informational =
+                    ((AssemblyInformationalVersionAttribute[])assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute)))
+                    .First();
+
+                this._version = "Version: " + informational.InformationalVersion;
+                return this._version;
             }
         }
     }

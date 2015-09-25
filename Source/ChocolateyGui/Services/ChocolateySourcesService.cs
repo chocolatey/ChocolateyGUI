@@ -75,7 +75,7 @@ namespace ChocolateyGui.Services
                     config.AllowUnofficialBuild = true;
                 });
 
-            return choco.List<ChocolateySource>();
+            return choco.List<ChocolateySource>().OrderByDescending(source => source.Priority);
         } 
     }
 }

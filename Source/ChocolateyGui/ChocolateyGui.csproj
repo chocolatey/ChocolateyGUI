@@ -67,7 +67,7 @@
       <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
     <Reference Include="chocolatey">
-      <HintPath>..\lib\chocolatey.lib.0.9.10-alpha-20150923\lib\chocolatey.dll</HintPath>
+      <HintPath>..\lib\chocolatey.lib.0.9.10-alpha-20150924\lib\chocolatey.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -214,7 +214,7 @@
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\PackageServices\Remote\IRemotePackageService.cs" />
     <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="Services\PackageServices\Remote\RemoteRemotePackageService.cs" />
+    <Compile Include="Services\PackageServices\Remote\RemotePackageService.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />

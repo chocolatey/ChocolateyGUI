@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="RemoteRemotePackageService.cs">
+// <copyright company="Chocolatey" file="RemotePackageService.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -12,14 +12,14 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.Services.PackageServices;
     using ChocolateyGui.ViewModels.Items;
 
-    public class RemoteRemotePackageService : IRemotePackageService
+    public class RemotePackageService : IRemotePackageService
     {
         private readonly IProgressService _progressService;
         private readonly ISourceService _sourceService;
         private readonly Func<IPackageViewModel> _packageFactory;
         private readonly ILogService _logService;
 
-        public RemoteRemotePackageService(
+        public RemotePackageService(
             IProgressService progressService, 
             ISourceService sourceService, 
             Func<IPackageViewModel> packageFactory, 
@@ -33,7 +33,7 @@ namespace ChocolateyGui.Services
             _progressService = progressService;
             _sourceService = sourceService;
             _packageFactory = packageFactory;
-            _logService = logFunc(typeof(RemoteRemotePackageService));
+            _logService = logFunc(typeof(RemotePackageService));
         }
 
         public async Task<PackageSearchResults> Search(string query, Uri source = null)

@@ -27,8 +27,15 @@
         <Property Name="PackageHashAlgorithm" Type="Edm.String" Nullable="true" />
         <Property Name="PackageSize" Type="Edm.Int64" Nullable="false" />
         <Property Name="ProjectUrl" Type="Edm.String" Nullable="true" />
+        <Property Name="ProjectSourceUrl" Type="Edm.String" Nullable="true" />
+        <Property Name="PackageSourceUrl" Type="Edm.String" Nullable="true" />
+        <Property Name="DocsUrl" Type="Edm.String" Nullable="true" />
+        <Property Name="MailingListUrl" Type="Edm.String" Nullable="true" />
+        <Property Name="BugTrackerUrl" Type="Edm.String" Nullable="true" />
         <Property Name="ReportAbuseUrl" Type="Edm.String" Nullable="true" />
         <Property Name="ReleaseNotes" Type="Edm.String" Nullable="true" />
+        <Property Name="PackageStatus" Type="Edm.String" Nullable="true" />
+        <Property Name="PackageSubmittedStatus" Type="Edm.String" Nullable="true" />
         <Property Name="RequireLicenseAcceptance" Type="Edm.Boolean" Nullable="false" />
         <Property Name="Summary" Type="Edm.String" Nullable="true" m:FC_TargetPath="SyndicationSummary" m:FC_ContentKind="text" m:FC_KeepInContent="false" />
         <Property Name="Tags" Type="Edm.String" Nullable="true" />

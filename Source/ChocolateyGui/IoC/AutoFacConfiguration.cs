@@ -51,7 +51,7 @@ namespace ChocolateyGui.IoC
             builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
             builder.RegisterType<ChocolateySourcesService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
-            builder.RegisterType<RemoteRemotePackageService>().As<IRemotePackageService>().SingleInstance();
+            builder.RegisterType<RemotePackageService>().As<IRemotePackageService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
 

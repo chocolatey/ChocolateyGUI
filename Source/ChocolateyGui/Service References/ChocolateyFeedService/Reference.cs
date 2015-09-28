@@ -16,6 +16,7 @@ namespace ChocolateyGui.ChocolateyFeedService
     /// <summary>
     /// There are no comments for FeedContext_x0060_1 in the schema.
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
     public partial class FeedContext_x0060_1 : global::System.Data.Services.Client.DataServiceContext
     {
         /// <summary>

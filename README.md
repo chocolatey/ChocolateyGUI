@@ -84,14 +84,6 @@ Committers, you should be very familiar with [COMMITTERS](https://github.com/cho
 
 ![image](https://cloud.githubusercontent.com/assets/1271146/4349077/4a3e3cbc-41a7-11e4-8806-63048ea626f3.png)
 
-## Blog Posts and external articles
-
-**NOTE:** Some of these articles refer to an older, Windows Forms, implementation of ChocolateyGUI, but they are still relevant.
-
-* [All new ChocolateyGUI](http://blogs.lessthandot.com/index.php/SysAdmins/OS/Windows/all-new-chocolateygui) by chrissie1
-* [Making a chocolatey package for ChocolateyGUI.](http://blogs.lessthandot.com/index.php/DesktopDev/MSTech/making-a-chocolatey-package) by chrissie1
-* [ChocolateyGUI](http://blogs.lessthandot.com/index.php/DesktopDev/MSTech/chocolatey-gui) by chrissie1
-
 ## Credits
 
 ChocolateyGUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/legal/CREDITS.md) (just LEGAL/Credits.md in the zip folder)

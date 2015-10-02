@@ -31,7 +31,7 @@
             <CheckBox Name="MatchCheckBox" Margin="5" Content="Match Word Exactly" IsChecked="{Binding MatchWord}"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,5">
-            <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}" Style="{StaticResource SquareButtonStyle}" Content="Refresh Packages"></Button>
+            <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}" Style="{StaticResource SquareButtonStyle}" Content="Refresh Packages" Margin="0,4,0,4"></Button>
         </StackPanel>
 
         <Grid Grid.Row="2" DockPanel.Dock="Bottom" Margin="4">

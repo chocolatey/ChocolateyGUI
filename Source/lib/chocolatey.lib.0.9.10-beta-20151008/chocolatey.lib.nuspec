@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>chocolatey.lib</id>
-    <version>0.9.10-alpha-20150924</version>
+    <version>0.9.10-beta-20151008</version>
     <title>Chocolatey Core [PREVIEW]</title>
     <authors>Rob Reynolds, The Chocolatey Team</authors>
     <owners>Rob Reynolds</owners>

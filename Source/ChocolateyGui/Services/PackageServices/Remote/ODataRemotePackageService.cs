@@ -13,16 +13,25 @@ namespace ChocolateyGui.Services.PackageServices
     using System.Linq;
     using System.Runtime.Caching;
     using System.Threading.Tasks;
+    using chocolatey;
+    using chocolatey.infrastructure.app.domain;
+    using chocolatey.infrastructure.results;
     using ChocolateyGui.ChocolateyFeedService;
     using ChocolateyGui.Models;
     using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.ViewModels.Items;
+    using NuGet;
 
     public static class ODataRemotePackageService
     {
         private static readonly object FeedLockObject = new object();
 
         private static readonly MemoryCache Cache = MemoryCache.Default;
+
+        static ODataRemotePackageService()
+        {
+            AutoMapper.Mapper.CreateMap<IPackage, IPackageViewModel>();
+        }
 
         public static async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel, Uri source)
         {
@@ -65,39 +74,24 @@ namespace ChocolateyGui.Services.PackageServices
 
         public static async Task<PackageSearchResults> Search(string query, Func<IPackageViewModel> packageFactory, PackageSearchOptions options, Uri source)
         {
-            var service = GetFeed(source);
-            var queryString = query;
-            IQueryable<V2FeedPackage> feedQuery = service.Packages.Where(package => package.IsPrerelease == options.IncludePrerelease || package.IsPrerelease == false);
-
-            if (!options.IncludeAllVersions)
+            var choco = Lets.GetChocolatey();
+            choco.Set(config =>
             {
-                feedQuery = feedQuery.Where(package => package.IsLatestVersion || package.IsAbsoluteLatestVersion);
-            }
+                config.CommandName = CommandNameType.list.ToString();
+                config.Input = query;
+                config.AllowUnofficialBuild = true;
+                config.AllVersions = options.IncludeAllVersions;
+                config.Prerelease = options.IncludePrerelease;
+                config.ListCommand.Page = options.CurrentPage;
+                config.ListCommand.PageSize = options.PageSize;
+            });
 
-            if (!string.IsNullOrWhiteSpace(queryString))
-            {
-                feedQuery = options.MatchQuery ?
-                    feedQuery.Where(package => package.Id == queryString || package.Title == queryString) :
-                    feedQuery.Where(package => package.Id.Contains(queryString) || package.Title.Contains(queryString));
-            }
-
-            var totalCount = feedQuery.Count();
-
-            if (!string.IsNullOrWhiteSpace(options.SortColumn))
-            {
-                feedQuery = !options.SortDescending ? feedQuery.OrderBy(options.SortColumn) : feedQuery.OrderByDescending(options.SortColumn);
-            }
-
-            feedQuery = feedQuery.Skip(options.CurrentPage * options.PageSize).Take(options.PageSize);
-            var feedDataServiceQuery = (DataServiceQuery<V2FeedPackage>)feedQuery;
-            var result = await Task.Factory.FromAsync(feedDataServiceQuery.BeginExecute, ar => feedDataServiceQuery.EndExecute(ar), null);
-
-            var packages = result.Select(package => AutoMapper.Mapper.Map(package, packageFactory()));
+            var packages = (await choco.ListAsync<PackageResult>()).Select(package => AutoMapper.Mapper.Map(package.Package, packageFactory()));
 
             return new PackageSearchResults
             {
-                TotalCount = totalCount,
-                Packages = packages
+                Packages = packages,
+                TotalCount = await Task.Run(() => choco.ListCount())
             };
         }
 

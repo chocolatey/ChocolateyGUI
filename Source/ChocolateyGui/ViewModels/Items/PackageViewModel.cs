@@ -3,6 +3,7 @@
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace ChocolateyGui.ViewModels.Items
 {
     using System;
@@ -13,6 +14,7 @@ namespace ChocolateyGui.ViewModels.Items
     using System.Windows;
     using Base;
     using Models;
+    using NuGet;
     using Services;
     using Utilities;
     using Views.Controls;
@@ -72,7 +74,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private string _projectUrl = string.Empty;
 
-        private DateTime _published;
+        private DateTimeOffset _published;
 
         private string _releaseNotes;
 
@@ -241,7 +243,7 @@ namespace ChocolateyGui.ViewModels.Items
             set { SetPropertyValue(ref _projectUrl, value); }
         }
 
-        public DateTime Published
+        public DateTimeOffset Published
         {
             get { return _published; }
             set { SetPropertyValue(ref _published, value); }

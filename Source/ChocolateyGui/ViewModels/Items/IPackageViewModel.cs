@@ -8,8 +8,8 @@ namespace ChocolateyGui.ViewModels.Items
 {
     using System;
     using System.Threading.Tasks;
-    using ChocolateyGui.Models;
-    
+    using NuGet;
+
     public interface IPackageViewModel
     {
         string Authors { get; set; }
@@ -58,7 +58,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         string ProjectUrl { get; set; }
 
-        DateTime Published { get; set; }
+        DateTimeOffset Published { get; set; }
 
         string ReleaseNotes { get; set; }
 

@@ -2,4 +2,4 @@
 
 Chocolatey is brought to you by the work and inspiration of the community, the work and thankless nights of the Chocolatey Team (https://github.com/orgs/chocolatey/members), and Rob heading up the direction.
 
-This is the core package which allows Chocolatey to be embedded in your application.</dc:description><dc:identifier>chocolatey.lib</dc:identifier><version>0.9.10-alpha-20150924</version><keywords>apt-get yum machine repository chocolatey</keywords><dc:title>Chocolatey Core [PREVIEW]</dc:title></coreProperties>
+This is the core package which allows Chocolatey to be embedded in your application.</dc:description><dc:identifier>chocolatey.lib</dc:identifier><version>0.9.10-beta-20151008</version><keywords>apt-get yum machine repository chocolatey</keywords><dc:title>Chocolatey Core [PREVIEW]</dc:title></coreProperties>

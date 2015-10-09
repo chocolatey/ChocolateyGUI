@@ -14,7 +14,7 @@ namespace ChocolateyGui.Services
     using chocolatey;
     using chocolatey.infrastructure.app.domain;
     using Enums;
-    using Models;
+    using NuGet;
     using Providers;
     using Utilities.Extensions;
     using ViewModels.Items;

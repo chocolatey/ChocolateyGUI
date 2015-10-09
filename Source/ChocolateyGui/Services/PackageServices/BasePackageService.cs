@@ -22,6 +22,7 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.Utilities.Nuspec;
     using ChocolateyGui.ViewModels.Items;
     using Newtonsoft.Json;
+    using NuGet;
 
     public abstract class BasePackageService
     {

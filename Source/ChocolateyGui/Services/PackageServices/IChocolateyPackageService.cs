@@ -9,9 +9,9 @@ namespace ChocolateyGui.Services
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using ChocolateyGui.Models;
     using ChocolateyGui.ViewModels.Items;
-
+    using NuGet;
+    
     public interface IChocolateyPackageService : IBasePackageService
     {
         Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false);

@@ -7,6 +7,7 @@
 namespace ChocolateyGui.Models
 {
     using System;
+    using NuGet;
 
     public class PackageConfigEntry
     {

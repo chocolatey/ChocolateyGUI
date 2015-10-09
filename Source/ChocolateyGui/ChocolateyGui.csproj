@@ -66,8 +66,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
-    <Reference Include="chocolatey">
-      <HintPath>..\lib\chocolatey.lib.0.9.10-alpha-20150924\lib\chocolatey.dll</HintPath>
+    <Reference Include="chocolatey, Version=0.9.10.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\chocolatey.lib.0.9.10-beta-20151008\lib\chocolatey.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -301,7 +302,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\SemanticVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

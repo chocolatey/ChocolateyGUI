@@ -21,10 +21,10 @@ clone_folder: C:\projects\ChocolateyGUI
 environment:
   MyGetDevelopApiKey:
     secure: LeTveN6ryggcXR4fgZcaMOdvVHFxR6NNZZpaaxCG83D8waN4D1eEoLRv+5ZvLKLF
-  MyGetDevelopFeedUrl: https://www.myget.org/F/chocolateygui
+  MyGetDevelopFeedUrl: https://www.myget.org/F/packages_develop
   MyGetMasterApiKey:
     secure: zTAGaSiQMYJeCl1dD+i/e0ZOZMT9Hq3nXd9fCzZE8/rHRnOkj4uUETfA2VbgjpCV
-  MyGetMasterFeedUrl: https://www.myget.org/F/chocolateygui_master/
+  MyGetMasterFeedUrl: https://www.myget.org/F/packages_master/
   ChocolateyApiKey:
     secure: 2Sbie8uhFjl1v+NtLuR1oGcWnQE2M87jq0fSEwFOYcnNEC5qdwCkgVOG0MmC2Ffv
   ChocolateyFeedUrl: https://chocolatey.org/

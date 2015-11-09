@@ -411,9 +411,8 @@ namespace ChocolateyGui.ViewModels.Items
 
         public async void ViewDetails()
         {
-            var item = this as IPackageViewModel;
-            await item.EnsureIsLoaded();
-            this._navigationService.Navigate(typeof(PackageControl), item);
+            await this.EnsureIsLoaded();
+            this._navigationService.Navigate(typeof(PackageControl), this);
         }
 
         private string MemoryCachePropertyKey([CallerMemberName] string propertyName = "")

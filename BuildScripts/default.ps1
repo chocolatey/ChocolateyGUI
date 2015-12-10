@@ -293,7 +293,7 @@ Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Desc
 
 		if (-not (Test-Path $inspectCodeExe)) {
 			exec {
-				Invoke-Expression "$script:chocolateyCommand install resharper-clt -y";
+				Invoke-Expression "$script:chocolateyCommand install JetBrains.ReSharper.CommandLineTools -source https://www.nuget.org/api/v2/ -y";
 			}
 		} else {
 			Write-Output "resharper-clt already installed";
@@ -312,7 +312,7 @@ Task -Name __UpdateReSharperCommandLineTools -Description $private -Action {
 		Write-Output "Running Upgrade Command Line Tools..."
 
 		exec {
-			Invoke-Expression "$script:chocolateyCommand upgrade resharper-clt";
+			Invoke-Expression "$script:chocolateyCommand upgrade JetBrains.ReSharper.CommandLineTools -source https://www.nuget.org/api/v2/";
 		}
 
 		Write-Output ("************ Upgrade Command Line Tools Successful ************")
@@ -326,7 +326,7 @@ Task -Name __UpdateReSharperCommandLineTools -Description $private -Action {
 Task -Name __InstallPSBuild -Description $private -Action {
 	try {
 		Write-Output "Running Install PSBuild..."
- (new-object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ligershark/psbuild/master/src/GetPSBuild.ps1') | iex
+
 		exec {
 			$psbuildLoaded = $false;
 			if(get-command invoke-msbuild -ErrorAction SilentlyContinue) {
@@ -337,7 +337,7 @@ Task -Name __InstallPSBuild -Description $private -Action {
 				Write-Output "PSBuild is already installed";
 			} else {
       	Write-Output "PSBuild is not already installed";
-        (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Invoke-Expression;
+        (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/ligershark/psbuild/dev/src/GetPSBuild.ps1") | Invoke-Expression;
 			}
 		}
 

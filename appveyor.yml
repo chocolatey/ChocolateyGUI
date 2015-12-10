@@ -20,18 +20,18 @@ clone_folder: C:\projects\ChocolateyGUI
 # environment variables
 environment:
   MyGetDevelopApiKey:
-    secure: LeTveN6ryggcXR4fgZcaMOdvVHFxR6NNZZpaaxCG83D8waN4D1eEoLRv+5ZvLKLF
+    secure: KFeZCL5TKhJaL96tl0H+HjcVYv/cSsVtFE48mYOpmCMuuNH/sId04odoavJqgl7f
   MyGetDevelopFeedUrl: https://www.myget.org/F/packages_develop
   MyGetMasterApiKey:
-    secure: zTAGaSiQMYJeCl1dD+i/e0ZOZMT9Hq3nXd9fCzZE8/rHRnOkj4uUETfA2VbgjpCV
+    secure: OewKlbHSmiVUj7kC0WMZwvjDQKBjcZNgSYyXIxDNGZxssxx4KDQNyRbT+6PZ+uPH
   MyGetMasterFeedUrl: https://www.myget.org/F/packages_master/
   ChocolateyApiKey:
-    secure: 2Sbie8uhFjl1v+NtLuR1oGcWnQE2M87jq0fSEwFOYcnNEC5qdwCkgVOG0MmC2Ffv
+    secure: rGZLB7/BIEUl7XMeMeidRD50lQe8igKyPUJSAzFBd146Foc67Vyagv1kJ4ImTGvY
   ChocolateyFeedUrl: https://chocolatey.org/
   GitHubUserName:
-    secure: 9zbEIVfl69s/qhei6qkdeA==
+    secure: je/D8MZcaA0IMfIhmrqShQ==
   GitHubPassword:
-    secure: XSuLygmr83zEpWcXIXMXGocN0QbooLud1eIMA3mQWKkT9LAU4TyrijLBcJIo7bD7
+    secure: DCLeGjj/fPf/rkF2y4e3ZEFta2Efnzof1GiOEIPdhw0PQs4NBnjaENwif1itJB96
    
 #---------------------------------#
 #       build configuration       #

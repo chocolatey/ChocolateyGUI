@@ -16,7 +16,7 @@ This uses the public ChocolateyGUI feed which is hosted on [MyGet.org](https://w
 
 TeamCity  | AppVeyor
 ------------- | -------------
-[![TeamCity Build Status](http://img.shields.io/teamcity/codebetter/bt613.svg)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt613) | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/21psh7flvro8buhm/branch/develop?svg=true)](https://ci.appveyor.com/project/GaryEwanPark/chocolateygui)
+[![TeamCity Build Status](http://img.shields.io/teamcity/codebetter/bt613.svg)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt613) | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/21psh7flvro8buhm/branch/develop?svg=true)](https://ci.appveyor.com/project/chocolatey/chocolateygui)
 
 
 ## Chat Room

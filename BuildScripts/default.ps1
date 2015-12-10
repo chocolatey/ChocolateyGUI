@@ -337,7 +337,8 @@ Task -Name __InstallPSBuild -Description $private -Action {
 				Write-Output "PSBuild is already installed";
 			} else {
       	Write-Output "PSBuild is not already installed";
-        (new-object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ligershark/psbuild/203670868f76dbec313c171bdd6100ac91bd2963/src/GetPSBuild.ps1') | Invoke-Expression;
+        $getPSBuild = (new-object Net.WebClient).DownloadString("https://raw.github.com/ligershark/psbuild/master/src/GetPSBuild.ps1") | Out-String;
+        Invoke-Expression -Command $getPSBuild
 			}
 		}
 

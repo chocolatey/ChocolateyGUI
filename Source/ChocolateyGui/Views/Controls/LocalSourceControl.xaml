@@ -25,9 +25,9 @@
             <CheckBox Name="UpdatesCheckBox" Margin="5" Content="Show Only Packages with Updates" IsChecked="{Binding ShowOnlyPackagesWithUpdate}"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,5">
-            <Button Command="{commands:DataContextCommandAdapter RefreshPackages, CanRefreshPackages}" Style="{StaticResource SquareButtonStyle}" Content="Refresh Packages"></Button>
-            <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}" Visibility="{Binding ShowOnlyPackagesWithUpdate, Converter={StaticResource BoolToVis}}" Style="{StaticResource SquareButtonStyle}" Content="Update All"/>
-            <Button Command="{commands:DataContextCommandAdapter ExportAll, CanExportAll}" Style="{StaticResource SquareButtonStyle}" Content="Export"/>
+            <Button Command="{commands:DataContextCommandAdapter RefreshPackages, CanRefreshPackages}" Style="{StaticResource SquareButtonStyle}" Content="Refresh Packages" Margin="4,0,4,0"></Button>
+            <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}" Visibility="{Binding ShowOnlyPackagesWithUpdate, Converter={StaticResource BoolToVis}}" Style="{StaticResource SquareButtonStyle}" Margin="4,0,4,0"  Content="Update All"/>
+            <Button Command="{commands:DataContextCommandAdapter ExportAll, CanExportAll}" Style="{StaticResource SquareButtonStyle}" Margin="4,0,0,0"  Content="Export"/>
         </StackPanel>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Packages}" Background="{StaticResource LightBackgroundColorBrush}"
                   AutoGenerateColumns="False" IsReadOnly="True"

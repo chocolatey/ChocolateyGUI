@@ -409,8 +409,9 @@ namespace ChocolateyGui.ViewModels.Items
             }
         }
 
-        public void ViewDetails()
+        public async void ViewDetails()
         {
+            await this.EnsureIsLoaded();
             this._navigationService.Navigate(typeof(PackageControl), this);
         }
 

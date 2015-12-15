@@ -12,10 +12,18 @@ namespace ChocolateyGui.Services
     using System.Linq;
     using ChocolateyGui.Models;
     using ChocolateyGui.Properties;
+    using ChocolateyGui.Providers;
     using ChocolateyGui.ViewModels.Items;
 
     internal class SettingsSourceService : ISourceService
     {
+        private readonly IChocolateyConfigurationProvider _chocoConfig;
+
+        public SettingsSourceService(IChocolateyConfigurationProvider chocoConfig)
+        {
+            this._chocoConfig = chocoConfig;
+        }
+
         public event SourcesChangedEventHandler SourcesChanged;
 
         public void AddSource(SourceViewModel sourceViewModel)
@@ -51,8 +59,11 @@ namespace ChocolateyGui.Services
         public IEnumerable<SourceViewModel> GetSources()
         {
             var sources = Settings.Default.sources;
-            return (from string source in sources select source.Split('|'))
-                .Select(parts => new SourceViewModel { Name = parts[0], Url = parts[1] });
+            var sourcesAsTuples = (from string source in sources select source.Split('|'))
+                .Select(s => Tuple.Create(s[0], s[1]));
+
+            return sourcesAsTuples.Union(this._chocoConfig.Sources, new SourceTupleComparer())
+                .Select(parts => new SourceViewModel { Name = parts.Item1, Url = parts.Item2 });
         }
 
         public void RemoveSource(SourceViewModel viewModel)
@@ -72,6 +83,28 @@ namespace ChocolateyGui.Services
             }
 
             Settings.Default.Save();
+        }
+
+        internal class SourceTupleComparer : IEqualityComparer<Tuple<string, string>>
+        {
+            public bool Equals(Tuple<string, string> x, Tuple<string, string> y)
+            {
+                return this.GetHashCode(x) == this.GetHashCode(y);
+            }
+
+            public int GetHashCode(Tuple<string, string> obj)
+            {
+                if (object.ReferenceEquals(obj, null))
+                {
+                    throw new ArgumentNullException("obj");
+                }
+
+                // URIs are functionally equivalent with or without trailing slashes.
+                var url = obj.Item2.TrimEnd('/', '\\');
+
+                return unchecked(obj.Item1.ToUpperInvariant().GetHashCode() // Name
+                    + url.GetHashCode());
+            }
         }
     }
 }

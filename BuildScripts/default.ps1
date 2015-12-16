@@ -473,13 +473,13 @@ Task -Name RunInspectCode -Depends __InstallReSharperCommandLineTools -Descripti
 	exec {
 		Invoke-Expression "$inspectCodeExe /config=$inspectCodeConfigFile";
 
+    # Reset the inspectcode.config file
+		git checkout $inspectCodeConfigFile;
+    
 		if(Test-Path $inspectCodeXmlFile) {
       applyXslTransform $inspectCodeXmlFile $inspectCodeXslFile $inspectCodeHtmlFile;
 			$inspectCodeXmlFile | analyseInspectCodeResults;
 		}
-
-		# Reset the inspectcode.config file
-		git checkout $inspectCodeConfigFile;
 	}
 }
 
@@ -500,13 +500,13 @@ Task -Name RunDupFinder -Depends __InstallReSharperCommandLineTools -Description
 	exec {
 		Invoke-Expression "$dupFinderExe /config=$dupFinderConfigFile";
 
+    # Reset the dupfinder.config file
+		git checkout $dupFinderConfigFile;
+    
 		if(Test-Path $dupFinderXmlFile) {
 			applyXslTransform $dupFinderXmlFile $dupFinderXslFile $dupFinderHtmlFile;
       $dupFinderXmlFile | analyseDupFinderResults;
 		}
-
-		# Reset the dupfinder.config file
-		git checkout $dupFinderConfigFile;
 	}
 }
 

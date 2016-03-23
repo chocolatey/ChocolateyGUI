@@ -20,18 +20,12 @@ namespace ChocolateyGui.Services.PackageServices
     using ChocolateyGui.Models;
     using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.ViewModels.Items;
-    using NuGet;
 
     public static class ODataRemotePackageService
     {
         private static readonly object FeedLockObject = new object();
 
         private static readonly MemoryCache Cache = MemoryCache.Default;
-
-        static ODataRemotePackageService()
-        {
-            AutoMapper.Mapper.CreateMap<IPackage, IPackageViewModel>();
-        }
 
         public static async Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel, Uri source)
         {

@@ -17,6 +17,7 @@
         <converters:NullToVisibility x:Key="NullToVisibility"/>
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString"/>
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString"/>
+        <converters:StringListToString x:Key="StringListToString"/>
         <xaml:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" Markdown="{StaticResource Markdown}"/>
      </UserControl.Resources>
 
@@ -31,8 +32,8 @@
                 <TextBlock AutomationProperties.Name="{Binding Version}" VerticalAlignment="Bottom">  <Run Text="{Binding Version}" Style="{StaticResource SubtitleRunTextStyle}" /></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Authors}"><Run Text="Authors: "/> <Run Text="{Binding Authors}" /></TextBlock>
-                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Owners}"><Run Text=" | Maintainers: "/> <Run Text="{Binding Owners}" /></TextBlock>
+                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}"><Run Text="Authors: "/> <Run Text="{Binding Authors, Converter={StaticResource StringListToString}}" /></TextBlock>
+                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Owners, Converter={StaticResource StringListToString}}"><Run Text=" | Maintainers: "/> <Run Text="{Binding Owners, Converter={StaticResource StringListToString}}" /></TextBlock>
             </StackPanel>
         </StackPanel>
 

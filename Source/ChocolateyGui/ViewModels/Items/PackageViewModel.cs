@@ -30,7 +30,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private readonly IRemotePackageService _remotePackageService;
 
-        private string _authors;
+        private string[] _authors;
 
         private string _copyright;
 
@@ -64,7 +64,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private string _licenseUrl = string.Empty;
 
-        private string _owners;
+        private string[] _owners;
 
         private string _packageHash;
 
@@ -107,7 +107,7 @@ namespace ChocolateyGui.ViewModels.Items
             _isInstalled = new Lazy<bool>(() => _chocolateyService.IsPackageInstalled(Id, Version));
         }
 
-        public string Authors
+        public string[] Authors
         {
             get { return _authors; }
             set { SetPropertyValue(ref _authors, value); }
@@ -213,7 +213,7 @@ namespace ChocolateyGui.ViewModels.Items
             set { SetPropertyValue(ref _licenseUrl, value); }
         }
 
-        public string Owners
+        public string[] Owners
         {
             get { return _owners; }
             set { SetPropertyValue(ref _owners, value); }

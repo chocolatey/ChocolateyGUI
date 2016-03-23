@@ -12,7 +12,7 @@ namespace ChocolateyGui.ViewModels.Items
 
     public interface IPackageViewModel
     {
-        string Authors { get; set; }
+        string[] Authors { get; set; }
 
         bool CanUpdate { get; }
 
@@ -48,7 +48,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         string LicenseUrl { get; set; }
 
-        string Owners { get; set; }
+        string[] Owners { get; set; }
 
         string PackageHash { get; set; }
 

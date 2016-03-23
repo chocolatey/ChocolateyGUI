@@ -8,11 +8,11 @@ namespace ChocolateyGui.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using chocolatey;
     using chocolatey.infrastructure.app.domain;
+    using chocolatey.infrastructure.results;
     using Enums;
     using NuGet;
     using Providers;
@@ -21,9 +21,16 @@ namespace ChocolateyGui.Services
 
     public class ChocolateyPackageService : BasePackageService, IChocolateyPackageService
     {
-        public ChocolateyPackageService(IProgressService progressService, Func<Type, ILogService> logServiceFunc, IChocolateyConfigurationProvider chocolateyConfigurationProvider)
+        private readonly Func<IPackageViewModel> _packageFactory;
+
+        public ChocolateyPackageService(
+            IProgressService progressService, 
+            Func<Type, ILogService> logServiceFunc, 
+            IChocolateyConfigurationProvider chocolateyConfigurationProvider,
+            Func<IPackageViewModel> packageFactory)
             : base(progressService, logServiceFunc, chocolateyConfigurationProvider)
         {
+            _packageFactory = packageFactory;
         }
 
         public async Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false)
@@ -52,9 +59,9 @@ namespace ChocolateyGui.Services
                     config.AllowUnofficialBuild = true;
                 });
 
-                var packageResults = await choco.ListPackagesAsync();
-                var libPath = Path.Combine(ChocolateyConfigurationProvider.ChocolateyInstall, "lib");
-                packages = await EnumerateLocalPackagesAndSetCache(packageResults.ToDictionary(pr => pr.Name, pr => new SemanticVersion(pr.Version)), libPath);
+                packages =
+                    (await choco.ListAsync<PackageResult>()).Select(
+                        package => AutoMapper.Mapper.Map(package.Package, _packageFactory())).ToList();
 
                 await ProgressService.StopLoading();
                 return packages;

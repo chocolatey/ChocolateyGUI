@@ -32,19 +32,11 @@ namespace ChocolateyGui.Services
         public const string LocalPackagesCacheKeyName = "LocalChocolateyService.Packages";
 
         /// <summary>
-        /// The key in the <see cref="Cache">Service's Memory Cache</see> for this service's packages JSON./>
-        /// </summary>
-        public const string LocalPackagesJsonCacheKeyName = "LocalChocolateyService.PackagesJson";
-
-        public static readonly Regex PackageRegex = new Regex(@"^(?<Name>[\w\.\-]*) (?<VersionString>(\d+(\s*\.\s*\d+){0,3})(-[a-z][0-9a-z-]*)?)$");
-
-        /// <summary>
         /// Synchronizes the GetPackages method.
         /// </summary>
         internal readonly AsyncLock GetInstalledLock;
       
         private static MemoryCache cache = MemoryCache.Default;
-        private string packagesJsonPath;
         private ILogService logService;
         private IProgressService progressService;
         private IChocolateyConfigurationProvider chocolateyConfigurationProvider;
@@ -60,11 +52,6 @@ namespace ChocolateyGui.Services
             this.progressService = progressService;
             this.logService = logServiceFunc(typeof(IChocolateyPackageService));
             this.chocolateyConfigurationProvider = chocolateyConfigurationProvider;
-
-            this.PackagesJsonPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "ChocolateyGUI",
-                "packages.json");
         }
 
         public event PackagesChangedEventHandler PackagesUpdated;
@@ -91,21 +78,10 @@ namespace ChocolateyGui.Services
             {
                 return (ICollection<IPackageViewModel>)Cache.Get(LocalPackagesCacheKeyName);
             }
-        }
 
-        /// <summary>
-        /// Gets or sets the path of the packages description JSON file.
-        /// </summary>
-        public string PackagesJsonPath
-        {
-            get
+            protected set
             {
-                return this.packagesJsonPath;
-            }
-
-            set
-            {
-                this.packagesJsonPath = value;
+                Cache.Set(LocalPackagesCacheKeyName, value, DateTimeOffset.Now + TimeSpan.FromMinutes(5));
             }
         }
 
@@ -136,80 +112,6 @@ namespace ChocolateyGui.Services
             }
         }
 
-        #region Packages Json Methods
-        public void AddPackageEntry(string id, SemanticVersion version, Uri source)
-        {
-            // Grab the current packages.
-            var packages = this.PackageConfigEntries();
-
-            // Check if we already exist
-            if (packages.Any(p => p.Id == id && p.Version == version))
-            {
-                this.LogService.ErrorFormat(
-                    "Package with id {0} and version {1} is already in the packages.json.\n From source {2}",
-                    id,
-                    version,
-                    source);
-
-                var oldPackage = packages.First(p => p.Id == id && p.Version == version);
-
-                if (oldPackage.Source != source)
-                {
-                    packages.Remove(oldPackage);
-                    packages.Add(new PackageConfigEntry(id, version, source));
-                }
-            }
-            else
-            {
-                packages.Add(new PackageConfigEntry(id, version, source));
-            }
-
-            this.SerializeJsonCache(packages);
-        }
-
-        public ICollection<PackageConfigEntry> PackageConfigEntries()
-        {
-            // Check to see if we already have a cached version of the packages.json.
-            var configEntries = Cache.Get(LocalPackagesJsonCacheKeyName) as List<PackageConfigEntry>;
-            if (configEntries != null)
-            {
-                return configEntries;
-            }
-
-            // If there is no packages.json, just pass back an empty array.
-            if (!File.Exists(this.PackagesJsonPath))
-            {
-                return new List<PackageConfigEntry>();
-            }
-
-            // If there is, deserialize and cache it.
-            var packageJson = File.ReadAllText(this.PackagesJsonPath);
-            var packages = JsonConvert.DeserializeObject<List<PackageConfigEntry>>(packageJson);
-            Cache.Set(LocalPackagesJsonCacheKeyName, packages, DateTime.Now.AddHours(1));
-
-            return packages;
-        }
-
-        public void RemovePackageEntry(string id, SemanticVersion version)
-        {
-            // Grab the current packages.
-            var packages = this.PackageConfigEntries();
-
-            var packagesToRemove = new List<PackageConfigEntry>();
-            foreach (var package in packages.Where(package => string.Compare(package.Id, id, StringComparison.OrdinalIgnoreCase) == 0 && package.Version == version))
-            {
-                packagesToRemove.Add(package);
-            }
-
-            foreach (var package in packagesToRemove)
-            {
-                packages.Remove(package);
-            }
-            
-            this.SerializeJsonCache(packages);
-        }
-        #endregion
-
         public void ClearPackageCache()
         {
             Cache.Remove(LocalPackagesCacheKeyName);
@@ -238,73 +140,26 @@ namespace ChocolateyGui.Services
                 throw new ArgumentNullException("packages");
             }
 
-            var packageConfigEntry =
-                this.PackageConfigEntries()
-                    .FirstOrDefault(
-                        entry =>
-                        string.Compare(entry.Id, packageInfo.Id, StringComparison.OrdinalIgnoreCase) == 0
-                        && entry.Version == packageInfo.Version);
-
-            if (packageConfigEntry != null)
-            {
-                packageInfo.Source = packageConfigEntry.Source;
-            }
-
             packages.Add(packageInfo);
         }
 
-        public void SerializeJsonCache(ICollection<PackageConfigEntry> packages)
+        public async Task InstalledPackage(string id, SemanticVersion version)
         {
-            // Serialize to the appropriate format.
-            var packageJson = JsonConvert.SerializeObject(packages);
-
-            // Make sure we have a ChocolateyGUI folder in the LocalApplicationData folder.
-            var directory = new DirectoryInfo(Path.GetDirectoryName(this.PackagesJsonPath));
-            if (!directory.Exists)
-            {
-                directory.Create();
-            }
-
-            // Write the new package file.
-            File.WriteAllText(this.PackagesJsonPath, packageJson);
-
-            // Invalidate the package cache.
-            Cache.Remove(LocalPackagesJsonCacheKeyName);
-
-            // Throw in this comment for fun.
-        }
-
-        public async void UpdatePackageLists(string id, Uri source, IPackageViewModel newPackage, SemanticVersion version)
-        {
-            if (newPackage != null)
-            {
-                this.AddPackageEntry(newPackage.Id, newPackage.Version, source);
-            }
-
+            ClearPackageCache();
             this.NotifyPackagesChanged(PackagesChangedEventType.Installed, id, version == null ? string.Empty : version.ToString());
-
             await this.ProgressService.StopLoading();
         }
 
-        public async void UpdatePackageLists(string id, Uri source, ICollection<PackageConfigEntry> currentPackages, IEnumerable<IPackageViewModel> newPackages)
+        public async Task UninstalledPackage(string id, SemanticVersion version)
         {
-            var packageViewModels = newPackages as IList<IPackageViewModel> ?? newPackages.ToList();
+            ClearPackageCache();
+            this.NotifyPackagesChanged(PackagesChangedEventType.Uninstalled, id, version == null ? string.Empty : version.ToString());
+            await this.ProgressService.StopLoading();
+        }
 
-            var results = packageViewModels.Where(p => string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0).ToList()
-                .FullOuterJoin(currentPackages, p => p.Version, cp => cp.Version, (p, cp, version) => new { Id = p != null ? p.Id ?? cp.Id : cp.Id, Version = version });
-
-            foreach (var result in results)
-            {
-                if (currentPackages.Any(p => string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0 && p.Version == result.Version) && !packageViewModels.Any(p => p.Id == result.Id && p.Version == result.Version))
-                {
-                    this.RemovePackageEntry(result.Id, result.Version);
-                }
-                else
-                {
-                    this.AddPackageEntry(result.Id, result.Version, source);
-                }
-            }
-
+        public async Task UpdatedPackage(string id, SemanticVersion oldVersion, SemanticVersion newVersion)
+        {
+            ClearPackageCache();
             this.NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
             await this.ProgressService.StopLoading();
         }

@@ -19,6 +19,7 @@ namespace ChocolateyGui.ViewModels.Controls
 
     public class RemoteSourceControlViewModel : ObservableBase, IRemoteSourceControlViewModel
     {
+        private readonly IChocolateyPackageService _chocolateyPackageService;
         private readonly IRemotePackageService _remotePackageService;
         private readonly Uri _source;
         private int _currentPage = 1;
@@ -33,8 +34,9 @@ namespace ChocolateyGui.ViewModels.Controls
         private string _sortColumn;
         private bool _sortDescending;
 
-        public RemoteSourceControlViewModel(IRemotePackageService remotePackageService, Uri source)
+        public RemoteSourceControlViewModel(IRemotePackageService remotePackageService, IChocolateyPackageService chocolateyPackageService, Uri source)
         {
+            _chocolateyPackageService = chocolateyPackageService;
             try
             {
                 _remotePackageService = remotePackageService;
@@ -200,11 +202,18 @@ namespace ChocolateyGui.ViewModels.Controls
             _hasLoaded = false;
 
             var result = await _remotePackageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord));
+            var installed = await _chocolateyPackageService.GetInstalledPackages();
+
             PageCount = result.TotalCount / PageSize;
             Packages.Clear();
             result.Packages.ToList().ForEach(p =>
             {
                 p.Source = _source;
+                if (installed.Any(package => package.Id == p.Id))
+                {
+                    p.IsInstalled = true;
+                }
+
                 Packages.Add(p);
             });
 

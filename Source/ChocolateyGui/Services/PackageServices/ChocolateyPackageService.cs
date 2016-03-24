@@ -70,9 +70,11 @@ namespace ChocolateyGui.Services
                             return package;
                         }).ToList();
 
+                CachedPackages = packages;
+
                 await ProgressService.StopLoading();
                 return packages;
-            }            
+            }
         }
 
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false)
@@ -111,7 +113,7 @@ namespace ChocolateyGui.Services
                         string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0
                         && (version == null || version == p.Version));
 
-            UpdatePackageLists(id, source, newPackage, version);
+            await InstalledPackage(id, version);
         }
 
         public async Task UninstallPackage(string id, SemanticVersion version, bool force = false)
@@ -135,7 +137,7 @@ namespace ChocolateyGui.Services
 
             await GetInstalledPackages(force: true);
 
-            RemovePackageEntry(id, version);
+            await UninstalledPackage(id, version);
             NotifyPackagesChanged(PackagesChangedEventType.Uninstalled, id, version.ToString());
 
             await ProgressService.StopLoading();
@@ -145,9 +147,7 @@ namespace ChocolateyGui.Services
         {
             StartProgressDialog("Updating", "Updating package", id);
 
-            var currentPackages = PackageConfigEntries()
-                .Where(p => p.Id.EqualsIgnoreCase(id))
-                .ToList();
+            var oldPackage = (await GetInstalledPackages()).FirstOrDefault(package => package.Id == id);
 
             var choco = Lets.GetChocolatey();
             choco.Set(config =>
@@ -158,9 +158,9 @@ namespace ChocolateyGui.Services
             });
             await choco.RunAsync();
 
-            var newPackages = await GetInstalledPackages();
+            var newPackage = (await GetInstalledPackages(true)).FirstOrDefault(package => package.Id == id);
 
-            UpdatePackageLists(id, source, currentPackages, newPackages);
+            await UpdatedPackage(id, oldPackage != null ? oldPackage.Version : null, newPackage != null ? newPackage.Version : null);
         }
     }
 }

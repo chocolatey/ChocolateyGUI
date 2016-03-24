@@ -38,8 +38,14 @@ namespace ChocolateyGui.Services.PackageServices
                 .FirstOrDefault(
                     result =>
                         includePrerelease ? result.Package.IsAbsoluteLatestVersion : result.Package.IsLatestVersion);
+            
+            var mappedPackage = package == null ? null : AutoMapper.Mapper.Map(package.Package, packageFactory());
+            if (mappedPackage != null)
+            {
+                mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation);
+            }
 
-            return package == null ? null : AutoMapper.Mapper.Map(package.Package, packageFactory());
+            return mappedPackage;
         }
 
         public static async Task<PackageSearchResults> Search(string query, Func<IPackageViewModel> packageFactory)
@@ -64,7 +70,12 @@ namespace ChocolateyGui.Services.PackageServices
                 config.ListCommand.Exact = options.MatchQuery;
             });
 
-            var packages = (await choco.ListAsync<PackageResult>()).Select(package => AutoMapper.Mapper.Map(package.Package, packageFactory()));
+            var packages = (await choco.ListAsync<PackageResult>()).Select(package =>
+            {
+                var mappedPackage = AutoMapper.Mapper.Map(package.Package, packageFactory());
+                mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation);
+                return mappedPackage;
+            });
 
             return new PackageSearchResults
             {
@@ -93,7 +104,13 @@ namespace ChocolateyGui.Services.PackageServices
                 .FirstOrDefault(
                     result => result.Package.Version == version);
 
-            return package == null ? null : AutoMapper.Mapper.Map(package.Package, packageFactory());
+            var mappedPackage = package == null ? null : AutoMapper.Mapper.Map(package.Package, packageFactory());
+            if (mappedPackage != null)
+            {
+                mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation);
+            }
+
+            return mappedPackage;
         }
     }
 }

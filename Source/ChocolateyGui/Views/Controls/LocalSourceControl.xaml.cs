@@ -29,7 +29,7 @@ namespace ChocolateyGui.Views.Controls
             Loaded += viewModel.Loaded;
         }
 
-        private async void PackageDoubleClick(object sender, MouseButtonEventArgs e)
+        private void PackageDoubleClick(object sender, MouseButtonEventArgs e)
         {
             dynamic source = e.OriginalSource;
             var item = source.DataContext as IPackageViewModel;
@@ -38,8 +38,7 @@ namespace ChocolateyGui.Views.Controls
                 return;
             }
 
-            await item.EnsureIsLoaded();
-            this._navigationService.Value.Navigate(typeof(PackageControl), item);
+            item.ViewDetails();
         }
     }
 }

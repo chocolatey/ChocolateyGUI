@@ -16,6 +16,8 @@ namespace ChocolateyGui.Services
 
     public class ChocolateySourcesService : ISourceService
     {
+        private const string SourceCommnadName = "source";
+
 #pragma warning disable CS0067 // The event 'ChocolateySourcesService.SourcesChanged' is never used
         public event SourcesChangedEventHandler SourcesChanged;
 #pragma warning restore CS0067 // The event 'ChocolateySourcesService.SourcesChanged' is never used
@@ -26,7 +28,7 @@ namespace ChocolateyGui.Services
             choco.Set(
                 config =>
                     {
-                        config.CommandName = CommandNameType.source.ToString();
+                        config.CommandName = SourceCommnadName;
                         config.SourceCommand.Command = SourceCommandType.add;
                         config.SourceCommand.Name = sourceViewModel.Name;
                         config.Sources = sourceViewModel.Url.to_string();
@@ -55,7 +57,7 @@ namespace ChocolateyGui.Services
             choco.Set(
                 config =>
                 {
-                    config.CommandName = CommandNameType.source.ToString();
+                    config.CommandName = SourceCommnadName;
                     config.SourceCommand.Command = SourceCommandType.remove;
                     config.SourceCommand.Name = sourceViewModel.Name;
                     config.AllowUnofficialBuild = true;
@@ -70,7 +72,7 @@ namespace ChocolateyGui.Services
             choco.Set(
                 config =>
                 {
-                    config.CommandName = CommandNameType.source.ToString();
+                    config.CommandName = SourceCommnadName;
                     config.SourceCommand.Command = SourceCommandType.list;
                     config.AllowUnofficialBuild = true;
                 });

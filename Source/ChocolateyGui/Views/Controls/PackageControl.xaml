@@ -53,10 +53,8 @@
             <TextBlock x:Name="VersionDownloadCount" Text="{Binding VersionDownloadCount}" Style="{StaticResource PackageResourceValue}"></TextBlock>
             <Label Style="{StaticResource PackageResourceLabel}" Content="Total Downloads" Target="{Binding ElementName=DownloadCount}"/>
             <TextBlock x:Name="DownloadCount" Text="{Binding DownloadCount}" Style="{StaticResource PackageResourceValue}"></TextBlock>
-            <Label Style="{StaticResource PackageResourceLabel}" Content="Created" Target="{Binding ElementName=Created}"/>
-            <TextBlock x:Name="Created" Text="{Binding Created}" Style="{StaticResource PackageResourceValue}"></TextBlock>
-            <Label Style="{StaticResource PackageResourceLabel}" Content="Last Updated" Target="{Binding ElementName=LastUpdated}"/>
-            <TextBlock x:Name="LastUpdated" Text="{Binding LastUpdated}" Style="{StaticResource PackageResourceValue}"></TextBlock>
+            <Label Style="{StaticResource PackageResourceLabel}" Content="Last update" Target="{Binding ElementName=Created}"/>
+            <TextBlock x:Name="Published" Text="{Binding Published}" Style="{StaticResource PackageResourceValue}"></TextBlock>
             <Label Style="{StaticResource PackageResourceLabel}" Content="Package Size" Target="{Binding ElementName=PackageSize}"/>
             <TextBlock x:Name="PackageSize" Text="{Binding PackageSize, Converter={StaticResource LongSizeToFileSizeString}}" Style="{StaticResource PackageResourceValue}"></TextBlock>
 

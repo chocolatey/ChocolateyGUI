@@ -11,7 +11,6 @@ namespace ChocolateyGui.Views.Windows
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
-    using ChocolateyGui.ChocolateyFeedService;
     using ChocolateyGui.Controls.Dialogs;
     using ChocolateyGui.Models;
     using ChocolateyGui.Providers;
@@ -51,7 +50,6 @@ namespace ChocolateyGui.Views.Windows
             this.CheckOperatingSystemCompatibility();
 
             // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
-            AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
             AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
 
             navigationService.SetNavigationItem(GlobalFrame);

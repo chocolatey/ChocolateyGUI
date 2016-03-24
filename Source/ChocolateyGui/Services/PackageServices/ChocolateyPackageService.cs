@@ -59,9 +59,16 @@ namespace ChocolateyGui.Services
                     config.AllowUnofficialBuild = true;
                 });
 
-                packages =
-                    (await choco.ListAsync<PackageResult>()).Select(
-                        package => AutoMapper.Mapper.Map(package.Package, _packageFactory())).ToList();
+                var packageResults = await choco.ListAsync<PackageResult>();
+
+                packages = packageResults
+                    .Select(
+                        package => AutoMapper.Mapper.Map(package.Package, _packageFactory()))
+                        .Select(package => 
+                        {
+                            package.IsInstalled = true;
+                            return package;
+                        }).ToList();
 
                 await ProgressService.StopLoading();
                 return packages;

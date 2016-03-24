@@ -23,6 +23,7 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.ViewModels.Items;
     using Newtonsoft.Json;
     using NuGet;
+    using MemoryCache = System.Runtime.Caching.MemoryCache;
 
     public abstract class BasePackageService
     {
@@ -169,17 +170,6 @@ namespace ChocolateyGui.Services
             }
 
             return packages;
-        }
-
-        public bool IsPackageInstalled(string id, SemanticVersion version)
-        {
-            if (Cache.Contains(LocalPackagesCacheKeyName))
-            {
-                return ((List<IPackageViewModel>)Cache.Get(LocalPackagesCacheKeyName))
-                    .Any(package => string.Compare(package.Id, id, StringComparison.OrdinalIgnoreCase) == 0 && package.Version == version);
-            }
-
-            return false;
         }
 
         #region Packages Json Methods

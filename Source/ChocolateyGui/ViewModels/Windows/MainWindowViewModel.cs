@@ -143,12 +143,6 @@ namespace ChocolateyGui.ViewModels.Windows
                 return;
             }
 
-            if (!(await this._packageService.Value.TestSourceUrl(url)))
-            {
-                this._progressService.ShowMessageAsync("New Source", "Failed to query source.").ConfigureAwait(false);
-                return;
-            }
-
             this._sourceService.AddSource(new SourceViewModel { Name = this.NewSourceName, Url = this.NewSourceUrl });
             this.NewSourceName = string.Empty;
             this.NewSourceUrl = string.Empty;

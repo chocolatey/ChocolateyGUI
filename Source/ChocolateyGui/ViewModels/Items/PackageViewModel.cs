@@ -8,16 +8,17 @@ namespace ChocolateyGui.ViewModels.Items
 {
     using System;
     using System.Diagnostics;
-    using System.Globalization;
     using System.Runtime.Caching;
     using System.Threading.Tasks;
     using System.Windows;
+    using AutoMapper;
     using Base;
     using Models;
     using NuGet;
     using Services;
     using Utilities;
     using Views.Controls;
+    using MemoryCache = System.Runtime.Caching.MemoryCache;
 
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
     public class PackageViewModel : ObservableBase, IPackageViewModel, IWeakEventListener
@@ -50,7 +51,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private bool _isAbsoluteLatestVersion;
 
-        private Lazy<bool> _isInstalled;
+        private bool _isInstalled;
 
         private bool _isLatestVersion;
 
@@ -103,8 +104,6 @@ namespace ChocolateyGui.ViewModels.Items
             _chocolateyService = chocolateyService;
             _navigationService = navigationService;
             PackagesChangedEventManager.AddListener(_chocolateyService, this);
-
-            _isInstalled = new Lazy<bool>(() => _chocolateyService.IsPackageInstalled(Id, Version));
         }
 
         public string[] Authors
@@ -122,12 +121,6 @@ namespace ChocolateyGui.ViewModels.Items
         {
             get { return _copyright; }
             set { SetPropertyValue(ref _copyright, value); }
-        }
-
-        public DateTime Created
-        {
-            get { return _created; }
-            set { SetPropertyValue(ref _created, value); }
         }
 
         public string Dependencies
@@ -174,7 +167,8 @@ namespace ChocolateyGui.ViewModels.Items
 
         public bool IsInstalled
         {
-            get { return _isInstalled.Value; }
+            get { return _isInstalled; }
+            set { SetPropertyValue(ref _isInstalled, value); }
         }
 
         public bool IsLatestVersion
@@ -193,12 +187,6 @@ namespace ChocolateyGui.ViewModels.Items
         {
             get { return _language; }
             set { SetPropertyValue(ref _language, value); }
-        }
-
-        public DateTime LastUpdated
-        {
-            get { return _lastUpdated; }
-            set { SetPropertyValue(ref _lastUpdated, value); }
         }
 
         public SemanticVersion LatestVersion
@@ -303,22 +291,9 @@ namespace ChocolateyGui.ViewModels.Items
             set { SetPropertyValue(ref _versionDownloadCount, value); }
         }
 
-        private string MemoryCacheKey
-        {
-            get { return string.Format(CultureInfo.CurrentCulture, "PackageViewModel.{0}{1}", Id, Version); }
-        }
-
         public bool CanGoBack()
         {
             return _navigationService.CanGoBack;
-        }
-
-        public async Task EnsureIsLoaded()
-        {
-            if (Published == DateTime.MinValue)
-            {
-                await _remotePackageService.EnsureIsLoaded(this, Source);
-            }
         }
 
         public void GoBack()
@@ -338,7 +313,6 @@ namespace ChocolateyGui.ViewModels.Items
         {
             if (sender is IChocolateyPackageService && e is PackagesChangedEventArgs)
             {
-                _isInstalled = new Lazy<bool>(() => _chocolateyService.IsPackageInstalled(Id, Version));
                 NotifyPropertyChanged("IsInstalled");
                 NotifyPropertyChanged("CanUpdate");
             }
@@ -355,7 +329,7 @@ namespace ChocolateyGui.ViewModels.Items
                 return;
             }
 
-            var latest = await _remotePackageService.GetLatest(Id, IsPrerelease, Source);
+            var latest = await _remotePackageService.GetLatest(Id, IsPrerelease);
 
             if (latest != null)
             {
@@ -414,8 +388,18 @@ namespace ChocolateyGui.ViewModels.Items
 
         public async void ViewDetails()
         {
-            await this.EnsureIsLoaded();
+            if (DownloadCount == -1)
+            {
+                await PopulateDetails();
+            }
+
             _navigationService.Navigate(typeof(PackageControl), this);
+        }
+
+        private async Task PopulateDetails()
+        {
+            var package = await _remotePackageService.GetByVersionAndIdAsync(_id, _version, _isPrerelease);
+            Mapper.Map<IPackageViewModel, IPackageViewModel>(package, this);
         }
     }
 }

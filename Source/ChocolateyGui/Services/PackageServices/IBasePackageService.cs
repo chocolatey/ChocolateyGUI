@@ -15,11 +15,5 @@ namespace ChocolateyGui.Services
     public interface IBasePackageService
     {
         event PackagesChangedEventHandler PackagesUpdated;
-
-        void ClearPackageCache();
-
-        Task<IEnumerable<IPackageViewModel>> GetPackagesFromLocalDirectory(Dictionary<string, string> requestedPackages, string directoryPath);
-
-        bool IsPackageInstalled(string id, SemanticVersion version);
     }
 }

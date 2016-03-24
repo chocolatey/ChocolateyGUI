@@ -6,21 +6,19 @@
 
 namespace ChocolateyGui.Services
 {
-    using System;
     using System.Threading.Tasks;
     using ChocolateyGui.Models;
     using ChocolateyGui.ViewModels.Items;
+    using NuGet;
 
     public interface IRemotePackageService
     {
-        Task<PackageSearchResults> Search(string query, Uri source = null);
+        Task<PackageSearchResults> Search(string query);
 
-        Task<PackageSearchResults> Search(string query, PackageSearchOptions options, Uri source = null);
+        Task<PackageSearchResults> Search(string query, PackageSearchOptions options);
 
-        Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false, Uri source = null);
+        Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false);
 
-        Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel, Uri source = null);
-
-        Task<bool> TestSourceUrl(Uri source);
+        Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version, bool isPrerelease);
     }
 }

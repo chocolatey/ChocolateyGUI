@@ -199,7 +199,7 @@ namespace ChocolateyGui.ViewModels.Controls
         {
             _hasLoaded = false;
 
-            var result = await _remotePackageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord), _source);
+            var result = await _remotePackageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord));
             PageCount = result.TotalCount / PageSize;
             Packages.Clear();
             result.Packages.ToList().ForEach(p =>

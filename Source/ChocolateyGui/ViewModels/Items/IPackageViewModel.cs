@@ -18,8 +18,6 @@ namespace ChocolateyGui.ViewModels.Items
 
         string Copyright { get; set; }
 
-        DateTime Created { get; set; }
-
         string Dependencies { get; set; }
 
         string Description { get; set; }
@@ -34,15 +32,13 @@ namespace ChocolateyGui.ViewModels.Items
 
         bool IsAbsoluteLatestVersion { get; set; }
 
-        bool IsInstalled { get; }
+        bool IsInstalled { get; set; }
 
         bool IsLatestVersion { get; set; }
 
         bool IsPrerelease { get; set; }
 
         string Language { get; set; }
-
-        DateTime LastUpdated { get; set; }
 
         SemanticVersion LatestVersion { get; }
 
@@ -77,8 +73,6 @@ namespace ChocolateyGui.ViewModels.Items
         SemanticVersion Version { get; set; }
 
         int VersionDownloadCount { get; set; }
-
-        Task EnsureIsLoaded();
 
         Task Install();
 

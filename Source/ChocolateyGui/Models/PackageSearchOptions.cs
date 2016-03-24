@@ -20,8 +20,6 @@ namespace ChocolateyGui.Models
 
         private readonly string _sortColumn;
 
-        private readonly bool _sortDescending;
-
 #pragma warning disable 649
         private readonly string[] _tagsQuery;
 #pragma warning restore 649
@@ -39,7 +37,6 @@ namespace ChocolateyGui.Models
             this._pageSize = pageSize;
             this._currentPage = currentPage;
             this._sortColumn = sortColumn;
-            this._sortDescending = sortDescending;
         }
 
         public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool sortDescending, bool includePrerelease, bool includeAllVersions, bool matchWord)
@@ -48,7 +45,6 @@ namespace ChocolateyGui.Models
             this._pageSize = pageSize;
             this._currentPage = currentPage;
             this._sortColumn = sortColumn;
-            this._sortDescending = sortDescending;
             this._includeAllVersions = includeAllVersions;
             this._includedPrerelease = includePrerelease;
             this._matchQuery = matchWord;
@@ -99,14 +95,6 @@ namespace ChocolateyGui.Models
             get
             {
                 return this._sortColumn;
-            }
-        }
-
-        public bool SortDescending
-        {
-            get
-            {
-                return this._sortDescending;
             }
         }
 

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>chocolatey.lib</id>
+    <version>0.9.10-beta-20160323</version>
+    <title>Chocolatey Core [PREVIEW]</title>
+    <authors>Rob Reynolds, The Chocolatey Team</authors>
+    <owners>Rob Reynolds</owners>
+    <licenseUrl>https://raw.githubusercontent.com/chocolatey/choco/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/chocolatey/choco</projectUrl>
+    <iconUrl>https://github.com/chocolatey/chocolatey/raw/master/docs/logo/chocolateyicon.gif</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Chocolatey is a package manager for Windows (like apt-get but for Windows). It was designed to be a decentralized framework for quickly installing applications and tools that you need. It is built on the NuGet infrastructure currently using PowerShell as its focus for delivering packages from the distros to your door, err computer.
+
+Chocolatey is brought to you by the work and inspiration of the community, the work and thankless nights of the Chocolatey Team (https://github.com/orgs/chocolatey/people), and Rob heading up the direction.
+
+This is the core package which allows Chocolatey to be embedded in your application.</description>
+    <summary>Chocolatey is your machine level NuGet repository. Think apt-get for Windows (executables/application packages), not library packages.</summary>
+    <releaseNotes>https://github.com/chocolatey/choco/blob/master/CHANGELOG.md</releaseNotes>
+    <copyright>RealDimensions Software, LLC - 2011 - Present</copyright>
+    <tags>apt-get yum machine repository chocolatey</tags>
+    <dependencies>
+      <dependency id="log4net" version="[2.0.3]" />
+    </dependencies>
+  </metadata>
+</package>

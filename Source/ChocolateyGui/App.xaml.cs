@@ -28,6 +28,7 @@ namespace ChocolateyGui
             Log = typeof(App).GetLogger();
 
             AutoMapper.Mapper.CreateMap<IPackage, IPackageViewModel>();
+            AutoMapper.Mapper.CreateMap<IPackageViewModel, IPackageViewModel>();
 
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

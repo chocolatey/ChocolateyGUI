@@ -203,7 +203,6 @@
     <Compile Include="Utilities\Extensions\LogExtensions.cs" />
     <Compile Include="Utilities\Extensions\PowershellExtensions.cs" />
     <Compile Include="Utilities\Extensions\StringExtensions.cs" />
-    <Compile Include="Utilities\Nuspec\NupkgReader.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
     <Compile Include="Utilities\SourcesChangedEventManager.cs" />
     <Compile Include="Utilities\TypeConverters\SemanticVersionTypeConverter.cs" />

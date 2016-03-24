@@ -19,7 +19,6 @@ namespace ChocolateyGui.Services
     using ChocolateyGui.Providers;
     using ChocolateyGui.Utilities;
     using ChocolateyGui.Utilities.Extensions;
-    using ChocolateyGui.Utilities.Nuspec;
     using ChocolateyGui.ViewModels.Items;
     using Newtonsoft.Json;
     using NuGet;
@@ -135,41 +134,6 @@ namespace ChocolateyGui.Services
             {
                 return this.chocolateyConfigurationProvider;
             }
-        }
-
-        /// <summary>
-        /// Placeholder. Will eventually allow one to call Chocolatey and list all the packages from a specified file system source.
-        /// </summary>
-        /// <param name="requestedPackages">
-        /// The requested Packages.
-        /// </param>
-        /// <param name="directoryPath">
-        /// The file system directory.
-        /// </param>
-        /// <returns>
-        /// List of packages in directory.
-        /// </returns>
-        public async Task<IEnumerable<IPackageViewModel>> GetPackagesFromLocalDirectory(Dictionary<string, string> requestedPackages, string directoryPath)
-        {
-            var packages = new List<IPackageViewModel>();
-
-            foreach (var nupkgFile in Directory.EnumerateFiles(directoryPath, "*.nupkg", SearchOption.AllDirectories))
-            {
-                var packageInfo = await NupkgReader.GetPackageInformation(nupkgFile);
-
-                if (
-                    !requestedPackages.Any(
-                        e =>
-                        string.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase)
-                        && new SemanticVersion(e.Value) == packageInfo.Version))
-                {
-                    continue;
-                }
-
-                this.PopulatePackages(packageInfo, packages);
-            }
-
-            return packages;
         }
 
         #region Packages Json Methods
@@ -343,37 +307,6 @@ namespace ChocolateyGui.Services
 
             this.NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
             await this.ProgressService.StopLoading();
-        }
-
-        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "Reviewed. Suppression is OK here.")]
-        public async Task<ICollection<IPackageViewModel>> EnumerateLocalPackagesAndSetCache(Dictionary<string, SemanticVersion> chocoPackageList, string libPath)
-        {
-            var packages = new List<IPackageViewModel>();
-            foreach (var nupkgFile in Directory.EnumerateFiles(libPath, "*.nupkg", SearchOption.AllDirectories))
-            {
-                var packageInfo = await NupkgReader.GetPackageInformation(nupkgFile);
-
-                if (
-                    !chocoPackageList.Any(
-                        e =>
-                        string.Equals(e.Key, packageInfo.Id, StringComparison.CurrentCultureIgnoreCase)
-                        && e.Value == packageInfo.Version))
-                {
-                    continue;
-                }
-
-                PopulatePackages(packageInfo, packages);
-            }
-
-            Cache.Set(
-                LocalPackagesCacheKeyName,
-                packages,
-                new CacheItemPolicy
-                {
-                    AbsoluteExpiration = DateTime.Now.AddHours(1)
-                });
-
-            return packages;
         }
 
         public async void StartProgressDialog(string commandString, string initialProgressText, string id = "")

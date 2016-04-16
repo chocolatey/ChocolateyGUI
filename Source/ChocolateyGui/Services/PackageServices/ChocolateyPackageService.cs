@@ -106,8 +106,7 @@ namespace ChocolateyGui.Services
 
             await choco.RunAsync();
 
-            var newPackage =
-                (await GetInstalledPackages(true)).OrderByDescending(p => p.Version)
+            (await GetInstalledPackages(true)).OrderByDescending(p => p.Version)
                     .FirstOrDefault(
                         p =>
                         string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0

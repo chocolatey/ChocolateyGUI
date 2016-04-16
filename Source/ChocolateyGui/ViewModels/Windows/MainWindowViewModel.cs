@@ -192,7 +192,7 @@ namespace ChocolateyGui.ViewModels.Windows
             if (sender is ISourceService)
             {
                 var eventArgs = e as SourcesChangedEventArgs;
-                if (eventArgs.AddedSources != null && eventArgs.AddedSources.Count > 0)
+                if (eventArgs != null && (eventArgs.AddedSources != null && eventArgs.AddedSources.Count > 0))
                 {
                     foreach (var source in eventArgs.AddedSources)
                     {
@@ -200,7 +200,7 @@ namespace ChocolateyGui.ViewModels.Windows
                     }
                 }
 
-                if (eventArgs.RemovedSources != null && eventArgs.RemovedSources.Count > 0)
+                if (eventArgs != null && (eventArgs.RemovedSources != null && eventArgs.RemovedSources.Count > 0))
                 {
                     foreach (var source in eventArgs.RemovedSources)
                     {

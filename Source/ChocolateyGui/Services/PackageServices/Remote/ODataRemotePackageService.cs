@@ -39,13 +39,7 @@ namespace ChocolateyGui.Services.PackageServices
                     result =>
                         includePrerelease ? result.Package.IsAbsoluteLatestVersion : result.Package.IsLatestVersion);
 
-            var mappedPackage = package == null ? null : AutoMapper.Mapper.Map(package.Package, packageFactory());
-            if (mappedPackage != null)
-            {
-                mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation);
-            }
-
-            return mappedPackage;
+            return GetMappedPackage(package, packageFactory);
         }
 
         public static async Task<PackageSearchResults> Search(string query, Func<IPackageViewModel> packageFactory)
@@ -104,7 +98,13 @@ namespace ChocolateyGui.Services.PackageServices
                 .FirstOrDefault(
                     result => result.Package.Version == version);
 
+            return GetMappedPackage(package, packageFactory);
+        }
+
+        private static IPackageViewModel GetMappedPackage(PackageResult package, Func<IPackageViewModel> packageFactory)
+        {
             var mappedPackage = package == null ? null : AutoMapper.Mapper.Map(package.Package, packageFactory());
+
             if (mappedPackage != null)
             {
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation);

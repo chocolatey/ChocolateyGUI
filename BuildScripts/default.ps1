@@ -258,7 +258,7 @@ Task -Name __InstallChocolatey -Description $private -Action {
     }
 
     exec {
-			Invoke-Expression "$script:chocolateyCommand upgrade chocolatey";
+			Invoke-Expression "$script:chocolateyCommand upgrade chocolatey -pre";
 		}
 
     Write-Output "Latest Chocolatey installed."
@@ -284,19 +284,7 @@ Task -Name __InstallChocolatey -Description $private -Action {
 	}
 }
 
-Task -Name __UpdateNuGet -Description $private -Action {
-  try {
-		Write-Output "Running Update NuGet..."
-
-		(New-Object Net.WebClient).DownloadFile("https://dist.nuget.org/win-x86-commandline/v3.3.0/nuget.exe", "C:\Tools\nuget\nuget.exe");
-	}
-	catch {
-		Write-Error $_
-		Write-Output ("************ Update NuGet Failed ************")
-	}
-}
-
-Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey, __UpdateNuGet -Description $private -Action {
+Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Description $private -Action {
 	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
 	$inspectCodeExe = Join-Path $chocolateyBinDir -ChildPath "inspectcode.exe";
 

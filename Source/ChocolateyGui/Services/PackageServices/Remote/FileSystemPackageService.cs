@@ -7,11 +7,9 @@
 namespace ChocolateyGui.Services.PackageServices
 {
     using System;
-    using System.Globalization;
     using System.Threading.Tasks;
-    using ChocolateyGui.Models;
     using ChocolateyGui.ViewModels.Items;
-    
+
     public static class FileSystemPackageService
     {
         public static Task<IPackageViewModel> EnsureIsLoaded(IPackageViewModel viewModel)
@@ -27,11 +25,6 @@ namespace ChocolateyGui.Services.PackageServices
         public static IPackageViewModel GetLatest(string id, IChocolateyPackageService chocolateyService, Func<IPackageViewModel> packageFactory, Uri source, bool includePrerelease = false)
         {
             throw new NotImplementedException();
-        }
-
-        private static string GetMemoryCacheKey(Uri source, string query, PackageSearchOptions options)
-        {
-            return string.Format(CultureInfo.CurrentCulture, "FileSystemPackageService.QueryResult.{0}|{1}|{2}|{3}", source, query, options.IncludeAllVersions, options.IncludePrerelease);
         }
     }
 }

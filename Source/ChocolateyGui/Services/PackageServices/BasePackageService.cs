@@ -8,19 +8,12 @@ namespace ChocolateyGui.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Linq;
-    using System.Runtime.Caching;
-    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using ChocolateyGui.Enums;
     using ChocolateyGui.Models;
     using ChocolateyGui.Providers;
     using ChocolateyGui.Utilities;
-    using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.ViewModels.Items;
-    using Newtonsoft.Json;
     using NuGet;
     using MemoryCache = System.Runtime.Caching.MemoryCache;
 

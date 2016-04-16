@@ -6,11 +6,7 @@
 
 namespace ChocolateyGui.Services
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using ChocolateyGui.Models;
-    using ChocolateyGui.ViewModels.Items;
-    using NuGet;
 
     public interface IBasePackageService
     {

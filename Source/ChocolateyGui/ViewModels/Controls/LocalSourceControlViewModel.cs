@@ -211,7 +211,7 @@ namespace ChocolateyGui.ViewModels.Controls
                     return;
                 }
 
-                XmlWriterSettings settings = new XmlWriterSettings { Indent = true };
+                var settings = new XmlWriterSettings { Indent = true };
 
                 using (var xw = XmlWriter.Create(fileStream, settings))
                 {
@@ -251,14 +251,14 @@ namespace ChocolateyGui.ViewModels.Controls
             var query = this._packages.AsEnumerable();
             if (!string.IsNullOrWhiteSpace(this.SearchQuery))
             {
-                query = this.MatchWord ? 
+                query = this.MatchWord ?
                      query.Where(
                          package =>
                          string.Compare(
                              package.Title ?? package.Id,
                              this.SearchQuery,
                              StringComparison.OrdinalIgnoreCase) == 0)
-                                : 
+                                :
                       query.Where(
                          package =>
                          CultureInfo.CurrentCulture.CompareInfo.IndexOf(
@@ -292,7 +292,7 @@ namespace ChocolateyGui.ViewModels.Controls
                     {
 #pragma warning disable CS4014 // We want this to execute asynchrnously.
                         packageViewModel.RetrieveLatestVersion().ConfigureAwait(false);
-#pragma warning restore CS4014 
+#pragma warning restore CS4014
                     }
                 }
             }

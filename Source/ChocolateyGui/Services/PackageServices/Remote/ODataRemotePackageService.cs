@@ -38,7 +38,7 @@ namespace ChocolateyGui.Services.PackageServices
                 .FirstOrDefault(
                     result =>
                         includePrerelease ? result.Package.IsAbsoluteLatestVersion : result.Package.IsLatestVersion);
-            
+
             var mappedPackage = package == null ? null : AutoMapper.Mapper.Map(package.Package, packageFactory());
             if (mappedPackage != null)
             {

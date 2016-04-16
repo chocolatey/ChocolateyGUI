@@ -14,6 +14,7 @@ namespace ChocolateyGui.Views.Windows
     using ChocolateyGui.ChocolateyFeedService;
     using ChocolateyGui.Controls.Dialogs;
     using ChocolateyGui.Models;
+    using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
     using ChocolateyGui.ViewModels.Items;
     using ChocolateyGui.ViewModels.Windows;
@@ -26,8 +27,9 @@ namespace ChocolateyGui.Views.Windows
     public partial class MainWindow
     {
         private readonly IProgressService _progressService;
+        private readonly IChocolateyConfigurationProvider _chocolateyConfigurationProvider;
 
-        public MainWindow(IMainWindowViewModel viewModel, INavigationService navigationService, IProgressService progressService)
+        public MainWindow(IMainWindowViewModel viewModel, INavigationService navigationService, IProgressService progressService, IChocolateyConfigurationProvider chocolateyConfigurationProvider)
         {
             if (navigationService == null)
             {
@@ -43,13 +45,35 @@ namespace ChocolateyGui.Views.Windows
             }
 
             this._progressService = progressService;
-            
+            this._progressService = progressService;
+            this._chocolateyConfigurationProvider = chocolateyConfigurationProvider;
+
+            this.CheckOperatingSystemCompatibility();
+
             // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
             AutoMapper.Mapper.CreateMap<V2FeedPackage, PackageViewModel>();
             AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
 
             navigationService.SetNavigationItem(GlobalFrame);
             navigationService.Navigate(typeof(SourcesControl));
+        }
+
+        public void CheckOperatingSystemCompatibility()
+        {
+            var operatingSystemVersion = Environment.OSVersion;
+
+            if (operatingSystemVersion.Version.Major == 10 && !this._chocolateyConfigurationProvider.IsChocolateyExecutableBeingUsed)
+            {
+                MessageBox.Show(
+                    "Usage of the PowerShell Version of Chocolatey (i.e. <= 0.9.8.33) has been detected.  ChocolateyGUI does not support using this version of Chocolatey on Windows 10.  Please update Chocolatey to the new C# Version (i.e. > 0.9.9.0) and restart ChocolateyGUI.  This application will now close.",
+                    "Incompatible Operating System Version",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.ServiceNotification);
+
+                Application.Current.Shutdown();
+            }
         }
 
         public Task<ChocolateyDialogController> ShowChocolateyDialogAsync(string title, bool isCancelable = false, MetroDialogSettings settings = null)
@@ -87,7 +111,7 @@ namespace ChocolateyGui.Views.Windows
             AboutFlyout.Width = Width / 3;
             AboutFlyout.IsOpen = !AboutFlyout.IsOpen;
         }
-        
+
         private void SourcesButton_OnClick(object sender, RoutedEventArgs e)
         {
             SettingsFlyout.IsOpen = false;
@@ -103,7 +127,7 @@ namespace ChocolateyGui.Views.Windows
                 SourcesFlyout.IsOpenChanged -= this.SourcesFlyout_IsOpenChanged;
             }
         }
-        
+
         private void CanGoToPage(object sender, CanExecuteRoutedEventArgs e)
         {
             // GEP: I can't think of any reason that we would want to prevent going to the linked
@@ -116,6 +140,6 @@ namespace ChocolateyGui.Views.Windows
             // https://github.com/theunrepentantgeek/Markdown.XAML/issues/5
             Process.Start(new ProcessStartInfo(e.Parameter.ToString()));
             e.Handled = true;
-        }        
+        }
     }
 }

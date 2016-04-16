@@ -284,7 +284,30 @@ Task -Name __InstallChocolatey -Description $private -Action {
 	}
 }
 
-Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Description $private -Action {
+Task -Name __InstallNuGetCommandLine -Description $private -Action {
+  $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+	$nugetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
+
+	try {
+		Write-Output "Running Install NuGet Command Line..."
+
+		if (-not (Test-Path $nugetExe)) {
+			exec {
+				Invoke-Expression "$script:chocolateyCommand install NuGet.CommandLine -y";
+			}
+		} else {
+			Write-Output "NuGet Command Line already installed";
+		}
+
+		Write-Output ("************ Install NuGet Command Line Successful ************")
+	}
+	catch {
+		Write-Error $_
+		Write-Output ("************ Install NuGet Command Line Failed ************")
+	}
+}
+
+Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey, __InstallNuGetCommandLine -Description $private -Action {
 	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
 	$inspectCodeExe = Join-Path $chocolateyBinDir -ChildPath "inspectcode.exe";
 

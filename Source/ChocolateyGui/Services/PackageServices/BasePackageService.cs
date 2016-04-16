@@ -35,7 +35,7 @@ namespace ChocolateyGui.Services
         /// Synchronizes the GetPackages method.
         /// </summary>
         internal readonly AsyncLock GetInstalledLock;
-      
+
         private static MemoryCache cache = MemoryCache.Default;
         private ILogService logService;
         private IProgressService progressService;
@@ -112,9 +112,19 @@ namespace ChocolateyGui.Services
             }
         }
 
-        public void ClearPackageCache()
+        public static void ClearPackageCache()
         {
             Cache.Remove(LocalPackagesCacheKeyName);
+        }
+
+        public static void PopulatePackages(IPackageViewModel packageInfo, ICollection<IPackageViewModel> packages)
+        {
+            if (packages == null)
+            {
+                throw new ArgumentNullException("packages");
+            }
+
+            packages.Add(packageInfo);
         }
 
         public void NotifyPackagesChanged(PackagesChangedEventType command, string packageId = "", string packageVersion = "")
@@ -133,16 +143,6 @@ namespace ChocolateyGui.Services
             }
         }
 
-        public void PopulatePackages(IPackageViewModel packageInfo, ICollection<IPackageViewModel> packages)
-        {
-            if (packages == null)
-            {
-                throw new ArgumentNullException("packages");
-            }
-
-            packages.Add(packageInfo);
-        }
-
         public async Task InstalledPackage(string id, SemanticVersion version)
         {
             ClearPackageCache();
@@ -157,7 +157,7 @@ namespace ChocolateyGui.Services
             await this.ProgressService.StopLoading();
         }
 
-        public async Task UpdatedPackage(string id, SemanticVersion oldVersion, SemanticVersion newVersion)
+        public async Task UpdatedPackage(string id)
         {
             ClearPackageCache();
             this.NotifyPackagesChanged(PackagesChangedEventType.Updated, id);

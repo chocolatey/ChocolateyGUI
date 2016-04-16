@@ -96,8 +96,8 @@ namespace ChocolateyGui.ViewModels.Items
         private int _versionDownloadCount;
 
         public PackageViewModel(
-            IRemotePackageService remotePackageService, 
-            IChocolateyPackageService chocolateyService, 
+            IRemotePackageService remotePackageService,
+            IChocolateyPackageService chocolateyService,
             INavigationService navigationService)
         {
             _remotePackageService = remotePackageService;
@@ -121,6 +121,12 @@ namespace ChocolateyGui.ViewModels.Items
         {
             get { return _copyright; }
             set { SetPropertyValue(ref _copyright, value); }
+        }
+
+        public DateTime Created
+        {
+            get { return _created; }
+            set { SetPropertyValue(ref _created, value); }
         }
 
         public string Dependencies
@@ -187,6 +193,12 @@ namespace ChocolateyGui.ViewModels.Items
         {
             get { return _language; }
             set { SetPropertyValue(ref _language, value); }
+        }
+
+        public DateTime LastUpdated
+        {
+            get { return _lastUpdated; }
+            set { SetPropertyValue(ref _lastUpdated, value); }
         }
 
         public SemanticVersion LatestVersion
@@ -346,8 +358,8 @@ namespace ChocolateyGui.ViewModels.Items
             }
 
             _cache.Set(
-                string.Format("LatestVersion_{0}", Id), 
-                version, 
+                string.Format("LatestVersion_{0}", Id),
+                version,
                 new CacheItemPolicy
                     {
                         AbsoluteExpiration = DateTime.Now.AddHours(1)

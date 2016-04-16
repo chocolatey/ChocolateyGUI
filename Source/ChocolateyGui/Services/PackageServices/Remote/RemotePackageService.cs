@@ -16,25 +16,14 @@ namespace ChocolateyGui.Services
     public class RemotePackageService : IRemotePackageService
     {
         private readonly IProgressService _progressService;
-        private readonly ISourceService _sourceService;
         private readonly Func<IPackageViewModel> _packageFactory;
-        private readonly ILogService _logService;
 
         public RemotePackageService(
-            IProgressService progressService, 
-            ISourceService sourceService, 
-            Func<IPackageViewModel> packageFactory, 
-            Func<Type, ILogService> logFunc)
+            IProgressService progressService,
+            Func<IPackageViewModel> packageFactory)
         {
-            if (logFunc == null)
-            {
-                throw new ArgumentNullException("logFunc");
-            }
-
             _progressService = progressService;
-            _sourceService = sourceService;
             _packageFactory = packageFactory;
-            _logService = logFunc(typeof(RemotePackageService));
         }
 
         public async Task<PackageSearchResults> Search(string query)

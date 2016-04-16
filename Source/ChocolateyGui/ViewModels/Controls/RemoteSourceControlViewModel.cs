@@ -201,7 +201,7 @@ namespace ChocolateyGui.ViewModels.Controls
         {
             _hasLoaded = false;
 
-            var result = await _remotePackageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, SortDescending, IncludePrerelease, IncludeAllVersions, MatchWord));
+            var result = await _remotePackageService.Search(SearchQuery, new PackageSearchOptions(PageSize, CurrentPage - 1, SortColumn, IncludePrerelease, IncludeAllVersions, MatchWord));
             var installed = await _chocolateyPackageService.GetInstalledPackages();
 
             PageCount = result.TotalCount / PageSize;

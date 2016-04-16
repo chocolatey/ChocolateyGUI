@@ -24,8 +24,8 @@ namespace ChocolateyGui.Services
         private readonly Func<IPackageViewModel> _packageFactory;
 
         public ChocolateyPackageService(
-            IProgressService progressService, 
-            Func<Type, ILogService> logServiceFunc, 
+            IProgressService progressService,
+            Func<Type, ILogService> logServiceFunc,
             IChocolateyConfigurationProvider chocolateyConfigurationProvider,
             Func<IPackageViewModel> packageFactory)
             : base(progressService, logServiceFunc, chocolateyConfigurationProvider)
@@ -42,7 +42,7 @@ namespace ChocolateyGui.Services
                 if (!force)
                 {
                     packages = CachedPackages;
-                    
+
                     if (packages != null)
                     {
                         return packages;
@@ -64,7 +64,7 @@ namespace ChocolateyGui.Services
                 packages = packageResults
                     .Select(
                         package => AutoMapper.Mapper.Map(package.Package, _packageFactory()))
-                        .Select(package => 
+                        .Select(package =>
                         {
                             package.IsInstalled = true;
                             return package;
@@ -103,7 +103,7 @@ namespace ChocolateyGui.Services
                     config.Force = true;
                 }
             });
-            
+
             await choco.RunAsync();
 
             var newPackage =
@@ -132,7 +132,7 @@ namespace ChocolateyGui.Services
                     config.Version = version.ToString();
                 }
             });
-            
+
             await choco.RunAsync();
 
             await GetInstalledPackages(force: true);
@@ -147,7 +147,7 @@ namespace ChocolateyGui.Services
         {
             StartProgressDialog("Updating", "Updating package", id);
 
-            var oldPackage = (await GetInstalledPackages()).FirstOrDefault(package => package.Id == id);
+            (await GetInstalledPackages()).FirstOrDefault(package => package.Id == id);
 
             var choco = Lets.GetChocolatey();
             choco.Set(config =>
@@ -156,11 +156,12 @@ namespace ChocolateyGui.Services
                 config.PackageNames = id;
                 config.AllowUnofficialBuild = true;
             });
+
             await choco.RunAsync();
 
-            var newPackage = (await GetInstalledPackages(true)).FirstOrDefault(package => package.Id == id);
+            (await GetInstalledPackages(true)).FirstOrDefault(package => package.Id == id);
 
-            await UpdatedPackage(id, oldPackage != null ? oldPackage.Version : null, newPackage != null ? newPackage.Version : null);
+            await UpdatedPackage(id);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ChocolateyGui.Models
             this._currentPage = currentPage;
         }
 
-        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool sortDescending)
+        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn)
             : this()
         {
             this._pageSize = pageSize;
@@ -39,7 +39,7 @@ namespace ChocolateyGui.Models
             this._sortColumn = sortColumn;
         }
 
-        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool sortDescending, bool includePrerelease, bool includeAllVersions, bool matchWord)
+        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool includePrerelease, bool includeAllVersions, bool matchWord)
             : this()
         {
             this._pageSize = pageSize;

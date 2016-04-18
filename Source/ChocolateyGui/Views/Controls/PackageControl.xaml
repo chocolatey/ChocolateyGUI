@@ -17,6 +17,7 @@
         <converters:NullToVisibility x:Key="NullToVisibility"/>
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString"/>
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString"/>
+        <converters:StringListToString x:Key="StringListToString"/>
         <xaml:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" Markdown="{StaticResource Markdown}"/>
      </UserControl.Resources>
 
@@ -31,8 +32,8 @@
                 <TextBlock AutomationProperties.Name="{Binding Version}" VerticalAlignment="Bottom">  <Run Text="{Binding Version}" Style="{StaticResource SubtitleRunTextStyle}" /></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Authors}"><Run Text="Authors: "/> <Run Text="{Binding Authors}" /></TextBlock>
-                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Owners}"><Run Text=" | Maintainers: "/> <Run Text="{Binding Owners}" /></TextBlock>
+                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}"><Run Text="Authors: "/> <Run Text="{Binding Authors, Converter={StaticResource StringListToString}}" /></TextBlock>
+                <TextBlock Style="{StaticResource SubtitleTextStyle}" AutomationProperties.Name="{Binding Owners, Converter={StaticResource StringListToString}}"><Run Text=" | Maintainers: "/> <Run Text="{Binding Owners, Converter={StaticResource StringListToString}}" /></TextBlock>
             </StackPanel>
         </StackPanel>
 
@@ -52,10 +53,8 @@
             <TextBlock x:Name="VersionDownloadCount" Text="{Binding VersionDownloadCount}" Style="{StaticResource PackageResourceValue}"></TextBlock>
             <Label Style="{StaticResource PackageResourceLabel}" Content="Total Downloads" Target="{Binding ElementName=DownloadCount}"/>
             <TextBlock x:Name="DownloadCount" Text="{Binding DownloadCount}" Style="{StaticResource PackageResourceValue}"></TextBlock>
-            <Label Style="{StaticResource PackageResourceLabel}" Content="Created" Target="{Binding ElementName=Created}"/>
-            <TextBlock x:Name="Created" Text="{Binding Created}" Style="{StaticResource PackageResourceValue}"></TextBlock>
-            <Label Style="{StaticResource PackageResourceLabel}" Content="Last Updated" Target="{Binding ElementName=LastUpdated}"/>
-            <TextBlock x:Name="LastUpdated" Text="{Binding LastUpdated}" Style="{StaticResource PackageResourceValue}"></TextBlock>
+            <Label Style="{StaticResource PackageResourceLabel}" Content="Last update" Target="{Binding ElementName=Created}"/>
+            <TextBlock x:Name="Published" Text="{Binding Published}" Style="{StaticResource PackageResourceValue}"></TextBlock>
             <Label Style="{StaticResource PackageResourceLabel}" Content="Package Size" Target="{Binding ElementName=PackageSize}"/>
             <TextBlock x:Name="PackageSize" Text="{Binding PackageSize, Converter={StaticResource LongSizeToFileSizeString}}" Style="{StaticResource PackageResourceValue}"></TextBlock>
 

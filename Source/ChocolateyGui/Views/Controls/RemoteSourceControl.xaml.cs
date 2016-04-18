@@ -92,17 +92,12 @@ namespace ChocolateyGui.Views.Controls
                 return;
             }
 
-            bool sortDescending;
-            if (!e.Column.SortDirection.HasValue || (e.Column.SortDirection.Value == ListSortDirection.Ascending))
+            if (sortPropertyName != "Title" && sortPropertyName != "DownloadCount")
             {
-                sortDescending = true;
-            }
-            else
-            {
-                sortDescending = false;
+                return;
             }
 
-            this._viewModel.SortDescending = sortDescending;
+            this._viewModel.SortDescending = true;
             this._viewModel.SortColumn = sortPropertyName;
             e.Handled = true;
         }

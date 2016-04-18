@@ -41,12 +41,22 @@ namespace ChocolateyGui.Utilities
 
         protected override void StartListening(object source)
         {
-            (source as ISourceService).SourcesChanged += this.OnSourceUpdated;
+            var sourceService = source as ISourceService;
+
+            if (sourceService != null)
+            {
+                sourceService.SourcesChanged += this.OnSourceUpdated;
+            }
         }
 
         protected override void StopListening(object source)
         {
-            (source as ISourceService).SourcesChanged -= this.OnSourceUpdated;
+            var sourceService = source as ISourceService;
+
+            if (sourceService != null)
+            {
+                sourceService.SourcesChanged -= this.OnSourceUpdated;
+            }
         }
 
         private void OnSourceUpdated(object sender, SourcesChangedEventArgs e)

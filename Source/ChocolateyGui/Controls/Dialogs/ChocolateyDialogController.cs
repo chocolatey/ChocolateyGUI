@@ -79,7 +79,6 @@ namespace ChocolateyGui.Controls.Dialogs
             {
                 IsOpen = false;
             }));
-            return;
         }
 
         /// <summary>

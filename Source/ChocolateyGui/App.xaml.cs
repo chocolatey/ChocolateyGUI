@@ -12,7 +12,9 @@ namespace ChocolateyGui
     using ChocolateyGui.IoC;
     using ChocolateyGui.Services;
     using ChocolateyGui.Utilities.Extensions;
+    using ChocolateyGui.ViewModels.Items;
     using ChocolateyGui.Views.Windows;
+    using NuGet;
 
     /// <summary>
     /// Interaction logic for App.xaml
@@ -24,6 +26,9 @@ namespace ChocolateyGui
             Container = AutoFacConfiguration.RegisterAutoFac();
 
             Log = typeof(App).GetLogger();
+
+            AutoMapper.Mapper.CreateMap<IPackage, IPackageViewModel>();
+            AutoMapper.Mapper.CreateMap<IPackageViewModel, IPackageViewModel>();
 
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

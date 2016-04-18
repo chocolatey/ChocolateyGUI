@@ -41,12 +41,22 @@ namespace ChocolateyGui.Utilities
 
         protected override void StartListening(object source)
         {
-            (source as IChocolateyPackageService).PackagesUpdated += this.OnPackagedUpdated;
+            var chocolateyPackageService = source as IChocolateyPackageService;
+
+            if (chocolateyPackageService != null)
+            {
+                chocolateyPackageService.PackagesUpdated += this.OnPackagedUpdated;
+            }
         }
 
         protected override void StopListening(object source)
         {
-            (source as IChocolateyPackageService).PackagesUpdated -= this.OnPackagedUpdated;
+            var chocolateyPackageService = source as IChocolateyPackageService;
+
+            if (chocolateyPackageService != null)
+            {
+                chocolateyPackageService.PackagesUpdated -= this.OnPackagedUpdated;
+            }
         }
 
         private void OnPackagedUpdated(object sender, PackagesChangedEventArgs e)

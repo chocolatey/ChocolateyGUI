@@ -147,7 +147,9 @@ namespace ChocolateyGui.ViewModels.Controls
                 var chocoPackage = this._packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
                 if (chocoPackage != null && chocoPackage.CanUpdate)
                 {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     this._progressService.ShowMessageAsync("Chocolatey", "There's an update available for chocolatey.").ConfigureAwait(false);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 }
             }
             catch (Exception ex)
@@ -196,7 +198,7 @@ namespace ChocolateyGui.ViewModels.Controls
             }
         }
 
-        public async void ExportAll()
+        public void ExportAll()
         {
             this._exportAll = false;
 
@@ -209,7 +211,7 @@ namespace ChocolateyGui.ViewModels.Controls
                     return;
                 }
 
-                XmlWriterSettings settings = new XmlWriterSettings { Indent = true };
+                var settings = new XmlWriterSettings { Indent = true };
 
                 using (var xw = XmlWriter.Create(fileStream, settings))
                 {
@@ -240,40 +242,37 @@ namespace ChocolateyGui.ViewModels.Controls
 
         public async void RefreshPackages()
         {
-            this._chocolateyService.ClearPackageCache();
             await this.LoadPackages();
         }
 
         private void FilterPackages()
         {
             this.Packages.Clear();
+            var query = this._packages.AsEnumerable();
             if (!string.IsNullOrWhiteSpace(this.SearchQuery))
             {
-                var query = this.MatchWord
-                     ? this._packages.Where(
+                query = this.MatchWord ?
+                     query.Where(
                          package =>
                          string.Compare(
                              package.Title ?? package.Id,
                              this.SearchQuery,
                              StringComparison.OrdinalIgnoreCase) == 0)
-                                : this._packages.Where(
+                                :
+                      query.Where(
                          package =>
                          CultureInfo.CurrentCulture.CompareInfo.IndexOf(
                              package.Title ?? package.Id,
                              this.SearchQuery,
                              CompareOptions.OrdinalIgnoreCase) >= 0);
+            }
 
-                query.ToList().ForEach(this.Packages.Add);
-            }
-            else if (this.ShowOnlyPackagesWithUpdate)
+            if (this.ShowOnlyPackagesWithUpdate)
             {
-                var query = this._packages.Where(p => p.CanUpdate == true);
-                query.ToList().ForEach(this.Packages.Add);
+                query = query.Where(p => p.CanUpdate);
             }
-            else
-            {
-                this.Packages = new ObservableCollection<IPackageViewModel>(this._packages);
-            }
+
+            this.Packages = new ObservableCollection<IPackageViewModel>(query);
         }
 
         private async Task LoadPackages()
@@ -291,7 +290,9 @@ namespace ChocolateyGui.ViewModels.Controls
 
                     if (packageViewModel.LatestVersion == null)
                     {
+#pragma warning disable CS4014 // We want this to execute asynchrnously.
                         packageViewModel.RetrieveLatestVersion().ConfigureAwait(false);
+#pragma warning restore CS4014
                     }
                 }
             }

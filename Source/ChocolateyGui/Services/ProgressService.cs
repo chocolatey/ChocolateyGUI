@@ -22,7 +22,7 @@ namespace ChocolateyGui.Services
     {
         private readonly AsyncLock _lock;
         private readonly ObservableRingBufferCollection<PowerShellOutputLine> _output;
-        private CancellationTokenSource _cst = null;
+        private CancellationTokenSource _cst;
         private bool _isLoading;
         private int _loadingItems;
         private double _progress;
@@ -120,6 +120,9 @@ namespace ChocolateyGui.Services
                 var currentCount = Interlocked.Increment(ref this._loadingItems);
                 if (currentCount == 1)
                 {
+                    // TODO: Rich, is this doing something I am not aware of?
+                    // chocoDialg is not used, but does the instanstiation of ChocolateyDialog actually kick something off?
+                    // ReSharper disable once UnusedVariable
                     var chocoDialg = new ChocolateyDialog(this.MainWindow);
 
                     this._progressController = await this.MainWindow.ShowChocolateyDialogAsync(title, isCancelable);

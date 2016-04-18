@@ -229,7 +229,12 @@ namespace ChocolateyGui.Services
                 logger.Appenders.Cast<IAppender>().AsQueryable().SingleOrDefault(app => app is BufferingAppenderSkeleton);
             if (buffered != null)
             {
-                (buffered as BufferingAppenderSkeleton).Flush();
+                var bufferingAppenderSkeleton = buffered as BufferingAppenderSkeleton;
+
+                if (bufferingAppenderSkeleton != null)
+                {
+                    bufferingAppenderSkeleton.Flush();
+                }
             }
         }
     }

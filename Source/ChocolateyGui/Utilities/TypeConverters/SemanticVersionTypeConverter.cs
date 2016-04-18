@@ -10,7 +10,7 @@ namespace ChocolateyGui.Utilities.TypeConverters
     using System.ComponentModel;
     using System.Globalization;
 
-    using ChocolateyGui.Models;
+    using NuGet;
 
     public class SemanticVersionTypeConverter : TypeConverter
     {

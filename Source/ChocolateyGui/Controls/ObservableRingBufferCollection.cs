@@ -25,25 +25,25 @@ namespace ChocolateyGui.Controls
         private T[] _buffer;
 
         /// <summary>
-        /// The all-over position within the ring buffer. The position 
-        /// increases continuously by adding new items to the buffer. This 
-        /// value is needed to calculate the current relative position within the 
+        /// The all-over position within the ring buffer. The position
+        /// increases continuously by adding new items to the buffer. This
+        /// value is needed to calculate the current relative position within the
         /// buffer.
         /// </summary>
         private int _position;
 
         /// <summary>
-        /// The current version of the buffer, this is required for a correct 
+        /// The current version of the buffer, this is required for a correct
         /// exception handling while enumerating over the items of the buffer.
         /// </summary>
         private long _version;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObservableRingBufferCollection{T}"/> class. 
+        /// Initializes a new instance of the <see cref="ObservableRingBufferCollection{T}"/> class.
         /// The observable ring buffer collection.
         /// </summary>
         /// <param name="capacity">
-        /// The maximum count of items to be stored within 
+        /// The maximum count of items to be stored within
         /// the ring buffer.
         /// </param>
         public ObservableRingBufferCollection(int capacity)
@@ -97,7 +97,7 @@ namespace ChocolateyGui.Controls
             }
 
             this._buffer[index] = item;
-            
+
             // increase the count if capacity is not yet reached
             if (this.Count < this.Capacity)
             {
@@ -110,12 +110,12 @@ namespace ChocolateyGui.Controls
         }
 
         /// <summary>
-        /// Clears the whole buffer and releases all referenced objects 
+        /// Clears the whole buffer and releases all referenced objects
         /// currently stored within the buffer.
         /// </summary>
         public void Clear()
         {
-            for (int i = 0; i < this.Count; i++)
+            for (var i = 0; i < this.Count; i++)
             {
                 this._buffer[i] = default(T);
             }
@@ -132,18 +132,18 @@ namespace ChocolateyGui.Controls
         /// </summary>
         /// <param name="item">The item to search for within the current
         /// buffer.</param>
-        /// <returns>True if the specified item is currently present within 
+        /// <returns>True if the specified item is currently present within
         /// the buffer; otherwise false.</returns>
         public bool Contains(T item)
         {
-            int index = this.IndexOf(item);
+            var index = this.IndexOf(item);
             return index != -1;
         }
 
         /// <summary>
         /// Copies the current items within the buffer to a specified array.
         /// </summary>
-        /// <param name="array">The target array to copy the items of 
+        /// <param name="array">The target array to copy the items of
         /// the buffer to.</param>
         /// <param name="arrayIndex">The start position within the target
         /// array to start copying.</param>
@@ -154,7 +154,7 @@ namespace ChocolateyGui.Controls
                 throw new ArgumentNullException("array");
             }
 
-            for (int i = 0; i < this.Count; i++)
+            for (var i = 0; i < this.Count; i++)
             {
                 array[i + arrayIndex] = this._buffer[(this._position - this.Count + i) % this.Capacity];
             }
@@ -167,8 +167,8 @@ namespace ChocolateyGui.Controls
         /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
-            long version = this._version;
-            for (int i = 0; i < this.Count; i++)
+            var version = this._version;
+            for (var i = 0; i < this.Count; i++)
             {
                 if (version != this._version)
                 {
@@ -198,16 +198,16 @@ namespace ChocolateyGui.Controls
         /// from the buffer; otherwise false.</returns>
         /// <remarks>
         /// <b>Warning</b>
-        /// Frequent usage of this method might become a bad idea if you are 
-        /// working with a large buffer capacity. The removing of an item 
+        /// Frequent usage of this method might become a bad idea if you are
+        /// working with a large buffer capacity. The removing of an item
         /// requires a scan of the buffer to get the position of the specified
-        /// item. If the item was found, the deletion requires a move of all 
+        /// item. If the item was found, the deletion requires a move of all
         /// items stored above the found position.
         /// </remarks>
         public bool Remove(T item)
         {
             // find the position of the specified item
-            int index = this.IndexOf(item);
+            var index = this.IndexOf(item);
 
             // item was not found; return false
             if (index == -1)
@@ -225,16 +225,16 @@ namespace ChocolateyGui.Controls
         /// Gets the position of a specified item within the ring buffer.
         /// </summary>
         /// <param name="item">The item to get the current position for.</param>
-        /// <returns>The zero based index of the found item within the 
+        /// <returns>The zero based index of the found item within the
         /// buffer. If the item was not present within the buffer, this
         /// method returns -1.</returns>
         private int IndexOf(T item)
         {
             // loop over the current count of items
-            for (int i = 0; i < this.Count; i++)
+            for (var i = 0; i < this.Count; i++)
             {
                 // get the item at the relative position within the internal array
-                T item2 = this._buffer[(this._position - this.Count + i) % this.Capacity];
+                var item2 = this._buffer[(this._position - this.Count + i) % this.Capacity];
 
                 // if both items are null, return true
                 if (null == item && null == item2)
@@ -268,8 +268,8 @@ namespace ChocolateyGui.Controls
         /// <exception cref="IndexOutOfRangeException">Thrown when incorrect argument passed in.</exception>
         /// <remarks>
         /// <b>Warning</b>
-        /// Frequent usage of this method might become a bad idea if you are 
-        /// working with a large buffer capacity. The deletion requires a move 
+        /// Frequent usage of this method might become a bad idea if you are
+        /// working with a large buffer capacity. The deletion requires a move
         /// of all items stored above the found position.
         /// </remarks>
         private void RemoveAt(int index)
@@ -282,27 +282,27 @@ namespace ChocolateyGui.Controls
 
             // move all items above the specified position one step
             // closer to zero
-            for (int i = index; i < this.Count - 1; i++)
+            for (var i = index; i < this.Count - 1; i++)
             {
                 // get the next relative target position of the item
-                int to = (this._position - this.Count + i) % this.Capacity;
-                
+                var to = (this._position - this.Count + i) % this.Capacity;
+
                 // get the next relative source position of the item
-                int from = (this._position - this.Count + i + 1) % this.Capacity;
-                
+                var from = (this._position - this.Count + i + 1) % this.Capacity;
+
                 // move the item
                 this._buffer[to] = this._buffer[from];
             }
 
             // get the relative position of the last item, which becomes empty
             // after deletion and set the item as empty
-            int last = (this._position - 1) % this.Capacity;
+            var last = (this._position - 1) % this.Capacity;
             this._buffer[last] = default(T);
 
             // adjust storage information
             this._position--;
             this.Count--;
-            
+
             // buffer changed; next version
             this._version++;
 

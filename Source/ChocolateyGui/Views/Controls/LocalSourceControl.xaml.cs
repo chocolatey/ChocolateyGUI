@@ -6,9 +6,7 @@
 
 namespace ChocolateyGui.Views.Controls
 {
-    using System;
     using System.Windows.Input;
-    using ChocolateyGui.Services;
     using ChocolateyGui.ViewModels.Controls;
     using ChocolateyGui.ViewModels.Items;
 
@@ -17,19 +15,15 @@ namespace ChocolateyGui.Views.Controls
     /// </summary>
     public partial class LocalSourceControl
     {
-        private readonly Lazy<INavigationService> _navigationService; 
-
-        public LocalSourceControl(ILocalSourceControlViewModel viewModel, Lazy<INavigationService> navigationService)
+        public LocalSourceControl(ILocalSourceControlViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
 
-            this._navigationService = navigationService;
-
             Loaded += viewModel.Loaded;
         }
 
-        private async void PackageDoubleClick(object sender, MouseButtonEventArgs e)
+        private void PackageDoubleClick(object sender, MouseButtonEventArgs e)
         {
             dynamic source = e.OriginalSource;
             var item = source.DataContext as IPackageViewModel;
@@ -38,8 +32,7 @@ namespace ChocolateyGui.Views.Controls
                 return;
             }
 
-            await item.EnsureIsLoaded();
-            this._navigationService.Value.Navigate(typeof(PackageControl), item);
+            item.ViewDetails();
         }
     }
 }

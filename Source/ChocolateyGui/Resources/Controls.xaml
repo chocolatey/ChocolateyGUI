@@ -15,7 +15,7 @@
         <ResourceDictionary Source="ControlStyles/Flyout.xaml"/>
         <ResourceDictionary Source="ControlStyles/Dialog.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    
+
     <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
     <converters:BooleanToTickString x:Key="BooleanToTickString"/>
 
@@ -228,7 +228,7 @@
     <SolidColorBrush x:Key="Brown4Brush" Color="{StaticResource Brown4}"></SolidColorBrush>
     <SolidColorBrush x:Key="Brown5Brush" Color="{StaticResource Brown5}"></SolidColorBrush>
     <SolidColorBrush x:Key="Brown6Brush" Color="{StaticResource Brown6}"></SolidColorBrush>
-    
+
     <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource AccentColor}" />
 
     <Style TargetType="{x:Type TextBox}">
@@ -402,7 +402,7 @@
     <Style TargetType="{x:Type Hyperlink}">
         <Setter Property="Foreground" Value="#FF34a1fe"/>
     </Style>
-    
+
     <Style TargetType="{x:Type FlowDocument}" x:Key="DocumentStyle">
         <Setter Property="FontFamily"
 			Value="Calibri" />
@@ -542,7 +542,7 @@
         <Setter Property="AutomationProperties.AcceleratorKey" Value="B"/>
         <Setter Property="ToolTip" Value="Back"/>
     </Style>
-    
+
     <Style x:Key="PaginationButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="MinHeight" Value="25"/>
         <Setter Property="FontWeight" Value="Bold"/>
@@ -620,7 +620,7 @@
         <MenuItem Header="Update" Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}" Command="{commands:DataContextCommandAdapter Update}"></MenuItem>
         <MenuItem Header="Details" Command="{commands:DataContextCommandAdapter ViewDetails}"></MenuItem>
     </ContextMenu>
-    
+
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}">
         <Setter Property="GridLinesVisibility" Value="None"/>
         <Setter Property="Background" Value="{DynamicResource Brown5Brush}"/>
@@ -914,7 +914,7 @@
                                             </DataGridColumnHeadersPresenter.Visibility>
                                         </DataGridColumnHeadersPresenter>
                                         <Grid Grid.ColumnSpan="2" Grid.Row="1">
-                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" Grid.ColumnSpan="2" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Grid.Row="1"/>
+                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" Grid.ColumnSpan="2" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
                                         </Grid>
                                         <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="2" Maximum="{TemplateBinding ScrollableHeight}" Orientation="Vertical" Grid.Row="1" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
                                         <Grid Grid.Column="1" Grid.Row="2">

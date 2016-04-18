@@ -8,17 +8,15 @@ namespace ChocolateyGui.ViewModels.Items
 {
     using System;
     using System.Threading.Tasks;
-    using ChocolateyGui.Models;
-    
+    using NuGet;
+
     public interface IPackageViewModel
     {
-        string Authors { get; set; }
+        string[] Authors { get; set; }
 
         bool CanUpdate { get; }
 
         string Copyright { get; set; }
-
-        DateTime Created { get; set; }
 
         string Dependencies { get; set; }
 
@@ -34,7 +32,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         bool IsAbsoluteLatestVersion { get; set; }
 
-        bool IsInstalled { get; }
+        bool IsInstalled { get; set; }
 
         bool IsLatestVersion { get; set; }
 
@@ -42,13 +40,11 @@ namespace ChocolateyGui.ViewModels.Items
 
         string Language { get; set; }
 
-        DateTime LastUpdated { get; set; }
-
         SemanticVersion LatestVersion { get; }
 
         string LicenseUrl { get; set; }
 
-        string Owners { get; set; }
+        string[] Owners { get; set; }
 
         string PackageHash { get; set; }
 
@@ -58,7 +54,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         string ProjectUrl { get; set; }
 
-        DateTime Published { get; set; }
+        DateTimeOffset Published { get; set; }
 
         string ReleaseNotes { get; set; }
 
@@ -77,8 +73,6 @@ namespace ChocolateyGui.ViewModels.Items
         SemanticVersion Version { get; set; }
 
         int VersionDownloadCount { get; set; }
-
-        Task EnsureIsLoaded();
 
         Task Install();
 

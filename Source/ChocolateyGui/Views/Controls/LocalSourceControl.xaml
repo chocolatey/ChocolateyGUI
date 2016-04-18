@@ -5,12 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controlVms="clr-namespace:ChocolateyGui.ViewModels.Controls"
       xmlns:commands="clr-namespace:ChocolateyGui.Commands"
+      xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1366"
 	  d:DataContext="{d:DesignInstance controlVms:LocalSourceControlViewModel}">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <converters:StringListToString x:Key="ListToString" />
     </UserControl.Resources>
     <Grid Background="{StaticResource AccentColorBrush}">
         <Grid.RowDefinitions>
@@ -34,7 +36,7 @@
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Title}" Width="2*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Authors" Binding="{Binding Authors}" Width="1*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Authors" Binding="{Binding Authors, Converter={StaticResource ListToString}}" Width="1*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Version" Binding="{Binding Version}" Width="1*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Latest Version" Binding="{Binding LatestVersion, IsAsync=True}" Width="1*"></DataGridTextColumn>
             </DataGrid.Columns>

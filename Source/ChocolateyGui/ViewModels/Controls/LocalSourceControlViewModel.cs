@@ -182,6 +182,7 @@ namespace ChocolateyGui.ViewModels.Controls
                     if (token.IsCancellationRequested)
                     {
                         await this._progressService.StopLoading();
+                        this.RefreshPackages();
                         return;
                     }
 
@@ -190,7 +191,6 @@ namespace ChocolateyGui.ViewModels.Controls
                 }
 
                 await this._progressService.StopLoading();
-                this.ShowOnlyPackagesWithUpdate = false;
                 this.RefreshPackages();
             }
             catch (Exception ex)
@@ -245,6 +245,7 @@ namespace ChocolateyGui.ViewModels.Controls
         public async void RefreshPackages()
         {
             await this.LoadPackages();
+            this.FilterPackages();
         }
 
         private void FilterPackages()

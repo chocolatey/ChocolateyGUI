@@ -190,6 +190,8 @@ namespace ChocolateyGui.ViewModels.Controls
                 }
 
                 await this._progressService.StopLoading();
+                this.ShowOnlyPackagesWithUpdate = false;
+                this.RefreshPackages();
             }
             catch (Exception ex)
             {

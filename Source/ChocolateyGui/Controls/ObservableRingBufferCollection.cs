@@ -237,7 +237,7 @@ namespace ChocolateyGui.Controls
                 var item2 = this._buffer[(this._position - this.Count + i) % this.Capacity];
 
                 // if both items are null, return true
-                if (null == item && null == item2)
+                if (item == null && item2 == null)
                 {
                     return i;
                 }

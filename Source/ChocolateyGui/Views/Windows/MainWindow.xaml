@@ -9,6 +9,7 @@
 		xmlns:xaml="clr-namespace:Markdown.Xaml"
 		mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
 		d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+        Icon="../../chocolateyicon.ico"
 		TitleForeground="{StaticResource GrayBrush1}"
 		Title="ChocolateyGUI">
 

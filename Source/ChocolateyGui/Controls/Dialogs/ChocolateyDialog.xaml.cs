@@ -15,7 +15,7 @@ namespace ChocolateyGui.Controls.Dialogs
     /// <summary>
     /// Interaction logic for ChocolateyDialog.xaml
     /// </summary>
-    public partial class ChocolateyDialog : BaseMetroDialog
+    public partial class ChocolateyDialog : CustomDialog
     {
         public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register(
             "IsCancelable",
@@ -46,8 +46,7 @@ namespace ChocolateyGui.Controls.Dialogs
 
         public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ChocolateyDialog), new PropertyMetadata(default(string)));
 
-        internal ChocolateyDialog(MetroWindow parentWindow, MetroDialogSettings settings)
-            : base(parentWindow, settings)
+        internal ChocolateyDialog(MetroWindow parentWindow)
         {
             this.InitializeComponent();
 
@@ -60,12 +59,7 @@ namespace ChocolateyGui.Controls.Dialogs
                 this.ProgressBarForeground = Brushes.White;
             }
         }
-
-        internal ChocolateyDialog(MetroWindow parentWindow)
-            : this(parentWindow, null)
-        {
-        }
-
+        
         public bool IsCancelable
         {
             get { return (bool)this.GetValue(IsCancelableProperty); }

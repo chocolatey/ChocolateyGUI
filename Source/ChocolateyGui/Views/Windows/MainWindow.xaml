@@ -23,12 +23,12 @@
 			CanExecute="CanGoToPage" />
 	</Window.CommandBindings>
 
-	<metro:MetroWindow.WindowCommands>
+	<metro:MetroWindow.RightWindowCommands>
 		<metro:WindowCommands>
 			<Button x:Name="SettingsButton" Content="settings" Click="SettingsButton_OnClick" ClickMode="Release"/>
 			<Button x:Name="AboutButton" Content="about" Click="AboutButton_OnClick" ClickMode="Release" />
 		</metro:WindowCommands>
-	</metro:MetroWindow.WindowCommands>
+	</metro:MetroWindow.RightWindowCommands>
 
 	<metro:MetroWindow.Flyouts>
 		<metro:FlyoutsControl>

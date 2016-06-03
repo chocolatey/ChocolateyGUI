@@ -72,23 +72,11 @@
       <Component Id="AutoMapper.dll" Guid="271807E2-0EFB-4A69-8184-4902A8DE0728">
         <File Id="AutoMapper.dll" Source="$(var.ChocolateyGui.TargetDir)\AutoMapper.dll" KeyPath="yes"/>
       </Component>
-      <Component Id="AutoMapper.Net4.dll" Guid="AC45B646-B968-43CC-BF19-EBF6E2DC74DC">
-        <File Id="AutoMapper.Net4.dll" Source="$(var.ChocolateyGui.TargetDir)\AutoMapper.Net4.dll" KeyPath="yes"/>
-      </Component>
       <Component Id="log4net.dll" Guid="0E8D8943-24F9-4934-86D5-AB314BFDC23E">
         <File Id="log4net.dll" Source="$(var.ChocolateyGui.TargetDir)\log4net.dll" KeyPath="yes"/>
       </Component>
       <Component Id="MahApps.Metro.dll" Guid="3B37657E-820C-40F8-92F4-6A282418D90B">
         <File Id="MahApps.Metro.dll" Source="$(var.ChocolateyGui.TargetDir)\MahApps.Metro.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Microsoft.Data.Edm.dll" Guid="68E8D1B2-3D2D-4EA2-8C24-26B433EEDD3E">
-        <File Id="Microsoft.Data.Edm.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Data.Edm.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Microsoft.Data.OData.dll" Guid="91C20061-9C15-4A6D-8D31-BBF640F62CFA">
-        <File Id="Microsoft.Data.OData.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Data.OData.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Microsoft.Data.Services.Client.dll" Guid="5099E03B-295A-4091-897C-7E68B7E76D17">
-        <File Id="Microsoft.Data.Services.Client.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Data.Services.Client.dll" KeyPath="yes"/>
       </Component>
       <Component Id="Mindscape.Raygun4Net.dll" Guid="C17C5A82-CA98-4702-94EB-DA01839D891E">
         <File Id="Mindscape.Raygun4Net.dll" Source="$(var.ChocolateyGui.TargetDir)\Mindscape.Raygun4Net.dll" KeyPath="yes"/>
@@ -108,14 +96,8 @@
       <Component Id="System.Reactive.Windows.Threading.dll" Guid="50F1967D-B04C-4C18-A5EF-DFE6E43DB7B1">
         <File Id="System.Reactive.Windows.Threading.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Windows.Threading.dll" KeyPath="yes"/>
       </Component>
-      <Component Id="System.Spatial.dll" Guid="0FEE0EEE-5D77-48F6-AB4C-BB616E00C76A">
-        <File Id="System.Spatial.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Spatial.dll" KeyPath="yes"/>
-      </Component>
       <Component Id="System.Windows.Interactivity.dll" Guid="C3AEADB7-B6E3-4952-9969-8C56F92E6470">
         <File Id="System.Windows.Interactivity.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Windows.Interactivity.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Newtonsoft.Json.dll" Guid="28267AA6-C039-4C3E-8869-056E98CD2C37">
-        <File Id="Newtonsoft.Json.dll" Source="$(var.ChocolateyGui.TargetDir)\Newtonsoft.Json.dll" KeyPath="yes"/>
       </Component>
     </ComponentGroup>
   </Fragment>

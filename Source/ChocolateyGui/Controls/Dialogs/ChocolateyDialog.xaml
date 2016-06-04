@@ -40,6 +40,7 @@
                 VerticalAlignment="Bottom"
                 Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                 Height="6"
+                Margin="0 5 0 5"
                 EllipseDiameter="5"
                 Panel.ZIndex="5"
                 IsIndeterminate="True"

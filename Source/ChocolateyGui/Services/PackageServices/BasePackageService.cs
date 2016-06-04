@@ -30,20 +30,22 @@ namespace ChocolateyGui.Services
         internal readonly AsyncLock GetInstalledLock;
 
         private static MemoryCache cache = MemoryCache.Default;
-        private ILogService logService;
-        private IProgressService progressService;
-        private IChocolateyConfigurationProvider chocolateyConfigurationProvider;
+        private readonly Func<string, ILogService> _logFactory;
+        private readonly ILogService _logService;
+        private readonly IProgressService _progressService;
+        private readonly IChocolateyConfigurationProvider chocolateyConfigurationProvider;
 
-        protected BasePackageService(IProgressService progressService, Func<Type, ILogService> logServiceFunc, IChocolateyConfigurationProvider chocolateyConfigurationProvider)
+        protected BasePackageService(IProgressService progressService, Func<string, ILogService> logFactory, IChocolateyConfigurationProvider chocolateyConfigurationProvider)
         {
-            if (logServiceFunc == null)
+            if (logFactory == null)
             {
-                throw new ArgumentNullException("logServiceFunc");
+                throw new ArgumentNullException("logFactory");
             }
 
             this.GetInstalledLock = new AsyncLock();
-            this.progressService = progressService;
-            this.logService = logServiceFunc(typeof(IChocolateyPackageService));
+            this._progressService = progressService;
+            this._logFactory = logFactory;
+            this._logService = logFactory(typeof(IChocolateyPackageService).Name);
             this.chocolateyConfigurationProvider = chocolateyConfigurationProvider;
         }
 
@@ -82,27 +84,32 @@ namespace ChocolateyGui.Services
         {
             get
             {
-                return this.logService;
+                return this._logService;
             }
         }
 
         /// <summary>
         /// Gets the Progress Service used to report progress to listeners.
         /// </summary>
-        public IProgressService ProgressService
+        protected IProgressService ProgressService
         {
             get
             {
-                return this.progressService;
+                return this._progressService;
             }
         }
 
-        public IChocolateyConfigurationProvider ChocolateyConfigurationProvider
+        protected IChocolateyConfigurationProvider ChocolateyConfigurationProvider
         {
             get
             {
                 return this.chocolateyConfigurationProvider;
             }
+        }
+
+        protected Func<string, ILogService> LogFactory
+        {
+            get { return _logFactory; }
         }
 
         public static void ClearPackageCache()

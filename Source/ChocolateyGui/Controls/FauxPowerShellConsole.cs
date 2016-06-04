@@ -90,29 +90,32 @@ namespace ChocolateyGui.Controls
                         Dispatcher.BeginInvoke(
                             new RunStringOnUI(
                                 line =>
-                                    {
-                                var run = new Run
-                                              {
-                                                  Text = item.Text,
-                                                  Name = _getNameHash(line.Text),
-                                                  Foreground =
-                                                      line.LineType == PowerShellLineType.Output
-                                                          ? Brushes.White
-                                                          : Brushes.Red,
-                                                  Background =
-                                                      line.LineType == PowerShellLineType.Output
-                                                          ? Brushes.Transparent
-                                                          : Brushes.Black
-                                              };
-
-                                if (item.NewLine)
                                 {
-                                    run.Text += Environment.NewLine;
-                                }
+#if !DEBUG
+                                    if (line.LineType == PowerShellLineType.Debug ||
+                                        line.LineType == PowerShellLineType.Verbose)
+                                    {
+                                        return;
+                                    }
+#endif // DEBUG
+                                    var runBrushes = GetOutputLineBrush(line);
+                                    var run = new Run
+                                    {
+                                        Text = item.Text,
+                                        Name = _getNameHash(line.Text),
+                                        Foreground = runBrushes.Item1,
+                                        Background = runBrushes.Item2
+                                    };
 
-                                this._backingParagraph.Inlines.Add(run);
-                                Selection.Select(run.ContentStart, run.ContentEnd);
-                            }), 
+                                    if (item.NewLine)
+                                    {
+                                        run.Text += Environment.NewLine;
+                                    }
+
+                                    this._backingParagraph.Inlines.Add(run);
+                                    Selection.Select(run.ContentStart, run.ContentEnd);
+                                    this.ScrollToEnd();
+                                }),
                             item);
                     }
 
@@ -144,6 +147,22 @@ namespace ChocolateyGui.Controls
             if (pob != null)
             {
                 pob.OnBufferChanged(args);
+            }
+        }
+
+        private static Tuple<Brush, Brush> GetOutputLineBrush(PowerShellOutputLine line)
+        {
+            switch (line.LineType)
+            {
+                case PowerShellLineType.Debug:
+                case PowerShellLineType.Verbose:
+                    return new Tuple<Brush, Brush>(Brushes.Gray, Brushes.Transparent);
+                case PowerShellLineType.Warning:
+                    return new Tuple<Brush, Brush>(Brushes.OrangeRed, Brushes.Black);
+                case PowerShellLineType.Error:
+                    return new Tuple<Brush, Brush>(Brushes.Red, Brushes.Black);
+                default:
+                    return new Tuple<Brush, Brush>(Brushes.White, Brushes.Transparent);
             }
         }
 

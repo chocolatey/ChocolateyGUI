@@ -23,10 +23,10 @@ namespace ChocolateyGui.Controls.Dialogs
 
             this.IsOpen = dialog.IsVisible;
 
-            this.WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() =>
+            this.WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(() =>
             {
                 this.WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
-            }));
+            });
         }
 
         public delegate void DialogCanceledEventHandler(BaseMetroDialog dialog);
@@ -75,10 +75,10 @@ namespace ChocolateyGui.Controls.Dialogs
 
             await this.CloseCallback();
 
-            this.WrappedDialog.Dispatcher.Invoke(new Action(() =>
+            this.WrappedDialog.Dispatcher.Invoke(() =>
             {
                 IsOpen = false;
-            }));
+            });
         }
 
         /// <summary>
@@ -114,11 +114,10 @@ namespace ChocolateyGui.Controls.Dialogs
             else
             {
                 this.WrappedDialog.Dispatcher.Invoke(
-                    new Action(
-                        () =>
-                        {
-                            WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
-                        }));
+                    () =>
+                    {
+                        WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
+                    });
             }
         }
 
@@ -130,7 +129,7 @@ namespace ChocolateyGui.Controls.Dialogs
         {
             if (value < 0.0 || value > 1.0)
             {
-                throw new ArgumentOutOfRangeException("value");
+                throw new ArgumentOutOfRangeException(nameof(value));
             }
 
             Action action = () =>
@@ -175,11 +174,6 @@ namespace ChocolateyGui.Controls.Dialogs
             {
                 this.IsCanceled = true;
                 this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
-                var cancelled = this.OnCanceled;
-                if (cancelled != null)
-                {
-                    cancelled(this.WrappedDialog);
-                }
             }
             else
             {
@@ -187,11 +181,7 @@ namespace ChocolateyGui.Controls.Dialogs
                 {
                     IsCanceled = true;
                     this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
-                    var cancelled = this.OnCanceled;
-                    if (cancelled != null)
-                    {
-                        cancelled(this.WrappedDialog);
-                    }
+                    this.OnCanceled?.Invoke(this.WrappedDialog);
                 }));
             }
 

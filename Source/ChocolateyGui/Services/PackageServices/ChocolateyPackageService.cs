@@ -27,11 +27,11 @@ namespace ChocolateyGui.Services
 
         public ChocolateyPackageService(
             IProgressService progressService,
-            Func<Type, ILogService> logServiceFunc,
+            Func<string, ILogService> logFactory,
             IChocolateyConfigurationProvider chocolateyConfigurationProvider,
             IMapper mapper,
             Func<IPackageViewModel> packageFactory)
-            : base(progressService, logServiceFunc, chocolateyConfigurationProvider)
+            : base(progressService, logFactory, chocolateyConfigurationProvider)
         {
             _mapper = mapper;
             _packageFactory = packageFactory;
@@ -55,12 +55,15 @@ namespace ChocolateyGui.Services
 
                 StartProgressDialog("Chocolatey Service", "Retrieving installed packages...");
 
-                var choco = Lets.GetChocolatey();
+                var choco = Lets.GetChocolatey().Init(ProgressService, LogFactory);
                 choco.Set(config =>
                 {
                     config.CommandName = CommandNameType.list.ToString();
                     config.ListCommand.LocalOnly = true;
                     config.AllowUnofficialBuild = true;
+#if !DEBUG
+                config.Verbose = false;
+#endif // DEBUG
                 });
 
                 var packageResults = await choco.ListAsync<PackageResult>();
@@ -85,12 +88,15 @@ namespace ChocolateyGui.Services
         {
             StartProgressDialog("Install Package", "Installing package", id);
 
-            var choco = Lets.GetChocolatey();
+            var choco = Lets.GetChocolatey().Init(ProgressService, LogFactory);
             choco.Set(config =>
             {
                 config.CommandName = CommandNameType.install.ToString();
                 config.PackageNames = id;
                 config.AllowUnofficialBuild = true;
+#if !DEBUG
+                config.Verbose = false;
+#endif // DEBUG
 
                 if (version != null)
                 {
@@ -123,12 +129,15 @@ namespace ChocolateyGui.Services
         {
             StartProgressDialog("Uninstalling", "Uninstalling package", id);
 
-            var choco = Lets.GetChocolatey();
+            var choco = Lets.GetChocolatey().Init(ProgressService, LogFactory);
             choco.Set(config =>
             {
                 config.CommandName = CommandNameType.uninstall.ToString();
                 config.PackageNames = id;
                 config.AllowUnofficialBuild = true;
+#if !DEBUG
+                config.Verbose = false;
+#endif // DEBUG
 
                 if (version != null)
                 {
@@ -152,12 +161,15 @@ namespace ChocolateyGui.Services
 
             (await GetInstalledPackages()).FirstOrDefault(package => package.Id == id);
 
-            var choco = Lets.GetChocolatey();
+            var choco = Lets.GetChocolatey().Init(ProgressService, LogFactory);
             choco.Set(config =>
             {
                 config.CommandName = CommandNameType.upgrade.ToString();
                 config.PackageNames = id;
                 config.AllowUnofficialBuild = true;
+#if !DEBUG
+                config.Verbose = false;
+#endif // DEBUG
             });
 
             await choco.RunAsync();

@@ -50,7 +50,7 @@ namespace ChocolateyGui.IoC
             builder.Register(c => new PackageViewModel(c.Resolve<IRemotePackageService>(), c.Resolve<IChocolateyPackageService>(), c.Resolve<INavigationService>(), c.Resolve<IMapper>())).As<IPackageViewModel>();
 
             // Register Services
-            builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
+            builder.RegisterType<Log4NetLoggingService>().As<ILogService>();
             builder.RegisterType<ChocolateySourcesService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<RemotePackageService>().As<IRemotePackageService>().SingleInstance();

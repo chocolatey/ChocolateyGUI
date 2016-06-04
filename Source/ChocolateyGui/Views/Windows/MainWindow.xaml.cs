@@ -71,7 +71,7 @@ namespace ChocolateyGui.Views.Windows
 
         public Task<ChocolateyDialogController> ShowChocolateyDialogAsync(string title, bool isCancelable = false, MetroDialogSettings settings = null)
         {
-            return (Task<ChocolateyDialogController>)Dispatcher.Invoke(new Func<Task<ChocolateyDialogController>>(async () =>
+            return Dispatcher.Invoke(async () =>
             {
                 // create the dialog control
                 var dialog = new ChocolateyDialog(this)
@@ -90,7 +90,7 @@ namespace ChocolateyGui.Views.Windows
 
                 await this.ShowMetroDialogAsync(dialog);
                 return new ChocolateyDialogController(dialog, () => this.HideMetroDialogAsync(dialog));
-            }));
+            });
         }
 
         private void SettingsButton_OnClick(object sender, RoutedEventArgs e)

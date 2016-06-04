@@ -30,6 +30,11 @@ namespace ChocolateyGui.Services
             this._log = LogManager.GetLogger(logSourceType);
         }
 
+        public Log4NetLoggingService(string logSourceName)
+        {
+            this._log = LogManager.GetLogger(logSourceName);
+        }
+
         public void Debug(object message)
         {
             this._log.Debug(message);

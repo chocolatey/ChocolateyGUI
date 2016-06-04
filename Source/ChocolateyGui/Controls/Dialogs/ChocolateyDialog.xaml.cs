@@ -44,7 +44,7 @@ namespace ChocolateyGui.Controls.Dialogs
                 ((ChocolateyDialog)s).PART_Console.BufferCollection = (ObservableRingBufferCollection<PowerShellOutputLine>)e.NewValue;
             })));
 
-        public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ChocolateyDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ChocolateyDialog), new PropertyMetadata(Brushes.White));
 
         internal ChocolateyDialog(MetroWindow parentWindow)
         {
@@ -82,6 +82,12 @@ namespace ChocolateyGui.Controls.Dialogs
         {
             get { return (Brush)this.GetValue(ProgressBarForegroundProperty); }
             set { this.SetValue(ProgressBarForegroundProperty, value); }
+        }
+
+        protected override void OnClose()
+        {
+            base.OnClose();
+            this.OutputBufferCollection.Clear();
         }
     }
 }

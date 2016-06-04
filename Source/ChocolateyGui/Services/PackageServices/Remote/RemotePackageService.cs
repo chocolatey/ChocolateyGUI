@@ -22,15 +22,18 @@ namespace ChocolateyGui.Services
     {
         private readonly IProgressService _progressService;
         private readonly IMapper _mapper;
+        private readonly Func<string, ILogService> _logFactory;
         private readonly Func<IPackageViewModel> _packageFactory;
 
         public RemotePackageService(
             IProgressService progressService,
             IMapper mapper,
+            Func<string, ILogService> logFactory,
             Func<IPackageViewModel> packageFactory)
         {
             _progressService = progressService;
             _mapper = mapper;
+            _logFactory = logFactory;
             _packageFactory = packageFactory;
         }
 
@@ -59,7 +62,7 @@ namespace ChocolateyGui.Services
         public async Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false)
         {
             _progressService.WriteMessage(string.Format("Getting latest version of {0}...", id));
-            var choco = Lets.GetChocolatey();
+            var choco = Lets.GetChocolatey().Init(_progressService, _logFactory);
             choco.Set(config =>
             {
                 config.CommandName = CommandNameType.list.ToString();
@@ -68,11 +71,13 @@ namespace ChocolateyGui.Services
                 config.ListCommand.ByIdOnly = true;
                 config.Prerelease = includePrerelease;
                 config.ListCommand.Exact = true;
+#if !DEBUG
+                config.Verbose = false;
+#endif // DEBUG
             });
 
             var packageResults = await choco.ListAsync<PackageResult>();
             var package = packageResults
-                .Where(result => string.Equals(result.Package.Id, id, StringComparison.InvariantCultureIgnoreCase))
                 .FirstOrDefault(
                     result =>
                         includePrerelease ? result.Package.IsAbsoluteLatestVersion : result.Package.IsLatestVersion);
@@ -82,7 +87,7 @@ namespace ChocolateyGui.Services
 
         public async Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version, bool isPrerelease)
         {
-            var choco = Lets.GetChocolatey();
+            var choco = Lets.GetChocolatey().Init(_progressService, _logFactory);
             choco.Set(config =>
             {
                 config.CommandName = CommandNameType.list.ToString();
@@ -92,6 +97,9 @@ namespace ChocolateyGui.Services
                 config.Prerelease = isPrerelease;
                 config.ListCommand.Exact = true;
                 config.AllVersions = true;
+#if !DEBUG
+                config.Verbose = false;
+#endif // DEBUG
             });
 
             var packageResults = await choco.ListAsync<PackageResult>();
@@ -111,7 +119,7 @@ namespace ChocolateyGui.Services
 
         private async Task<PackageSearchResults> SearchImpl(string query, PackageSearchOptions options)
         {
-            var choco = Lets.GetChocolatey();
+            var choco = Lets.GetChocolatey().Init(_progressService, _logFactory);
             choco.Set(config =>
             {
                 config.CommandName = CommandNameType.list.ToString();
@@ -124,6 +132,9 @@ namespace ChocolateyGui.Services
                 config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn) ||
                                                         options.SortColumn == "DownloadCount";
                 config.ListCommand.Exact = options.MatchQuery;
+#if !DEBUG
+                config.Verbose = false;
+#endif // DEBUG
             });
 
             var packages = (await choco.ListAsync<PackageResult>()).Select(package =>

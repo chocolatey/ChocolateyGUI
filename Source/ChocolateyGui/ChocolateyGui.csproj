@@ -63,9 +63,9 @@
       <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="chocolatey, Version=0.9.10.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb, processorArchitecture=MSIL">
+    <Reference Include="chocolatey, Version=0.9.10.0, Culture=neutral, PublicKeyToken=fd112f53c3ab578c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\chocolatey.lib.0.9.10-beta-20160531\lib\chocolatey.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -172,8 +172,6 @@
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\ISourceService.cs" />
     <Compile Include="Services\Log4NetLoggingService.cs" />
-    <Compile Include="Services\PackageServices\Remote\FileSystemPackageService.cs" />
-    <Compile Include="Services\PackageServices\Remote\ODataRemotePackageService.cs" />
     <Compile Include="Services\PersistenceService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\AsyncLock.cs" />

@@ -12,10 +12,8 @@ namespace ChocolateyGui.Views.Windows
     using System.Windows;
     using System.Windows.Input;
     using ChocolateyGui.Controls.Dialogs;
-    using ChocolateyGui.Models;
     using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
-    using ChocolateyGui.ViewModels.Items;
     using ChocolateyGui.ViewModels.Windows;
     using ChocolateyGui.Views.Controls;
     using MahApps.Metro.Controls.Dialogs;
@@ -48,9 +46,6 @@ namespace ChocolateyGui.Views.Windows
             this._chocolateyConfigurationProvider = chocolateyConfigurationProvider;
 
             this.CheckOperatingSystemCompatibility();
-
-            // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
-            AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
 
             navigationService.SetNavigationItem(GlobalFrame);
             navigationService.Navigate(typeof(SourcesControl));

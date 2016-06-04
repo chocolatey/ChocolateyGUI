@@ -8,6 +8,7 @@ namespace ChocolateyGui.IoC
 {
     using System;
     using Autofac;
+    using AutoMapper;
     using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
     using ChocolateyGui.ViewModels.Controls;
@@ -15,6 +16,7 @@ namespace ChocolateyGui.IoC
     using ChocolateyGui.ViewModels.Windows;
     using ChocolateyGui.Views.Controls;
     using ChocolateyGui.Views.Windows;
+    using NuGet;
 
     public static class AutoFacConfiguration
     {
@@ -45,7 +47,7 @@ namespace ChocolateyGui.IoC
             builder.RegisterType<LocalSourceControlViewModel>().As<ILocalSourceControlViewModel>();
             builder.RegisterType<RemoteSourceControlViewModel>().As<IRemoteSourceControlViewModel>();
             builder.RegisterType<PackageControlViewModel>().As<IPackageControlViewModel>();
-            builder.Register(c => new PackageViewModel(c.Resolve<IRemotePackageService>(), c.Resolve<IChocolateyPackageService>(), c.Resolve<INavigationService>())).As<IPackageViewModel>();
+            builder.Register(c => new PackageViewModel(c.Resolve<IRemotePackageService>(), c.Resolve<IChocolateyPackageService>(), c.Resolve<INavigationService>(), c.Resolve<IMapper>())).As<IPackageViewModel>();
 
             // Register Services
             builder.Register((c, parameters) => new Log4NetLoggingService(parameters.TypedAs<Type>())).As<ILogService>();
@@ -62,6 +64,16 @@ namespace ChocolateyGui.IoC
             builder.Register((c, parameters) =>
                 new RemoteSourceControl(c.Resolve<IRemoteSourceControlViewModel>(parameters), c.Resolve<Lazy<INavigationService>>()));
             builder.Register((c, pvm) => new PackageControl(c.Resolve<IPackageControlViewModel>(), pvm.TypedAs<PackageViewModel>()));
+
+            // Register Mapper
+            var mapperConfiguration = new MapperConfiguration(config =>
+            {
+                config.CreateMap<IPackage, IPackageViewModel>();
+                config.CreateMap<IPackageViewModel, IPackageViewModel>()
+                    .ForMember(vm => vm.IsInstalled, options => options.Ignore());
+            });
+
+            builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
 
             return builder.Build();
         }

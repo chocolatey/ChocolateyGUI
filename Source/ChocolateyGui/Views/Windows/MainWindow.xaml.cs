@@ -12,10 +12,8 @@ namespace ChocolateyGui.Views.Windows
     using System.Windows;
     using System.Windows.Input;
     using ChocolateyGui.Controls.Dialogs;
-    using ChocolateyGui.Models;
     using ChocolateyGui.Providers;
     using ChocolateyGui.Services;
-    using ChocolateyGui.ViewModels.Items;
     using ChocolateyGui.ViewModels.Windows;
     using ChocolateyGui.Views.Controls;
     using MahApps.Metro.Controls.Dialogs;

@@ -14,6 +14,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ControlStyles/Flyout.xaml"/>
         <ResourceDictionary Source="ControlStyles/Dialog.xaml"/>
+        <ResourceDictionary Source="ControlStyles/SourceList.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <converters:BooleanToVisibility x:Key="BooleanToVisibility"/>
@@ -43,16 +44,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Padding="20, 10" Margin="0,5,0,0" BorderThickness="2,0,0,0" BorderBrush="#7e4700">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Padding="20, 10" Margin="0,5,0,0" BorderThickness="2,0,0,0" BorderBrush="{StaticResource AccentColorBrush3}">
                         <TextBlock x:Name="Tb" Style="{StaticResource SouceItemTextBlockStyle}"  Text="{Binding Name}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"  />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="BorderBrush" TargetName="Bd" Value="LightGray"/>
-                            <Setter Property="Background" TargetName="Bd" Value="#FFb4884f"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource AccentColorBrush2}"/>
+                            <Setter Property="Foreground" TargetName="Tb" Value="{StaticResource IdealForegroundColorBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Bd" Value="#77b4884f"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource HighlightBrush}"/>
+                            <Setter Property="Foreground" TargetName="Tb" Value="{StaticResource IdealForegroundColorBrush}"/>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="LightGray"/>
                         </Trigger>
                         <MultiTrigger>
@@ -60,8 +63,8 @@
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="Selector.IsSelectionActive" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="#FFb4884f"/>
-                            <Setter Property="Foreground" TargetName="Tb" Value="#FF4e2c01"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource AccentColorBrush}"/>
+                            <Setter Property="Foreground" TargetName="Tb" Value="{StaticResource IdealForegroundColorBrush}"/>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="White"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
@@ -128,8 +131,9 @@
         </Setter>
     </Style>
 
+
     <Style TargetType="{x:Type CheckBox}">
-        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}"/>
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}"/>
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -200,36 +204,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Color x:Key="AccentColor">#FF4e2c01</Color>
-    <Color x:Key="HighlightColor">#FFb4884f</Color>
-    <Color x:Key="TextHighlightColor">#FFa07644</Color>
-    <Color x:Key="LightBackgroundColor">#FFf7f1e4</Color>
-
-    <Color x:Key="Brown1">#FF4e2c01</Color>
-    <Color x:Key="Brown2">#FF5F3500</Color>
-    <Color x:Key="Brown3">#FFb4884f</Color>
-    <Color x:Key="Brown4">#FFC4965A</Color>
-    <Color x:Key="Brown5">#FFDEAB68</Color>
-    <Color x:Key="Brown6">#FF8D6634</Color>
-
-    <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}"/>
-    <SolidColorBrush x:Key="AccentColorBrush2" Color="#FF8D6634"/>
-    <SolidColorBrush x:Key="AccentColorBrush3" Color="#FFDEAB68"/>
-    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}"/>
-    <SolidColorBrush x:Key="TextHighlightBrush" Color="{StaticResource TextHighlightColor}"/>
-    <SolidColorBrush x:Key="TextBoxMouseOverBorderBrush" Color="{StaticResource HighlightColor}"/>
-    <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush" Color="{StaticResource HighlightColor}"/>
-    <SolidColorBrush x:Key="LightBackgroundColorBrush" Color="{StaticResource LightBackgroundColor}"/>
-
-    <SolidColorBrush x:Key="Brown1Brush" Color="{StaticResource Brown1}"></SolidColorBrush>
-    <SolidColorBrush x:Key="Brown2Brush" Color="{StaticResource Brown2}"></SolidColorBrush>
-    <SolidColorBrush x:Key="Brown3Brush" Color="{StaticResource Brown3}"></SolidColorBrush>
-    <SolidColorBrush x:Key="Brown4Brush" Color="{StaticResource Brown4}"></SolidColorBrush>
-    <SolidColorBrush x:Key="Brown5Brush" Color="{StaticResource Brown5}"></SolidColorBrush>
-    <SolidColorBrush x:Key="Brown6Brush" Color="{StaticResource Brown6}"></SolidColorBrush>
-
-    <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource AccentColor}" />
 
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}"/>
@@ -394,7 +368,7 @@
     </Style>
 
     <Style x:Key="PageCountTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource Brown5Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush4}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
@@ -623,7 +597,7 @@
 
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}">
         <Setter Property="GridLinesVisibility" Value="None"/>
-        <Setter Property="Background" Value="{DynamicResource Brown5Brush}"/>
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ColumnHeaderStyle">
@@ -638,8 +612,8 @@
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                     <Setter Property="Padding" Value="10,4,4,7"/>
                     <Setter Property="Margin" Value="0"/>
-                    <Setter Property="BorderBrush" Value="{StaticResource Brown1Brush}"/>
-                    <Setter Property="Background" Value="{StaticResource Brown3Brush}"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush4}"/>
+                    <Setter Property="Background" Value="{StaticResource AccentColorBrush2}"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
@@ -844,7 +818,7 @@
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="Selector.IsSelectionActive" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" Value="{StaticResource Brown2Brush}"/>
+                            <Setter Property="Background" Value="{StaticResource AccentColorBrush2}"/>
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}"/>

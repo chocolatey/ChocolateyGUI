@@ -23,7 +23,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,5">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,5" Style="{StaticResource LeftSourceListItem}">
             <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}">Search:</Label>
             <TextBox x:Name="SearchTextBox" Width="300" Padding="0,2,0,-2" FontSize="14" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <CheckBox Name="AllVersionsCheckBox" Margin="10,5,5,5" Content="All Versions" IsChecked="{Binding IncludeAllVersions}"/>
@@ -49,7 +49,7 @@
             <Button Grid.Column="4" Name="LastPage" AutomationProperties.Name="Go to Last Page" ToolTip="Last" Command="{commands:DataContextCommandAdapter Executed=GoToLast, CanExecute=CanGoToLast}" Style="{DynamicResource PaginationButtonStyle}">Last</Button>
         </Grid>
 
-        <DataGrid Grid.Row="1" x:Name="PackagesGrid" ItemsSource="{Binding Packages}" Background="{StaticResource LightBackgroundColorBrush}"
+        <DataGrid Grid.Row="1" x:Name="PackagesGrid" ItemsSource="{Binding Packages}" Background="{StaticResource ControlBackgroundBrush}"
                   AutoGenerateColumns="False" IsReadOnly="True" Sorting="DataGrid_OnSorting"
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>

@@ -8,29 +8,30 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     mc:Ignorable="d"
                     x:Class="ChocolateyGui.Controls.Dialogs.ChocolateyDialog"
-                    d:DesignHeight="300" d:DesignWidth="1300">
+                    Background="{StaticResource BackgroundColorBrush}"
+                    Height="300" d:DesignWidth="1300">
     <MahDialogs:BaseMetroDialog.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <Controls:FauxPowerShellConsole x:Name="PART_Console" Padding="5"
-                                            MinHeight="300" MaxHeight="800"
-                                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                            BorderBrush="#FFEBEBEB" BorderThickness="5" Background="#FF012456"
-                                            Foreground="#FFEEEDF0" FontFamily="Lucida Console" FontSize="12"
-                                            IsReadOnly="True"/>
+                <Controls:FauxPowerShellConsole x:Name="PART_Console" Padding="5"
+                                                Grid.Row="0"
+                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                BorderBrush="#FFEBEBEB" BorderThickness="5" Background="#FF012456"
+                                                Foreground="#FFEEEDF0" FontFamily="Lucida Console" FontSize="12"
+                                                IsReadOnly="True"/>
                 <StackPanel Grid.Row="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
-                <Button x:Name="PART_NegativeButton"
-                        Height="35"
-                        MinWidth="80"
-                        Style="{DynamicResource AccentedDialogSquareButton}"
-                        Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="5 0 0 0"
-                        Visibility="Hidden" />
+                    <Button x:Name="PART_NegativeButton"
+                            Height="35"
+                            MinWidth="80"
+                            Style="{DynamicResource AccentedDialogSquareButton}"
+                            Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="5 0 0 0"
+                            Visibility="Hidden" />
             </StackPanel>
         </Grid>
     </MahDialogs:BaseMetroDialog.Content>

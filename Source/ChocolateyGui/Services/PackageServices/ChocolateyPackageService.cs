@@ -80,6 +80,7 @@ namespace ChocolateyGui.Services
                 CachedPackages = packages;
 
                 await ProgressService.StopLoading();
+                NotifyPackagesChanged(PackagesChangedEventType.Updated);
                 return packages;
             }
         }
@@ -116,11 +117,7 @@ namespace ChocolateyGui.Services
 
             await choco.RunAsync();
 
-            (await GetInstalledPackages(true)).OrderByDescending(p => p.Version)
-                    .FirstOrDefault(
-                        p =>
-                        string.Compare(p.Id, id, StringComparison.OrdinalIgnoreCase) == 0
-                        && (version == null || version == p.Version));
+            await GetInstalledPackages(true);
 
             await InstalledPackage(id, version);
         }
@@ -150,7 +147,6 @@ namespace ChocolateyGui.Services
             await GetInstalledPackages(force: true);
 
             await UninstalledPackage(id, version);
-            NotifyPackagesChanged(PackagesChangedEventType.Uninstalled, id, version.ToString());
 
             await ProgressService.StopLoading();
         }
@@ -174,7 +170,7 @@ namespace ChocolateyGui.Services
 
             await choco.RunAsync();
 
-            (await GetInstalledPackages(true)).FirstOrDefault(package => package.Id == id);
+            await GetInstalledPackages(true);
 
             await UpdatedPackage(id);
         }

@@ -22,7 +22,7 @@
      </UserControl.Resources>
 
     <DockPanel x:Name="PackageViewGrid" LastChildFill="True" DataContext="{Binding Package}" d:DataContext="{d:DesignInstance items:PackageViewModel}"
-                          Background="{StaticResource LightBackgroundColorBrush}"
+                          Background="{StaticResource ControlBackgroundBrush}"
                           Visibility="{Binding DataContext, RelativeSource={RelativeSource Self}, FallbackValue=Collapsed, Converter={StaticResource NullToVisibility}}">
         <StackPanel DockPanel.Dock="Top" Margin="20,0,0,0">
             <StackPanel Orientation="Horizontal">

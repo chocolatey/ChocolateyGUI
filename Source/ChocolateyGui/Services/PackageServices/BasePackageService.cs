@@ -129,18 +129,14 @@ namespace ChocolateyGui.Services
 
         public void NotifyPackagesChanged(PackagesChangedEventType command, string packageId = "", string packageVersion = "")
         {
-            var packagesUpdated = this.PackagesUpdated;
-            if (packagesUpdated != null)
-            {
-                packagesUpdated(
-                    this,
-                    new PackagesChangedEventArgs
-                    {
-                        EventType = command,
-                        PackageId = packageId,
-                        PackageVersion = packageVersion
-                    });
-            }
+            PackagesUpdated?.Invoke(
+                this,
+                new PackagesChangedEventArgs
+                {
+                    EventType = command,
+                    PackageId = packageId,
+                    PackageVersion = packageVersion
+                });
         }
 
         public async Task InstalledPackage(string id, SemanticVersion version)

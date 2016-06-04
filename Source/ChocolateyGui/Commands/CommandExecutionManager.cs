@@ -12,6 +12,7 @@ namespace ChocolateyGui.Commands
     using System.Globalization;
     using System.Reflection;
     using System.Threading.Tasks;
+    using System.Windows;
     using Expression = System.Linq.Expressions.Expression;
 
     /// <summary>
@@ -114,6 +115,13 @@ namespace ChocolateyGui.Commands
         /// </returns>
         public static bool TryExecuteCommand(object target, object parameter, bool execute, string executedMethodName, string canExecuteMethodName, out bool canExecute)
         {
+            var designTime = System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject());
+            if (designTime)
+            {
+                canExecute = true;
+                return true;
+            }
+
             if (target != null && !string.IsNullOrEmpty(executedMethodName))
             {
                 var executionProvider = GetCommandExecutionProvider(target, canExecuteMethodName, executedMethodName);

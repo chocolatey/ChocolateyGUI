@@ -7,22 +7,30 @@
 namespace ChocolateyGui.Services
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
+    using AutoMapper;
+    using chocolatey;
+    using chocolatey.infrastructure.app.domain;
+    using chocolatey.infrastructure.results;
     using ChocolateyGui.Models;
-    using ChocolateyGui.Services.PackageServices;
+    using ChocolateyGui.Utilities.Extensions;
     using ChocolateyGui.ViewModels.Items;
     using NuGet;
 
     public class RemotePackageService : IRemotePackageService
     {
         private readonly IProgressService _progressService;
+        private readonly IMapper _mapper;
         private readonly Func<IPackageViewModel> _packageFactory;
 
         public RemotePackageService(
             IProgressService progressService,
+            IMapper mapper,
             Func<IPackageViewModel> packageFactory)
         {
             _progressService = progressService;
+            _mapper = mapper;
             _packageFactory = packageFactory;
         }
 
@@ -43,7 +51,7 @@ namespace ChocolateyGui.Services
                 _progressService.WriteMessage(string.Format("Searching for {0}", query));
             }
 
-            var results = await ODataRemotePackageService.Search(query, _packageFactory, options);
+            var results = await SearchImpl(query, options);
             await _progressService.StopLoading();
             return results;
         }
@@ -51,12 +59,85 @@ namespace ChocolateyGui.Services
         public async Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false)
         {
             _progressService.WriteMessage(string.Format("Getting latest version of {0}...", id));
-            return await ODataRemotePackageService.GetLatest(id, _packageFactory, includePrerelease);
+            var choco = Lets.GetChocolatey();
+            choco.Set(config =>
+            {
+                config.CommandName = CommandNameType.list.ToString();
+                config.Input = id;
+                config.AllowUnofficialBuild = true;
+                config.ListCommand.ByIdOnly = true;
+                config.Prerelease = includePrerelease;
+                config.ListCommand.Exact = true;
+            });
+
+            var packageResults = await choco.ListAsync<PackageResult>();
+            var package = packageResults
+                .Where(result => string.Equals(result.Package.Id, id, StringComparison.InvariantCultureIgnoreCase))
+                .FirstOrDefault(
+                    result =>
+                        includePrerelease ? result.Package.IsAbsoluteLatestVersion : result.Package.IsLatestVersion);
+
+            return GetMappedPackage(package, _packageFactory);
         }
 
-        public Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version, bool isPrerelease)
+        public async Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version, bool isPrerelease)
         {
-            return ODataRemotePackageService.GetByVersionAndIdAsync(id, version, isPrerelease, _packageFactory);
+            var choco = Lets.GetChocolatey();
+            choco.Set(config =>
+            {
+                config.CommandName = CommandNameType.list.ToString();
+                config.Input = id;
+                config.AllowUnofficialBuild = true;
+                config.ListCommand.ByIdOnly = true;
+                config.Prerelease = isPrerelease;
+                config.ListCommand.Exact = true;
+                config.AllVersions = true;
+            });
+
+            var packageResults = await choco.ListAsync<PackageResult>();
+            var package = packageResults
+                .Where(result => string.Equals(result.Package.Id, id, StringComparison.InvariantCultureIgnoreCase))
+                .FirstOrDefault(
+                    result => result.Package.Version == version);
+
+            return GetMappedPackage(package, _packageFactory);
+        }
+
+        private IPackageViewModel GetMappedPackage(PackageResult package, Func<IPackageViewModel> packageFactory)
+        {
+            var mappedPackage = package == null ? null : _mapper.Map(package.Package, packageFactory());
+            return mappedPackage;
+        }
+
+        private async Task<PackageSearchResults> SearchImpl(string query, PackageSearchOptions options)
+        {
+            var choco = Lets.GetChocolatey();
+            choco.Set(config =>
+            {
+                config.CommandName = CommandNameType.list.ToString();
+                config.Input = query;
+                config.AllowUnofficialBuild = true;
+                config.AllVersions = options.IncludeAllVersions;
+                config.Prerelease = options.IncludePrerelease;
+                config.ListCommand.Page = options.CurrentPage;
+                config.ListCommand.PageSize = options.PageSize;
+                config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn) ||
+                                                        options.SortColumn == "DownloadCount";
+                config.ListCommand.Exact = options.MatchQuery;
+            });
+
+            var packages = (await choco.ListAsync<PackageResult>()).Select(package =>
+            {
+                var mappedPackage = _mapper.Map(package.Package, _packageFactory());
+                mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation);
+                return mappedPackage;
+            });
+
+            return new PackageSearchResults
+            {
+                Packages = packages,
+                TotalCount = await Task.Run(() => choco.ListCount())
+            };
         }
     }
 }

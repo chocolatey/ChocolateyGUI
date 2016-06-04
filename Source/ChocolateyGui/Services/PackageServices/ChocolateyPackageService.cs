@@ -10,6 +10,7 @@ namespace ChocolateyGui.Services
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using AutoMapper;
     using chocolatey;
     using chocolatey.infrastructure.app.domain;
     using chocolatey.infrastructure.results;
@@ -21,15 +22,18 @@ namespace ChocolateyGui.Services
 
     public class ChocolateyPackageService : BasePackageService, IChocolateyPackageService
     {
+        private readonly IMapper _mapper;
         private readonly Func<IPackageViewModel> _packageFactory;
 
         public ChocolateyPackageService(
             IProgressService progressService,
             Func<Type, ILogService> logServiceFunc,
             IChocolateyConfigurationProvider chocolateyConfigurationProvider,
+            IMapper mapper,
             Func<IPackageViewModel> packageFactory)
             : base(progressService, logServiceFunc, chocolateyConfigurationProvider)
         {
+            _mapper = mapper;
             _packageFactory = packageFactory;
         }
 
@@ -63,7 +67,7 @@ namespace ChocolateyGui.Services
 
                 packages = packageResults
                     .Select(
-                        package => AutoMapper.Mapper.Map(package.Package, _packageFactory()))
+                        package => _mapper.Map(package.Package, _packageFactory()))
                         .Select(package =>
                         {
                             package.IsInstalled = true;

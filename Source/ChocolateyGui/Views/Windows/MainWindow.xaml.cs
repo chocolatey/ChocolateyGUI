@@ -49,9 +49,6 @@ namespace ChocolateyGui.Views.Windows
 
             this.CheckOperatingSystemCompatibility();
 
-            // RichiCoder1 (21-09-2014) - Why are we doing this, especially here?
-            AutoMapper.Mapper.CreateMap<PackageMetadata, PackageViewModel>();
-
             navigationService.SetNavigationItem(GlobalFrame);
             navigationService.Navigate(typeof(SourcesControl));
         }

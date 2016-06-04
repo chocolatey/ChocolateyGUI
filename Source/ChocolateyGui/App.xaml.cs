@@ -12,9 +12,7 @@ namespace ChocolateyGui
     using ChocolateyGui.IoC;
     using ChocolateyGui.Services;
     using ChocolateyGui.Utilities.Extensions;
-    using ChocolateyGui.ViewModels.Items;
     using ChocolateyGui.Views.Windows;
-    using NuGet;
 
     /// <summary>
     /// Interaction logic for App.xaml
@@ -27,11 +25,9 @@ namespace ChocolateyGui
 
             Log = typeof(App).GetLogger();
 
-            AutoMapper.Mapper.CreateMap<IPackage, IPackageViewModel>();
-            AutoMapper.Mapper.CreateMap<IPackageViewModel, IPackageViewModel>();
-
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
             Log.Info("Starting...");
         }
@@ -56,6 +52,20 @@ namespace ChocolateyGui
             var mainWindow = Container.Resolve<MainWindow>();
             MainWindow = mainWindow;
             MainWindow.Show();
+        }
+
+        // Monkey patch for confliciting versions of Reactive in Chocolatey and ChocolateyGUI.
+        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (args.Name ==
+                "System.Reactive.PlatformServices, Version=0.9.10.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb")
+            {
+                return typeof(chocolatey.Lets).Assembly;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private static void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)

@@ -29,6 +29,8 @@ namespace ChocolateyGui.ViewModels.Items
 
         private readonly INavigationService _navigationService;
 
+        private readonly IMapper _mapper;
+
         private readonly IRemotePackageService _remotePackageService;
 
         private string[] _authors;
@@ -98,11 +100,13 @@ namespace ChocolateyGui.ViewModels.Items
         public PackageViewModel(
             IRemotePackageService remotePackageService,
             IChocolateyPackageService chocolateyService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            IMapper mapper)
         {
             _remotePackageService = remotePackageService;
             _chocolateyService = chocolateyService;
             _navigationService = navigationService;
+            _mapper = mapper;
             PackagesChangedEventManager.AddListener(_chocolateyService, this);
         }
 
@@ -411,7 +415,7 @@ namespace ChocolateyGui.ViewModels.Items
         private async Task PopulateDetails()
         {
             var package = await _remotePackageService.GetByVersionAndIdAsync(_id, _version, _isPrerelease);
-            Mapper.Map<IPackageViewModel, IPackageViewModel>(package, this);
+            _mapper.Map<IPackageViewModel, IPackageViewModel>(package, this);
         }
     }
 }

@@ -14,7 +14,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
                 <Controls:FauxPowerShellConsole x:Name="PART_Console" Padding="5"
                                                 Grid.Row="0"
@@ -24,7 +24,8 @@
                                                 IsReadOnly="True"/>
                 <StackPanel Grid.Row="1"
                         Orientation="Horizontal"
-                        HorizontalAlignment="Right">
+                        HorizontalAlignment="Right"
+                        Visibility="{Binding IsCancelable, RelativeSource={RelativeSource AncestorType=Dialogs:ChocolateyDialog, Mode=FindAncestor}, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged}">
                     <Button x:Name="PART_NegativeButton"
                             Height="35"
                             MinWidth="80"

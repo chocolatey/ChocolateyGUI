@@ -13,6 +13,7 @@ namespace ChocolateyGui.ViewModels.Items
     using System.Windows;
     using AutoMapper;
     using Base;
+    using ChocolateyGui.Enums;
     using Models;
     using NuGet;
     using Services;
@@ -329,7 +330,19 @@ namespace ChocolateyGui.ViewModels.Items
         {
             if (sender is IChocolateyPackageService && e is PackagesChangedEventArgs)
             {
-                NotifyPropertyChanged("IsInstalled");
+                var args = (PackagesChangedEventArgs)e;
+                if (args.PackageId == this.Id && args.PackageVersion == this.Version.ToString())
+                {
+                    if (args.EventType == PackagesChangedEventType.Installed)
+                    {
+                        this.IsInstalled = true;
+                    }
+                    else if (args.EventType == PackagesChangedEventType.Uninstalled)
+                    {
+                        this.IsInstalled = true;
+                    }
+                }
+
                 NotifyPropertyChanged("CanUpdate");
             }
 

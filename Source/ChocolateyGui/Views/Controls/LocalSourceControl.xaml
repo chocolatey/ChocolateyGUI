@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Margin="0,5">
+        <StackPanel Orientation="Horizontal" Margin="0,5" Style="{StaticResource LeftSourceListItem}">
             <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}">Search: </Label>
             <TextBox x:Name="SearchTextBox" Width="300" Padding="0,2,0,-2" FontSize="14" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <CheckBox Name="MatchCheckBox" Margin="5" Content="Match Word Exactly" IsChecked="{Binding MatchWord}"/>
@@ -31,7 +31,7 @@
             <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}" Visibility="{Binding ShowOnlyPackagesWithUpdate, Converter={StaticResource BoolToVis}}" Style="{StaticResource SquareButtonStyle}" Margin="4,0,4,0"  Content="Update All"/>
             <Button Command="{commands:DataContextCommandAdapter ExportAll, CanExportAll}" Style="{StaticResource SquareButtonStyle}" Margin="4,0,0,0"  Content="Export"/>
         </StackPanel>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Packages}" Background="{StaticResource LightBackgroundColorBrush}"
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Packages}" Background="{StaticResource ControlBackgroundBrush}"
                   AutoGenerateColumns="False" IsReadOnly="True"
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>

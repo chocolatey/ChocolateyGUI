@@ -21,15 +21,7 @@ namespace ChocolateyGui.Controls.Dialogs
             "IsCancelable",
             typeof(bool),
             typeof(ChocolateyDialog),
-            new PropertyMetadata(
-                default(bool),
-                new PropertyChangedCallback(
-                    (s, e) =>
-                        {
-                            ((ChocolateyDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue
-                                                                                       ? Visibility.Visible
-                                                                                       : Visibility.Collapsed;
-                        })));
+            new PropertyMetadata(default(bool)));
 
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(ChocolateyDialog), new PropertyMetadata("Cancel"));
 

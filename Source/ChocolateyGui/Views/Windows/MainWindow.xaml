@@ -7,10 +7,12 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:commands="clr-namespace:ChocolateyGui.Commands"
 		xmlns:xaml="clr-namespace:Markdown.Xaml"
+        xmlns:diagnostics="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+        diagnostics:PresentationTraceSources.TraceLevel="High"
 		mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
 		d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         Icon="../../chocolateyicon.ico"
-		TitleForeground="{StaticResource GrayBrush1}"
+		TitleForeground="Transparent"
 		Title="ChocolateyGUI">
 
 	<Window.Resources>
@@ -34,7 +36,7 @@
 	<metro:MetroWindow.Flyouts>
 		<metro:FlyoutsControl>
             <metro:Flyout x:Name="AboutFlyout" Header="About" Position="Right" Width="540" Theme="Accent" >
-                <Border Background="{StaticResource LightBackgroundColorBrush}">
+                <Border Background="White">
                     <metro:MetroAnimatedSingleRowTabControl>
 					    <TabItem Header="About">
                             <Grid>
@@ -99,7 +101,7 @@
 		</metro:FlyoutsControl>
 	</metro:MetroWindow.Flyouts>
 
-	<Border Background="{StaticResource LightBackgroundColorBrush}">
+    <Border Background="{StaticResource BackgroundColorBrush}">
 		<Grid>
 			<ContentControl x:Name="GlobalFrame"></ContentControl>
 		</Grid>

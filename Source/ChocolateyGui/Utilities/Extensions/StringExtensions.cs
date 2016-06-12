@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+
 namespace ChocolateyGui.Utilities.Extensions
 {
-    using System;
-
     public static class StringExtensions
     {
         public static bool EqualsIgnoreCase(this string source, string target)

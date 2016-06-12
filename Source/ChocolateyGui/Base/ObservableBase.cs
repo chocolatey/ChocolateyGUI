@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace ChocolateyGui.Base
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-
     public abstract class ObservableBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -22,12 +22,12 @@ namespace ChocolateyGui.Base
             }
 
             property = value;
-            this.NotifyPropertyChanged(propertyName);
+            NotifyPropertyChanged(propertyName);
         }
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            var propertyChangedEvent = this.PropertyChanged;
+            var propertyChangedEvent = PropertyChanged;
             if (propertyChangedEvent != null)
             {
                 propertyChangedEvent(this, new PropertyChangedEventArgs(propertyName));

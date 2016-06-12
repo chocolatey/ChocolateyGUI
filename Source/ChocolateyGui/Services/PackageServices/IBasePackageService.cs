@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using ChocolateyGui.Models;
+
 namespace ChocolateyGui.Services
 {
-    using ChocolateyGui.Models;
-
     public interface IBasePackageService
     {
         event PackagesChangedEventHandler PackagesUpdated;

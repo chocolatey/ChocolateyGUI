@@ -4,16 +4,17 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Data;
+
 namespace ChocolateyGui.Utilities.Converters
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows.Data;
-
     public class StringListToString : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var items = value as IEnumerable<string>;
             if (items == null)
@@ -24,7 +25,7 @@ namespace ChocolateyGui.Utilities.Converters
             return string.Join(", ", items.Select(item => item.Trim()).ToList());
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

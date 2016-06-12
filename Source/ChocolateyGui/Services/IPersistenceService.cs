@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.IO;
+
 namespace ChocolateyGui.Services
 {
-    using System.IO;
-
     public interface IPersistenceService
     {
         Stream OpenFile(string defaultExtension, string filter);

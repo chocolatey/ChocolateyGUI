@@ -4,13 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Threading.Tasks;
+using ChocolateyGui.Models;
+using ChocolateyGui.ViewModels.Items;
+using NuGet;
+
 namespace ChocolateyGui.Services
 {
-    using System.Threading.Tasks;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.ViewModels.Items;
-    using NuGet;
-
     public interface IRemotePackageService
     {
         Task<PackageSearchResults> Search(string query);

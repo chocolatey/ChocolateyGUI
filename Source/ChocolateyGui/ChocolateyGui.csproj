@@ -63,6 +63,18 @@
       <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Caliburn.Micro, Version=3.0.1.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.3.0.1\lib\net45\Caliburn.Micro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform, Version=3.0.1.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.3.0.1\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform.Core, Version=3.0.1.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.3.0.1\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="chocolatey, Version=0.9.10.0, Culture=neutral, PublicKeyToken=fd112f53c3ab578c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\chocolatey.lib.0.9.10-beta-20160531\lib\chocolatey.dll</HintPath>
@@ -86,10 +98,6 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\System.Management.Automation.6.1.7601.17515\lib\net45\System.Management.Automation.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -115,7 +123,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\Caliburn.Micro.3.0.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -134,6 +142,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IoC\ChocolateyGuiModule.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />
     <Compile Include="Commands\DataContextCommandAdapter.cs" />
     <Compile Include="Commands\DataContextCommandBinding.cs" />
@@ -148,6 +158,11 @@
     <Compile Include="Enums\PackagesChangedEventType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IoC\AutoFacConfiguration.cs" />
+    <Compile Include="Models\Messages\PackageChangedMessage.cs" />
+    <Compile Include="Models\Messages\ResetScrollPositionMessage.cs" />
+    <Compile Include="Models\Messages\ShowSourcesMessage.cs" />
+    <Compile Include="Models\Messages\ShowPackageDetailsMessage.cs" />
+    <Compile Include="Models\Messages\SortColumnMessage.cs" />
     <Compile Include="Models\PackageConfigEntry.cs" />
     <Compile Include="Models\PackageMetadata.cs" />
     <Compile Include="Models\ShowMessageEventArgs.cs" />
@@ -180,15 +195,12 @@
     <Compile Include="Utilities\Extensions\ChocolateyExtensions.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\LogExtensions.cs" />
-    <Compile Include="Utilities\Extensions\PowershellExtensions.cs" />
+    <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
     <Compile Include="Utilities\Extensions\StringExtensions.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
-    <Compile Include="Utilities\SourcesChangedEventManager.cs" />
     <Compile Include="Utilities\TypeConverters\SemanticVersionTypeConverter.cs" />
-    <Compile Include="ViewModels\Items\SourceTabViewModel.cs" />
-    <Compile Include="Services\INavigationService.cs" />
+    <Compile Include="ViewModels\ISourceViewModelBase.cs" />
     <Compile Include="Services\PackageServices\Remote\IRemotePackageService.cs" />
-    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\PackageServices\Remote\RemotePackageService.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
@@ -231,23 +243,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\PackageControl.xaml">
+    <Page Include="Views\PackageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\RemoteSourceControl.xaml">
+    <Page Include="Views\RemoteSourceView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Controls\LocalSourceControl.xaml">
+    <Page Include="Views\LocalSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\SourcesControl.xaml">
+    <Page Include="Views\SourcesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\MainWindow.xaml">
+    <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -258,32 +270,26 @@
     <Compile Include="Base\ObservableBase.cs" />
     <Compile Include="ViewModels\Items\IPackageViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
-    <Compile Include="ViewModels\Controls\ISourcesControlViewModel.cs" />
-    <Compile Include="ViewModels\Controls\IPackageControlViewModel.cs" />
-    <Compile Include="ViewModels\Controls\IRemoteSourceControlViewModel.cs" />
-    <Compile Include="ViewModels\Controls\SourcesControlViewModel.cs" />
-    <Compile Include="ViewModels\Controls\PackageControlViewModel.cs" />
-    <Compile Include="ViewModels\Controls\RemoteSourceControlViewModel.cs" />
-    <Compile Include="ViewModels\Controls\ILocalSourceControlViewModel.cs" />
-    <Compile Include="ViewModels\Controls\LocalSourceControlViewModel.cs" />
+    <Compile Include="ViewModels\SourcesViewModel.cs" />
+    <Compile Include="ViewModels\PackageViewModel.cs" />
+    <Compile Include="ViewModels\RemoteSourceViewModel.cs" />
+    <Compile Include="ViewModels\LocalSourceViewModel.cs" />
     <Compile Include="ViewModels\Items\SourceViewModel.cs" />
-    <Compile Include="Utilities\PackagesChangedEventManager.cs" />
-    <Compile Include="ViewModels\Windows\IMainWindowViewModel.cs" />
-    <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
-    <Compile Include="Views\Controls\PackageControl.xaml.cs">
-      <DependentUpon>PackageControl.xaml</DependentUpon>
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\PackageView.xaml.cs">
+      <DependentUpon>PackageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\RemoteSourceControl.xaml.cs">
-      <DependentUpon>RemoteSourceControl.xaml</DependentUpon>
+    <Compile Include="Views\RemoteSourceView.xaml.cs">
+      <DependentUpon>RemoteSourceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\LocalSourceControl.xaml.cs">
-      <DependentUpon>LocalSourceControl.xaml</DependentUpon>
+    <Compile Include="Views\LocalSourceView.xaml.cs">
+      <DependentUpon>LocalSourceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\SourcesControl.xaml.cs">
-      <DependentUpon>SourcesControl.xaml</DependentUpon>
+    <Compile Include="Views\SourcesView.xaml.cs">
+      <DependentUpon>SourcesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -342,6 +348,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\Windows\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\BuildScripts\CodeAnalysis.props" Condition="Exists('..\..\BuildScripts\CodeAnalysis.props')" />

@@ -4,17 +4,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Concurrent;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Windows;
+using Expression = System.Linq.Expressions.Expression;
+
 namespace ChocolateyGui.Commands
 {
-    using System;
-    using System.Collections.Concurrent;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Reflection;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using Expression = System.Linq.Expressions.Expression;
-
     /// <summary>
     ///     This class provides a single method that allows other classes to dynamically execute
     ///     command methods on objects. The execution is performed using mechanisms that provide
@@ -25,29 +26,13 @@ namespace ChocolateyGui.Commands
         private static readonly ConcurrentDictionary<CommandExecutionProviderKey, Func<object>> CompiledConstructors
             = new ConcurrentDictionary<CommandExecutionProviderKey, Func<object>>();
 
-        private static readonly ConcurrentDictionary<CommandExecutionProviderKey, ICommandExecutionProvider> ExecutionProviders
-            = new ConcurrentDictionary<CommandExecutionProviderKey, ICommandExecutionProvider>();
+        private static readonly ConcurrentDictionary<CommandExecutionProviderKey, ICommandExecutionProvider>
+            ExecutionProviders
+                = new ConcurrentDictionary<CommandExecutionProviderKey, ICommandExecutionProvider>();
 
         private static object _disconnectedItemSentinelValue;
 
         private static Func<object, bool> _isDisconnected;
-
-        /// <summary>
-        ///     Represents an object that is capable of executing a specific CanExecute method and
-        ///     Execute method for a specific LineType on any object of the specific type.
-        /// </summary>
-        private interface ICommandExecutionProvider
-        {
-            string CanExecuteMethodName { get; }
-
-            string ExecutedMethodName { get; }
-
-            Type TargetType { get; }
-
-            bool InvokeCanExecuteMethod(object target, object parameter);
-
-            void InvokeExecutedMethod(object target, object parameter);
-        }
 
         private static Func<object, bool> IsDisconnected
         {
@@ -60,7 +45,8 @@ namespace ChocolateyGui.Commands
                     var label = Expression.Label();
 
                     var targetTypeVarExpr = Expression.Variable(typeof(Type), "targetType");
-                    var setTargetTypeVarExpr = Expression.Assign(targetTypeVarExpr, Expression.Call(param, objectType.GetMethod("GetType")));
+                    var setTargetTypeVarExpr = Expression.Assign(targetTypeVarExpr,
+                        Expression.Call(param, objectType.GetMethod("GetType")));
                     var targetTypeNameExpr = Expression.PropertyOrField(targetTypeVarExpr, "FullName");
 
                     var targetNameExpr = Expression.PropertyOrField(param, "_name");
@@ -69,7 +55,10 @@ namespace ChocolateyGui.Commands
                         Expression.Return(label, Expression.Constant(true)),
                         Expression.Return(label, Expression.Constant(false)));
 
-                    var branchExpr = Expression.IfThen(Expression.Equal(targetTypeNameExpr, Expression.Constant("MS.Internal.NamedObject")), returnExpr);
+                    var branchExpr =
+                        Expression.IfThen(
+                            Expression.Equal(targetTypeNameExpr, Expression.Constant("MS.Internal.NamedObject")),
+                            returnExpr);
 
                     var block = Expression.Block(
                         targetTypeVarExpr,
@@ -84,7 +73,7 @@ namespace ChocolateyGui.Commands
         }
 
         /// <summary>
-        ///     Attempts to dynamically execute the method indicated by canExecuteMethodName 
+        ///     Attempts to dynamically execute the method indicated by canExecuteMethodName
         ///     and, if necessary, the method indicated by executedMethodName on the provided
         ///     target object.
         /// </summary>
@@ -104,7 +93,7 @@ namespace ChocolateyGui.Commands
         /// </param>
         /// <param name="canExecuteMethodName">
         ///     The name of the method on the target object that contains the can execute logic for
-        ///     the command. 
+        ///     the command.
         /// </param>
         /// <param name="canExecute">
         ///     The return value of the call to the can execute method. If canExecuteMethodName is
@@ -113,9 +102,10 @@ namespace ChocolateyGui.Commands
         /// <returns>
         ///     True if the command logic was successfully executed; otherwise false.
         /// </returns>
-        public static bool TryExecuteCommand(object target, object parameter, bool execute, string executedMethodName, string canExecuteMethodName, out bool canExecute)
+        public static bool TryExecuteCommand(object target, object parameter, bool execute, string executedMethodName,
+            string canExecuteMethodName, out bool canExecute)
         {
-            var designTime = System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject());
+            var designTime = DesignerProperties.GetIsInDesignMode(new DependencyObject());
             if (designTime)
             {
                 canExecute = true;
@@ -141,7 +131,8 @@ namespace ChocolateyGui.Commands
             return false;
         }
 
-        private static ICommandExecutionProvider GetCommandExecutionProvider(object target, string canExecuteMethodName, string executedMethodName)
+        private static ICommandExecutionProvider GetCommandExecutionProvider(object target, string canExecuteMethodName,
+            string executedMethodName)
         {
             if (target == _disconnectedItemSentinelValue)
             {
@@ -154,7 +145,7 @@ namespace ChocolateyGui.Commands
             {
                 try
                 {
-                    executionProvider = (ICommandExecutionProvider)GetCommandExecutionProviderConstructor(key)();
+                    executionProvider = (ICommandExecutionProvider) GetCommandExecutionProviderConstructor(key)();
                 }
                 catch (TargetInvocationException)
                 {
@@ -203,9 +194,10 @@ namespace ChocolateyGui.Commands
             if (!CompiledConstructors.TryGetValue(key, out constructor))
             {
                 var executionProviderType = typeof(CommandExecutionProvider<>).MakeGenericType(key.TargetType);
-                var executionProviderCtor = executionProviderType.GetConstructor(new[] { typeof(Type), typeof(string), typeof(string) });
+                var executionProviderCtor =
+                    executionProviderType.GetConstructor(new[] {typeof(Type), typeof(string), typeof(string)});
 
-                var executionProviderCtorParamaters = new Expression[] 
+                var executionProviderCtorParamaters = new Expression[]
                 {
                     Expression.Constant(key.TargetType),
                     Expression.Constant(key.CanExecuteMethodName, typeof(string)),
@@ -213,11 +205,29 @@ namespace ChocolateyGui.Commands
                 };
 
                 Debug.Assert(executionProviderCtor != null, "executionProviderCtor != null");
-                var executionProviderCtorExpression = Expression.New(executionProviderCtor, executionProviderCtorParamaters);
+                var executionProviderCtorExpression = Expression.New(executionProviderCtor,
+                    executionProviderCtorParamaters);
                 constructor = Expression.Lambda<Func<object>>(executionProviderCtorExpression).Compile();
             }
 
             return constructor;
+        }
+
+        /// <summary>
+        ///     Represents an object that is capable of executing a specific CanExecute method and
+        ///     Execute method for a specific LineType on any object of the specific type.
+        /// </summary>
+        private interface ICommandExecutionProvider
+        {
+            string CanExecuteMethodName { get; }
+
+            string ExecutedMethodName { get; }
+
+            Type TargetType { get; }
+
+            bool InvokeCanExecuteMethod(object target, object parameter);
+
+            void InvokeExecutedMethod(object target, object parameter);
         }
 
         /// <summary>
@@ -230,16 +240,16 @@ namespace ChocolateyGui.Commands
             public CommandExecutionProviderKey(Type targetType, string canExecuteMethodName, string executedMethodName)
                 : this()
             {
-                this.TargetType = targetType;
-                this.CanExecuteMethodName = canExecuteMethodName;
-                this.ExecutedMethodName = executedMethodName;
+                TargetType = targetType;
+                CanExecuteMethodName = canExecuteMethodName;
+                ExecutedMethodName = executedMethodName;
             }
 
-            public string CanExecuteMethodName { get; private set; }
+            public string CanExecuteMethodName { get; }
 
-            public string ExecutedMethodName { get; private set; }
+            public string ExecutedMethodName { get; }
 
-            public Type TargetType { get; private set; }
+            public Type TargetType { get; }
         }
 
         /// <summary>
@@ -256,26 +266,26 @@ namespace ChocolateyGui.Commands
 
             public CommandExecutionProvider(Type targetType, string canExecuteMethodName, string executedMethodName)
             {
-                this.TargetType = targetType;
-                this.CanExecuteMethodName = canExecuteMethodName;
-                this.ExecutedMethodName = executedMethodName;
+                TargetType = targetType;
+                CanExecuteMethodName = canExecuteMethodName;
+                ExecutedMethodName = executedMethodName;
 
                 var targetParameter = Expression.Parameter(targetType);
                 var paramParamater = Expression.Parameter(typeof(object));
 
-                var canExecuteMethodInfo = GetMethodInfo(this.CanExecuteMethodName);
+                var canExecuteMethodInfo = GetMethodInfo(CanExecuteMethodName);
                 if (canExecuteMethodInfo != null && canExecuteMethodInfo.ReturnType == typeof(bool))
                 {
                     if (canExecuteMethodInfo.GetParameters().Length == 0)
                     {
-                        this._canExecute =
+                        _canExecute =
                             Expression.Lambda<Func<TTarget, bool>>(
                                 Expression.Call(targetParameter, canExecuteMethodInfo),
                                 targetParameter).Compile();
                     }
                     else
                     {
-                        this._canExecuteWithParam =
+                        _canExecuteWithParam =
                             Expression.Lambda<Func<TTarget, object, bool>>(
                                 Expression.Call(targetParameter, canExecuteMethodInfo, paramParamater),
                                 targetParameter,
@@ -283,27 +293,29 @@ namespace ChocolateyGui.Commands
                     }
                 }
 
-                if (this._canExecute == null && this._canExecuteWithParam == null)
+                if (_canExecute == null && _canExecuteWithParam == null)
                 {
-                    this._canExecute = Expression.Lambda<Func<TTarget, bool>>(Expression.Constant(true), targetParameter).Compile();
+                    _canExecute =
+                        Expression.Lambda<Func<TTarget, bool>>(Expression.Constant(true), targetParameter).Compile();
                     ////throw new Exception(string.Format(
                     ////    "Method {0} on type {1} does not have a valid method signature. The method must have one of the following signatures: 'public bool CanExecute()' or 'public bool CanExecute(object parameter)'",
                     ////    CanExecuteMethodName, typeof(TTarget)));
                 }
 
-                var executedMethodInfo = GetMethodInfo(this.ExecutedMethodName);
-                if (executedMethodInfo != null && (executedMethodInfo.ReturnType == typeof(void) || executedMethodInfo.ReturnType == typeof(Task)))
+                var executedMethodInfo = GetMethodInfo(ExecutedMethodName);
+                if (executedMethodInfo != null &&
+                    (executedMethodInfo.ReturnType == typeof(void) || executedMethodInfo.ReturnType == typeof(Task)))
                 {
                     if (executedMethodInfo.GetParameters().Length == 0)
                     {
-                        this._executed =
+                        _executed =
                             Expression.Lambda<Action<TTarget>>(
                                 Expression.Call(targetParameter, executedMethodInfo),
                                 targetParameter).Compile();
                     }
                     else
                     {
-                        this._executedWithParam =
+                        _executedWithParam =
                             Expression.Lambda<Action<TTarget, object>>(
                                 Expression.Call(targetParameter, executedMethodInfo, paramParamater),
                                 targetParameter,
@@ -311,34 +323,34 @@ namespace ChocolateyGui.Commands
                     }
                 }
 
-                if (this._executed == null && this._executedWithParam == null)
+                if (_executed == null && _executedWithParam == null)
                 {
                     throw new Exception(
                         string.Format(
-                        CultureInfo.CurrentCulture, 
-                        "Method {0} on type {1} does not have a valid method signature. The method must have one of the following signatures: 'public void {2}()' or 'public void {2}(object parameter)'",
-                        this.ExecutedMethodName, 
-                        typeof(TTarget), 
-                        executedMethodName));
+                            CultureInfo.CurrentCulture,
+                            "Method {0} on type {1} does not have a valid method signature. The method must have one of the following signatures: 'public void {2}()' or 'public void {2}(object parameter)'",
+                            ExecutedMethodName,
+                            typeof(TTarget),
+                            executedMethodName));
                 }
             }
 
-            public string CanExecuteMethodName { get; private set; }
+            public string CanExecuteMethodName { get; }
 
-            public string ExecutedMethodName { get; private set; }
+            public string ExecutedMethodName { get; }
 
-            public Type TargetType { get; private set; }
+            public Type TargetType { get; }
 
             public bool InvokeCanExecuteMethod(object target, object parameter)
             {
-                if (this._canExecute != null)
+                if (_canExecute != null)
                 {
-                    return this._canExecute((TTarget)target);
+                    return _canExecute((TTarget) target);
                 }
 
-                if (this._canExecuteWithParam != null)
+                if (_canExecuteWithParam != null)
                 {
-                    return this._canExecuteWithParam((TTarget)target, parameter);
+                    return _canExecuteWithParam((TTarget) target, parameter);
                 }
 
                 return false;
@@ -346,13 +358,13 @@ namespace ChocolateyGui.Commands
 
             public void InvokeExecutedMethod(object target, object parameter)
             {
-                if (this._executed != null)
+                if (_executed != null)
                 {
-                    this._executed((TTarget)target);
+                    _executed((TTarget) target);
                 }
-                else if (this._executedWithParam != null)
+                else if (_executedWithParam != null)
                 {
-                    this._executedWithParam((TTarget)target, parameter);
+                    _executedWithParam((TTarget) target, parameter);
                 }
             }
 
@@ -363,8 +375,8 @@ namespace ChocolateyGui.Commands
                     return null;
                 }
 
-                return typeof(TTarget).GetMethod(methodName, new[] { typeof(object) })
-                    ?? typeof(TTarget).GetMethod(methodName, new Type[0]);
+                return typeof(TTarget).GetMethod(methodName, new[] {typeof(object)})
+                       ?? typeof(TTarget).GetMethod(methodName, new Type[0]);
             }
         }
     }

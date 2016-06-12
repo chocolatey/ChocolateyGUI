@@ -4,20 +4,20 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using ChocolateyGui.ViewModels.Items;
+
 namespace ChocolateyGui.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using ChocolateyGui.ViewModels.Items;
-
     public delegate void SourcesChangedEventHandler(object sender, SourcesChangedEventArgs e);
 
     public class SourcesChangedEventArgs : EventArgs
     {
         public SourcesChangedEventArgs(IList<SourceViewModel> newSources, IList<SourceViewModel> removedSources)
         {
-            this.AddedSources = newSources;
-            this.RemovedSources = removedSources;
+            AddedSources = newSources;
+            RemovedSources = removedSources;
         }
 
         public IList<SourceViewModel> AddedSources { get; private set; }

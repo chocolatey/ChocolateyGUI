@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using ChocolateyGui.Enums;
+
 namespace ChocolateyGui.Models
 {
-    using System;
-    using ChocolateyGui.Enums;
-
     public delegate void PackagesChangedEventHandler(object sender, PackagesChangedEventArgs e);
 
     public class PackagesChangedEventArgs : EventArgs

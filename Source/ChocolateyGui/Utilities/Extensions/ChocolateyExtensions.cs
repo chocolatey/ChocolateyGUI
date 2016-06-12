@@ -4,18 +4,19 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+using chocolatey;
+using chocolatey.infrastructure.results;
+using ChocolateyGui.Models;
+using ChocolateyGui.Services;
+using ILog = chocolatey.infrastructure.logging.ILog;
+
 namespace ChocolateyGui.Utilities.Extensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using chocolatey;
-    using chocolatey.infrastructure.results;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Services;
-
     public static class ChocolateyExtensions
     {
         public static Task RunAsync(this GetChocolatey chocolatey)
@@ -25,15 +26,16 @@ namespace ChocolateyGui.Utilities.Extensions
 
         public static Task<ICollection<T>> ListAsync<T>(this GetChocolatey chocolatey)
         {
-            return Task.Run(() => (ICollection<T>)chocolatey.List<T>().ToList());
+            return Task.Run(() => (ICollection<T>) chocolatey.List<T>().ToList());
         }
 
         public static Task<ICollection<PackageResult>> ListPackagesAsync(this GetChocolatey chocolatey)
         {
-            return Task.Run(() => (ICollection<PackageResult>)chocolatey.List<PackageResult>().ToList());
+            return Task.Run(() => (ICollection<PackageResult>) chocolatey.List<PackageResult>().ToList());
         }
 
-        public static GetChocolatey Init(this GetChocolatey chocolatey, IProgressService progressService, Func<string, ILogService> logService)
+        public static GetChocolatey Init(this GetChocolatey chocolatey, IProgressService progressService,
+            Func<string, ILogService> logService)
         {
             if (chocolatey == null)
             {
@@ -44,10 +46,10 @@ namespace ChocolateyGui.Utilities.Extensions
             return chocolatey;
         }
 
-        private class ProgressWrapper : chocolatey.infrastructure.logging.ILog
+        private class ProgressWrapper : ILog
         {
-            private readonly IProgressService _progressService;
             private readonly Func<string, ILogService> _logSerivceFactory;
+            private readonly IProgressService _progressService;
             private ILogService _logService;
 
             public ProgressWrapper(IProgressService progressService, Func<string, ILogService> logSerivceFactory)

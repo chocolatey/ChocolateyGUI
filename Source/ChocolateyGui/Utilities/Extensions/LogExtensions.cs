@@ -4,17 +4,17 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using Autofac;
+using ChocolateyGui.Services;
+
 namespace ChocolateyGui.Utilities.Extensions
 {
-    using System;
-    using Autofac;
-    using ChocolateyGui.Services;
-
     public static class LogExtensions
     {
         public static ILogService GetLogger(this Type sourceType)
         {
-            return App.Container.Resolve<ILogService>(new TypedParameter(typeof(Type), sourceType));
+            return Bootstrapper.Container.Resolve<ILogService>(new TypedParameter(typeof(Type), sourceType));
         }
     }
 }

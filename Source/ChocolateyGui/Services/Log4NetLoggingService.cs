@@ -4,16 +4,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+using System;
+using System.Globalization;
+using System.Linq;
+using log4net;
+using log4net.Appender;
+using log4net.Config;
+using log4net.Repository.Hierarchy;
+
+[assembly: XmlConfigurator(Watch = true)]
 
 namespace ChocolateyGui.Services
 {
-    using System;
-    using System.Globalization;
-    using System.Linq;
-    using log4net;
-    using log4net.Appender;
-    using log4net.Repository.Hierarchy;
 #if !DEBUG
     using Mindscape.Raygun4Net;
 #endif
@@ -27,143 +29,143 @@ namespace ChocolateyGui.Services
 
         public Log4NetLoggingService(Type logSourceType)
         {
-            this._log = LogManager.GetLogger(logSourceType);
+            _log = LogManager.GetLogger(logSourceType);
         }
 
         public Log4NetLoggingService(string logSourceName)
         {
-            this._log = LogManager.GetLogger(logSourceName);
+            _log = LogManager.GetLogger(logSourceName);
         }
 
         public void Debug(object message)
         {
-            this._log.Debug(message);
+            _log.Debug(message);
         }
 
         public void Debug(object message, Exception exception)
         {
-            this._log.Debug(message, exception);
+            _log.Debug(message, exception);
         }
 
         public void DebugFormat(string message, object obj)
         {
-            this._log.DebugFormat(message, obj);
+            _log.DebugFormat(message, obj);
         }
 
         public void DebugFormat(string message, object obj1, object obj2)
         {
-            this._log.DebugFormat(message, obj1, obj2);
+            _log.DebugFormat(message, obj1, obj2);
         }
 
         public void DebugFormat(string message, object obj1, object obj2, object obj3)
         {
-            this._log.DebugFormat(message, obj1, obj2, obj3);
+            _log.DebugFormat(message, obj1, obj2, obj3);
         }
 
         public void DebugFormat(string message, params object[] parameters)
         {
-            this._log.DebugFormat(CultureInfo.CurrentCulture, message, parameters);
+            _log.DebugFormat(CultureInfo.CurrentCulture, message, parameters);
         }
 
         public void Error(object message)
         {
-            this._log.Error(message);
-            this.FlushBuffer();
+            _log.Error(message);
+            FlushBuffer();
         }
 
         public void Error(object message, Exception exception)
         {
-            this._log.Error(message, exception);
+            _log.Error(message, exception);
 #if !DEBUG
             this._client.Send(exception);
 #endif
-            this.FlushBuffer();
+            FlushBuffer();
         }
 
         public void ErrorFormat(string message, object obj)
         {
-            this._log.ErrorFormat(message, obj);
-            this.FlushBuffer();
+            _log.ErrorFormat(message, obj);
+            FlushBuffer();
         }
 
         public void ErrorFormat(string message, object obj1, object obj2)
         {
-            this._log.ErrorFormat(message, obj1, obj2);
-            this.FlushBuffer();
+            _log.ErrorFormat(message, obj1, obj2);
+            FlushBuffer();
         }
 
         public void ErrorFormat(string message, object obj1, object obj2, object obj3)
         {
-            this._log.ErrorFormat(message, obj1, obj2, obj3);
-            this.FlushBuffer();
+            _log.ErrorFormat(message, obj1, obj2, obj3);
+            FlushBuffer();
         }
 
         public void ErrorFormat(string message, params object[] parameters)
         {
-            this._log.ErrorFormat(CultureInfo.CurrentCulture, message, parameters);
-            this.FlushBuffer();
+            _log.ErrorFormat(CultureInfo.CurrentCulture, message, parameters);
+            FlushBuffer();
         }
 
         public void Fatal(object message)
         {
-            this._log.Fatal(message);
-            this.FlushBuffer();
+            _log.Fatal(message);
+            FlushBuffer();
         }
 
         public void Fatal(object message, Exception exception)
         {
-            this._log.Fatal(message, exception);
+            _log.Fatal(message, exception);
 #if !DEBUG
             this._client.Send(exception);
 #endif
-            this.FlushBuffer();
+            FlushBuffer();
         }
 
         public void FatalFormat(string message, object obj)
         {
-            this._log.FatalFormat(message, obj);
-            this.FlushBuffer();
+            _log.FatalFormat(message, obj);
+            FlushBuffer();
         }
 
         public void FatalFormat(string message, object obj1, object obj2)
         {
-            this._log.FatalFormat(message, obj1, obj2);
-            this.FlushBuffer();
+            _log.FatalFormat(message, obj1, obj2);
+            FlushBuffer();
         }
 
         public void FatalFormat(string message, object obj1, object obj2, object obj3)
         {
-            this._log.FatalFormat(message, obj1, obj2, obj3);
-            this.FlushBuffer();
+            _log.FatalFormat(message, obj1, obj2, obj3);
+            FlushBuffer();
         }
 
         public void FatalFormat(string message, params object[] parameters)
         {
-            this._log.FatalFormat(CultureInfo.CurrentCulture, message, parameters);
-            this.FlushBuffer();
+            _log.FatalFormat(CultureInfo.CurrentCulture, message, parameters);
+            FlushBuffer();
         }
 
         public void ForceFlush()
         {
             try
             {
-                this.FlushBuffer();
+                FlushBuffer();
             }
             catch (Exception ex)
             {
-                this.Error("Error flushing buffer...", ex);
+                Error("Error flushing buffer...", ex);
                 throw;
             }
         }
 
         public void Info(object message)
         {
-            this._log.Info(message);
+            _log.Info(message);
         }
 
         public void Info(object message, Exception exception)
         {
-            this._log.Info(message, exception);
+            _log.Info(message, exception);
 #if !DEBUG
             this._client.Send(exception);
 #endif
@@ -171,32 +173,32 @@ namespace ChocolateyGui.Services
 
         public void InfoFormat(string message, object obj)
         {
-            this._log.InfoFormat(message, obj);
+            _log.InfoFormat(message, obj);
         }
 
         public void InfoFormat(string message, object obj1, object obj2)
         {
-            this._log.InfoFormat(message, obj1, obj2);
+            _log.InfoFormat(message, obj1, obj2);
         }
 
         public void InfoFormat(string message, object obj1, object obj2, object obj3)
         {
-            this._log.InfoFormat(message, obj1, obj2, obj3);
+            _log.InfoFormat(message, obj1, obj2, obj3);
         }
 
         public void InfoFormat(string message, params object[] parameters)
         {
-            this._log.InfoFormat(CultureInfo.CurrentCulture, message, parameters);
+            _log.InfoFormat(CultureInfo.CurrentCulture, message, parameters);
         }
 
         public void Warn(object message)
         {
-            this._log.Warn(message);
+            _log.Warn(message);
         }
 
         public void Warn(object message, Exception exception)
         {
-            this._log.Warn(message, exception);
+            _log.Warn(message, exception);
 #if !DEBUG
             this._client.Send(exception);
 #endif
@@ -204,34 +206,36 @@ namespace ChocolateyGui.Services
 
         public void WarnFormat(string message, object obj)
         {
-            this._log.WarnFormat(message, obj);
+            _log.WarnFormat(message, obj);
         }
 
         public void WarnFormat(string message, object obj1, object obj2)
         {
-            this._log.WarnFormat(message, obj1, obj2);
+            _log.WarnFormat(message, obj1, obj2);
         }
 
         public void WarnFormat(string message, object obj1, object obj2, object obj3)
         {
-            this._log.WarnFormat(message, obj1, obj2, obj3);
+            _log.WarnFormat(message, obj1, obj2, obj3);
         }
 
         public void WarnFormat(string message, params object[] parameters)
         {
-            this._log.WarnFormat(CultureInfo.CurrentCulture, message, parameters);
+            _log.WarnFormat(CultureInfo.CurrentCulture, message, parameters);
         }
 
         private void FlushBuffer()
         {
-            var logger = this._log.Logger as Logger;
+            var logger = _log.Logger as Logger;
             if (logger == null)
             {
                 return;
             }
 
             var buffered =
-                logger.Appenders.Cast<IAppender>().AsQueryable().SingleOrDefault(app => app is BufferingAppenderSkeleton);
+                logger.Appenders.Cast<IAppender>()
+                    .AsQueryable()
+                    .SingleOrDefault(app => app is BufferingAppenderSkeleton);
             if (buffered != null)
             {
                 var bufferingAppenderSkeleton = buffered as BufferingAppenderSkeleton;

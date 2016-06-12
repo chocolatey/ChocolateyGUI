@@ -4,22 +4,22 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using chocolatey;
+using chocolatey.infrastructure.app.domain;
+using chocolatey.infrastructure.results;
+using ChocolateyGui.Enums;
+using ChocolateyGui.Providers;
+using ChocolateyGui.Utilities.Extensions;
+using ChocolateyGui.ViewModels.Items;
+using NuGet;
+
 namespace ChocolateyGui.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using AutoMapper;
-    using chocolatey;
-    using chocolatey.infrastructure.app.domain;
-    using chocolatey.infrastructure.results;
-    using Enums;
-    using NuGet;
-    using Providers;
-    using Utilities.Extensions;
-    using ViewModels.Items;
-
     public class ChocolateyPackageService : BasePackageService, IChocolateyPackageService
     {
         private readonly IMapper _mapper;
@@ -71,11 +71,11 @@ namespace ChocolateyGui.Services
                 packages = packageResults
                     .Select(
                         package => _mapper.Map(package.Package, _packageFactory()))
-                        .Select(package =>
-                        {
-                            package.IsInstalled = true;
-                            return package;
-                        }).ToList();
+                    .Select(package =>
+                    {
+                        package.IsInstalled = true;
+                        return package;
+                    }).ToList();
 
                 CachedPackages = packages;
 
@@ -85,7 +85,8 @@ namespace ChocolateyGui.Services
             }
         }
 
-        public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false)
+        public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null,
+            bool force = false)
         {
             StartProgressDialog("Install Package", "Installing package", id);
 
@@ -144,7 +145,7 @@ namespace ChocolateyGui.Services
 
             await choco.RunAsync();
 
-            await GetInstalledPackages(force: true);
+            await GetInstalledPackages(true);
 
             await UninstalledPackage(id, version);
 

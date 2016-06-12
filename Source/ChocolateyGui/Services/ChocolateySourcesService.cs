@@ -4,16 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Linq;
+using chocolatey;
+using chocolatey.infrastructure.app.configuration;
+using chocolatey.infrastructure.app.domain;
+using ChocolateyGui.Models;
+using ChocolateyGui.ViewModels.Items;
+
 namespace ChocolateyGui.Services
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using chocolatey;
-    using chocolatey.infrastructure.app.configuration;
-    using chocolatey.infrastructure.app.domain;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.ViewModels.Items;
-
     public class ChocolateySourcesService : ISourceService
     {
         private const string SourceCommnadName = "source";
@@ -27,13 +27,13 @@ namespace ChocolateyGui.Services
             var choco = Lets.GetChocolatey();
             choco.Set(
                 config =>
-                    {
-                        config.CommandName = SourceCommnadName;
-                        config.SourceCommand.Command = SourceCommandType.add;
-                        config.SourceCommand.Name = sourceViewModel.Name;
-                        config.Sources = sourceViewModel.Url.to_string();
-                        config.AllowUnofficialBuild = true;
-                    });
+                {
+                    config.CommandName = SourceCommnadName;
+                    config.SourceCommand.Command = SourceCommandType.add;
+                    config.SourceCommand.Name = sourceViewModel.Name;
+                    config.Sources = sourceViewModel.Url.to_string();
+                    config.AllowUnofficialBuild = true;
+                });
 
             choco.Run();
         }
@@ -42,13 +42,13 @@ namespace ChocolateyGui.Services
         {
             return
                 GetSourcesImpl()
-                    .Select(source => new SourceViewModel { Name = source.Id, Url = source.Value })
+                    .Select(source => new SourceViewModel {Name = source.Id, Url = source.Value})
                     .FirstOrDefault();
         }
 
         public IEnumerable<SourceViewModel> GetSources()
         {
-            return GetSourcesImpl().Select(source => new SourceViewModel { Name = source.Id, Url = source.Value });
+            return GetSourcesImpl().Select(source => new SourceViewModel {Name = source.Id, Url = source.Value});
         }
 
         public void RemoveSource(SourceViewModel sourceViewModel)
@@ -78,6 +78,6 @@ namespace ChocolateyGui.Services
                 });
 
             return choco.List<ChocolateySource>().OrderByDescending(source => source.Priority);
-        } 
+        }
     }
 }

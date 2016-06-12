@@ -4,15 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace ChocolateyGui.Utilities.Extensions
 {
-    using System;
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
     public static class LinqExtensions
     {
         private static readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, PropertyInfo>> CachedTypes =
@@ -25,7 +25,7 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentNullException("query");
             }
 
-            if ((new OrderByVistor(query.Expression)).HasOrderBy)
+            if (new OrderByVistor(query.Expression).HasOrderBy)
             {
                 throw new InvalidOperationException(
                     "You can't call OrderBy on a query that is already ordered. Try using ThenBy.");
@@ -37,13 +37,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
+            var parameters = new[] {Expression.Parameter(query.ElementType, "query")};
 
             var queryExpr = query.Expression;
             queryExpr = Expression.Call(
                 typeof(Queryable),
                 "OrderBy",
-                new[] { query.ElementType, targetProp.PropertyType },
+                new[] {query.ElementType, targetProp.PropertyType},
                 queryExpr,
                 Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
 
@@ -57,7 +57,7 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentNullException("query");
             }
 
-            if ((new OrderByVistor(query.Expression)).HasOrderBy)
+            if (new OrderByVistor(query.Expression).HasOrderBy)
             {
                 throw new InvalidOperationException(
                     "You can't call OrderByDescending on a query that is already ordered. Try using ThenByDescending.");
@@ -69,13 +69,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
+            var parameters = new[] {Expression.Parameter(query.ElementType, "query")};
 
             var queryExpr = query.Expression;
             queryExpr = Expression.Call(
                 typeof(Queryable),
                 "OrderByDescending",
-                new[] { query.ElementType, targetProp.PropertyType },
+                new[] {query.ElementType, targetProp.PropertyType},
                 queryExpr,
                 Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
             return query.Provider.CreateQuery<T>(queryExpr);
@@ -88,7 +88,7 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentNullException("query");
             }
 
-            if (!(new OrderByVistor(query.Expression)).HasOrderBy)
+            if (!new OrderByVistor(query.Expression).HasOrderBy)
             {
                 throw new InvalidOperationException(
                     "You can't call ThenBy on a query that isn't already ordered. First call OrderBy.");
@@ -100,13 +100,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
+            var parameters = new[] {Expression.Parameter(query.ElementType, "query")};
 
             var queryExpr = query.Expression;
             queryExpr = Expression.Call(
                 typeof(Queryable),
                 "ThenBy",
-                new[] { query.ElementType, targetProp.PropertyType },
+                new[] {query.ElementType, targetProp.PropertyType},
                 queryExpr,
                 Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
             return query.Provider.CreateQuery<T>(queryExpr);
@@ -119,7 +119,7 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentNullException("query");
             }
 
-            if (!(new OrderByVistor(query.Expression)).HasOrderBy)
+            if (!new OrderByVistor(query.Expression).HasOrderBy)
             {
                 throw new InvalidOperationException(
                     "You can't call ThenByDescending on a query that isn't already ordered. First call OrderByDescending.");
@@ -131,13 +131,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
+            var parameters = new[] {Expression.Parameter(query.ElementType, "query")};
 
             var queryExpr = query.Expression;
             queryExpr = Expression.Call(
                 typeof(Queryable),
                 "ThenByDescending",
-                new[] { query.ElementType, targetProp.PropertyType },
+                new[] {query.ElementType, targetProp.PropertyType},
                 queryExpr,
                 Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
             return query.Provider.CreateQuery<T>(queryExpr);
@@ -162,9 +162,9 @@ namespace ChocolateyGui.Utilities.Extensions
             keys.UnionWith(blookup.Select(p => p.Key));
 
             var join = from key in keys
-                       from xa in alookup[key].DefaultIfEmpty(defaultA)
-                       from xb in blookup[key].DefaultIfEmpty(defaultB)
-                       select projection(xa, xb, key);
+                from xa in alookup[key].DefaultIfEmpty(defaultA)
+                from xb in blookup[key].DefaultIfEmpty(defaultB)
+                select projection(xa, xb, key);
 
             return join.ToList();
         }
@@ -198,7 +198,7 @@ namespace ChocolateyGui.Utilities.Extensions
         {
             public OrderByVistor(Expression queryExpr)
             {
-                this.Visit(queryExpr);
+                Visit(queryExpr);
             }
 
             public bool HasOrderBy { get; set; }
@@ -212,7 +212,7 @@ namespace ChocolateyGui.Utilities.Extensions
 
                 if (node.Method.Name == "OrderByDescending" || node.Method.Name == "OrderBy")
                 {
-                    this.HasOrderBy = true;
+                    HasOrderBy = true;
                 }
 
                 return node.CanReduce ? base.VisitMethodCall(node) : node;

@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using ChocolateyGui.ViewModels.Items;
+
 namespace ChocolateyGui.Models
 {
-    using System.Collections.Generic;
-    using ChocolateyGui.ViewModels.Items;
-    
     public class PackageSearchResults
     {
         public IEnumerable<IPackageViewModel> Packages { get; set; }

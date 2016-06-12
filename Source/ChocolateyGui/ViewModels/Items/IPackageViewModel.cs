@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Threading.Tasks;
+using NuGet;
+
 namespace ChocolateyGui.ViewModels.Items
 {
-    using System;
-    using System.Threading.Tasks;
-    using NuGet;
-
     public interface IPackageViewModel
     {
         string[] Authors { get; set; }

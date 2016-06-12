@@ -4,18 +4,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using NuGet;
+
 namespace ChocolateyGui.Models
 {
-    using System;
-    using NuGet;
-
     public class PackageConfigEntry
     {
         public PackageConfigEntry(string id, SemanticVersion version, Uri source)
         {
-            this.Id = id;
-            this.Version = version;
-            this.Source = source;
+            Id = id;
+            Version = version;
+            Source = source;
         }
 
         public string Id { get; private set; }

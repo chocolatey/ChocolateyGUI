@@ -4,51 +4,49 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Threading.Tasks;
+using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
+
 namespace ChocolateyGui.Controls.Dialogs
 {
-    using System;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using MahApps.Metro.Controls.Dialogs;
-
     /// <summary>
-    /// A class for manipulating an open ChocolateyDialog.
+    ///     A class for manipulating an open ChocolateyDialog.
     /// </summary>
     public class ChocolateyDialogController
     {
-        internal ChocolateyDialogController(ChocolateyDialog dialog, Func<Task> closeCallBack)
-        {
-            this.WrappedDialog = dialog;
-            this.CloseCallback = closeCallBack;
-
-            this.IsOpen = dialog.IsVisible;
-
-            this.WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(() =>
-            {
-                this.WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
-            });
-        }
-
         public delegate void DialogCanceledEventHandler(BaseMetroDialog dialog);
 
-        public event DialogCanceledEventHandler OnCanceled;
+        internal ChocolateyDialogController(ChocolateyDialog dialog, Func<Task> closeCallBack)
+        {
+            WrappedDialog = dialog;
+            CloseCallback = closeCallBack;
+
+            IsOpen = dialog.IsVisible;
+
+            WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(
+                () => { WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click; });
+        }
 
         /// <summary>
-        /// Gets a value indicating whether the Cancel button has been pressed.
+        ///     Gets a value indicating whether the Cancel button has been pressed.
         /// </summary>
         public bool IsCanceled { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether the wrapped ProgressDialog is open.
+        ///     Gets a value indicating whether the wrapped ProgressDialog is open.
         /// </summary>
         public bool IsOpen { get; private set; }
 
-        private Func<Task> CloseCallback { get; set; }
+        private Func<Task> CloseCallback { get; }
 
-        private ChocolateyDialog WrappedDialog { get; set; }
+        private ChocolateyDialog WrappedDialog { get; }
+
+        public event DialogCanceledEventHandler OnCanceled;
 
         /// <summary>
-        /// Begins an operation to close the ProgressDialog.
+        ///     Begins an operation to close the ProgressDialog.
         /// </summary>
         /// <returns>A task representing the operation.</returns>
         public async Task CloseAsync()
@@ -64,65 +62,55 @@ namespace ChocolateyGui.Controls.Dialogs
                 WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
             };
 
-            if (this.WrappedDialog.Dispatcher.CheckAccess())
+            if (WrappedDialog.Dispatcher.CheckAccess())
             {
                 action();
             }
             else
             {
-                this.WrappedDialog.Dispatcher.Invoke(action);
+                WrappedDialog.Dispatcher.Invoke(action);
             }
 
-            await this.CloseCallback();
+            await CloseCallback();
 
-            this.WrappedDialog.Dispatcher.Invoke(() =>
-            {
-                IsOpen = false;
-            });
+            WrappedDialog.Dispatcher.Invoke(() => { IsOpen = false; });
         }
 
         /// <summary>
-        /// Sets if the Cancel button is visible.
+        ///     Sets if the Cancel button is visible.
         /// </summary>
         /// <param name="value">Default is false</param>
         public void SetCancelable(bool value)
         {
-            if (this.WrappedDialog.Dispatcher.CheckAccess())
+            if (WrappedDialog.Dispatcher.CheckAccess())
             {
-                this.WrappedDialog.IsCancelable = value;
+                WrappedDialog.IsCancelable = value;
             }
             else
             {
-                this.WrappedDialog.Dispatcher.Invoke(
-                    new Action(
-                        () =>
-                        {
-                            WrappedDialog.IsCancelable = value;
-                        }));
+                WrappedDialog.Dispatcher.Invoke(
+                    () => { WrappedDialog.IsCancelable = value; });
             }
         }
 
         /// <summary>
-        /// Sets the ProgressBar's IsIndeterminate to true. To set it to false, call SetProgress.
+        ///     Sets the ProgressBar's IsIndeterminate to true. To set it to false, call SetProgress.
         /// </summary>
         public void SetIndeterminate()
         {
-            if (this.WrappedDialog.Dispatcher.CheckAccess())
+            if (WrappedDialog.Dispatcher.CheckAccess())
             {
-                this.WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
+                WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
             }
             else
             {
-                this.WrappedDialog.Dispatcher.Invoke(
-                    () =>
-                    {
-                        WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
-                    });
+                WrappedDialog.Dispatcher.Invoke(
+                    () => { WrappedDialog.PART_ProgressBar.IsIndeterminate = true; });
             }
         }
 
         /// <summary>
-        /// Sets the dialog's progress bar value and sets IsIndeterminate to false.
+        ///     Sets the dialog's progress bar value and sets IsIndeterminate to false.
         /// </summary>
         /// <param name="value">The percentage to set as the value.</param>
         public void SetProgress(double value)
@@ -140,49 +128,49 @@ namespace ChocolateyGui.Controls.Dialogs
                 WrappedDialog.PART_ProgressBar.ApplyTemplate();
             };
 
-            if (this.WrappedDialog.Dispatcher.CheckAccess())
+            if (WrappedDialog.Dispatcher.CheckAccess())
             {
                 action();
             }
             else
             {
-                this.WrappedDialog.Dispatcher.Invoke(action);
+                WrappedDialog.Dispatcher.Invoke(action);
             }
         }
 
         /// <summary>
-        /// Sets the dialog's title content.
+        ///     Sets the dialog's title content.
         /// </summary>
         /// <param name="title">
-        /// The title.
+        ///     The title.
         /// </param>
         public void SetTitle(string title)
         {
-            if (this.WrappedDialog.Dispatcher.CheckAccess())
+            if (WrappedDialog.Dispatcher.CheckAccess())
             {
-                this.WrappedDialog.Title = title;
+                WrappedDialog.Title = title;
             }
             else
             {
-                this.WrappedDialog.Dispatcher.Invoke(new Action(() => { WrappedDialog.Title = title; }));
+                WrappedDialog.Dispatcher.Invoke(() => { WrappedDialog.Title = title; });
             }
         }
 
         private void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WrappedDialog.Dispatcher.CheckAccess())
+            if (WrappedDialog.Dispatcher.CheckAccess())
             {
-                this.IsCanceled = true;
-                this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
+                IsCanceled = true;
+                WrappedDialog.PART_NegativeButton.IsEnabled = false;
             }
             else
             {
-                this.WrappedDialog.Dispatcher.Invoke(new Action(() =>
+                WrappedDialog.Dispatcher.Invoke(() =>
                 {
                     IsCanceled = true;
-                    this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
-                    this.OnCanceled?.Invoke(this.WrappedDialog);
-                }));
+                    WrappedDialog.PART_NegativeButton.IsEnabled = false;
+                    OnCanceled?.Invoke(WrappedDialog);
+                });
             }
 
             // Close();

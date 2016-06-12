@@ -4,113 +4,70 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using ChocolateyGui.Enums;
+using ChocolateyGui.Models;
+using ChocolateyGui.Providers;
+using ChocolateyGui.Utilities;
+using ChocolateyGui.ViewModels.Items;
+using NuGet;
+using MemoryCache = System.Runtime.Caching.MemoryCache;
+
 namespace ChocolateyGui.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using ChocolateyGui.Enums;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Providers;
-    using ChocolateyGui.Utilities;
-    using ChocolateyGui.ViewModels.Items;
-    using NuGet;
-    using MemoryCache = System.Runtime.Caching.MemoryCache;
-
     public abstract class BasePackageService
     {
         /// <summary>
-        /// The key in the <see cref="Cache">Service's Memory Cache</see> for this service's packages./>
+        ///     The key in the <see cref="Cache">Service's Memory Cache</see> for this service's packages./>
         /// </summary>
         public const string LocalPackagesCacheKeyName = "LocalChocolateyService.Packages";
 
         /// <summary>
-        /// Synchronizes the GetPackages method.
+        ///     Synchronizes the GetPackages method.
         /// </summary>
         internal readonly AsyncLock GetInstalledLock;
 
-        private static MemoryCache cache = MemoryCache.Default;
-        private readonly Func<string, ILogService> _logFactory;
-        private readonly ILogService _logService;
-        private readonly IProgressService _progressService;
-        private readonly IChocolateyConfigurationProvider chocolateyConfigurationProvider;
-
-        protected BasePackageService(IProgressService progressService, Func<string, ILogService> logFactory, IChocolateyConfigurationProvider chocolateyConfigurationProvider)
+        protected BasePackageService(IProgressService progressService, Func<string, ILogService> logFactory,
+            IChocolateyConfigurationProvider chocolateyConfigurationProvider)
         {
             if (logFactory == null)
             {
                 throw new ArgumentNullException("logFactory");
             }
 
-            this.GetInstalledLock = new AsyncLock();
-            this._progressService = progressService;
-            this._logFactory = logFactory;
-            this._logService = logFactory(typeof(IChocolateyPackageService).Name);
-            this.chocolateyConfigurationProvider = chocolateyConfigurationProvider;
+            GetInstalledLock = new AsyncLock();
+            ProgressService = progressService;
+            LogFactory = logFactory;
+            LogService = logFactory(typeof(IChocolateyPackageService).Name);
+            ChocolateyConfigurationProvider = chocolateyConfigurationProvider;
         }
-
-        public event PackagesChangedEventHandler PackagesUpdated;
 
         /// <summary>
-        /// Gets or sets the Cache for this service where out installed packages list is stored.
+        ///     Gets or sets the Cache for this service where out installed packages list is stored.
         /// </summary>
-        public static MemoryCache Cache
-        {
-            get
-            {
-                return cache;
-            }
-
-            set
-            {
-                cache = value;
-            }
-        }
+        public static MemoryCache Cache { get; set; } = MemoryCache.Default;
 
         public static ICollection<IPackageViewModel> CachedPackages
         {
-            get
-            {
-                return (ICollection<IPackageViewModel>)Cache.Get(LocalPackagesCacheKeyName);
-            }
+            get { return (ICollection<IPackageViewModel>) Cache.Get(LocalPackagesCacheKeyName); }
 
-            protected set
-            {
-                Cache.Set(LocalPackagesCacheKeyName, value, DateTimeOffset.Now + TimeSpan.FromMinutes(5));
-            }
+            protected set { Cache.Set(LocalPackagesCacheKeyName, value, DateTimeOffset.Now + TimeSpan.FromMinutes(5)); }
         }
 
-        public ILogService LogService
-        {
-            get
-            {
-                return this._logService;
-            }
-        }
+        public ILogService LogService { get; }
 
         /// <summary>
-        /// Gets the Progress Service used to report progress to listeners.
+        ///     Gets the Progress Service used to report progress to listeners.
         /// </summary>
-        protected IProgressService ProgressService
-        {
-            get
-            {
-                return this._progressService;
-            }
-        }
+        protected IProgressService ProgressService { get; }
 
-        protected IChocolateyConfigurationProvider ChocolateyConfigurationProvider
-        {
-            get
-            {
-                return this.chocolateyConfigurationProvider;
-            }
-        }
+        protected IChocolateyConfigurationProvider ChocolateyConfigurationProvider { get; }
 
-        protected Func<string, ILogService> LogFactory
-        {
-            get { return _logFactory; }
-        }
+        protected Func<string, ILogService> LogFactory { get; }
+
+        public event PackagesChangedEventHandler PackagesUpdated;
 
         public static void ClearPackageCache()
         {
@@ -127,7 +84,8 @@ namespace ChocolateyGui.Services
             packages.Add(packageInfo);
         }
 
-        public void NotifyPackagesChanged(PackagesChangedEventType command, string packageId = "", string packageVersion = "")
+        public void NotifyPackagesChanged(PackagesChangedEventType command, string packageId = "",
+            string packageVersion = "")
         {
             PackagesUpdated?.Invoke(
                 this,
@@ -142,28 +100,30 @@ namespace ChocolateyGui.Services
         public async Task InstalledPackage(string id, SemanticVersion version)
         {
             ClearPackageCache();
-            this.NotifyPackagesChanged(PackagesChangedEventType.Installed, id, version == null ? string.Empty : version.ToString());
-            await this.ProgressService.StopLoading();
+            NotifyPackagesChanged(PackagesChangedEventType.Installed, id,
+                version == null ? string.Empty : version.ToString());
+            await ProgressService.StopLoading();
         }
 
         public async Task UninstalledPackage(string id, SemanticVersion version)
         {
             ClearPackageCache();
-            this.NotifyPackagesChanged(PackagesChangedEventType.Uninstalled, id, version == null ? string.Empty : version.ToString());
-            await this.ProgressService.StopLoading();
+            NotifyPackagesChanged(PackagesChangedEventType.Uninstalled, id,
+                version == null ? string.Empty : version.ToString());
+            await ProgressService.StopLoading();
         }
 
         public async Task UpdatedPackage(string id)
         {
             ClearPackageCache();
-            this.NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
-            await this.ProgressService.StopLoading();
+            NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
+            await ProgressService.StopLoading();
         }
 
         public async void StartProgressDialog(string commandString, string initialProgressText, string id = "")
         {
-            await this.ProgressService.StartLoading(string.Format("{0} {1}...", commandString, id));
-            this.ProgressService.WriteMessage(initialProgressText);
+            await ProgressService.StartLoading(string.Format("{0} {1}...", commandString, id));
+            ProgressService.WriteMessage(initialProgressText);
         }
     }
 }

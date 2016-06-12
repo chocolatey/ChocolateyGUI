@@ -4,27 +4,28 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Data;
+
 namespace ChocolateyGui.Utilities.Converters
 {
-    using System;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Windows.Data;
-
     public class PackageDependenciesToString : IValueConverter
     {
         private static readonly Regex PackageNameVersionRegex = new Regex(@"(?<Id>[\w\.]*):{1,2}(?<Version>[\w\.]*)");
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (string.IsNullOrWhiteSpace(value as string))
             {
                 return string.Empty;
             }
 
-            var dependenciesString = (string)value;
-            var dependencyStrings = dependenciesString.Split(new[] { '|' });
-            var items = dependencyStrings.Select((dependency) =>
+            var dependenciesString = (string) value;
+            var dependencyStrings = dependenciesString.Split('|');
+            var items = dependencyStrings.Select(dependency =>
             {
                 var result = string.Empty;
 
@@ -51,7 +52,7 @@ namespace ChocolateyGui.Utilities.Converters
             return string.Join(", ", items);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

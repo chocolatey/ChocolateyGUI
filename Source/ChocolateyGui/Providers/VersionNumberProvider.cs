@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Linq;
+using System.Reflection;
+
 namespace ChocolateyGui.Providers
 {
-    using System.Linq;
-    using System.Reflection;
-
     public class VersionNumberProvider : IVersionNumberProvider
     {
         private string _version;
@@ -17,18 +17,19 @@ namespace ChocolateyGui.Providers
         {
             get
             {
-                if (this._version != null)
+                if (_version != null)
                 {
-                    return this._version;
+                    return _version;
                 }
 
-                var assembly = this.GetType().Assembly;
+                var assembly = GetType().Assembly;
                 var informational =
-                    ((AssemblyInformationalVersionAttribute[])assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute)))
-                    .First();
+                    ((AssemblyInformationalVersionAttribute[])
+                        assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute)))
+                        .First();
 
-                this._version = "Version: " + informational.InformationalVersion;
-                return this._version;
+                _version = "Version: " + informational.InformationalVersion;
+                return _version;
             }
         }
     }

@@ -4,26 +4,26 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using chocolatey;
+using chocolatey.infrastructure.app.domain;
+using chocolatey.infrastructure.results;
+using ChocolateyGui.Models;
+using ChocolateyGui.Utilities.Extensions;
+using ChocolateyGui.ViewModels.Items;
+using NuGet;
+
 namespace ChocolateyGui.Services
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using AutoMapper;
-    using chocolatey;
-    using chocolatey.infrastructure.app.domain;
-    using chocolatey.infrastructure.results;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Utilities.Extensions;
-    using ChocolateyGui.ViewModels.Items;
-    using NuGet;
-
     public class RemotePackageService : IRemotePackageService
     {
-        private readonly IProgressService _progressService;
-        private readonly IMapper _mapper;
         private readonly Func<string, ILogService> _logFactory;
+        private readonly IMapper _mapper;
         private readonly Func<IPackageViewModel> _packageFactory;
+        private readonly IProgressService _progressService;
 
         public RemotePackageService(
             IProgressService progressService,
@@ -85,7 +85,8 @@ namespace ChocolateyGui.Services
             return GetMappedPackage(package, _packageFactory);
         }
 
-        public async Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version, bool isPrerelease)
+        public async Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version,
+            bool isPrerelease)
         {
             var choco = Lets.GetChocolatey().Init(_progressService, _logFactory);
             choco.Set(config =>
@@ -130,7 +131,7 @@ namespace ChocolateyGui.Services
                 config.ListCommand.Page = options.CurrentPage;
                 config.ListCommand.PageSize = options.PageSize;
                 config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn) ||
-                                                        options.SortColumn == "DownloadCount";
+                                                       options.SortColumn == "DownloadCount";
                 config.ListCommand.Exact = options.MatchQuery;
 #if !DEBUG
                 config.Verbose = false;

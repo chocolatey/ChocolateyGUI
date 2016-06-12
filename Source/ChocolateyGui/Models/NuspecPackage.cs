@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Xml.Serialization;
+
 namespace ChocolateyGui.Models
 {
-    using System;
-    using System.Xml.Serialization;
-
     [Serializable]
     [XmlRoot(ElementName = "package")]
     public class NuspecPackage

@@ -3,11 +3,11 @@
     <Style TargetType="StackPanel" x:Key="LeftSourceListItem">
         <Style.Resources>
             <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
             </Style>
             <Style TargetType="Label">
-                <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
             </Style>
         </Style.Resources>
-     </Style>
+    </Style>
 </ResourceDictionary>

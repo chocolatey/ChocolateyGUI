@@ -683,7 +683,7 @@
         </Setter>
     </Style>
 
-    <ContextMenu x:Key="PackagesGridContextMenu"
+    <ContextMenu x:Key="PackagesContextMenu"
                  DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
         <MenuItem Header="Install"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
@@ -949,7 +949,7 @@
                     <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
                     <Setter Property="MinHeight" Value="25" />
                     <Setter Property="Margin" Value="0" />
-                    <Setter Property="ContextMenu" Value="{StaticResource PackagesGridContextMenu}" />
+                    <Setter Property="ContextMenu" Value="{StaticResource PackagesContextMenu}" />
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />

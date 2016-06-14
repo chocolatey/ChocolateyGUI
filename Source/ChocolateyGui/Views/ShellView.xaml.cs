@@ -36,7 +36,6 @@ namespace ChocolateyGui.Views
             }
 
             _progressService = progressService;
-            _progressService = progressService;
             _chocolateyConfigurationProvider = chocolateyConfigurationProvider;
 
             CheckOperatingSystemCompatibility();

@@ -12,20 +12,6 @@
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}">
 
-    <UserControl.Resources>
-        <DataGridTextColumn x:Key="NameColumn" Header="Name" Binding="{Binding Title}" Width="2*" />
-        <DataGridTextColumn x:Key="VersionColumn" Header="Version" CanUserSort="False" Binding="{Binding Version}"
-                            Width="1*" />
-        <DataGridTextColumn x:Key="DownloadCountColumn" Header="Downloads" Binding="{Binding DownloadCount}" Width="1*"
-                            Visibility="{Binding DataContext.IncludeAllVersions, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True, Source={x:Reference PackagesGrid}}" />
-        <DataGridTextColumn x:Key="VersionDownloadCountColumn" Header="Version Downloads"
-                            Binding="{Binding VersionDownloadCount}" Width="1*"
-                            Visibility="{Binding DataContext.IncludeAllVersions, Converter={StaticResource BooleanToVisibility}, Source={x:Reference PackagesGrid}}" />
-        <DataGridTextColumn x:Key="IsInstalledColumn" CanUserSort="False" Header="Installed"
-                            Binding="{Binding IsInstalled, Mode=OneWay, IsAsync=True, Converter={StaticResource BooleanToTickString}}"
-                            Width="1*" />
-    </UserControl.Resources>
-
     <Grid Background="{StaticResource AccentColorBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -108,7 +94,8 @@
                             </Style.Triggers>
                         </Style>
                     </DataTemplate.Resources>
-                    <Grid x:Name="PackageDetailsGrid" Height="105" Margin="5" HorizontalAlignment="Stretch">
+                    <Grid x:Name="PackageDetailsGrid" Height="105" Margin="5" HorizontalAlignment="Stretch" Background="Transparent"
+                          ContextMenu="{StaticResource PackagesContextMenu}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
@@ -135,7 +122,7 @@
                                 </TextBlock>
                             </StackPanel>
                             <TextBlock Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" FontWeight="SemiBold" FontSize="20" HorizontalAlignment="Right">
-                                <Run Text="{Binding VersionDownloadCount}"/>
+                                <Run Text="{Binding DownloadCount}"/>
                                 <Run Text=" downloads"/>
                             </TextBlock>
                         </Grid>

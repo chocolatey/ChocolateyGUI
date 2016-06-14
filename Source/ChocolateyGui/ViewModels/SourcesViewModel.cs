@@ -13,6 +13,8 @@ namespace ChocolateyGui.ViewModels
 {
     public sealed class SourcesViewModel : Conductor<ISourceViewModelBase>.Collection.OneActive
     {
+        private bool _firstLoad = true;
+
         public SourcesViewModel(ISourceService sourceService,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
             Func<Uri, string, RemoteSourceViewModel> remoteSourceVmFactory)
@@ -28,8 +30,15 @@ namespace ChocolateyGui.ViewModels
             {
                 Items.Add(remoteSourceVmFactory(new Uri(source.Url), source.Name));
             }
+        }
 
-            // ActiveItem = Items[0];
+        protected override void OnViewReady(object view)
+        {
+            if (_firstLoad)
+            {
+                ActivateItem(Items[0]);
+                _firstLoad = false;
+            }
         }
     }
 }

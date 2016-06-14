@@ -37,7 +37,7 @@ namespace ChocolateyGui.ViewModels
         private int _pageCount = 1;
         private int _pageSize = 50;
         private string _searchQuery;
-        private string _sortSelection;
+        private string _sortSelection = "Popularity";
 
         public RemoteSourceViewModel(IRemotePackageService remotePackageService,
             IChocolateyPackageService chocolateyPackageService,

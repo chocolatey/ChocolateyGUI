@@ -68,13 +68,7 @@ namespace ChocolateyGui.ViewModels
         public bool MatchWord
         {
             get { return _matchWord; }
-            set
-            {
-                if (this.SetPropertyValue(ref _matchWord, value))
-                {
-                    ShowOnlyPackagesWithUpdate = false;
-                }
-            }
+            set { this.SetPropertyValue(ref _matchWord, value); }
         }
 
         public ObservableCollection<IPackageViewModel> Packages
@@ -86,14 +80,7 @@ namespace ChocolateyGui.ViewModels
         public string SearchQuery
         {
             get { return _searchQuery; }
-
-            set
-            {
-                if (this.SetPropertyValue(ref _searchQuery, value))
-                {
-                    ShowOnlyPackagesWithUpdate = false;
-                }
-            }
+            set { this.SetPropertyValue(ref _searchQuery, value); }
         }
 
         public string SortColumn
@@ -291,7 +278,6 @@ namespace ChocolateyGui.ViewModels
                 foreach (var packageViewModel in packages)
                 {
                     _packages.Add(packageViewModel);
-                    Packages.Add(packageViewModel);
 
                     if (packageViewModel.LatestVersion == null)
                     {
@@ -300,6 +286,8 @@ namespace ChocolateyGui.ViewModels
 #pragma warning restore CS4014
                     }
                 }
+
+                FilterPackages();
             }
             catch (Exception ex)
             {

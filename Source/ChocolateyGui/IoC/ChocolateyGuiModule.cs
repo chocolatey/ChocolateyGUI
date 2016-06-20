@@ -55,7 +55,6 @@ namespace ChocolateyGui.IoC
             builder.Register<IEventAggregator>(c => new EventAggregator()).InstancePerLifetimeScope();
 
             // Register Services
-            builder.RegisterType<Log4NetLoggingService>().As<ILogService>();
             builder.RegisterType<ChocolateySourcesService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<RemotePackageService>().As<IRemotePackageService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();

@@ -7,12 +7,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChocolateyGui.Enums;
-using ChocolateyGui.Models;
+using Caliburn.Micro;
+using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels.Items;
 using NuGet;
+using Serilog;
+using ILogger = Serilog.ILogger;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
 namespace ChocolateyGui.Services
@@ -29,18 +31,17 @@ namespace ChocolateyGui.Services
         /// </summary>
         internal readonly AsyncLock GetInstalledLock;
 
-        protected BasePackageService(IProgressService progressService, Func<string, ILogService> logFactory,
-            IChocolateyConfigurationProvider chocolateyConfigurationProvider)
-        {
-            if (logFactory == null)
-            {
-                throw new ArgumentNullException("logFactory");
-            }
+        private static readonly ILogger Logger = Log.ForContext<BasePackageService>();
 
+        private readonly IEventAggregator _eventAggregator;
+
+        protected BasePackageService(IProgressService progressService,
+            IChocolateyConfigurationProvider chocolateyConfigurationProvider,
+            IEventAggregator eventAggregator)
+        {
+            _eventAggregator = eventAggregator;
             GetInstalledLock = new AsyncLock();
             ProgressService = progressService;
-            LogFactory = logFactory;
-            LogService = logFactory(typeof(IChocolateyPackageService).Name);
             ChocolateyConfigurationProvider = chocolateyConfigurationProvider;
         }
 
@@ -56,8 +57,6 @@ namespace ChocolateyGui.Services
             protected set { Cache.Set(LocalPackagesCacheKeyName, value, DateTimeOffset.Now + TimeSpan.FromMinutes(5)); }
         }
 
-        public ILogService LogService { get; }
-
         /// <summary>
         ///     Gets the Progress Service used to report progress to listeners.
         /// </summary>
@@ -65,65 +64,31 @@ namespace ChocolateyGui.Services
 
         protected IChocolateyConfigurationProvider ChocolateyConfigurationProvider { get; }
 
-        protected Func<string, ILogService> LogFactory { get; }
-
-        public event PackagesChangedEventHandler PackagesUpdated;
-
         public static void ClearPackageCache()
         {
             Cache.Remove(LocalPackagesCacheKeyName);
         }
 
-        public static void PopulatePackages(IPackageViewModel packageInfo, ICollection<IPackageViewModel> packages)
+        public void InstalledPackage(string id, SemanticVersion version)
         {
-            if (packages == null)
-            {
-                throw new ArgumentNullException("packages");
-            }
-
-            packages.Add(packageInfo);
+            _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Installed, version));
         }
 
-        public void NotifyPackagesChanged(PackagesChangedEventType command, string packageId = "",
-            string packageVersion = "")
+        public void UninstalledPackage(string id, SemanticVersion version)
         {
-            PackagesUpdated?.Invoke(
-                this,
-                new PackagesChangedEventArgs
-                {
-                    EventType = command,
-                    PackageId = packageId,
-                    PackageVersion = packageVersion
-                });
+            _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Uninstalled, version));
         }
 
-        public async Task InstalledPackage(string id, SemanticVersion version)
+        public void UpdatedPackage(string id)
         {
-            ClearPackageCache();
-            NotifyPackagesChanged(PackagesChangedEventType.Installed, id,
-                version == null ? string.Empty : version.ToString());
-            await ProgressService.StopLoading();
+            _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Updated));
         }
 
-        public async Task UninstalledPackage(string id, SemanticVersion version)
+        public async Task<IDisposable> StartProgressDialog(string commandString, string initialProgressText, string id = "")
         {
-            ClearPackageCache();
-            NotifyPackagesChanged(PackagesChangedEventType.Uninstalled, id,
-                version == null ? string.Empty : version.ToString());
-            await ProgressService.StopLoading();
-        }
-
-        public async Task UpdatedPackage(string id)
-        {
-            ClearPackageCache();
-            NotifyPackagesChanged(PackagesChangedEventType.Updated, id);
-            await ProgressService.StopLoading();
-        }
-
-        public async void StartProgressDialog(string commandString, string initialProgressText, string id = "")
-        {
-            await ProgressService.StartLoading(string.Format("{0} {1}...", commandString, id));
+            await ProgressService.StartLoading($"{commandString} {id}...");
             ProgressService.WriteMessage(initialProgressText);
+            return new DisposableAction(() => ProgressService.StopLoading());
         }
     }
 }

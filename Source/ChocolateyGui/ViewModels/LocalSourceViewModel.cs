@@ -15,18 +15,21 @@ using System.Threading.Tasks;
 using System.Xml;
 using Caliburn.Micro;
 using ChocolateyGui.Models;
+using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
+using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
-    public class LocalSourceViewModel : Screen, ISourceViewModelBase
+    public class LocalSourceViewModel : Screen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
     {
+        private static readonly ILogger Logger = Log.ForContext<LocalSourceViewModel>();
         private readonly IChocolateyPackageService _chocolateyService;
-        private readonly ILogService _logService;
         private readonly List<IPackageViewModel> _packages;
         private readonly IPersistenceService _persistenceService;
+        private readonly IEventAggregator _eventAggregator;
         private readonly IProgressService _progressService;
         private bool _exportAll = true;
         private bool _hasLoaded;
@@ -41,22 +44,18 @@ namespace ChocolateyGui.ViewModels
             IChocolateyPackageService chocolateyService,
             IProgressService progressService,
             IPersistenceService persistenceService,
-            Func<Type, ILogService> logFactory,
+            IEventAggregator eventAggregator,
             string name)
         {
-            if (logFactory == null)
-            {
-                throw new ArgumentNullException("logFactory");
-            }
-
             _chocolateyService = chocolateyService;
             _progressService = progressService;
             _persistenceService = persistenceService;
-            _logService = logFactory(typeof(LocalSourceViewModel));
+            _eventAggregator = eventAggregator;
 
             Name = name;
             Packages = new ObservableCollection<IPackageViewModel>();
             _packages = new List<IPackageViewModel>();
+            eventAggregator.Subscribe(this);
         }
 
         public bool ShowOnlyPackagesWithUpdate
@@ -126,7 +125,7 @@ namespace ChocolateyGui.ViewModels
             }
             catch (Exception ex)
             {
-                _logService.Fatal("Updated all has failed.", ex);
+                Logger.Fatal("Updated all has failed.", ex);
                 throw;
             }
         }
@@ -164,7 +163,7 @@ namespace ChocolateyGui.ViewModels
             }
             catch (Exception ex)
             {
-                _logService.Fatal("Export all has failed.", ex);
+                Logger.Fatal("Export all has failed.", ex);
                 throw;
             }
             finally
@@ -194,6 +193,11 @@ namespace ChocolateyGui.ViewModels
         }
 
         public async void RefreshPackages()
+        {
+            await LoadPackages();
+        }
+
+        public async Task Handle(PackageChangedMessage message)
         {
             await LoadPackages();
         }
@@ -233,7 +237,7 @@ namespace ChocolateyGui.ViewModels
             }
             catch (Exception ex)
             {
-                _logService.Fatal("Local source control view model failed to load.", ex);
+                Logger.Fatal("Local source control view model failed to load.", ex);
                 throw;
             }
         }
@@ -291,11 +295,11 @@ namespace ChocolateyGui.ViewModels
             }
             catch (Exception ex)
             {
-                _logService.Fatal("Packages failed to load", ex);
+                Logger.Fatal("Packages failed to load", ex);
                 throw;
             }
         }
 
-        public string Name { get; } 
+        public string Name { get; }
     }
 }

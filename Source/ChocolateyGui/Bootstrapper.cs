@@ -6,16 +6,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Windows;
 using Autofac;
 using Caliburn.Micro;
 using chocolatey;
 using ChocolateyGui.IoC;
-using ChocolateyGui.Services;
-using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels;
+using Serilog;
 
 namespace ChocolateyGui
 {
@@ -24,21 +23,38 @@ namespace ChocolateyGui
         public Bootstrapper()
         {
             Initialize();
-
-            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+            
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
         internal static IContainer Container { get; private set; }
 
-        private static ILogService Log { get; set; }
+        internal static ILogger Log { get; private set; }
+
+        internal static string AppDataPath { get; private set; }
 
         protected override void Configure()
         {
             Container = AutoFacConfiguration.RegisterAutoFac();
+            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData,
+                Environment.SpecialFolderOption.DoNotVerify);
+            AppDataPath = Path.Combine(appDataFolder, "ChocolateyGUI");
+            var logPath = Path.Combine(AppDataPath, "Logs");
+            if (!Directory.Exists(logPath))
+            {
+                Directory.CreateDirectory(logPath);
+            }
 
-            Log = typeof(App).GetLogger();
+            var directPath = Path.Combine(logPath, "{Date}.log");
+
+            Log = Serilog.Log.Logger = new LoggerConfiguration()
+#if DEBUG
+                .MinimumLevel.Debug()
+#endif
+                .WriteTo.ColoredConsole()
+                .WriteTo.RollingFile(directPath)
+                .CreateLogger();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
@@ -78,8 +94,7 @@ namespace ChocolateyGui
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            Log.InfoFormat("Exiting.");
-            Log.ForceFlush();
+            Log.Information("Exiting.");
         }
 
         // Monkey patch for confliciting versions of Reactive in Chocolatey and ChocolateyGUI.
@@ -89,11 +104,6 @@ namespace ChocolateyGui
                    "System.Reactive.PlatformServices, Version=0.9.10.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb"
                 ? typeof(Lets).Assembly
                 : null;
-        }
-
-        private static void CurrentDomain_FirstChanceException(object sender, FirstChanceExceptionEventArgs e)
-        {
-            Log.Debug("First Chance Exception", e.Exception);
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

@@ -8,11 +8,13 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Caliburn.Micro;
 using ChocolateyGui.Base;
 using ChocolateyGui.Controls;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Models;
 using ChocolateyGui.Utilities;
+using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.Views;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -59,11 +61,11 @@ namespace ChocolateyGui.Services
             {
                 if (value < 0)
                 {
-                    _progressController.SetIndeterminate();
+                    Execute.OnUIThread(() => _progressController.SetIndeterminate());
                 }
                 else
                 {
-                    _progressController.SetProgress(Math.Min(Progress / 100.0f, 100));
+                    Execute.OnUIThread(() => _progressController.SetProgress(Math.Min(Progress / 100.0f, 100)));
                 }
             }
 
@@ -74,7 +76,7 @@ namespace ChocolateyGui.Services
         {
             if (ShellView != null)
             {
-                return await ShellView.ShowMessageAsync(title, message);
+                return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message));
             }
 
             return MessageBox.Show(message, title) == MessageBoxResult.OK
@@ -89,24 +91,27 @@ namespace ChocolateyGui.Services
                 var currentCount = Interlocked.Increment(ref _loadingItems);
                 if (currentCount == 1)
                 {
-                    _progressController = await ShellView.ShowChocolateyDialogAsync(title, isCancelable);
-                    _progressController.SetIndeterminate();
-                    if (isCancelable)
+                    await RunOnUIAsync(async () =>
                     {
-                        _cst = new CancellationTokenSource();
-                        _progressController.OnCanceled += dialog =>
+                        _progressController = await ShellView.ShowChocolateyDialogAsync(title, isCancelable);
+                        _progressController.SetIndeterminate();
+                        if (isCancelable)
                         {
-                            if (_cst != null)
+                            _cst = new CancellationTokenSource();
+                            _progressController.OnCanceled += dialog =>
                             {
-                                _cst.Cancel();
-                            }
-                        };
-                    }
+                                if (_cst != null)
+                                {
+                                    _cst.Cancel();
+                                }
+                            };
+                        }
 
-                    Output.Clear();
+                        Output.Clear();
 
-                    IsLoading = true;
-                    NotifyPropertyChanged("IsLoading");
+                        IsLoading = true;
+                        NotifyPropertyChanged("IsLoading");
+                    });
                 }
             }
         }
@@ -118,7 +123,7 @@ namespace ChocolateyGui.Services
                 var currentCount = Interlocked.Decrement(ref _loadingItems);
                 if (currentCount == 0)
                 {
-                    await _progressController.CloseAsync();
+                    await RunOnUIAsync(() => _progressController.CloseAsync());
                     _progressController = null;
                     Report(0);
 
@@ -131,7 +136,17 @@ namespace ChocolateyGui.Services
         public void WriteMessage(string message, PowerShellLineType type = PowerShellLineType.Output,
             bool newLine = true)
         {
-            Output.Add(new PowerShellOutputLine(message, type, newLine));
+            Execute.BeginOnUIThread(() => Output.Add(new PowerShellOutputLine(message, type, newLine)));
+        }
+
+        private Task RunOnUIAsync(Func<Task> action)
+        {
+            return action.RunOnUIThreadAsync();
+        }
+
+        private Task<T> RunOnUIAsync<T>(Func<Task<T>> action)
+        {
+            return action.RunOnUIThreadAsync();
         }
     }
 }

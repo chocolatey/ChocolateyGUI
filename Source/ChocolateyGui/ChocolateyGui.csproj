@@ -75,9 +75,9 @@
       <HintPath>..\packages\Caliburn.Micro.3.0.1\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="chocolatey, Version=0.9.10.0, Culture=neutral, PublicKeyToken=fd112f53c3ab578c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\chocolatey.lib.0.9.10-beta-20160531\lib\chocolatey.dll</HintPath>
+    <Reference Include="chocolatey, Version=0.9.10.2, Culture=neutral, PublicKeyToken=79d02ea9cad655eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\chocolatey.lib.0.9.10.2\lib\chocolatey.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -93,6 +93,14 @@
     </Reference>
     <Reference Include="Mindscape.Raygun4Net4, Version=5.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mindscape.Raygun4Net.5.3.0\lib\net40\Mindscape.Raygun4Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Serilog, Version=1.5.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.1.5.14\lib\net45\Serilog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Serilog.FullNetFx, Version=1.5.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.1.5.14\lib\net45\Serilog.FullNetFx.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -182,11 +190,9 @@
     <Compile Include="Services\PackageServices\ChocolateyPackageService.cs" />
     <Compile Include="Services\PackageServices\IBasePackageService.cs" />
     <Compile Include="Services\PackageServices\IChocolateyPackageService.cs" />
-    <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\ISourceService.cs" />
-    <Compile Include="Services\Log4NetLoggingService.cs" />
     <Compile Include="Services\PersistenceService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\AsyncLock.cs" />
@@ -321,7 +327,9 @@
       <Link>Resources\CREDITS.md</Link>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="app.manifest" />
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ChocolateyGui.ChocolateyFeedService.FeedContext_x0060_1.datasource" />
     <None Include="Properties\Settings.settings">

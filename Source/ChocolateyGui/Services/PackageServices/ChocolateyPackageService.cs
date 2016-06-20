@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Caliburn.Micro;
 using chocolatey;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.results;
-using ChocolateyGui.Enums;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
@@ -27,11 +27,11 @@ namespace ChocolateyGui.Services
 
         public ChocolateyPackageService(
             IProgressService progressService,
-            Func<string, ILogService> logFactory,
             IChocolateyConfigurationProvider chocolateyConfigurationProvider,
             IMapper mapper,
+            IEventAggregator eventAggregator,
             Func<IPackageViewModel> packageFactory)
-            : base(progressService, logFactory, chocolateyConfigurationProvider)
+            : base(progressService, chocolateyConfigurationProvider, eventAggregator)
         {
             _mapper = mapper;
             _packageFactory = packageFactory;
@@ -53,127 +53,125 @@ namespace ChocolateyGui.Services
                     }
                 }
 
-                StartProgressDialog("Chocolatey Service", "Retrieving installed packages...");
-
-                var choco = Lets.GetChocolatey().Init(ProgressService, LogFactory);
-                choco.Set(config =>
+                using (await StartProgressDialog("Chocolatey Service", "Retrieving installed packages..."))
                 {
-                    config.CommandName = CommandNameType.list.ToString();
-                    config.ListCommand.LocalOnly = true;
-                    config.AllowUnofficialBuild = true;
-#if !DEBUG
-                config.Verbose = false;
-#endif // DEBUG
-                });
-
-                var packageResults = await choco.ListAsync<PackageResult>();
-
-                packages = packageResults
-                    .Select(
-                        package => _mapper.Map(package.Package, _packageFactory()))
-                    .Select(package =>
+                    var choco = Lets.GetChocolatey().Init(ProgressService);
+                    choco.Set(config =>
                     {
-                        package.IsInstalled = true;
-                        return package;
-                    }).ToList();
+                        config.CommandName = CommandNameType.list.ToString();
+                        config.ListCommand.LocalOnly = true;
+                        config.AllowUnofficialBuild = true;
+#if !DEBUG
+                        config.Verbose = false;
+#endif // DEBUG
+                    });
 
-                CachedPackages = packages;
+                    var packageResults = await choco.ListAsync<PackageResult>();
 
-                await ProgressService.StopLoading();
-                NotifyPackagesChanged(PackagesChangedEventType.Updated);
-                return packages;
+                    packages = packageResults
+                        .Select(
+                            package => _mapper.Map(package.Package, _packageFactory()))
+                        .Select(package =>
+                        {
+                            package.IsInstalled = true;
+                            return package;
+                        }).ToList();
+
+                    CachedPackages = packages;
+
+                    return packages;
+                }
             }
         }
 
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null,
             bool force = false)
         {
-            StartProgressDialog("Install Package", "Installing package", id);
-
-            var choco = Lets.GetChocolatey().Init(ProgressService, LogFactory);
-            choco.Set(config =>
+            using (await StartProgressDialog("Install Package", "Installing package", id))
             {
-                config.CommandName = CommandNameType.install.ToString();
-                config.PackageNames = id;
-                config.AllowUnofficialBuild = true;
+                var choco = Lets.GetChocolatey().Init(ProgressService);
+                choco.Set(config =>
+                {
+                    config.CommandName = CommandNameType.install.ToString();
+                    config.PackageNames = id;
+                    config.AllowUnofficialBuild = true;
 #if !DEBUG
-                config.Verbose = false;
+                    config.Verbose = false;
 #endif // DEBUG
 
-                if (version != null)
-                {
-                    config.Version = version.ToString();
-                }
+                    if (version != null)
+                    {
+                        config.Version = version.ToString();
+                    }
 
-                if (source != null)
-                {
-                    config.Sources = source.ToString();
-                }
+                    if (source != null)
+                    {
+                        config.Sources = source.ToString();
+                    }
 
-                if (force)
-                {
-                    config.Force = true;
-                }
-            });
+                    if (force)
+                    {
+                        config.Force = true;
+                    }
+                });
 
-            await choco.RunAsync();
+                await choco.RunAsync();
 
-            await GetInstalledPackages(true);
+                await GetInstalledPackages(true);
 
-            await InstalledPackage(id, version);
+                InstalledPackage(id, version);
+            }
         }
 
         public async Task UninstallPackage(string id, SemanticVersion version, bool force = false)
         {
-            StartProgressDialog("Uninstalling", "Uninstalling package", id);
-
-            var choco = Lets.GetChocolatey().Init(ProgressService, LogFactory);
-            choco.Set(config =>
+            using (await StartProgressDialog("Uninstalling", "Uninstalling package", id))
             {
-                config.CommandName = CommandNameType.uninstall.ToString();
-                config.PackageNames = id;
-                config.AllowUnofficialBuild = true;
+                var choco = Lets.GetChocolatey().Init(ProgressService);
+                choco.Set(config =>
+                {
+                    config.CommandName = CommandNameType.uninstall.ToString();
+                    config.PackageNames = id;
+                    config.AllowUnofficialBuild = true;
 #if !DEBUG
-                config.Verbose = false;
+                    config.Verbose = false;
 #endif // DEBUG
 
-                if (version != null)
-                {
-                    config.Version = version.ToString();
-                }
-            });
+                    if (version != null)
+                    {
+                        config.Version = version.ToString();
+                    }
+                });
 
-            await choco.RunAsync();
+                await choco.RunAsync();
 
-            await GetInstalledPackages(true);
+                await GetInstalledPackages(true);
 
-            await UninstalledPackage(id, version);
-
-            await ProgressService.StopLoading();
+                UninstalledPackage(id, version);
+            }
         }
 
         public async Task UpdatePackage(string id, Uri source = null)
         {
-            StartProgressDialog("Updating", "Updating package", id);
-
-            (await GetInstalledPackages()).FirstOrDefault(package => package.Id == id);
-
-            var choco = Lets.GetChocolatey().Init(ProgressService, LogFactory);
-            choco.Set(config =>
+            using (await StartProgressDialog("Updating", "Updating package", id))
             {
-                config.CommandName = CommandNameType.upgrade.ToString();
-                config.PackageNames = id;
-                config.AllowUnofficialBuild = true;
+                var choco = Lets.GetChocolatey().Init(ProgressService);
+                choco.Set(config =>
+                {
+                    config.CommandName = CommandNameType.upgrade.ToString();
+                    config.PackageNames = id;
+                    config.AllowUnofficialBuild = true;
 #if !DEBUG
-                config.Verbose = false;
+                    config.Verbose = false;
 #endif // DEBUG
-            });
+                });
 
-            await choco.RunAsync();
+                await choco.RunAsync();
 
-            await GetInstalledPackages(true);
+                await GetInstalledPackages(true);
 
-            await UpdatedPackage(id);
+                UpdatedPackage(id);
+            }
         }
     }
 }

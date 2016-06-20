@@ -8,12 +8,9 @@ using System;
 using System.Diagnostics;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
-using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
-using ChocolateyGui.Enums;
-using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
 using NuGet;
@@ -22,7 +19,7 @@ using MemoryCache = System.Runtime.Caching.MemoryCache;
 namespace ChocolateyGui.ViewModels.Items
 {
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
-    public class PackageViewModel : ObservableBase, IPackageViewModel, IWeakEventListener
+    public class PackageViewModel : ObservableBase, IPackageViewModel
     {
         private readonly MemoryCache _cache = MemoryCache.Default;
 
@@ -314,7 +311,7 @@ namespace ChocolateyGui.ViewModels.Items
         public async Task RetrieveLatestVersion()
         {
             SemanticVersion version;
-            if ((version = (SemanticVersion) _cache.Get(string.Format("LatestVersion_{0}", Id))) != null)
+            if ((version = (SemanticVersion) _cache.Get($"LatestVersion_{Id}")) != null)
             {
                 LatestVersion = version;
                 return;
@@ -337,7 +334,7 @@ namespace ChocolateyGui.ViewModels.Items
             }
 
             _cache.Set(
-                string.Format("LatestVersion_{0}", Id),
+                $"LatestVersion_{Id}",
                 version,
                 new CacheItemPolicy
                 {
@@ -359,37 +356,16 @@ namespace ChocolateyGui.ViewModels.Items
             await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Updated));
         }
 
+#pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
         public async void ViewDetails()
+#pragma warning restore RECS0165 // Asynchronous methods should return a Task instead of void
         {
             if (DownloadCount == -1)
             {
-                await PopulateDetails();
+                await PopulateDetails().ConfigureAwait(false);
             }
 
-            await _eventAggregator.PublishOnUIThreadAsync(new ShowPackageDetailsMessage(this));
-        }
-
-        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
-        {
-            if (sender is IChocolateyPackageService && e is PackagesChangedEventArgs)
-            {
-                var args = (PackagesChangedEventArgs) e;
-                if (args.PackageId == Id && args.PackageVersion == Version.ToString())
-                {
-                    if (args.EventType == PackagesChangedEventType.Installed)
-                    {
-                        IsInstalled = true;
-                    }
-                    else if (args.EventType == PackagesChangedEventType.Uninstalled)
-                    {
-                        IsInstalled = true;
-                    }
-                }
-
-                NotifyPropertyChanged("CanUpdate");
-            }
-
-            return true;
+            await _eventAggregator.PublishOnUIThreadAsync(new ShowPackageDetailsMessage(this)).ConfigureAwait(false);
         }
 
         public async Task Reinstall()
@@ -400,7 +376,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private async Task PopulateDetails()
         {
-            var package = await _remotePackageService.GetByVersionAndIdAsync(_id, _version, _isPrerelease);
+            var package = await _remotePackageService.GetByVersionAndIdAsync(_id, _version, _isPrerelease).ConfigureAwait(false);
             _mapper.Map<IPackageViewModel, IPackageViewModel>(package, this);
         }
     }

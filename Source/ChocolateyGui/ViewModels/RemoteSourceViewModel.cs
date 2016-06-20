@@ -19,11 +19,13 @@ using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
+using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
     public class RemoteSourceViewModel : Screen, ISourceViewModelBase
     {
+        private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyPackageService _chocolateyPackageService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IRemotePackageService _remotePackageService;
@@ -48,6 +50,7 @@ namespace ChocolateyGui.ViewModels
             _eventAggregator = eventAggregator;
             _remotePackageService = remotePackageService;
             _source = source;
+            _eventAggregator.Subscribe(this);
             Packages = new ObservableCollection<IPackageViewModel>();
             Name = name;
         }
@@ -217,17 +220,6 @@ namespace ChocolateyGui.ViewModels
                     MessageBoxResult.OK,
                     MessageBoxOptions.ServiceNotification);
             }
-        }
-
-        protected override void OnActivate()
-        {
-            _eventAggregator.Subscribe(this);
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            _eventAggregator.Unsubscribe(this);
-            _eventAggregator.Unsubscribe(GetView());
         }
 
         private async Task LoadPackages()

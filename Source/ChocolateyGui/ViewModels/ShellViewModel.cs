@@ -11,11 +11,13 @@ using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels.Items;
+using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
     public class ShellViewModel : Conductor<object>.Collection.OneActive, IHandle<ShowPackageDetailsMessage>, IHandle<ShowSourcesMessage>
     {
+        private static readonly ILogger Logger = Log.ForContext<ShellViewModel>();
         private readonly IVersionNumberProvider _versionNumberProvider;
         private readonly IEventAggregator _eventAggregator;
         private readonly SourcesViewModel _sourcesViewModel;

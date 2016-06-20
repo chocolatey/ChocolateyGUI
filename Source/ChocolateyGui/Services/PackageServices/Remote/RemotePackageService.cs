@@ -20,7 +20,6 @@ namespace ChocolateyGui.Services
 {
     public class RemotePackageService : IRemotePackageService
     {
-        private readonly Func<string, ILogService> _logFactory;
         private readonly IMapper _mapper;
         private readonly Func<IPackageViewModel> _packageFactory;
         private readonly IProgressService _progressService;
@@ -28,12 +27,10 @@ namespace ChocolateyGui.Services
         public RemotePackageService(
             IProgressService progressService,
             IMapper mapper,
-            Func<string, ILogService> logFactory,
             Func<IPackageViewModel> packageFactory)
         {
             _progressService = progressService;
             _mapper = mapper;
-            _logFactory = logFactory;
             _packageFactory = packageFactory;
         }
 
@@ -62,7 +59,7 @@ namespace ChocolateyGui.Services
         public async Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false)
         {
             _progressService.WriteMessage(string.Format("Getting latest version of {0}...", id));
-            var choco = Lets.GetChocolatey().Init(_progressService, _logFactory);
+            var choco = Lets.GetChocolatey().Init(_progressService);
             choco.Set(config =>
             {
                 config.CommandName = CommandNameType.list.ToString();
@@ -88,7 +85,7 @@ namespace ChocolateyGui.Services
         public async Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version,
             bool isPrerelease)
         {
-            var choco = Lets.GetChocolatey().Init(_progressService, _logFactory);
+            var choco = Lets.GetChocolatey().Init(_progressService);
             choco.Set(config =>
             {
                 config.CommandName = CommandNameType.list.ToString();
@@ -120,7 +117,7 @@ namespace ChocolateyGui.Services
 
         private async Task<PackageSearchResults> SearchImpl(string query, PackageSearchOptions options)
         {
-            var choco = Lets.GetChocolatey().Init(_progressService, _logFactory);
+            var choco = Lets.GetChocolatey().Init(_progressService);
             choco.Set(config =>
             {
                 config.CommandName = CommandNameType.list.ToString();

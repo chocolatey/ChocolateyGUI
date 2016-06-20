@@ -5,16 +5,20 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using Autofac;
-using ChocolateyGui.Services;
+using Serilog;
 
 namespace ChocolateyGui.Utilities.Extensions
 {
     public static class LogExtensions
     {
-        public static ILogService GetLogger(this Type sourceType)
+        public static ILogger GetLogger<T>(this T thing)
         {
-            return Bootstrapper.Container.Resolve<ILogService>(new TypedParameter(typeof(Type), sourceType));
+            return Log.Logger.ForContext<T>();
+        }
+
+        public static ILogger GetLogger(this Type type)
+        {
+            return Log.Logger.ForContext(type);
         }
     }
 }

@@ -129,10 +129,23 @@
                         <Grid x:Name="PART_Body" Grid.Row="1">
                             <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{Binding Description}"/>
                         </Grid>
-                        <StackPanel x:Name="PART_Bottom" Grid.Row="2" Orientation="Horizontal">
-                            <TextBlock x:Name="TagsLabel" FontSize="14">Tags:</TextBlock>
-                            <TextBlock x:Name="Tags" Margin="5 0 0 0" Style="{StaticResource ColoredDetailsText}" FontSize="14" Text="{Binding Tags}"></TextBlock>
-                        </StackPanel>
+                        <Grid x:Name="PART_Bottom" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="TagsLabel" FontSize="14">Tags:</TextBlock>
+                                <TextBlock x:Name="Tags" Margin="5 0 0 0" Style="{StaticResource ColoredDetailsText}" FontSize="14" Text="{Binding Tags}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                                <Ellipse Fill="ForestGreen" Width="15" Height="15" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}">
+                                    <Ellipse.OpacityMask>
+                                        <VisualBrush Visual="{StaticResource appbar_check}"/>
+                                    </Ellipse.OpacityMask>
+                                </Ellipse>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

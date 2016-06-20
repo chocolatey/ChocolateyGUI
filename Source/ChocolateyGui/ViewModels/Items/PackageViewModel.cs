@@ -19,7 +19,7 @@ using MemoryCache = System.Runtime.Caching.MemoryCache;
 namespace ChocolateyGui.ViewModels.Items
 {
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
-    public class PackageViewModel : ObservableBase, IPackageViewModel
+    public class PackageViewModel : ObservableBase, IPackageViewModel, IHandleWithTask<PackageChangedMessage>
     {
         private readonly MemoryCache _cache = MemoryCache.Default;
 
@@ -104,6 +104,7 @@ namespace ChocolateyGui.ViewModels.Items
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
             _mapper = mapper;
+            eventAggregator.Subscribe(this);
         }
 
         public DateTime Created
@@ -124,10 +125,7 @@ namespace ChocolateyGui.ViewModels.Items
             set { SetPropertyValue(ref _authors, value); }
         }
 
-        public bool CanUpdate
-        {
-            get { return IsInstalled && LatestVersion != null && LatestVersion > Version; }
-        }
+        public bool CanUpdate => IsInstalled && LatestVersion != null && LatestVersion > Version;
 
         public string Copyright
         {
@@ -372,6 +370,26 @@ namespace ChocolateyGui.ViewModels.Items
         {
             await _chocolateyService.InstallPackage(Id, Version, Source, true).ConfigureAwait(false);
             await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
+        }
+
+        public Task Handle(PackageChangedMessage message)
+        {
+            if (message.Id != Id)
+            {
+                return Task.FromResult(true);
+            }
+
+            switch (message.ChangeType)
+            {
+                case PackageChangeType.Installed:
+                    IsInstalled = true;
+                    break;
+                case PackageChangeType.Uninstalled:
+                    IsInstalled = false;
+                    break;
+            }
+
+            return Task.FromResult(true);
         }
 
         private async Task PopulateDetails()

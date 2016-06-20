@@ -28,12 +28,7 @@ namespace ChocolateyGui.Views
         {
             dynamic source = e.OriginalSource;
             var item = source.DataContext as IPackageViewModel;
-            if (item == null)
-            {
-                return;
-            }
-
-            _eventAggregator.PublishOnUIThread(new ShowPackageDetailsMessage(item));
+            item?.ViewDetails();
         }
     }
 }

@@ -14,7 +14,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 using Caliburn.Micro;
-using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
@@ -170,16 +169,6 @@ namespace ChocolateyGui.ViewModels
             {
                 _exportAll = true;
             }
-        }
-
-        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
-        {
-            if (sender is IChocolateyPackageService && e is PackagesChangedEventArgs)
-            {
-                LoadPackages().ConfigureAwait(false);
-            }
-
-            return true;
         }
 
         public bool CanExportAll()

@@ -52,7 +52,7 @@ namespace ChocolateyGui
 #if DEBUG
                 .MinimumLevel.Debug()
 #endif
-                .WriteTo.ColoredConsole()
+                .WriteTo.LiterateConsole()
                 .WriteTo.RollingFile(directPath)
                 .CreateLogger();
         }

@@ -14,7 +14,6 @@ using chocolatey;
 using chocolatey.infrastructure.results;
 using ChocolateyGui.Models;
 using ChocolateyGui.Services;
-using log4net;
 using Serilog;
 
 namespace ChocolateyGui.Utilities.Extensions

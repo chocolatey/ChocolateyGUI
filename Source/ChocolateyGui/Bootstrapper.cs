@@ -37,7 +37,7 @@ namespace ChocolateyGui
         protected override void Configure()
         {
             Container = AutoFacConfiguration.RegisterAutoFac();
-            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData,
+            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData,
                 Environment.SpecialFolderOption.DoNotVerify);
             AppDataPath = Path.Combine(appDataFolder, "ChocolateyGUI");
             var logPath = Path.Combine(AppDataPath, "Logs");
@@ -53,7 +53,7 @@ namespace ChocolateyGui
                 .MinimumLevel.Debug()
 #endif
                 .WriteTo.LiterateConsole()
-                .WriteTo.RollingFile(directPath)
+                .WriteTo.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000)
                 .CreateLogger();
         }
 

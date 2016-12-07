@@ -79,7 +79,7 @@ namespace ChocolateyGui.Utilities.Extensions
         {
             private static readonly ILogger Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.RollingFile(Path.Combine(Bootstrapper.AppDataPath, "Logs", "Chocolatey.{Date}.log"))
+                .WriteTo.RollingFile(Path.Combine(Bootstrapper.AppDataPath, "Logs", "Chocolatey.{Date}.log"), retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000)
                 .CreateLogger();
 
             private readonly IProgressService _progressService;

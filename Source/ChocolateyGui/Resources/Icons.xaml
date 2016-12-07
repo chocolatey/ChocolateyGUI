@@ -2921,7 +2921,7 @@
                 <LinearGradientBrush StartPoint="0.853553,0.853553" EndPoint="0.146447,0.146447">
                     <LinearGradientBrush.GradientStops>
                         <GradientStop Color="#00000000" Offset="0"/>
-                        <GradientStop Color="{DynamicResource BlackColor}" Offset="1"/>
+                        <GradientStop Color="Black" Offset="1"/>
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Path.Fill>

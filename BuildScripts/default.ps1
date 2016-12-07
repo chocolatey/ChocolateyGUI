@@ -293,7 +293,7 @@ Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Desc
 
 		if (-not (Test-Path $inspectCodeExe)) {
 			exec {
-				Invoke-Expression "$script:chocolateyCommand install JetBrains.ReSharper.CommandLineTools -source https://www.nuget.org/api/v2/ -y";
+				Invoke-Expression "$script:chocolateyCommand install JetBrains.ReSharper.CommandLineTools -source https://www.nuget.org/api/v2/ -y -version 2016.1.20160523.144749";
 			}
 		} else {
 			Write-Output "resharper-clt already installed";

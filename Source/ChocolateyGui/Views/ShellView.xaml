@@ -29,8 +29,8 @@
 
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
-            <Button x:Name="ShowSettings" Content="settings" ClickMode="Release" />
-            <Button x:Name="ShowAbout" Content="about" ClickMode="Release" />
+            <Button x:Name="ShowSettings" Content="settings" ClickMode="Release" Visibility="Collapsed" />
+            <Button x:Name="ShowAbout" Content="about" ClickMode="Release" Visibility="Collapsed" />
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 

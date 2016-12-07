@@ -6,12 +6,15 @@
              xmlns:commands="clr-namespace:ChocolateyGui.Commands"
              xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
-             mc:Ignorable="d"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
+            mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:LocalSourceViewModel}">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:BooleanToVisibilityHidden x:Key="BoolToHidden" />
         <converters:StringListToString x:Key="ListToString" />
     </UserControl.Resources>
     <Grid Background="{StaticResource AccentColorBrush}">
@@ -42,7 +45,16 @@
                   AutoGenerateColumns="False" IsReadOnly="True"
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Title}" Width="2*" />
+                <DataGridTemplateColumn Header="Name" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type items:IPackageViewModel}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconEntypo Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BoolToHidden}}" />
+                                <TextBlock Text="{Binding Title}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Authors"
                                     Binding="{Binding Authors, Converter={StaticResource ListToString}}" Width="1*" />
                 <DataGridTextColumn Header="Version" Binding="{Binding Version}" Width="1*" />

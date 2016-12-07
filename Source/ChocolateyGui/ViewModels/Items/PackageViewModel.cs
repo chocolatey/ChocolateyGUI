@@ -52,6 +52,8 @@ namespace ChocolateyGui.ViewModels.Items
 
         private bool _isInstalled;
 
+        private bool _isPinned;
+
         private bool _isLatestVersion;
 
         private bool _isPrerelease;
@@ -179,6 +181,12 @@ namespace ChocolateyGui.ViewModels.Items
         {
             get { return _isInstalled; }
             set { SetPropertyValue(ref _isInstalled, value); }
+        }
+
+        public bool IsPinned
+        {
+            get { return _isPinned; }
+            set { SetPropertyValue(ref _isPinned, value); }
         }
 
         public bool IsLatestVersion

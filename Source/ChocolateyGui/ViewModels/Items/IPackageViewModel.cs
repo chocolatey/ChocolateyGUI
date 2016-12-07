@@ -34,6 +34,8 @@ namespace ChocolateyGui.ViewModels.Items
 
         bool IsInstalled { get; set; }
 
+        bool IsPinned { get; set; }
+
         bool IsLatestVersion { get; set; }
 
         bool IsPrerelease { get; set; }

@@ -91,6 +91,10 @@
       <HintPath>..\packages\MahApps.Metro.1.3.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Entypo, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Entypo.1.6.0\lib\net45\MahApps.Metro.IconPacks.Entypo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mindscape.Raygun4Net, Version=5.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mindscape.Raygun4Net.5.4.0\lib\net40\Mindscape.Raygun4Net.dll</HintPath>
       <Private>True</Private>
@@ -210,6 +214,7 @@
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\AsyncLock.cs" />
     <Compile Include="Utilities\Converters\BooleanToTickString.cs" />
+    <Compile Include="Utilities\Converters\BooleanToVisibilityHidden.cs" />
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\Extensions\ChocolateyExtensions.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />

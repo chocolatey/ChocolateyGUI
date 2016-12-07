@@ -7,7 +7,8 @@
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
              xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:cal="http://www.caliburnproject.org" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}">
@@ -139,11 +140,7 @@
                                 <TextBlock x:Name="Tags" Margin="5 0 0 0" Style="{StaticResource ColoredDetailsText}" FontSize="14" Text="{Binding Tags}"></TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                                <Ellipse Fill="ForestGreen" Width="15" Height="15" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}">
-                                    <Ellipse.OpacityMask>
-                                        <VisualBrush Visual="{StaticResource appbar_check}"/>
-                                    </Ellipse.OpacityMask>
-                                </Ellipse>
+                                <iconPacks:PackIconEntypo Kind="Check" Width="15" Height="15" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}" />
                             </StackPanel>
                         </Grid>
                     </Grid>

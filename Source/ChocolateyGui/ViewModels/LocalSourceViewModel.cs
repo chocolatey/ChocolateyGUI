@@ -104,7 +104,7 @@ namespace ChocolateyGui.ViewModels
             {
                 await _progressService.StartLoading("Packages", true);
                 var token = _progressService.GetCancellationToken();
-                var packages = Packages.Where(p => p.CanUpdate).ToList();
+                var packages = Packages.Where(p => p.CanUpdate && !p.IsPinned).ToList();
                 double current = 0.0f;
                 foreach (var package in packages)
                 {
@@ -254,7 +254,7 @@ namespace ChocolateyGui.ViewModels
 
             if (ShowOnlyPackagesWithUpdate)
             {
-                query = query.Where(p => p.CanUpdate);
+                query = query.Where(p => p.CanUpdate && !p.IsPinned);
             }
 
             Packages = new ObservableCollection<IPackageViewModel>(query);

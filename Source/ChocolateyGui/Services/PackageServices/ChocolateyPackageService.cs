@@ -70,7 +70,13 @@ namespace ChocolateyGui.Services
 
                     packages = packageResults
                         .Select(
-                            package => _mapper.Map(package.Package, _packageFactory()))
+                            package =>
+                            {
+                                var packageInfo = ChocolateyExtensions.GetPackageInformationService().get_package_information(package.Package);
+                                var pgck = _mapper.Map(package.Package, _packageFactory());
+                                pgck.IsPinned = packageInfo.IsPinned;
+                                return pgck;
+                            })
                         .Select(package =>
                         {
                             package.IsInstalled = true;
@@ -87,9 +93,11 @@ namespace ChocolateyGui.Services
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null,
             bool force = false)
         {
+            var failed = false;
+            var errors = new List<string>();
             using (await StartProgressDialog("Install Package", "Installing package", id))
             {
-                var choco = Lets.GetChocolatey().Init(ProgressService);
+                var choco = Lets.GetChocolatey().Init(ProgressService, message => errors.Add(message));
                 choco.Set(config =>
                 {
                     config.CommandName = CommandNameType.install.ToString();
@@ -117,17 +125,30 @@ namespace ChocolateyGui.Services
 
                 await choco.RunAsync();
 
+                if (Environment.ExitCode != 0)
+                {
+                    failed = true;
+                    Environment.ExitCode = 0;
+                }
+
                 await GetInstalledPackages(true);
 
                 InstalledPackage(id, version);
+            }
+
+            if (failed)
+            {
+                await ProgressService.ShowMessageAsync("Failed to intall package", string.Join("\n", errors));
             }
         }
 
         public async Task UninstallPackage(string id, SemanticVersion version, bool force = false)
         {
+            var failed = false;
+            var errors = new List<string>();
             using (await StartProgressDialog("Uninstalling", "Uninstalling package", id))
             {
-                var choco = Lets.GetChocolatey().Init(ProgressService);
+                var choco = Lets.GetChocolatey().Init(ProgressService, message => errors.Add(message));
                 choco.Set(config =>
                 {
                     config.CommandName = CommandNameType.uninstall.ToString();
@@ -145,17 +166,30 @@ namespace ChocolateyGui.Services
 
                 await choco.RunAsync();
 
+                if (Environment.ExitCode != 0)
+                {
+                    failed = true;
+                    Environment.ExitCode = 0;
+                }
+
                 await GetInstalledPackages(true);
 
                 UninstalledPackage(id, version);
+            }
+
+            if (failed)
+            {
+                await ProgressService.ShowMessageAsync("Failed to intall package", string.Join("\n", errors));
             }
         }
 
         public async Task UpdatePackage(string id, Uri source = null)
         {
+            var failed = false;
+            var errors = new List<string>();
             using (await StartProgressDialog("Updating", "Updating package", id))
             {
-                var choco = Lets.GetChocolatey().Init(ProgressService);
+                var choco = Lets.GetChocolatey().Init(ProgressService, message => errors.Add(message));
                 choco.Set(config =>
                 {
                     config.CommandName = CommandNameType.upgrade.ToString();
@@ -168,9 +202,20 @@ namespace ChocolateyGui.Services
 
                 await choco.RunAsync();
 
+                if (Environment.ExitCode != 0)
+                {
+                    failed = true;
+                    Environment.ExitCode = 0;
+                }
+
                 await GetInstalledPackages(true);
 
                 UpdatedPackage(id);
+            }
+
+            if (failed)
+            {
+                await ProgressService.ShowMessageAsync("Failed to intall package", string.Join("\n", errors));
             }
         }
     }

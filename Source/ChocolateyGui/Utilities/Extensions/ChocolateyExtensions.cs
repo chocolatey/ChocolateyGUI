@@ -9,8 +9,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using chocolatey;
+using chocolatey.infrastructure.app.services;
+using chocolatey.infrastructure.registration;
 using chocolatey.infrastructure.results;
 using ChocolateyGui.Models;
 using ChocolateyGui.Services;
@@ -35,18 +38,43 @@ namespace ChocolateyGui.Utilities.Extensions
             return Task.Run(() => (ICollection<PackageResult>) chocolatey.List<PackageResult>().ToList());
         }
 
-        public static GetChocolatey Init(this GetChocolatey chocolatey, IProgressService progressService)
+        public static GetChocolatey Init(this GetChocolatey chocolatey, IProgressService progressService, Action<string> errorListener = null)
         {
             if (chocolatey == null)
             {
                 throw new ArgumentNullException(nameof(chocolatey));
             }
 
-            chocolatey.SetCustomLogging(new ProgressWrapper(progressService));
+            chocolatey.SetCustomLogging(new ProgressWrapper(progressService, errorListener));
             return chocolatey;
         }
 
-        private class ProgressWrapper : chocolatey.infrastructure.logging.ILog
+        public static IChocolateyPackageInformationService GetPackageInformationService()
+        {
+            var containerType = SimpleInjectorContainer.Container.GetType();
+            var containerParam = Expression.Constant(SimpleInjectorContainer.Container);
+            var myMethod = containerType
+                          .GetMethods()
+                          .Where(m => m.Name == "GetInstance")
+                          .Select(m => new
+                          {
+                              Method = m,
+                              Params = m.GetParameters(),
+                              Args = m.GetGenericArguments()
+                          })
+                          .Where(x => x.Params.Length == 0
+                                      && x.Args.Length == 1)
+                          .Select(x => x.Method)
+                          .First();
+
+            var block = Expression.Block(
+                Expression.Call(containerParam, myMethod.MakeGenericMethod(typeof(IChocolateyPackageInformationService))));
+
+            var func = Expression.Lambda<Func<IChocolateyPackageInformationService>>(block).Compile();
+            return func();
+        }
+
+        public class ProgressWrapper : chocolatey.infrastructure.logging.ILog
         {
             private static readonly ILogger Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -54,11 +82,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 .CreateLogger();
 
             private readonly IProgressService _progressService;
+            private readonly Action<string> _errorListener;
             private ILogger _log = Logger;
 
-            public ProgressWrapper(IProgressService progressService)
+            public ProgressWrapper(IProgressService progressService, Action<string> errorListener = null)
             {
                 _progressService = progressService;
+                _errorListener = errorListener;
             }
 
             public void Debug(Func<string> message)
@@ -89,12 +119,15 @@ namespace ChocolateyGui.Utilities.Extensions
                 var messageString = message();
                 _log.Error(messageString);
                 _progressService.WriteMessage(messageString, PowerShellLineType.Error);
+                _errorListener?.Invoke(messageString);
             }
 
             public void Error(string message, params object[] formatting)
             {
                 _log.Error(message, formatting);
-                _progressService.WriteMessage(string.Format(CultureInfo.CurrentCulture, message, formatting), PowerShellLineType.Error);
+                var messageString = string.Format(CultureInfo.CurrentCulture, message, formatting);
+                _progressService.WriteMessage(messageString, PowerShellLineType.Error);
+                _errorListener?.Invoke(messageString);
             }
 
             public void Fatal(Func<string> message)
@@ -107,12 +140,15 @@ namespace ChocolateyGui.Utilities.Extensions
                 var messageString = message();
                 _log.Fatal(messageString);
                 _progressService.WriteMessage(messageString, PowerShellLineType.Error);
+                _errorListener?.Invoke(messageString);
             }
 
             public void Fatal(string message, params object[] formatting)
             {
                 _log.Fatal(message, formatting);
-                _progressService.WriteMessage(string.Format(CultureInfo.CurrentCulture, message, formatting), PowerShellLineType.Error);
+                var messageString = string.Format(CultureInfo.CurrentCulture, message, formatting);
+                _progressService.WriteMessage(messageString, PowerShellLineType.Error);
+                _errorListener?.Invoke(messageString);
             }
 
             public void Info(Func<string> message)

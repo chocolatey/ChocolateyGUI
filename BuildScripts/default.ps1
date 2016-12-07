@@ -416,7 +416,7 @@ Task -Name __UpdateGitVersion -Description $private -Action {
 Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Description "Complete build, including creation of Chocolatey Package."
 
 						<# Chocolatey can't pull the most recent version of dupFinder and inspect and the latest we can pull throws errors. #>
-Task -Name InspectCodeForProblems -Depends PackageSolution, <# RunDupFinder, RunInspectCode #> -Description "Complete build, including running dup finder and inspectcode."
+Task -Name InspectCodeForProblems -Depends PackageSolution <#, RunDupFinder, RunInspectCode #> -Description "Complete build, including running dup finder and inspectcode."
 
 Task -Name DeployDevelopSolutionToMyGet -Depends InspectCodeForProblems, DeployDevelopPackageToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 

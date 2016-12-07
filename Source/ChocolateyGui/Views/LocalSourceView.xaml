@@ -36,7 +36,6 @@
             <Button Command="{commands:DataContextCommandAdapter RefreshPackages, CanRefreshPackages}"
                     Style="{StaticResource SquareButtonStyle}" Content="Refresh Packages" Margin="4,0,4,0" />
             <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}"
-                    Visibility="{Binding ShowOnlyPackagesWithUpdate, Converter={StaticResource BoolToVis}}"
                     Style="{StaticResource SquareButtonStyle}" Margin="4,0,4,0" Content="Update All" />
             <Button Command="{commands:DataContextCommandAdapter ExportAll, CanExportAll}"
                     Style="{StaticResource SquareButtonStyle}" Margin="4,0,0,0" Content="Export" />

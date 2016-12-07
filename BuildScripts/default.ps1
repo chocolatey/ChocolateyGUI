@@ -293,8 +293,7 @@ Task -Name __InstallReSharperCommandLineTools -Depends __InstallChocolatey -Desc
 
 		if (-not (Test-Path $inspectCodeExe)) {
 			exec {
-				<# Todo: Use nuget to install these tools #>
-				Invoke-Expression "$script:chocolateyCommand install JetBrains.ReSharper.CommandLineTools -source https://www.nuget.org/api/v2/ -y --version 2016.1.20160523.144749";
+				Invoke-Expression "$script:chocolateyCommand install JetBrains.ReSharper.CommandLineTools -source https://www.nuget.org/api/v2/ -y";
 			}
 		} else {
 			Write-Output "resharper-clt already installed";
@@ -416,8 +415,8 @@ Task -Name __UpdateGitVersion -Description $private -Action {
 
 Task -Name PackageSolution -Depends RebuildSolution, PackageChocolatey -Description "Complete build, including creation of Chocolatey Package."
 
-						<# Chocolatey can't pull the most recent version of dupFinder and inspect, and dupFinder throws errors #>
-Task -Name InspectCodeForProblems -Depends PackageSolution, <# RunDupFinder, #> RunInspectCode -Description "Complete build, including running inspectcode."
+						<# Chocolatey can't pull the most recent version of dupFinder and inspect and the latest we can pull throws errors. #>
+Task -Name InspectCodeForProblems -Depends PackageSolution, <# RunDupFinder, RunInspectCode #> -Description "Complete build, including running dup finder and inspectcode."
 
 Task -Name DeployDevelopSolutionToMyGet -Depends InspectCodeForProblems, DeployDevelopPackageToMyGet -Description "Complete build, including creation of Chocolatey Package and Deployment to MyGet.org"
 

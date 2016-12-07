@@ -14,6 +14,7 @@ using chocolatey;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.results;
 using ChocolateyGui.Providers;
+using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
 using NuGet;

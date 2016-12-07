@@ -49,6 +49,7 @@ namespace ChocolateyGui.Utilities.Extensions
             return chocolatey;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "N/A")]
         public static IChocolateyPackageInformationService GetPackageInformationService()
         {
             var containerType = SimpleInjectorContainer.Container.GetType();

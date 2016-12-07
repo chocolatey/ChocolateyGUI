@@ -11,6 +11,7 @@ using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
+using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.ViewModels;
 using ChocolateyGui.ViewModels.Items;
 using ChocolateyGui.Views;
@@ -21,6 +22,7 @@ namespace ChocolateyGui.IoC
 {
     internal class ChocolateyGuiModule : Module
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Not Relevant")]
         protected override void Load(ContainerBuilder builder)
         {
             var viewModelAssembly = typeof(ShellViewModel).Assembly;

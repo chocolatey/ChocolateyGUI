@@ -16,6 +16,7 @@ using System.Xml;
 using Caliburn.Micro;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
+using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
 using Serilog;
@@ -28,7 +29,6 @@ namespace ChocolateyGui.ViewModels
         private readonly IChocolateyPackageService _chocolateyService;
         private readonly List<IPackageViewModel> _packages;
         private readonly IPersistenceService _persistenceService;
-        private readonly IEventAggregator _eventAggregator;
         private readonly IProgressService _progressService;
         private bool _exportAll = true;
         private bool _hasLoaded;
@@ -49,11 +49,16 @@ namespace ChocolateyGui.ViewModels
             _chocolateyService = chocolateyService;
             _progressService = progressService;
             _persistenceService = persistenceService;
-            _eventAggregator = eventAggregator;
 
             Name = name;
             Packages = new ObservableCollection<IPackageViewModel>();
             _packages = new List<IPackageViewModel>();
+
+            if (eventAggregator == null)
+            {
+                throw new ArgumentNullException(nameof(eventAggregator));
+            }
+
             eventAggregator.Subscribe(this);
         }
 

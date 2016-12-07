@@ -13,11 +13,9 @@ using ChocolateyGui.Providers;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels.Items;
 using NuGet;
-using Serilog;
-using ILogger = Serilog.ILogger;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
-namespace ChocolateyGui.Services
+namespace ChocolateyGui.Services.PackageServices
 {
     public abstract class BasePackageService
     {
@@ -30,8 +28,6 @@ namespace ChocolateyGui.Services
         ///     Synchronizes the GetPackages method.
         /// </summary>
         internal readonly AsyncLock GetInstalledLock;
-
-        private static readonly ILogger Logger = Log.ForContext<BasePackageService>();
 
         private readonly IEventAggregator _eventAggregator;
 

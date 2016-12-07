@@ -64,6 +64,11 @@ namespace ChocolateyGui
 
         protected override object GetInstance(Type service, string key)
         {
+            if (service == null)
+            {
+                throw new ArgumentNullException(nameof(service));
+            }
+
             if (string.IsNullOrWhiteSpace(key))
             {
                 if (Container.IsRegistered(service))

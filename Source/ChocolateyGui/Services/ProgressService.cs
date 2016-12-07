@@ -139,12 +139,12 @@ namespace ChocolateyGui.Services
             Execute.BeginOnUIThread(() => Output.Add(new PowerShellOutputLine(message, type, newLine)));
         }
 
-        private Task RunOnUIAsync(Func<Task> action)
+        private static Task RunOnUIAsync(Func<Task> action)
         {
             return action.RunOnUIThreadAsync();
         }
 
-        private Task<T> RunOnUIAsync<T>(Func<Task<T>> action)
+        private static Task<T> RunOnUIAsync<T>(Func<Task<T>> action)
         {
             return action.RunOnUIThreadAsync();
         }

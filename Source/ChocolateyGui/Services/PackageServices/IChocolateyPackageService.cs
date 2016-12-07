@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using ChocolateyGui.ViewModels.Items;
 using NuGet;
 
-namespace ChocolateyGui.Services
+namespace ChocolateyGui.Services.PackageServices
 {
-    public interface IChocolateyPackageService : IBasePackageService
+    public interface IChocolateyPackageService
     {
         Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false);
 

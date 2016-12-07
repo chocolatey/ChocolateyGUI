@@ -17,6 +17,7 @@ using Caliburn.Micro;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
+using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
 using Serilog;
@@ -50,9 +51,16 @@ namespace ChocolateyGui.ViewModels
             _eventAggregator = eventAggregator;
             _remotePackageService = remotePackageService;
             _source = source;
-            _eventAggregator.Subscribe(this);
+
             Packages = new ObservableCollection<IPackageViewModel>();
             Name = name;
+
+            if (eventAggregator == null)
+            {
+                throw new ArgumentNullException(nameof(eventAggregator));
+            }
+
+            _eventAggregator.Subscribe(this);
         }
 
         public ObservableCollection<IPackageViewModel> Packages
@@ -103,7 +111,7 @@ namespace ChocolateyGui.ViewModels
             set { this.SetPropertyValue(ref _searchQuery, value); }
         }
 
-        public List<string> SortOptions { get; } = new List<string>
+        public IReadOnlyList<string> SortOptions { get; } = new List<string>
         {
             "Popularity",
             "A-Z"
@@ -170,7 +178,9 @@ namespace ChocolateyGui.ViewModels
 
         public void RefreshRemotePackages()
         {
+#pragma warning disable 4014
             LoadPackages();
+#pragma warning restore 4014
         }
 
         protected override void OnViewAttached(object view, object context)
@@ -182,7 +192,9 @@ namespace ChocolateyGui.ViewModels
         {
             try
             {
+#pragma warning disable 4014
                 LoadPackages();
+#pragma warning restore 4014
 
                 var immediateProperties = new[]
                 {
@@ -194,22 +206,29 @@ namespace ChocolateyGui.ViewModels
                     .Throttle(TimeSpan.FromMilliseconds(500))
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
+#pragma warning disable 4014
                     .Subscribe(e => LoadPackages());
+#pragma warning restore 4014
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                     .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
                     .ObserveOnDispatcher()
+#pragma warning disable 4014
                     .Subscribe(e => LoadPackages());
+#pragma warning restore 4014
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                     .Where(e => e.EventArgs.PropertyName == "CurrentPage")
                     .Throttle(TimeSpan.FromMilliseconds(300))
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
+#pragma warning disable 4014
                     .Subscribe(e => LoadPackages());
+#pragma warning restore 4014
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
+                Logger.Error(ex, "Failed to intialize remote source view model.");
                 MessageBox.Show(
                     string.Format(CultureInfo.InvariantCulture,
                         "Unable to connect to feed with Url: {0}.  Please check that this feed is accessible, and try again.",

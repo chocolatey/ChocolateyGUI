@@ -13,6 +13,7 @@ using Caliburn.Micro;
 using ChocolateyGui.Base;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
+using ChocolateyGui.Services.PackageServices;
 using NuGet;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
@@ -106,7 +107,7 @@ namespace ChocolateyGui.ViewModels.Items
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
             _mapper = mapper;
-            eventAggregator.Subscribe(this);
+            eventAggregator?.Subscribe(this);
         }
 
         public DateTime Created
@@ -382,6 +383,11 @@ namespace ChocolateyGui.ViewModels.Items
 
         public Task Handle(PackageChangedMessage message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             if (message.Id != Id)
             {
                 return Task.FromResult(true);

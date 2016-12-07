@@ -205,7 +205,6 @@
     <Compile Include="Services\ChocolateySourcesService.cs" />
     <Compile Include="Services\PackageServices\BasePackageService.cs" />
     <Compile Include="Services\PackageServices\ChocolateyPackageService.cs" />
-    <Compile Include="Services\PackageServices\IBasePackageService.cs" />
     <Compile Include="Services\PackageServices\IChocolateyPackageService.cs" />
     <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\IProgressService.cs" />

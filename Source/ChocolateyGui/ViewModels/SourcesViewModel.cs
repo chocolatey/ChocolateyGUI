@@ -24,6 +24,16 @@ namespace ChocolateyGui.ViewModels
                 throw new ArgumentNullException(nameof(sourceService));
             }
 
+            if (localSourceVmFactory == null)
+            {
+                throw new ArgumentNullException(nameof(localSourceVmFactory));
+            }
+
+            if (remoteSourceVmFactory == null)
+            {
+                throw new ArgumentNullException(nameof(remoteSourceVmFactory));
+            }
+
             Items.Add(localSourceVmFactory("This PC"));
 
             foreach (var source in sourceService.GetSources())

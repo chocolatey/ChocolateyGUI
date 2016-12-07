@@ -11,6 +11,7 @@ namespace ChocolateyGui.Utilities.Extensions
 {
     public static class LogExtensions
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "thing", Justification = "N/A")]
         public static ILogger GetLogger<T>(this T thing)
         {
             return Log.Logger.ForContext<T>();

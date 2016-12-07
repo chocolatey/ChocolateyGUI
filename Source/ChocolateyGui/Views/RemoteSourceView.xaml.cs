@@ -4,6 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,6 +22,11 @@ namespace ChocolateyGui.Views
     {
         public RemoteSourceView(IEventAggregator eventAggregator)
         {
+            if (eventAggregator == null)
+            {
+                throw new ArgumentNullException(nameof(eventAggregator));
+            }
+
             eventAggregator.Subscribe(this);
         }
 

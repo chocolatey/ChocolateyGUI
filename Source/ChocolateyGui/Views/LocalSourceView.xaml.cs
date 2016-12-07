@@ -5,8 +5,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Windows.Input;
-using Caliburn.Micro;
-using ChocolateyGui.Models.Messages;
 using ChocolateyGui.ViewModels.Items;
 
 namespace ChocolateyGui.Views
@@ -16,11 +14,8 @@ namespace ChocolateyGui.Views
     /// </summary>
     public partial class LocalSourceView
     {
-        private readonly IEventAggregator _eventAggregator;
-
-        public LocalSourceView(IEventAggregator eventAggregator)
+        public LocalSourceView()
         {
-            _eventAggregator = eventAggregator;
             InitializeComponent();
         }
 

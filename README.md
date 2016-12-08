@@ -40,8 +40,7 @@ Or, you can find us in IRC at #chocolatey.
 Please see the [wiki](https://github.com/chocolatey/chocolateygui/wiki)
 
 ### Requirements
-* .NET Framework 4.0
-* PowerShell 2.0+
+* .NET Framework 4.5
 
 ### License / Credits
 Apache 2.0 - see [LICENSE](https://github.com/chocolatey/chocolateygui/blob/develop/LICENSE) and [NOTICE](https://github.com/chocolatey/chocolateygui/blob/develop/NOTICE) files.

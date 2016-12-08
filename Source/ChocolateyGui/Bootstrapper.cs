@@ -34,12 +34,21 @@ namespace ChocolateyGui
 
         internal static string AppDataPath { get; private set; }
 
+        internal static string LocalAppDataPath { get; private set; }
+
         protected override void Configure()
         {
+            LocalAppDataPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData,
+                    Environment.SpecialFolderOption.DoNotVerify),
+                "ChocolateyGUI");
+
+            AppDataPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData,
+                    Environment.SpecialFolderOption.DoNotVerify),
+                "ChocolateyGUI");
+
             Container = AutoFacConfiguration.RegisterAutoFac();
-            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData,
-                Environment.SpecialFolderOption.DoNotVerify);
-            AppDataPath = Path.Combine(appDataFolder, "ChocolateyGUI");
             var logPath = Path.Combine(AppDataPath, "Logs");
             if (!Directory.Exists(logPath))
             {

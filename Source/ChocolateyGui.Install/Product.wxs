@@ -26,6 +26,7 @@
       <ComponentGroupRef Id="ChocolateyComponents" />
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="CreateAppDataFolder" />
+      <ComponentRef Id="CreateUserAppDataFolder" />
     </Feature>
   </Product>
 
@@ -43,6 +44,13 @@
             <CreateFolder>
               <Permission User="Everyone" GenericAll="yes" />
             </CreateFolder>
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="LocalAppDataFolder">
+        <Directory Id="UserAppStuff" Name="ChocolateyGUI">
+          <Component Id="CreateUserAppDataFolder" Guid="265AADCF-FCC7-45F1-8E2B-506F0B426D37">
+            <CreateFolder />
           </Component>
         </Directory>
       </Directory>
@@ -136,6 +144,9 @@
       </Component>
       <Component Id="ChocolateyGui.pdb" Guid="3b6f4686-3710-4741-a2e7-635eedab9292">
         <File Id="ChocolateyGui.pdb" Name="ChocolateyGui.pdb" Source="$(var.ChocolateyGui_TargetDir)ChocolateyGui.pdb" />
+      </Component>
+      <Component Id="LiteDB.dll" Guid="b5679a33-06c5-4598-91c1-e6bda40355ad">
+        <File Id="LiteDB.dll" Name="LiteDB.dll" Source="$(var.ChocolateyGui_TargetDir)LiteDB.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

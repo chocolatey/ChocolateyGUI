@@ -6,6 +6,7 @@
 
 using System;
 using System.ComponentModel;
+using System.IO;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
@@ -15,6 +16,7 @@ using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.ViewModels;
 using ChocolateyGui.ViewModels.Items;
 using ChocolateyGui.Views;
+using LiteDB;
 using NuGet;
 using PackageViewModel = ChocolateyGui.ViewModels.Items.PackageViewModel;
 
@@ -71,6 +73,8 @@ namespace ChocolateyGui.IoC
             });
 
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
+
+            builder.Register(c => new LiteDatabase(Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")));
         }
     }
 }

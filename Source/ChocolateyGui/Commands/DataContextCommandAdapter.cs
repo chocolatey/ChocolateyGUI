@@ -4,24 +4,24 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Markup;
+
 namespace ChocolateyGui.Commands
 {
-    using System;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Markup;
-
     /// <summary>
-    ///     A markup extension that returns an <see cref="ICommand"/> that is capable of executing
+    ///     A markup extension that returns an <see cref="ICommand" /> that is capable of executing
     ///     methods of the DataContext of a target FrameworkElement.
     /// </summary>
     /// <remarks>
-    ///     When the <see cref="ICommand.Execute"/> and <see cref="ICommand.CanExecute"/> methods
-    ///     of the returned <see cref="ICommand"/> object are invoked, methods on the DataContext
-    ///     whose names correspond to the values of the <see cref="Executed"/> and
-    ///     <see cref="CanExecute"/> properties are invoked. See the <see cref="Executed"/> and
-    ///     <see cref="CanExecute"/> properties for specifics on the allowable method signatures.
+    ///     When the <see cref="ICommand.Execute" /> and <see cref="ICommand.CanExecute" /> methods
+    ///     of the returned <see cref="ICommand" /> object are invoked, methods on the DataContext
+    ///     whose names correspond to the values of the <see cref="Executed" /> and
+    ///     <see cref="CanExecute" /> properties are invoked. See the <see cref="Executed" /> and
+    ///     <see cref="CanExecute" /> properties for specifics on the allowable method signatures.
     /// </remarks>
     public sealed class DataContextCommandAdapter : MarkupExtension, ICommand
     {
@@ -35,38 +35,32 @@ namespace ChocolateyGui.Commands
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="DataContextCommandAdapter"/> class by
-        ///     using the specified method name for the <see cref="Executed"/> property.
+        ///     Initializes a new instance of the <see cref="DataContextCommandAdapter" /> class by
+        ///     using the specified method name for the <see cref="Executed" /> property.
         /// </summary>
         /// <param name="executed">
-        ///     The name of the <see cref="Executed"/> method.
+        ///     The name of the <see cref="Executed" /> method.
         /// </param>
         public DataContextCommandAdapter(string executed)
         {
-            this.Executed = executed;
+            Executed = executed;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="DataContextCommandAdapter"/> class by
-        ///     using the specified method names for the <see cref="Executed"/> and
-        ///     <see cref="CanExecute"/> properties.
+        ///     Initializes a new instance of the <see cref="DataContextCommandAdapter" /> class by
+        ///     using the specified method names for the <see cref="Executed" /> and
+        ///     <see cref="CanExecute" /> properties.
         /// </summary>
         /// <param name="executed">
-        ///     The name of the <see cref="Executed"/> method.
+        ///     The name of the <see cref="Executed" /> method.
         /// </param>
         /// <param name="canExecute">
-        ///     The name of the <see cref="CanExecute"/> method.
+        ///     The name of the <see cref="CanExecute" /> method.
         /// </param>
         public DataContextCommandAdapter(string executed, string canExecute)
         {
-            this.Executed = executed;
-            this.CanExecute = canExecute;
-        }
-
-        event EventHandler ICommand.CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            Executed = executed;
+            CanExecute = canExecute;
         }
 
         /// <summary>
@@ -93,39 +87,47 @@ namespace ChocolateyGui.Commands
         /// </remarks>
         public string Executed { get; set; }
 
+        event EventHandler ICommand.CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
         bool ICommand.CanExecute(object parameter)
         {
-            var target = GetDataContext(this._target);
-            if (this._target == null)
+            var target = GetDataContext(_target);
+            if (_target == null)
             {
                 return false;
             }
 
             bool canExecute;
-            return CommandExecutionManager.TryExecuteCommand(target, parameter, false, this.Executed, this.CanExecute, out canExecute) && canExecute;
+            return
+                CommandExecutionManager.TryExecuteCommand(target, parameter, false, Executed, CanExecute, out canExecute) &&
+                canExecute;
         }
 
         void ICommand.Execute(object parameter)
         {
-            var target = GetDataContext(this._target);
-            if (this._target == null)
+            var target = GetDataContext(_target);
+            if (_target == null)
             {
                 return;
             }
 
             bool canExecute;
-            CommandExecutionManager.TryExecuteCommand(target, parameter, true, this.Executed, this.CanExecute, out canExecute);
+            CommandExecutionManager.TryExecuteCommand(target, parameter, true, Executed, CanExecute, out canExecute);
         }
 
         /// <summary>
-        ///     Returns an <see cref="ICommand"/> that is capable of executing methods of the
+        ///     Returns an <see cref="ICommand" /> that is capable of executing methods of the
         ///     DataContext of the target.
         /// </summary>
         /// <param name="serviceProvider">
         ///     Object that can provide services for the markup extension.
         /// </param>
         /// <returns>
-        ///     The <see cref="ICommand"/> object.
+        ///     The <see cref="ICommand" /> object.
         /// </returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -140,10 +142,10 @@ namespace ChocolateyGui.Commands
                 throw new Exception("IProvideValueTarget could not be resolved.");
             }
 
-            this._target = 
+            _target =
                 target.TargetObject is InputBinding
-                ? GetInputBindingsCollectionOwner(target)
-                : target.TargetObject;
+                    ? GetInputBindingsCollectionOwner(target)
+                    : target.TargetObject;
 
             return this;
         }
@@ -166,7 +168,8 @@ namespace ChocolateyGui.Commands
         // not really a performance issue.
         private static object GetInputBindingsCollectionOwner(IProvideValueTarget targetService)
         {
-            var xamlContextField = targetService.GetType().GetField("_xamlContext", BindingFlags.Instance | BindingFlags.NonPublic);
+            var xamlContextField = targetService.GetType()
+                .GetField("_xamlContext", BindingFlags.Instance | BindingFlags.NonPublic);
             if (xamlContextField == null)
             {
                 return null;
@@ -180,7 +183,8 @@ namespace ChocolateyGui.Commands
             }
 
             var inputBindingsCollection = grandParentInstanceProperty.GetGetMethod().Invoke(xamlContext, null);
-            var ownerField = inputBindingsCollection.GetType().GetField("_owner", BindingFlags.Instance | BindingFlags.NonPublic);
+            var ownerField = inputBindingsCollection.GetType()
+                .GetField("_owner", BindingFlags.Instance | BindingFlags.NonPublic);
             if (ownerField == null)
             {
                 return null;

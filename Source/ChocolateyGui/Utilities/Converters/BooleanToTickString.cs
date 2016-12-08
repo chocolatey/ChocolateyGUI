@@ -4,22 +4,23 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+
 namespace ChocolateyGui.Utilities.Converters
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Data;
-
     public class BooleanToTickString : DependencyObject, IValueConverter
     {
         private const string Tick = "✓";
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? Tick : string.Empty;
+            return (bool) value ? Tick : string.Empty;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

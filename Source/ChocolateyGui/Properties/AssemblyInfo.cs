@@ -21,7 +21,9 @@ using System.Windows;
 [assembly: AssemblyInformationalVersion("0.14.0.0-dev")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Chocolatey")]
-[assembly: AssemblyCopyright("Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC")]
+[assembly:
+    AssemblyCopyright(
+        "Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-US")]
@@ -31,14 +33,13 @@ using System.Windows;
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
-
 [assembly: ThemeInfo(
-    ResourceDictionaryLocation.None, 
+    ResourceDictionaryLocation.None,
     // where theme specific resource dictionaries are located
     // (used if a resource is not found in the page, 
     // or application resource dictionaries)
-    ResourceDictionaryLocation.SourceAssembly 
+    ResourceDictionaryLocation.SourceAssembly
     // where the generic resource dictionary is located
     // (used if a resource is not found in the page, 
     // app, or any theme specific resource dictionaries)
-)]
+    )]

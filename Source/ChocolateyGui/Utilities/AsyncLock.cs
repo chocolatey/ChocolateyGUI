@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace ChocolateyGui.Utilities
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-
     internal class AsyncLock
     {
         private readonly Task<Releaser> _releaser;
@@ -17,19 +17,20 @@ namespace ChocolateyGui.Utilities
 
         public AsyncLock()
         {
-            this._semaphore = new SemaphoreSlim(1);
-            this._releaser = Task.FromResult(new Releaser(this));
+            _semaphore = new SemaphoreSlim(1);
+            _releaser = Task.FromResult(new Releaser(this));
         }
 
         public Task<Releaser> LockAsync()
         {
-            var wait = this._semaphore.WaitAsync();
-            return wait.IsCompleted ? this._releaser
-                       : wait.ContinueWith(
-                           (task) => new Releaser(this),
-                           CancellationToken.None,
-                           TaskContinuationOptions.ExecuteSynchronously,
-                           TaskScheduler.Default);
+            var wait = _semaphore.WaitAsync();
+            return wait.IsCompleted
+                ? _releaser
+                : wait.ContinueWith(
+                    task => new Releaser(this),
+                    CancellationToken.None,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Default);
         }
 
         public struct Releaser : IDisposable
@@ -38,14 +39,14 @@ namespace ChocolateyGui.Utilities
 
             public Releaser(AsyncLock @lock)
             {
-                this._lock = @lock;
+                _lock = @lock;
             }
 
             public void Dispose()
             {
-                if (this._lock != null)
+                if (_lock != null)
                 {
-                    this._lock._semaphore.Release();
+                    _lock._semaphore.Release();
                 }
             }
         }

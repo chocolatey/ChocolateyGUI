@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
 namespace ChocolateyGui.Models
 {
-    using System;
-    using System.Collections.Generic;
-
     public class PackageConfig
     {
         public DateTime LastUpdated { get; set; }

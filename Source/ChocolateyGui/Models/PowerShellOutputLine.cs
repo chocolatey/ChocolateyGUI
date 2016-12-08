@@ -12,16 +12,16 @@ namespace ChocolateyGui.Models
         Error,
         Warning,
         Verbose,
-        Debug,
+        Debug
     }
 
     public class PowerShellOutputLine
     {
         public PowerShellOutputLine(string text, PowerShellLineType lineType, bool newLine = true)
         {
-            this.Text = text;
-            this.LineType = lineType;
-            this.NewLine = newLine;
+            Text = text;
+            LineType = lineType;
+            NewLine = newLine;
         }
 
         public bool NewLine { get; private set; }

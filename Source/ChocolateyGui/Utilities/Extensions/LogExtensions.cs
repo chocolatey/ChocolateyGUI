@@ -4,17 +4,22 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using Serilog;
+
 namespace ChocolateyGui.Utilities.Extensions
 {
-    using System;
-    using Autofac;
-    using ChocolateyGui.Services;
-
     public static class LogExtensions
     {
-        public static ILogService GetLogger(this Type sourceType)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "thing", Justification = "N/A")]
+        public static ILogger GetLogger<T>(this T thing)
         {
-            return App.Container.Resolve<ILogService>(new TypedParameter(typeof(Type), sourceType));
+            return Log.Logger.ForContext<T>();
+        }
+
+        public static ILogger GetLogger(this Type type)
+        {
+            return Log.Logger.ForContext(type);
         }
     }
 }

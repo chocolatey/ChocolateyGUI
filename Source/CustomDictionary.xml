@@ -27,6 +27,7 @@
       <Word>SetBufferContents</Word>
       <Word>ThenBy</Word>
       <Word>ThenByDescending</Word>
+      <Word>Vm</Word>
     </Recognized>
     <Deprecated>
       <Term />

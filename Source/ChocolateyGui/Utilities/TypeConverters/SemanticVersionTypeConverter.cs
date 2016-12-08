@@ -4,14 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.ComponentModel;
+using System.Globalization;
+using NuGet;
+
 namespace ChocolateyGui.Utilities.TypeConverters
 {
-    using System;
-    using System.ComponentModel;
-    using System.Globalization;
-
-    using NuGet;
-
     public class SemanticVersionTypeConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)

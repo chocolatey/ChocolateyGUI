@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Threading.Tasks;
+using NuGet;
+
 namespace ChocolateyGui.ViewModels.Items
 {
-    using System;
-    using System.Threading.Tasks;
-    using NuGet;
-
     public interface IPackageViewModel
     {
         string[] Authors { get; set; }
@@ -33,6 +33,8 @@ namespace ChocolateyGui.ViewModels.Items
         bool IsAbsoluteLatestVersion { get; set; }
 
         bool IsInstalled { get; set; }
+
+        bool IsPinned { get; set; }
 
         bool IsLatestVersion { get; set; }
 

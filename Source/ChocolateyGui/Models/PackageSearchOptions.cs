@@ -8,102 +8,48 @@ namespace ChocolateyGui.Models
 {
     public struct PackageSearchOptions
     {
-        private readonly int _currentPage;
-
-        private readonly bool _includeAllVersions;
-
-        private readonly bool _includedPrerelease;
-
-        private readonly bool _matchQuery;
-
-        private readonly int _pageSize;
-
-        private readonly string _sortColumn;
-
 #pragma warning disable 649
-        private readonly string[] _tagsQuery;
 #pragma warning restore 649
 
         public PackageSearchOptions(int pageSize, int currentPage)
             : this()
         {
-            this._pageSize = pageSize;
-            this._currentPage = currentPage;
+            PageSize = pageSize;
+            CurrentPage = currentPage;
         }
 
         public PackageSearchOptions(int pageSize, int currentPage, string sortColumn)
             : this()
         {
-            this._pageSize = pageSize;
-            this._currentPage = currentPage;
-            this._sortColumn = sortColumn;
+            PageSize = pageSize;
+            CurrentPage = currentPage;
+            SortColumn = sortColumn;
         }
 
-        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool includePrerelease, bool includeAllVersions, bool matchWord)
+        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool includePrerelease,
+            bool includeAllVersions, bool matchWord)
             : this()
         {
-            this._pageSize = pageSize;
-            this._currentPage = currentPage;
-            this._sortColumn = sortColumn;
-            this._includeAllVersions = includeAllVersions;
-            this._includedPrerelease = includePrerelease;
-            this._matchQuery = matchWord;
+            PageSize = pageSize;
+            CurrentPage = currentPage;
+            SortColumn = sortColumn;
+            IncludeAllVersions = includeAllVersions;
+            IncludePrerelease = includePrerelease;
+            MatchQuery = matchWord;
         }
 
-        public int CurrentPage
-        {
-            get
-            {
-                return this._currentPage;
-            }
-        }
+        public int CurrentPage { get; }
 
-        public bool IncludeAllVersions
-        {
-            get
-            {
-                return this._includeAllVersions;
-            }
-        }
+        public bool IncludeAllVersions { get; }
 
-        public bool IncludePrerelease
-        {
-            get
-            {
-                return this._includedPrerelease;
-            }
-        }
+        public bool IncludePrerelease { get; }
 
-        public bool MatchQuery
-        {
-            get
-            {
-                return this._matchQuery;
-            }
-        }
+        public bool MatchQuery { get; }
 
-        public int PageSize
-        {
-            get
-            {
-                return this._pageSize;
-            }
-        }
+        public int PageSize { get; }
 
-        public string SortColumn
-        {
-            get
-            {
-                return this._sortColumn;
-            }
-        }
+        public string SortColumn { get; }
 
-        public string[] TagsQuery
-        {
-            get
-            {
-                return this._tagsQuery;
-            }
-        }
+        public string[] TagsQuery { get; }
     }
 }

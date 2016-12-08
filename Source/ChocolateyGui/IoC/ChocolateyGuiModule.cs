@@ -60,7 +60,6 @@ namespace ChocolateyGui.IoC
 
             // Register Services
             builder.RegisterType<ChocolateySourcesService>().As<ISourceService>().SingleInstance();
-            builder.RegisterType<RemotePackageService>().As<IRemotePackageService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
 

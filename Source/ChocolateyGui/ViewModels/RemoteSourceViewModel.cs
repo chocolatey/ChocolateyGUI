@@ -16,7 +16,6 @@ using System.Windows;
 using Caliburn.Micro;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Services;
 using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
@@ -29,7 +28,6 @@ namespace ChocolateyGui.ViewModels
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyPackageService _chocolateyPackageService;
         private readonly IEventAggregator _eventAggregator;
-        private readonly IRemotePackageService _remotePackageService;
         private readonly Uri _source;
         private int _currentPage = 1;
         private bool _hasLoaded;
@@ -42,14 +40,12 @@ namespace ChocolateyGui.ViewModels
         private string _searchQuery;
         private string _sortSelection = "Popularity";
 
-        public RemoteSourceViewModel(IRemotePackageService remotePackageService,
-            IChocolateyPackageService chocolateyPackageService,
+        public RemoteSourceViewModel(IChocolateyPackageService chocolateyPackageService,
             IEventAggregator eventAggregator,
             Uri source, string name)
         {
             _chocolateyPackageService = chocolateyPackageService;
             _eventAggregator = eventAggregator;
-            _remotePackageService = remotePackageService;
             _source = source;
 
             Packages = new ObservableCollection<IPackageViewModel>();
@@ -249,7 +245,7 @@ namespace ChocolateyGui.ViewModels
 
             var result =
                 await
-                    _remotePackageService.Search(SearchQuery,
+                    _chocolateyPackageService.Search(SearchQuery,
                         new PackageSearchOptions(PageSize, CurrentPage - 1, sort, IncludePrerelease,
                             IncludeAllVersions, MatchWord));
             var installed = await _chocolateyPackageService.GetInstalledPackages();

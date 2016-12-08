@@ -8,6 +8,7 @@
              xmlns:xaml="clr-namespace:Markdown.Xaml"
              xmlns:commands="clr-namespace:ChocolateyGui.Commands"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DesignHeight="786" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:PackageViewModel}">
@@ -52,18 +53,57 @@
             <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                     Background="{StaticResource AccentColorBrush4}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,20,10">
-                    <Button Style="{StaticResource InstallButtonStyle}"
-                            Command="{commands:DataContextCommandAdapter Install}"
-                            Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}" />
-                    <Button Style="{StaticResource ReinstallButtonStyle}"
-                            Command="{commands:DataContextCommandAdapter Reinstall}"
-                            Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}" />
-                    <Button Style="{StaticResource UninstallButtonStyle}"
-                            Command="{commands:DataContextCommandAdapter Uninstall}"
-                            Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}" />
-                    <Button Style="{StaticResource UpdateButtonStyle}"
+                    <StackPanel Orientation="Horizontal"
+                                Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
+                        <Button Padding="10" Margin="5 0"
+                            Command="{commands:DataContextCommandAdapter Install}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconEntypo Kind="Install" Margin="0 0 5 0 " VerticalAlignment="Center" />
+                                <TextBlock Text="Install" FontSize="16"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}">
+                        <Button Padding="10" Margin="5 0"
+                                Command="{commands:DataContextCommandAdapter Pin}"
+                                Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="Pin" Margin="0 0 5 0 " VerticalAlignment="Center" />
+                                <TextBlock Text="Pin" FontSize="16"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Padding="10" Margin="5 0"
+                                Command="{commands:DataContextCommandAdapter Unpin}"
+                                Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibility}}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="PinRemove" Margin="0 0 5 0 " VerticalAlignment="Center" />
+                                <TextBlock Text="Unpin" FontSize="16"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Padding="10" Margin="5 0"
+                            Command="{commands:DataContextCommandAdapter Reinstall}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconEntypo Kind="Cw" Margin="0 0 5 0 " VerticalAlignment="Center" />
+                                <TextBlock Text="Reinstall" FontSize="16"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Padding="10" Margin="5 0"
+                            Command="{commands:DataContextCommandAdapter Uninstall}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconEntypo Kind="Uninstall" Margin="0 0 5 0 " VerticalAlignment="Center" />
+                                <TextBlock Text="Uninstall" FontSize="16"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Update}"
-                            Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}" />
+                            Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconEntypo Kind="Cycle" Margin="0 0 5 0 " VerticalAlignment="Center" />
+                                <TextBlock Text="Update" FontSize="16"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </Grid>

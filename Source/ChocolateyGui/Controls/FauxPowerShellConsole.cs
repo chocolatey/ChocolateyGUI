@@ -162,7 +162,7 @@ namespace ChocolateyGui.Controls
                 case PowerShellLineType.Verbose:
                     return new Tuple<Brush, Brush>(Brushes.Gray, Brushes.Transparent);
                 case PowerShellLineType.Warning:
-                    return new Tuple<Brush, Brush>(Brushes.OrangeRed, Brushes.Black);
+                    return new Tuple<Brush, Brush>(Brushes.Yellow, Brushes.Black);
                 case PowerShellLineType.Error:
                     return new Tuple<Brush, Brush>(Brushes.Red, Brushes.Black);
                 default:

@@ -20,6 +20,7 @@
     <converters:BooleanToVisibility x:Key="BooleanToVisibility" />
     <converters:BooleanToTickString x:Key="BooleanToTickString" />
     <converters:StringListToString x:Key="StringListToString" />
+    <converters:BooleanInverter x:Key="BooleanInverter" />
 
     <Style x:Key="BaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular" />
@@ -523,54 +524,6 @@
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
     </Style>
 
-    <Style x:Key="InstallButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
-        <Setter Property="Content">
-            <Setter.Value>
-                <TextBlock Style="{StaticResource EntypoIconLargeStyle}">&#59256;</TextBlock>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="AutomationProperties.Name" Value="Install" />
-        <Setter Property="AutomationProperties.HelpText" Value="Installs the Package" />
-        <Setter Property="AutomationProperties.AcceleratorKey" Value="I" />
-        <Setter Property="ToolTip" Value="Install" />
-    </Style>
-
-    <Style x:Key="ReinstallButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
-        <Setter Property="Content">
-            <Setter.Value>
-                <TextBlock Style="{StaticResource EntypoIconLargeStyle}">&#128257;</TextBlock>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="AutomationProperties.Name" Value="Reinstall" />
-        <Setter Property="AutomationProperties.HelpText" Value="Reinstalls the Package" />
-        <Setter Property="AutomationProperties.AcceleratorKey" Value="R" />
-        <Setter Property="ToolTip" Value="Reinstall" />
-    </Style>
-
-    <Style x:Key="UninstallButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
-        <Setter Property="Content">
-            <Setter.Value>
-                <TextBlock Style="{StaticResource EntypoIconLargeStyle}"></TextBlock>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="AutomationProperties.Name" Value="Uninstall" />
-        <Setter Property="AutomationProperties.HelpText" Value="Uninstalls the Package" />
-        <Setter Property="AutomationProperties.AcceleratorKey" Value="U" />
-        <Setter Property="ToolTip" Value="Uninstall" />
-    </Style>
-
-    <Style x:Key="UpdateButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigEntypeIconButton}">
-        <Setter Property="Content">
-            <Setter.Value>
-                <TextBlock Style="{StaticResource EntypoIconLargeStyle}">&#128260;</TextBlock>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="AutomationProperties.Name" Value="Update" />
-        <Setter Property="AutomationProperties.HelpText" Value="Updates the Package" />
-        <Setter Property="AutomationProperties.AcceleratorKey" Value="P" />
-        <Setter Property="ToolTip" Value="Update" />
-    </Style>
-
     <Style x:Key="BigIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroCircleButtonStyle}">
         <Setter Property="Width" Value="55" />
         <Setter Property="Height" Value="55" />
@@ -684,10 +637,29 @@
     </Style>
 
     <ContextMenu x:Key="PackagesContextMenu"
-                 DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                 DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
+                 d:DataContext="{d:DesignInstance Type=items:PackageViewModel}">
         <MenuItem Header="Install"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
                   Command="{commands:DataContextCommandAdapter Install}" />
+        <MenuItem Header="Pin"
+                  Command="{commands:DataContextCommandAdapter Pin}">
+            <MenuItem.Visibility>
+                <MultiBinding Converter="{StaticResource BooleanToVisibility}">
+                    <Binding Path="IsInstalled" Mode="OneWay"/>
+                    <Binding Path="IsPinned" Converter="{StaticResource BooleanInverter}" Mode="OneWay"/>
+                </MultiBinding>
+            </MenuItem.Visibility>
+        </MenuItem>
+        <MenuItem Header="Unpin"
+                  Command="{commands:DataContextCommandAdapter Unpin}">
+            <MenuItem.Visibility>
+                <MultiBinding Converter="{StaticResource BooleanToVisibility}">
+                    <Binding Path="IsInstalled" Mode="OneWay"/>
+                    <Binding Path="IsPinned" Mode="OneWay"/>
+                </MultiBinding>
+            </MenuItem.Visibility>
+        </MenuItem>
         <MenuItem Header="Uninstall" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Uninstall}" />
         <MenuItem Header="Reinstall" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"

@@ -28,6 +28,8 @@ namespace ChocolateyGui.Models.Messages
     {
         Updated,
         Uninstalled,
-        Installed
+        Installed,
+        Pinned,
+        Unpinned
     }
 }

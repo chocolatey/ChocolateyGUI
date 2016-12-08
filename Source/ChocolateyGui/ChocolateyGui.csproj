@@ -99,6 +99,10 @@
       <HintPath>..\packages\MahApps.Metro.IconPacks.Entypo.1.6.0\lib\net45\MahApps.Metro.IconPacks.Entypo.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Modern, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.1.6.0\lib\net45\MahApps.Metro.IconPacks.Modern.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mindscape.Raygun4Net, Version=5.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mindscape.Raygun4Net.5.4.0\lib\net40\Mindscape.Raygun4Net.dll</HintPath>
       <Private>True</Private>
@@ -207,9 +211,8 @@
     <Compile Include="Providers\IVersionNumberProvider.cs" />
     <Compile Include="Providers\VersionNumberProvider.cs" />
     <Compile Include="Services\ChocolateySourcesService.cs" />
-    <Compile Include="Services\PackageServices\BasePackageService.cs" />
-    <Compile Include="Services\PackageServices\ChocolateyPackageService.cs" />
-    <Compile Include="Services\PackageServices\IChocolateyPackageService.cs" />
+    <Compile Include="Services\ChocolateyPackageService.cs" />
+    <Compile Include="Services\IChocolateyPackageService.cs" />
     <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\ISourceService.cs" />
@@ -217,6 +220,7 @@
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\AsyncLock.cs" />
     <Compile Include="Utilities\Converters\BooleanToTickString.cs" />
+    <Compile Include="Utilities\Converters\BooleanInverter.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityHidden.cs" />
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\Extensions\ChocolateyExtensions.cs" />
@@ -227,8 +231,6 @@
     <Compile Include="Utilities\ResourceReader.cs" />
     <Compile Include="Utilities\TypeConverters\SemanticVersionTypeConverter.cs" />
     <Compile Include="ViewModels\ISourceViewModelBase.cs" />
-    <Compile Include="Services\PackageServices\Remote\IRemotePackageService.cs" />
-    <Compile Include="Services\PackageServices\Remote\RemotePackageService.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />

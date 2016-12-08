@@ -28,8 +28,7 @@ namespace ChocolateyGui.ViewModels.Items
         private readonly IEventAggregator _eventAggregator;
 
         private readonly IMapper _mapper;
-
-        private readonly IRemotePackageService _remotePackageService;
+        private readonly IProgressService _progressService;
 
         private string[] _authors;
 
@@ -98,15 +97,15 @@ namespace ChocolateyGui.ViewModels.Items
         private int _versionDownloadCount;
 
         public PackageViewModel(
-            IRemotePackageService remotePackageService,
             IChocolateyPackageService chocolateyService,
             IEventAggregator eventAggregator,
-            IMapper mapper)
+            IMapper mapper,
+            IProgressService progressService)
         {
-            _remotePackageService = remotePackageService;
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
             _mapper = mapper;
+            _progressService = progressService;
             eventAggregator?.Subscribe(this);
         }
 
@@ -128,7 +127,7 @@ namespace ChocolateyGui.ViewModels.Items
             set { SetPropertyValue(ref _authors, value); }
         }
 
-        public bool CanUpdate => IsInstalled && LatestVersion != null && LatestVersion > Version;
+        public bool CanUpdate => IsInstalled && !IsPinned && LatestVersion != null && LatestVersion > Version;
 
         public string Copyright
         {
@@ -187,7 +186,11 @@ namespace ChocolateyGui.ViewModels.Items
         public bool IsPinned
         {
             get { return _isPinned; }
-            set { SetPropertyValue(ref _isPinned, value); }
+            set
+            {
+                SetPropertyValue(ref _isPinned, value);
+                NotifyPropertyChanged(nameof(CanUpdate));
+            }
         }
 
         public bool IsLatestVersion
@@ -324,7 +327,7 @@ namespace ChocolateyGui.ViewModels.Items
                 return;
             }
 
-            var latest = await _remotePackageService.GetLatest(Id, IsPrerelease);
+            var latest = await _chocolateyService.GetLatest(Id, IsPrerelease);
 
             if (latest != null)
             {
@@ -354,13 +357,21 @@ namespace ChocolateyGui.ViewModels.Items
         public async Task Uninstall()
         {
             await _chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
-            await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Uninstalled, Version));
         }
 
         public async Task Update()
         {
             await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
-            await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Updated));
+        }
+
+        public async Task Pin()
+        {
+            await _chocolateyService.PinPackage(Id, Version).ConfigureAwait(false);
+        }
+
+        public async Task Unpin()
+        {
+            await _chocolateyService.UnpinPackage(Id, Version).ConfigureAwait(false);
         }
 
 #pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
@@ -401,6 +412,12 @@ namespace ChocolateyGui.ViewModels.Items
                 case PackageChangeType.Uninstalled:
                     IsInstalled = false;
                     break;
+                case PackageChangeType.Pinned:
+                    IsPinned = true;
+                    break;
+                case PackageChangeType.Unpinned:
+                    IsPinned = false;
+                    break;
             }
 
             return Task.FromResult(true);
@@ -408,8 +425,18 @@ namespace ChocolateyGui.ViewModels.Items
 
         private async Task PopulateDetails()
         {
-            var package = await _remotePackageService.GetByVersionAndIdAsync(_id, _version, _isPrerelease).ConfigureAwait(false);
-            _mapper.Map<IPackageViewModel, IPackageViewModel>(package, this);
+            await _progressService.StartLoading("Loading package information...");
+            try
+            {
+                var package =
+                    await
+                        _chocolateyService.GetByVersionAndIdAsync(_id, _version, _isPrerelease).ConfigureAwait(false);
+                _mapper.Map<IPackageViewModel, IPackageViewModel>(package, this);
+            }
+            finally
+            {
+                await _progressService.StopLoading();
+            }
         }
     }
 }

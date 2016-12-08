@@ -15,7 +15,6 @@ using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.results;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Providers;
 using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
@@ -40,7 +39,6 @@ namespace ChocolateyGui.Services
 
         public ChocolateyPackageService(
             IProgressService progressService,
-            IChocolateyConfigurationProvider chocolateyConfigurationProvider,
             IMapper mapper,
             IEventAggregator eventAggregator,
             Func<IPackageViewModel> packageFactory)

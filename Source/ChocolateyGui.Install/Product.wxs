@@ -148,6 +148,6 @@
       <Component Id="LiteDB.dll" Guid="b5679a33-06c5-4598-91c1-e6bda40355ad">
         <File Id="LiteDB.dll" Name="LiteDB.dll" Source="$(var.ChocolateyGui_TargetDir)LiteDB.dll" />
       </Component>
-    </ComponentGroup>
+    <Component Id="MahApps.Metro.IconPacks.Modern.dll" Guid="834f313b-1f2b-4eab-9691-bf3aac501c17"><File Id="MahApps.Metro.IconPacks.Modern.dll" Name="MahApps.Metro.IconPacks.Modern.dll" Source="$(var.ChocolateyGui_TargetDir)MahApps.Metro.IconPacks.Modern.dll" /></Component></ComponentGroup>
   </Fragment>
 </Wix>

@@ -250,7 +250,7 @@ namespace ChocolateyGui.ViewModels
                             IncludeAllVersions, MatchWord));
             var installed = await _chocolateyPackageService.GetInstalledPackages();
 
-            PageCount = result.TotalCount / PageSize;
+            PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
             Packages.Clear();
             result.Packages.ToList().ForEach(p =>
             {

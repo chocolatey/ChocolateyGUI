@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
 using chocolatey;
@@ -19,7 +20,10 @@ using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
+using MahApps.Metro.Controls.Dialogs;
 using NuGet;
+using Serilog;
+using ILogger = Serilog.ILogger;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
 namespace ChocolateyGui.Services
@@ -36,6 +40,8 @@ namespace ChocolateyGui.Services
         private readonly Func<IPackageViewModel> _packageFactory;
         private readonly IEventAggregator _eventAggregator;
         private readonly AsyncLock _getInstalledLock = new AsyncLock();
+
+        private readonly ILogger _logger = Log.ForContext<ChocolateyPackageService>();
 
         public ChocolateyPackageService(
             IProgressService progressService,
@@ -180,6 +186,12 @@ namespace ChocolateyGui.Services
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null,
             bool force = false)
         {
+            if (!Privileged.IsElevated)
+            {
+                await ShieldElevation("install package");
+                return;
+            }
+
             var failed = false;
             var errors = new List<string>();
             using (await StartProgressDialog("Install Package", "Installing package", id))
@@ -210,7 +222,16 @@ namespace ChocolateyGui.Services
                     }
                 });
 
-                await choco.RunAsync();
+                try
+                {
+                    await choco.RunAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, "Failed to install package {Id}", id);
+                    failed = true;
+                    errors.Add(ex.Message);
+                }
 
                 if (Environment.ExitCode != 0)
                 {
@@ -231,6 +252,12 @@ namespace ChocolateyGui.Services
 
         public async Task UninstallPackage(string id, SemanticVersion version, bool force = false)
         {
+            if (!Privileged.IsElevated)
+            {
+                await ShieldElevation("uninstall package");
+                return;
+            }
+
             var failed = false;
             var errors = new List<string>();
             using (await StartProgressDialog("Uninstalling", "Uninstalling package", id))
@@ -272,6 +299,12 @@ namespace ChocolateyGui.Services
 
         public async Task UpdatePackage(string id, Uri source = null)
         {
+            if (!Privileged.IsElevated)
+            {
+                await ShieldElevation("update package");
+                return;
+            }
+
             var failed = false;
             var errors = new List<string>();
             using (await StartProgressDialog("Updating", "Updating package", id))
@@ -308,6 +341,12 @@ namespace ChocolateyGui.Services
 
         public async Task PinPackage(string id, SemanticVersion version)
         {
+            if (!Privileged.IsElevated)
+            {
+                await ShieldElevation("pin package");
+                return;
+            }
+
             using (await StartProgressDialog("Pinning", "Pinning package", id))
             {
                 var choco = Lets.GetChocolatey().Init(_progressService);
@@ -333,6 +372,12 @@ namespace ChocolateyGui.Services
 
         public async Task UnpinPackage(string id, SemanticVersion version)
         {
+            if (!Privileged.IsElevated)
+            {
+                await ShieldElevation("unpin package");
+                return;
+            }
+
             using (await StartProgressDialog("Pinning", "Pinning package", id))
             {
                 var choco = Lets.GetChocolatey().Init(_progressService);
@@ -419,6 +464,31 @@ namespace ChocolateyGui.Services
             await _progressService.StartLoading($"{commandString} {id}...");
             _progressService.WriteMessage(initialProgressText);
             return new DisposableAction(() => _progressService.StopLoading());
+        }
+
+        private async Task<bool> ShieldElevation(string actionName)
+        {
+            var result =
+                await
+                    _progressService.ShowMessageAsync("Elevation Required",
+                        "You must be running this app as admin to perform this operation",
+                        MessageDialogStyle.AffirmativeAndNegative);
+
+            if (result != MessageDialogResult.Affirmative)
+            {
+                return false;
+            }
+
+            if (Privileged.Elevate())
+            {
+                Application.Current.Shutdown();
+                return true;
+            }
+            else
+            {
+                await _progressService.ShowMessageAsync("Error", $"Unable to {actionName}. {Environment.NewLine}Elevation was canceled or there was an issue running the application as an administrator.");
+                return false;
+            }
         }
     }
 }

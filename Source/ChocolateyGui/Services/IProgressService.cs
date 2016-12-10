@@ -24,7 +24,7 @@ namespace ChocolateyGui.Services
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
         CancellationToken GetCancellationToken();
 
-        Task<MessageDialogResult> ShowMessageAsync(string title, string message);
+        Task<MessageDialogResult> ShowMessageAsync(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null);
 
         Task StartLoading(string title = null, bool isCancelable = false);
 

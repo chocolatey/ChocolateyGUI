@@ -72,14 +72,28 @@ namespace ChocolateyGui.Services
             NotifyPropertyChanged("Progress");
         }
 
-        public async Task<MessageDialogResult> ShowMessageAsync(string title, string message)
+        public async Task<MessageDialogResult> ShowMessageAsync(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
             if (ShellView != null)
             {
-                return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message));
+                return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message, style, settings));
             }
 
-            return MessageBox.Show(message, title) == MessageBoxResult.OK
+            MessageBoxButton classicStyle;
+            switch (style)
+            {
+                case MessageDialogStyle.Affirmative:
+                    classicStyle = MessageBoxButton.OK;
+                    break;
+                 case MessageDialogStyle.AffirmativeAndNegative:
+                    classicStyle = MessageBoxButton.OKCancel;
+                    break;
+                default:
+                    classicStyle = MessageBoxButton.OK;
+                    break;
+            }
+
+            return MessageBox.Show(message, title, classicStyle) == MessageBoxResult.OK
                 ? MessageDialogResult.Affirmative
                 : MessageDialogResult.Negative;
         }

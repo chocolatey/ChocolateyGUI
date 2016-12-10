@@ -46,6 +46,7 @@ namespace ChocolateyGui.Utilities
         }
 
         [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool DestroyIcon(IntPtr hIcon);
 
         private static readonly Lazy<BitmapSource> UacIconLazy = new Lazy<BitmapSource>(GetUacIcon);

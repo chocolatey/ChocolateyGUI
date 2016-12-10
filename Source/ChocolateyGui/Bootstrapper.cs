@@ -40,8 +40,8 @@ namespace ChocolateyGui
             settings[key] = value;
 
             using (var writer = File.OpenWrite($"{path}.temp"))
-            using (var textWriter = new StreamWriter(writer))
             {
+                var textWriter = new StreamWriter(writer);
                 textWriter.WriteLine(JsonConvert.SerializeObject(settings, Formatting.Indented));
             }
 

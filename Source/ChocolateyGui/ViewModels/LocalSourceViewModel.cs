@@ -30,6 +30,7 @@ namespace ChocolateyGui.ViewModels
         private readonly List<IPackageViewModel> _packages;
         private readonly IPersistenceService _persistenceService;
         private readonly IProgressService _progressService;
+        private readonly IEventAggregator _eventAggregator;
         private bool _exportAll = true;
         private bool _hasLoaded;
         private bool _matchWord;
@@ -53,13 +54,13 @@ namespace ChocolateyGui.ViewModels
             Name = name;
             Packages = new ObservableCollection<IPackageViewModel>();
             _packages = new List<IPackageViewModel>();
-
             if (eventAggregator == null)
             {
                 throw new ArgumentNullException(nameof(eventAggregator));
             }
 
-            eventAggregator.Subscribe(this);
+            _eventAggregator = eventAggregator;
+            _eventAggregator.Subscribe(this);
         }
 
         public bool ShowOnlyPackagesWithUpdate
@@ -276,16 +277,15 @@ namespace ChocolateyGui.ViewModels
                 foreach (var packageViewModel in packages)
                 {
                     _packages.Add(packageViewModel);
-
-                    if (packageViewModel.LatestVersion == null)
-                    {
-#pragma warning disable CS4014 // We want this to execute asynchrnously.
-                        packageViewModel.RetrieveLatestVersion().ConfigureAwait(false);
-#pragma warning restore CS4014
-                    }
                 }
 
                 FilterPackages();
+
+                var updates = await _chocolateyService.GetOutdatedPackages();
+                foreach (var update in updates)
+                {
+                    await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Item1, update.Item2));
+                }
             }
             catch (Exception ex)
             {

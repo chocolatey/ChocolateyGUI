@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <SuppressValidation>true</SuppressValidation>
+    <SuppressValidation>false</SuppressValidation>
     <Name>ChocolateyGui.Install</Name>
   </PropertyGroup>
   <PropertyGroup>
@@ -27,6 +27,9 @@
     <OutputPath>..\..\BuildArtifacts\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
+    <SuppressIces>ICE38</SuppressIces>
+    <CompilerAdditionalOptions>-ext WixNetFxExtension</CompilerAdditionalOptions>
+    <LinkerAdditionalOptions>-ext WixNetFxExtension</LinkerAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>..\..\BuildArtifacts\</OutputPath>
@@ -37,31 +40,25 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <WixExtension Include="WixNetFxExtension">
-      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
-      <Name>WixNetFxExtension</Name>
-    </WixExtension>
+    <Content Include="ApplicationContent.Transform.xsl" />
+    <Content Include="Microsoft_VC120_CRT_x86.msm" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChocolateyGui\ChocolateyGui.csproj">
       <Name>ChocolateyGui</Name>
       <Project>{851fc2f6-afb0-4153-8520-bf68e1bea3cb}</Project>
       <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ChocolateyGui.Install.wax" />
+    <HarvestDirectory Include="..\ChocolateyGui\bin\$(Platform)\$(Configuration)">
+      <DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
+      <SuppressCom>True</SuppressCom>
+      <SuppressRootDirectory>True</SuppressRootDirectory>
+      <SuppressRegistry>True</SuppressRegistry>
+      <ComponentGroupName>ApplicationContent</ComponentGroupName>
+      <PreprocessorVariable>var.ChocolateyGui.TargetDir</PreprocessorVariable>
+      <Transforms>ApplicationContent.Transform.xsl</Transforms>
+      <Link>$(Configuration)</Link>
+    </HarvestDirectory>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
-  <!--
-	To modify your build process, add your task inside one of the targets below and uncomment it.
-	Other similar extension points exist, see Wix.targets.
-	<Target Name="BeforeBuild">
-	</Target>
-	<Target Name="AfterBuild">
-	</Target>
-	-->
 </Project>

@@ -6,9 +6,12 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using CefSharp;
+using CefSharp.Wpf;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
@@ -39,6 +42,15 @@ namespace ChocolateyGui.Views
             _chocolateyConfigurationProvider = chocolateyConfigurationProvider;
 
             CheckOperatingSystemCompatibility();
+
+            var settings = new CefSettings();
+            settings.RegisterScheme(new CefCustomScheme { SchemeName = ChocolateyCustomSchemeProvider.SchemeName, SchemeHandlerFactory = new ChocolateyCustomSchemeProvider() });
+            settings.CefCommandLineArgs.Add("no-proxy-server", "1");
+            settings.CachePath = Path.Combine(Bootstrapper.LocalAppDataPath, "CefCache");
+            if (!Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null))
+            {
+                return;
+            }
         }
 
         public void CheckOperatingSystemCompatibility()

@@ -6,7 +6,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Runtime.Caching;
 using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
@@ -20,8 +19,14 @@ using MemoryCache = System.Runtime.Caching.MemoryCache;
 namespace ChocolateyGui.ViewModels.Items
 {
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
-    public class PackageViewModel : ObservableBase, IPackageViewModel, IHandleWithTask<PackageChangedMessage>
+    public class PackageViewModel : 
+        ObservableBase, 
+        IPackageViewModel, 
+        IHandleWithTask<PackageChangedMessage>,
+        IHandle<PackageHasUpdateMessage>
     {
+        private static readonly Serilog.ILogger Logger = Serilog.Log.ForContext<PackageViewModel>();
+
         private readonly MemoryCache _cache = MemoryCache.Default;
 
         private readonly IChocolateyPackageService _chocolateyService;
@@ -315,63 +320,82 @@ namespace ChocolateyGui.ViewModels.Items
 
         public async Task Install()
         {
-            await _chocolateyService.InstallPackage(Id, Version, Source).ConfigureAwait(false);
+            try
+            {
+                await _chocolateyService.InstallPackage(Id, Version, Source).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while installing {Id}, version {Version}.", Id, Version);
+                await _progressService.ShowMessageAsync("Failed to Install", $"Ran into an error while install {Id}.\n{ex.Message}");
+            }
         }
 
-        public async Task RetrieveLatestVersion()
+        public async Task Reinstall()
         {
-            SemanticVersion version;
-            if ((version = (SemanticVersion) _cache.Get($"LatestVersion_{Id}")) != null)
+            try
             {
-                LatestVersion = version;
-                return;
+                await _chocolateyService.InstallPackage(Id, Version, Source, true).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while reinstalling {Id}, version {Version}.", Id, Version);
+                await _progressService.ShowMessageAsync("Failed to Reinstall", $"Ran into an error while reinstalling {Id}.\n{ex.Message}");
             }
 
-            var latest = await _chocolateyService.GetLatest(Id, IsPrerelease);
-
-            if (latest != null)
-            {
-                version = latest.Version;
-
-                if (latest.Source != null)
-                {
-                    Source = latest.Source;
-                }
-            }
-            else
-            {
-                version = Version;
-            }
-
-            _cache.Set(
-                $"LatestVersion_{Id}",
-                version,
-                new CacheItemPolicy
-                {
-                    AbsoluteExpiration = DateTime.Now.AddHours(1)
-                });
-
-            LatestVersion = version;
+            await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
         }
 
         public async Task Uninstall()
         {
-            await _chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
+            try
+            {
+                await _chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while uninstalling {Id}, version {Version}.", Id, Version);
+                await _progressService.ShowMessageAsync("Failed to Uninstall", $"Ran into an error while uninstalling {Id}.\n{ex.Message}");
+            }
         }
 
         public async Task Update()
         {
-            await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
+            try
+            {
+                await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while updating {Id}, version {Version}.", Id, Version);
+                await _progressService.ShowMessageAsync("Failed to Update", $"Ran into an error while updating {Id}.\n{ex.Message}");
+            }
         }
 
         public async Task Pin()
         {
-            await _chocolateyService.PinPackage(Id, Version).ConfigureAwait(false);
+            try
+            {
+                await _chocolateyService.PinPackage(Id, Version).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while pinning {Id}, version {Version}.", Id, Version);
+                await _progressService.ShowMessageAsync("Failed to Pin", $"Ran into an error while pinning {Id}.\n{ex.Message}");
+            }
         }
 
         public async Task Unpin()
         {
-            await _chocolateyService.UnpinPackage(Id, Version).ConfigureAwait(false);
+            try
+            {
+                await _chocolateyService.UnpinPackage(Id, Version).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while unpinning {Id}, version {Version}.", Id, Version);
+                await _progressService.ShowMessageAsync("Failed to Unpin", $"Ran into an error while unpinning {Id}.\n{ex.Message}");
+            }
         }
 
 #pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
@@ -384,12 +408,6 @@ namespace ChocolateyGui.ViewModels.Items
             }
 
             await _eventAggregator.PublishOnUIThreadAsync(new ShowPackageDetailsMessage(this)).ConfigureAwait(false);
-        }
-
-        public async Task Reinstall()
-        {
-            await _chocolateyService.InstallPackage(Id, Version, Source, true).ConfigureAwait(false);
-            await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
         }
 
         public Task Handle(PackageChangedMessage message)
@@ -423,6 +441,17 @@ namespace ChocolateyGui.ViewModels.Items
             return Task.FromResult(true);
         }
 
+        public void Handle(PackageHasUpdateMessage message)
+        {
+            if (message.Id != Id)
+            {
+                return;
+            }
+
+            LatestVersion = message.Version;
+            IsLatestVersion = false;
+        }
+
         private async Task PopulateDetails()
         {
             await _progressService.StartLoading("Loading package information...");
@@ -432,6 +461,10 @@ namespace ChocolateyGui.ViewModels.Items
                     await
                         _chocolateyService.GetByVersionAndIdAsync(_id, _version, _isPrerelease).ConfigureAwait(false);
                 _mapper.Map<IPackageViewModel, IPackageViewModel>(package, this);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Error while populating details for package {Id}, version {Version}.", Id, Version);
             }
             finally
             {

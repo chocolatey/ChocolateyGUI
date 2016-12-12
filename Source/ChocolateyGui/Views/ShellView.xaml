@@ -6,7 +6,6 @@
                    xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:commands="clr-namespace:ChocolateyGui.Commands"
-                   xmlns:xaml="clr-namespace:Markdown.Xaml"
                    xmlns:diagnostics="clr-namespace:System.Diagnostics;assembly=WindowsBase"
                    xmlns:cal="http://www.caliburnproject.org"
                    diagnostics:PresentationTraceSources.TraceLevel="High"
@@ -16,10 +15,7 @@
                    Icon="../chocolateyicon.ico"
                    TitleForeground="Transparent"
                    Title="ChocolateyGUI">
-
-    <Window.Resources>
-        <xaml:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" Markdown="{StaticResource Markdown}" />
-    </Window.Resources>
+ 
 
     <Window.CommandBindings>
         <CommandBinding

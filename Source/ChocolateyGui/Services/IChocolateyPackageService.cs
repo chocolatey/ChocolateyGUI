@@ -15,15 +15,13 @@ namespace ChocolateyGui.Services.PackageServices
 {
     public interface IChocolateyPackageService
     {
-        Task<PackageSearchResults> Search(string query);
-
         Task<PackageSearchResults> Search(string query, PackageSearchOptions options);
-
-        Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false);
 
         Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version, bool isPrerelease);
 
         Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false);
+
+        Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false);
 
         Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false);
 

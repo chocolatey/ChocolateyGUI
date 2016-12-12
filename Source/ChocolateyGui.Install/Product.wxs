@@ -10,10 +10,14 @@
   <Product Id="*" Name="$(var.ProductName) $(var.Version)" Language="$(var.Language)" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5b146155">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
 
-    <PropertyRef Id="NETFRAMEWORK45" />
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED" />
 
-    <Condition Message="This application requires .NET Framework 4.5. Please install the .NET 4.5 Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK45]]>
+    <Condition Message="This application requires .NET Framework 4.5.2. Please install the .NET 4.5.2 Framework then run this installer again.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED]]>
+    </Condition>
+
+    <Condition Message="This application only runs in Windows 7 SP1 or later.">
+      <![CDATA[Installed OR (VersionNT >= 601)]]>
     </Condition>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -23,10 +27,12 @@
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
     <Feature Id="ProductFeature" Title="ChocolateyGUI" Level="1">
-      <ComponentGroupRef Id="ChocolateyComponents" />
+      <ComponentGroupRef Id="ChocolateyExe" />
+      <ComponentGroupRef Id="ApplicationContent" />
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="CreateAppDataFolder" />
       <ComponentRef Id="CreateUserAppDataFolder" />
+      <MergeRef Id="VCRedist" />
     </Feature>
   </Product>
 
@@ -51,9 +57,11 @@
         <Directory Id="UserAppStuff" Name="ChocolateyGUI">
           <Component Id="CreateUserAppDataFolder" Guid="265AADCF-FCC7-45F1-8E2B-506F0B426D37">
             <CreateFolder />
+            <RemoveFolder Id="UserAppStuff" On="uninstall" />
           </Component>
         </Directory>
       </Directory>
+      <Merge Id="VCRedist" SourceFile="Microsoft_VC120_CRT_x86.msm" DiskId="1" Language="0" />
     </Directory>
   </Fragment>
 
@@ -69,85 +77,10 @@
   </Fragment>
 
   <Fragment>
-    <ComponentGroup Id="ChocolateyComponents" Directory="INSTALLFOLDER">
+    <ComponentGroup Id="ChocolateyExe" Directory="INSTALLFOLDER">
       <Component Id="ChocolateyGui.exe" Guid="f8164f91-fa5c-0001-0001-9beb5a044699">
         <File Id="ChocolateyGui.exe" Source="$(var.ChocolateyGui.TargetPath)" KeyPath="yes" Checksum="yes" />
       </Component>
-      <Component Id="ChocolateyGui.exe.config" Guid="f8164f91-fa5c-0004-0002-9beb5b044699">
-        <File Id="ChocolateyGui.exe.config" Source="$(var.ChocolateyGui.TargetDir)\ChocolateyGui.exe.config" KeyPath="yes" />
-      </Component>
-      <Component Id="Autofac.dll" Guid="3D998CFD-929C-45DD-8EC9-849D7DB383E1">
-        <File Id="Autofac.dll" Source="$(var.ChocolateyGui.TargetDir)\Autofac.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="AutoMapper.dll" Guid="271807E2-0EFB-4A69-8184-4902A8DE0728">
-        <File Id="AutoMapper.dll" Source="$(var.ChocolateyGui.TargetDir)\AutoMapper.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="log4net.dll" Guid="0E8D8943-24F9-4934-86D5-AB314BFDC23E">
-        <File Id="log4net.dll" Source="$(var.ChocolateyGui.TargetDir)\log4net.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="MahApps.Metro.dll" Guid="3B37657E-820C-40F8-92F4-6A282418D90B">
-        <File Id="MahApps.Metro.dll" Source="$(var.ChocolateyGui.TargetDir)\MahApps.Metro.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="Mindscape.Raygun4Net.dll" Guid="C17C5A82-CA98-4702-94EB-DA01839D891E">
-        <File Id="Mindscape.Raygun4Net.dll" Source="$(var.ChocolateyGui.TargetDir)\Mindscape.Raygun4Net.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="System.Reactive.Core.dll" Guid="11AFB91C-B27E-4212-B963-9580FE7C07DA">
-        <File Id="System.Reactive.Core.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Core.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="System.Reactive.Interfaces.dll" Guid="AB49D8BA-C4AA-4DD6-807E-D38D0BE1DF43">
-        <File Id="System.Reactive.Interfaces.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Interfaces.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="System.Reactive.Linq.dll" Guid="73F5FCC7-34CA-423B-A684-EC1F388F42AC">
-        <File Id="System.Reactive.Linq.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Linq.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="System.Reactive.PlatformServices.dll" Guid="CEBA9F63-6B82-4A71-A6A1-119CFB4E2EA8">
-        <File Id="System.Reactive.PlatformServices.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.PlatformServices.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="System.Reactive.Windows.Threading.dll" Guid="50F1967D-B04C-4C18-A5EF-DFE6E43DB7B1">
-        <File Id="System.Reactive.Windows.Threading.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Windows.Threading.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="System.Windows.Interactivity.dll" Guid="C3AEADB7-B6E3-4952-9969-8C56F92E6470">
-        <File Id="System.Windows.Interactivity.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Windows.Interactivity.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="AlphaFS.dll" Guid="4b01c3e6-2aeb-482e-aa24-021549b1d870">
-        <File Id="AlphaFS.dll" Name="AlphaFS.dll" Source="$(var.ChocolateyGui_TargetDir)AlphaFS.dll" />
-      </Component>
-      <Component Id="Caliburn.Micro.Platform.Core.dll" Guid="4f9104ba-00eb-4c74-8d0b-d0d04c331f6e">
-        <File Id="Caliburn.Micro.Platform.Core.dll" Name="Caliburn.Micro.Platform.Core.dll" Source="$(var.ChocolateyGui_TargetDir)Caliburn.Micro.Platform.Core.dll" />
-      </Component>
-      <Component Id="Caliburn.Micro.Platform.dll" Guid="ae589a14-fae7-4e84-88ca-c94c6ef160ac">
-        <File Id="Caliburn.Micro.Platform.dll" Name="Caliburn.Micro.Platform.dll" Source="$(var.ChocolateyGui_TargetDir)Caliburn.Micro.Platform.dll" />
-      </Component>
-      <Component Id="Caliburn.Micro.dll" Guid="24c7eaa1-72e5-41c4-bff4-276237962552">
-        <File Id="Caliburn.Micro.dll" Name="Caliburn.Micro.dll" Source="$(var.ChocolateyGui_TargetDir)Caliburn.Micro.dll" />
-      </Component>
-      <Component Id="chocolatey.dll" Guid="b8ac0252-5fd0-432c-bdd5-d414d1927d8a">
-        <File Id="chocolatey.dll" Name="chocolatey.dll" Source="$(var.ChocolateyGui_TargetDir)chocolatey.dll" />
-      </Component>
-      <Component Id="MahApps.Metro.IconPacks.Entypo.dll" Guid="cdf371c5-7aed-4468-b716-9e80728cb271">
-        <File Id="MahApps.Metro.IconPacks.Entypo.dll" Name="MahApps.Metro.IconPacks.Entypo.dll" Source="$(var.ChocolateyGui_TargetDir)MahApps.Metro.IconPacks.Entypo.dll" />
-      </Component>
-      <Component Id="Mindscape.Raygun4Net4.dll" Guid="1c20ec82-17f7-4de0-8a93-428704d1c303">
-        <File Id="Mindscape.Raygun4Net4.dll" Name="Mindscape.Raygun4Net4.dll" Source="$(var.ChocolateyGui_TargetDir)Mindscape.Raygun4Net4.dll" />
-      </Component>
-      <Component Id="Serilog.dll" Guid="ad598b79-6104-471f-9ffe-6230a932b9a4">
-        <File Id="Serilog.dll" Name="Serilog.dll" Source="$(var.ChocolateyGui_TargetDir)Serilog.dll" />
-      </Component>
-      <Component Id="Serilog.Sinks.File.dll" Guid="44cbaca3-ec91-4057-8d0d-e357e1118325">
-        <File Id="Serilog.Sinks.File.dll" Name="Serilog.Sinks.File.dll" Source="$(var.ChocolateyGui_TargetDir)Serilog.Sinks.File.dll" />
-      </Component>
-      <Component Id="Serilog.Sinks.Literate.dll" Guid="8ef2fd12-2f99-4491-beb6-4bfc3662d851">
-        <File Id="Serilog.Sinks.Literate.dll" Name="Serilog.Sinks.Literate.dll" Source="$(var.ChocolateyGui_TargetDir)Serilog.Sinks.Literate.dll" />
-      </Component>
-      <Component Id="Serilog.Sinks.RollingFile.dll" Guid="8f1468e4-8b6c-4b8f-9e44-ff4cd7ca72a8">
-        <File Id="Serilog.Sinks.RollingFile.dll" Name="Serilog.Sinks.RollingFile.dll" Source="$(var.ChocolateyGui_TargetDir)Serilog.Sinks.RollingFile.dll" />
-      </Component>
-      <Component Id="ChocolateyGui.pdb" Guid="3b6f4686-3710-4741-a2e7-635eedab9292">
-        <File Id="ChocolateyGui.pdb" Name="ChocolateyGui.pdb" Source="$(var.ChocolateyGui_TargetDir)ChocolateyGui.pdb" />
-      </Component>
-      <Component Id="LiteDB.dll" Guid="b5679a33-06c5-4598-91c1-e6bda40355ad">
-        <File Id="LiteDB.dll" Name="LiteDB.dll" Source="$(var.ChocolateyGui_TargetDir)LiteDB.dll" />
-      </Component>
-    <Component Id="MahApps.Metro.IconPacks.Modern.dll" Guid="834f313b-1f2b-4eab-9691-bf3aac501c17"><File Id="MahApps.Metro.IconPacks.Modern.dll" Name="MahApps.Metro.IconPacks.Modern.dll" Source="$(var.ChocolateyGui_TargetDir)MahApps.Metro.IconPacks.Modern.dll" /></Component></ComponentGroup>
+    </ComponentGroup>
   </Fragment>
 </Wix>

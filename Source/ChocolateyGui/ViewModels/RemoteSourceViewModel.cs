@@ -16,6 +16,7 @@ using System.Windows;
 using Caliburn.Micro;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Services;
 using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
@@ -27,6 +28,7 @@ namespace ChocolateyGui.ViewModels
     {
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyPackageService _chocolateyPackageService;
+        private readonly IProgressService _progressService;
         private readonly IEventAggregator _eventAggregator;
         private readonly Uri _source;
         private int _currentPage = 1;
@@ -41,10 +43,12 @@ namespace ChocolateyGui.ViewModels
         private string _sortSelection = "Popularity";
 
         public RemoteSourceViewModel(IChocolateyPackageService chocolateyPackageService,
+            IProgressService progressService,
             IEventAggregator eventAggregator,
             Uri source, string name)
         {
             _chocolateyPackageService = chocolateyPackageService;
+            _progressService = progressService;
             _eventAggregator = eventAggregator;
             _source = source;
 
@@ -239,38 +243,47 @@ namespace ChocolateyGui.ViewModels
 
         private async Task LoadPackages()
         {
-            _hasLoaded = false;
-
-            var sort = SortSelection == "Popularity" ? "DownloadCount" : "Title";
-
-            var result =
-                await
-                    _chocolateyPackageService.Search(SearchQuery,
-                        new PackageSearchOptions(PageSize, CurrentPage - 1, sort, IncludePrerelease,
-                            IncludeAllVersions, MatchWord));
-            var installed = await _chocolateyPackageService.GetInstalledPackages();
-
-            PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
-            Packages.Clear();
-            result.Packages.ToList().ForEach(p =>
+            try
             {
-                p.Source = _source;
-                if (installed.Any(package => package.Id == p.Id))
+                _hasLoaded = false;
+
+                var sort = SortSelection == "Popularity" ? "DownloadCount" : "Title";
+
+                var result =
+                    await
+                        _chocolateyPackageService.Search(SearchQuery,
+                            new PackageSearchOptions(PageSize, CurrentPage - 1, sort, IncludePrerelease,
+                                IncludeAllVersions, MatchWord));
+                var installed = await _chocolateyPackageService.GetInstalledPackages();
+
+                PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
+                Packages.Clear();
+                result.Packages.ToList().ForEach(p =>
                 {
-                    p.IsInstalled = true;
+                    p.Source = _source;
+                    if (installed.Any(package => package.Id == p.Id))
+                    {
+                        p.IsInstalled = true;
+                    }
+
+                    Packages.Add(p);
+                });
+
+                if (PageCount < CurrentPage)
+                {
+                    CurrentPage = PageCount == 0 ? 1 : PageCount;
                 }
 
-                Packages.Add(p);
-            });
+                _hasLoaded = true;
 
-            if (PageCount < CurrentPage)
-            {
-                CurrentPage = PageCount == 0 ? 1 : PageCount;
+                await _eventAggregator.PublishOnUIThreadAsync(new ResetScrollPositionMessage());
             }
-
-            _hasLoaded = true;
-
-            await _eventAggregator.PublishOnUIThreadAsync(new ResetScrollPositionMessage());
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Failed to load new packages.");
+                await _progressService.ShowMessageAsync("Failed to Load", $"Failed to load remote packages!\n{ex.Message}");
+                throw;
+            }
         }
     }
 }

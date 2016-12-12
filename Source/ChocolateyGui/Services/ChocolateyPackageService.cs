@@ -12,6 +12,7 @@ using AutoMapper;
 using Caliburn.Micro;
 using chocolatey;
 using chocolatey.infrastructure.app.domain;
+using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.results;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
@@ -49,11 +50,6 @@ namespace ChocolateyGui.Services
             _packageFactory = packageFactory;
         }
 
-        public async Task<PackageSearchResults> Search(string query)
-        {
-            return await Search(query, new PackageSearchOptions());
-        }
-
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
         {
             await _progressService.StartLoading("Search");
@@ -71,32 +67,6 @@ namespace ChocolateyGui.Services
             return results;
         }
 
-        public async Task<IPackageViewModel> GetLatest(string id, bool includePrerelease = false)
-        {
-            _progressService.WriteMessage(string.Format("Getting latest version of {0}...", id));
-            var choco = Lets.GetChocolatey().Init(_progressService);
-            choco.Set(config =>
-            {
-                config.CommandName = CommandNameType.list.ToString();
-                config.Input = id;
-                config.AllowUnofficialBuild = true;
-                config.ListCommand.ByIdOnly = true;
-                config.Prerelease = includePrerelease;
-                config.ListCommand.Exact = true;
-#if !DEBUG
-                config.Verbose = false;
-#endif // DEBUG
-            });
-
-            var packageResults = await choco.ListAsync<PackageResult>();
-            var package = packageResults
-                .FirstOrDefault(
-                    result =>
-                        includePrerelease ? result.Package.IsAbsoluteLatestVersion : result.Package.IsLatestVersion);
-
-            return GetMappedPackage(package, _packageFactory);
-        }
-
         public async Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version,
             bool isPrerelease)
         {
@@ -105,23 +75,24 @@ namespace ChocolateyGui.Services
             {
                 config.CommandName = CommandNameType.list.ToString();
                 config.Input = id;
+                config.Version = version.ToNormalizedString();
                 config.AllowUnofficialBuild = true;
-                config.ListCommand.ByIdOnly = true;
-                config.Prerelease = isPrerelease;
-                config.ListCommand.Exact = true;
-                config.AllVersions = true;
 #if !DEBUG
                 config.Verbose = false;
 #endif // DEBUG
             });
 
-            var packageResults = await choco.ListAsync<PackageResult>();
-            var package = packageResults
-                .Where(result => string.Equals(result.Package.Id, id, StringComparison.InvariantCultureIgnoreCase))
-                .FirstOrDefault(
-                    result => result.Package.Version == version);
+            var chocoConfig = choco.GetConfiguration();
+            var _nugetLogger = new ChocolateyNugetLogger();
+            var packageManager = NugetCommon.GetPackageManager(
+                chocoConfig,
+                _nugetLogger,
+                installSuccessAction: null,
+                uninstallSuccessAction: null,
+                addUninstallHandler: false);
 
-            return GetMappedPackage(package, _packageFactory);
+            var rawPackage = await Task.Run(() => packageManager.SourceRepository.FindPackage(id, version));
+            return GetMappedPackage(new PackageResult(rawPackage, null, chocoConfig.Sources));
         }
 
         public async Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false)
@@ -156,14 +127,7 @@ namespace ChocolateyGui.Services
                     var packageResults = await choco.ListAsync<PackageResult>();
 
                     packages = packageResults
-                        .Select(
-                            package =>
-                            {
-                                var packageInfo = ChocolateyExtensions.GetPackageInformationService().get_package_information(package.Package);
-                                var pgck = _mapper.Map(package.Package, _packageFactory());
-                                pgck.IsPinned = packageInfo.IsPinned;
-                                return pgck;
-                            })
+                        .Select(GetMappedPackage)
                         .Select(package =>
                         {
                             package.IsInstalled = true;
@@ -175,6 +139,32 @@ namespace ChocolateyGui.Services
                     return packages;
                 }
             }
+        }
+
+        public async Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false)
+        {
+            var choco = Lets.GetChocolatey().Init(_progressService);
+            choco.Set(config =>
+            {
+                config.CommandName = "outdated";
+                config.RegularOutput = false;
+                config.Prerelease = false;
+            });
+
+            var chocoConfig = choco.GetConfiguration();
+            var _nugetLogger = new ChocolateyNugetLogger();
+            var packageManager = NugetCommon.GetPackageManager(
+                chocoConfig,
+                _nugetLogger,
+                installSuccessAction: null,
+                uninstallSuccessAction: null,
+                addUninstallHandler: false);
+
+            var packageInfoService = Hacks.GetPackageInformationService();
+            var ids = packageManager.LocalRepository.GetPackages()
+                .Where(p => !packageInfoService.get_package_information(p).IsPinned);
+            var updateable = await Task.Run(() => packageManager.SourceRepository.GetUpdates(ids, false, false).ToList());
+            return updateable.Select(p => Tuple.Create(p.Id, p.Version)).ToList();
         }
 
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null,
@@ -368,13 +358,14 @@ namespace ChocolateyGui.Services
             protected set { Cache.Set(LocalPackagesCacheKeyName, value, DateTimeOffset.Now + TimeSpan.FromMinutes(5)); }
         }
 
-        private IPackageViewModel GetMappedPackage(PackageResult package, Func<IPackageViewModel> packageFactory)
+        private IPackageViewModel GetMappedPackage(PackageResult package)
         {
-            var mappedPackage = package == null ? null : _mapper.Map(package.Package, packageFactory());
+            var mappedPackage = package == null ? null : _mapper.Map(package.Package, _packageFactory());
             if (mappedPackage != null)
             {
-                var packageInfo = ChocolateyExtensions.GetPackageInformationService().get_package_information(package.Package);
+                var packageInfo = Hacks.GetPackageInformationService().get_package_information(package.Package);
                 mappedPackage.IsPinned = packageInfo.IsPinned;
+                mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation);
             }
 
             return mappedPackage;
@@ -400,12 +391,7 @@ namespace ChocolateyGui.Services
 #endif // DEBUG
             });
 
-            var packages = (await choco.ListAsync<PackageResult>()).Select(package =>
-            {
-                var mappedPackage = GetMappedPackage(package, _packageFactory);
-                mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation);
-                return mappedPackage;
-            });
+            var packages = (await choco.ListAsync<PackageResult>()).Select(GetMappedPackage);
 
             return new PackageSearchResults
             {

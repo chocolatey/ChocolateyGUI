@@ -4,13 +4,11 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
-                    xmlns:xaml="clr-namespace:Markdown.Xaml"
                     xmlns:custom="http://metro.mahapps.com/winfx/xaml/shared"
                     xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
                     xmlns:commands="clr-namespace:ChocolateyGui.Commands"
                     mc:Ignorable="d">
-
-
+    
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ControlStyles/Flyout.xaml" />
         <ResourceDictionary Source="ControlStyles/Dialog.xaml" />
@@ -492,12 +490,6 @@
         <Setter Property="FontWeight"
                 Value="Light" />
     </Style>
-
-    <xaml:Markdown x:Key="Markdown"
-                   DocumentStyle="{StaticResource DocumentStyle}"
-                   Heading1Style="{StaticResource PageHeader}"
-                   Heading2Style="{StaticResource SubHeader}"
-                   Heading3Style="{StaticResource SubHeaderSecondary}" />
 
     <Style x:Key="PageTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FF000000" />

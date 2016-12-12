@@ -5,8 +5,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Linq.Expressions;
+using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 
 namespace ChocolateyGui.Utilities.Extensions
@@ -61,6 +65,18 @@ namespace ChocolateyGui.Utilities.Extensions
             };
             await action.OnUIThreadAsync();
             return await tcs.Task;
+        }
+
+        public static IObservable<TType> ToObservable<TType, TObject>(this TObject dependencyObject, DependencyProperty property, Expression<Func<TType>> propertyExpression)
+            where TObject : DependencyObject
+        {
+            return Observable.Create<TType>(o => 
+            {
+                var des = DependencyPropertyDescriptor.FromProperty(property, typeof(TObject));
+                var eh = new EventHandler((s, e) => o.OnNext((TType)des.GetValue(dependencyObject)));
+                des.AddValueChanged(dependencyObject, eh);
+                return () => des.RemoveValueChanged(dependencyObject, eh);
+            });
         }
     }
 }

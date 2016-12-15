@@ -8,9 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
+using Akavache;
 using Autofac;
 using Caliburn.Micro;
+using CefSharp;
 using chocolatey;
 using ChocolateyGui.IoC;
 using ChocolateyGui.ViewModels;
@@ -36,17 +39,27 @@ namespace ChocolateyGui
 
         internal static string LocalAppDataPath { get; private set; }
 
+        internal const string ApplicationName = "ChocolateyGUI";
+
+        public async Task OnExitAsync()
+        {
+            Cef.Shutdown();
+            await BlobCache.Shutdown();
+        }
+
         protected override void Configure()
         {
+            BlobCache.ApplicationName = ApplicationName;
+
             LocalAppDataPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData,
                     Environment.SpecialFolderOption.DoNotVerify),
-                "ChocolateyGUI");
+                ApplicationName);
 
             AppDataPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData,
                     Environment.SpecialFolderOption.DoNotVerify),
-                "ChocolateyGUI");
+                ApplicationName);
 
             Container = AutoFacConfiguration.RegisterAutoFac();
             var logPath = Path.Combine(AppDataPath, "Logs");
@@ -68,6 +81,7 @@ namespace ChocolateyGui
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
+            App.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
             DisplayRootViewFor<ShellViewModel>();
         }
 

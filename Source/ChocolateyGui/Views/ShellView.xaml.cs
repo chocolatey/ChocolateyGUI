@@ -5,13 +5,14 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Caliburn.Micro;
 using CefSharp;
-using CefSharp.Wpf;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
@@ -95,6 +96,22 @@ namespace ChocolateyGui.Views
                 await this.ShowMetroDialogAsync(dialog);
                 return new ChocolateyDialogController(dialog, () => this.HideMetroDialogAsync(dialog));
             });
+        }
+
+        private bool _closeInitiated = false;
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!_closeInitiated)
+            {
+                e.Cancel = true;
+                _closeInitiated = true;
+                var bootstrapper = (Bootstrapper) Application.Current.FindResource("Bootstrapper");
+#pragma warning disable 4014
+                // ReSharper disable once PossibleNullReferenceException
+                bootstrapper.OnExitAsync().ContinueWith(t => Execute.OnUIThread(Close));
+#pragma warning restore 4014
+            }
         }
 
         private void CanGoToPage(object sender, CanExecuteRoutedEventArgs e)

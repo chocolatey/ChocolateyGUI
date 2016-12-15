@@ -6,7 +6,7 @@
 $psake.use_exit_on_error = $true
 properties {
 	$config = 'Debug';
-	$platform = 'Mixed Platforms';
+	$platform = 'x86';
 	$nugetExe = "..\Tools\NuGet\NuGet.exe";
 	$projectName = "ChocolateyGUI";
 }
@@ -201,7 +201,7 @@ function applyXslTransform($xmlFile, $xslFile, $outputFile) {
 	}
 }
 
-Task -Name Default -Depends BuildSolution
+Task -Name Default -Depends RebuildSolution
 
 # private tasks
 

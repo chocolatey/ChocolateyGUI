@@ -35,6 +35,8 @@
     <OutputPath>..\..\BuildArtifacts\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <SuppressPdbOutput>True</SuppressPdbOutput>
+    <LinkerAdditionalOptions>-ext WixNetFxExtension</LinkerAdditionalOptions>
+    <SuppressIces>ICE38</SuppressIces>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />

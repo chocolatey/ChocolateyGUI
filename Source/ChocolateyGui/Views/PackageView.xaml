@@ -155,7 +155,7 @@
         </StackPanel>
 
         <Grid DockPanel.Dock="Right">
-            <Image AutomationProperties.Name="Package Icon" Source="{Binding IconUrl, IsAsync=True}"
+            <controls:InternetImage AutomationProperties.Name="Package Icon" IconUrl="{Binding IconUrl, IsAsync=True}"
                    Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top"
                    Margin="0,0,20,0" />
         </Grid>

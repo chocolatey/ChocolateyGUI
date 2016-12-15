@@ -5,10 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.IO;
-using System.Text;
 using System.Windows;
-using Caliburn.Micro;
 using CefSharp;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Utilities.Extensions;
@@ -32,6 +29,8 @@ namespace ChocolateyGui.Controls
             // Bind Properties
             this.ToObservable(MarkdownStringProperty, () => MarkdownString)
                 .Subscribe(LoadMarkdown);
+
+            Unloaded += MarkdownViewer_Unloaded;
         }
 
         public static readonly DependencyProperty MarkdownStringProperty = DependencyProperty.Register(
@@ -69,7 +68,7 @@ namespace ChocolateyGui.Controls
             Browser.LoadHtml(displayHtml, url);
         }
 
-        private const string HtmlTemplate = @"
+        internal const string HtmlTemplate = @"
 <!doctype html>
 <html class=""no-js"" lang="""">
     <head>
@@ -93,5 +92,13 @@ namespace ChocolateyGui.Controls
     </body>
 </html>
 ";
+
+        private void MarkdownViewer_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (!Browser.IsDisposed)
+            {
+                Browser.Dispose();
+            }
+        }
     }
 }

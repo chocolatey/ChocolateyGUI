@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\CefSharp.OffScreen.53.0.0\build\CefSharp.OffScreen.props" Condition="Exists('..\packages\CefSharp.OffScreen.53.0.0\build\CefSharp.OffScreen.props')" />
   <Import Project="..\packages\CefSharp.Wpf.53.0.0\build\CefSharp.Wpf.props" Condition="Exists('..\packages\CefSharp.Wpf.53.0.0\build\CefSharp.Wpf.props')" />
   <Import Project="..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -69,6 +70,10 @@
       <HintPath>..\packages\Caliburn.Micro.3.0.2\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CefSharp.OffScreen, Version=53.0.0.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CefSharp.OffScreen.53.0.0\CefSharp\x86\CefSharp.OffScreen.dll</HintPath>
+    </Reference>
     <Reference Include="chocolatey, Version=0.10.3.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb, processorArchitecture=MSIL">
       <HintPath>..\packages\chocolatey.lib.0.10.3\lib\chocolatey.dll</HintPath>
       <Private>True</Private>
@@ -124,6 +129,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -169,6 +175,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\InternetImage.xaml.cs">
+      <DependentUpon>InternetImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MarkdownViewer.xaml.cs">
       <DependentUpon>MarkdownViewer.xaml</DependentUpon>
     </Compile>
@@ -208,7 +217,9 @@
     <Compile Include="Providers\ChocolateyCustomSchemeProvider.cs" />
     <Compile Include="Providers\ChocoRequestHandler.cs" />
     <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
+    <Compile Include="Providers\IPlatformProvider.cs" />
     <Compile Include="Providers\IVersionNumberProvider.cs" />
+    <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
     <Compile Include="Providers\VersionNumberProvider.cs" />
     <Compile Include="Services\ChocolateySourcesService.cs" />
     <Compile Include="Services\ChocolateyPackageService.cs" />
@@ -240,6 +251,10 @@
     <Compile Include="Utilities\Extensions\LinqExtensions.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
     <Page Include="Controls\Dialogs\ChocolateyDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\InternetImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -405,6 +420,8 @@
     <Error Condition="!Exists('..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.targets'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Wpf.53.0.0\build\CefSharp.Wpf.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.53.0.0\build\CefSharp.Wpf.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Wpf.53.0.0\build\CefSharp.Wpf.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.53.0.0\build\CefSharp.Wpf.targets'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.OffScreen.53.0.0\build\CefSharp.OffScreen.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.OffScreen.53.0.0\build\CefSharp.OffScreen.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.OffScreen.53.0.0\build\CefSharp.OffScreen.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.OffScreen.53.0.0\build\CefSharp.OffScreen.targets'))" />
   </Target>
   <Import Project="..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets')" />
   <Import Project="..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets')" />
@@ -412,6 +429,7 @@
   <Import Project="..\packages\cef.redist.x86.3.2785.1482\build\cef.redist.x86.targets" Condition="Exists('..\packages\cef.redist.x86.3.2785.1482\build\cef.redist.x86.targets')" />
   <Import Project="..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.targets')" />
   <Import Project="..\packages\CefSharp.Wpf.53.0.0\build\CefSharp.Wpf.targets" Condition="Exists('..\packages\CefSharp.Wpf.53.0.0\build\CefSharp.Wpf.targets')" />
+  <Import Project="..\packages\CefSharp.OffScreen.53.0.0\build\CefSharp.OffScreen.targets" Condition="Exists('..\packages\CefSharp.OffScreen.53.0.0\build\CefSharp.OffScreen.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using CefSharp;
-using CefSharp.Wpf;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;

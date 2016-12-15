@@ -110,15 +110,15 @@
         <StackPanel DockPanel.Dock="Left" Margin="20,0,0,0">
             <Label Style="{StaticResource PackageResourceLabel}" Content="Downloads"
                    Target="{Binding ElementName=VersionDownloadCount}" />
-            <TextBlock x:Name="VersionDownloadCount" Text="{Binding VersionDownloadCount}"
+            <TextBlock x:Name="VersionDownloadCount" Text="{Binding VersionDownloadCount, StringFormat=N0}"
                        Style="{StaticResource PackageResourceValue}" />
             <Label Style="{StaticResource PackageResourceLabel}" Content="Total Downloads"
                    Target="{Binding ElementName=DownloadCount}" />
-            <TextBlock x:Name="DownloadCount" Text="{Binding DownloadCount}"
+            <TextBlock x:Name="DownloadCount" Text="{Binding DownloadCount, StringFormat=N0}"
                        Style="{StaticResource PackageResourceValue}" />
             <Label Style="{StaticResource PackageResourceLabel}" Content="Last update"
                    Target="{Binding ElementName=Published}" />
-            <TextBlock x:Name="Published" Text="{Binding Published}" Style="{StaticResource PackageResourceValue}" />
+            <TextBlock x:Name="Published" Text="{Binding Published, StringFormat=g}" Style="{StaticResource PackageResourceValue}" />
             <Label Style="{StaticResource PackageResourceLabel}" Content="Package Size"
                    Target="{Binding ElementName=PackageSize}" />
             <TextBlock x:Name="PackageSize"

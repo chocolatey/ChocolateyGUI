@@ -123,7 +123,7 @@
                                 </TextBlock>
                             </StackPanel>
                             <TextBlock Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" FontWeight="SemiBold" FontSize="20" HorizontalAlignment="Right">
-                                <Run Text="{Binding DownloadCount}"/>
+                                <Run Text="{Binding DownloadCount, StringFormat=N0}"/>
                                 <Run Text=" downloads"/>
                             </TextBlock>
                         </Grid>

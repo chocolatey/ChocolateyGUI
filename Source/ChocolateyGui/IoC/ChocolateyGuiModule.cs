@@ -10,6 +10,7 @@ using System.IO;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
+using ChocolateyGui.Models;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
 using ChocolateyGui.Services.PackageServices;
@@ -35,7 +36,7 @@ namespace ChocolateyGui.IoC
 
             var configurationProvider = new ChocolateyConfigurationProvider();
             builder.RegisterInstance(configurationProvider).As<IChocolateyConfigurationProvider>().SingleInstance();
-            builder.RegisterType<ChocolateyPackageService>().As<IChocolateyPackageService>().SingleInstance();
+            builder.RegisterType<ChocolateyRemotePackageService>().As<IChocolateyPackageService>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterAssemblyTypes(viewModelAssembly)
@@ -69,10 +70,10 @@ namespace ChocolateyGui.IoC
                 config.CreateMap<IPackage, IPackageViewModel>();
                 config.CreateMap<IPackageViewModel, IPackageViewModel>()
                     .ForMember(vm => vm.IsInstalled, options => options.Ignore());
+                config.CreateMap<Package, IPackageViewModel>();
             });
 
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
-
             builder.Register(c => new LiteDatabase(Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")));
         }
     }

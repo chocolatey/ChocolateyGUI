@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <?define MainExe=$(var.ChocolateyGui.TargetFileName)?>
   <?define Version=!(bind.fileVersion.$(var.MainExe))?>
   <?define ProductName="ChocolateyGUI" ?>
@@ -21,7 +22,11 @@
     </Condition>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-    <MediaTemplate EmbedCab="yes" />
+    <?if $(var.ChocolateyGui.Configuration) = "Debug"?>
+    <MediaTemplate EmbedCab="yes" CompressionLevel="none" />
+    <?else?>
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+    <?endif?>
 
     <Icon Id="icon.ico" SourceFile="$(var.ChocolateyGui.ProjectDir)\chocolateyicon.ico" />
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />

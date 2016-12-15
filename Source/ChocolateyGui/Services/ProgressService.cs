@@ -17,6 +17,8 @@ using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.Views;
 using MahApps.Metro.Controls.Dialogs;
+using Serilog;
+using Serilog.Events;
 
 namespace ChocolateyGui.Services
 {
@@ -136,6 +138,12 @@ namespace ChocolateyGui.Services
         public void WriteMessage(string message, PowerShellLineType type = PowerShellLineType.Output,
             bool newLine = true)
         {
+            // Don't show debug events when not running in debug.
+            if (type == PowerShellLineType.Debug && !Log.IsEnabled(LogEventLevel.Debug))
+            {
+                return;
+            }
+
             Execute.BeginOnUIThread(() => Output.Add(new PowerShellOutputLine(message, type, newLine)));
         }
 

@@ -15,6 +15,7 @@ using chocolatey;
 using ChocolateyGui.IoC;
 using ChocolateyGui.ViewModels;
 using Serilog;
+using Serilog.Events;
 
 namespace ChocolateyGui
 {
@@ -30,7 +31,7 @@ namespace ChocolateyGui
 
         internal static IContainer Container { get; private set; }
 
-        internal static ILogger Log { get; private set; }
+        internal static ILogger Logger { get; private set; }
 
         internal static string AppDataPath { get; private set; }
 
@@ -55,14 +56,17 @@ namespace ChocolateyGui
                 Directory.CreateDirectory(logPath);
             }
 
-            var directPath = Path.Combine(logPath, "{Date}.log");
+            var directPath = Path.Combine(logPath, "ChocolateyGui.{Date}.log");
 
-            Log = Serilog.Log.Logger = new LoggerConfiguration()
+            Logger = Log.Logger = new LoggerConfiguration()
 #if DEBUG
                 .MinimumLevel.Debug()
 #endif
-                .WriteTo.LiterateConsole()
-                .WriteTo.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000)
+                // Wamp gets *very* noise. Comment out at your own peril
+                .MinimumLevel.Override("WampSharp", LogEventLevel.Information)
+                .WriteTo.Async(config => config.LiterateConsole())
+                .WriteTo.Async(config =>
+                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
                 .CreateLogger();
         }
 
@@ -108,7 +112,10 @@ namespace ChocolateyGui
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            Log.Information("Exiting.");
+            Logger.Information("Exiting.");
+            Log.CloseAndFlush();
+            CefSharp.Cef.Shutdown();
+            Container.Dispose();
         }
 
         // Monkey patch for confliciting versions of Reactive in Chocolatey and ChocolateyGUI.
@@ -124,7 +131,7 @@ namespace ChocolateyGui
         {
             if (e.IsTerminating)
             {
-                Log.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
+                Logger.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
                 MessageBox.Show(
                     e.ExceptionObject.ToString(),
                     "Unhandled Exception",
@@ -135,7 +142,7 @@ namespace ChocolateyGui
             }
             else
             {
-                Log.Error("Unhandled Exception", e.ExceptionObject as Exception);
+                Logger.Error("Unhandled Exception", e.ExceptionObject as Exception);
             }
         }
     }

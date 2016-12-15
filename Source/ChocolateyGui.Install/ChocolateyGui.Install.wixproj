@@ -13,6 +13,8 @@
     <WixToolPath Condition="'$(WixToolPath)' == ''">$(WIX)tools\</WixToolPath>
     <!-- Relative to the targets file that defines the UsingTask element is defined -->
     <WixTasksPath>tools\WixTasks.dll</WixTasksPath>
+    <CompilerAdditionalOptions>-ext WixNetFxExtension</CompilerAdditionalOptions>
+    <LinkerAdditionalOptions>-ext WixNetFxExtension</LinkerAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -28,13 +30,12 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
     <SuppressIces>ICE38</SuppressIces>
-    <CompilerAdditionalOptions>-ext WixNetFxExtension</CompilerAdditionalOptions>
-    <LinkerAdditionalOptions>-ext WixNetFxExtension</LinkerAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>..\..\BuildArtifacts\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <SuppressPdbOutput>True</SuppressPdbOutput>
+    <SuppressIces>ICE38</SuppressIces>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />

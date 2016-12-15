@@ -39,6 +39,8 @@ namespace ChocolateyGui.ViewModels
         private bool _showOnlyPackagesWithUpdate;
         private string _sortColumn;
         private bool _sortDescending;
+        private bool _isLoading;
+        private bool _firstLoadComplete = true;
 
         public LocalSourceViewModel(
             IChocolateyPackageService chocolateyService,
@@ -97,6 +99,18 @@ namespace ChocolateyGui.ViewModels
         {
             get { return _sortDescending; }
             set { this.SetPropertyValue(ref _sortDescending, value); }
+        }
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { this.SetPropertyValue(ref _isLoading, value); }
+        }
+
+        public bool FirstLoadComplete
+        {
+            get { return _firstLoadComplete; }
+            set { this.SetPropertyValue(ref _firstLoadComplete, value); }
         }
 
         public bool CanUpdateAll()
@@ -184,7 +198,7 @@ namespace ChocolateyGui.ViewModels
 
         public bool CanRefreshPackages()
         {
-            return _hasLoaded;
+            return _hasLoaded && !IsLoading;
         }
 
         public async void RefreshPackages()
@@ -268,6 +282,7 @@ namespace ChocolateyGui.ViewModels
 
         private async Task LoadPackages()
         {
+            IsLoading = true;
             try
             {
                 _packages.Clear();
@@ -281,6 +296,8 @@ namespace ChocolateyGui.ViewModels
 
                 FilterPackages();
 
+                FirstLoadComplete = false;
+
                 var updates = await _chocolateyService.GetOutdatedPackages();
                 foreach (var update in updates)
                 {
@@ -291,6 +308,10 @@ namespace ChocolateyGui.ViewModels
             {
                 Logger.Fatal("Packages failed to load", ex);
                 throw;
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 

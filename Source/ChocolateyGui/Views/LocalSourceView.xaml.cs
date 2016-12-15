@@ -4,6 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Windows;
 using System.Windows.Input;
 using ChocolateyGui.ViewModels.Items;
 
@@ -17,6 +18,8 @@ namespace ChocolateyGui.Views
         public LocalSourceView()
         {
             InitializeComponent();
+
+            PART_Loading.Margin = new Thickness(0, 0, 13, 0);
         }
 
         private void PackageDoubleClick(object sender, MouseButtonEventArgs e)

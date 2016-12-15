@@ -166,8 +166,13 @@ namespace ChocolateyGui.Controls
             return bs;
         }
 
-        private static Task LoadBitmap(BitmapImage img)
+        private static Task LoadBitmap(BitmapSource img)
         {
+            if (!img.IsDownloading)
+            {
+                return Task.FromResult(true);
+            }
+
             // If using .Net 4.6 then use TaskCreationOptions.RunContinuationsAsynchronously
             // and switch to tcs.TrySetResult below - no need for the custom extension method
             var tcs = new TaskCompletionSource<bool>();

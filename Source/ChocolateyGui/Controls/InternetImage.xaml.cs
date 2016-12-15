@@ -5,16 +5,20 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Net.Cache;
+using System.Reactive.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Akavache;
+using Autofac;
 using Caliburn.Micro;
 using CefSharp;
 using CefSharp.Internals;
@@ -22,6 +26,9 @@ using CefSharp.OffScreen;
 using ChocolateyGui.Providers.PlatformProvider;
 using ChocolateyGui.Utilities.Extensions;
 using Serilog;
+using Splat;
+using BitmapMixins = Splat.WinForms.BitmapMixins;
+using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Controls
 {
@@ -36,6 +43,8 @@ namespace ChocolateyGui.Controls
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly ChromiumWebBrowser RenderBrowser;
         private static readonly Lazy<BitmapSource> ErrorIcon = new Lazy<BitmapSource>(GetErrorImage);
+
+        private readonly IObjectBlobCache _cache = Bootstrapper.Container.ResolveKeyed<IObjectBlobCache>("Local");
 
         static InternetImage()
         {
@@ -103,18 +112,7 @@ namespace ChocolateyGui.Controls
             PART_Loading.IsActive = true;
             var imagePart = uri.Segments.Last();
             var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
-            if (fileTypeSeperator < 0)
-            {
-                Logger.Debug("Got an extensionless img url: \"{IconUrl}\".\nPassing straight to Image.", url);
-                var source = new BitmapImage(uri, new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable));
-                await LoadBitmap(source);
-                PART_Image.Source = source;
-                PART_Loading.IsActive = false;
-                return;
-            }
-
-            var extension = imagePart.Substring(fileTypeSeperator + 1);
-            if (extension.Equals("svg", StringComparison.InvariantCultureIgnoreCase))
+            if (fileTypeSeperator > 0 && imagePart.Substring(fileTypeSeperator + 1).Equals("svg", StringComparison.InvariantCultureIgnoreCase))
             {
                 var source = await SvgUrlToBitmapSource(uri.ToString());
                 PART_Image.Source = source;
@@ -122,27 +120,46 @@ namespace ChocolateyGui.Controls
                 return;
             }
 
-            // Otherwise, just pass it on like normal.
-            var finalSource = new BitmapImage(uri, new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable));
-            await LoadBitmap(finalSource);
-            PART_Image.Source = finalSource;
+            if (fileTypeSeperator < 0)
+            {
+                Logger.Debug("Got an extensionless img url: \"{IconUrl}\".\nPassing straight to Image.", url);
+            }
+
+            var size = GetBitmapSize();
+            var image = await _cache.LoadImageFromUrl(url, false, size.Width, size.Height, DateTimeOffset.UtcNow + TimeSpan.FromDays(1));
+            PART_Image.Source = image.ToNative();
             PART_Loading.IsActive = false;
         }
 
-        private static async Task<BitmapSource> SvgUrlToBitmapSource(string url)
+        private async Task<BitmapSource> SvgUrlToBitmapSource(string url)
         {
-            var html = $@"
-<style>
-    img {{ width: 100%; height: auto; }}
-    body {{ margin: 0 }}
-</style>
-<img src=""{url}"" />";
-            html = MarkdownViewer.HtmlTemplate.Replace("{{content}}", html);
-            await LoadHtmlAsync(RenderBrowser, html, "http://rawhtml/svg");
-            using (var result = await RenderBrowser.ScreenshotAsync(true))
-            {
-                return LoadBitmap(result);
-            }
+            var size = GetBitmapSize();
+            var image = await _cache.LoadImage(url, size.Width, size.Height)
+                .Catch<IBitmap, KeyNotFoundException>(error =>
+                {
+                    return Observable.FromAsync(async () =>
+                    {
+                        var html = $@"<style>
+                            img {{ width: 100%; height: auto; }}
+                            body {{ margin: 0 }}
+                            </style>
+                            <img src=""{url}"">";
+                        html = MarkdownViewer.HtmlTemplate.Replace("{{content}}", html);
+                        await LoadHtmlAsync(RenderBrowser, html, "http://rawhtml/svg");
+
+                        using (var result = await RenderBrowser.ScreenshotAsync(true))
+                        {
+                            using (var stream = new MemoryStream())
+                            {
+                                result.Save(stream, ImageFormat.Png);
+                                await _cache.Insert(url, stream.ToArray(), DateTimeOffset.UtcNow + TimeSpan.FromDays(1));
+                                stream.Position = 0;
+                                return await BitmapLoader.Current.Load(stream, null, null);
+                            }
+                        }
+                    });
+                });
+            return image.ToNative();
         }
 
         [DllImport("gdi32")]
@@ -186,9 +203,34 @@ namespace ChocolateyGui.Controls
                 // Extension method found in the CefSharp.Internals namespace
                 tcs.TrySetResultAsync(true);
             };
+
             img.DownloadCompleted += handler;
 
             return tcs.Task;
+        }
+
+        private static void DisplayBitmap(Bitmap bitmap)
+        {
+            // Make a file to save it to (e.g. C:\Users\jan\Desktop\CefSharp screenshot.png)
+            var screenshotPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "CefSharp screenshot" + DateTime.Now.Ticks + ".png");
+
+            Console.WriteLine();
+            Console.WriteLine("Screenshot ready. Saving to {0}", screenshotPath);
+
+            // Save the Bitmap to the path.
+            // The image type is auto-detected via the ".png" extension.
+            bitmap.Save(screenshotPath);
+
+            // We no longer need the Bitmap.
+            // Dispose it to avoid keeping the memory alive.  Especially important in 32-bit applications.
+            bitmap.Dispose();
+
+            Console.WriteLine("Screenshot saved.  Launching your default image viewer...");
+
+            // Tell Windows to launch the saved image.
+            Process.Start(screenshotPath);
+
+            Console.WriteLine("Image viewer launched.  Press any key to exit.");
         }
 
         private static Task LoadHtmlAsync(IWebBrowser browser, string html, string address)

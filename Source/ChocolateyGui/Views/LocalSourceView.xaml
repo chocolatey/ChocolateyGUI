@@ -8,7 +8,8 @@
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
-            mc:Ignorable="d"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:LocalSourceViewModel}">
 
@@ -60,5 +61,8 @@
                 <DataGridTextColumn Header="Latest Version" Binding="{Binding LatestVersion, IsAsync=True}" Width="1*" />
             </DataGrid.Columns>
         </DataGrid>
+        <controls:ProgressRing Grid.Row="1" IsActive="{Binding FirstLoadComplete}"/>
+        <ProgressBar Grid.Row="1" Height="10" VerticalAlignment="Bottom" IsIndeterminate="True" x:Name="PART_Loading"
+                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibility}}"/>
     </Grid>
 </UserControl>

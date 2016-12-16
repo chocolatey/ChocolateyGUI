@@ -70,7 +70,18 @@ namespace ChocolateyGui.Utilities.Extensions
         public static IObservable<TType> ToObservable<TType, TObject>(this TObject dependencyObject, DependencyProperty property, Expression<Func<TType>> propertyExpression)
             where TObject : DependencyObject
         {
-            return Observable.Create<TType>(o => 
+            return ToObservable<TType, TObject>(dependencyObject, property);
+        }
+
+        public static IObservable<TType> ToObservable<TType, TObject>(this TObject dependencyObject, DependencyProperty property)
+            where TObject : DependencyObject
+        {
+            if (property.PropertyType != typeof(TType))
+            {
+                throw new ArgumentException($"ToObservable expected \"{property.PropertyType}\", but got \"{typeof(TType)}\" instead.");
+            }
+
+            return Observable.Create<TType>(o =>
             {
                 var des = DependencyPropertyDescriptor.FromProperty(property, typeof(TObject));
                 var eh = new EventHandler((s, e) => o.OnNext((TType)des.GetValue(dependencyObject)));

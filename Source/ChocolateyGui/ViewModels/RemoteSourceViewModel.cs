@@ -249,32 +249,39 @@ namespace ChocolateyGui.ViewModels
 
                 var sort = SortSelection == "Popularity" ? "DownloadCount" : "Title";
 
-                var result =
-                    await
-                        _chocolateyPackageService.Search(SearchQuery,
-                            new PackageSearchOptions(PageSize, CurrentPage - 1, sort, IncludePrerelease,
-                                IncludeAllVersions, MatchWord));
-                var installed = await _chocolateyPackageService.GetInstalledPackages();
-
-                PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
-                Packages.Clear();
-                result.Packages.ToList().ForEach(p =>
+                await _progressService.StartLoading($"Loading page {CurrentPage}...");
+                try
                 {
-                    p.Source = _source;
-                    if (installed.Any(package => package.Id == p.Id))
+                    var result =
+                        await
+                            _chocolateyPackageService.Search(SearchQuery,
+                                new PackageSearchOptions(PageSize, CurrentPage - 1, sort, IncludePrerelease,
+                                    IncludeAllVersions, MatchWord));
+                    var installed = await _chocolateyPackageService.GetInstalledPackages();
+
+                    PageCount = (int)(((double) result.TotalCount / (double) PageSize) + 0.5);
+                    Packages.Clear();
+                    result.Packages.ToList().ForEach(p =>
                     {
-                        p.IsInstalled = true;
+                        p.Source = _source;
+                        if (installed.Any(package => package.Id == p.Id))
+                        {
+                            p.IsInstalled = true;
+                        }
+
+                        Packages.Add(p);
+                    });
+
+                    if (PageCount < CurrentPage)
+                    {
+                        CurrentPage = PageCount == 0 ? 1 : PageCount;
                     }
-
-                    Packages.Add(p);
-                });
-
-                if (PageCount < CurrentPage)
-                {
-                    CurrentPage = PageCount == 0 ? 1 : PageCount;
                 }
-
-                _hasLoaded = true;
+                finally
+                {
+                    await _progressService.StopLoading();
+                    _hasLoaded = true;
+                }
 
                 await _eventAggregator.PublishOnUIThreadAsync(new ResetScrollPositionMessage());
             }

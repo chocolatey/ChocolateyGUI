@@ -52,18 +52,16 @@ namespace ChocolateyGui.Services
 
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
         {
-            await _progressService.StartLoading("Search");
             if (string.IsNullOrWhiteSpace(query))
             {
                 _progressService.WriteMessage("Loading data...");
             }
             else
             {
-                _progressService.WriteMessage(string.Format("Searching for {0}", query));
+                _progressService.WriteMessage($"Searching for {query}");
             }
 
             var results = await SearchImpl(query, options);
-            await _progressService.StopLoading();
             return results;
         }
 
@@ -110,34 +108,31 @@ namespace ChocolateyGui.Services
                         return packages;
                     }
                 }
-
-                using (await StartProgressDialog("Chocolatey Service", "Retrieving installed packages..."))
+                
+                var choco = Lets.GetChocolatey().Init(_progressService);
+                choco.Set(config =>
                 {
-                    var choco = Lets.GetChocolatey().Init(_progressService);
-                    choco.Set(config =>
-                    {
-                        config.CommandName = CommandNameType.list.ToString();
-                        config.ListCommand.LocalOnly = true;
-                        config.AllowUnofficialBuild = true;
+                    config.CommandName = CommandNameType.list.ToString();
+                    config.ListCommand.LocalOnly = true;
+                    config.AllowUnofficialBuild = true;
 #if !DEBUG
-                        config.Verbose = false;
+                    config.Verbose = false;
 #endif // DEBUG
-                    });
+                });
 
-                    var packageResults = await choco.ListAsync<PackageResult>();
+                var packageResults = await choco.ListAsync<PackageResult>();
 
-                    packages = packageResults
-                        .Select(GetMappedPackage)
-                        .Select(package =>
-                        {
-                            package.IsInstalled = true;
-                            return package;
-                        }).ToList();
+                packages = packageResults
+                    .Select(GetMappedPackage)
+                    .Select(package =>
+                    {
+                        package.IsInstalled = true;
+                        return package;
+                    }).ToList();
 
-                    CachedPackages = packages;
+                CachedPackages = packages;
 
-                    return packages;
-                }
+                return packages;
             }
         }
 

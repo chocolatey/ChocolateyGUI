@@ -15,8 +15,6 @@
                    Icon="../chocolateyicon.ico"
                    TitleForeground="Transparent"
                    Title="ChocolateyGUI">
- 
-
     <Window.CommandBindings>
         <CommandBinding
             Command="NavigationCommands.GoToPage"

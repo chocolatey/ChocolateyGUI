@@ -8,20 +8,21 @@
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                          mc:Ignorable="d"
                          x:Class="ChocolateyGui.Controls.Dialogs.ChocolateyDialog"
-                         Background="{StaticResource BackgroundColorBrush}"
-                         Height="300" d:DesignWidth="1300">
+                         Background="{StaticResource BackgroundColorBrush}" d:DesignWidth="1300">
     <MahDialogs:BaseMetroDialog.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Controls:FauxPowerShellConsole x:Name="PART_Console" Padding="5"
-                                            Grid.Row="0"
-                                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                            BorderBrush="#FFEBEBEB" BorderThickness="5" Background="#FF012456"
-                                            Foreground="#FFEEEDF0" FontFamily="Lucida Console" FontSize="12"
-                                            IsReadOnly="True" />
+            <Expander Grid.Row="0" Margin="0 10 0 0" Header="Console Output">
+                <Controls:FauxPowerShellConsole x:Name="PART_Console"
+                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                BorderBrush="#FFEBEBEB" Background="#FF012456"
+                                                Foreground="#FFEEEDF0" FontFamily="Lucida Console" FontSize="12"
+                                                Height="200"
+                                                IsReadOnly="True" />
+            </Expander>
             <StackPanel Grid.Row="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right"

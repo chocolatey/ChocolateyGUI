@@ -4,7 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ChocolateyGui.Models
+using Newtonsoft.Json;
+
+namespace ChocolateyGui.Subprocess
 {
     public struct PackageSearchOptions
     {
@@ -14,28 +16,29 @@ namespace ChocolateyGui.Models
         public PackageSearchOptions(int pageSize, int currentPage)
             : this()
         {
-            PageSize = pageSize;
-            CurrentPage = currentPage;
+            this.PageSize = pageSize;
+            this.CurrentPage = currentPage;
         }
 
         public PackageSearchOptions(int pageSize, int currentPage, string sortColumn)
             : this()
         {
-            PageSize = pageSize;
-            CurrentPage = currentPage;
-            SortColumn = sortColumn;
+            this.PageSize = pageSize;
+            this.CurrentPage = currentPage;
+            this.SortColumn = sortColumn;
         }
 
+        [JsonConstructor]
         public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool includePrerelease,
             bool includeAllVersions, bool matchWord)
             : this()
         {
-            PageSize = pageSize;
-            CurrentPage = currentPage;
-            SortColumn = sortColumn;
-            IncludeAllVersions = includeAllVersions;
-            IncludePrerelease = includePrerelease;
-            MatchQuery = matchWord;
+            this.PageSize = pageSize;
+            this.CurrentPage = currentPage;
+            this.SortColumn = sortColumn;
+            this.IncludeAllVersions = includeAllVersions;
+            this.IncludePrerelease = includePrerelease;
+            this.MatchQuery = matchWord;
         }
 
         public int CurrentPage { get; }

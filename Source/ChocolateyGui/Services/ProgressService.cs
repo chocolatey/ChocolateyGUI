@@ -76,14 +76,17 @@ namespace ChocolateyGui.Services
 
         public async Task<MessageDialogResult> ShowMessageAsync(string title, string message)
         {
-            if (ShellView != null)
+            using (await _lock.LockAsync())
             {
-                return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message));
-            }
+                if (ShellView != null)
+                {
+                    return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message));
+                }
 
-            return MessageBox.Show(message, title) == MessageBoxResult.OK
-                ? MessageDialogResult.Affirmative
-                : MessageDialogResult.Negative;
+                return MessageBox.Show(message, title) == MessageBoxResult.OK
+                           ? MessageDialogResult.Affirmative
+                           : MessageDialogResult.Negative;
+            }
         }
 
         public async Task StartLoading(string title = null, bool isCancelable = false)

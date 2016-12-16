@@ -14,14 +14,17 @@ using chocolatey;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.results;
-using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services.PackageServices;
+using ChocolateyGui.Subprocess;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
 using NuGet;
+using ChocolateyExtensions = ChocolateyGui.Utilities.Extensions.ChocolateyExtensions;
+using Hacks = ChocolateyGui.Utilities.Hacks;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
+using PackageSearchResults = ChocolateyGui.Models.PackageSearchResults;
 
 namespace ChocolateyGui.Services
 {
@@ -80,7 +83,7 @@ namespace ChocolateyGui.Services
 #endif // DEBUG
             });
 
-            var chocoConfig = choco.GetConfiguration();
+            var chocoConfig = Hacks.GetConfiguration(choco);
             var _nugetLogger = new ChocolateyNugetLogger();
             var packageManager = NugetCommon.GetPackageManager(
                 chocoConfig,
@@ -120,7 +123,7 @@ namespace ChocolateyGui.Services
 #endif // DEBUG
                 });
 
-                var packageResults = await choco.ListAsync<PackageResult>();
+                var packageResults = await ChocolateyExtensions.ListAsync<PackageResult>(choco);
 
                 packages = packageResults
                     .Select(GetMappedPackage)
@@ -146,7 +149,7 @@ namespace ChocolateyGui.Services
                 config.Prerelease = false;
             });
 
-            var chocoConfig = choco.GetConfiguration();
+            var chocoConfig = Hacks.GetConfiguration(choco);
             var _nugetLogger = new ChocolateyNugetLogger();
             var packageManager = NugetCommon.GetPackageManager(
                 chocoConfig,
@@ -195,7 +198,7 @@ namespace ChocolateyGui.Services
                     }
                 });
 
-                await choco.RunAsync();
+                await ChocolateyExtensions.RunAsync(choco);
 
                 if (Environment.ExitCode != 0)
                 {
@@ -236,7 +239,7 @@ namespace ChocolateyGui.Services
                     }
                 });
 
-                await choco.RunAsync();
+                await ChocolateyExtensions.RunAsync(choco);
 
                 if (Environment.ExitCode != 0)
                 {
@@ -272,7 +275,7 @@ namespace ChocolateyGui.Services
 #endif // DEBUG
                 });
 
-                await choco.RunAsync();
+                await ChocolateyExtensions.RunAsync(choco);
 
                 if (Environment.ExitCode != 0)
                 {
@@ -308,7 +311,7 @@ namespace ChocolateyGui.Services
 #endif // DEBUG
                 });
 
-                await choco.RunAsync();
+                await ChocolateyExtensions.RunAsync(choco);
 
                 await GetInstalledPackages(true);
 
@@ -333,7 +336,7 @@ namespace ChocolateyGui.Services
 #endif // DEBUG
                 });
 
-                await choco.RunAsync();
+                await ChocolateyExtensions.RunAsync(choco);
 
                 await GetInstalledPackages(true);
 
@@ -386,7 +389,7 @@ namespace ChocolateyGui.Services
 #endif // DEBUG
             });
 
-            var packages = (await choco.ListAsync<PackageResult>()).Select(GetMappedPackage);
+            var packages = (await ChocolateyExtensions.ListAsync<PackageResult>(choco)).Select(GetMappedPackage);
 
             return new PackageSearchResults
             {

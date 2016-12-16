@@ -7,8 +7,6 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using Akavache;
-using Akavache.Sqlite3;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
@@ -77,8 +75,6 @@ namespace ChocolateyGui.IoC
 
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
             builder.Register(c => new LiteDatabase(Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")));
-            builder.RegisterInstance(BlobCache.UserAccount).Keyed<IObjectBlobCache>("Local");
-            builder.RegisterInstance(BlobCache.LocalMachine).Keyed<IObjectBlobCache>("Common");
         }
     }
 }

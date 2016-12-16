@@ -12,6 +12,8 @@ using WampSharp.V2.Rpc;
 
 namespace ChocolateyGui.Interface
 {
+    using ChocolateyGui.Subprocess;
+
     public interface IChocolateyService
     {
         [WampProcedure("com.chocolatey.iselevated")]
@@ -22,6 +24,9 @@ namespace ChocolateyGui.Interface
 
         [WampProcedure("com.chocolatey.getoutdated")]
         Task<IReadOnlyList<Tuple<string, string>>> GetOutdatedPackages(bool includePrerelease = false);
+
+        [WampProcedure("com.chocolatey.search")]
+        Task<PackageSearchResults> Search(string query, PackageSearchOptions options);
 
         [WampProcedure("com.chocolatey.getbyversionandid")]
         Task<Package> GetByVersionAndIdAsync(string id, string version, bool isPrerelease);

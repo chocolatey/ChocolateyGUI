@@ -121,6 +121,34 @@ namespace ChocolateyGui.Subprocess
                 return PackageOperationResult.SuccessfulCached;
             }
         }
+        public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
+        {
+            var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
+                config =>
+                    {
+                        config.CommandName = CommandNameType.list.ToString();
+                        config.Input = query;
+                        config.AllowUnofficialBuild = true;
+                        config.AllVersions = options.IncludeAllVersions;
+                        config.Prerelease = options.IncludePrerelease;
+                        config.ListCommand.Page = options.CurrentPage;
+                        config.ListCommand.PageSize = options.PageSize;
+                        config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn)
+                                                               || options.SortColumn == "DownloadCount";
+                        config.ListCommand.Exact = options.MatchQuery;
+#if !DEBUG
+                        config.Verbose = false;
+#endif // DEBUG
+                    });
+
+            var packages = (await choco.ListAsync<PackageResult>()).Select(pckge => GetMappedPackage(pckge));
+
+            return new PackageSearchResults
+            {
+                Packages = packages,
+                TotalCount = await Task.Run(() => choco.ListCount())
+            };
+        }
 
         public async Task<Package> GetByVersionAndIdAsync(string id, string version, bool isPrerelease)
         {
@@ -136,10 +164,10 @@ namespace ChocolateyGui.Subprocess
             });
 
             var chocoConfig = choco.GetConfiguration();
-            var _nugetLogger = new ChocolateyNugetLogger();
+            var nugetLogger = new ChocolateyNugetLogger();
             var packageManager = NugetCommon.GetPackageManager(
                 chocoConfig,
-                _nugetLogger,
+                nugetLogger,
                 installSuccessAction: null,
                 uninstallSuccessAction: null,
                 addUninstallHandler: false);

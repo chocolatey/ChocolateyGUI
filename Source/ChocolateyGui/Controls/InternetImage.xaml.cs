@@ -5,29 +5,27 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using Akavache;
 using Autofac;
 using Caliburn.Micro;
 using CefSharp;
 using CefSharp.Internals;
 using CefSharp.OffScreen;
 using ChocolateyGui.Providers.PlatformProvider;
+using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
+using LiteDB;
 using Serilog;
 using Splat;
-using BitmapMixins = Splat.WinForms.BitmapMixins;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Controls
@@ -43,8 +41,9 @@ namespace ChocolateyGui.Controls
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly ChromiumWebBrowser RenderBrowser;
         private static readonly Lazy<BitmapSource> ErrorIcon = new Lazy<BitmapSource>(GetErrorImage);
-
-        private readonly IObjectBlobCache _cache = Bootstrapper.Container.ResolveKeyed<IObjectBlobCache>("Local");
+        
+        private readonly LiteDatabase _data = Bootstrapper.Container.Resolve<LiteDatabase>();
+        private readonly AsyncLock _asyncLock = new AsyncLock();
 
         static InternetImage()
         {
@@ -110,127 +109,120 @@ namespace ChocolateyGui.Controls
             }
 
             PART_Loading.IsActive = true;
+            
+            var size = GetBitmapSize();
+            var expiration = DateTime.UtcNow + TimeSpan.FromDays(1);
+
             var imagePart = uri.Segments.Last();
             var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
-            if (fileTypeSeperator > 0 && imagePart.Substring(fileTypeSeperator + 1).Equals("svg", StringComparison.InvariantCultureIgnoreCase))
+
+            IBitmap source;
+            if (fileTypeSeperator > 0 &&
+                imagePart.Substring(fileTypeSeperator + 1).Equals("svg", StringComparison.InvariantCultureIgnoreCase))
             {
-                var source = await SvgUrlToBitmapSource(uri.ToString());
-                PART_Image.Source = source;
-                PART_Loading.IsActive = false;
-                return;
+                source = await LoadSvg(url, size.Width, size.Height, expiration);
+            }
+            else
+            {
+                source = await LoadImage(url, size.Width, size.Height, expiration);
             }
 
-            if (fileTypeSeperator < 0)
-            {
-                Logger.Debug("Got an extensionless img url: \"{IconUrl}\".\nPassing straight to Image.", url);
-            }
-
-            var size = GetBitmapSize();
-            var image = await _cache.LoadImageFromUrl(url, false, size.Width, size.Height, DateTimeOffset.UtcNow + TimeSpan.FromDays(1));
-            PART_Image.Source = image.ToNative();
+            PART_Image.Source = source.ToNative();
             PART_Loading.IsActive = false;
         }
 
-        private async Task<BitmapSource> SvgUrlToBitmapSource(string url)
+        private async Task<IBitmap> LoadImage(string url, float? desiredWidth, float? desiredHeight, DateTime absoluteExpiration)
         {
-            var size = GetBitmapSize();
-            var image = await _cache.LoadImage(url, size.Width, size.Height)
-                .Catch<IBitmap, KeyNotFoundException>(error =>
+            var imageStream = await DownloadUrl(url, absoluteExpiration);
+            return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
+        }
+
+        private async Task<IBitmap> LoadSvg(string url, float? desiredWidth, float? desiredHeight,
+            DateTime absoluteExpiration)
+        {
+            var id = $"imagecache/{url.GetHashCode()}";
+            using (var imageStream = new MemoryStream())
+            { 
+                var fileStorage = _data.FileStorage;
+                if (fileStorage.Exists(id))
                 {
-                    return Observable.FromAsync(async () =>
+                    var info = fileStorage.FindById(id);
+                    var expires = info.Metadata["Expires"].AsDateTime;
+                    if (expires > DateTime.UtcNow)
                     {
-                        var html = $@"<style>
+                        info.CopyTo(imageStream);
+                        return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
+                    }
+
+                    fileStorage.Delete(id);
+                }
+
+                // If we couldn't find the image or it expired
+                var html = $@"<style>
                             img {{ width: 100%; height: auto; }}
                             body {{ margin: 0 }}
                             </style>
                             <img src=""{url}"">";
-                        html = MarkdownViewer.HtmlTemplate.Replace("{{content}}", html);
-                        await LoadHtmlAsync(RenderBrowser, html, "http://rawhtml/svg");
+                html = MarkdownViewer.HtmlTemplate.Replace("{{content}}", html);
+                await LoadHtmlAsync(RenderBrowser, html, "http://rawhtml/svg");
 
-                        using (var result = await RenderBrowser.ScreenshotAsync(true))
-                        {
-                            using (var stream = new MemoryStream())
-                            {
-                                result.Save(stream, ImageFormat.Png);
-                                await _cache.Insert(url, stream.ToArray(), DateTimeOffset.UtcNow + TimeSpan.FromDays(1));
-                                stream.Position = 0;
-                                return await BitmapLoader.Current.Load(stream, null, null);
-                            }
-                        }
-                    });
-                });
-            return image.ToNative();
+                using (var result = await RenderBrowser.ScreenshotAsync(true))
+                {
+                        result.Save(imageStream, ImageFormat.Png);
+                        imageStream.Position = 0;
+                }
+
+                var fileInfo = new LiteFileInfo(id)
+                {
+                    Metadata =
+                    {
+                        ["Expires"] = absoluteExpiration
+                    }
+                };
+                imageStream.Position = 0;
+                fileStorage.Upload(fileInfo, imageStream);
+
+                imageStream.Position = 0;
+                return await BitmapLoader.Current.Load(imageStream, null, null);
+            }
         }
 
-        [DllImport("gdi32")]
-        private static extern int DeleteObject(IntPtr o);
-
-        private static BitmapSource LoadBitmap(Bitmap source)
+        private async Task<Stream> DownloadUrl(string url, DateTime absoluteExpiration)
         {
-            var ip = source.GetHbitmap();
-            BitmapSource bs = null;
-            try
-            {
-                bs = Imaging.CreateBitmapSourceFromHBitmap(ip,
-                    IntPtr.Zero, Int32Rect.Empty,
-                    BitmapSizeOptions.FromEmptyOptions());
-            }
-            finally
-            {
-                DeleteObject(ip);
-            }
+            var id = $"imagecache/{url.GetHashCode()}";
+            var imageStream = new MemoryStream();
 
-            return bs;
-        }
-
-        private static Task LoadBitmap(BitmapSource img)
-        {
-            if (!img.IsDownloading)
+            var fileStorage = _data.FileStorage;
+            if (fileStorage.Exists(id))
             {
-                return Task.FromResult(true);
+                var info = fileStorage.FindById(id);
+                var expires = info.Metadata["Expires"].AsDateTime;
+                if (expires > DateTime.UtcNow)
+                {
+                    info.CopyTo(imageStream);
+                    return imageStream;
+                }
+
+                fileStorage.Delete(id);
             }
 
-            // If using .Net 4.6 then use TaskCreationOptions.RunContinuationsAsynchronously
-            // and switch to tcs.TrySetResult below - no need for the custom extension method
-            var tcs = new TaskCompletionSource<bool>();
+            // If we couldn't find the image or it expired
+            var request = WebRequest.Create(url);
+            var response = await request.GetRequestStreamAsync();
+            await response.CopyToAsync(imageStream);
 
-            EventHandler handler = null;
-            handler = (sender, args) =>
+            var fileInfo = new LiteFileInfo(id)
             {
-                img.DownloadCompleted -= handler;
-
-                // This is required when using a standard TaskCompletionSource
-                // Extension method found in the CefSharp.Internals namespace
-                tcs.TrySetResultAsync(true);
+                Metadata =
+                {
+                    ["Expires"] = absoluteExpiration
+                }
             };
+            imageStream.Position = 0;
+            fileStorage.Upload(fileInfo, imageStream);
 
-            img.DownloadCompleted += handler;
-
-            return tcs.Task;
-        }
-
-        private static void DisplayBitmap(Bitmap bitmap)
-        {
-            // Make a file to save it to (e.g. C:\Users\jan\Desktop\CefSharp screenshot.png)
-            var screenshotPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "CefSharp screenshot" + DateTime.Now.Ticks + ".png");
-
-            Console.WriteLine();
-            Console.WriteLine("Screenshot ready. Saving to {0}", screenshotPath);
-
-            // Save the Bitmap to the path.
-            // The image type is auto-detected via the ".png" extension.
-            bitmap.Save(screenshotPath);
-
-            // We no longer need the Bitmap.
-            // Dispose it to avoid keeping the memory alive.  Especially important in 32-bit applications.
-            bitmap.Dispose();
-
-            Console.WriteLine("Screenshot saved.  Launching your default image viewer...");
-
-            // Tell Windows to launch the saved image.
-            Process.Start(screenshotPath);
-
-            Console.WriteLine("Image viewer launched.  Press any key to exit.");
+            imageStream.Position = 0;
+            return imageStream;
         }
 
         private static Task LoadHtmlAsync(IWebBrowser browser, string html, string address)

@@ -28,8 +28,9 @@ namespace ChocolateyGui.Subprocess
 
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.LiterateConsole()
-                .WriteTo.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000)
+                .WriteTo.Async(config => config.LiterateConsole())
+                .WriteTo.Async(config =>
+                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
                 .CreateLogger();
 
             Logger = Log.ForContext<Program>();

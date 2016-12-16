@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace ChocolateyGui.Models
+namespace ChocolateyGui.Subprocess
 {
+    using System;
+    using System.Collections.Generic;
+
     public class PackageOperationResult
     {
         internal static readonly PackageOperationResult SuccessfulCached = new PackageOperationResult

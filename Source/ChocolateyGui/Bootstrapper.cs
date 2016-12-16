@@ -10,7 +10,6 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
-using Akavache;
 using Autofac;
 using Caliburn.Micro;
 using CefSharp;
@@ -42,16 +41,16 @@ namespace ChocolateyGui
 
         internal const string ApplicationName = "ChocolateyGUI";
 
-        public async Task OnExitAsync()
+        public Task OnExitAsync()
         {
+            Log.CloseAndFlush();
             Cef.Shutdown();
-            await BlobCache.Shutdown();
+            Container.Dispose();
+            return Task.FromResult(true);
         }
 
         protected override void Configure()
         {
-            BlobCache.ApplicationName = ApplicationName;
-
             LocalAppDataPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData,
                     Environment.SpecialFolderOption.DoNotVerify),
@@ -127,9 +126,6 @@ namespace ChocolateyGui
         protected override void OnExit(object sender, EventArgs e)
         {
             Logger.Information("Exiting.");
-            Log.CloseAndFlush();
-            CefSharp.Cef.Shutdown();
-            Container.Dispose();
         }
 
         // Monkey patch for confliciting versions of Reactive in Chocolatey and ChocolateyGUI.

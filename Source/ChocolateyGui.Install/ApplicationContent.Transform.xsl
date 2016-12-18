@@ -21,7 +21,11 @@
   <xsl:template match="wix:Component[key('vshost-search', @Id)]" />
   <xsl:template match="wix:ComponentRef[key('vshost-search', @Id)]" />
 
-  <xsl:key name="pak-search" match="wix:Component[contains(wix:File/@Source, '.pak')]" use="@Id" />
+  <xsl:key name="vshost-search" match="wix:Component[contains(wix:File/@Source, '.xml')]" use="@Id" />
+  <xsl:template match="wix:Component[key('vshost-search', @Id)]" />
+  <xsl:template match="wix:ComponentRef[key('vshost-search', @Id)]" />
+
+  <xsl:key name="pak-search" match="wix:Component[contains(wix:File/@Source, '.pak') and not(contains(wix:File/@Source, 'locale'))]" use="@Id" />
   <xsl:template match="wix:Component[key('pak-search', @Id)]" />
   <xsl:template match="wix:ComponentRef[key('pak-search', @Id)]" />
 

@@ -86,6 +86,9 @@
       <Component Id="ChocolateyGui.exe" Guid="f8164f91-fa5c-0001-0001-9beb5a044699">
         <File Id="ChocolateyGui.exe" Source="$(var.ChocolateyGui.TargetPath)" KeyPath="yes" Checksum="yes" />
       </Component>
+      <Component Id="ChocolateyGui.exe.config" Guid="6C3AE56F-1AA3-4145-BFA9-345BBCC5C3D1">
+        <File Id="ChocolateyGui.exe.config" Source="$(var.ChocolateyGui_TargetDir)/ChocolateyGui.exe.config" KeyPath="yes" Checksum="yes" />
+      </Component>
     </ComponentGroup>
   </Fragment>
 </Wix>

@@ -58,8 +58,8 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MsgPack, Version=0.6.0.0, Culture=neutral, PublicKeyToken=a2625990d5dc0167, processorArchitecture=MSIL">
-      <HintPath>..\packages\MsgPack.Cli.0.6.2\lib\net45\MsgPack.dll</HintPath>
+    <Reference Include="MsgPack, Version=0.8.0.0, Culture=neutral, PublicKeyToken=a2625990d5dc0167, processorArchitecture=MSIL">
+      <HintPath>..\packages\MsgPack.Cli.0.8.0\lib\net45\MsgPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

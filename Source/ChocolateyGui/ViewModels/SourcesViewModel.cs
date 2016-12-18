@@ -5,6 +5,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Reactive.Linq;
 using Caliburn.Micro;
 using ChocolateyGui.Services;
 ////using ChocolateyGui.ViewModels.Items;
@@ -44,6 +46,10 @@ namespace ChocolateyGui.ViewModels
 
         protected override void OnViewReady(object view)
         {
+            Observable.FromEventPattern<PropertyChangedEventArgs>(this, nameof(PropertyChanged))
+                .Where(p => p.EventArgs.PropertyName == nameof(ActiveItem))
+                .Subscribe(p => DisplayName = $"Source - {ActiveItem.DisplayName}");
+
             if (_firstLoad)
             {
                 ActivateItem(Items[0]);

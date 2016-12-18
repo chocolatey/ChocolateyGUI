@@ -9,8 +9,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Reactive.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
@@ -41,9 +40,8 @@ namespace ChocolateyGui.Controls
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly ChromiumWebBrowser RenderBrowser;
         private static readonly Lazy<BitmapSource> ErrorIcon = new Lazy<BitmapSource>(GetErrorImage);
-        
-        private readonly LiteDatabase _data = Bootstrapper.Container.Resolve<LiteDatabase>();
-        private readonly AsyncLock _asyncLock = new AsyncLock();
+        private static readonly LiteDatabase Data = Bootstrapper.Container.Resolve<LiteDatabase>();
+        private static readonly AsyncLock AsyncLock = new AsyncLock();
 
         static InternetImage()
         {
@@ -116,18 +114,25 @@ namespace ChocolateyGui.Controls
             var imagePart = uri.Segments.Last();
             var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
 
-            IBitmap source;
+            BitmapSource source;
             if (fileTypeSeperator > 0 &&
                 imagePart.Substring(fileTypeSeperator + 1).Equals("svg", StringComparison.InvariantCultureIgnoreCase))
             {
-                source = await LoadSvg(url, size.Width, size.Height, expiration);
+                source = (await LoadSvg(url, size.Width, size.Height, expiration)).ToNative();
             }
             else
             {
-                source = await LoadImage(url, size.Width, size.Height, expiration);
+                try
+                {
+                    source = (await LoadImage(url, size.Width, size.Height, expiration)).ToNative();
+                }
+                catch (HttpRequestException)
+                {
+                    source = ErrorIcon.Value;
+                }
             }
 
-            PART_Image.Source = source.ToNative();
+            PART_Image.Source = source;
             PART_Loading.IsActive = false;
         }
 
@@ -143,7 +148,7 @@ namespace ChocolateyGui.Controls
             var id = $"imagecache/{url.GetHashCode()}";
             using (var imageStream = new MemoryStream())
             { 
-                var fileStorage = _data.FileStorage;
+                var fileStorage = Data.FileStorage;
                 if (fileStorage.Exists(id))
                 {
                     var info = fileStorage.FindById(id);
@@ -192,7 +197,7 @@ namespace ChocolateyGui.Controls
             var id = $"imagecache/{url.GetHashCode()}";
             var imageStream = new MemoryStream();
 
-            var fileStorage = _data.FileStorage;
+            var fileStorage = Data.FileStorage;
             if (fileStorage.Exists(id))
             {
                 var info = fileStorage.FindById(id);
@@ -207,9 +212,12 @@ namespace ChocolateyGui.Controls
             }
 
             // If we couldn't find the image or it expired
-            var request = WebRequest.Create(url);
-            var response = await request.GetRequestStreamAsync();
-            await response.CopyToAsync(imageStream);
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                await response.Content.CopyToAsync(imageStream);
+            }
 
             var fileInfo = new LiteFileInfo(id)
             {

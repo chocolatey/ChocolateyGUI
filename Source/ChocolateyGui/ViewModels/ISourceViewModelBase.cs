@@ -8,6 +8,6 @@ namespace ChocolateyGui.ViewModels
 {
     public interface ISourceViewModelBase
     {
-        string Name { get; }
+        string DisplayName { get; }
     }
 }

@@ -43,7 +43,7 @@ namespace ChocolateyGui.ViewModels
             {
                 throw new ArgumentNullException(nameof(message));
             }
-
+            
             ActiveItem = new PackageViewModel(_eventAggregator) { Package = message.Package };
         }
 

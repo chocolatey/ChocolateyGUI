@@ -10,7 +10,7 @@ using ChocolateyGui.ViewModels.Items;
 
 namespace ChocolateyGui.ViewModels
 {
-    public class PackageViewModel : PropertyChangedBase
+    public sealed class PackageViewModel : Screen
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -20,6 +20,8 @@ namespace ChocolateyGui.ViewModels
         }
 
         public IPackageViewModel Package { get; set; }
+
+        public new string DisplayName => $"Package - {Package?.Title}";
 
         public void Back()
         {

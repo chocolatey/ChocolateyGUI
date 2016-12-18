@@ -13,14 +13,19 @@
                    d:DataContext="{d:DesignInstance Type=local:ShellViewModel}"
                    SaveWindowPosition="True"
                    Icon="../chocolateyicon.ico"
-                   TitleForeground="Transparent"
-                   Title="ChocolateyGUI">
+                   TitleForeground="Transparent">
     <Window.CommandBindings>
         <CommandBinding
             Command="NavigationCommands.GoToPage"
             Executed="PerformGoToPage"
             CanExecute="CanGoToPage" />
     </Window.CommandBindings>
+    <Window.Title>
+        <PriorityBinding>
+            <Binding Path="ActiveItem.DisplayName"></Binding>
+            <Binding Path="DisplayName"></Binding>
+        </PriorityBinding>
+    </Window.Title>
 
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>

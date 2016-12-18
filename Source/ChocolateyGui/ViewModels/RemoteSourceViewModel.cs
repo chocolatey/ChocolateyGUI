@@ -14,7 +14,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
-using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
 using ChocolateyGui.Services.PackageServices;
@@ -25,7 +24,7 @@ using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
-    public class RemoteSourceViewModel : Screen, ISourceViewModelBase
+    public sealed class RemoteSourceViewModel : Screen, ISourceViewModelBase
     {
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyPackageService _chocolateyPackageService;
@@ -54,7 +53,7 @@ namespace ChocolateyGui.ViewModels
             _source = source;
 
             Packages = new ObservableCollection<IPackageViewModel>();
-            Name = name;
+            DisplayName = name;
 
             if (eventAggregator == null)
             {
@@ -123,8 +122,6 @@ namespace ChocolateyGui.ViewModels
             get { return _sortSelection; }
             set { this.SetPropertyValue(ref _sortSelection, value); }
         }
-
-        public string Name { get; }
 
         public bool CanGoToFirst()
         {

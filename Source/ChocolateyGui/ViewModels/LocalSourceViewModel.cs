@@ -23,7 +23,7 @@ using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
-    public class LocalSourceViewModel : Screen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
+    public sealed class LocalSourceViewModel : Screen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
     {
         private static readonly ILogger Logger = Log.ForContext<LocalSourceViewModel>();
         private readonly IChocolateyPackageService _chocolateyService;
@@ -47,13 +47,13 @@ namespace ChocolateyGui.ViewModels
             IProgressService progressService,
             IPersistenceService persistenceService,
             IEventAggregator eventAggregator,
-            string name)
+            string displayName)
         {
             _chocolateyService = chocolateyService;
             _progressService = progressService;
             _persistenceService = persistenceService;
 
-            Name = name;
+            DisplayName = displayName;
             Packages = new ObservableCollection<IPackageViewModel>();
             _packages = new List<IPackageViewModel>();
             if (eventAggregator == null)
@@ -314,7 +314,5 @@ namespace ChocolateyGui.ViewModels
                 IsLoading = false;
             }
         }
-
-        public string Name { get; }
     }
 }

@@ -16,7 +16,6 @@ using System.Windows;
 using Caliburn.Micro;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
-using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Subprocess;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;

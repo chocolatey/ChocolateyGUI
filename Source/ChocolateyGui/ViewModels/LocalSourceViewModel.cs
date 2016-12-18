@@ -16,7 +16,6 @@ using System.Xml;
 using Caliburn.Micro;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
-using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
 using Serilog;

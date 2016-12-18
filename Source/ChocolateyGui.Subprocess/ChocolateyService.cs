@@ -7,7 +7,6 @@ using AutoMapper;
 using chocolatey;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
-using chocolatey.infrastructure.information;
 using chocolatey.infrastructure.results;
 using ChocolateyGui.Interface;
 using ChocolateyGui.Models;
@@ -30,7 +29,7 @@ namespace ChocolateyGui.Subprocess
 
         public Task<bool> IsElevated()
         {
-            return Task.FromResult(ProcessInformation.process_is_elevated());
+            return Task.FromResult(Hacks.IsElevated);
         }
 
         public async Task<IReadOnlyList<Package>> GetInstalledPackages()

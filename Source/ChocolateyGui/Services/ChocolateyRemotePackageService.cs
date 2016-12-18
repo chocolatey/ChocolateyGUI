@@ -12,12 +12,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Interface;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Services.PackageServices;
+using ChocolateyGui.Providers;
 using ChocolateyGui.Subprocess;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels.Items;
@@ -45,6 +46,7 @@ namespace ChocolateyGui.Services
         private IChocolateyService _chocolateyService;
         private IDisposable _logStream;
         private bool _isInitialized;
+        private bool? _requiresElevation;
 
         public ChocolateyRemotePackageService(
             IProgressService progressService,
@@ -179,10 +181,22 @@ namespace ChocolateyGui.Services
             _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Unpinned, version));
         }
 
+        public ValueTask<bool> RequiresElevation()
+        {
+            return _requiresElevation.HasValue ? new ValueTask<bool>(_requiresElevation.Value) : new ValueTask<bool>(RequiresElevationImpl());
+        }
+
         public void Dispose()
         {
             _logStream?.Dispose();
             _wampChannel?.Close("Exiting", new GoodbyeDetails { Message = "Exiting" });
+        }
+
+        private async Task<bool> RequiresElevationImpl()
+        {
+            await Initialize();
+            _requiresElevation = !await _chocolateyService.IsElevated();
+            return _requiresElevation.Value;
         }
 
         private Task Initialize(bool requireAdmin = false)
@@ -347,6 +361,9 @@ namespace ChocolateyGui.Services
 
                             _progressService.WriteMessage(message.Message, powerShellLineType);
                         });
+
+                // ReSharper disable once PossibleNullReferenceException
+                ((ElevationStatusProvider)Application.Current.FindResource("Elevation")).IsElevated = await _chocolateyService.IsElevated();
             }
         }
     }

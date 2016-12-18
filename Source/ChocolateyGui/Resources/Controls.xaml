@@ -7,6 +7,8 @@
                     xmlns:custom="http://metro.mahapps.com/winfx/xaml/shared"
                     xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
                     xmlns:commands="clr-namespace:ChocolateyGui.Commands"
+                    xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
+                    xmlns:providers="clr-namespace:ChocolateyGui.Providers"
                     mc:Ignorable="d">
     
     <ResourceDictionary.MergedDictionaries>
@@ -20,6 +22,17 @@
     <converters:StringListToString x:Key="StringListToString" />
     <converters:BooleanInverter x:Key="BooleanInverter" />
 
+    <providers:ElevationStatusProvider x:Key="Elevation" />
+    
+    <Style x:Key="UacIconStyle" TargetType="{x:Type Image}">
+        <Setter Property="Source" Value="{x:Static utilities:NativeMethods.UacIcon}"/>
+        <Setter Property="Visibility" Value="{Binding Path=IsElevated, Source={StaticResource Elevation}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
+    </Style>
+
+    <Image x:Key="UacIcon" x:Shared="False"
+          Style="{StaticResource UacIconStyle}"
+          Width="16" Height="16"/>
+    
     <Style x:Key="BaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular" />
         <Setter Property="FontSize" Value="14" />
@@ -631,10 +644,10 @@
     <ContextMenu x:Key="PackagesContextMenu"
                  DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
                  d:DataContext="{d:DesignInstance Type=items:PackageViewModel}">
-        <MenuItem Header="Install"
+        <MenuItem Header="Install" Icon="{StaticResource UacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
                   Command="{commands:DataContextCommandAdapter Install}" />
-        <MenuItem Header="Pin"
+        <MenuItem Header="Pin" Icon="{StaticResource UacIcon}"
                   Command="{commands:DataContextCommandAdapter Pin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -643,7 +656,7 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="Unpin"
+        <MenuItem Header="Unpin" Icon="{StaticResource UacIcon}"
                   Command="{commands:DataContextCommandAdapter Unpin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -652,11 +665,14 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="Uninstall" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
+        <MenuItem Header="Uninstall" Icon="{StaticResource UacIcon}"
+                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Uninstall}" />
-        <MenuItem Header="Reinstall" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
+        <MenuItem Header="Reinstall" Icon="{StaticResource UacIcon}"
+                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Reinstall}" />
-        <MenuItem Header="Update" Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"
+        <MenuItem Header="Update" Icon="{StaticResource UacIcon}"
+                  Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Update}" />
         <MenuItem Header="Details" Command="{commands:DataContextCommandAdapter ViewDetails}" />
     </ContextMenu>

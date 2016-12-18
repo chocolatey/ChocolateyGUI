@@ -18,6 +18,12 @@
         <converters:NullToVisibility x:Key="NullToVisibility" />
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString" />
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString" />
+        <Style x:Key="UacActionStyle" BasedOn="{StaticResource UacIconStyle}" TargetType="Image">
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Height" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 0 5 0"/>
+        </Style>
     </UserControl.Resources>
 
     <DockPanel x:Name="PackageViewGrid" LastChildFill="True" DataContext="{Binding Package}"
@@ -57,6 +63,7 @@
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Install}">
                             <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource UacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Install" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="Install" FontSize="16"/>
                             </StackPanel>
@@ -68,6 +75,7 @@
                                 Command="{commands:DataContextCommandAdapter Pin}"
                                 Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
                             <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource UacActionStyle}" />
                                 <iconPacks:PackIconModern Kind="Pin" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="Pin" FontSize="16"/>
                             </StackPanel>
@@ -76,6 +84,7 @@
                                 Command="{commands:DataContextCommandAdapter Unpin}"
                                 Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibility}}">
                             <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource UacActionStyle}" />
                                 <iconPacks:PackIconModern Kind="PinRemove" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="Unpin" FontSize="16"/>
                             </StackPanel>
@@ -83,6 +92,7 @@
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Reinstall}">
                             <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource UacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Cw" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="Reinstall" FontSize="16"/>
                             </StackPanel>
@@ -90,6 +100,7 @@
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Uninstall}">
                             <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource UacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Uninstall" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="Uninstall" FontSize="16"/>
                             </StackPanel>
@@ -98,6 +109,7 @@
                             Command="{commands:DataContextCommandAdapter Update}"
                             Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}">
                             <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource UacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Cycle" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="Update" FontSize="16"/>
                             </StackPanel>

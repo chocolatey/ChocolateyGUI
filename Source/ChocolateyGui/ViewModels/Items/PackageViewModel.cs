@@ -12,7 +12,6 @@ using Caliburn.Micro;
 using ChocolateyGui.Base;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
-using ChocolateyGui.Services.PackageServices;
 using NuGet;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 

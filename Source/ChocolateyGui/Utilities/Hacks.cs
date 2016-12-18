@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Security.Principal;
 using chocolatey;
 using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.services;
@@ -19,6 +20,8 @@ namespace ChocolateyGui.Utilities
 {
     public static class Hacks
     {
+        public static bool IsElevated => (WindowsIdentity.GetCurrent().Owner?.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid)).GetValueOrDefault(false);
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "N/A")]
         public static IChocolateyPackageInformationService GetPackageInformationService()
         {

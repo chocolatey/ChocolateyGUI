@@ -212,6 +212,10 @@
       <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.7.0\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
@@ -298,6 +302,7 @@
     <Compile Include="Providers\ChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\ChocolateyCustomSchemeProvider.cs" />
     <Compile Include="Providers\ChocoRequestHandler.cs" />
+    <Compile Include="Providers\ElevationStatusProvider.cs" />
     <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IPlatformProvider.cs" />
     <Compile Include="Providers\IVersionNumberProvider.cs" />

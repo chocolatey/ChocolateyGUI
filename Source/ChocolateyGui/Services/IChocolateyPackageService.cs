@@ -12,7 +12,7 @@ using ChocolateyGui.ViewModels.Items;
 using NuGet;
 using PackageSearchResults = ChocolateyGui.Models.PackageSearchResults;
 
-namespace ChocolateyGui.Services.PackageServices
+namespace ChocolateyGui.Services
 {
     public interface IChocolateyPackageService
     {
@@ -33,5 +33,7 @@ namespace ChocolateyGui.Services.PackageServices
         Task PinPackage(string id, SemanticVersion version);
 
         Task UnpinPackage(string id, SemanticVersion version);
+
+        ValueTask<bool> RequiresElevation();
     }
 }

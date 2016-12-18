@@ -13,9 +13,9 @@ using Caliburn.Micro;
 using chocolatey;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
+using chocolatey.infrastructure.information;
 using chocolatey.infrastructure.results;
 using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Services.PackageServices;
 using ChocolateyGui.Subprocess;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
@@ -342,6 +342,11 @@ namespace ChocolateyGui.Services
 
                 _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Unpinned));
             }
+        }
+
+        public ValueTask<bool> RequiresElevation()
+        {
+            return new ValueTask<bool>(ProcessInformation.process_is_elevated());
         }
 
         /// <summary>

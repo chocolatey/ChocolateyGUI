@@ -48,6 +48,8 @@ namespace ChocolateyGui.Views
             settings.RegisterScheme(new CefCustomScheme { SchemeName = ChocolateyCustomSchemeProvider.SchemeName, SchemeHandlerFactory = new ChocolateyCustomSchemeProvider() });
             settings.CefCommandLineArgs.Add("no-proxy-server", "1");
             settings.CachePath = Path.Combine(Bootstrapper.LocalAppDataPath, "CefCache");
+            settings.PackLoadingDisabled = true;
+            settings.SetOffScreenRenderingBestPerformanceArgs();
             if (!Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null))
             {
                 return;

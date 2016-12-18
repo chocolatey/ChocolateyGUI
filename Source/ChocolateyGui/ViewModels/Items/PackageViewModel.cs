@@ -12,7 +12,6 @@ using Caliburn.Micro;
 using ChocolateyGui.Base;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
-using ChocolateyGui.Services.PackageServices;
 using NuGet;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
@@ -322,7 +321,10 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                await _chocolateyService.InstallPackage(Id, Version, Source).ConfigureAwait(false);
+                using (await StartProgressDialog("Installing package", "Installing package", Id))
+                {
+                    await _chocolateyService.InstallPackage(Id, Version, Source).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -335,7 +337,10 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                await _chocolateyService.InstallPackage(Id, Version, Source, true).ConfigureAwait(false);
+                using (await StartProgressDialog("Reinstalling package", "Reinstalling package", Id))
+                {
+                    await _chocolateyService.InstallPackage(Id, Version, Source, true).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -350,7 +355,10 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                await _chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
+                using (await StartProgressDialog("Uninstalling package", "Uninstalling package", Id))
+                {
+                    await _chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -363,12 +371,17 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
+                using (await StartProgressDialog("Updating package", "Updating package", Id))
+                {
+                    await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
                 Logger.Error(ex, "Ran into an error while updating {Id}, version {Version}.", Id, Version);
-                await _progressService.ShowMessageAsync("Failed to Update", $"Ran into an error while updating {Id}.\n{ex.Message}");
+                await _progressService.ShowMessageAsync(
+                    "Failed to Update",
+                    $"Ran into an error while updating {Id}.\n{ex.Message}");
             }
         }
 
@@ -376,7 +389,10 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                await _chocolateyService.PinPackage(Id, Version).ConfigureAwait(false);
+                using (await StartProgressDialog("Pinning package", "Pinning package", Id))
+                {
+                    await _chocolateyService.PinPackage(Id, Version).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -389,7 +405,10 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                await _chocolateyService.UnpinPackage(Id, Version).ConfigureAwait(false);
+                using (await StartProgressDialog("Installing package", "Installing package", Id))
+                {
+                    await _chocolateyService.UnpinPackage(Id, Version).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -470,6 +489,13 @@ namespace ChocolateyGui.ViewModels.Items
             {
                 await _progressService.StopLoading();
             }
+        }
+
+        private async Task<IDisposable> StartProgressDialog(string commandString, string initialProgressText, string id = "")
+        {
+            await _progressService.StartLoading($"{commandString} {id}...");
+            _progressService.WriteMessage(initialProgressText);
+            return new DisposableAction(() => _progressService.StopLoading());
         }
     }
 }

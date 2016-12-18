@@ -16,7 +16,7 @@ using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.registration;
 
-namespace ChocolateyGui.Utilities
+namespace ChocolateyGui.Subprocess
 {
     public static class Hacks
     {
@@ -44,21 +44,21 @@ namespace ChocolateyGui.Utilities
 
         public static T GetInstance<T>()
         {
-            Func<object> _instanceExp;
-            if (!instanceExpCache.TryGetValue(typeof(T), out _instanceExp))
+            Func<object> instanceExp;
+            if (!InstanceExpCache.TryGetValue(typeof(T), out instanceExp))
             {
-                _instanceExp = GetInstanceExp<T>();
-                instanceExpCache.TryAdd(typeof(T), _instanceExp);
+                instanceExp = GetInstanceExp<T>();
+                InstanceExpCache.TryAdd(typeof(T), instanceExp);
             }
 
-            return (T)_instanceExp();
+            return (T)instanceExp();
         }
 
-        private static Lazy<Func<object>> getContainerInstLazy = new Lazy<Func<object>>(GetContainerInst);
+        private static readonly Lazy<Func<object>> GetContainerInstLazy = new Lazy<Func<object>>(GetContainerInst);
 
-        private static object GetContainer()
+        public static object GetContainer()
         {
-            return getContainerInstLazy.Value();
+            return GetContainerInstLazy.Value();
         }
 
         private static ConstantExpression GetContainerExp()
@@ -76,7 +76,7 @@ namespace ChocolateyGui.Utilities
                     .Compile();
         }
 
-        private static ConcurrentDictionary<Type, Func<object>> instanceExpCache = new ConcurrentDictionary<Type, Func<object>>();
+        private static readonly ConcurrentDictionary<Type, Func<object>> InstanceExpCache = new ConcurrentDictionary<Type, Func<object>>();
 
         private static Func<object> GetInstanceExp<T>()
         {

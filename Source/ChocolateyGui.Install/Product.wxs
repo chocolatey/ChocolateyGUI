@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <?define MainExe=$(var.ChocolateyGui.TargetFileName)?>
   <?define Version=!(bind.fileVersion.$(var.MainExe))?>
   <?define ProductName="ChocolateyGUI" ?>
@@ -21,7 +22,11 @@
     </Condition>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-    <MediaTemplate EmbedCab="yes" />
+    <?if $(var.ChocolateyGui.Configuration) = "Debug"?>
+    <MediaTemplate EmbedCab="yes" CompressionLevel="none" />
+    <?else?>
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+    <?endif?>
 
     <Icon Id="icon.ico" SourceFile="$(var.ChocolateyGui.ProjectDir)\chocolateyicon.ico" />
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
@@ -80,6 +85,9 @@
     <ComponentGroup Id="ChocolateyExe" Directory="INSTALLFOLDER">
       <Component Id="ChocolateyGui.exe" Guid="f8164f91-fa5c-0001-0001-9beb5a044699">
         <File Id="ChocolateyGui.exe" Source="$(var.ChocolateyGui.TargetPath)" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="ChocolateyGui.exe.config" Guid="6C3AE56F-1AA3-4145-BFA9-345BBCC5C3D1">
+        <File Id="ChocolateyGui.exe.config" Source="$(var.ChocolateyGui_TargetDir)/ChocolateyGui.exe.config" KeyPath="yes" Checksum="yes" />
       </Component>
     </ComponentGroup>
   </Fragment>

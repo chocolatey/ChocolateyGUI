@@ -17,6 +17,8 @@ using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.Views;
 using MahApps.Metro.Controls.Dialogs;
+using Serilog;
+using Serilog.Events;
 
 namespace ChocolateyGui.Services
 {
@@ -74,14 +76,17 @@ namespace ChocolateyGui.Services
 
         public async Task<MessageDialogResult> ShowMessageAsync(string title, string message)
         {
-            if (ShellView != null)
+            using (await _lock.LockAsync())
             {
-                return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message));
-            }
+                if (ShellView != null)
+                {
+                    return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message));
+                }
 
-            return MessageBox.Show(message, title) == MessageBoxResult.OK
-                ? MessageDialogResult.Affirmative
-                : MessageDialogResult.Negative;
+                return MessageBox.Show(message, title) == MessageBoxResult.OK
+                           ? MessageDialogResult.Affirmative
+                           : MessageDialogResult.Negative;
+            }
         }
 
         public async Task StartLoading(string title = null, bool isCancelable = false)
@@ -136,6 +141,12 @@ namespace ChocolateyGui.Services
         public void WriteMessage(string message, PowerShellLineType type = PowerShellLineType.Output,
             bool newLine = true)
         {
+            // Don't show debug events when not running in debug.
+            if (type == PowerShellLineType.Debug && !Log.IsEnabled(LogEventLevel.Debug))
+            {
+                return;
+            }
+
             Execute.BeginOnUIThread(() => Output.Add(new PowerShellOutputLine(message, type, newLine)));
         }
 

@@ -3,7 +3,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using chocolatey.infrastructure.app.configuration;
 using ChocolateyGui.Models;
+using ChocolateyGui.Subprocess.Models;
 using NuGet;
 using Serilog;
 using ILogger = Serilog.ILogger;
@@ -67,6 +69,8 @@ namespace ChocolateyGui.Subprocess
             Mapper.Initialize(config =>
             {
                 config.CreateMap<IPackage, Package>();
+                config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
+                config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();
             });
 
             if (args.Length != 1)

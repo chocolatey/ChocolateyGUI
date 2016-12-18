@@ -19,7 +19,7 @@ using ChocolateyGui.Interface;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Providers;
-using ChocolateyGui.Subprocess;
+using ChocolateyGui.Subprocess.Models;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels.Items;
 using NuGet;
@@ -38,6 +38,7 @@ namespace ChocolateyGui.Services
         private readonly IProgressService _progressService;
         private readonly IMapper _mapper;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IConfigService _configService;
         private readonly Func<IPackageViewModel> _packageFactory;
         private readonly AsyncLock _lock = new AsyncLock();
 
@@ -47,17 +48,21 @@ namespace ChocolateyGui.Services
         private IDisposable _logStream;
         private bool _isInitialized;
         private bool? _requiresElevation;
+        private Lazy<bool> _forceElevation;
 
         public ChocolateyRemotePackageService(
             IProgressService progressService,
             IMapper mapper,
             IEventAggregator eventAggregator,
+            IConfigService configService,
             Func<IPackageViewModel> packageFactory)
         {
             _progressService = progressService;
             _mapper = mapper;
             _eventAggregator = eventAggregator;
+            _configService = configService;
             _packageFactory = packageFactory;
+            _forceElevation = new Lazy<bool>(() => _configService.GetSettings().ElevateByDefault);
         }
 
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
@@ -181,6 +186,28 @@ namespace ChocolateyGui.Services
             _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Unpinned, version));
         }
 
+        public async Task<IReadOnlyList<ChocolateyFeature>> GetFeatures()
+        {
+            return await _chocolateyService.GetFeatures();
+        }
+
+        public async Task SetFeature(ChocolateyFeature feature)
+        {
+            await Initialize(true);
+            await _chocolateyService.SetFeature(feature);
+        }
+
+        public async Task<IReadOnlyList<ChocolateySetting>> GetSettings()
+        {
+            return await _chocolateyService.GetSettings();
+        }
+
+        public async Task SetSetting(ChocolateySetting setting)
+        {
+            await Initialize(true);
+            await _chocolateyService.SetSetting(setting);
+        }
+
         public ValueTask<bool> RequiresElevation()
         {
             return _requiresElevation.HasValue ? new ValueTask<bool>(_requiresElevation.Value) : new ValueTask<bool>(RequiresElevationImpl());
@@ -206,6 +233,8 @@ namespace ChocolateyGui.Services
 
         private async Task InitializeImpl(bool requireAdmin = false)
         {
+            requireAdmin = requireAdmin || _forceElevation.Value;
+
             // Check if we're not already initialized or running, as well as our permissions level.
             if (_isInitialized)
             {

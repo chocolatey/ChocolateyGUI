@@ -6,7 +6,7 @@
 
 using Newtonsoft.Json;
 
-namespace ChocolateyGui.Subprocess
+namespace ChocolateyGui.Subprocess.Models
 {
     public struct PackageSearchOptions
     {

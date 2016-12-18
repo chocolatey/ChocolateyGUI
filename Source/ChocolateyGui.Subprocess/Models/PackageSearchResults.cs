@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
+using ChocolateyGui.Models;
 
-namespace ChocolateyGui.Subprocess
+namespace ChocolateyGui.Subprocess.Models
 {
-    using ChocolateyGui.Models;
-
     public class PackageSearchResults
     {
         public IEnumerable<Package> Packages { get; set; }

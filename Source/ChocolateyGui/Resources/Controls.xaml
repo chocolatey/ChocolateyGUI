@@ -10,11 +10,13 @@
                     xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
                     xmlns:providers="clr-namespace:ChocolateyGui.Providers"
                     mc:Ignorable="d">
-    
+
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ControlStyles/Typography.xaml" />
         <ResourceDictionary Source="ControlStyles/Flyout.xaml" />
         <ResourceDictionary Source="ControlStyles/Dialog.xaml" />
         <ResourceDictionary Source="ControlStyles/SourceList.xaml" />
+        <ResourceDictionary Source="ControlStyles/ToggleSwitch.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <converters:BooleanToVisibility x:Key="BooleanToVisibility" />
@@ -32,19 +34,21 @@
     <Image x:Key="UacIcon" x:Shared="False"
           Style="{StaticResource UacIconStyle}"
           Width="16" Height="16"/>
+
+    <system:Double x:Key="ToggleSwitchFontSize">15</system:Double>
     
-    <Style x:Key="BaseTextBlockStyle" TargetType="{x:Type TextBlock}">
+    <Style x:Key="SourceBaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular" />
         <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style x:Key="SouceItemTextBlockStyle" TargetType="{x:Type TextBlock}"
-           BasedOn="{StaticResource BaseTextBlockStyle}">
+           BasedOn="{StaticResource SourceBaseTextBlockStyle}">
         <Setter Property="FontSize" Value="16" />
     </Style>
 
     <Style x:Key="VersionNumberTextBlockStyle" TargetType="{x:Type TextBlock}"
-           BasedOn="{StaticResource BaseTextBlockStyle}">
+           BasedOn="{StaticResource SourceBaseTextBlockStyle}">
         <Setter Property="FontSize" Value="16" />
         <Setter Property="Foreground" Value="Black" />
     </Style>

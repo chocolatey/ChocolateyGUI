@@ -5,8 +5,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
+using Caliburn.Micro;
 using CefSharp;
+using CefSharp.Wpf;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Utilities.Extensions;
 using Markdig;
@@ -23,14 +27,17 @@ namespace ChocolateyGui.Controls
             InitializeComponent();
 
             // Setup Browser
-            Browser.RequestHandler = new ChocoRequestHandler();
-            Browser.IsBrowserInitializedChanged += FirstStart;
+            if (DesignMode.IsInDesignModeStatic)
+            {
+                SetBrowser();
+            }
 
             // Bind Properties
             this.ToObservable(MarkdownStringProperty, () => MarkdownString)
                 .Subscribe(LoadMarkdown);
 
             Unloaded += MarkdownViewer_Unloaded;
+            Loaded += OnLoaded;
         }
 
         public static readonly DependencyProperty MarkdownStringProperty = DependencyProperty.Register(
@@ -42,6 +49,23 @@ namespace ChocolateyGui.Controls
             set { SetValue(MarkdownStringProperty, value); }
         }
 
+        public static readonly DependencyProperty MarkdownSourceProperty = DependencyProperty.Register("MarkdownSource", typeof(Uri), typeof(MarkdownViewer), new PropertyMetadata(default(Uri)));
+
+        public Uri MarkdownSource
+        {
+            get
+            {
+                return (Uri)GetValue(MarkdownSourceProperty);
+            }
+
+            set
+            {
+                SetValue(MarkdownSourceProperty, value);
+            }
+        }
+
+        private ChromiumWebBrowser _browser;
+
         public void FirstStart(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
@@ -50,14 +74,38 @@ namespace ChocolateyGui.Controls
             }
         }
 
+        private void SetBrowser()
+        {
+            _browser = new ChromiumWebBrowser { RequestHandler = new ChocoRequestHandler() };
+            _browser.IsBrowserInitializedChanged += FirstStart;
+            PART_BrowserHost.Content = _browser;
+        }
+
         private void InitializedBrowser()
         {
-            LoadMarkdown(MarkdownString);
+            if (MarkdownSource != null)
+            {
+                var resourceInfo = Application.GetResourceStream(MarkdownSource);
+                if (resourceInfo == null)
+                {
+                    throw new InvalidOperationException($"Failed to find markdown resource \"{MarkdownSource}\".");
+                }
+
+                using (var stream = resourceInfo.Stream)
+                using (var reader = new StreamReader(stream))
+                {
+                    LoadMarkdown(reader.ReadToEnd());
+                }
+            }
+            else
+            {
+                LoadMarkdown(MarkdownString);
+            }
         }
 
         private void LoadMarkdown(string markdown)
         {
-            if (!Browser.IsInitialized)
+            if (_browser == null || !_browser.IsInitialized)
             {
                 return;
             }
@@ -65,7 +113,7 @@ namespace ChocolateyGui.Controls
             var newHtml = Markdown.ToHtml(markdown ?? string.Empty);
             var displayHtml = HtmlTemplate.Replace("{{content}}", newHtml);
             var url = $"http://rawhtml/{newHtml.GetHashCode()}";
-            Browser.LoadHtml(displayHtml, url);
+            _browser.LoadHtml(displayHtml, url);
         }
 
         internal const string HtmlTemplate = @"
@@ -95,9 +143,20 @@ namespace ChocolateyGui.Controls
 
         private void MarkdownViewer_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (!Browser.IsDisposed)
+            if (!_browser.IsDisposed)
             {
-                Browser.Dispose();
+                // Off load dispose, as it's an expensive blocking call.
+                var browser = _browser;
+                Execute.BeginOnUIThread(() => browser.Dispose());
+                _browser = null;
+            }
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (_browser == null)
+            {
+                SetBrowser();
             }
         }
     }

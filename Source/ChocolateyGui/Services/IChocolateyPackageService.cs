@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChocolateyGui.Subprocess;
+using ChocolateyGui.Subprocess.Models;
 using ChocolateyGui.ViewModels.Items;
 using NuGet;
 using PackageSearchResults = ChocolateyGui.Models.PackageSearchResults;
@@ -34,6 +34,14 @@ namespace ChocolateyGui.Services
 
         Task UnpinPackage(string id, SemanticVersion version);
 
+        Task<IReadOnlyList<ChocolateyFeature>> GetFeatures();
+
+        Task SetFeature(ChocolateyFeature feature);
+
         ValueTask<bool> RequiresElevation();
+
+        Task<IReadOnlyList<ChocolateySetting>> GetSettings();
+
+        Task SetSetting(ChocolateySetting setting);
     }
 }

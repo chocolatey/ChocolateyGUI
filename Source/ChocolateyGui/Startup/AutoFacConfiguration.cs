@@ -7,7 +7,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Autofac;
 
-namespace ChocolateyGui.IoC
+namespace ChocolateyGui.Startup
 {
     public static class AutoFacConfiguration
     {

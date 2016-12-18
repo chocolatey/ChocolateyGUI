@@ -8,6 +8,7 @@
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                          mc:Ignorable="d"
                          x:Class="ChocolateyGui.Controls.Dialogs.ChocolateyDialog"
+                         x:Name="PART_Dialog"
                          Background="{StaticResource BackgroundColorBrush}" d:DesignWidth="1300">
     <MahDialogs:BaseMetroDialog.Content>
         <Grid>
@@ -15,7 +16,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Expander Grid.Row="0" Margin="0 10 0 0" Header="Console Output">
+            <Expander Grid.Row="0" Margin="0 10 0 0" Header="Console Output" IsExpanded="{Binding Path=ShowOutputConsole, ElementName=PART_Dialog}">
                 <Controls:FauxPowerShellConsole x:Name="PART_Console"
                                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                 BorderBrush="#FFEBEBEB" Background="#FF012456"

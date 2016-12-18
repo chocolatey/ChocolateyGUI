@@ -14,11 +14,16 @@ using ChocolateyGui.ViewModels.Items;
 
 namespace ChocolateyGui.ViewModels
 {
-    public class ShellViewModel : Conductor<object>.Collection.OneActive, IHandle<ShowPackageDetailsMessage>, IHandle<ShowSourcesMessage>
+    public class ShellViewModel : Conductor<object>.Collection.OneActive, 
+        IHandle<ShowPackageDetailsMessage>, 
+        IHandle<ShowSourcesMessage>,
+        IHandle<ShowSettingsMessage>,
+        IHandle<SettingsGoBackMessage>
     {
         private readonly IVersionNumberProvider _versionNumberProvider;
         private readonly IEventAggregator _eventAggregator;
         private readonly SourcesViewModel _sourcesViewModel;
+        private object _lastActiveItem;
 
         public ShellViewModel(ISourceService sourceService,
             IVersionNumberProvider versionNumberProvider,
@@ -43,13 +48,53 @@ namespace ChocolateyGui.ViewModels
             {
                 throw new ArgumentNullException(nameof(message));
             }
-            
-            ActiveItem = new PackageViewModel(_eventAggregator) { Package = message.Package };
+
+            var packageVm = IoC.Get<PackageViewModel>();
+            packageVm.Package = message.Package;
+            SetActiveItem(packageVm);
         }
 
         public void Handle(ShowSourcesMessage message)
         {
-            ActiveItem = _sourcesViewModel;
+            SetActiveItem(_sourcesViewModel);
+        }
+
+        public void Handle(ShowSettingsMessage message)
+        {
+            ShowSettings();
+        }
+
+        public void Handle(SettingsGoBackMessage message)
+        {
+            SetActiveItem(_lastActiveItem);
+        }
+
+        public void ShowSettings()
+        {
+            SetActiveItem(IoC.Get<SettingsViewModel>());
+        }
+
+        protected override void OnInitialize()
+        {
+            _eventAggregator.Subscribe(this);
+        }
+
+        private void SetActiveItem<T>(T newItem)
+        {
+            if (_lastActiveItem != null && _lastActiveItem.Equals(newItem))
+            {
+                _lastActiveItem = null;
+            }
+            else
+            {
+                _lastActiveItem = ActiveItem;
+            }
+
+            ActivateItem(newItem);
+            if (_lastActiveItem is PackageViewModel)
+            {
+                this.CloseItem(_lastActiveItem);
+            }
         }
 
         public string AboutInformation
@@ -66,10 +111,5 @@ namespace ChocolateyGui.ViewModels
         public BindableCollection<SourceViewModel> Sources { get; set; }
 
         public SourcesViewModel SourcesSelectorViewModel => _sourcesViewModel;
-
-        protected override void OnInitialize()
-        {
-            _eventAggregator.Subscribe(this);
-        }
     }
 }

@@ -122,6 +122,18 @@
       <HintPath>..\packages\Newtonsoft.Msgpack.0.1.10\lib\net45\Newtonsoft.Msgpack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Concurrent, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.Concurrent.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Enlightenment, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.Enlightenment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.3.0\lib\net45\Serilog.dll</HintPath>
       <Private>True</Private>
@@ -268,7 +280,11 @@
     <Compile Include="Controls\MarkdownViewer.xaml.cs">
       <DependentUpon>MarkdownViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IoC\ChocolateyGuiModule.cs" />
+    <Compile Include="DesignMode.cs" />
+    <Compile Include="Models\AppConfiguration.cs" />
+    <Compile Include="Services\ConfigService.cs" />
+    <Compile Include="Services\IConfigService.cs" />
+    <Compile Include="Startup\ChocolateyGuiModule.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />
     <Compile Include="Commands\DataContextCommandAdapter.cs" />
@@ -283,10 +299,12 @@
     <Compile Include="Controls\ObservableRingBufferCollection.cs" />
     <Compile Include="Enums\PackagesChangedEventType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IoC\AutoFacConfiguration.cs" />
+    <Compile Include="Startup\AutoFacConfiguration.cs" />
     <Compile Include="Models\Messages\PackageChangedMessage.cs" />
     <Compile Include="Models\Messages\PackageHasUpdateMessage.cs" />
     <Compile Include="Models\Messages\ResetScrollPositionMessage.cs" />
+    <Compile Include="Models\Messages\SettingsGoBackMessage.cs" />
+    <Compile Include="Models\Messages\ShowSettingsMessage.cs" />
     <Compile Include="Models\Messages\ShowSourcesMessage.cs" />
     <Compile Include="Models\Messages\ShowPackageDetailsMessage.cs" />
     <Compile Include="Models\Messages\SortColumnMessage.cs" />
@@ -310,7 +328,6 @@
     <Compile Include="Providers\VersionNumberProvider.cs" />
     <Compile Include="Services\ChocolateyRemotePackageService.cs" />
     <Compile Include="Services\ChocolateySourcesService.cs" />
-    <Compile Include="Services\ChocolateyPackageService.cs" />
     <Compile Include="Services\IChocolateyPackageService.cs" />
     <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\IProgressService.cs" />
@@ -366,6 +383,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\ControlStyles\ToggleSwitch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ControlStyles\Typography.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -394,6 +419,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SourcesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -409,6 +438,7 @@
     <Compile Include="Base\ObservableBase.cs" />
     <Compile Include="ViewModels\Items\IPackageViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SourcesViewModel.cs" />
     <Compile Include="ViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\RemoteSourceViewModel.cs" />
@@ -423,6 +453,9 @@
     </Compile>
     <Compile Include="Views\LocalSourceView.xaml.cs">
       <DependentUpon>LocalSourceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SourcesView.xaml.cs">
       <DependentUpon>SourcesView.xaml</DependentUpon>
@@ -450,15 +483,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\..\ABOUT.md">
+    <Resource Include="..\..\ABOUT.md">
       <Link>Resources\ABOUT.md</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\CHANGELOG.md">
+    </Resource>
+    <Resource Include="..\..\CHANGELOG.md">
       <Link>Resources\CHANGELOG.md</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\docs\legal\CREDITS.md">
+    </Resource>
+    <Resource Include="..\..\docs\legal\CREDITS.md">
       <Link>Resources\CREDITS.md</Link>
-    </EmbeddedResource>
+    </Resource>
     <None Include="app.config" />
     <None Include="app.manifest">
       <SubType>Designer</SubType>

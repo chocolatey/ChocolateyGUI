@@ -26,10 +26,14 @@ namespace ChocolateyGui.Views
     public partial class ShellView
     {
         private readonly IChocolateyConfigurationProvider _chocolateyConfigurationProvider;
+
+        private readonly IConfigService _configService;
+
         private readonly IProgressService _progressService;
 
         public ShellView(IProgressService progressService,
-            IChocolateyConfigurationProvider chocolateyConfigurationProvider)
+            IChocolateyConfigurationProvider chocolateyConfigurationProvider,
+            IConfigService configService)
         {
             InitializeComponent();
 
@@ -41,6 +45,7 @@ namespace ChocolateyGui.Views
 
             _progressService = progressService;
             _chocolateyConfigurationProvider = chocolateyConfigurationProvider;
+            _configService = configService;
 
             CheckOperatingSystemCompatibility();
 
@@ -48,8 +53,6 @@ namespace ChocolateyGui.Views
             settings.RegisterScheme(new CefCustomScheme { SchemeName = ChocolateyCustomSchemeProvider.SchemeName, SchemeHandlerFactory = new ChocolateyCustomSchemeProvider() });
             settings.CefCommandLineArgs.Add("no-proxy-server", "1");
             settings.CachePath = Path.Combine(Bootstrapper.LocalAppDataPath, "CefCache");
-            settings.PackLoadingDisabled = true;
-            settings.SetOffScreenRenderingBestPerformanceArgs();
             if (!Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null))
             {
                 return;
@@ -81,7 +84,7 @@ namespace ChocolateyGui.Views
             return Dispatcher.Invoke(async () =>
             {
                 // create the dialog control
-                var dialog = new ChocolateyDialog(this)
+                var dialog = new ChocolateyDialog(this, _configService.GetSettings().ShowConsoleOutput)
                 {
                     Title = title,
                     IsCancelable = isCancelable,

@@ -20,7 +20,7 @@ using LiteDB;
 using NuGet;
 using PackageViewModel = ChocolateyGui.ViewModels.Items.PackageViewModel;
 
-namespace ChocolateyGui.IoC
+namespace ChocolateyGui.Startup
 {
     internal class ChocolateyGuiModule : Module
     {
@@ -62,6 +62,7 @@ namespace ChocolateyGui.IoC
             builder.RegisterType<ChocolateySourcesService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
+            builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
 
             // Register Mapper
             var mapperConfiguration = new MapperConfiguration(config =>

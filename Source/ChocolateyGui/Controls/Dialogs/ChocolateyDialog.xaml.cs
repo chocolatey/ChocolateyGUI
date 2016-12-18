@@ -43,8 +43,10 @@ namespace ChocolateyGui.Controls.Dialogs
             DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ChocolateyDialog),
                 new PropertyMetadata(Brushes.White));
 
-        internal ChocolateyDialog(MetroWindow parentWindow)
+        internal ChocolateyDialog(MetroWindow parentWindow, bool showConsoleOutput)
         {
+            ShowOutputConsole = showConsoleOutput;
+
             InitializeComponent();
 
             if (parentWindow.MetroDialogOptions.ColorScheme == MetroDialogColorScheme.Theme)
@@ -68,6 +70,8 @@ namespace ChocolateyGui.Controls.Dialogs
             get { return (string)GetValue(NegativeButtonTextProperty); }
             set { SetValue(NegativeButtonTextProperty, value); }
         }
+
+        public bool ShowOutputConsole { get; set; }
 
         public ObservableRingBufferCollection<PowerShellOutputLine> OutputBufferCollection
         {

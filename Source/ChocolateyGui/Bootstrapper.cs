@@ -14,7 +14,7 @@ using Autofac;
 using Caliburn.Micro;
 using CefSharp;
 using chocolatey;
-using ChocolateyGui.IoC;
+using ChocolateyGui.Startup;
 using ChocolateyGui.ViewModels;
 using Serilog;
 using Serilog.Events;

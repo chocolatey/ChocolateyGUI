@@ -8,12 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChocolateyGui.Models;
+using ChocolateyGui.Subprocess.Models;
 using WampSharp.V2.Rpc;
 
 namespace ChocolateyGui.Interface
 {
-    using ChocolateyGui.Subprocess;
-
     public interface IChocolateyService
     {
         [WampProcedure("com.chocolatey.iselevated")]
@@ -46,6 +45,18 @@ namespace ChocolateyGui.Interface
 
         [WampProcedure("com.chocolatey.unpin")]
         Task<PackageOperationResult> UnpinPackage(string id, string version);
+
+        [WampProcedure("com.chocolatey.features")]
+        Task<IReadOnlyList<ChocolateyFeature>> GetFeatures();
+
+        [WampProcedure("com.chocolatey.setfeatures")]
+        Task SetFeature(ChocolateyFeature feature);
+
+        [WampProcedure("com.chocolatey.settings")]
+        Task<IReadOnlyList<ChocolateySetting>> GetSettings();
+
+        [WampProcedure("com.chocolatey.setsettings")]
+        Task SetSetting(ChocolateySetting setting);
 
         [WampProcedure("com.chocolatey.kill")]
         void Exit();

@@ -9,7 +9,8 @@
              x:Name="PART_PARENT"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Background="White">
-        <cef:ChromiumWebBrowser
-            x:Name="Browser"/>
+        <ContentControl x:Name="PART_BrowserHost"/>
+        <!--<cef:ChromiumWebBrowser
+            x:Name="Browser"/>-->
     </Grid>
 </UserControl>

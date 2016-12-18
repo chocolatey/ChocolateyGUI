@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -14,15 +15,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using Autofac;
 using Caliburn.Micro;
 using CefSharp;
 using CefSharp.Internals;
 using CefSharp.OffScreen;
 using ChocolateyGui.Providers.PlatformProvider;
-using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using LiteDB;
+using Nito.AsyncEx;
 using Serilog;
 using Splat;
 using ILogger = Serilog.ILogger;
@@ -40,8 +40,8 @@ namespace ChocolateyGui.Controls
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly ChromiumWebBrowser RenderBrowser;
         private static readonly Lazy<BitmapSource> ErrorIcon = new Lazy<BitmapSource>(GetErrorImage);
-        private static readonly LiteDatabase Data = Bootstrapper.Container.Resolve<LiteDatabase>();
-        private static readonly AsyncLock AsyncLock = new AsyncLock();
+        private static readonly LiteDatabase Data = Caliburn.Micro.IoC.Get<LiteDatabase>();
+        private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
 
         static InternetImage()
         {
@@ -145,9 +145,62 @@ namespace ChocolateyGui.Controls
         private async Task<IBitmap> LoadSvg(string url, float? desiredWidth, float? desiredHeight,
             DateTime absoluteExpiration)
         {
-            var id = $"imagecache/{url.GetHashCode()}";
-            using (var imageStream = new MemoryStream())
-            { 
+            using (var upgradeToken = await Lock.UpgradeableReaderLockAsync())
+            {
+                var id = $"imagecache/{url.GetHashCode()}";
+                using (var imageStream = new MemoryStream())
+                {
+                    var fileStorage = Data.FileStorage;
+                    if (fileStorage.Exists(id))
+                    {
+                        var info = fileStorage.FindById(id);
+                        var expires = info.Metadata["Expires"].AsDateTime;
+                        if (expires > DateTime.UtcNow)
+                        {
+                            info.CopyTo(imageStream);
+                            return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
+                        }
+
+                        fileStorage.Delete(id);
+                    }
+
+                    using (await upgradeToken.UpgradeAsync())
+                    {
+                        // If we couldn't find the image or it expired
+                        var html = $@"<style>
+                            img {{ width: 100%; height: auto; }}
+                            body {{ margin: 0 }}
+                            </style>
+                            <img src=""{url}"">";
+                        html = MarkdownViewer.HtmlTemplate.Replace("{{content}}", html);
+                        await LoadHtmlAsync(RenderBrowser, html, "http://rawhtml/svg");
+
+                        using (var result = await RenderBrowser.ScreenshotAsync(true))
+                        {
+                            result.Save(imageStream, ImageFormat.Png);
+                            imageStream.Position = 0;
+                        }
+
+                        imageStream.Position = 0;
+                        var fileInfo = fileStorage.Upload(id, imageStream);
+                        fileStorage.SetMetadata(
+                            fileInfo.Id,
+                            new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
+
+                        imageStream.Position = 0;
+                        return await BitmapLoader.Current.Load(imageStream, null, null);
+                    }
+                }
+            }
+        }
+
+        private async Task<Stream> DownloadUrl(string url, DateTime absoluteExpiration)
+        {
+            using (var upgradeToken = await Lock.UpgradeableReaderLockAsync())
+            {
+                var id = $"imagecache/{url.GetHashCode()}";
+                var imageStream = new MemoryStream();
+
                 var fileStorage = Data.FileStorage;
                 if (fileStorage.Exists(id))
                 {
@@ -156,81 +209,32 @@ namespace ChocolateyGui.Controls
                     if (expires > DateTime.UtcNow)
                     {
                         info.CopyTo(imageStream);
-                        return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
+                        return imageStream;
                     }
 
                     fileStorage.Delete(id);
                 }
 
-                // If we couldn't find the image or it expired
-                var html = $@"<style>
-                            img {{ width: 100%; height: auto; }}
-                            body {{ margin: 0 }}
-                            </style>
-                            <img src=""{url}"">";
-                html = MarkdownViewer.HtmlTemplate.Replace("{{content}}", html);
-                await LoadHtmlAsync(RenderBrowser, html, "http://rawhtml/svg");
-
-                using (var result = await RenderBrowser.ScreenshotAsync(true))
+                using (await upgradeToken.UpgradeAsync())
                 {
-                        result.Save(imageStream, ImageFormat.Png);
-                        imageStream.Position = 0;
-                }
-
-                var fileInfo = new LiteFileInfo(id)
-                {
-                    Metadata =
+                    // If we couldn't find the image or it expired
+                    using (var client = new HttpClient())
                     {
-                        ["Expires"] = absoluteExpiration
+                        var response = await client.GetAsync(url);
+                        response.EnsureSuccessStatusCode();
+                        await response.Content.CopyToAsync(imageStream);
                     }
-                };
-                imageStream.Position = 0;
-                fileStorage.Upload(fileInfo, imageStream);
 
-                imageStream.Position = 0;
-                return await BitmapLoader.Current.Load(imageStream, null, null);
-            }
-        }
+                    imageStream.Position = 0;
+                    var fileInfo = fileStorage.Upload(id, imageStream);
+                    fileStorage.SetMetadata(
+                        fileInfo.Id,
+                        new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
 
-        private async Task<Stream> DownloadUrl(string url, DateTime absoluteExpiration)
-        {
-            var id = $"imagecache/{url.GetHashCode()}";
-            var imageStream = new MemoryStream();
-
-            var fileStorage = Data.FileStorage;
-            if (fileStorage.Exists(id))
-            {
-                var info = fileStorage.FindById(id);
-                var expires = info.Metadata["Expires"].AsDateTime;
-                if (expires > DateTime.UtcNow)
-                {
-                    info.CopyTo(imageStream);
+                    imageStream.Position = 0;
                     return imageStream;
                 }
-
-                fileStorage.Delete(id);
             }
-
-            // If we couldn't find the image or it expired
-            using (var client = new HttpClient())
-            {
-                var response = await client.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-                await response.Content.CopyToAsync(imageStream);
-            }
-
-            var fileInfo = new LiteFileInfo(id)
-            {
-                Metadata =
-                {
-                    ["Expires"] = absoluteExpiration
-                }
-            };
-            imageStream.Position = 0;
-            fileStorage.Upload(fileInfo, imageStream);
-
-            imageStream.Position = 0;
-            return imageStream;
         }
 
         private static Task LoadHtmlAsync(IWebBrowser browser, string html, string address)

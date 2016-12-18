@@ -8,7 +8,7 @@
   <?define Manufacturer="Chocolatey"?>
   <?define ChocolateyGui_TargetDir=$(var.ChocolateyGui.TargetDir)?>
 
-  <Product Id="*" Name="$(var.ProductName) $(var.Version)" Language="$(var.Language)" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5b146155">
+  <Product Id="*" Name="$(var.ProductName)" Language="$(var.Language)" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5b146155">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
 
     <PropertyRef Id="WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED" />
@@ -21,7 +21,12 @@
       <![CDATA[Installed OR (VersionNT >= 601)]]>
     </Condition>
 
+    <Condition Message="Chocolatey must already be installed.">
+      <![CDATA[NOT %ChocolateyInstall]]>
+    </Condition>
+
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
     <?if $(var.ChocolateyGui.Configuration) = "Debug"?>
     <MediaTemplate EmbedCab="yes" CompressionLevel="none" />
     <?else?>
@@ -47,7 +52,14 @@
         <Directory Id="INSTALLFOLDER" Name="ChocolateyGUI" />
       </Directory>
       <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="ChocolateyGUI" />
+        <Component Id="ApplicationShortcut" Guid="A508A8D8-4F82-4AA9-AB70-E1022B9A9EAC">
+          <Shortcut Id="ApplicationStartMenuShortcut" Advertise="no"
+                    Name="ChocolateyGUI" 
+                    Description="GUI for Chocolatey" 
+                    Target="[INSTALLFOLDER]ChocolateyGui.exe" 
+                    WorkingDirectory="INSTALLFOLDER" 
+                    Icon="icon.ico" />
+        </Component>
       </Directory>
       <Directory Id="CommonAppDataFolder">
         <Directory Id="CommonAppStuff" Name="ChocolateyGUI">
@@ -68,17 +80,6 @@
       </Directory>
       <Merge Id="VCRedist" SourceFile="Microsoft_VC120_CRT_x86.msm" DiskId="1" Language="0" />
     </Directory>
-  </Fragment>
-
-  <Fragment>
-    <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="{4747347F-5DBC-44C6-A56A-AA9473606DEC}">
-        <Shortcut Id="ApplicationStartMenuShortcut" Name="ChocolateyGUI" Description="GUI for Chocolatey" Target="[INSTALLFOLDER]ChocolateyGui.exe" WorkingDirectory="INSTALLFOLDER" Icon="icon.ico" />
-        <Shortcut Id="Uninstall" Name="Uninstall ChocolateyGUI" Description="Uninstalls ChocolateyGUI" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]" />
-        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
-        <RegistryValue Root="HKCU" Key="Software\Microsoft\ChocolateyGUI" Name="installed" Type="integer" Value="1" KeyPath="yes" />
-      </Component>
-    </DirectoryRef>
   </Fragment>
 
   <Fragment>

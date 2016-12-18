@@ -29,13 +29,13 @@
     <OutputPath>..\..\BuildArtifacts\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
-    <SuppressIces>ICE38</SuppressIces>
+    <SuppressIces>ICE38;ICE43;ICE18</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>..\..\BuildArtifacts\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <SuppressPdbOutput>True</SuppressPdbOutput>
-    <SuppressIces>ICE38</SuppressIces>
+    <SuppressIces>ICE38;ICE43;ICE18</SuppressIces>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />

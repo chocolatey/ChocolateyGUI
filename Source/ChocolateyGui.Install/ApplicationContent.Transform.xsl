@@ -25,10 +25,6 @@
   <xsl:template match="wix:Component[key('vshost-search', @Id)]" />
   <xsl:template match="wix:ComponentRef[key('vshost-search', @Id)]" />
 
-  <xsl:key name="pak-search" match="wix:Component[contains(wix:File/@Source, '.pak') and not(contains(wix:File/@Source, 'locale'))]" use="@Id" />
-  <xsl:template match="wix:Component[key('pak-search', @Id)]" />
-  <xsl:template match="wix:ComponentRef[key('pak-search', @Id)]" />
-
   <xsl:key name="d3d-search" match="wix:Component[contains(wix:File/@Source, 'd3dcompiler_43.dll')]" use="@Id" />
   <xsl:template match="wix:Component[key('d3d-search', @Id)]" />
   <xsl:template match="wix:ComponentRef[key('d3d-search', @Id)]" />

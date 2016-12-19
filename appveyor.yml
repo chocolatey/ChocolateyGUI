@@ -47,7 +47,7 @@ test: off
 #---------------------------------#
 
 cache:
-  - Source\packages
+  - Source\packages -> Source\**\packages.config
 
 #---------------------------------#
 #  notifications configuration    #

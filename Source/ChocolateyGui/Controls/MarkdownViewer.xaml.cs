@@ -143,7 +143,7 @@ namespace ChocolateyGui.Controls
 
         private void MarkdownViewer_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (!_browser.IsDisposed)
+            if (_browser != null && !_browser.IsDisposed)
             {
                 // Off load dispose, as it's an expensive blocking call.
                 var browser = _browser;

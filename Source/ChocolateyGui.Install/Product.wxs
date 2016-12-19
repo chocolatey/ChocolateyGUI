@@ -11,7 +11,9 @@
   <Product Id="*" Name="$(var.ProductName)" Language="$(var.Language)" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5b146155">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
 
-    <PropertyRef Id="WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED" />
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED" />    
+    <SetProperty Id="CHOCOLATEY_INSTALL" Value="$(env.ChocolateyInstall)" Before="LaunchConditions" Sequence="first"  />
+
 
     <Condition Message="This application requires .NET Framework 4.5.2. Please install the .NET 4.5.2 Framework then run this installer again.">
       <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED]]>
@@ -22,7 +24,7 @@
     </Condition>
 
     <Condition Message="Chocolatey must already be installed.">
-      <![CDATA[NOT %ChocolateyInstall]]>
+      <![CDATA[CHOCOLATEY_INSTALL]]>
     </Condition>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />

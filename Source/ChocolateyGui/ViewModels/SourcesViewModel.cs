@@ -5,22 +5,35 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Caliburn.Micro;
+using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
-////using ChocolateyGui.ViewModels.Items;
+using ChocolateyGui.Subprocess.Models;
 
 namespace ChocolateyGui.ViewModels
 {
-    public sealed class SourcesViewModel : Conductor<ISourceViewModelBase>.Collection.OneActive
+    public sealed class SourcesViewModel : Conductor<ISourceViewModelBase>.Collection.OneActive, IHandleWithTask<SourcesUpdatedMessage>
     {
+        private readonly IChocolateyPackageService _packageService;
+        private readonly CreateRemove _remoteSourceVmFactory;
+
+        public delegate RemoteSourceViewModel CreateRemove(ChocolateySource source);
+
         private bool _firstLoad = true;
 
         public SourcesViewModel(ISourceService sourceService,
+            IChocolateyPackageService packageService,
+            IEventAggregator eventAggregator,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
-            Func<Uri, string, RemoteSourceViewModel> remoteSourceVmFactory)
+            CreateRemove remoteSourceVmFactory)
         {
+            _packageService = packageService;
+            _remoteSourceVmFactory = remoteSourceVmFactory;
             if (sourceService == null)
             {
                 throw new ArgumentNullException(nameof(sourceService));
@@ -38,10 +51,37 @@ namespace ChocolateyGui.ViewModels
 
             Items.Add(localSourceVmFactory("This PC"));
 
-            foreach (var source in sourceService.GetSources())
+#pragma warning disable 4014
+            LoadSources();
+#pragma warning restore 4014
+
+            eventAggregator.Subscribe(this);
+        }
+
+        public async Task LoadSources()
+        {
+            var oldItems = Items.Skip(1).Cast<RemoteSourceViewModel>().ToList();
+
+            var sources = await _packageService.GetSources();
+            var vms = new List<RemoteSourceViewModel>();
+            foreach (var source in sources.Where(s => !s.Disabled).OrderBy(s => s.Priority))
             {
-                Items.Add(remoteSourceVmFactory(new Uri(source.Url), source.Name));
+                vms.Add(_remoteSourceVmFactory(source));
             }
+
+            await Execute.OnUIThreadAsync(
+                () =>
+                    {
+                        ActivateItem(Items[0]);
+
+                        Items.RemoveRange(oldItems);
+                        Items.AddRange(vms);
+                    });
+        }
+
+        public async Task Handle(SourcesUpdatedMessage message)
+        {
+            await LoadSources();
         }
 
         protected override void OnViewReady(object view)
@@ -54,6 +94,19 @@ namespace ChocolateyGui.ViewModels
             {
                 ActivateItem(Items[0]);
                 _firstLoad = false;
+            }
+        }
+
+        private class SourcesComparer : IEqualityComparer<RemoteSourceViewModel>
+        {
+            public bool Equals(RemoteSourceViewModel x, RemoteSourceViewModel y)
+            {
+                return x.Source.Equals(y.Source);
+            }
+
+            public int GetHashCode(RemoteSourceViewModel obj)
+            {
+                return obj.Source.GetHashCode();
             }
         }
     }

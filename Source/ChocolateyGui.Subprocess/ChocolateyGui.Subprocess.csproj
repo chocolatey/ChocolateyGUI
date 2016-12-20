@@ -171,6 +171,7 @@
     <Compile Include="IChocolateyService.cs" />
     <Compile Include="Models\ChocolateySetting.cs" />
     <Compile Include="Models\ChocolateyFeature.cs" />
+    <Compile Include="Models\ChocolateySource.cs" />
     <Compile Include="Package.cs" />
     <Compile Include="Models\PackageOperationResult.cs" />
     <Compile Include="Models\PackageSearchOptions.cs" />

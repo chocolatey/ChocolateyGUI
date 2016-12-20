@@ -17,6 +17,7 @@ using ChocolateyGui.Subprocess.Models;
 using Nito.AsyncEx;
 using NuGet;
 using WampSharp.V2.Core.Contracts;
+using ChocolateySource = ChocolateyGui.Subprocess.Models.ChocolateySource;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Subprocess
@@ -156,9 +157,16 @@ namespace ChocolateyGui.Subprocess
                             config.Prerelease = options.IncludePrerelease;
                             config.ListCommand.Page = options.CurrentPage;
                             config.ListCommand.PageSize = options.PageSize;
-                            config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn)
-                                                                   || options.SortColumn == "DownloadCount";
+                            if (string.IsNullOrWhiteSpace(query) || !string.IsNullOrWhiteSpace(options.SortColumn))
+                            {
+                                config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn)
+                                                                       || options.SortColumn == "DownloadCount";
+                            }
                             config.ListCommand.Exact = options.MatchQuery;
+                            if (!string.IsNullOrWhiteSpace(options.Source))
+                            {
+                                config.Sources = options.Source;
+                            }
 #if !DEBUG
                         config.Verbose = false;
 #endif // DEBUG
@@ -423,6 +431,101 @@ namespace ChocolateyGui.Subprocess
                         });
 
                 await choco.RunAsync();
+            }
+        }
+
+        public async Task<IReadOnlyList<ChocolateySource>> GetSources()
+        {
+            using (await Lock.ReaderLockAsync())
+            {
+                var xmlService = Hacks.GetInstance<IXmlService>();
+                var config =
+                    await Task.Run(
+                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
+                return (config.Sources.Select(Mapper.Map<ChocolateySource>).ToList());
+            }
+        }
+
+        public async Task AddSource(ChocolateySource source)
+        {
+            using (await Lock.WriterLockAsync())
+            {
+                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
+                    config =>
+                    {
+                        config.CommandName = "source";
+                        config.SourceCommand.Command = SourceCommandType.add;
+                        config.SourceCommand.Name = source.Id;
+                        config.Sources = source.Value;
+                        config.SourceCommand.Username = source.UserName;
+                        config.SourceCommand.Password = source.Password;
+                        config.SourceCommand.Certificate = source.Certificate;
+                        config.SourceCommand.CertificatePassword = source.CertificatePassword;
+                        config.SourceCommand.Priority = source.Priority;
+                    });
+
+                await choco.RunAsync();
+
+                if (source.Disabled)
+                {
+                    choco.Set(
+                        config =>
+                            {
+                                config.CommandName = "source";
+                                config.SourceCommand.Command = SourceCommandType.disable;
+                                config.SourceCommand.Name = source.Id;
+                            });
+                    await choco.RunAsync();
+                }
+                else
+                {
+                    choco.Set(
+                       config =>
+                       {
+                           config.CommandName = "source";
+                           config.SourceCommand.Command = SourceCommandType.enable;
+                           config.SourceCommand.Name = source.Id;
+                       });
+                    await choco.RunAsync();
+                }
+            }
+        }
+
+        public async Task UpdateSource(string id, ChocolateySource source)
+        {
+            if (id != source.Id)
+            {
+                await RemoveSource(id);
+            }
+
+            await AddSource(source);
+        }
+
+        public async Task<bool> RemoveSource(string id)
+        {
+            using (await Lock.WriterLockAsync())
+            {
+                var xmlService = Hacks.GetInstance<IXmlService>();
+                var chocoCOnfig =
+                    await Task.Run(
+                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
+                var sources = (chocoCOnfig.Sources.Select(Mapper.Map<ChocolateySource>).ToList());
+
+                if (sources.All(source => source.Id != id))
+                {
+                    return false;
+                }
+
+                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
+                        config =>
+                        {
+                            config.CommandName = "source";
+                            config.SourceCommand.Command = SourceCommandType.remove;
+                            config.SourceCommand.Name = id;
+                        });
+
+                await choco.RunAsync();
+                return true;
             }
         }
 

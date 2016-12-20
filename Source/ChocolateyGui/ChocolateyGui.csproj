@@ -282,6 +282,7 @@
     </Compile>
     <Compile Include="DesignMode.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
+    <Compile Include="Models\Messages\SourcesUpdatedMessage.cs" />
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Startup\ChocolateyGuiModule.cs" />

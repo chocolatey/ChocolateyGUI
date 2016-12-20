@@ -188,6 +188,7 @@ namespace ChocolateyGui.Services
 
         public async Task<IReadOnlyList<ChocolateyFeature>> GetFeatures()
         {
+            await Initialize();
             return await _chocolateyService.GetFeatures();
         }
 
@@ -199,6 +200,7 @@ namespace ChocolateyGui.Services
 
         public async Task<IReadOnlyList<ChocolateySetting>> GetSettings()
         {
+            await Initialize();
             return await _chocolateyService.GetSettings();
         }
 
@@ -206,6 +208,30 @@ namespace ChocolateyGui.Services
         {
             await Initialize(true);
             await _chocolateyService.SetSetting(setting);
+        }
+
+        public async Task<IReadOnlyList<ChocolateySource>> GetSources()
+        {
+            await Initialize();
+            return await _chocolateyService.GetSources();
+        }
+
+        public async Task AddSource(ChocolateySource source)
+        {
+            await Initialize(true);
+            await _chocolateyService.AddSource(source);
+        }
+
+        public async Task UpdateSource(string id, ChocolateySource source)
+        {
+            await Initialize(true);
+            await _chocolateyService.UpdateSource(id, source);
+        }
+
+        public async Task<bool> RemoveSource(string id)
+        {
+            await Initialize(true);
+            return await _chocolateyService.RemoveSource(id);
         }
 
         public ValueTask<bool> RequiresElevation()

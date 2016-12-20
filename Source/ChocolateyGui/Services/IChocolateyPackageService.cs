@@ -43,5 +43,13 @@ namespace ChocolateyGui.Services
         Task<IReadOnlyList<ChocolateySetting>> GetSettings();
 
         Task SetSetting(ChocolateySetting setting);
+        
+        Task AddSource(ChocolateySource source);
+        
+        Task UpdateSource(string id, ChocolateySource source);
+        
+        Task<bool> RemoveSource(string id);
+
+        Task<IReadOnlyList<ChocolateySource>> GetSources();
     }
 }

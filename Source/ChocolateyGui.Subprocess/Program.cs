@@ -71,6 +71,7 @@ namespace ChocolateyGui.Subprocess
                 config.CreateMap<IPackage, Package>();
                 config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
                 config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();
+                config.CreateMap<ConfigFileSourceSetting, Models.ChocolateySource>();
             });
 
             if (args.Length != 1)

@@ -69,23 +69,140 @@
                                 </ItemsControl>
                             </ScrollViewer>
                         </DockPanel>
-                        <DockPanel Grid.Column="1" Grid.Row="1" Margin="5 0">
-                            <TextBlock DockPanel.Dock="Top" Style="{StaticResource TitleTextBlockStyle}">Settings</TextBlock>
-                            <DataGrid CanUserAddRows="False" CanUserDeleteRows="False" 
-                                      ItemsSource="{Binding Settings}" AutoGenerateColumns="False"
-                                      cal:Message.Attach="[Event RowEditEnding] = [Action RowEditEnding($eventArgs)]">
+                        <Grid Grid.Column="1" Grid.Row="1" Margin="5 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Style="{StaticResource TitleTextBlockStyle}">Settings</TextBlock>
+                            <DataGrid Grid.Row="1"
+                                    CanUserAddRows="False" CanUserDeleteRows="False" 
+                                          ItemsSource="{Binding Settings}" AutoGenerateColumns="False"
+                                          cal:Message.Attach="[Event RowEditEnding] = [Action RowEditEnding($eventArgs)]">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Name" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
                                     <DataGridTextColumn Header="Value" Width="2*" Binding="{Binding Value}"/>
                                     <DataGridTextColumn Header="Description" Width="2*" IsReadOnly="True" Binding="{Binding Description}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-                        </DockPanel>
+                        </Grid>
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="About">
+            <TabItem Header="Sources">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Sources -->
+                    <TextBlock Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}">Sources</TextBlock>
+                    <DataGrid  x:Name="SourcesGrid"
+                               Grid.Row="1" Grid.Column="0"
+                               CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
+                               cal:Message.Attach="[Event SelectionChanged] = [Action SourceSelectionChanged(SourcesGrid.SelectedItem)]"
+                               ItemsSource="{Binding Sources}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Path" Width="3*" Binding="{Binding Value}"/>
+                            <DataGridTextColumn Header="Username" Width="*" Binding="{Binding UserName}" />
+                            <DataGridTextColumn Header="Password" Width="*" Binding="{Binding Password}" />
+                            <DataGridTextColumn Header="Certificate" Width="*" Binding="{Binding Certificate}" />
+                            <DataGridTextColumn Header="Certificate Pass" Width="*" Binding="{Binding CertificatePassword}" />
+                            <metro:DataGridNumericUpDownColumn Header="Priority" Binding="{Binding Priority}"/>
+                            <DataGridCheckBoxColumn Header="Disabled" Width="Auto" Binding="{Binding Disabled}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DockPanel Grid.Row="2" Grid.Column="0" Margin="5">
+                        <Grid DockPanel.Dock="Top">
+                            <TextBlock Text="Source" Margin="15 5 0 0" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <Button x:Name="New" HorizontalAlignment="Right" VerticalAlignment="Center" Width="80" Padding="5">New</Button>
+                        </Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource BaseAltTextBlockStyle}">
+                                    <Setter Property="Padding" Value="0 0 5 0"/>
+                                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="Margin" Value="5"/>
+                                    <Setter Property="IsReadOnly" Value="{Binding SelectedSource, Converter={StaticResource BooleanInverter}}"/>
+                                </Style>
+                                <Style TargetType="CheckBox">
+                                    <Setter Property="Margin" Value="10 0 0 0 "/>
+                                    <Setter Property="IsEnabled" Value="{Binding SelectedSource}"/>
+                                </Style>
+                                <Style TargetType="metro:NumericUpDown">
+                                    <Setter Property="Margin" Value="5 "/>
+                                    <Setter Property="IsReadOnly" Value="{Binding SelectedSource, Converter={StaticResource BooleanInverter}}"/>
+                                </Style>
+                            </Grid.Resources>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0">Id</TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding SelectedSource.Id}"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0">Source</TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="1"
+                                 VerticalContentAlignment="Center"  Text="{Binding SelectedSource.Value}"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0">Username</TextBlock>
+                            <TextBox Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"  Text="{Binding SelectedSource.UserName}"/>
+
+                            <TextBlock Grid.Row="4" Grid.Column="0">Password</TextBlock>
+                            <TextBox Grid.Row="4" Grid.Column="1"
+                                 VerticalContentAlignment="Center"  Text="{Binding SelectedSource.Password}"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="2">Certificate</TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="3" VerticalContentAlignment="Center"  Text="{Binding SelectedSource.Certificate}"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="2">Certifice Pass</TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="3"
+                                 VerticalContentAlignment="Center"  Text="{Binding SelectedSource.CertificatePassword}"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="2">Is Disabled</TextBlock>
+                            <CheckBox Grid.Row="3" Grid.Column="3"
+                                 VerticalAlignment="Center" IsChecked="{Binding SelectedSource.Disabled}"/>
+
+                            <TextBlock Grid.Row="4" Grid.Column="2">Priority</TextBlock>
+                            <metro:NumericUpDown Grid.Row="4" Grid.Column="3" VerticalContentAlignment="Center" Value="{Binding SelectedSource.Priority}"/>
+
+                            <StackPanel Grid.Row="5" Grid.Column="3"  Orientation="Horizontal" Margin="15 0 0 0">
+                                <Button x:Name="Save"
+                                Padding="5 5" Margin="5 0" Width="80"
+                                HorizontalAlignment="Left" VerticalAlignment="Center">Save</Button>
+
+                                <Button x:Name="Remove"
+                                Padding="5 5" Width="80" Margin="5 0 "
+                                HorizontalAlignment="Left" VerticalAlignment="Center">Remove</Button>
+
+                                <Button x:Name="Cancel"
+                                Padding="5 5" Width="80" Margin="5 0 "
+                                HorizontalAlignment="Left" VerticalAlignment="Center">Cancel</Button>
+                            </StackPanel>
+                        </Grid>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="About">
+                <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>

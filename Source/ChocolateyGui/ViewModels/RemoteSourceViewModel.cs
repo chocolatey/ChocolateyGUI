@@ -29,7 +29,6 @@ namespace ChocolateyGui.ViewModels
         private readonly IChocolateyPackageService _chocolateyPackageService;
         private readonly IProgressService _progressService;
         private readonly IEventAggregator _eventAggregator;
-        private readonly Uri _source;
         private int _currentPage = 1;
         private bool _hasLoaded;
         private bool _includeAllVersions;
@@ -44,15 +43,15 @@ namespace ChocolateyGui.ViewModels
         public RemoteSourceViewModel(IChocolateyPackageService chocolateyPackageService,
             IProgressService progressService,
             IEventAggregator eventAggregator,
-            Uri source, string name)
+            ChocolateySource source)
         {
+            Source = source;
             _chocolateyPackageService = chocolateyPackageService;
             _progressService = progressService;
             _eventAggregator = eventAggregator;
-            _source = source;
 
             Packages = new ObservableCollection<IPackageViewModel>();
-            DisplayName = name;
+            DisplayName = source.Id;
 
             if (eventAggregator == null)
             {
@@ -61,6 +60,8 @@ namespace ChocolateyGui.ViewModels
 
             _eventAggregator.Subscribe(this);
         }
+
+        public ChocolateySource Source { get; }
 
         public ObservableCollection<IPackageViewModel> Packages
         {
@@ -228,8 +229,8 @@ namespace ChocolateyGui.ViewModels
                 Logger.Error(ex, "Failed to intialize remote source view model.");
                 MessageBox.Show(
                     string.Format(CultureInfo.InvariantCulture,
-                        "Unable to connect to feed with Url: {0}.  Please check that this feed is accessible, and try again.",
-                        _source),
+                        "Unable to connect to feed with Source: {0}.  Please check that this feed is accessible, and try again.",
+                        Source.Value),
                     "Feed Search Error",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error,
@@ -253,14 +254,13 @@ namespace ChocolateyGui.ViewModels
                         await
                             _chocolateyPackageService.Search(SearchQuery,
                                 new PackageSearchOptions(PageSize, CurrentPage - 1, sort, IncludePrerelease,
-                                    IncludeAllVersions, MatchWord));
+                                    IncludeAllVersions, MatchWord, Source.Value));
                     var installed = await _chocolateyPackageService.GetInstalledPackages();
 
                     PageCount = (int)(((double) result.TotalCount / (double) PageSize) + 0.5);
                     Packages.Clear();
                     result.Packages.ToList().ForEach(p =>
                     {
-                        p.Source = _source;
                         if (installed.Any(package => package.Id == p.Id))
                         {
                             p.IsInstalled = true;

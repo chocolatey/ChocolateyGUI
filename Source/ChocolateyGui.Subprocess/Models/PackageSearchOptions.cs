@@ -30,7 +30,7 @@ namespace ChocolateyGui.Subprocess.Models
 
         [JsonConstructor]
         public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool includePrerelease,
-            bool includeAllVersions, bool matchWord)
+            bool includeAllVersions, bool matchWord, string source)
             : this()
         {
             this.PageSize = pageSize;
@@ -39,6 +39,7 @@ namespace ChocolateyGui.Subprocess.Models
             this.IncludeAllVersions = includeAllVersions;
             this.IncludePrerelease = includePrerelease;
             this.MatchQuery = matchWord;
+            Source = source;
         }
 
         public int CurrentPage { get; }
@@ -48,6 +49,8 @@ namespace ChocolateyGui.Subprocess.Models
         public bool IncludePrerelease { get; }
 
         public bool MatchQuery { get; }
+
+        public string Source { get; }
 
         public int PageSize { get; }
 

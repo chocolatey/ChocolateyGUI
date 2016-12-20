@@ -17,6 +17,7 @@ using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
 using ChocolateyGui.Subprocess.Models;
+using ChocolateyGui.Utilities.Extensions;
 using NuGet;
 using Serilog;
 using WampSharp.V2.Core.Contracts;
@@ -34,15 +35,15 @@ namespace ChocolateyGui.ViewModels
         private readonly IEventAggregator _eventAggregator;
 
         private Subject<ChocolateyFeature> _changedFeature;
-        private IDisposable _featureSubscription;
         private Subject<ChocolateySetting> _changedSetting;
-        private IDisposable _settingSubscription;
         private IDisposable _configSubscription;
         private AppConfiguration _config;
 
         public ObservableCollection<ChocolateyFeature> Features { get; } = new ObservableCollection<ChocolateyFeature>();
 
         public ObservableCollection<ChocolateySetting> Settings { get; } = new ObservableCollection<ChocolateySetting>();
+
+        public ObservableCollection<ChocolateySource> Sources { get; } = new ObservableCollection<ChocolateySource>();
 
         public SettingsViewModel(IChocolateyPackageService packageService, 
             IProgressService progressService, 
@@ -78,6 +79,32 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
+        private ChocolateySource _selectedSource;
+
+        public ChocolateySource SelectedSource
+        {
+            get { return _selectedSource; }
+            set
+            {
+                this.SetPropertyValue(ref _selectedSource, value);
+                if (value != null && value.Id == null)
+                {
+                    _isNewItem = true;
+                }
+                else
+                {
+                    _isNewItem = false;
+                    _originalId = value?.Id;
+                }
+
+                NotifyOfPropertyChange(nameof(CanSave));
+                NotifyOfPropertyChange(nameof(CanRemove));
+            }
+        }
+
+        private string _originalId;
+        private bool _isNewItem;
+
         public void FeatureToggled(ChocolateyFeature feature)
         {
             _changedFeature.OnNext(feature);
@@ -87,6 +114,13 @@ namespace ChocolateyGui.ViewModels
         {
             await Task.Delay(100);
             _changedSetting.OnNext((ChocolateySetting)eventArgs.Row.Item);
+        }
+
+        public void SourceSelectionChanged(object source)
+        {
+            var sourceItem = (ChocolateySource)source;
+            SelectedSource = sourceItem;
+            return;
         }
 
         public void UpdateConfig()
@@ -124,6 +158,76 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
+        public void New()
+        {
+            SelectedSource = new ChocolateySource();
+        }
+
+        public bool CanSave => SelectedSource != null;
+
+        public async void Save()
+        {
+            if (string.IsNullOrWhiteSpace(SelectedSource.Id))
+            {
+                await _progressService.ShowMessageAsync("Saving Source", "Source must have an Id!");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(SelectedSource.Value))
+            {
+                await _progressService.ShowMessageAsync("Saving Source", "Source must have an value!");
+                return;
+            }
+
+            await _progressService.StartLoading("Saving source...");
+            try
+            {
+                if (_isNewItem)
+                {
+                    await _packageService.AddSource(SelectedSource);
+                    _isNewItem = false;
+                    Sources.Add(SelectedSource);
+                    NotifyOfPropertyChange(nameof(CanRemove));
+                }
+                else
+                {
+                    await _packageService.UpdateSource(_originalId, SelectedSource);
+                }
+
+                _originalId = SelectedSource?.Id;
+                await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
+            }
+            finally
+            {
+                await _progressService.StopLoading();
+            }
+        }
+
+        public bool CanRemove => SelectedSource != null && !_isNewItem;
+
+        public async void Remove()
+        {
+            await _progressService.StartLoading("Removing source...");
+            try
+            {
+                await _packageService.RemoveSource(_originalId);
+                Sources.Remove(SelectedSource);
+                SelectedSource = null;
+                await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
+            }
+            finally
+            {
+                await _progressService.StopLoading();
+            }
+        }
+
+        public bool CanCanel => SelectedSource != null;
+
+        public void Cancel()
+        {
+            SelectedSource = null;
+        }
+
         public void Back()
         {
             _eventAggregator.PublishOnUIThread(new SettingsGoBackMessage());
@@ -137,7 +241,7 @@ namespace ChocolateyGui.ViewModels
             Features.AddRange(features);
 
             _changedFeature = new Subject<ChocolateyFeature>();
-            _featureSubscription = _changedFeature
+            _changedFeature
                         .Select(f => Observable.FromAsync(() => UpdateFeature(f)))
                         .Concat()
                         .Subscribe();
@@ -146,10 +250,13 @@ namespace ChocolateyGui.ViewModels
             Settings.AddRange(settings);
 
             _changedSetting = new Subject<ChocolateySetting>();
-            _settingSubscription = _changedSetting
+            _changedSetting
                         .Select(s => Observable.FromAsync(() => UpdateSetting(s)))
                         .Concat()
                         .Subscribe();
+
+            var sources = await _packageService.GetSources();
+            Sources.AddRange(sources);
         }
 
         private static readonly HashSet<string> ConfigProperties = new HashSet<string>

@@ -15,7 +15,12 @@ namespace ChocolateyGui.Utilities.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null || (bool) value == false;
+            if (value == null)
+            {
+                return true;
+            }
+
+            return value as bool? == false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

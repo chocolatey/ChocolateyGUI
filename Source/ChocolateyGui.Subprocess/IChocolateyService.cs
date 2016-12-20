@@ -58,6 +58,18 @@ namespace ChocolateyGui.Interface
         [WampProcedure("com.chocolatey.setsettings")]
         Task SetSetting(ChocolateySetting setting);
 
+        [WampProcedure("com.chocolatey.sources")]
+        Task<IReadOnlyList<ChocolateySource>> GetSources();
+
+        [WampProcedure("com.chocolatey.addsource")]
+        Task AddSource(ChocolateySource source);
+
+        [WampProcedure("com.chocolatey.updatesource")]
+        Task UpdateSource(string id, ChocolateySource source);
+
+        [WampProcedure("com.chocolatey.removesource")]
+        Task<bool> RemoveSource(string id);
+
         [WampProcedure("com.chocolatey.kill")]
         void Exit();
     }

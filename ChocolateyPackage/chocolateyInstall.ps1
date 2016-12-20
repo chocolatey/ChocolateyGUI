@@ -4,9 +4,4 @@ $silentArgs = '/quiet'
 $scriptPath =  $(Split-Path $MyInvocation.MyCommand.Path)
 $fileFullPath = Join-Path $scriptPath 'ChocolateyGUI.msi'
 
-try { 
-  Install-ChocolateyInstallPackage $packageName $fileType $silentArgs $fileFullPath
-} catch {
-  Write-ChocolateyFailure $packageName $($_.Exception.Message)
-  throw 
-}
+Install-ChocolateyInstallPackage $packageName $fileType $silentArgs $fileFullPath

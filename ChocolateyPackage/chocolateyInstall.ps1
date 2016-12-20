@@ -7,4 +7,4 @@ $packageArgs = @{
   file = Join-Path $scriptPath 'ChocolateyGUI.msi'
 }
 
-Install-ChocolateyInstallPackage $packageArgs
+Install-ChocolateyInstallPackage @packageArgs

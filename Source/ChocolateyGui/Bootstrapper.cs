@@ -66,11 +66,6 @@ namespace ChocolateyGui
                     Environment.SpecialFolderOption.DoNotVerify),
                 ApplicationName);
 
-            if (!Directory.Exists(AppDataPath))
-            {
-                Directory.CreateDirectory(AppDataPath);
-            }
-
             Container = AutoFacConfiguration.RegisterAutoFac();
             var logPath = Path.Combine(AppDataPath, "Logs");
             if (!Directory.Exists(logPath))

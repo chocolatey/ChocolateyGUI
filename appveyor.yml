@@ -1,10 +1,14 @@
 #---------------------------------#
 #  Build Script                   #
 #---------------------------------#
+
 build_script:
   - ps: .\build.ps1 -Target AppVeyor
 
+#---------------------------------#
 # Tests
+#---------------------------------#
+
 test: off
 
 #---------------------------------#
@@ -21,25 +25,18 @@ branches:
 #---------------------------------#
 #  notifications configuration    #
 #---------------------------------#
+
 notifications:
   - provider: Webhook
     url: https://webhooks.gitter.im/e/4933c447ea42a0480587
     on_build_success: true
     on_build_failure: true
     on_build_status_changed: true
-   
-#---------------------------------#
-#       build configuration       #
-#---------------------------------#
-
-build_script:
-  - ps: .\BuildScripts\build.ps1
-  
-test: off
 
 #---------------------------------#
 #  Build Cache                    #
 #---------------------------------#
+
 cache:
 - Source\packages -> Source\**\packages.config
 - Tools -> build.ps1
@@ -47,6 +44,7 @@ cache:
 #---------------------------------#
 #  Skip builds for doc changes    #
 #---------------------------------#
+
 skip_commits:
   # Regex for matching commit message
   message: /\(doc\).*/

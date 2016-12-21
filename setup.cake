@@ -4,12 +4,15 @@ Environment.SetVariableNames();
 
 BuildParameters.SetParameters(context: Context, 
                             buildSystem: BuildSystem,
-                            sourceDirectoryPath: "./src",
+                            sourceDirectoryPath: "./Source",
                             title: "ChocolateyGUI",
                             repositoryOwner: "chocolatey",
                             repositoryName: "ChocolateyGUI",
                             appVeyorAccountName: "chocolatey");
 
-ToolSettings.SetToolSettings(Context);
+ToolSettings.SetToolSettings(context: Context,
+                            dupFinderExcludePattern: new string[] { 
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Extensions/LinqExtensions.cs" },
+                            buildPlatformTarget: PlatformTarget.x86);
 
 Build.Run();

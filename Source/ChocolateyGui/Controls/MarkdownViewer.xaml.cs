@@ -9,7 +9,6 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
-using Caliburn.Micro;
 using CefSharp;
 using CefSharp.Wpf;
 using ChocolateyGui.Providers;
@@ -172,7 +171,7 @@ namespace ChocolateyGui.Controls
         }
 
         private static readonly DispatcherTimer DispatcherTimer;
-        private static readonly ConcurrentBag<ChromiumWebBrowser> BrowserCleanupQueue = 
+        private static readonly ConcurrentBag<ChromiumWebBrowser> BrowserCleanupQueue =
             new ConcurrentBag<ChromiumWebBrowser>();
 
         static MarkdownViewer()

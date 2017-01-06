@@ -20,7 +20,7 @@ branches:
     - master
     - develop
     - /release/.*/
-    - /hotfix/.*/    
+    - /hotfix/.*/
 
 #---------------------------------#
 #  notifications configuration    #

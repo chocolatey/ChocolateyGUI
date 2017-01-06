@@ -6,7 +6,6 @@
 
 using System;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
 using ChocolateyGui.Utilities;

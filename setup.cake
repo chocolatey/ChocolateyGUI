@@ -8,7 +8,12 @@ BuildParameters.SetParameters(context: Context,
                             title: "ChocolateyGUI",
                             repositoryOwner: "chocolatey",
                             repositoryName: "ChocolateyGUI",
-                            appVeyorAccountName: "chocolatey");
+                            appVeyorAccountName: "chocolatey",
+                            shouldDownloadFullReleaseNotes: true,
+                            shouldDownloadMilestoneReleaseNotes: true,
+                            shouldPublishChocolatey: false,
+                            shouldPublishNuGet: false,
+                            shouldPublishGitHub: false);
 
 ToolSettings.SetToolSettings(context: Context,
                             dupFinderExcludePattern: new string[] { 

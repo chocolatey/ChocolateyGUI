@@ -31,6 +31,6 @@ All release notes for ChocolateyGUI can be found on the GitHub site - https://gi
   <files>
     <file src="chocolateyInstall.ps1" target="tools"/>
 	  <file src="chocolateyUninstall.ps1" target="tools"/>
-	  <file src="..\BuildArtifacts\ChocolateyGUI.msi" target="tools"/>
+	  <file src="..\..\BuildArtifacts\ChocolateyGUI.msi" target="tools"/>
   </files>  
 </package>

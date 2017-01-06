@@ -17,7 +17,10 @@ BuildParameters.SetParameters(context: Context,
 
 ToolSettings.SetToolSettings(context: Context,
                             dupFinderExcludePattern: new string[] { 
-                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Extensions/LinqExtensions.cs" },
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Extensions/LinqExtensions.cs",
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui.Subprocess/Hacks.cs",
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui.Subprocess/ChocolateyExtensions.cs",
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Hacks.cs" },
                             buildPlatformTarget: PlatformTarget.x86);
 
 Build.Run();

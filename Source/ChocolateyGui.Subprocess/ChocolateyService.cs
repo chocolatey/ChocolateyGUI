@@ -69,11 +69,9 @@ namespace ChocolateyGui.Subprocess
                             config.Prerelease = false;
                         });
 
-                var chocoConfig = choco.GetConfiguration();
-                var nugetLogger = new ChocolateyNugetLogger();
                 var packageManager = NugetCommon.GetPackageManager(
-                    chocoConfig,
-                    nugetLogger,
+                    choco.GetConfiguration(),
+                    new ChocolateyNugetLogger(),
                     installSuccessAction: null,
                     uninstallSuccessAction: null,
                     addUninstallHandler: false);
@@ -117,18 +115,8 @@ namespace ChocolateyGui.Subprocess
                             }
                         });
 
-                var errors = new List<string>();
-                Action<StreamingLogMessage> grabErrors = m =>
-                    {
-                        switch (m.LogLevel)
-                        {
-                            case StreamingLogLevel.Warn:
-                            case StreamingLogLevel.Error:
-                            case StreamingLogLevel.Fatal:
-                                errors.Add(m.Message);
-                                break;
-                        }
-                    };
+                Action<StreamingLogMessage> grabErrors;
+                var errors = GetErrors(out grabErrors);
 
                 using (_streamingLogger.Intercept(grabErrors))
                 {
@@ -143,6 +131,7 @@ namespace ChocolateyGui.Subprocess
                 }
             }
         }
+
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
         {
             using (await Lock.ReaderLockAsync())
@@ -242,37 +231,7 @@ namespace ChocolateyGui.Subprocess
                             }
                         });
 
-                var errors = new List<string>();
-                Action<StreamingLogMessage> grabErrors = m =>
-                    {
-                        switch (m.LogLevel)
-                        {
-                            case StreamingLogLevel.Warn:
-                            case StreamingLogLevel.Error:
-                            case StreamingLogLevel.Fatal:
-                                errors.Add(m.Message);
-                                break;
-                        }
-                    };
-
-                using (_streamingLogger.Intercept(grabErrors))
-                {
-                    try
-                    {
-                        await choco.RunAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        return new PackageOperationResult { Successful = false, Messages = errors, Exception = ex };
-                    }
-
-                    if (Environment.ExitCode != 0)
-                    {
-                        Environment.ExitCode = 0;
-                        return new PackageOperationResult { Successful = false, Messages = errors };
-                    }
-                    return PackageOperationResult.SuccessfulCached;
-                }
+                return await RunCommand(choco);
             }
         }
 
@@ -290,37 +249,7 @@ namespace ChocolateyGui.Subprocess
                         });
 
 
-                var errors = new List<string>();
-                Action<StreamingLogMessage> grabErrors = m =>
-                    {
-                        switch (m.LogLevel)
-                        {
-                            case StreamingLogLevel.Warn:
-                            case StreamingLogLevel.Error:
-                            case StreamingLogLevel.Fatal:
-                                errors.Add(m.Message);
-                                break;
-                        }
-                    };
-
-                using (_streamingLogger.Intercept(grabErrors))
-                {
-                    try
-                    {
-                        await choco.RunAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        return new PackageOperationResult { Successful = false, Messages = errors, Exception = ex };
-                    }
-
-                    if (Environment.ExitCode != 0)
-                    {
-                        Environment.ExitCode = 0;
-                        return new PackageOperationResult { Successful = false, Messages = errors };
-                    }
-                    return PackageOperationResult.SuccessfulCached;
-                }
+                return await RunCommand(choco);
             }
         }
 
@@ -544,6 +473,48 @@ namespace ChocolateyGui.Subprocess
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
             }
             return mappedPackage;
+        }
+
+        private async Task<PackageOperationResult> RunCommand(GetChocolatey choco)
+        {
+            Action<StreamingLogMessage> grabErrors;
+            var errors = GetErrors(out grabErrors);
+
+            using (_streamingLogger.Intercept(grabErrors))
+            {
+                try
+                {
+                    await choco.RunAsync();
+                }
+                catch (Exception ex)
+                {
+                    return new PackageOperationResult { Successful = false, Messages = errors, Exception = ex };
+                }
+
+                if (Environment.ExitCode != 0)
+                {
+                    Environment.ExitCode = 0;
+                    return new PackageOperationResult { Successful = false, Messages = errors };
+                }
+                return PackageOperationResult.SuccessfulCached;
+            }
+        }
+
+        private static List<string> GetErrors(out Action<StreamingLogMessage> grabErrors)
+        {
+            var errors = new List<string>();
+            grabErrors = m =>
+            {
+                switch (m.LogLevel)
+                {
+                    case StreamingLogLevel.Warn:
+                    case StreamingLogLevel.Error:
+                    case StreamingLogLevel.Fatal:
+                        errors.Add(m.Message);
+                        break;
+                }
+            };
+            return errors;
         }
     }
 }

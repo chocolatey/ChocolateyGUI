@@ -45,8 +45,8 @@ namespace ChocolateyGui.ViewModels
 
         public ObservableCollection<ChocolateySource> Sources { get; } = new ObservableCollection<ChocolateySource>();
 
-        public SettingsViewModel(IChocolateyPackageService packageService, 
-            IProgressService progressService, 
+        public SettingsViewModel(IChocolateyPackageService packageService,
+            IProgressService progressService,
             IConfigService configService,
             IEventAggregator eventAggregator)
         {
@@ -136,10 +136,7 @@ namespace ChocolateyGui.ViewModels
             }
             catch (WampException ex)
             {
-                Logger.Error(ex, "Failed to update features list!\nMessage: {Message}\nArguments: {Arguments}", ex.Message, ex.Arguments);
-                await _progressService.ShowMessageAsync(
-                    "Feature Updates Error",
-                    $"Failed to update features. Error:\n{string.Join("\v", ex.Arguments)}");
+                await LogError(ex);
             }
         }
 
@@ -151,10 +148,7 @@ namespace ChocolateyGui.ViewModels
             }
             catch (WampException ex)
             {
-                Logger.Error(ex, "Failed to update features list!\nMessage: {Message}\nArguments: {Arguments}", ex.Message, ex.Arguments);
-                await _progressService.ShowMessageAsync(
-                    "Feature Updates Error",
-                    $"Failed to update features. Error:\n{string.Join("\v", ex.Arguments)}");
+                await LogError(ex);
             }
         }
 
@@ -283,6 +277,14 @@ namespace ChocolateyGui.ViewModels
             _changedFeature.OnCompleted();
             _changedSetting.OnCompleted();
             _configSubscription.Dispose();
+        }
+
+        private async Task LogError(WampException ex)
+        {
+            Logger.Error(ex, "Failed to update features list!\nMessage: {Message}\nArguments: {Arguments}", ex.Message, ex.Arguments);
+            await _progressService.ShowMessageAsync(
+                "Feature Updates Error",
+                $"Failed to update features. Error:\n{string.Join("\v", ex.Arguments)}");
         }
     }
 }

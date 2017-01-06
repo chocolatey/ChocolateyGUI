@@ -331,11 +331,7 @@ namespace ChocolateyGui.Services
                     {
                         if (_chocolateyProcess.HasExited)
                         {
-                            Log.Logger.Fatal(
-                                "Failed to start Chocolatey subprocess. Exit Code {ExitCode}.",
-                                _chocolateyProcess.ExitCode);
-                            throw new ApplicationException($"Failed to start chocolatey subprocess.\n"
-                                                           + $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
+                            LogError();
                         }
 
                         if (!_chocolateyProcess.WaitForExit(TimeSpan.FromSeconds(3).Milliseconds)
@@ -352,22 +348,14 @@ namespace ChocolateyGui.Services
                         {
                             if (_chocolateyProcess.HasExited)
                             {
-                                Log.Logger.Fatal(
-                                    "Failed to start Chocolatey subprocess. Exit Code {ExitCode}.",
-                                    _chocolateyProcess.ExitCode);
-                                throw new ApplicationException($"Failed to start chocolatey subprocess.\n"
-                                                               + $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
+                                LogError();
                             }
                         }
                     }
 
                     if (_chocolateyProcess.WaitForExit(500))
                     {
-                        Log.Logger.Fatal(
-                            "Failed to start Chocolatey subprocess. Exit Code {ExitCode}.",
-                            _chocolateyProcess.ExitCode);
-                        throw new ApplicationException($"Failed to start chocolatey subprocess.\n"
-                                                       + $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
+                        LogError();
                     }
                 }
 
@@ -420,6 +408,16 @@ namespace ChocolateyGui.Services
                 // ReSharper disable once PossibleNullReferenceException
                 ((ElevationStatusProvider)Application.Current.FindResource("Elevation")).IsElevated = await _chocolateyService.IsElevated();
             }
+        }
+
+        private void LogError()
+        {
+            Log.Logger.Fatal(
+                "Failed to start Chocolatey subprocess. Exit Code {ExitCode}.",
+                _chocolateyProcess.ExitCode);
+            throw new ApplicationException($"Failed to start chocolatey subprocess.\n"
+                                           +
+                                           $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
         }
     }
 }

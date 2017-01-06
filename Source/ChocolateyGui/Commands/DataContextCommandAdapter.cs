@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
+using ChocolateyGui.Utilities;
 
 namespace ChocolateyGui.Commands
 {
@@ -95,7 +96,7 @@ namespace ChocolateyGui.Commands
 
         bool ICommand.CanExecute(object parameter)
         {
-            var target = GetDataContext(_target);
+            var target = DataContext.GetDataContext(_target);
             if (_target == null)
             {
                 return false;
@@ -109,7 +110,7 @@ namespace ChocolateyGui.Commands
 
         void ICommand.Execute(object parameter)
         {
-            var target = GetDataContext(_target);
+            var target = DataContext.GetDataContext(_target);
             if (_target == null)
             {
                 return;
@@ -148,18 +149,6 @@ namespace ChocolateyGui.Commands
                     : target.TargetObject;
 
             return this;
-        }
-
-        private static object GetDataContext(object element)
-        {
-            var fe = element as FrameworkElement;
-            if (fe != null)
-            {
-                return fe.DataContext;
-            }
-
-            var fce = element as FrameworkContentElement;
-            return fce == null ? null : fce.DataContext;
         }
 
         // This method only works with the C# 4.0 XamlParser.

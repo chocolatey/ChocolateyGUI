@@ -49,7 +49,7 @@ namespace ChocolateyGui.Controls
             {
                 WindowlessFrameRate = 1,
             };
-            
+
             RenderBrowser = new ChromiumWebBrowser(string.Empty, browserSettings)
             {
                 Size = GetBitmapSize()
@@ -107,7 +107,7 @@ namespace ChocolateyGui.Controls
             }
 
             PART_Loading.IsActive = true;
-            
+
             var size = GetBitmapSize();
             var expiration = DateTime.UtcNow + TimeSpan.FromDays(1);
 
@@ -181,13 +181,7 @@ namespace ChocolateyGui.Controls
                             imageStream.Position = 0;
                         }
 
-                        imageStream.Position = 0;
-                        var fileInfo = fileStorage.Upload(id, imageStream);
-                        fileStorage.SetMetadata(
-                            fileInfo.Id,
-                            new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
-
-                        imageStream.Position = 0;
+                        UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
                         return await BitmapLoader.Current.Load(imageStream, null, null);
                     }
                 }
@@ -225,13 +219,7 @@ namespace ChocolateyGui.Controls
                         await response.Content.CopyToAsync(imageStream);
                     }
 
-                    imageStream.Position = 0;
-                    var fileInfo = fileStorage.Upload(id, imageStream);
-                    fileStorage.SetMetadata(
-                        fileInfo.Id,
-                        new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
-
-                    imageStream.Position = 0;
+                    UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
                     return imageStream;
                 }
             }
@@ -277,6 +265,17 @@ namespace ChocolateyGui.Controls
             var x = (int) Math.Round(64 * scale.Item1);
             var y = (int)Math.Round(64 * scale.Item2);
             return new System.Drawing.Size(x, y);
+        }
+
+        private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteFileStorage fileStorage, string id)
+        {
+            imageStream.Position = 0;
+            var fileInfo = fileStorage.Upload(id, imageStream);
+            fileStorage.SetMetadata(
+                fileInfo.Id,
+                new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
+
+            imageStream.Position = 0;
         }
     }
 }

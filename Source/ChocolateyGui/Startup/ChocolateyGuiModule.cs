@@ -10,7 +10,6 @@ using System.IO;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
-using ChocolateyGui.Models;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
 using ChocolateyGui.Subprocess;

@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace ChocoPM.Extensions
+namespace ChocolateyGui.Utilities.Extensions
 {
     internal static class DataGridExtensions
     {

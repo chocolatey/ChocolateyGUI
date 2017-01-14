@@ -82,7 +82,7 @@ Committers, you should be very familiar with [COMMITTERS](https://github.com/cho
 * **Install** and **uninstall** packages
 * See detailed **package information**
 
-![image](https://cloud.githubusercontent.com/assets/1271146/4349077/4a3e3cbc-41a7-11e4-8806-63048ea626f3.png)
+![ChocolateyGUI](https://github.com/chocolatey/ChocolateyGUI/blob/10809890189206cece4b64ab038f33d11cf7b840/docs/Screenshots/Application_Loaded.png)
 
 ## Credits
 

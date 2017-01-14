@@ -23,7 +23,7 @@ namespace ChocolateyGui.Utilities.Converters
                 return string.Empty;
             }
 
-            var dependenciesString = (string) value;
+            var dependenciesString = (string)value;
             var dependencyStrings = dependenciesString.Split('|');
             var items = dependencyStrings.Select(dependency =>
             {

@@ -8,6 +8,15 @@ using NuGet;
 
 namespace ChocolateyGui.Models.Messages
 {
+    public enum PackageChangeType
+    {
+        Updated,
+        Uninstalled,
+        Installed,
+        Pinned,
+        Unpinned
+    }
+
     public class PackageChangedMessage
     {
         public PackageChangedMessage(string id, PackageChangeType changeType, SemanticVersion version = null)
@@ -22,14 +31,5 @@ namespace ChocolateyGui.Models.Messages
         public SemanticVersion Version { get; }
 
         public PackageChangeType ChangeType { get; }
-    }
-
-    public enum PackageChangeType
-    {
-        Updated,
-        Uninstalled,
-        Installed,
-        Pinned,
-        Unpinned
     }
 }

@@ -1,4 +1,10 @@
-﻿namespace ChocolateyGui.Subprocess.Models
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ChocolateySetting.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ChocolateyGui.Subprocess.Models
 {
     public class ChocolateySetting
     {

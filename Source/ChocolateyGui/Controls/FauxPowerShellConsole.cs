@@ -57,13 +57,16 @@ namespace ChocolateyGui.Controls
                 unhashed =>
                     "_" +
                     hashAlg.ComputeHash(Encoding.UTF8.GetBytes(unhashed))
-                        .Aggregate(new StringBuilder(),
+                        .Aggregate(
+                            new StringBuilder(),
                             (sb, piece) => sb.Append(piece.ToString("X2", CultureInfo.CurrentCulture)))
                         .ToString();
 
             _backingParagraph = new Paragraph();
             Document.Blocks.Add(_backingParagraph);
         }
+
+        private delegate void RunStringOnUI(PowerShellOutputLine line);
 
         public ObservableRingBufferCollection<PowerShellOutputLine> BufferCollection
         {
@@ -73,7 +76,7 @@ namespace ChocolateyGui.Controls
 
         protected T GetValue<T>(DependencyProperty dependencyProperty)
         {
-            return (T) GetValue(dependencyProperty);
+            return (T)GetValue(dependencyProperty);
         }
 
         protected void OnBufferUpdated(object sender, NotifyCollectionChangedEventArgs args)
@@ -175,11 +178,11 @@ namespace ChocolateyGui.Controls
             // If we had a previous buffer, clear our event holder.
             if (args.OldValue != null)
             {
-                ((ObservableRingBufferCollection<PowerShellOutputLine>) args.OldValue).CollectionChanged -=
+                ((ObservableRingBufferCollection<PowerShellOutputLine>)args.OldValue).CollectionChanged -=
                     OnBufferUpdated;
             }
 
-            var newBuffer = (ObservableRingBufferCollection<PowerShellOutputLine>) args.NewValue;
+            var newBuffer = (ObservableRingBufferCollection<PowerShellOutputLine>)args.NewValue;
             newBuffer.CollectionChanged += OnBufferUpdated;
 
             // Reset the current console.
@@ -190,7 +193,5 @@ namespace ChocolateyGui.Controls
             // Add in any lines written to the buffer.
             OnBufferUpdated(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, bufferItems));
         }
-
-        private delegate void RunStringOnUI(PowerShellOutputLine line);
     }
 }

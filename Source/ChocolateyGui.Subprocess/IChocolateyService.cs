@@ -7,11 +7,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChocolateyGui.Models;
 using ChocolateyGui.Subprocess.Models;
 using WampSharp.V2.Rpc;
 
-namespace ChocolateyGui.Interface
+namespace ChocolateyGui.Subprocess
 {
     public interface IChocolateyService
     {
@@ -31,7 +30,10 @@ namespace ChocolateyGui.Interface
         Task<Package> GetByVersionAndIdAsync(string id, string version, bool isPrerelease);
 
         [WampProcedure("com.chocolatey.install")]
-        Task<PackageOperationResult> InstallPackage(string id, string version = null, Uri source = null,
+        Task<PackageOperationResult> InstallPackage(
+            string id,
+            string version = null,
+            Uri source = null,
             bool force = false);
 
         [WampProcedure("com.chocolatey.uninstall")]

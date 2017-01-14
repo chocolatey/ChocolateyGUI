@@ -22,6 +22,65 @@ namespace ChocolateyGui.Controls
     /// </summary>
     public partial class MarkdownViewer
     {
+        public static readonly DependencyProperty MarkdownSourceProperty = DependencyProperty.Register(
+            "MarkdownSource",
+            typeof(Uri),
+            typeof(MarkdownViewer),
+            new PropertyMetadata(default(Uri)));
+
+        public static readonly DependencyProperty MarkdownStringProperty = DependencyProperty.Register(
+            "MarkdownString",
+            typeof(string),
+            typeof(MarkdownViewer),
+            new PropertyMetadata(default(string)));
+
+        internal const string HtmlTemplate = @"
+<!doctype html>
+<html>
+    <head>
+        <meta charset=""utf-8"">
+        <title>Markdown</title>
+        <style>
+            html, body {
+                font-family: ""Segoe UI"", sans-serif;
+                font-size: 14px;
+                line-height: 1.4;
+                margin: 0;
+                margin-top: -5px;
+                padding: 0;
+            }
+
+            h1,h2,h3,h4,h5 {
+                line-height: 1.2;
+            }
+        </style>
+    </head>
+    <body>
+        {{content}}
+    </body>
+</html>
+";
+
+        private static readonly MarkdownPipeline DefaultPipeline =
+            new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+
+        private static readonly DispatcherTimer DispatcherTimer;
+
+        private static readonly ConcurrentBag<ChromiumWebBrowser> BrowserCleanupQueue =
+            new ConcurrentBag<ChromiumWebBrowser>();
+
+        private ChromiumWebBrowser _browser;
+
+        static MarkdownViewer()
+        {
+            DispatcherTimer = new DispatcherTimer(DispatcherPriority.ApplicationIdle)
+            {
+                Interval = TimeSpan.FromSeconds(10)
+            };
+            DispatcherTimer.Tick += DispatcherWork;
+            DispatcherTimer.Start();
+        }
+
         public MarkdownViewer()
         {
             InitializeComponent();
@@ -40,23 +99,11 @@ namespace ChocolateyGui.Controls
             Loaded += OnLoaded;
         }
 
-        public static readonly DependencyProperty MarkdownStringProperty = DependencyProperty.Register(
-            "MarkdownString",
-            typeof(string),
-            typeof(MarkdownViewer),
-            new PropertyMetadata(default(string)));
-
         public string MarkdownString
         {
             get { return (string)GetValue(MarkdownStringProperty); }
             set { SetValue(MarkdownStringProperty, value); }
         }
-
-        public static readonly DependencyProperty MarkdownSourceProperty = DependencyProperty.Register(
-            "MarkdownSource",
-            typeof(Uri),
-            typeof(MarkdownViewer),
-            new PropertyMetadata(default(Uri)));
 
         public Uri MarkdownSource
         {
@@ -71,13 +118,20 @@ namespace ChocolateyGui.Controls
             }
         }
 
-        private ChromiumWebBrowser _browser;
-
         public void FirstStart(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
             {
                 InitializedBrowser();
+            }
+        }
+
+        private static void DispatcherWork(object sender, EventArgs e)
+        {
+            ChromiumWebBrowser browser;
+            while (BrowserCleanupQueue.TryTake(out browser))
+            {
+                browser.Dispose();
             }
         }
 
@@ -110,9 +164,6 @@ namespace ChocolateyGui.Controls
             }
         }
 
-        private static readonly MarkdownPipeline DefaultPipeline =
-            new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-
         private void LoadMarkdown(string markdown)
         {
             if (_browser == null || !_browser.IsInitialized)
@@ -125,33 +176,6 @@ namespace ChocolateyGui.Controls
             var url = $"http://rawhtml/{newHtml.GetHashCode()}";
             _browser.LoadHtml(displayHtml, url);
         }
-
-        internal const string HtmlTemplate = @"
-<!doctype html>
-<html>
-    <head>
-        <meta charset=""utf-8"">
-        <title>Markdown</title>
-        <style>
-            html, body {
-                font-family: ""Segoe UI"", sans-serif;
-                font-size: 14px;
-                line-height: 1.4;
-                margin: 0;
-                margin-top: -5px;
-                padding: 0;
-            }
-
-            h1,h2,h3,h4,h5 {
-                line-height: 1.2;
-            }
-        </style>
-    </head>
-    <body>
-        {{content}}
-    </body>
-</html>
-";
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
@@ -167,29 +191,6 @@ namespace ChocolateyGui.Controls
             if (_browser == null)
             {
                 SetBrowser();
-            }
-        }
-
-        private static readonly DispatcherTimer DispatcherTimer;
-        private static readonly ConcurrentBag<ChromiumWebBrowser> BrowserCleanupQueue =
-            new ConcurrentBag<ChromiumWebBrowser>();
-
-        static MarkdownViewer()
-        {
-            DispatcherTimer = new DispatcherTimer(DispatcherPriority.ApplicationIdle)
-            {
-                Interval = TimeSpan.FromSeconds(10)
-            };
-            DispatcherTimer.Tick += DispatcherWork;
-            DispatcherTimer.Start();
-        }
-
-        private static void DispatcherWork(object sender, EventArgs e)
-        {
-            ChromiumWebBrowser browser;
-            while (BrowserCleanupQueue.TryTake(out browser))
-            {
-                browser.Dispose();
             }
         }
     }

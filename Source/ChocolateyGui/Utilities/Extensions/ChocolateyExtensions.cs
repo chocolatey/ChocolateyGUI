@@ -28,12 +28,12 @@ namespace ChocolateyGui.Utilities.Extensions
 
         public static Task<ICollection<T>> ListAsync<T>(this GetChocolatey chocolatey)
         {
-            return Task.Run(() => (ICollection<T>) chocolatey.List<T>().ToList());
+            return Task.Run(() => (ICollection<T>)chocolatey.List<T>().ToList());
         }
 
         public static Task<ICollection<PackageResult>> ListPackagesAsync(this GetChocolatey chocolatey)
         {
-            return Task.Run(() => (ICollection<PackageResult>) chocolatey.List<PackageResult>().ToList());
+            return Task.Run(() => (ICollection<PackageResult>)chocolatey.List<PackageResult>().ToList());
         }
 
         public static GetChocolatey Init(this GetChocolatey chocolatey, IProgressService progressService, Action<string> errorListener = null)

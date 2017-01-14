@@ -17,7 +17,7 @@ namespace ChocolateyGui.Utilities.Converters
         {
             if (value is string)
             {
-                return string.IsNullOrWhiteSpace((string) value) ? Visibility.Collapsed : Visibility.Visible;
+                return string.IsNullOrWhiteSpace((string)value) ? Visibility.Collapsed : Visibility.Visible;
             }
 
             return value == null ? Visibility.Collapsed : Visibility.Visible;

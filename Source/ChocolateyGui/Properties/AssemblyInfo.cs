@@ -10,7 +10,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-// General Information about an assembly is controlled through the following 
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ChocolateyGui")]
@@ -29,17 +29,22 @@ using System.Windows;
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(false)]
 
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 [assembly: ThemeInfo(
-    ResourceDictionaryLocation.None,
+
     // where theme specific resource dictionaries are located
-    // (used if a resource is not found in the page, 
+    // (used if a resource is not found in the page,
     // or application resource dictionaries)
-    ResourceDictionaryLocation.SourceAssembly
+#pragma warning disable SA1114 // Parameter list must follow declaration
+    ResourceDictionaryLocation.None,
+#pragma warning restore SA1114 // Parameter list must follow declaration
+
     // where the generic resource dictionary is located
-    // (used if a resource is not found in the page, 
+    // (used if a resource is not found in the page,
     // app, or any theme specific resource dictionaries)
-    )]
+#pragma warning disable SA1115 // Parameter must follow comma
+    ResourceDictionaryLocation.SourceAssembly)]
+#pragma warning restore SA1115 // Parameter must follow comma

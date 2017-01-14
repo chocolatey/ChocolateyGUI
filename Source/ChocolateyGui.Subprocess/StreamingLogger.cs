@@ -1,7 +1,12 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="StreamingLogger.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Reactive.Subjects;
 using chocolatey.infrastructure.logging;
-using ChocolateyGui.Models;
 using Serilog;
 
 namespace ChocolateyGui.Subprocess
@@ -9,13 +14,13 @@ namespace ChocolateyGui.Subprocess
     internal class StreamingLogger : ILog
     {
         private static readonly ILogger Logger = Serilog.Log.ForContext<StreamingLogger>();
-        protected ISubject<StreamingLogMessage> Subject;
+        private ISubject<StreamingLogMessage> _subject;
         private string _context;
         private Action<StreamingLogMessage> _interceptor;
 
         public StreamingLogger(ISubject<StreamingLogMessage> subject)
         {
-            Subject = subject;
+            _subject = subject;
         }
 
         public void InitializeFor(string loggerName)
@@ -38,7 +43,7 @@ namespace ChocolateyGui.Subprocess
                 Message = string.Format(message, formatting)
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public void Debug(Func<string> message)
@@ -51,7 +56,7 @@ namespace ChocolateyGui.Subprocess
                 Message = message()
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public void Info(string message, params object[] formatting)
@@ -64,7 +69,7 @@ namespace ChocolateyGui.Subprocess
                 Message = string.Format(message, formatting)
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public void Info(Func<string> message)
@@ -77,7 +82,7 @@ namespace ChocolateyGui.Subprocess
                 Message = message()
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public void Warn(string message, params object[] formatting)
@@ -90,7 +95,7 @@ namespace ChocolateyGui.Subprocess
                 Message = string.Format(message, formatting)
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public void Warn(Func<string> message)
@@ -103,7 +108,7 @@ namespace ChocolateyGui.Subprocess
                 Message = message()
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public void Error(string message, params object[] formatting)
@@ -116,7 +121,7 @@ namespace ChocolateyGui.Subprocess
                 Message = string.Format(message, formatting)
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public void Error(Func<string> message)
@@ -129,7 +134,7 @@ namespace ChocolateyGui.Subprocess
                 Message = message()
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public void Fatal(string message, params object[] formatting)
@@ -142,7 +147,7 @@ namespace ChocolateyGui.Subprocess
                 Message = string.Format(message, formatting)
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public void Fatal(Func<string> message)
@@ -155,7 +160,7 @@ namespace ChocolateyGui.Subprocess
                 Message = message()
             };
             _interceptor?.Invoke(logMessage);
-            Subject.OnNext(logMessage);
+            _subject.OnNext(logMessage);
         }
 
         public class InterceptMessages : IDisposable

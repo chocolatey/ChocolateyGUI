@@ -24,7 +24,10 @@ namespace ChocolateyGui.Controls.Dialogs
             new PropertyMetadata(default(bool)));
 
         public static readonly DependencyProperty NegativeButtonTextProperty =
-            DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(ChocolateyDialog),
+            DependencyProperty.Register(
+                "NegativeButtonText",
+                typeof(string),
+                typeof(ChocolateyDialog),
                 new PropertyMetadata("Cancel"));
 
         public static readonly DependencyProperty OutputBufferCollectionProperty = DependencyProperty.Register(
@@ -40,7 +43,10 @@ namespace ChocolateyGui.Controls.Dialogs
                 }));
 
         public static readonly DependencyProperty ProgressBarForegroundProperty =
-            DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ChocolateyDialog),
+            DependencyProperty.Register(
+                "ProgressBarForeground",
+                typeof(Brush),
+                typeof(ChocolateyDialog),
                 new PropertyMetadata(Brushes.White));
 
         internal ChocolateyDialog(MetroWindow parentWindow, bool showConsoleOutput)

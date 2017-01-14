@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ChocolateyGui.Models
+namespace ChocolateyGui.Subprocess
 {
     public enum StreamingLogLevel
     {

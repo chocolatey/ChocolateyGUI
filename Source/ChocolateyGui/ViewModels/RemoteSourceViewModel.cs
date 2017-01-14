@@ -40,7 +40,8 @@ namespace ChocolateyGui.ViewModels
         private string _searchQuery;
         private string _sortSelection = "Popularity";
 
-        public RemoteSourceViewModel(IChocolateyPackageService chocolateyPackageService,
+        public RemoteSourceViewModel(
+            IChocolateyPackageService chocolateyPackageService,
             IProgressService progressService,
             IEventAggregator eventAggregator,
             ChocolateySource source)
@@ -228,7 +229,8 @@ namespace ChocolateyGui.ViewModels
             {
                 Logger.Error(ex, "Failed to intialize remote source view model.");
                 MessageBox.Show(
-                    string.Format(CultureInfo.InvariantCulture,
+                    string.Format(
+                        CultureInfo.InvariantCulture,
                         "Unable to connect to feed with Source: {0}.  Please check that this feed is accessible, and try again.",
                         Source.Value),
                     "Feed Search Error",
@@ -252,12 +254,19 @@ namespace ChocolateyGui.ViewModels
                 {
                     var result =
                         await
-                            _chocolateyPackageService.Search(SearchQuery,
-                                new PackageSearchOptions(PageSize, CurrentPage - 1, sort, IncludePrerelease,
-                                    IncludeAllVersions, MatchWord, Source.Value));
+                            _chocolateyPackageService.Search(
+                                SearchQuery,
+                                new PackageSearchOptions(
+                                    PageSize,
+                                    CurrentPage - 1,
+                                    sort,
+                                    IncludePrerelease,
+                                    IncludeAllVersions,
+                                    MatchWord,
+                                    Source.Value));
                     var installed = await _chocolateyPackageService.GetInstalledPackages();
 
-                    PageCount = (int)(((double) result.TotalCount / (double) PageSize) + 0.5);
+                    PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
                     Packages.Clear();
                     result.Packages.ToList().ForEach(p =>
                     {

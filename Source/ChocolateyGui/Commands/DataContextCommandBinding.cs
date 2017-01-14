@@ -105,7 +105,12 @@ namespace ChocolateyGui.Commands
             var target = DataContext.GetDataContext(sender);
             bool canExecute;
             if (
-                !CommandExecutionManager.TryExecuteCommand(target, e.Parameter, false, Executed, CanExecute,
+                !CommandExecutionManager.TryExecuteCommand(
+                    target,
+                    e.Parameter,
+                    false,
+                    Executed,
+                    CanExecute,
                     out canExecute))
             {
                 return;
@@ -160,8 +165,13 @@ namespace ChocolateyGui.Commands
             var target = DataContext.GetDataContext(sender);
             bool canExecute;
             if (
-                !CommandExecutionManager.TryExecuteCommand(target, e.Parameter, false, PreviewExecuted,
-                    PreviewCanExecute, out canExecute))
+                !CommandExecutionManager.TryExecuteCommand(
+                    target,
+                    e.Parameter,
+                    false,
+                    PreviewExecuted,
+                    PreviewCanExecute,
+                    out canExecute))
             {
                 return;
             }

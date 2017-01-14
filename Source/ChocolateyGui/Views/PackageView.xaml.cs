@@ -22,7 +22,7 @@ namespace ChocolateyGui.Views
 
         private void HandleLinkClick(object sender, RoutedEventArgs e)
         {
-            var hl = (Hyperlink) sender;
+            var hl = (Hyperlink)sender;
             var navigateUri = hl.NavigateUri.ToString();
             Process.Start(new ProcessStartInfo(navigateUri));
             e.Handled = true;

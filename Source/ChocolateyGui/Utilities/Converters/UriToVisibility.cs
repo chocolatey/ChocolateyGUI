@@ -15,7 +15,7 @@ namespace ChocolateyGui.Utilities.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || (value is string && string.IsNullOrWhiteSpace((string) value)))
+            if (value == null || (value is string && string.IsNullOrWhiteSpace((string)value)))
             {
                 return Visibility.Collapsed;
             }

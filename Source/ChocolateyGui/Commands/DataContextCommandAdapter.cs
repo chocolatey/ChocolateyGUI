@@ -28,7 +28,7 @@ namespace ChocolateyGui.Commands
         private object _target;
 
         /// <summary>
-        ///     Initializes a new instance of the DataContextCommandAdapter class.
+        /// Initializes a new instance of the <see cref="DataContextCommandAdapter"/> class.
         /// </summary>
         public DataContextCommandAdapter()
         {
@@ -63,6 +63,12 @@ namespace ChocolateyGui.Commands
             CanExecute = canExecute;
         }
 
+        event EventHandler ICommand.CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
         /// <summary>
         ///     Gets or sets the name of the method of the target object's DataContext that determines whether the
         ///     command can execute in its current state.
@@ -86,12 +92,6 @@ namespace ChocolateyGui.Commands
         ///     <code>void MyExecutedMethod();</code>
         /// </remarks>
         public string Executed { get; set; }
-
-        event EventHandler ICommand.CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
 
         bool ICommand.CanExecute(object parameter)
         {

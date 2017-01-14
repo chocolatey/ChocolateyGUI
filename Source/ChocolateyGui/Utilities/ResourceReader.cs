@@ -12,10 +12,10 @@ namespace ChocolateyGui.Utilities
 {
     public static class ResourceReader
     {
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times",
-            Justification =
-                "Based on this blog post: http://blogs.msdn.com/b/tilovell/archive/2014/02/12/the-worst-code-analysis-rule-that-s-recommended-ca2202.aspx"
-            )]
+        [SuppressMessage(
+            "Microsoft.Usage",
+            "CA2202:Do not dispose objects multiple times",
+            Justification = "Based on this blog post: http://blogs.msdn.com/b/tilovell/archive/2014/02/12/the-worst-code-analysis-rule-that-s-recommended-ca2202.aspx")]
         internal static string GetFromResources(Assembly assembly, string resourceName)
         {
             using (var stream = assembly.GetManifestResourceStream(resourceName))

@@ -37,13 +37,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] {Expression.Parameter(query.ElementType, "query")};
+            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
 
             var queryExpr = query.Expression;
             queryExpr = Expression.Call(
                 typeof(Queryable),
                 "OrderBy",
-                new[] {query.ElementType, targetProp.PropertyType},
+                new[] { query.ElementType, targetProp.PropertyType },
                 queryExpr,
                 Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
 
@@ -69,13 +69,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] {Expression.Parameter(query.ElementType, "query")};
+            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
 
             var queryExpr = query.Expression;
             queryExpr = Expression.Call(
                 typeof(Queryable),
                 "OrderByDescending",
-                new[] {query.ElementType, targetProp.PropertyType},
+                new[] { query.ElementType, targetProp.PropertyType },
                 queryExpr,
                 Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
             return query.Provider.CreateQuery<T>(queryExpr);
@@ -100,13 +100,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] {Expression.Parameter(query.ElementType, "query")};
+            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
 
             var queryExpr = query.Expression;
             queryExpr = Expression.Call(
                 typeof(Queryable),
                 "ThenBy",
-                new[] {query.ElementType, targetProp.PropertyType},
+                new[] { query.ElementType, targetProp.PropertyType },
                 queryExpr,
                 Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
             return query.Provider.CreateQuery<T>(queryExpr);
@@ -131,13 +131,13 @@ namespace ChocolateyGui.Utilities.Extensions
                 throw new ArgumentException("There is no property with that name");
             }
 
-            var parameters = new[] {Expression.Parameter(query.ElementType, "query")};
+            var parameters = new[] { Expression.Parameter(query.ElementType, "query") };
 
             var queryExpr = query.Expression;
             queryExpr = Expression.Call(
                 typeof(Queryable),
                 "ThenByDescending",
-                new[] {query.ElementType, targetProp.PropertyType},
+                new[] { query.ElementType, targetProp.PropertyType },
                 queryExpr,
                 Expression.Lambda(Expression.Property(parameters[0], targetProp), parameters[0]));
             return query.Provider.CreateQuery<T>(queryExpr);
@@ -162,9 +162,9 @@ namespace ChocolateyGui.Utilities.Extensions
             keys.UnionWith(blookup.Select(p => p.Key));
 
             var join = from key in keys
-                from xa in alookup[key].DefaultIfEmpty(defaultA)
-                from xb in blookup[key].DefaultIfEmpty(defaultB)
-                select projection(xa, xb, key);
+                       from xa in alookup[key].DefaultIfEmpty(defaultA)
+                       from xb in blookup[key].DefaultIfEmpty(defaultB)
+                       select projection(xa, xb, key);
 
             return join.ToList();
         }

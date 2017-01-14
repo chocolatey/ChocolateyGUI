@@ -13,86 +13,13 @@ using System.Windows.Media.Imaging;
 
 namespace ChocolateyGui.Utilities
 {
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses",
+    [SuppressMessage(
+        "Microsoft.Performance",
+        "CA1812:AvoidUninstantiatedInternalClasses",
         Justification = "PIvoke magic is happening here...")]
     internal class NativeMethods
     {
-        public static float GetScaleFactor()
-        {
-            var desktop = GetDCCE(IntPtr.Zero);
-            int Xdpi = GetDeviceCaps(desktop, (int)DeviceCap.LOGPIXELSX);
-            int Ydpi = GetDeviceCaps(desktop, (int)DeviceCap.LOGPIXELSY);
-            ReleaseDC(IntPtr.Zero, desktop);
-            return Xdpi / 96f;
-        }
-
-        public static BitmapSource UacIcon => UacIconLazy.Value;
-
-        [DllImport("Shlwapi.dll", CharSet = CharSet.Auto)]
-        internal static extern long StrFormatByteSize(long fileSize,
-            [MarshalAs(UnmanagedType.LPWStr)] StringBuilder buffer, int bufferSize);
-
-        [DllImport("User32.dll", EntryPoint = "GetDC", SetLastError = true)]
-        private static extern IntPtr GetDCCE(IntPtr hWnd);
-
-        [DllImport("User32.dll", EntryPoint = "ReleaseDC", SetLastError = true)]
-        private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
-
-        [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
-        private static extern int GetDeviceCaps(IntPtr hDC, int nIndex);
-
-        private enum DeviceCap
-        {
-            /// <summary>
-            /// Logical pixels inch in X
-            /// </summary>
-            LOGPIXELSX = 88,
-
-            /// <summary>
-            /// Logical pixels inch in Y
-            /// </summary>
-            LOGPIXELSY = 90
-
-            // Other constants may be founded on pinvoke.net
-        }
-
-        [DllImport("Shell32.dll", SetLastError = false)]
-        private static extern int SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
-
-        private static BitmapSource GetUacIcon()
-        {
-            var sii = new SHSTOCKICONINFO { cbSize = (uint)Marshal.SizeOf(typeof(SHSTOCKICONINFO)) };
-
-            Marshal.ThrowExceptionForHR(SHGetStockIconInfo(SHSTOCKICONID.SIID_SHIELD,
-                SHGSI.SHGSI_ICON | SHGSI.SHGSI_SMALLICON,
-                ref sii));
-
-            var icon = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
-                sii.hIcon,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions());
-
-            DestroyIcon(sii.hIcon);
-
-            return icon;
-        }
-
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool DestroyIcon(IntPtr hIcon);
-
         private static readonly Lazy<BitmapSource> UacIconLazy = new Lazy<BitmapSource>(GetUacIcon);
-
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        public struct SHSTOCKICONINFO
-        {
-            public uint cbSize;
-            public IntPtr hIcon;
-            public int iSysIconIndex;
-            public int iIcon;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-            public string szPath;
-        }
 
         [Flags]
         internal enum SHGSI : uint
@@ -203,6 +130,84 @@ namespace ChocolateyGui.Utilities
             SIID_MEDIABDRE = 139,
             SIID_CLUSTEREDDRIVE = 140,
             SIID_MAX_ICONS = 175
+        }
+
+        private enum DeviceCap
+        {
+            /// <summary>
+            /// Logical pixels inch in X
+            /// </summary>
+            LOGPIXELSX = 88,
+
+            /// <summary>
+            /// Logical pixels inch in Y
+            /// </summary>
+            LOGPIXELSY = 90
+
+            // Other constants may be founded on pinvoke.net
+        }
+
+        public static BitmapSource UacIcon => UacIconLazy.Value;
+
+        public static float GetScaleFactor()
+        {
+            var desktop = GetDCCE(IntPtr.Zero);
+            int Xdpi = GetDeviceCaps(desktop, (int)DeviceCap.LOGPIXELSX);
+            int Ydpi = GetDeviceCaps(desktop, (int)DeviceCap.LOGPIXELSY);
+            ReleaseDC(IntPtr.Zero, desktop);
+            return Xdpi / 96f;
+        }
+
+        [DllImport("Shlwapi.dll", CharSet = CharSet.Auto)]
+        internal static extern long StrFormatByteSize(
+            long fileSize,
+            [MarshalAs(UnmanagedType.LPWStr)] StringBuilder buffer,
+            int bufferSize);
+
+        [DllImport("User32.dll", EntryPoint = "GetDC", SetLastError = true)]
+        private static extern IntPtr GetDCCE(IntPtr hWnd);
+
+        [DllImport("User32.dll", EntryPoint = "ReleaseDC", SetLastError = true)]
+        private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+        private static extern int GetDeviceCaps(IntPtr hDC, int nIndex);
+
+        [DllImport("Shell32.dll", SetLastError = false)]
+        private static extern int SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
+
+        private static BitmapSource GetUacIcon()
+        {
+            var sii = new SHSTOCKICONINFO { cbSize = (uint)Marshal.SizeOf(typeof(SHSTOCKICONINFO)) };
+
+            Marshal.ThrowExceptionForHR(SHGetStockIconInfo(
+                SHSTOCKICONID.SIID_SHIELD,
+                SHGSI.SHGSI_ICON | SHGSI.SHGSI_SMALLICON,
+                ref sii));
+
+            var icon = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+                sii.hIcon,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+
+            DestroyIcon(sii.hIcon);
+
+            return icon;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool DestroyIcon(IntPtr hIcon);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct SHSTOCKICONINFO
+        {
+            public uint cbSize;
+            public IntPtr hIcon;
+            public int iSysIconIndex;
+            public int iIcon;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            public string szPath;
         }
     }
 }

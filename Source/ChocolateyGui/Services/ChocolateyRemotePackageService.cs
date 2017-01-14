@@ -15,10 +15,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
-using ChocolateyGui.Interface;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Providers;
+using ChocolateyGui.Subprocess;
 using ChocolateyGui.Subprocess.Models;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels.Items;
@@ -107,7 +107,7 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.InstallPackage(id, version?.ToString(), source, force);
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? "" : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
                 await _progressService.ShowMessageAsync(
                     "Failed to install package.",
                     $"Failed to install package \"{id}\", version \"{version}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");
@@ -124,7 +124,7 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.UninstallPackage(id, version.ToString(), force);
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? "" : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
                 await _progressService.ShowMessageAsync(
                     "Failed to uninstall package.",
                     $"Failed to uninstall package \"{id}\", version \"{version}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");
@@ -141,7 +141,7 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.UpdatePackage(id, source);
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? "" : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
                 await _progressService.ShowMessageAsync(
                     "Failed to update package.",
                     $"Failed to update package \"{id}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");
@@ -158,7 +158,7 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.PinPackage(id, version.ToString());
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? "" : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
                 await _progressService.ShowMessageAsync(
                     "Failed to pin package.",
                     $"Failed to pin package \"{id}\", version \"{version}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");
@@ -175,7 +175,7 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.UnpinPackage(id, version.ToString());
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? "" : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
                 await _progressService.ShowMessageAsync(
                     "Failed to unpin package.",
                     $"Failed to unpin package \"{id}\", version \"{version}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");

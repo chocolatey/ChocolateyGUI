@@ -22,11 +22,10 @@ namespace ChocolateyGui.ViewModels
         private readonly IChocolateyPackageService _packageService;
         private readonly CreateRemove _remoteSourceVmFactory;
 
-        public delegate RemoteSourceViewModel CreateRemove(ChocolateySource source);
-
         private bool _firstLoad = true;
 
-        public SourcesViewModel(ISourceService sourceService,
+        public SourcesViewModel(
+            ISourceService sourceService,
             IChocolateyPackageService packageService,
             IEventAggregator eventAggregator,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
@@ -57,6 +56,8 @@ namespace ChocolateyGui.ViewModels
 
             eventAggregator.Subscribe(this);
         }
+
+        public delegate RemoteSourceViewModel CreateRemove(ChocolateySource source);
 
         public async Task LoadSources()
         {

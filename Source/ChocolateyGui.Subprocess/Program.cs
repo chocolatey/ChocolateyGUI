@@ -1,10 +1,15 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="Program.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using chocolatey.infrastructure.app.configuration;
-using ChocolateyGui.Models;
 using ChocolateyGui.Subprocess.Models;
 using NuGet;
 using Serilog;
@@ -21,8 +26,7 @@ namespace ChocolateyGui.Subprocess
         public static int Main(string[] args)
         {
             var appDataPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData,
-                    Environment.SpecialFolderOption.DoNotVerify),
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.DoNotVerify),
                 "ChocolateyGUI");
 
             var logFolder = Path.Combine(appDataPath, "Logs");
@@ -89,7 +93,6 @@ namespace ChocolateyGui.Subprocess
                 return 1;
             }
 
-            
             Logger.Information("Starting WAMP Client on port {port}.", port);
             var host = new ChocoWamp(port);
             await host.Start();

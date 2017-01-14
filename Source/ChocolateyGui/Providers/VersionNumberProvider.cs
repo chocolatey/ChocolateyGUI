@@ -24,8 +24,7 @@ namespace ChocolateyGui.Providers
 
                 var assembly = GetType().Assembly;
                 var informational =
-                    ((AssemblyInformationalVersionAttribute[])
-                        assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute)))
+                    ((AssemblyInformationalVersionAttribute[])assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute)))
                         .First();
 
                 _version = "Version: " + informational.InformationalVersion;

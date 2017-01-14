@@ -185,6 +185,12 @@
     <Compile Include="StreamingLogMessage.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\ChocolateyGuiRules.ruleset">
+      <Link>ChocolateyGuiRules.ruleset</Link>
+    </None>
+    <AdditionalFiles Include="..\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
     <None Include="app.config" />
     <None Include="ChocolateyGui.Subprocess.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

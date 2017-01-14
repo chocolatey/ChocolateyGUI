@@ -20,6 +20,10 @@ namespace ChocolateyGui.Utilities
 {
     public static class Hacks
     {
+        private static Lazy<Func<object>> getContainerInstLazy = new Lazy<Func<object>>(GetContainerInst);
+
+        private static ConcurrentDictionary<Type, Func<object>> instanceExpCache = new ConcurrentDictionary<Type, Func<object>>();
+
         public static bool IsElevated => (WindowsIdentity.GetCurrent().Owner?.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid)).GetValueOrDefault(false);
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "N/A")]
@@ -44,17 +48,15 @@ namespace ChocolateyGui.Utilities
 
         public static T GetInstance<T>()
         {
-            Func<object> _instanceExp;
-            if (!instanceExpCache.TryGetValue(typeof(T), out _instanceExp))
+            Func<object> instanceExp;
+            if (!instanceExpCache.TryGetValue(typeof(T), out instanceExp))
             {
-                _instanceExp = GetInstanceExp<T>();
-                instanceExpCache.TryAdd(typeof(T), _instanceExp);
+                instanceExp = GetInstanceExp<T>();
+                instanceExpCache.TryAdd(typeof(T), instanceExp);
             }
 
-            return (T)_instanceExp();
+            return (T)instanceExp();
         }
-
-        private static Lazy<Func<object>> getContainerInstLazy = new Lazy<Func<object>>(GetContainerInst);
 
         private static object GetContainer()
         {
@@ -75,8 +77,6 @@ namespace ChocolateyGui.Utilities
                                 typeof(object))))
                     .Compile();
         }
-
-        private static ConcurrentDictionary<Type, Func<object>> instanceExpCache = new ConcurrentDictionary<Type, Func<object>>();
 
         private static Func<object> GetInstanceExp<T>()
         {

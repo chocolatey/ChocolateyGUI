@@ -9,6 +9,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:cal="http://www.caliburnproject.org" 
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}">
@@ -21,20 +22,20 @@
         </Grid.RowDefinitions>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,5"
                     Style="{StaticResource LeftSourceListItem}">
-            <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}">Search:</Label>
-            <TextBox x:Name="SearchTextBox" Width="200" Padding="0,2,0,-2" FontSize="14"
+            <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Strings.RemoteSourceView_SearchBoxText}"/>
+      <TextBox x:Name="SearchTextBox" Width="200" Padding="0,2,0,-2" FontSize="14"
                      Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Name="AllVersionsCheckBox" Margin="10,5,5,5" Content="All Versions"
+            <CheckBox Name="AllVersionsCheckBox" Margin="10,5,5,5" Content="{x:Static lang:Strings.RemoteSourceView_CheckboxAllVersions}"
                       IsChecked="{Binding IncludeAllVersions}" />
-            <CheckBox Name="PrereleaseCheckBox" Margin="5" Content="Include Prerelease"
+            <CheckBox Name="PrereleaseCheckBox" Margin="5" Content="{x:Static lang:Strings.RemoteSourceView_CheckboxIncludePrerelease}"
                       IsChecked="{Binding IncludePrerelease}" />
-            <CheckBox Name="MatchCheckBox" Margin="5" Content="Match Word Exactly" IsChecked="{Binding MatchWord}" />
+            <CheckBox Name="MatchCheckBox" Margin="5" Content="{x:Static lang:Strings.RemoteSourceView_CheckboxMatchExactly}" IsChecked="{Binding MatchWord}" />
             <ComboBox Name="SortBox" Margin="5" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
                     Margin="10,5">
             <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}"
-                    Style="{StaticResource SquareButtonStyle}" Content="Refresh Packages" Margin="0,4,0,4" />
+                    Style="{StaticResource SquareButtonStyle}" Content="{x:Static lang:Strings.RemoteSourceView_ButtonRefreshPkgs}" Margin="0,4,0,4" />
         </StackPanel>
 
         <Grid Grid.Row="2" DockPanel.Dock="Bottom" Margin="4">
@@ -45,30 +46,22 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Name="FirstPage" AutomationProperties.Name="Go to First Page" ToolTip="First"
+            <Button Grid.Column="0" Name="FirstPage" Content="{x:Static lang:Strings.RemoteSourceView_ButtonGotoFirstPage}" AutomationProperties.Name="Go to First Page" ToolTip="First"
                     Command="{commands:DataContextCommandAdapter Executed=GoToFirst, CanExecute=CanGoToFirst}"
-                    Style="{DynamicResource PaginationButtonStyle}">
-                First
-            </Button>
-            <Button Grid.Column="1" Name="BackPage" AutomationProperties.Name="Go Back a Page" ToolTip="Back"
+                    Style="{DynamicResource PaginationButtonStyle}"/>
+            <Button Grid.Column="1" Name="BackPage" Content="{x:Static lang:Strings.RemoteSourceView_ButtonGoBackAPage}" AutomationProperties.Name="Go Back a Page" ToolTip="Back"
                     Command="{commands:DataContextCommandAdapter Executed=GoToPrevious, CanExecute=CanGoToPrevious}"
-                    Style="{DynamicResource PaginationButtonStyle}">
-                Previous
-            </Button>
+                    Style="{DynamicResource PaginationButtonStyle}"/>
             <TextBlock Grid.Column="2" Name="CurrentPage" AutomationProperties.Name="Current Page"
                        HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding CurrentPage}"
-                       Style="{StaticResource PageCountTextStyle}" />
-            <Button Grid.Column="3" Name="ForwardPage" AutomationProperties.Name="Go Forward a Page" ToolTip="Forward"
+                       Style="{StaticResource PageCountTextStyle}"/>
+            <Button Grid.Column="3" Name="ForwardPage" Content="{x:Static lang:Strings.RemoteSourceView_ButtonGoForwardAPage}" AutomationProperties.Name="Go Forward a Page" ToolTip="Forward"
                     Command="{commands:DataContextCommandAdapter Executed=GoToNext, CanExecute=CanGoToNext}"
-                    Style="{DynamicResource PaginationButtonStyle}">
-                Next
-            </Button>
-            <Button Grid.Column="4" Name="LastPage" AutomationProperties.Name="Go to Last Page" ToolTip="Last"
+                    Style="{DynamicResource PaginationButtonStyle}"/>
+            <Button Grid.Column="4" Name="LastPage" Content="{x:Static lang:Strings.RemoteSourceView_ButtonGotoLastPage}" AutomationProperties.Name="Go to Last Page" ToolTip="Last"
                     Command="{commands:DataContextCommandAdapter Executed=GoToLast, CanExecute=CanGoToLast}"
-                    Style="{DynamicResource PaginationButtonStyle}">
-                Last
-            </Button>
-        </Grid>
+                    Style="{DynamicResource PaginationButtonStyle}"/>
+    </Grid>
         
         <ListBox Grid.Row="1" x:Name="Packages" ItemsSource="{Binding Packages}"
                  VerticalAlignment="Stretch"
@@ -118,13 +111,13 @@
                             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
                                 <TextBlock FontSize="14"
                                            AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}">
-                                    <Run Text="Authors: " />
+                                    <Run Text="{x:Static lang:Strings.RemoteSourceView_Authors}" />
                                     <Run Style="{StaticResource ColoredDetailsTextLine}" Text="{Binding Authors, Converter={StaticResource StringListToString}}" />
                                 </TextBlock>
                             </StackPanel>
                             <TextBlock Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" FontWeight="SemiBold" FontSize="20" HorizontalAlignment="Right">
                                 <Run Text="{Binding DownloadCount, StringFormat=N0}"/>
-                                <Run Text=" downloads"/>
+                                <Run Text=" {x:Static lang:Strings.RemoteSourceView_Downloads}"/>
                             </TextBlock>
                         </Grid>
                         <Grid x:Name="PART_Body" Grid.Row="1">

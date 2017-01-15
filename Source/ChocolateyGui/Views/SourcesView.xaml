@@ -6,13 +6,14 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels" 
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              mc:Ignorable="d"
              d:DesignHeight="760" d:DesignWidth="1300"
              d:DataContext="{d:DesignInstance viewModels:SourcesViewModel}">
 
     <DockPanel>
         <StackPanel DockPanel.Dock="Left" Background="{StaticResource BackgroundColorBrush}">
-            <TextBlock Text="chocolatey" FontSize="38" Foreground="{StaticResource IdealForegroundColorBrush}"
+            <TextBlock Text="{x:Static lang:Strings.SourcesView_Choco}" FontSize="38" Foreground="{StaticResource IdealForegroundColorBrush}"
                        FontWeight="SemiBold" Padding="20,5" Background="{StaticResource AccentBaseColorBrush}" />
             <Grid DockPanel.Dock="Left" MinWidth="250">
                 <ListView x:Name="SourcesListView" ItemsSource="{Binding Items}" Background="Transparent"

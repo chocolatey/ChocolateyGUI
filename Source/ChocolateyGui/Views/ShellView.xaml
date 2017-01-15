@@ -8,6 +8,7 @@
                    xmlns:commands="clr-namespace:ChocolateyGui.Commands"
                    xmlns:diagnostics="clr-namespace:System.Diagnostics;assembly=WindowsBase"
                    xmlns:cal="http://www.caliburnproject.org"
+                   xmlns:lang="clr-namespace:ChocolateyGui.Properties"
                    diagnostics:PresentationTraceSources.TraceLevel="High"
                    mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
                    d:DataContext="{d:DesignInstance Type=local:ShellViewModel}"
@@ -33,8 +34,8 @@
     
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
-            <Button x:Name="ShowSettings" Content="settings" ClickMode="Release" cal:Message.Attach="ShowSettings()"/>
-            <Button x:Name="ShowAbout" Content="about" ClickMode="Release" Visibility="Collapsed" />
+            <Button x:Name="ShowSettings" Content="{x:Static lang:Strings.ShellView_ButtonSettings}" ClickMode="Release" cal:Message.Attach="ShowSettings()"/>
+            <Button x:Name="ShowAbout" Content="{x:Static lang:Strings.ShellView_ButtonAbout}" ClickMode="Release" Visibility="Collapsed" />
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 

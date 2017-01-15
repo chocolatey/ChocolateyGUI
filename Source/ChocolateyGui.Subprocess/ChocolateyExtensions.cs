@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ChocolateyExtensions.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using chocolatey;

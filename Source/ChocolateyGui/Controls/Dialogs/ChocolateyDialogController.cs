@@ -16,8 +16,6 @@ namespace ChocolateyGui.Controls.Dialogs
     /// </summary>
     public class ChocolateyDialogController
     {
-        public delegate void DialogCanceledEventHandler(BaseMetroDialog dialog);
-
         internal ChocolateyDialogController(ChocolateyDialog dialog, Func<Task> closeCallBack)
         {
             WrappedDialog = dialog;
@@ -28,6 +26,10 @@ namespace ChocolateyGui.Controls.Dialogs
             WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(
                 () => { WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click; });
         }
+
+        public delegate void DialogCanceledEventHandler(BaseMetroDialog dialog);
+
+        public event DialogCanceledEventHandler OnCanceled;
 
         /// <summary>
         ///     Gets a value indicating whether the Cancel button has been pressed.
@@ -42,8 +44,6 @@ namespace ChocolateyGui.Controls.Dialogs
         private Func<Task> CloseCallback { get; }
 
         private ChocolateyDialog WrappedDialog { get; }
-
-        public event DialogCanceledEventHandler OnCanceled;
 
         /// <summary>
         ///     Begins an operation to close the ProgressDialog.

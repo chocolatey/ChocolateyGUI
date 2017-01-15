@@ -42,13 +42,13 @@ namespace ChocolateyGui.Services
         {
             return
                 GetSourcesImpl()
-                    .Select(source => new SourceViewModel {Name = source.Id, Url = source.Value})
+                    .Select(source => new SourceViewModel { Name = source.Id, Url = source.Value })
                     .FirstOrDefault();
         }
 
         public IEnumerable<SourceViewModel> GetSources()
         {
-            return GetSourcesImpl().Select(source => new SourceViewModel {Name = source.Id, Url = source.Value});
+            return GetSourcesImpl().Select(source => new SourceViewModel { Name = source.Id, Url = source.Value });
         }
 
         public void RemoveSource(SourceViewModel sourceViewModel)

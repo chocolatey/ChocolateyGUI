@@ -20,6 +20,10 @@ namespace ChocolateyGui.Subprocess
 {
     public static class Hacks
     {
+        private static readonly Lazy<Func<object>> GetContainerInstLazy = new Lazy<Func<object>>(GetContainerInst);
+
+        private static readonly ConcurrentDictionary<Type, Func<object>> InstanceExpCache = new ConcurrentDictionary<Type, Func<object>>();
+
         public static bool IsElevated => (WindowsIdentity.GetCurrent().Owner?.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid)).GetValueOrDefault(false);
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "N/A")]
@@ -54,8 +58,6 @@ namespace ChocolateyGui.Subprocess
             return (T)instanceExp();
         }
 
-        private static readonly Lazy<Func<object>> GetContainerInstLazy = new Lazy<Func<object>>(GetContainerInst);
-
         public static object GetContainer()
         {
             return GetContainerInstLazy.Value();
@@ -75,8 +77,6 @@ namespace ChocolateyGui.Subprocess
                                 typeof(object))))
                     .Compile();
         }
-
-        private static readonly ConcurrentDictionary<Type, Func<object>> InstanceExpCache = new ConcurrentDictionary<Type, Func<object>>();
 
         private static Func<object> GetInstanceExp<T>()
         {

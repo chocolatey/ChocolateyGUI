@@ -15,7 +15,7 @@ namespace ChocolateyGui.Utilities.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value == null || (bool) value == false) ^ (parameter != null && bool.Parse((string) parameter))
+            return (value == null || (bool)value == false) ^ (parameter != null && bool.Parse((string)parameter))
                 ? Visibility.Hidden
                 : Visibility.Visible;
         }

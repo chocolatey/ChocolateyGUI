@@ -28,6 +28,13 @@ namespace ChocolateyGui.ViewModels
     public sealed class SettingsViewModel : Screen
     {
         private static readonly ILogger Logger = Log.ForContext<SettingsViewModel>();
+
+        private static readonly HashSet<string> ConfigProperties = new HashSet<string>
+                                                                       {
+                                                                           nameof(ElevateByDefault),
+                                                                           nameof(ShowConsoleOutput)
+                                                                       };
+
         private readonly IChocolateyPackageService _packageService;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
@@ -38,15 +45,13 @@ namespace ChocolateyGui.ViewModels
         private Subject<ChocolateySetting> _changedSetting;
         private IDisposable _configSubscription;
         private AppConfiguration _config;
+        private ChocolateySource _selectedSource;
+        private string _originalId;
+        private bool _isNewItem;
 
-        public ObservableCollection<ChocolateyFeature> Features { get; } = new ObservableCollection<ChocolateyFeature>();
-
-        public ObservableCollection<ChocolateySetting> Settings { get; } = new ObservableCollection<ChocolateySetting>();
-
-        public ObservableCollection<ChocolateySource> Sources { get; } = new ObservableCollection<ChocolateySource>();
-
-        public SettingsViewModel(IChocolateyPackageService packageService, 
-            IProgressService progressService, 
+        public SettingsViewModel(
+            IChocolateyPackageService packageService,
+            IProgressService progressService,
             IConfigService configService,
             IEventAggregator eventAggregator)
         {
@@ -59,9 +64,19 @@ namespace ChocolateyGui.ViewModels
             Deactivated += OnDeactivated;
         }
 
+        public ObservableCollection<ChocolateyFeature> Features { get; } = new ObservableCollection<ChocolateyFeature>();
+
+        public ObservableCollection<ChocolateySetting> Settings { get; } = new ObservableCollection<ChocolateySetting>();
+
+        public ObservableCollection<ChocolateySource> Sources { get; } = new ObservableCollection<ChocolateySource>();
+
         public bool ElevateByDefault
         {
-            get { return _config.ElevateByDefault; }
+            get
+            {
+                return _config.ElevateByDefault;
+            }
+
             set
             {
                 _config.ElevateByDefault = value;
@@ -71,7 +86,11 @@ namespace ChocolateyGui.ViewModels
 
         public bool ShowConsoleOutput
         {
-            get { return _config.ShowConsoleOutput; }
+            get
+            {
+                return _config.ShowConsoleOutput;
+            }
+
             set
             {
                 _config.ShowConsoleOutput = value;
@@ -79,11 +98,19 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
-        private ChocolateySource _selectedSource;
+        public bool CanSave => SelectedSource != null;
+
+        public bool CanRemove => SelectedSource != null && !_isNewItem;
+
+        public bool CanCanel => SelectedSource != null;
 
         public ChocolateySource SelectedSource
         {
-            get { return _selectedSource; }
+            get
+            {
+                return _selectedSource;
+            }
+
             set
             {
                 this.SetPropertyValue(ref _selectedSource, value);
@@ -101,9 +128,6 @@ namespace ChocolateyGui.ViewModels
                 NotifyOfPropertyChange(nameof(CanRemove));
             }
         }
-
-        private string _originalId;
-        private bool _isNewItem;
 
         public void FeatureToggled(ChocolateyFeature feature)
         {
@@ -136,10 +160,7 @@ namespace ChocolateyGui.ViewModels
             }
             catch (WampException ex)
             {
-                Logger.Error(ex, "Failed to update features list!\nMessage: {Message}\nArguments: {Arguments}", ex.Message, ex.Arguments);
-                await _progressService.ShowMessageAsync(
-                    "Feature Updates Error",
-                    $"Failed to update features. Error:\n{string.Join("\v", ex.Arguments)}");
+                await LogError(ex);
             }
         }
 
@@ -151,10 +172,7 @@ namespace ChocolateyGui.ViewModels
             }
             catch (WampException ex)
             {
-                Logger.Error(ex, "Failed to update features list!\nMessage: {Message}\nArguments: {Arguments}", ex.Message, ex.Arguments);
-                await _progressService.ShowMessageAsync(
-                    "Feature Updates Error",
-                    $"Failed to update features. Error:\n{string.Join("\v", ex.Arguments)}");
+                await LogError(ex);
             }
         }
 
@@ -162,8 +180,6 @@ namespace ChocolateyGui.ViewModels
         {
             SelectedSource = new ChocolateySource();
         }
-
-        public bool CanSave => SelectedSource != null;
 
         public async void Save()
         {
@@ -203,8 +219,6 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
-        public bool CanRemove => SelectedSource != null && !_isNewItem;
-
         public async void Remove()
         {
             await _progressService.StartLoading("Removing source...");
@@ -220,8 +234,6 @@ namespace ChocolateyGui.ViewModels
                 await _progressService.StopLoading();
             }
         }
-
-        public bool CanCanel => SelectedSource != null;
 
         public void Cancel()
         {
@@ -259,12 +271,6 @@ namespace ChocolateyGui.ViewModels
             Sources.AddRange(sources);
         }
 
-        private static readonly HashSet<string> ConfigProperties = new HashSet<string>
-                                                                       {
-                                                                           nameof(ElevateByDefault),
-                                                                           nameof(ShowConsoleOutput)
-                                                                       };
-
         private void WireUpConfig()
         {
             _config = _configService.GetSettings();
@@ -283,6 +289,14 @@ namespace ChocolateyGui.ViewModels
             _changedFeature.OnCompleted();
             _changedSetting.OnCompleted();
             _configSubscription.Dispose();
+        }
+
+        private async Task LogError(WampException ex)
+        {
+            Logger.Error(ex, "Failed to update features list!\nMessage: {Message}\nArguments: {Arguments}", ex.Message, ex.Arguments);
+            await _progressService.ShowMessageAsync(
+                "Feature Updates Error",
+                $"Failed to update features. Error:\n{string.Join("\v", ex.Arguments)}");
         }
     }
 }

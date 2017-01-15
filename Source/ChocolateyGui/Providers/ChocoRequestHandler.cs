@@ -70,7 +70,7 @@ namespace ChocolateyGui.Providers
         }
 
         public bool OnQuotaRequest(IWebBrowser browserControl, IBrowser browser, string originUrl, long newSize, IRequestCallback callback)
-        { 
+        {
             // NOTE: When executing the callback in an async fashion need to check to see if it's disposed
             if (!callback.IsDisposed)
             {

@@ -49,7 +49,7 @@ namespace ChocolateyGui.Controls
             {
                 WindowlessFrameRate = 1,
             };
-            
+
             RenderBrowser = new ChromiumWebBrowser(string.Empty, browserSettings)
             {
                 Size = GetBitmapSize()
@@ -84,8 +84,62 @@ namespace ChocolateyGui.Controls
 
         public string IconUrl
         {
-            get { return (string) GetValue(IconUrlProperty); }
+            get { return (string)GetValue(IconUrlProperty); }
             set { SetValue(IconUrlProperty, value); }
+        }
+
+        private static Task LoadHtmlAsync(IWebBrowser browser, string html, string address)
+        {
+            // If using .Net 4.6 then use TaskCreationOptions.RunContinuationsAsynchronously
+            // and switch to tcs.TrySetResult below - no need for the custom extension method
+            var tcs = new TaskCompletionSource<bool>();
+
+            EventHandler<FrameLoadEndEventArgs> handler = null;
+            handler = (sender, args) =>
+            {
+                browser.FrameLoadEnd -= handler;
+
+                // This is required when using a standard TaskCompletionSource
+                // Extension method found in the CefSharp.Internals namespace
+                tcs.TrySetResultAsync(true);
+            };
+
+            browser.FrameLoadEnd += handler;
+
+            if (!string.IsNullOrEmpty(address))
+            {
+                browser.LoadHtml(html, address);
+            }
+
+            return tcs.Task;
+        }
+
+        private static BitmapSource GetErrorImage()
+        {
+            var size = GetBitmapSize();
+            return Imaging.CreateBitmapSourceFromHIcon(
+                SystemIcons.Error.Handle,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromWidthAndHeight(size.Width, size.Height));
+        }
+
+        private static System.Drawing.Size GetBitmapSize()
+        {
+            var scale = new Windows7PlatformProvider().GetDpiScaleFactor();
+            var x = (int)Math.Round(64 * scale.Item1);
+            var y = (int)Math.Round(64 * scale.Item2);
+            return new System.Drawing.Size(x, y);
+        }
+
+        private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteFileStorage fileStorage, string id)
+        {
+            imageStream.Position = 0;
+            var fileInfo = fileStorage.Upload(id, imageStream);
+            fileStorage.SetMetadata(
+                fileInfo.Id,
+                new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
+
+            imageStream.Position = 0;
         }
 
         private async Task SetImage(string url)
@@ -107,7 +161,7 @@ namespace ChocolateyGui.Controls
             }
 
             PART_Loading.IsActive = true;
-            
+
             var size = GetBitmapSize();
             var expiration = DateTime.UtcNow + TimeSpan.FromDays(1);
 
@@ -142,7 +196,10 @@ namespace ChocolateyGui.Controls
             return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
         }
 
-        private async Task<IBitmap> LoadSvg(string url, float? desiredWidth, float? desiredHeight,
+        private async Task<IBitmap> LoadSvg(
+            string url,
+            float? desiredWidth,
+            float? desiredHeight,
             DateTime absoluteExpiration)
         {
             using (var upgradeToken = await Lock.UpgradeableReaderLockAsync())
@@ -181,13 +238,7 @@ namespace ChocolateyGui.Controls
                             imageStream.Position = 0;
                         }
 
-                        imageStream.Position = 0;
-                        var fileInfo = fileStorage.Upload(id, imageStream);
-                        fileStorage.SetMetadata(
-                            fileInfo.Id,
-                            new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
-
-                        imageStream.Position = 0;
+                        UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
                         return await BitmapLoader.Current.Load(imageStream, null, null);
                     }
                 }
@@ -225,58 +276,10 @@ namespace ChocolateyGui.Controls
                         await response.Content.CopyToAsync(imageStream);
                     }
 
-                    imageStream.Position = 0;
-                    var fileInfo = fileStorage.Upload(id, imageStream);
-                    fileStorage.SetMetadata(
-                        fileInfo.Id,
-                        new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
-
-                    imageStream.Position = 0;
+                    UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
                     return imageStream;
                 }
             }
-        }
-
-        private static Task LoadHtmlAsync(IWebBrowser browser, string html, string address)
-        {
-            // If using .Net 4.6 then use TaskCreationOptions.RunContinuationsAsynchronously
-            // and switch to tcs.TrySetResult below - no need for the custom extension method
-            var tcs = new TaskCompletionSource<bool>();
-
-            EventHandler<FrameLoadEndEventArgs> handler = null;
-            handler = (sender, args) =>
-            {
-                browser.FrameLoadEnd -= handler;
-
-                // This is required when using a standard TaskCompletionSource
-                // Extension method found in the CefSharp.Internals namespace
-                tcs.TrySetResultAsync(true);
-            };
-
-            browser.FrameLoadEnd += handler;
-
-            if (!string.IsNullOrEmpty(address))
-            {
-                browser.LoadHtml(html, address);
-            }
-
-            return tcs.Task;
-        }
-
-        private static BitmapSource GetErrorImage()
-        {
-            var size = GetBitmapSize();
-            return Imaging.CreateBitmapSourceFromHIcon(
-                SystemIcons.Error.Handle, Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(size.Width, size.Height));
-        }
-
-        private static System.Drawing.Size GetBitmapSize()
-        {
-            var scale = (new Windows7PlatformProvider()).GetDpiScaleFactor();
-            var x = (int) Math.Round(64 * scale.Item1);
-            var y = (int)Math.Round(64 * scale.Item2);
-            return new System.Drawing.Size(x, y);
         }
     }
 }

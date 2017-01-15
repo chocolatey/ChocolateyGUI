@@ -1,4 +1,10 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ChocolateyService.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
@@ -11,8 +17,6 @@ using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
-using ChocolateyGui.Interface;
-using ChocolateyGui.Models;
 using ChocolateyGui.Subprocess.Models;
 using Nito.AsyncEx;
 using NuGet;
@@ -69,11 +73,9 @@ namespace ChocolateyGui.Subprocess
                             config.Prerelease = false;
                         });
 
-                var chocoConfig = choco.GetConfiguration();
-                var nugetLogger = new ChocolateyNugetLogger();
                 var packageManager = NugetCommon.GetPackageManager(
-                    chocoConfig,
-                    nugetLogger,
+                    choco.GetConfiguration(),
+                    new ChocolateyNugetLogger(),
                     installSuccessAction: null,
                     uninstallSuccessAction: null,
                     addUninstallHandler: false);
@@ -88,7 +90,10 @@ namespace ChocolateyGui.Subprocess
             }
         }
 
-        public async Task<PackageOperationResult> InstallPackage(string id, string version = null, Uri source = null,
+        public async Task<PackageOperationResult> InstallPackage(
+            string id,
+            string version = null,
+            Uri source = null,
             bool force = false)
         {
             using (await Lock.WriterLockAsync())
@@ -117,18 +122,8 @@ namespace ChocolateyGui.Subprocess
                             }
                         });
 
-                var errors = new List<string>();
-                Action<StreamingLogMessage> grabErrors = m =>
-                    {
-                        switch (m.LogLevel)
-                        {
-                            case StreamingLogLevel.Warn:
-                            case StreamingLogLevel.Error:
-                            case StreamingLogLevel.Fatal:
-                                errors.Add(m.Message);
-                                break;
-                        }
-                    };
+                Action<StreamingLogMessage> grabErrors;
+                var errors = GetErrors(out grabErrors);
 
                 using (_streamingLogger.Intercept(grabErrors))
                 {
@@ -139,10 +134,12 @@ namespace ChocolateyGui.Subprocess
                         Environment.ExitCode = 0;
                         return new PackageOperationResult { Successful = false, Messages = errors };
                     }
+
                     return PackageOperationResult.SuccessfulCached;
                 }
             }
         }
+
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
         {
             using (await Lock.ReaderLockAsync())
@@ -242,37 +239,7 @@ namespace ChocolateyGui.Subprocess
                             }
                         });
 
-                var errors = new List<string>();
-                Action<StreamingLogMessage> grabErrors = m =>
-                    {
-                        switch (m.LogLevel)
-                        {
-                            case StreamingLogLevel.Warn:
-                            case StreamingLogLevel.Error:
-                            case StreamingLogLevel.Fatal:
-                                errors.Add(m.Message);
-                                break;
-                        }
-                    };
-
-                using (_streamingLogger.Intercept(grabErrors))
-                {
-                    try
-                    {
-                        await choco.RunAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        return new PackageOperationResult { Successful = false, Messages = errors, Exception = ex };
-                    }
-
-                    if (Environment.ExitCode != 0)
-                    {
-                        Environment.ExitCode = 0;
-                        return new PackageOperationResult { Successful = false, Messages = errors };
-                    }
-                    return PackageOperationResult.SuccessfulCached;
-                }
+                return await RunCommand(choco);
             }
         }
 
@@ -289,38 +256,7 @@ namespace ChocolateyGui.Subprocess
                             config.Features.UsePackageExitCodes = false;
                         });
 
-
-                var errors = new List<string>();
-                Action<StreamingLogMessage> grabErrors = m =>
-                    {
-                        switch (m.LogLevel)
-                        {
-                            case StreamingLogLevel.Warn:
-                            case StreamingLogLevel.Error:
-                            case StreamingLogLevel.Fatal:
-                                errors.Add(m.Message);
-                                break;
-                        }
-                    };
-
-                using (_streamingLogger.Intercept(grabErrors))
-                {
-                    try
-                    {
-                        await choco.RunAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        return new PackageOperationResult { Successful = false, Messages = errors, Exception = ex };
-                    }
-
-                    if (Environment.ExitCode != 0)
-                    {
-                        Environment.ExitCode = 0;
-                        return new PackageOperationResult { Successful = false, Messages = errors };
-                    }
-                    return PackageOperationResult.SuccessfulCached;
-                }
+                return await RunCommand(choco);
             }
         }
 
@@ -385,7 +321,7 @@ namespace ChocolateyGui.Subprocess
                 var config =
                     await Task.Run(
                         () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
-                return (config.Features.Select(Mapper.Map<ChocolateyFeature>).ToList());
+                return config.Features.Select(Mapper.Map<ChocolateyFeature>).ToList();
             }
         }
 
@@ -413,7 +349,7 @@ namespace ChocolateyGui.Subprocess
                 var config =
                     await Task.Run(
                         () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
-                return (config.ConfigSettings.Select(Mapper.Map<ChocolateySetting>).ToList());
+                return config.ConfigSettings.Select(Mapper.Map<ChocolateySetting>).ToList();
             }
         }
 
@@ -442,7 +378,7 @@ namespace ChocolateyGui.Subprocess
                 var config =
                     await Task.Run(
                         () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
-                return (config.Sources.Select(Mapper.Map<ChocolateySource>).ToList());
+                return config.Sources.Select(Mapper.Map<ChocolateySource>).ToList();
             }
         }
 
@@ -509,7 +445,7 @@ namespace ChocolateyGui.Subprocess
                 var chocoCOnfig =
                     await Task.Run(
                         () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
-                var sources = (chocoCOnfig.Sources.Select(Mapper.Map<ChocolateySource>).ToList());
+                var sources = chocoCOnfig.Sources.Select(Mapper.Map<ChocolateySource>).ToList();
 
                 if (sources.All(source => source.Id != id))
                 {
@@ -543,7 +479,51 @@ namespace ChocolateyGui.Subprocess
                 mappedPackage.IsPinned = packageInfo.IsPinned;
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
             }
+
             return mappedPackage;
+        }
+
+        private static List<string> GetErrors(out Action<StreamingLogMessage> grabErrors)
+        {
+            var errors = new List<string>();
+            grabErrors = m =>
+            {
+                switch (m.LogLevel)
+                {
+                    case StreamingLogLevel.Warn:
+                    case StreamingLogLevel.Error:
+                    case StreamingLogLevel.Fatal:
+                        errors.Add(m.Message);
+                        break;
+                }
+            };
+            return errors;
+        }
+
+        private async Task<PackageOperationResult> RunCommand(GetChocolatey choco)
+        {
+            Action<StreamingLogMessage> grabErrors;
+            var errors = GetErrors(out grabErrors);
+
+            using (_streamingLogger.Intercept(grabErrors))
+            {
+                try
+                {
+                    await choco.RunAsync();
+                }
+                catch (Exception ex)
+                {
+                    return new PackageOperationResult { Successful = false, Messages = errors, Exception = ex };
+                }
+
+                if (Environment.ExitCode != 0)
+                {
+                    Environment.ExitCode = 0;
+                    return new PackageOperationResult { Successful = false, Messages = errors };
+                }
+
+                return PackageOperationResult.SuccessfulCached;
+            }
         }
     }
 }

@@ -23,10 +23,12 @@ namespace ChocolateyGui
 {
     public class Bootstrapper : BootstrapperBase
     {
+        internal const string ApplicationName = "ChocolateyGUI";
+
         public Bootstrapper()
         {
             Initialize();
-            
+
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
@@ -39,8 +41,6 @@ namespace ChocolateyGui
 
         internal static string LocalAppDataPath { get; private set; }
 
-        internal const string ApplicationName = "ChocolateyGUI";
-
         public Task OnExitAsync()
         {
             Log.CloseAndFlush();
@@ -52,7 +52,8 @@ namespace ChocolateyGui
         protected override void Configure()
         {
             LocalAppDataPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData,
+                Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData,
                     Environment.SpecialFolderOption.DoNotVerify),
                 ApplicationName);
 
@@ -62,7 +63,8 @@ namespace ChocolateyGui
             }
 
             AppDataPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData,
+                Environment.GetFolderPath(
+                    Environment.SpecialFolder.CommonApplicationData,
                     Environment.SpecialFolderOption.DoNotVerify),
                 ApplicationName);
 
@@ -79,6 +81,7 @@ namespace ChocolateyGui
 #if DEBUG
                 .MinimumLevel.Debug()
 #endif
+
                 // Wamp gets *very* noise. Comment out at your own peril
                 .MinimumLevel.Override("WampSharp", LogEventLevel.Information)
                 .WriteTo.Async(config => config.LiterateConsole())

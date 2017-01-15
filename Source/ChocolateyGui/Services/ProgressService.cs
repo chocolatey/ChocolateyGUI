@@ -138,7 +138,9 @@ namespace ChocolateyGui.Services
             }
         }
 
-        public void WriteMessage(string message, PowerShellLineType type = PowerShellLineType.Output,
+        public void WriteMessage(
+            string message,
+            PowerShellLineType type = PowerShellLineType.Output,
             bool newLine = true)
         {
             // Don't show debug events when not running in debug.

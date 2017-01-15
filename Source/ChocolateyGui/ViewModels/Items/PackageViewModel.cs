@@ -18,9 +18,9 @@ using MemoryCache = System.Runtime.Caching.MemoryCache;
 namespace ChocolateyGui.ViewModels.Items
 {
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
-    public class PackageViewModel : 
-        ObservableBase, 
-        IPackageViewModel, 
+    public class PackageViewModel :
+        ObservableBase,
+        IPackageViewModel,
         IHandleWithTask<PackageChangedMessage>,
         IHandle<PackageHasUpdateMessage>
     {
@@ -189,7 +189,11 @@ namespace ChocolateyGui.ViewModels.Items
 
         public bool IsPinned
         {
-            get { return _isPinned; }
+            get
+            {
+                return _isPinned;
+            }
+
             set
             {
                 SetPropertyValue(ref _isPinned, value);

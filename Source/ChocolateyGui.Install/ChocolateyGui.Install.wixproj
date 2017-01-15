@@ -5,14 +5,6 @@
     <Name>ChocolateyGui.Install</Name>
   </PropertyGroup>
   <PropertyGroup>
-    <WIXRoot>..\Tools\WiX\</WIXRoot>
-    <WIX Condition="'$(SolutionRoot)' == ''">.\..\$(WIXRoot)</WIX>
-    <WIX Condition="'$(SolutionRoot)' != ''">$(SolutionRoot)\$(WIXRoot)</WIX>
-    <WixTargetsPath Condition="'$(WixTargetsPath)' == ''">$(WIX)Wix.targets</WixTargetsPath>
-    <WixCATargetsPath Condition="'$(WixCATargetsPath)' == ''">$(WIX)Wix.ca.targets</WixCATargetsPath>
-    <WixToolPath Condition="'$(WixToolPath)' == ''">$(WIX)tools\</WixToolPath>
-    <!-- Relative to the targets file that defines the UsingTask element is defined -->
-    <WixTasksPath>tools\WixTasks.dll</WixTasksPath>
     <CompilerAdditionalOptions>-ext WixNetFxExtension</CompilerAdditionalOptions>
     <LinkerAdditionalOptions>-ext WixNetFxExtension</LinkerAdditionalOptions>
   </PropertyGroup>
@@ -24,6 +16,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>ChocolateyGUI</OutputName>
     <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>..\..\BuildArtifacts\</OutputPath>

@@ -11,7 +11,9 @@ namespace ChocolateyGui.Startup
 {
     public static class AutoFacConfiguration
     {
-        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling",
+        [SuppressMessage(
+            "Microsoft.Maintainability",
+            "CA1506:AvoidExcessiveClassCoupling",
             Justification = "This is really a requirement due to required registrations.")]
         public static IContainer RegisterAutoFac()
         {

@@ -7,6 +7,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using ChocolateyGui.Utilities;
 
 namespace ChocolateyGui.Commands
 {
@@ -101,10 +102,15 @@ namespace ChocolateyGui.Commands
                 throw new ArgumentNullException("e");
             }
 
-            var target = GetDataContext(sender);
+            var target = DataContext.GetDataContext(sender);
             bool canExecute;
             if (
-                !CommandExecutionManager.TryExecuteCommand(target, e.Parameter, false, Executed, CanExecute,
+                !CommandExecutionManager.TryExecuteCommand(
+                    target,
+                    e.Parameter,
+                    false,
+                    Executed,
+                    CanExecute,
                     out canExecute))
             {
                 return;
@@ -128,7 +134,7 @@ namespace ChocolateyGui.Commands
                 throw new ArgumentNullException("e");
             }
 
-            var target = GetDataContext(sender);
+            var target = DataContext.GetDataContext(sender);
             bool canExecute;
             if (CommandExecutionManager.TryExecuteCommand(
                 target,
@@ -156,11 +162,16 @@ namespace ChocolateyGui.Commands
                 throw new ArgumentNullException("e");
             }
 
-            var target = GetDataContext(sender);
+            var target = DataContext.GetDataContext(sender);
             bool canExecute;
             if (
-                !CommandExecutionManager.TryExecuteCommand(target, e.Parameter, false, PreviewExecuted,
-                    PreviewCanExecute, out canExecute))
+                !CommandExecutionManager.TryExecuteCommand(
+                    target,
+                    e.Parameter,
+                    false,
+                    PreviewExecuted,
+                    PreviewCanExecute,
+                    out canExecute))
             {
                 return;
             }
@@ -183,7 +194,7 @@ namespace ChocolateyGui.Commands
                 throw new ArgumentNullException("e");
             }
 
-            var target = GetDataContext(sender);
+            var target = DataContext.GetDataContext(sender);
             bool canExecute;
             if (CommandExecutionManager.TryExecuteCommand(
                 target,
@@ -195,18 +206,6 @@ namespace ChocolateyGui.Commands
             {
                 e.Handled = true;
             }
-        }
-
-        private static object GetDataContext(object element)
-        {
-            var fe = element as FrameworkElement;
-            if (fe != null)
-            {
-                return fe.DataContext;
-            }
-
-            var fce = element as FrameworkContentElement;
-            return fce == null ? null : fce.DataContext;
         }
     }
 }

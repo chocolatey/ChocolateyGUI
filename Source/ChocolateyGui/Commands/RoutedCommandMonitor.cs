@@ -127,19 +127,19 @@ namespace ChocolateyGui.Commands
             {
                 if (e.RoutedEvent == CommandManager.PreviewCanExecuteEvent)
                 {
-                    binding.OnPreviewCanExecute(sender, (CanExecuteRoutedEventArgs) e);
+                    binding.OnPreviewCanExecute(sender, (CanExecuteRoutedEventArgs)e);
                 }
                 else if (e.RoutedEvent == CommandManager.CanExecuteEvent)
                 {
-                    binding.OnCanExecute(sender, (CanExecuteRoutedEventArgs) e);
+                    binding.OnCanExecute(sender, (CanExecuteRoutedEventArgs)e);
                 }
                 else if (e.RoutedEvent == CommandManager.PreviewExecutedEvent)
                 {
-                    binding.OnPreviewExecuted(sender, (ExecutedRoutedEventArgs) e);
+                    binding.OnPreviewExecuted(sender, (ExecutedRoutedEventArgs)e);
                 }
                 else if (e.RoutedEvent == CommandManager.ExecutedEvent)
                 {
-                    binding.OnExecuted(sender, (ExecutedRoutedEventArgs) e);
+                    binding.OnExecuted(sender, (ExecutedRoutedEventArgs)e);
                 }
 
                 if (e.Handled)

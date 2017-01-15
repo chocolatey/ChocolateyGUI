@@ -34,6 +34,23 @@ namespace ChocolateyGui.Commands
 
         private static Func<object, bool> _isDisconnected;
 
+        /// <summary>
+        ///     Represents an object that is capable of executing a specific CanExecute method and
+        ///     Execute method for a specific LineType on any object of the specific type.
+        /// </summary>
+        private interface ICommandExecutionProvider
+        {
+            string CanExecuteMethodName { get; }
+
+            string ExecutedMethodName { get; }
+
+            Type TargetType { get; }
+
+            bool InvokeCanExecuteMethod(object target, object parameter);
+
+            void InvokeExecutedMethod(object target, object parameter);
+        }
+
         private static Func<object, bool> IsDisconnected
         {
             get
@@ -45,7 +62,8 @@ namespace ChocolateyGui.Commands
                     var label = Expression.Label();
 
                     var targetTypeVarExpr = Expression.Variable(typeof(Type), "targetType");
-                    var setTargetTypeVarExpr = Expression.Assign(targetTypeVarExpr,
+                    var setTargetTypeVarExpr = Expression.Assign(
+                        targetTypeVarExpr,
                         Expression.Call(param, objectType.GetMethod("GetType")));
                     var targetTypeNameExpr = Expression.PropertyOrField(targetTypeVarExpr, "FullName");
 
@@ -102,8 +120,13 @@ namespace ChocolateyGui.Commands
         /// <returns>
         ///     True if the command logic was successfully executed; otherwise false.
         /// </returns>
-        public static bool TryExecuteCommand(object target, object parameter, bool execute, string executedMethodName,
-            string canExecuteMethodName, out bool canExecute)
+        public static bool TryExecuteCommand(
+            object target,
+            object parameter,
+            bool execute,
+            string executedMethodName,
+            string canExecuteMethodName,
+            out bool canExecute)
         {
             var designTime = DesignerProperties.GetIsInDesignMode(new DependencyObject());
             if (designTime)
@@ -131,7 +154,9 @@ namespace ChocolateyGui.Commands
             return false;
         }
 
-        private static ICommandExecutionProvider GetCommandExecutionProvider(object target, string canExecuteMethodName,
+        private static ICommandExecutionProvider GetCommandExecutionProvider(
+            object target,
+            string canExecuteMethodName,
             string executedMethodName)
         {
             if (target == _disconnectedItemSentinelValue)
@@ -145,7 +170,7 @@ namespace ChocolateyGui.Commands
             {
                 try
                 {
-                    executionProvider = (ICommandExecutionProvider) GetCommandExecutionProviderConstructor(key)();
+                    executionProvider = (ICommandExecutionProvider)GetCommandExecutionProviderConstructor(key)();
                 }
                 catch (TargetInvocationException)
                 {
@@ -195,7 +220,7 @@ namespace ChocolateyGui.Commands
             {
                 var executionProviderType = typeof(CommandExecutionProvider<>).MakeGenericType(key.TargetType);
                 var executionProviderCtor =
-                    executionProviderType.GetConstructor(new[] {typeof(Type), typeof(string), typeof(string)});
+                    executionProviderType.GetConstructor(new[] { typeof(Type), typeof(string), typeof(string) });
 
                 var executionProviderCtorParamaters = new Expression[]
                 {
@@ -205,29 +230,13 @@ namespace ChocolateyGui.Commands
                 };
 
                 Debug.Assert(executionProviderCtor != null, "executionProviderCtor != null");
-                var executionProviderCtorExpression = Expression.New(executionProviderCtor,
+                var executionProviderCtorExpression = Expression.New(
+                    executionProviderCtor,
                     executionProviderCtorParamaters);
                 constructor = Expression.Lambda<Func<object>>(executionProviderCtorExpression).Compile();
             }
 
             return constructor;
-        }
-
-        /// <summary>
-        ///     Represents an object that is capable of executing a specific CanExecute method and
-        ///     Execute method for a specific LineType on any object of the specific type.
-        /// </summary>
-        private interface ICommandExecutionProvider
-        {
-            string CanExecuteMethodName { get; }
-
-            string ExecutedMethodName { get; }
-
-            Type TargetType { get; }
-
-            bool InvokeCanExecuteMethod(object target, object parameter);
-
-            void InvokeExecutedMethod(object target, object parameter);
         }
 
         /// <summary>
@@ -345,12 +354,12 @@ namespace ChocolateyGui.Commands
             {
                 if (_canExecute != null)
                 {
-                    return _canExecute((TTarget) target);
+                    return _canExecute((TTarget)target);
                 }
 
                 if (_canExecuteWithParam != null)
                 {
-                    return _canExecuteWithParam((TTarget) target, parameter);
+                    return _canExecuteWithParam((TTarget)target, parameter);
                 }
 
                 return false;
@@ -360,11 +369,11 @@ namespace ChocolateyGui.Commands
             {
                 if (_executed != null)
                 {
-                    _executed((TTarget) target);
+                    _executed((TTarget)target);
                 }
                 else if (_executedWithParam != null)
                 {
-                    _executedWithParam((TTarget) target, parameter);
+                    _executedWithParam((TTarget)target, parameter);
                 }
             }
 
@@ -375,7 +384,7 @@ namespace ChocolateyGui.Commands
                     return null;
                 }
 
-                return typeof(TTarget).GetMethod(methodName, new[] {typeof(object)})
+                return typeof(TTarget).GetMethod(methodName, new[] { typeof(object) })
                        ?? typeof(TTarget).GetMethod(methodName, new Type[0]);
             }
         }

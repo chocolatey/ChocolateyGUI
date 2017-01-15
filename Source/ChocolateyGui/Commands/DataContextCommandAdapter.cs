@@ -6,9 +6,9 @@
 
 using System;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
+using ChocolateyGui.Utilities;
 
 namespace ChocolateyGui.Commands
 {
@@ -28,7 +28,7 @@ namespace ChocolateyGui.Commands
         private object _target;
 
         /// <summary>
-        ///     Initializes a new instance of the DataContextCommandAdapter class.
+        /// Initializes a new instance of the <see cref="DataContextCommandAdapter"/> class.
         /// </summary>
         public DataContextCommandAdapter()
         {
@@ -63,6 +63,12 @@ namespace ChocolateyGui.Commands
             CanExecute = canExecute;
         }
 
+        event EventHandler ICommand.CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
         /// <summary>
         ///     Gets or sets the name of the method of the target object's DataContext that determines whether the
         ///     command can execute in its current state.
@@ -87,15 +93,9 @@ namespace ChocolateyGui.Commands
         /// </remarks>
         public string Executed { get; set; }
 
-        event EventHandler ICommand.CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
         bool ICommand.CanExecute(object parameter)
         {
-            var target = GetDataContext(_target);
+            var target = DataContext.GetDataContext(_target);
             if (_target == null)
             {
                 return false;
@@ -109,7 +109,7 @@ namespace ChocolateyGui.Commands
 
         void ICommand.Execute(object parameter)
         {
-            var target = GetDataContext(_target);
+            var target = DataContext.GetDataContext(_target);
             if (_target == null)
             {
                 return;
@@ -148,18 +148,6 @@ namespace ChocolateyGui.Commands
                     : target.TargetObject;
 
             return this;
-        }
-
-        private static object GetDataContext(object element)
-        {
-            var fe = element as FrameworkElement;
-            if (fe != null)
-            {
-                return fe.DataContext;
-            }
-
-            var fce = element as FrameworkContentElement;
-            return fce == null ? null : fce.DataContext;
         }
 
         // This method only works with the C# 4.0 XamlParser.

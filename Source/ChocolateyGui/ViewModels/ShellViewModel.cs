@@ -14,8 +14,8 @@ using ChocolateyGui.ViewModels.Items;
 
 namespace ChocolateyGui.ViewModels
 {
-    public class ShellViewModel : Conductor<object>.Collection.OneActive, 
-        IHandle<ShowPackageDetailsMessage>, 
+    public class ShellViewModel : Conductor<object>.Collection.OneActive,
+        IHandle<ShowPackageDetailsMessage>,
         IHandle<ShowSourcesMessage>,
         IHandle<ShowSettingsMessage>,
         IHandle<SettingsGoBackMessage>
@@ -25,7 +25,8 @@ namespace ChocolateyGui.ViewModels
         private readonly SourcesViewModel _sourcesViewModel;
         private object _lastActiveItem;
 
-        public ShellViewModel(ISourceService sourceService,
+        public ShellViewModel(
+            ISourceService sourceService,
             IVersionNumberProvider versionNumberProvider,
             IEventAggregator eventAggregator,
             SourcesViewModel sourcesViewModel)
@@ -41,6 +42,21 @@ namespace ChocolateyGui.ViewModels
             Sources = new BindableCollection<SourceViewModel>(sourceService.GetSources());
             ActiveItem = _sourcesViewModel;
         }
+
+        public string AboutInformation
+            => ResourceReader.GetFromResources(GetType().Assembly, "ChocolateyGui.Resources.ABOUT.md");
+
+        public string ReleaseNotes
+            => ResourceReader.GetFromResources(GetType().Assembly, "ChocolateyGui.Resources.CHANGELOG.md");
+
+        public string Credits
+            => ResourceReader.GetFromResources(GetType().Assembly, "ChocolateyGui.Resources.CREDITS.md");
+
+        public string VersionNumber => _versionNumberProvider.Version;
+
+        public BindableCollection<SourceViewModel> Sources { get; set; }
+
+        public SourcesViewModel SourcesSelectorViewModel => _sourcesViewModel;
 
         public void Handle(ShowPackageDetailsMessage message)
         {
@@ -96,20 +112,5 @@ namespace ChocolateyGui.ViewModels
                 this.CloseItem(_lastActiveItem);
             }
         }
-
-        public string AboutInformation
-            => ResourceReader.GetFromResources(GetType().Assembly, "ChocolateyGui.Resources.ABOUT.md");
-
-        public string ReleaseNotes
-            => ResourceReader.GetFromResources(GetType().Assembly, "ChocolateyGui.Resources.CHANGELOG.md");
-
-        public string Credits
-            => ResourceReader.GetFromResources(GetType().Assembly, "ChocolateyGui.Resources.CREDITS.md");
-
-        public string VersionNumber => _versionNumberProvider.Version;
-
-        public BindableCollection<SourceViewModel> Sources { get; set; }
-
-        public SourcesViewModel SourcesSelectorViewModel => _sourcesViewModel;
     }
 }

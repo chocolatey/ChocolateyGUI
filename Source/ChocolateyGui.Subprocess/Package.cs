@@ -6,7 +6,7 @@
 
 using System;
 
-namespace ChocolateyGui.Models
+namespace ChocolateyGui.Subprocess
 {
     public class Package
     {

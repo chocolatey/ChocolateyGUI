@@ -13,7 +13,7 @@ namespace ChocolateyGui.Services
     {
         public Stream OpenFile(string defaultExtension, string filter)
         {
-            var fd = new OpenFileDialog {DefaultExt = defaultExtension, Filter = filter};
+            var fd = new OpenFileDialog { DefaultExt = defaultExtension, Filter = filter };
 
             var result = fd.ShowDialog();
 
@@ -22,7 +22,7 @@ namespace ChocolateyGui.Services
 
         public Stream SaveFile(string defaultExtension, string filter)
         {
-            var fd = new SaveFileDialog {DefaultExt = defaultExtension, Filter = filter};
+            var fd = new SaveFileDialog { DefaultExt = defaultExtension, Filter = filter };
 
             var result = fd.ShowDialog();
 

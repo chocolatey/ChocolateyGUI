@@ -17,7 +17,7 @@ namespace ChocolateyGui.Utilities.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool) value ? Tick : string.Empty;
+            return (bool)value ? Tick : string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

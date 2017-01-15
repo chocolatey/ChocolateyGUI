@@ -46,8 +46,8 @@ namespace ChocolateyGui.Views
             {
                 if (obj.GetType() == typeof(ListBoxItem))
                 {
-                    var item = (ListBoxItem) obj;
-                    var context = (IPackageViewModel) item.DataContext;
+                    var item = (ListBoxItem)obj;
+                    var context = (IPackageViewModel)item.DataContext;
                     context.ViewDetails();
                 }
 

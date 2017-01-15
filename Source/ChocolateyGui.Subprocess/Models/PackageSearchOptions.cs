@@ -29,8 +29,14 @@ namespace ChocolateyGui.Subprocess.Models
         }
 
         [JsonConstructor]
-        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool includePrerelease,
-            bool includeAllVersions, bool matchWord, string source)
+        public PackageSearchOptions(
+            int pageSize,
+            int currentPage,
+            string sortColumn,
+            bool includePrerelease,
+            bool includeAllVersions,
+            bool matchWord,
+            string source)
             : this()
         {
             this.PageSize = pageSize;

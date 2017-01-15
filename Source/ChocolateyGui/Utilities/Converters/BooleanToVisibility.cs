@@ -39,8 +39,8 @@ namespace ChocolateyGui.Utilities.Converters
 
         private static bool IsCollapsed(object value, object parameter)
         {
-            var boolVal = (value != null && value != DependencyProperty.UnsetValue) && (bool) value;
-            return boolVal == false ^ (parameter != null && bool.Parse((string) parameter));
+            var boolVal = (value != null && value != DependencyProperty.UnsetValue) && (bool)value;
+            return boolVal == false ^ (parameter != null && bool.Parse((string)parameter));
         }
     }
 }

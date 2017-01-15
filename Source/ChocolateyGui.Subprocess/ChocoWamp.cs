@@ -1,5 +1,10 @@
-﻿using System.Threading.Tasks;
-using ChocolateyGui.Models;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ChocoWamp.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Threading.Tasks;
 using WampSharp.Binding;
 using WampSharp.Fleck;
 using WampSharp.V2;
@@ -9,14 +14,14 @@ namespace ChocolateyGui.Subprocess
 {
     public class ChocoWamp
     {
-        private string Location { get;  }
-
-        private WampHost Host { get; set; }
-
         public ChocoWamp(int port)
         {
             Location = $"ws://127.0.0.1:{port}/ws";
         }
+
+        private string Location { get;  }
+
+        private WampHost Host { get; set; }
 
         public async Task Start()
         {

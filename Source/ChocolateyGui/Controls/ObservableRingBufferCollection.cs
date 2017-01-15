@@ -59,6 +59,8 @@ namespace ChocolateyGui.Controls
             _buffer = new T[capacity];
         }
 
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
         /// <summary>
         ///     Gets the maximal count of items within the ring buffer.
         /// </summary>
@@ -88,7 +90,8 @@ namespace ChocolateyGui.Controls
             var index = _position++ % Capacity;
             if (_buffer[index] != null)
             {
-                NotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove,
+                NotifyCollectionChanged(new NotifyCollectionChangedEventArgs(
+                    NotifyCollectionChangedAction.Remove,
                     _buffer[index]));
             }
 
@@ -227,8 +230,6 @@ namespace ChocolateyGui.Controls
             NotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item));
             return true;
         }
-
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         /// <summary>
         ///     Gets the position of a specified item within the ring buffer.

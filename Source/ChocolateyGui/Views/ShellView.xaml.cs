@@ -31,7 +31,10 @@ namespace ChocolateyGui.Views
 
         private readonly IProgressService _progressService;
 
-        public ShellView(IProgressService progressService,
+        private bool _closeInitiated = false;
+
+        public ShellView(
+            IProgressService progressService,
             IChocolateyConfigurationProvider chocolateyConfigurationProvider,
             IConfigService configService)
         {
@@ -78,7 +81,9 @@ namespace ChocolateyGui.Views
             }
         }
 
-        public Task<ChocolateyDialogController> ShowChocolateyDialogAsync(string title, bool isCancelable = false,
+        public Task<ChocolateyDialogController> ShowChocolateyDialogAsync(
+            string title,
+            bool isCancelable = false,
             MetroDialogSettings settings = null)
         {
             return Dispatcher.Invoke(async () =>
@@ -103,16 +108,15 @@ namespace ChocolateyGui.Views
             });
         }
 
-        private bool _closeInitiated = false;
-
         protected override void OnClosing(CancelEventArgs e)
         {
             if (!_closeInitiated)
             {
                 e.Cancel = true;
                 _closeInitiated = true;
-                var bootstrapper = (Bootstrapper) Application.Current.FindResource("Bootstrapper");
+                var bootstrapper = (Bootstrapper)Application.Current.FindResource("Bootstrapper");
 #pragma warning disable 4014
+
                 // ReSharper disable once PossibleNullReferenceException
                 bootstrapper.OnExitAsync().ContinueWith(t => Execute.OnUIThread(Close));
 #pragma warning restore 4014

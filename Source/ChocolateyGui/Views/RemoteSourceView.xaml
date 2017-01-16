@@ -117,7 +117,7 @@
                             </StackPanel>
                             <TextBlock Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" FontWeight="SemiBold" FontSize="20" HorizontalAlignment="Right">
                                 <Run Text="{Binding DownloadCount, StringFormat=N0}"/>
-                                <Run Text=" {x:Static lang:Strings.RemoteSourceView_Downloads}"/>
+                                <Run Text="{x:Static lang:Strings.RemoteSourceView_Downloads}"/>
                             </TextBlock>
                         </Grid>
                         <Grid x:Name="PART_Body" Grid.Row="1">

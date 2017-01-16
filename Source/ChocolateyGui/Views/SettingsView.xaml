@@ -74,7 +74,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="x:Static lang:Strings.SettingsView_Settings"/>
+                            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static lang:Strings.SettingsView_Settings}"/>
                             <DataGrid Grid.Row="1"
                                     CanUserAddRows="False" CanUserDeleteRows="False" 
                                           ItemsSource="{Binding Settings}" AutoGenerateColumns="False"

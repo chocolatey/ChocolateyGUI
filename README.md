@@ -86,4 +86,4 @@ Committers, you should be very familiar with [COMMITTERS](https://github.com/cho
 
 ## Credits
 
-ChocolateyGUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/legal/CREDITS.md) (just LEGAL/Credits.md in the zip folder)
+ChocolateyGUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/input/credits.md) (just input/credits.md in the zip folder)

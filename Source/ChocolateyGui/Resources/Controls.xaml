@@ -9,6 +9,7 @@
                     xmlns:commands="clr-namespace:ChocolateyGui.Commands"
                     xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
                     xmlns:providers="clr-namespace:ChocolateyGui.Providers"
+                    xmlns:lang="clr-namespace:ChocolateyGui.Properties"
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -129,20 +130,20 @@
                                            FontSize="16" Margin="5,0,0,0" VerticalAlignment="Bottom" />
                             </StackPanel>
                             <TextBlock Grid.Row="1">
-                                <Run Text="By: " />
+                                <Run Text="{x:Static lang:Strings.Controls_PackageListByAuthor}" />
                                 <Run Text="{Binding Authors}" Foreground="{DynamicResource TextHighlightBrush}" />
                             </TextBlock>
                             <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="{Binding Summary}" FontSize="12" />
                             <StackPanel Grid.Row="3" Orientation="Horizontal">
                                 <TextBlock>
                                     <Run Text="{Binding DownloadCount}" FontWeight="SemiBold" />
-                                    <Run Text=" downloads" />
+                                    <Run Text=" {x:Static lang:Strings.Controls_PackageListDownloads}" />
                                 </TextBlock>
                                 <TextBlock FontWeight="Light" Padding="5,0">
                                     <Run Text="|" />
                                 </TextBlock>
                                 <TextBlock>
-                                    <Run FontWeight="SemiBold" Text="Tags:" /><Run Text=" " />
+                                    <Run FontWeight="SemiBold" Text="{x:Static lang:Strings.Controls_PackageListTags}" /><Run Text=" " />
                                     <Run Text="{Binding Tags}" Foreground="{DynamicResource TextHighlightBrush}" />
                                 </TextBlock>
                             </StackPanel>

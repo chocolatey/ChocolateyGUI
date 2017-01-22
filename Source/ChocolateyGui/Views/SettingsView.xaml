@@ -9,6 +9,7 @@
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
              xmlns:models="clr-namespace:ChocolateyGui.Subprocess.Models;assembly=ChocolateyGui.Subprocess"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              mc:Ignorable="d" 
              Background="{StaticResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel, IsDesignTimeCreatable=False}"
@@ -22,10 +23,10 @@
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-            <TextBlock Text="Settings" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Text="{x:Static lang:Strings.SettingsView_Settings}" Style="{StaticResource TitleTextStyle}"/>
         </StackPanel>
         <TabControl>
-            <TabItem Header="Options">
+            <TabItem Header="{x:Static lang:Strings.SettingsView_Options}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -36,10 +37,10 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Margin="5 5 5 3" Style="{StaticResource SubheaderTextBlockStyle}">Chocolatey Gui</TextBlock>
+                        <TextBlock Margin="5 5 5 3" Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Static lang:Strings.SettingsView_ChocoGui}"/>
                         <StackPanel Margin="5 0" Grid.Row="1" Width="300" HorizontalAlignment="Left">
-                            <metro:ToggleSwitch Header="Elevate By Default" IsChecked="{Binding ElevateByDefault}"/>
-                            <metro:ToggleSwitch Header="Show Console Output" IsChecked="{Binding ShowConsoleOutput}"/>
+                            <metro:ToggleSwitch Header="{x:Static lang:Strings.SettingsView_ToggleElevateByDefault}" IsChecked="{Binding ElevateByDefault}"/>
+                            <metro:ToggleSwitch Header="{x:Static lang:Strings.SettingsView_ToggleShowConsoleOutput}" IsChecked="{Binding ShowConsoleOutput}"/>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="1" Background="White" Margin="5">
@@ -51,10 +52,9 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.ColumnSpan="2" Margin="10 5 10 3" Style="{StaticResource SubheaderTextBlockStyle}">Chocolatey</TextBlock>
-
+                        <TextBlock Grid.ColumnSpan="2" Margin="10 5 10 3" Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Static lang:Strings.SettingsView_SubheaderChoco}"/>
                         <DockPanel Margin="10 0 5 0" Grid.Column="0" Grid.Row="1">
-                            <TextBlock DockPanel.Dock="Top" Style="{StaticResource TitleTextBlockStyle}">Features</TextBlock>
+                            <TextBlock DockPanel.Dock="Top" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static lang:Strings.SettingsView_Features}"/>
                             <ScrollViewer>
                                 <ItemsControl ItemsSource="{Binding Features}">
                                     <ItemsControl.ItemTemplate>
@@ -74,22 +74,22 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Style="{StaticResource TitleTextBlockStyle}">Settings</TextBlock>
+                            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static lang:Strings.SettingsView_Settings}"/>
                             <DataGrid Grid.Row="1"
                                     CanUserAddRows="False" CanUserDeleteRows="False" 
                                           ItemsSource="{Binding Settings}" AutoGenerateColumns="False"
                                           cal:Message.Attach="[Event RowEditEnding] = [Action RowEditEnding($eventArgs)]">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Name" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
-                                    <DataGridTextColumn Header="Value" Width="2*" Binding="{Binding Value}"/>
-                                    <DataGridTextColumn Header="Description" Width="2*" IsReadOnly="True" Binding="{Binding Description}"/>
+                                    <DataGridTextColumn Header="{x:Static lang:Strings.SettingsView_PropertyName}" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
+                                    <DataGridTextColumn Header="{x:Static lang:Strings.SettingsView_PropertyValue}" Width="2*" Binding="{Binding Value}"/>
+                                    <DataGridTextColumn Header="{x:Static lang:Strings.SettingsView_PropertyDescription}" Width="2*" IsReadOnly="True" Binding="{Binding Description}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Sources">
+            <TabItem Header="{x:Static lang:Strings.SettingsView_Sources}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -98,27 +98,27 @@
                     </Grid.RowDefinitions>
 
                     <!-- Sources -->
-                    <TextBlock Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}">Sources</TextBlock>
+                    <TextBlock Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static lang:Strings.SettingsView_Sources}"/>
                     <DataGrid  x:Name="SourcesGrid"
                                Grid.Row="1" Grid.Column="0"
                                CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
                                cal:Message.Attach="[Event SelectionChanged] = [Action SourceSelectionChanged(SourcesGrid.SelectedItem)]"
                                ItemsSource="{Binding Sources}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="Path" Width="3*" Binding="{Binding Value}"/>
-                            <DataGridTextColumn Header="Username" Width="*" Binding="{Binding UserName}" />
-                            <DataGridTextColumn Header="Password" Width="*" Binding="{Binding Password}" />
-                            <DataGridTextColumn Header="Certificate" Width="*" Binding="{Binding Certificate}" />
-                            <DataGridTextColumn Header="Certificate Pass" Width="*" Binding="{Binding CertificatePassword}" />
-                            <metro:DataGridNumericUpDownColumn Header="Priority" Binding="{Binding Priority}"/>
+                            <DataGridTextColumn Header="{x:Static lang:Strings.SettingsView_SourcesId}" Width="*" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="{x:Static lang:Strings.SettingsView_SourcesPath}" Width="3*" Binding="{Binding Value}"/>
+                            <DataGridTextColumn Header="{x:Static lang:Strings.SettingsView_SourcesUsername}" Width="*" Binding="{Binding UserName}" />
+                            <DataGridTextColumn Header="{x:Static lang:Strings.SettingsView_SourcesPassword}" Width="*" Binding="{Binding Password}" />
+                            <DataGridTextColumn Header="{x:Static lang:Strings.SettingsView_SourcesCertificate}" Width="*" Binding="{Binding Certificate}" />
+                            <DataGridTextColumn Header="{x:Static lang:Strings.SettingsView_SourcesCertificatePass}" Width="*" Binding="{Binding CertificatePassword}" />
+                            <metro:DataGridNumericUpDownColumn Header="{x:Static lang:Strings.SettingsView_SourcesPriority}" Binding="{Binding Priority}"/>
                             <DataGridCheckBoxColumn Header="Disabled" Width="Auto" Binding="{Binding Disabled}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <DockPanel Grid.Row="2" Grid.Column="0" Margin="5">
                         <Grid DockPanel.Dock="Top">
                             <TextBlock Text="Source" Margin="15 5 0 0" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <Button x:Name="New" HorizontalAlignment="Right" VerticalAlignment="Center" Width="80" Padding="5">New</Button>
+                            <Button x:Name="New" HorizontalAlignment="Right" VerticalAlignment="Center" Width="80" Padding="5" Content="{x:Static lang:Strings.SettingsView_ButtonNew}"/>
                         </Grid>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -156,52 +156,52 @@
                                 </Style>
                             </Grid.Resources>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0">Id</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static lang:Strings.SettingsView_SourcesId}"/>
                             <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding SelectedSource.Id}"/>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0">Source</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static lang:Strings.SettingsView_SourcesSource}"/>
                             <TextBox Grid.Row="2" Grid.Column="1"
                                  VerticalContentAlignment="Center"  Text="{Binding SelectedSource.Value}"/>
 
-                            <TextBlock Grid.Row="3" Grid.Column="0">Username</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="{x:Static lang:Strings.SettingsView_SourcesUsername}"/>
                             <TextBox Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"  Text="{Binding SelectedSource.UserName}"/>
 
-                            <TextBlock Grid.Row="4" Grid.Column="0">Password</TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="{x:Static lang:Strings.SettingsView_SourcesPassword}"/>
                             <TextBox Grid.Row="4" Grid.Column="1"
                                  VerticalContentAlignment="Center"  Text="{Binding SelectedSource.Password}"/>
 
-                            <TextBlock Grid.Row="1" Grid.Column="2">Certificate</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Static lang:Strings.SettingsView_SourcesCertificate}"/>
                             <TextBox Grid.Row="1" Grid.Column="3" VerticalContentAlignment="Center"  Text="{Binding SelectedSource.Certificate}"/>
 
-                            <TextBlock Grid.Row="2" Grid.Column="2">Certifice Pass</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{x:Static lang:Strings.SettingsView_SourcesCertificatePass}"/>
                             <TextBox Grid.Row="2" Grid.Column="3"
                                  VerticalContentAlignment="Center"  Text="{Binding SelectedSource.CertificatePassword}"/>
 
-                            <TextBlock Grid.Row="3" Grid.Column="2">Is Disabled</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{x:Static lang:Strings.SettingsView_SourcesIsDisabled}"/>
                             <CheckBox Grid.Row="3" Grid.Column="3"
                                  VerticalAlignment="Center" IsChecked="{Binding SelectedSource.Disabled}"/>
 
-                            <TextBlock Grid.Row="4" Grid.Column="2">Priority</TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="2" Text="{x:Static lang:Strings.SettingsView_SourcesPriority}"/>
                             <metro:NumericUpDown Grid.Row="4" Grid.Column="3" VerticalContentAlignment="Center" Value="{Binding SelectedSource.Priority}"/>
 
                             <StackPanel Grid.Row="5" Grid.Column="3"  Orientation="Horizontal" Margin="15 0 0 0">
                                 <Button x:Name="Save"
                                 Padding="5 5" Margin="5 0" Width="80"
-                                HorizontalAlignment="Left" VerticalAlignment="Center">Save</Button>
+                                HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Strings.SettingsView_ButtonSave}"/>
 
                                 <Button x:Name="Remove"
                                 Padding="5 5" Width="80" Margin="5 0 "
-                                HorizontalAlignment="Left" VerticalAlignment="Center">Remove</Button>
+                                HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Strings.SettingsView_ButtonRemove}"/>
 
                                 <Button x:Name="Cancel"
                                 Padding="5 5" Width="80" Margin="5 0 "
-                                HorizontalAlignment="Left" VerticalAlignment="Center">Cancel</Button>
+                                HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Strings.SettingsView_ButtonCancel}"/>
                             </StackPanel>
                         </Grid>
                     </DockPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="About">
+            <TabItem Header="{x:Static lang:Strings.SettingsView_About}">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -214,7 +214,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
-                        Style="{StaticResource SectionHeaderTextStyle}">About</TextBlock>
+                        Style="{StaticResource SectionHeaderTextStyle}" Text="{x:Static lang:Strings.SettingsView_About}"/>
                     <controls:MarkdownViewer 
                             AutomationProperties.Name="About"
                             Grid.Row="1" Grid.Column="0"
@@ -222,7 +222,7 @@
                             HorizontalAlignment="Stretch"
                             Margin="5 0"
                             MarkdownSource="pack://application:,,,/../../Resources/ABOUT.md" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource SectionHeaderTextStyle}">Credits</TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource SectionHeaderTextStyle}" Text="{x:Static lang:Strings.SettingsView_Credits}"/>
                     <controls:MarkdownViewer 
                             AutomationProperties.Name="Credits"
                             Grid.Row="3" Grid.Column="0"
@@ -231,7 +231,7 @@
                             Margin="5 0"
                             MarkdownSource="pack://application:,,,/../../Resources/CREDITS.md" />
                     
-                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource SectionHeaderTextStyle}">Release Notes</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource SectionHeaderTextStyle}" Text="{x:Static lang:Strings.SettingsView_ReleaseNotes}"/>
                     <controls:MarkdownViewer 
                             AutomationProperties.Name="Release Notes"
                             Grid.Row="1" Grid.Column="1" Grid.RowSpan="3"

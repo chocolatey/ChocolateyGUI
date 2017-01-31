@@ -14,12 +14,12 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 using Caliburn.Micro;
+using ChocolateyGui.Base;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
 using Serilog;
-using ChocolateyGui.Base;
 
 namespace ChocolateyGui.ViewModels
 {

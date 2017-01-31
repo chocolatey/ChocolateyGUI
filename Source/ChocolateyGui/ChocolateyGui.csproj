@@ -233,7 +233,7 @@
     <Compile Include="Providers\ChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\ChocolateyCustomSchemeProvider.cs" />
     <Compile Include="Providers\ChocoRequestHandler.cs" />
-    <Compile Include="Providers\ElevationStatusProvider.cs" />
+    <Compile Include="Elevation.cs" />
     <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IPlatformProvider.cs" />
     <Compile Include="Providers\IVersionNumberProvider.cs" />

@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
 using Caliburn.Micro;
 using CefSharp;
+using chocolatey;
 using ChocolateyGui.Properties;
+using ChocolateyGui.Services;
 using ChocolateyGui.Startup;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels;
@@ -89,10 +93,26 @@ namespace ChocolateyGui
             Internationalization.Initialize();
         }
 
-        protected override void OnStartup(object sender, StartupEventArgs e)
+        protected override async void OnStartup(object sender, StartupEventArgs e)
         {
-            App.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
-            DisplayRootViewFor<ShellViewModel>();
+            try
+            {
+                var packageSerice = Container.Resolve<IChocolateyPackageService>();
+                var features = await packageSerice.GetFeatures();
+
+                var backgroundFeature = features.FirstOrDefault(feature => string.Equals(feature.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase));
+                var elevationProvider = Elevation.Instance;
+                elevationProvider.IsBackgroundRunning = backgroundFeature?.Enabled ?? false;
+
+                App.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
+                DisplayRootViewFor<ShellViewModel>();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to start application.\n{ex.Message}\n\nMore details available in application logs.");
+                Logger.Fatal(ex, "Failed to start application.");
+                await OnExitAsync();
+            }
         }
 
         protected override object GetInstance(Type service, string key)

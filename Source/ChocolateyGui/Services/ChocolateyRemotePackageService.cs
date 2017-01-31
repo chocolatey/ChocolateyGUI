@@ -95,6 +95,11 @@ namespace ChocolateyGui.Services
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false)
         {
             await Initialize(true);
+            if (Elevation.Instance.IsBackgroundRunning)
+            {
+                source = null;
+            }
+
             var result = await _chocolateyService.InstallPackage(id, version?.ToString(), source, force);
             if (!result.Successful)
             {
@@ -145,6 +150,11 @@ namespace ChocolateyGui.Services
         public async Task UpdatePackage(string id, Uri source = null)
         {
             await Initialize(true);
+            if (Elevation.Instance.IsBackgroundRunning)
+            {
+                source = null;
+            }
+
             var result = await _chocolateyService.UpdatePackage(id, source);
             if (!result.Successful)
             {
@@ -226,6 +236,10 @@ namespace ChocolateyGui.Services
         {
             await Initialize(true);
             await _chocolateyService.SetFeature(feature);
+            if (string.Equals(feature.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase))
+            {
+                Elevation.Instance.IsBackgroundRunning = feature.Enabled;
+            }
         }
 
         public async Task<IReadOnlyList<ChocolateySetting>> GetSettings()
@@ -380,7 +394,7 @@ namespace ChocolateyGui.Services
                 _chocolateyService = CreateClient();
 
                 // ReSharper disable once PossibleNullReferenceException
-                ((ElevationStatusProvider)Application.Current.FindResource("Elevation")).IsElevated = await _chocolateyService.IsElevated();
+                Elevation.Instance.IsElevated = await _chocolateyService.IsElevated();
             }
         }
 

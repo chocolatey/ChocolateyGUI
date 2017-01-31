@@ -89,6 +89,7 @@ namespace ChocolateyGui.ViewModels
         {
             Observable.FromEventPattern<PropertyChangedEventArgs>(this, nameof(PropertyChanged))
                 .Where(p => p.EventArgs.PropertyName == nameof(ActiveItem))
+                .Where(p => ActiveItem != null)
                 .Subscribe(p => DisplayName = $"Source - {ActiveItem.DisplayName}");
 
             if (_firstLoad)

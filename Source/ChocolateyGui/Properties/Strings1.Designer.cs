@@ -205,6 +205,15 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pin.
+        /// </summary>
+        public static string PackageView_ButtonPin {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reinstall.
         /// </summary>
         public static string PackageView_ButtonReinstall {

@@ -32,6 +32,7 @@ namespace ChocolateyGui.Startup
 
             // Register Providers
             builder.RegisterType<VersionNumberProvider>().As<IVersionNumberProvider>().SingleInstance();
+            builder.RegisterType<Elevation>().SingleInstance();
 
             var configurationProvider = new ChocolateyConfigurationProvider();
             builder.RegisterInstance(configurationProvider).As<IChocolateyConfigurationProvider>().SingleInstance();

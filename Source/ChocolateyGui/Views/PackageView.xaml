@@ -19,7 +19,13 @@
         <converters:NullToVisibility x:Key="NullToVisibility" />
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString" />
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString" />
-        <Style x:Key="UacActionStyle" BasedOn="{StaticResource UacIconStyle}" TargetType="Image">
+        <Style x:Key="PrimaryUacActionStyle" BasedOn="{StaticResource PrimaryUacIconStyle}" TargetType="Image">
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Height" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 0 5 0"/>
+        </Style>
+        <Style x:Key="TertiaryUacActionStyle" BasedOn="{StaticResource TertiaryUacIconStyle}" TargetType="Image">
             <Setter Property="Width" Value="16"/>
             <Setter Property="Height" Value="16"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -64,7 +70,7 @@
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Install}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Style="{StaticResource UacActionStyle}" />
+                                <Image Style="{StaticResource PrimaryUacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Install" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static lang:Strings.PackageView_ButtonInstall}" FontSize="16"/>
                             </StackPanel>
@@ -76,16 +82,16 @@
                                 Command="{commands:DataContextCommandAdapter Pin}"
                                 Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Style="{StaticResource UacActionStyle}" />
+                                <Image Style="{StaticResource TertiaryUacActionStyle}" />
                                 <iconPacks:PackIconModern Kind="Pin" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static lang:Strings.PackageView_ButtonInstall}" FontSize="16"/>
+                                <TextBlock Text="{x:Static lang:Strings.PackageView_ButtonPin}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
                                 Command="{commands:DataContextCommandAdapter Unpin}"
                                 Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibility}}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Style="{StaticResource UacActionStyle}" />
+                                <Image Style="{StaticResource TertiaryUacActionStyle}" />
                                 <iconPacks:PackIconModern Kind="PinRemove" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static lang:Strings.PackageView_ButtonUnpin}" FontSize="16"/>
                             </StackPanel>
@@ -93,7 +99,7 @@
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Reinstall}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Style="{StaticResource UacActionStyle}" />
+                                <Image Style="{StaticResource PrimaryUacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Cw" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static lang:Strings.PackageView_ButtonReinstall}" FontSize="16"/>
                             </StackPanel>
@@ -101,7 +107,7 @@
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Uninstall}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Style="{StaticResource UacActionStyle}" />
+                                <Image Style="{StaticResource PrimaryUacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Uninstall" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static lang:Strings.PackageView_ButtonUninstall}" FontSize="16"/>
                             </StackPanel>
@@ -110,7 +116,7 @@
                             Command="{commands:DataContextCommandAdapter Update}"
                             Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Style="{StaticResource UacActionStyle}" />
+                                <Image Style="{StaticResource PrimaryUacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Cycle" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static lang:Strings.PackageView_ButtonUpdate}" FontSize="16"/>
                             </StackPanel>

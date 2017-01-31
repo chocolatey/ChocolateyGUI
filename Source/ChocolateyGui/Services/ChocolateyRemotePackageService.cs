@@ -296,17 +296,7 @@ namespace ChocolateyGui.Services
             await Initialize();
             try
             {
-                var list = await _chocolateyService.GetFeatures();
-                var background = list.FirstOrDefault(feature => string.Equals(feature.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase));
-                if (background == null)
-                {
-                    return list.Concat(new[] { new ChocolateyFeature() { Name = "useBackgroundService", Enabled = true } }).ToList();
-                }
-                else
-                {
-                    background.Enabled = true;
-                    return list;
-                }
+                return await _chocolateyService.GetFeatures();
             }
             catch (WampConnectionBrokenException ex)
             {

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Argument_cant_be_null_or_empty" xml:space="preserve">
+    <value>Argument darf nicht 'null' oder leer sein!</value>
+  </data>
   <data name="ChocolateyDialog_ConsoleOutput" xml:space="preserve">
     <value>Terminalausgabe</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Controls_PackageListTags" xml:space="preserve">
     <value>Tags:</value>
+  </data>
+  <data name="InvalidVersionString" xml:space="preserve">
+    <value>Ungültige Versionskennung.</value>
   </data>
   <data name="LocalSourceView_ButtonExport" xml:space="preserve">
     <value>Exportieren</value>
@@ -142,7 +148,7 @@
     <value>Nur ganze Wörter</value>
   </data>
   <data name="LocalSourceView_CheckboxPkgsWithUpdates" xml:space="preserve">
-    <value>Zeige nur Pakete mit Updates</value>
+    <value>nur Pakete mit Updates</value>
   </data>
   <data name="LocalSourceView_Grid_Authors" xml:space="preserve">
     <value>Autoren</value>
@@ -196,7 +202,7 @@
     <value>Lizenz</value>
   </data>
   <data name="PackageView_Maintainers" xml:space="preserve">
-    <value> | Maintainers: </value>
+    <value> | Maintainer: </value>
   </data>
   <data name="PackageView_PackageID" xml:space="preserve">
     <value>Paket ID</value>
@@ -251,6 +257,9 @@
   </data>
   <data name="RemoteSourceView_SearchBoxText" xml:space="preserve">
     <value>Suche:</value>
+  </data>
+  <data name="Resources_ThisPC" xml:space="preserve">
+    <value>Dieser PC</value>
   </data>
   <data name="SettingsView_About" xml:space="preserve">
     <value>Über</value>
@@ -341,5 +350,8 @@
   </data>
   <data name="SourcesView_Choco" xml:space="preserve">
     <value>chocolatey</value>
+  </data>
+  <data name="TypeMustBeASemanticVersion" xml:space="preserve">
+    <value>LineType muss im Format 'semantic version' sein.</value>
   </data>
 </root>

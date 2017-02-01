@@ -34,8 +34,8 @@
     
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
-            <Button x:Name="ShowSettings" Content="{x:Static lang:Strings.ShellView_ButtonSettings}" ClickMode="Release" cal:Message.Attach="ShowSettings()"/>
-            <Button x:Name="ShowAbout" Content="{x:Static lang:Strings.ShellView_ButtonAbout}" ClickMode="Release" Visibility="Collapsed" />
+						<Button x:Name="ShowSettings" Content="{x:Static lang:Resources.ShellView_ButtonSettings}" ClickMode="Release" cal:Message.Attach="ShowSettings()"/>
+						<Button x:Name="ShowAbout" Content="{x:Static lang:Resources.ShellView_ButtonAbout}" ClickMode="Release" Visibility="Collapsed" />
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 

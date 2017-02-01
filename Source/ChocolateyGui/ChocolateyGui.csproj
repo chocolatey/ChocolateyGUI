@@ -283,6 +283,11 @@
     <Compile Include="DesignMode.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\Messages\SourcesUpdatedMessage.cs" />
+    <Compile Include="Properties\String.de.Designer.cs">
+      <DependentUpon>String.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Startup\ChocolateyGuiModule.cs" />
@@ -490,6 +495,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\String.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>String.de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -18,6 +18,8 @@ using ChocolateyGui.Startup;
 using ChocolateyGui.ViewModels;
 using Serilog;
 using Serilog.Events;
+using System.Windows.Markup;
+using System.Globalization;
 
 namespace ChocolateyGui
 {
@@ -88,6 +90,8 @@ namespace ChocolateyGui
                 .WriteTo.Async(config =>
                     config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
                 .CreateLogger();
+
+            Internationalization.Initialize();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)

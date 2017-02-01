@@ -13,7 +13,7 @@
 
     <DockPanel>
         <StackPanel DockPanel.Dock="Left" Background="{StaticResource BackgroundColorBrush}">
-            <TextBlock Text="{x:Static lang:Strings.SourcesView_Choco}" FontSize="38" Foreground="{StaticResource IdealForegroundColorBrush}"
+						<TextBlock Text="{x:Static lang:Resources.SourcesView_Choco}" FontSize="38" Foreground="{StaticResource IdealForegroundColorBrush}"
                        FontWeight="SemiBold" Padding="20,5" Background="{StaticResource AccentBaseColorBrush}" />
             <Grid DockPanel.Dock="Left" MinWidth="250">
                 <ListView x:Name="SourcesListView" ItemsSource="{Binding Items}" Background="Transparent"

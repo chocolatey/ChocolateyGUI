@@ -55,7 +55,12 @@ namespace ChocolateyGui.ViewModels
             DisplayName = displayName;
             Packages = new ObservableCollection<IPackageViewModel>();
             _packages = new List<IPackageViewModel>();
-            _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            if (eventAggregator == null)
+            {
+                throw new ArgumentNullException(nameof(eventAggregator));
+            }
+
+            _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
         }
 

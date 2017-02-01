@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Argument_cant_be_null_or_empty" xml:space="preserve">
+    <value>Argument darf nicht 'null' oder leer sein!</value>
+  </data>
   <data name="ChocolateyDialog_ConsoleOutput" xml:space="preserve">
-    <value>Console Output</value>
+    <value>Terminalausgabe</value>
   </data>
   <data name="Controls_PackageListByAuthor" xml:space="preserve">
-    <value>By: </value>
+    <value>Von: </value>
   </data>
   <data name="Controls_PackageListDownloads" xml:space="preserve">
     <value>downloads</value>
@@ -129,26 +132,29 @@
   <data name="Controls_PackageListTags" xml:space="preserve">
     <value>Tags:</value>
   </data>
+  <data name="InvalidVersionString" xml:space="preserve">
+    <value>Ungültige Versionskennung.</value>
+  </data>
   <data name="LocalSourceView_ButtonExport" xml:space="preserve">
-    <value>Export</value>
+    <value>Exportieren</value>
   </data>
   <data name="LocalSourceView_ButtonRefreshPkgs" xml:space="preserve">
-    <value>Refresh Packages</value>
+    <value>Paketliste aktualisieren</value>
   </data>
   <data name="LocalSourceView_ButtonUpdateAll" xml:space="preserve">
-    <value>Update All</value>
+    <value>Alle aktualisieren</value>
   </data>
   <data name="LocalSourceView_CheckboxMatchExact" xml:space="preserve">
-    <value>Match Word Exactly</value>
+    <value>Nur ganze Wörter</value>
   </data>
   <data name="LocalSourceView_CheckboxPkgsWithUpdates" xml:space="preserve">
-    <value>Show Only Packages with Updates</value>
+    <value>nur Pakete mit Updates</value>
   </data>
   <data name="LocalSourceView_Grid_Authors" xml:space="preserve">
-    <value>Authors</value>
+    <value>Autoren</value>
   </data>
   <data name="LocalSourceView_Grid_LatestVersion" xml:space="preserve">
-    <value>Latest Version</value>
+    <value>Aktuelle Version</value>
   </data>
   <data name="LocalSourceView_Grid_Name" xml:space="preserve">
     <value>Name</value>
@@ -157,19 +163,19 @@
     <value>Version</value>
   </data>
   <data name="LocalSourceView_SearchBoxText" xml:space="preserve">
-    <value>Search:</value>
+    <value>Suche: </value>
   </data>
   <data name="PackageView_Authors" xml:space="preserve">
-    <value>Authors:</value>
+    <value>Autoren: </value>
   </data>
   <data name="PackageView_ButtonInstall" xml:space="preserve">
-    <value>Install</value>
+    <value>Installieren</value>
   </data>
   <data name="PackageView_ButtonReinstall" xml:space="preserve">
-    <value>Reinstall</value>
+    <value>Erneut Installieren</value>
   </data>
   <data name="PackageView_ButtonUninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>Deinstallieren</value>
   </data>
   <data name="PackageView_ButtonUnpin" xml:space="preserve">
     <value>Unpin</value>
@@ -178,94 +184,97 @@
     <value>Update</value>
   </data>
   <data name="PackageView_Dependencies" xml:space="preserve">
-    <value>Dependencies</value>
+    <value>Abhängigkeiten</value>
   </data>
   <data name="PackageView_Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Beschreibung</value>
   </data>
   <data name="PackageView_Downloads" xml:space="preserve">
     <value>Downloads</value>
   </data>
   <data name="PackageView_Gallery" xml:space="preserve">
-    <value>Gallery</value>
+    <value>Galerie</value>
   </data>
   <data name="PackageView_LastUpdate" xml:space="preserve">
-    <value>Last update</value>
+    <value>Letztes Update</value>
   </data>
   <data name="PackageView_License" xml:space="preserve">
-    <value>License</value>
+    <value>Lizenz</value>
   </data>
   <data name="PackageView_Maintainers" xml:space="preserve">
-    <value> | Maintainers: </value>
+    <value> | Maintainer: </value>
   </data>
   <data name="PackageView_PackageID" xml:space="preserve">
-    <value>Package ID</value>
+    <value>Paket ID</value>
   </data>
   <data name="PackageView_PackageSize" xml:space="preserve">
-    <value>Package Size</value>
+    <value>Paket Größe</value>
   </data>
   <data name="PackageView_ProjectSite" xml:space="preserve">
-    <value>Project Site</value>
+    <value>Projekt Website</value>
   </data>
   <data name="PackageView_ReleaseNotes" xml:space="preserve">
     <value>Release Notes</value>
   </data>
   <data name="PackageView_ReportAbuse" xml:space="preserve">
-    <value>Report Abuse</value>
+    <value>Missbrauch melden</value>
   </data>
   <data name="PackageView_Summary" xml:space="preserve">
-    <value>Summary</value>
+    <value>Beschreibung</value>
   </data>
   <data name="PackageView_TotalDownloads" xml:space="preserve">
-    <value>Total Downloads</value>
+    <value>Downloads Gesamt</value>
   </data>
   <data name="RemoteSourceView_Authors" xml:space="preserve">
-    <value>Authors:</value>
+    <value>Autoren: </value>
   </data>
   <data name="RemoteSourceView_ButtonGoBackAPage" xml:space="preserve">
-    <value>Go Back a Page</value>
+    <value>Zurück</value>
   </data>
   <data name="RemoteSourceView_ButtonGoForwardAPage" xml:space="preserve">
-    <value>Next</value>
+    <value>Weiter</value>
   </data>
   <data name="RemoteSourceView_ButtonGotoFirstPage" xml:space="preserve">
-    <value>Go to First Page</value>
+    <value>Erste Seite</value>
   </data>
   <data name="RemoteSourceView_ButtonGotoLastPage" xml:space="preserve">
-    <value>Last</value>
+    <value>Letze</value>
   </data>
   <data name="RemoteSourceView_ButtonRefreshPkgs" xml:space="preserve">
-    <value>Refresh Packages</value>
+    <value>Paketliste aktualisieren</value>
   </data>
   <data name="RemoteSourceView_CheckboxAllVersions" xml:space="preserve">
-    <value>All Versions</value>
+    <value>Alle Versionen</value>
   </data>
   <data name="RemoteSourceView_CheckboxIncludePrerelease" xml:space="preserve">
-    <value>Include Prerelease</value>
+    <value>Prereleases anzeigen</value>
   </data>
   <data name="RemoteSourceView_CheckboxMatchExactly" xml:space="preserve">
-    <value>Match Word Exactly</value>
+    <value>Nur ganze Wörter</value>
   </data>
   <data name="RemoteSourceView_Downloads" xml:space="preserve">
     <value>downloads</value>
   </data>
   <data name="RemoteSourceView_SearchBoxText" xml:space="preserve">
-    <value>Search:</value>
+    <value>Suche:</value>
+  </data>
+  <data name="Resources_ThisPC" xml:space="preserve">
+    <value>Dieser PC</value>
   </data>
   <data name="SettingsView_About" xml:space="preserve">
-    <value>About</value>
+    <value>Über</value>
   </data>
   <data name="SettingsView_ButtonCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="SettingsView_ButtonNew" xml:space="preserve">
-    <value>New</value>
+    <value>Neu</value>
   </data>
   <data name="SettingsView_ButtonRemove" xml:space="preserve">
-    <value>Remove</value>
+    <value>Entfernen</value>
   </data>
   <data name="SettingsView_ButtonSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="SettingsView_ChocoGui" xml:space="preserve">
     <value>Chocolatey Gui</value>
@@ -274,72 +283,75 @@
     <value>Credits</value>
   </data>
   <data name="SettingsView_Features" xml:space="preserve">
-    <value>Features</value>
+    <value>Featurse</value>
   </data>
   <data name="SettingsView_Options" xml:space="preserve">
-    <value>Options</value>
+    <value>Optionen</value>
   </data>
   <data name="SettingsView_PropertyDescription" xml:space="preserve">
-    <value>Description</value>
+    <value>Beschreibung</value>
   </data>
   <data name="SettingsView_PropertyName" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="SettingsView_PropertyValue" xml:space="preserve">
-    <value>Value</value>
+    <value>Wert</value>
   </data>
   <data name="SettingsView_ReleaseNotes" xml:space="preserve">
     <value>Release Notes</value>
   </data>
   <data name="SettingsView_Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="SettingsView_Sources" xml:space="preserve">
-    <value>Sources</value>
+    <value>Quellen</value>
   </data>
   <data name="SettingsView_SourcesCertificate" xml:space="preserve">
-    <value>Certificate</value>
+    <value>Zertifikat</value>
   </data>
   <data name="SettingsView_SourcesCertificatePass" xml:space="preserve">
-    <value>Certificate Pass</value>
+    <value>Zertifikat Passwort</value>
   </data>
   <data name="SettingsView_SourcesId" xml:space="preserve">
     <value>Id</value>
   </data>
   <data name="SettingsView_SourcesIsDisabled" xml:space="preserve">
-    <value>Is Disabled</value>
+    <value>Deaktiviert</value>
   </data>
   <data name="SettingsView_SourcesPassword" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="SettingsView_SourcesPath" xml:space="preserve">
-    <value>Path</value>
+    <value>URL</value>
   </data>
   <data name="SettingsView_SourcesPriority" xml:space="preserve">
-    <value>Priority</value>
+    <value>Priorität</value>
   </data>
   <data name="SettingsView_SourcesSource" xml:space="preserve">
-    <value>Source</value>
+    <value>Quelle</value>
   </data>
   <data name="SettingsView_SourcesUsername" xml:space="preserve">
-    <value>Username</value>
+    <value>Benutzername</value>
   </data>
   <data name="SettingsView_SubheaderChoco" xml:space="preserve">
     <value>Chocolatey</value>
   </data>
   <data name="SettingsView_ToggleElevateByDefault" xml:space="preserve">
-    <value>Elevate By Default</value>
+    <value>automatische Anmeldung als Administrator</value>
   </data>
   <data name="SettingsView_ToggleShowConsoleOutput" xml:space="preserve">
-    <value>Show Console Output</value>
+    <value>Terminalausgaben anzeigen</value>
   </data>
   <data name="ShellView_ButtonAbout" xml:space="preserve">
-    <value>about</value>
+    <value>Über</value>
   </data>
   <data name="ShellView_ButtonSettings" xml:space="preserve">
-    <value>settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="SourcesView_Choco" xml:space="preserve">
     <value>chocolatey</value>
+  </data>
+  <data name="TypeMustBeASemanticVersion" xml:space="preserve">
+    <value>LineType muss im Format 'semantic version' sein.</value>
   </data>
 </root>

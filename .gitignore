@@ -196,3 +196,4 @@ BuildArtifacts
 # Build related
 tools/
 BuildArtifacts/
+\.vs/

@@ -18,8 +18,6 @@ using ChocolateyGui.Startup;
 using ChocolateyGui.ViewModels;
 using Serilog;
 using Serilog.Events;
-using System.Windows.Markup;
-using System.Globalization;
 
 namespace ChocolateyGui
 {

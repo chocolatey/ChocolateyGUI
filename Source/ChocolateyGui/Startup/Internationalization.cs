@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+﻿// <copyright file="Internationalization.cs" company="Chocolatey">
+// Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;

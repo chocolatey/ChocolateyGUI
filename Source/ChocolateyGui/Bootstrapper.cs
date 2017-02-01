@@ -88,6 +88,8 @@ namespace ChocolateyGui
                 .WriteTo.Async(config =>
                     config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
                 .CreateLogger();
+
+            Internationalization.Initialize();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)

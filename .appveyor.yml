@@ -28,7 +28,7 @@ branches:
 
 cache:
 - Source\packages -> Source\**\packages.config
-- Tools -> build.ps1
+- tools -> setup.cake
 
 #---------------------------------#
 #  Skip builds for doc changes    #

@@ -1,0 +1,4 @@
+System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-GB");
+Settings.Host = "chocolatey.github.io";
+Settings.LinkRoot = "ChocolateyGUI";
+GlobalMetadata["BaseEditUrl"] = "https://github.com/chocolatey/ChocolateyGUI/tree/develop/docs/input";

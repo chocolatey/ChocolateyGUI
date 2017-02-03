@@ -13,7 +13,8 @@ BuildParameters.SetParameters(context: Context,
                             shouldDownloadMilestoneReleaseNotes: true,
                             shouldPublishChocolatey: false,
                             shouldPublishNuGet: false,
-                            shouldPublishGitHub: false);
+                            shouldPublishGitHub: false,
+                            shouldExecuteGitLink: false);
 
 ToolSettings.SetToolSettings(context: Context,
                             dupFinderExcludePattern: new string[] { 

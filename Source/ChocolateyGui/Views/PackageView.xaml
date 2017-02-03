@@ -103,7 +103,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Style="{StaticResource UacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Uninstall" Margin="0 0 5 0 " VerticalAlignment="Center" />
-																<TextBlock Text="{x:Static lang:Resources.PackageView_ButtonUninstall}" FontSize="16"/>
+								<TextBlock Text="{x:Static lang:Resources.PackageView_ButtonUninstall}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"

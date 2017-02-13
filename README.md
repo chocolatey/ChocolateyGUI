@@ -37,7 +37,7 @@ Or, you can find us in IRC at #chocolatey.
  * [Build Status Email List](http://groups.google.com/group/chocolatey-build-status)
 
 ### Documentation
-Please see the [wiki](https://github.com/chocolatey/chocolateygui/wiki)
+You can find information about ChocolateyGUI here: [https://chocolatey.github.io/ChocolateyGUI/](https://chocolatey.github.io/ChocolateyGUI/)
 
 ### Requirements
 * .NET Framework 4.5.2

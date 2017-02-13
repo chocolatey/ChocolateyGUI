@@ -4,7 +4,7 @@ Title: About
 
 # History
 
-ChocolateyGUI, formerly known as Chocolatey Explorer or Chocolatey PackageManager, was originally created by [Christiaan Baes](https://twitter.com/chrissie1).  For informtaion about the original version, you can see the following blog posts:
+ChocolateyGUI, formerly known as Chocolatey Explorer or Chocolatey PackageManager, was originally created by [Christiaan Baes](https://twitter.com/chrissie1).  For information about the original version, you can see the following blog posts:
 
 * [All new ChocolateyGUI](http://blogs.lessthandot.com/index.php/SysAdmins/OS/Windows/all-new-chocolateygui/)
 * [Making a chocolatey package for ChocolateyGUI](http://blogs.lessthandot.com/index.php/DesktopDev/MSTech/making-a-chocolatey-package/)

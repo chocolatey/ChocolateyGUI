@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using Caliburn.Micro;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Subprocess.Models;
 using ChocolateyGui.Utilities.Extensions;
@@ -59,7 +60,7 @@ namespace ChocolateyGui.ViewModels
             _progressService = progressService;
             _configService = configService;
             _eventAggregator = eventAggregator;
-            DisplayName = "ChocolateyGUI - Settings";
+            DisplayName = Resources.SettingsViewModel_DisplayName;
             Activated += OnActivated;
             Deactivated += OnDeactivated;
         }
@@ -185,17 +186,17 @@ namespace ChocolateyGui.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SelectedSource.Id))
             {
-                await _progressService.ShowMessageAsync("Saving Source", "Source must have an Id!");
+                await _progressService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingId);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(SelectedSource.Value))
             {
-                await _progressService.ShowMessageAsync("Saving Source", "Source must have an value!");
+                await _progressService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingValue);
                 return;
             }
 
-            await _progressService.StartLoading("Saving source...");
+            await _progressService.StartLoading(Resources.SettingsViewModel_SavingSourceLoading);
             try
             {
                 if (_isNewItem)
@@ -221,7 +222,7 @@ namespace ChocolateyGui.ViewModels
 
         public async void Remove()
         {
-            await _progressService.StartLoading("Removing source...");
+            await _progressService.StartLoading(Resources.SettingsViewModel_RemovingSource);
             try
             {
                 await _packageService.RemoveSource(_originalId);
@@ -295,8 +296,8 @@ namespace ChocolateyGui.ViewModels
         {
             Logger.Error(ex, "Failed to update features list!\nMessage: {Message}\nArguments: {Arguments}", ex.Message, ex.Arguments);
             await _progressService.ShowMessageAsync(
-                "Feature Updates Error",
-                $"Failed to update features. Error:\n{string.Join("\v", ex.Arguments)}");
+                Resources.SettingsViewModel_FeatureUpdatesError,
+                string.Format(Resources.SettingsViewModel_FeatureFailedToUpdate, string.Join("\v", ex.Arguments)));
         }
     }
 }

@@ -78,7 +78,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Style="{StaticResource UacActionStyle}" />
                                 <iconPacks:PackIconModern Kind="Pin" Margin="0 0 5 0 " VerticalAlignment="Center" />
-																<TextBlock Text="{x:Static lang:Resources.PackageView_ButtonInstall}" FontSize="16"/>
+																<TextBlock Text="{x:Static lang:Resources.PackageView_ButtonPin}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"

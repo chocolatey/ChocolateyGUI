@@ -17,6 +17,7 @@ using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Properties;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Subprocess;
 using ChocolateyGui.Subprocess.Models;
@@ -107,10 +108,18 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.InstallPackage(id, version?.ToString(), source, force);
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null
+                    ? string.Empty
+                    : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                var message = string.Format(
+                    Resources.ChocolateyRemotePackageService_InstallFailedMessage,
+                    id,
+                    version,
+                    string.Join("\n", result.Messages),
+                    exceptionMessage);
                 await _progressService.ShowMessageAsync(
-                    "Failed to install package.",
-                    $"Failed to install package \"{id}\", version \"{version}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");
+                    Resources.ChocolateyRemotePackageService_InstallFailedTitle,
+                    message);
                 Logger.Warning(result.Exception, "Failed to install {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
                 return;
             }
@@ -124,10 +133,18 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.UninstallPackage(id, version.ToString(), force);
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null
+                    ? string.Empty
+                    : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                var message = string.Format(
+                    Resources.ChocolateyRemotePackageService_UninstallFailedMessage,
+                    id,
+                    version,
+                    string.Join("\n", result.Messages),
+                    exceptionMessage);
                 await _progressService.ShowMessageAsync(
-                    "Failed to uninstall package.",
-                    $"Failed to uninstall package \"{id}\", version \"{version}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");
+                    Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
+                    Resources.ChocolateyRemotePackageService_UninstallFailedMessage);
                 Logger.Warning(result.Exception, "Failed to uninstall {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
                 return;
             }
@@ -141,10 +158,17 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.UpdatePackage(id, source);
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null
+                    ? string.Empty
+                    : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                var message = string.Format(
+                    Resources.ChocolateyRemotePackageService_UpdateFailedMessage,
+                    id,
+                    string.Join("\n", result.Messages),
+                    exceptionMessage);
                 await _progressService.ShowMessageAsync(
-                    "Failed to update package.",
-                    $"Failed to update package \"{id}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");
+                    Resources.ChocolateyRemotePackageService_UpdateFailedTitle,
+                    Resources.ChocolateyRemotePackageService_UpdateFailedMessage);
                 Logger.Warning(result.Exception, "Failed to update {Package}. Errors: {Errors}", id, result.Messages);
                 return;
             }
@@ -158,10 +182,18 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.PinPackage(id, version.ToString());
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null
+                    ? string.Empty
+                    : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                var message = string.Format(
+                    Resources.ChocolateyRemotePackageService_PinFailedMessage,
+                    id,
+                    version,
+                    string.Join("\n", result.Messages),
+                    exceptionMessage);
                 await _progressService.ShowMessageAsync(
-                    "Failed to pin package.",
-                    $"Failed to pin package \"{id}\", version \"{version}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");
+                    Resources.ChocolateyRemotePackageService_PinFailedTitle,
+                    message);
                 Logger.Warning(result.Exception, "Failed to pin {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
                 return;
             }
@@ -175,10 +207,18 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.UnpinPackage(id, version.ToString());
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null ? string.Empty : $"\nException: {result.Exception}";
+                var exceptionMessage = result.Exception == null
+                    ? string.Empty
+                    : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                var message = string.Format(
+                    Resources.ChocolateyRemotePackageService_UnpinFailedMessage,
+                    id,
+                    version,
+                    string.Join("\n", result.Messages),
+                    exceptionMessage);
                 await _progressService.ShowMessageAsync(
-                    "Failed to unpin package.",
-                    $"Failed to unpin package \"{id}\", version \"{version}\".\nError: {string.Join("\n", result.Messages)}{exceptionMessage}");
+                    Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
+                    message);
                 Logger.Warning(result.Exception, "Failed to unpin {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
                 return;
             }

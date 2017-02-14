@@ -14,6 +14,7 @@ using Autofac;
 using Caliburn.Micro;
 using CefSharp;
 using chocolatey;
+using ChocolateyGui.Properties;
 using ChocolateyGui.Startup;
 using ChocolateyGui.ViewModels;
 using Serilog;
@@ -154,7 +155,7 @@ namespace ChocolateyGui
                 Logger.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
                 MessageBox.Show(
                     e.ExceptionObject.ToString(),
-                    "Unhandled Exception",
+                    Resources.Bootstrapper_UnhandledException,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error,
                     MessageBoxResult.OK,

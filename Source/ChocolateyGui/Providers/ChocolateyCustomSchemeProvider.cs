@@ -7,6 +7,7 @@
 using System;
 using System.Linq;
 using CefSharp;
+using ChocolateyGui.Properties;
 
 namespace ChocolateyGui.Providers
 {
@@ -22,14 +23,14 @@ namespace ChocolateyGui.Providers
                 case "markdown":
                     if (request.PostData == null)
                     {
-                        return ResourceHandler.FromString("<h3>Invalid HTML String</h3>");
+                        return ResourceHandler.FromString(Resources.ChocolateyCustomSchemeProvider_InvalidHtml);
                     }
 
                     var postData = request.PostData.Elements.FirstOrDefault();
                     var markdown = postData.GetBody();
                     return ResourceHandler.FromString(markdown);
                 default:
-                    return ResourceHandler.FromString("<h1>Unknown Host</h1>");
+                    return ResourceHandler.FromString(Resources.ChocolateyCustomSchemeProvider_UnknownHost);
             }
         }
     }

@@ -120,8 +120,62 @@
   <data name="Argument_cant_be_null_or_empty" xml:space="preserve">
     <value>Argument can't be null or empty.</value>
   </data>
+  <data name="Bootstrapper_UnhandledException" xml:space="preserve">
+    <value>Unhandled Exception</value>
+  </data>
+  <data name="ChocolateyCustomSchemeProvider_InvalidHtml" xml:space="preserve">
+    <value>&lt;h3&gt;Invalid HTML String&lt;/h3&gt;</value>
+  </data>
+  <data name="ChocolateyCustomSchemeProvider_UnknownHost" xml:space="preserve">
+    <value>&lt;h1&gt;Unknown Host&lt;/h1&gt;</value>
+  </data>
   <data name="ChocolateyDialog_ConsoleOutput" xml:space="preserve">
     <value>Console Output</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_Escalating" xml:space="preserve">
+    <value>Escalating</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_ExceptionFormat" xml:space="preserve">
+    <value>
+Exception: {0}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_Exiting" xml:space="preserve">
+    <value>Exiting</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_InstallFailedMessage" xml:space="preserve">
+    <value>Failed to install package "{0}", version "{1}".
+Error: {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_InstallFailedTitle" xml:space="preserve">
+    <value>Failed to install package.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_PinFailedMessage" xml:space="preserve">
+    <value>Failed to pin package "{0}", version "{1}".
+Error: {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_PinFailedTitle" xml:space="preserve">
+    <value>Failed to pin package.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UninstallFailedMessage" xml:space="preserve">
+    <value>Failed to uninstall package "{0}", version "{1}".
+Error: {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UninstallFailedTitle" xml:space="preserve">
+    <value>Failed to uninstall package.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UnpinFailedMessage" xml:space="preserve">
+    <value>Failed to unpin package "{0}", version "{1}".
+Error {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UnpinFailedTitle" xml:space="preserve">
+    <value>Failed to unpin package.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UpdateFailedMessage" xml:space="preserve">
+    <value>Failed to update package "{0}".
+Error: {1}{2}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UpdateFailedTitle" xml:space="preserve">
+    <value>Failed to update package.</value>
   </data>
   <data name="Controls_PackageListByAuthor" xml:space="preserve">
     <value>By: </value>
@@ -132,8 +186,41 @@
   <data name="Controls_PackageListTags" xml:space="preserve">
     <value>Tags:</value>
   </data>
+  <data name="Controls_PackagesContextMenuDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Controls_PackagesContextMenuInstall" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="Controls_PackagesContextMenuPin" xml:space="preserve">
+    <value>Pin</value>
+  </data>
+  <data name="Controls_PackagesContextMenuReinstall" xml:space="preserve">
+    <value>Reinstall</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUninstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUnpin" xml:space="preserve">
+    <value>Unpin</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUpdate" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="InvalidVersionString" xml:space="preserve">
     <value>Invalid version string.</value>
+  </data>
+  <data name="LocalSourceViewModel_Chocolatey" xml:space="preserve">
+    <value>Chocolatey</value>
+  </data>
+  <data name="LocalSourceViewModel_ConfigFiles" xml:space="preserve">
+    <value>Config Files (.config)|*.config</value>
+  </data>
+  <data name="LocalSourceViewModel_Packages" xml:space="preserve">
+    <value>Packages</value>
+  </data>
+  <data name="LocalSourceViewModel_UpdateAvailableForChocolatey" xml:space="preserve">
+    <value>There's an update available for chocolatey.</value>
   </data>
   <data name="LocalSourceView_ButtonExport" xml:space="preserve">
     <value>Export</value>
@@ -165,11 +252,99 @@
   <data name="LocalSourceView_SearchBoxText" xml:space="preserve">
     <value>Search:</value>
   </data>
+  <data name="PackageViewModel_DisplayName" xml:space="preserve">
+    <value>Package - {0}</value>
+    <comment>{0} = Package Title</comment>
+  </data>
+  <data name="PackageViewModel_FailedToInstall" xml:space="preserve">
+    <value>Failed to install</value>
+  </data>
+  <data name="PackageViewModel_FailedToPin" xml:space="preserve">
+    <value>Failed to Pin</value>
+  </data>
+  <data name="PackageViewModel_FailedToReinstall" xml:space="preserve">
+    <value>Failed to Reinstall</value>
+  </data>
+  <data name="PackageViewModel_FailedToUninstall" xml:space="preserve">
+    <value>Failed to Uninstall</value>
+  </data>
+  <data name="PackageViewModel_FailedToUnpin" xml:space="preserve">
+    <value>Failed to Unpin</value>
+  </data>
+  <data name="PackageViewModel_FailedToUpdate" xml:space="preserve">
+    <value>Failed to Update</value>
+  </data>
+  <data name="PackageViewModel_InstallingPackage" xml:space="preserve">
+    <value>Installing package</value>
+  </data>
+  <data name="PackageViewModel_LoadingPackageInfo" xml:space="preserve">
+    <value>Loading package information...</value>
+  </data>
+  <data name="PackageViewModel_PinningPackage" xml:space="preserve">
+    <value>Pinning package</value>
+  </data>
+  <data name="PackageViewModel_RanIntoInstallError" xml:space="preserve">
+    <value>Ran into an error while installing {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoPinningError" xml:space="preserve">
+    <value>Ran into an error while pinning {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoReinstallError" xml:space="preserve">
+    <value>Ran into an error while reinstalling {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoUninstallError" xml:space="preserve">
+    <value>Ran into an error while uninstalling {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoUnpinError" xml:space="preserve">
+    <value>Ran into an error while unpinning {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoUpdateError" xml:space="preserve">
+    <value>Ran into an error while updating {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_ReinstallingPackage" xml:space="preserve">
+    <value>Reinstalling package</value>
+  </data>
+  <data name="PackageViewModel_StartLoadingFormat" xml:space="preserve">
+    <value>{0} {1}...</value>
+    <comment>{0} = The command text
+{1} = The package id
+NOTE: Probably only necessary to change in RTL languages.</comment>
+  </data>
+  <data name="PackageViewModel_UninstallingPackage" xml:space="preserve">
+    <value>Uninstalling package</value>
+  </data>
+  <data name="PackageViewModel_UnpinningPackage" xml:space="preserve">
+    <value>Unpinning package</value>
+  </data>
+  <data name="PackageViewModel_UpdatingPackage" xml:space="preserve">
+    <value>Updating package</value>
+  </data>
   <data name="PackageView_Authors" xml:space="preserve">
     <value>Authors:</value>
   </data>
   <data name="PackageView_ButtonInstall" xml:space="preserve">
     <value>Install</value>
+  </data>
+  <data name="PackageView_ButtonPin" xml:space="preserve">
+    <value>Pin</value>
   </data>
   <data name="PackageView_ButtonReinstall" xml:space="preserve">
     <value>Reinstall</value>
@@ -225,6 +400,24 @@
   <data name="PackageView_TotalDownloads" xml:space="preserve">
     <value>Total Downloads</value>
   </data>
+  <data name="RemoteSourceViewModel_FailedToLoad" xml:space="preserve">
+    <value>Failed to Load</value>
+  </data>
+  <data name="RemoteSourceViewModel_FailedToLoadRemotePackages" xml:space="preserve">
+    <value>Failed to load remote packages!
+{0}</value>
+    <comment>{0} = The exception message that occured</comment>
+  </data>
+  <data name="RemoteSourceViewModel_FeedSearchError" xml:space="preserve">
+    <value>Feed Search Error</value>
+  </data>
+  <data name="RemoteSourceViewModel_LoadingPage" xml:space="preserve">
+    <value>Loading page {0}...</value>
+    <comment>{0} = The page that is loading</comment>
+  </data>
+  <data name="RemoteSourceViewModel_UnableToConnectToFeed" xml:space="preserve">
+    <value>Unable to connect to feed with Source: {0}.  Please check that this feed is accessible, and try again.</value>
+  </data>
   <data name="RemoteSourceView_Authors" xml:space="preserve">
     <value>Authors:</value>
   </data>
@@ -260,6 +453,32 @@
   </data>
   <data name="Resources_ThisPC" xml:space="preserve">
     <value>This PC</value>
+  </data>
+  <data name="SettingsViewModel_DisplayName" xml:space="preserve">
+    <value>ChocolateyGUI - Settings</value>
+  </data>
+  <data name="SettingsViewModel_FeatureFailedToUpdate" xml:space="preserve">
+    <value>Failed to update features. Error:
+{0}</value>
+    <comment>{0} = The exception arguments</comment>
+  </data>
+  <data name="SettingsViewModel_FeatureUpdatesError" xml:space="preserve">
+    <value>Feature Updates Error</value>
+  </data>
+  <data name="SettingsViewModel_RemovingSource" xml:space="preserve">
+    <value>Removing source...</value>
+  </data>
+  <data name="SettingsViewModel_SavingSource" xml:space="preserve">
+    <value>Saving Source</value>
+  </data>
+  <data name="SettingsViewModel_SavingSourceLoading" xml:space="preserve">
+    <value>Saving source...</value>
+  </data>
+  <data name="SettingsViewModel_SourceMissingId" xml:space="preserve">
+    <value>Source must have an Id!</value>
+  </data>
+  <data name="SettingsViewModel_SourceMissingValue" xml:space="preserve">
+    <value>Source must have an value!</value>
   </data>
   <data name="SettingsView_About" xml:space="preserve">
     <value>About</value>
@@ -312,6 +531,9 @@
   <data name="SettingsView_SourcesCertificatePass" xml:space="preserve">
     <value>Certificate Pass</value>
   </data>
+  <data name="SettingsView_SourcesDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
   <data name="SettingsView_SourcesId" xml:space="preserve">
     <value>Id</value>
   </data>
@@ -348,10 +570,17 @@
   <data name="ShellView_ButtonSettings" xml:space="preserve">
     <value>settings</value>
   </data>
+  <data name="SourcesViewModel_SourcesDisplayFormat" xml:space="preserve">
+    <value>Source - {0}</value>
+    <comment>{0} = The display name of the active item</comment>
+  </data>
   <data name="SourcesView_Choco" xml:space="preserve">
     <value>chocolatey</value>
   </data>
   <data name="TypeMustBeASemanticVersion" xml:space="preserve">
     <value>LineType must be a semantic version.</value>
+  </data>
+  <data name="VersionNumberProvider_VersionFormat" xml:space="preserve">
+    <value>Version: {0}</value>
   </data>
 </root>

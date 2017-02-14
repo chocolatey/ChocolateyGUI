@@ -370,7 +370,6 @@ namespace ChocolateyGui.Services
                     }
                 }
 
-
                 var factory = new WampChannelFactory();
                 _wampChannel =
                     factory.ConnectToRealm("default")
@@ -432,7 +431,7 @@ namespace ChocolateyGui.Services
                                            $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
         }
 
-        private static bool IsPortAvailable(int port)
+        private bool IsPortAvailable(int port)
         {
             return IPGlobalProperties
                 .GetIPGlobalProperties()

@@ -282,9 +282,7 @@ namespace ChocolateyGui.Services
         public void Dispose()
         {
             _logStream?.Dispose();
-            _wampChannel?.Close(
-                Resources.ChocolateyRemotePackageService_Exiting,
-                new GoodbyeDetails { Message = Resources.ChocolateyRemotePackageService_Exiting });
+            _wampChannel?.Close("Exiting", new GoodbyeDetails { Message = "Exiting" });
         }
 
         private async Task<bool> RequiresElevationImpl()
@@ -325,9 +323,7 @@ namespace ChocolateyGui.Services
                     _isInitialized = false;
                     _logStream.Dispose();
                     _logStream = null;
-                    _wampChannel.Close(
-                        Resources.ChocolateyRemotePackageService_Escalating,
-                        new GoodbyeDetails { Message = Resources.ChocolateyRemotePackageService_Escalating });
+                    _wampChannel.Close("Escalating", new GoodbyeDetails { Message = "Escalating" });
                     _wampChannel = null;
                     _chocolateyService = null;
 

@@ -112,7 +112,7 @@
 														<DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesCertificate}" Width="*" Binding="{Binding Certificate}" />
 														<DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesCertificatePass}" Width="*" Binding="{Binding CertificatePassword}" />
 														<metro:DataGridNumericUpDownColumn Header="{x:Static lang:Resources.SettingsView_SourcesPriority}" Binding="{Binding Priority}"/>
-                            <DataGridCheckBoxColumn Header="Disabled" Width="Auto" Binding="{Binding Disabled}"/>
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesDisabled}" Width="Auto" Binding="{Binding Disabled}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <DockPanel Grid.Row="2" Grid.Column="0" Margin="5">

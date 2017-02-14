@@ -649,10 +649,10 @@
     <ContextMenu x:Key="PackagesContextMenu"
                  DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
                  d:DataContext="{d:DesignInstance Type=items:PackageViewModel}">
-        <MenuItem Header="Install" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuInstall}" Icon="{StaticResource UacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
                   Command="{commands:DataContextCommandAdapter Install}" />
-        <MenuItem Header="Pin" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuPin}" Icon="{StaticResource UacIcon}"
                   Command="{commands:DataContextCommandAdapter Pin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -670,16 +670,16 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="Uninstall" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUninstall}" Icon="{StaticResource UacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Uninstall}" />
-        <MenuItem Header="Reinstall" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuReinstall}" Icon="{StaticResource UacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Reinstall}" />
-        <MenuItem Header="Update" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUpdate}" Icon="{StaticResource UacIcon}"
                   Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Update}" />
-        <MenuItem Header="Details" Command="{commands:DataContextCommandAdapter ViewDetails}" />
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuDetails}" Command="{commands:DataContextCommandAdapter ViewDetails}" />
     </ContextMenu>
 
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}">

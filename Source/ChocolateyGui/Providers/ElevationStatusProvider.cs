@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Windows;
 using Caliburn.Micro;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
@@ -12,12 +14,43 @@ namespace ChocolateyGui.Providers
 {
     public class ElevationStatusProvider : PropertyChangedBase
     {
+        public static readonly ElevationStatusProvider Instance =
+            (ElevationStatusProvider) Application.Current.FindResource("Elevation");
+
         private bool _isElevated = Hacks.IsElevated;
+
+        private Tuple<bool, bool> _overrideElevation;
 
         public bool IsElevated
         {
-            get { return _isElevated; }
-            set { this.SetPropertyValue(ref _isElevated, value); }
+            get
+            {
+                if (_overrideElevation.Item1)
+                {
+                    return _overrideElevation.Item2;
+                }
+
+                return _isElevated;
+            }
+
+            set
+            {
+                this.SetPropertyValue(ref _isElevated, value);
+            }
+        }
+
+        public Tuple<bool, bool> OverrideElevation
+        {
+            get
+            {
+                return _overrideElevation;
+            }
+
+            set
+            {
+                _overrideElevation = value;
+                NotifyOfPropertyChange(nameof(IsElevated));
+            }
         }
     }
 }

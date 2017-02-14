@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Models;
@@ -257,14 +256,22 @@ namespace ChocolateyGui.Services
             return Task.Run(() => InitializeImpl(requireAdmin));
         }
 
-        private async Task InitializeImpl(bool requireAdmin = false)
+        private async Task InitializeImpl(bool requiresAdministrator = false)
         {
-            requireAdmin = requireAdmin || _forceElevation.Value;
+            if (!ElevationStatusProvider.Instance.IsElevated)
+            {
+                requiresAdministrator = requiresAdministrator || _forceElevation.Value;
+            }
+            else
+            {
+                // If we're already elevated, don't force any permissions checks.
+                requiresAdministrator = false;
+            }
 
             // Check if we're not already initialized or running, as well as our permissions level.
             if (_isInitialized)
             {
-                if (!requireAdmin || await _chocolateyService.IsElevated())
+                if (!requiresAdministrator || await _chocolateyService.IsElevated())
                 {
                     return;
                 }
@@ -275,7 +282,7 @@ namespace ChocolateyGui.Services
                 // Double check our initialization and permissions status.
                 if (_isInitialized)
                 {
-                    if (!requireAdmin || await _chocolateyService.IsElevated())
+                    if (!requiresAdministrator || await _chocolateyService.IsElevated())
                     {
                         return;
                     }
@@ -296,17 +303,17 @@ namespace ChocolateyGui.Services
                     }
                 }
 
-                const string Port = "24606";
+                const string port = "24606";
                 var subprocessPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ChocolateyGui.Subprocess.exe");
                 var startInfo = new ProcessStartInfo
                                     {
-                                        Arguments = Port,
+                                        Arguments = port,
                                         UseShellExecute = true,
                                         FileName = subprocessPath,
                                         WindowStyle = ProcessWindowStyle.Hidden
                                     };
 
-                if (requireAdmin)
+                if (requiresAdministrator)
                 {
                     startInfo.Verb = "runas";
                 }
@@ -362,7 +369,7 @@ namespace ChocolateyGui.Services
                 var factory = new WampChannelFactory();
                 _wampChannel =
                     factory.ConnectToRealm("default")
-                        .WebSocketTransport($"ws://127.0.0.1:{Port}/ws")
+                        .WebSocketTransport($"ws://127.0.0.1:{port}/ws")
                         .JsonSerialization()
                         .Build();
 
@@ -406,7 +413,7 @@ namespace ChocolateyGui.Services
                         });
 
                 // ReSharper disable once PossibleNullReferenceException
-                ((ElevationStatusProvider)Application.Current.FindResource("Elevation")).IsElevated = await _chocolateyService.IsElevated();
+                ElevationStatusProvider.Instance.IsElevated = await _chocolateyService.IsElevated();
             }
         }
 

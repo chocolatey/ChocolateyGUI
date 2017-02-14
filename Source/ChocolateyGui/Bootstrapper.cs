@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,8 @@ using Autofac;
 using Caliburn.Micro;
 using CefSharp;
 using chocolatey;
+using ChocolateyGui.Providers;
+using ChocolateyGui.Services;
 using ChocolateyGui.Startup;
 using ChocolateyGui.ViewModels;
 using Serilog;
@@ -92,8 +95,18 @@ namespace ChocolateyGui
             Internationalization.Initialize();
         }
 
-        protected override void OnStartup(object sender, StartupEventArgs e)
+        protected override async void OnStartup(object sender, StartupEventArgs e)
         {
+            var chocolatey = Container.Resolve<IChocolateyPackageService>();
+            var features = await chocolatey.GetFeatures();
+            var runningInBackground =
+                features.First(f => string.Equals(f.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase));
+            if (runningInBackground.Enabled)
+            {
+                // Override elevation status and force true.
+                ElevationStatusProvider.Instance.OverrideElevation = Tuple.Create(true, true);
+            }
+
             App.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
             DisplayRootViewFor<ShellViewModel>();
         }

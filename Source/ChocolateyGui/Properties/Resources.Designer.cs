@@ -106,6 +106,69 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Controls_PackagesContextMenuDetails {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string Controls_PackagesContextMenuInstall {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin.
+        /// </summary>
+        public static string Controls_PackagesContextMenuPin {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reinstall.
+        /// </summary>
+        public static string Controls_PackagesContextMenuReinstall {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuReinstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstall.
+        /// </summary>
+        public static string Controls_PackagesContextMenuUninstall {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpin.
+        /// </summary>
+        public static string Controls_PackagesContextMenuUnpin {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuUnpin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Controls_PackagesContextMenuUpdate {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid version string..
         /// </summary>
         public static string InvalidVersionString {
@@ -219,6 +282,15 @@ namespace ChocolateyGui.Properties {
         public static string PackageView_ButtonInstall {
             get {
                 return ResourceManager.GetString("PackageView_ButtonInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin.
+        /// </summary>
+        public static string PackageView_ButtonPin {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonPin", resourceCulture);
             }
         }
         
@@ -642,6 +714,15 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_SourcesCertificatePass {
             get {
                 return ResourceManager.GetString("SettingsView_SourcesCertificatePass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string SettingsView_SourcesDisabled {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesDisabled", resourceCulture);
             }
         }
         

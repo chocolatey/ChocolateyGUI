@@ -132,6 +132,27 @@
   <data name="Controls_PackageListTags" xml:space="preserve">
     <value>Tags:</value>
   </data>
+  <data name="Controls_PackagesContextMenuDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Controls_PackagesContextMenuInstall" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="Controls_PackagesContextMenuPin" xml:space="preserve">
+    <value>Pin</value>
+  </data>
+  <data name="Controls_PackagesContextMenuReinstall" xml:space="preserve">
+    <value>Reinstall</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUninstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUnpin" xml:space="preserve">
+    <value>Unpin</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUpdate" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="InvalidVersionString" xml:space="preserve">
     <value>Invalid version string.</value>
   </data>
@@ -170,6 +191,9 @@
   </data>
   <data name="PackageView_ButtonInstall" xml:space="preserve">
     <value>Install</value>
+  </data>
+  <data name="PackageView_ButtonPin" xml:space="preserve">
+    <value>Pin</value>
   </data>
   <data name="PackageView_ButtonReinstall" xml:space="preserve">
     <value>Reinstall</value>
@@ -311,6 +335,9 @@
   </data>
   <data name="SettingsView_SourcesCertificatePass" xml:space="preserve">
     <value>Certificate Pass</value>
+  </data>
+  <data name="SettingsView_SourcesDisabled" xml:space="preserve">
+    <value>Disabled</value>
   </data>
   <data name="SettingsView_SourcesId" xml:space="preserve">
     <value>Id</value>

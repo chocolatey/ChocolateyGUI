@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -336,11 +337,21 @@ namespace ChocolateyGui.Services
                     }
                 }
 
-                const string Port = "24606";
+                var port = 5000;
+                while (!IsPortAvailable(port) && port < 6000)
+                {
+                    port++;
+                }
+
+                if (port >= 6000)
+                {
+                    throw new Exception("Failed to acquire port for GUI Subprocess.");
+                }
+
                 var subprocessPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ChocolateyGui.Subprocess.exe");
                 var startInfo = new ProcessStartInfo
                                     {
-                                        Arguments = Port,
+                                        Arguments = port.ToString(),
                                         UseShellExecute = true,
                                         FileName = subprocessPath,
                                         WindowStyle = ProcessWindowStyle.Hidden
@@ -402,7 +413,7 @@ namespace ChocolateyGui.Services
                 var factory = new WampChannelFactory();
                 _wampChannel =
                     factory.ConnectToRealm("default")
-                        .WebSocketTransport($"ws://127.0.0.1:{Port}/ws")
+                        .WebSocketTransport($"ws://127.0.0.1:{port}/ws")
                         .JsonSerialization()
                         .Build();
 
@@ -458,6 +469,14 @@ namespace ChocolateyGui.Services
             throw new ApplicationException($"Failed to start chocolatey subprocess.\n"
                                            +
                                            $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
+        }
+
+        private bool IsPortAvailable(int port)
+        {
+            return IPGlobalProperties
+                .GetIPGlobalProperties()
+                .GetActiveTcpListeners()
+                .All(tcpi => tcpi.Port != port);
         }
     }
 }

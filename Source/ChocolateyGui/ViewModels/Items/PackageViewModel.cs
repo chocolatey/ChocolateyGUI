@@ -11,6 +11,7 @@ using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
 using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using NuGet;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
@@ -325,7 +326,7 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog("Installing package", "Installing package", Id))
+                using (await StartProgressDialog(Resources.PackageViewModel_InstallingPackage, Resources.PackageViewModel_InstallingPackage, Id))
                 {
                     await _chocolateyService.InstallPackage(Id, Version, Source).ConfigureAwait(false);
                 }
@@ -333,7 +334,12 @@ namespace ChocolateyGui.ViewModels.Items
             catch (Exception ex)
             {
                 Logger.Error(ex, "Ran into an error while installing {Id}, version {Version}.", Id, Version);
-                await _progressService.ShowMessageAsync("Failed to Install", $"Ran into an error while install {Id}.\n{ex.Message}");
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToInstall,
+                    string.Format(
+                        Resources.PackageViewModel_RanIntoInstallError,
+                        Id,
+                        ex.Message));
             }
         }
 
@@ -341,7 +347,7 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog("Reinstalling package", "Reinstalling package", Id))
+                using (await StartProgressDialog(Resources.PackageViewModel_ReinstallingPackage, Resources.PackageViewModel_ReinstallingPackage, Id))
                 {
                     await _chocolateyService.InstallPackage(Id, Version, Source, true).ConfigureAwait(false);
                 }
@@ -349,7 +355,12 @@ namespace ChocolateyGui.ViewModels.Items
             catch (Exception ex)
             {
                 Logger.Error(ex, "Ran into an error while reinstalling {Id}, version {Version}.", Id, Version);
-                await _progressService.ShowMessageAsync("Failed to Reinstall", $"Ran into an error while reinstalling {Id}.\n{ex.Message}");
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToReinstall,
+                    string.Format(
+                        Resources.PackageViewModel_RanIntoReinstallError,
+                        Id,
+                        ex.Message));
             }
 
             await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
@@ -359,7 +370,7 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog("Uninstalling package", "Uninstalling package", Id))
+                using (await StartProgressDialog(Resources.PackageViewModel_UninstallingPackage, Resources.PackageViewModel_UninstallingPackage, Id))
                 {
                     await _chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
                 }
@@ -367,7 +378,12 @@ namespace ChocolateyGui.ViewModels.Items
             catch (Exception ex)
             {
                 Logger.Error(ex, "Ran into an error while uninstalling {Id}, version {Version}.", Id, Version);
-                await _progressService.ShowMessageAsync("Failed to Uninstall", $"Ran into an error while uninstalling {Id}.\n{ex.Message}");
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToUninstall,
+                    string.Format(
+                        Resources.PackageViewModel_RanIntoUninstallError,
+                        Id,
+                        ex.Message));
             }
         }
 
@@ -375,7 +391,7 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog("Updating package", "Updating package", Id))
+                using (await StartProgressDialog(Resources.PackageViewModel_UpdatingPackage, Resources.PackageViewModel_UpdatingPackage, Id))
                 {
                     await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
                 }
@@ -384,8 +400,11 @@ namespace ChocolateyGui.ViewModels.Items
             {
                 Logger.Error(ex, "Ran into an error while updating {Id}, version {Version}.", Id, Version);
                 await _progressService.ShowMessageAsync(
-                    "Failed to Update",
-                    $"Ran into an error while updating {Id}.\n{ex.Message}");
+                    Resources.PackageViewModel_FailedToUpdate,
+                    string.Format(
+                        Resources.PackageViewModel_RanIntoUpdateError,
+                        Id,
+                        ex.Message));
             }
         }
 
@@ -393,7 +412,7 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog("Pinning package", "Pinning package", Id))
+                using (await StartProgressDialog(Resources.PackageViewModel_PinningPackage, Resources.PackageViewModel_PinningPackage, Id))
                 {
                     await _chocolateyService.PinPackage(Id, Version).ConfigureAwait(false);
                 }
@@ -401,7 +420,12 @@ namespace ChocolateyGui.ViewModels.Items
             catch (Exception ex)
             {
                 Logger.Error(ex, "Ran into an error while pinning {Id}, version {Version}.", Id, Version);
-                await _progressService.ShowMessageAsync("Failed to Pin", $"Ran into an error while pinning {Id}.\n{ex.Message}");
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToPin,
+                    string.Format(
+                        Resources.PackageViewModel_RanIntoPinningError,
+                        Id,
+                        ex.Message));
             }
         }
 
@@ -409,7 +433,7 @@ namespace ChocolateyGui.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog("Installing package", "Installing package", Id))
+                using (await StartProgressDialog(Resources.PackageViewModel_UnpinningPackage, Resources.PackageViewModel_UnpinningPackage, Id))
                 {
                     await _chocolateyService.UnpinPackage(Id, Version).ConfigureAwait(false);
                 }
@@ -417,7 +441,12 @@ namespace ChocolateyGui.ViewModels.Items
             catch (Exception ex)
             {
                 Logger.Error(ex, "Ran into an error while unpinning {Id}, version {Version}.", Id, Version);
-                await _progressService.ShowMessageAsync("Failed to Unpin", $"Ran into an error while unpinning {Id}.\n{ex.Message}");
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToUnpin,
+                    string.Format(
+                        Resources.PackageViewModel_RanIntoUnpinError,
+                        Id,
+                        ex.Message));
             }
         }
 
@@ -477,7 +506,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private async Task PopulateDetails()
         {
-            await _progressService.StartLoading("Loading package information...");
+            await _progressService.StartLoading(Resources.PackageViewModel_LoadingPackageInfo);
             try
             {
                 var package =
@@ -497,7 +526,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private async Task<IDisposable> StartProgressDialog(string commandString, string initialProgressText, string id = "")
         {
-            await _progressService.StartLoading($"{commandString} {id}...");
+            await _progressService.StartLoading(string.Format(Resources.PackageViewModel_StartLoadingFormat, commandString, id));
             _progressService.WriteMessage(initialProgressText);
             return new DisposableAction(() => _progressService.StopLoading());
         }

@@ -6,6 +6,7 @@
 
 using Caliburn.Micro;
 using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Properties;
 using ChocolateyGui.ViewModels.Items;
 
 namespace ChocolateyGui.ViewModels
@@ -21,7 +22,7 @@ namespace ChocolateyGui.ViewModels
 
         public IPackageViewModel Package { get; set; }
 
-        public new string DisplayName => $"Package - {Package?.Title}";
+        public new string DisplayName => string.Format(Resources.PackageViewModel_DisplayName, Package?.Title);
 
         public void Back()
         {

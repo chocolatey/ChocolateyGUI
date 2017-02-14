@@ -90,7 +90,7 @@ namespace ChocolateyGui.ViewModels
         {
             Observable.FromEventPattern<PropertyChangedEventArgs>(this, nameof(PropertyChanged))
                 .Where(p => p.EventArgs.PropertyName == nameof(ActiveItem))
-                .Subscribe(p => DisplayName = $"Source - {ActiveItem.DisplayName}");
+                .Subscribe(p => DisplayName = $"Source - {ActiveItem?.DisplayName}");
 
             if (_firstLoad)
             {

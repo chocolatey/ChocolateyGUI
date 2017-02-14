@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Caliburn.Micro;
 using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
@@ -121,7 +122,7 @@ namespace ChocolateyGui.ViewModels
         {
             try
             {
-                await _progressService.StartLoading("Packages", true);
+                await _progressService.StartLoading(Resources.LocalSourceViewModel_Packages, true);
                 var token = _progressService.GetCancellationToken();
                 var packages = Packages.Where(p => p.CanUpdate && !p.IsPinned).ToList();
                 double current = 0.0f;
@@ -154,7 +155,7 @@ namespace ChocolateyGui.ViewModels
 
             try
             {
-                var fileStream = _persistenceService.SaveFile("*.config", "Config Files (.config)|*.config");
+                var fileStream = _persistenceService.SaveFile("*.config", Resources.LocalSourceViewModel_ConfigFiles);
 
                 if (fileStream == null)
                 {
@@ -238,7 +239,7 @@ namespace ChocolateyGui.ViewModels
                 if (chocoPackage != null && chocoPackage.CanUpdate)
                 {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    _progressService.ShowMessageAsync("Chocolatey", "There's an update available for chocolatey.")
+                    _progressService.ShowMessageAsync(Resources.LocalSourceViewModel_Chocolatey, Resources.LocalSourceViewModel_UpdateAvailableForChocolatey)
                         .ConfigureAwait(false);
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 }

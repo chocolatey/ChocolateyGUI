@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Subprocess.Models;
 using ChocolateyGui.Utilities.Extensions;
@@ -231,9 +232,9 @@ namespace ChocolateyGui.ViewModels
                 MessageBox.Show(
                     string.Format(
                         CultureInfo.InvariantCulture,
-                        "Unable to connect to feed with Source: {0}.  Please check that this feed is accessible, and try again.",
+                        Resources.RemoteSourceViewModel_UnableToConnectToFeed,
                         Source.Value),
-                    "Feed Search Error",
+                    Resources.RemoteSourceViewModel_FeedSearchError,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error,
                     MessageBoxResult.OK,
@@ -249,7 +250,7 @@ namespace ChocolateyGui.ViewModels
 
                 var sort = SortSelection == "Popularity" ? "DownloadCount" : "Title";
 
-                await _progressService.StartLoading($"Loading page {CurrentPage}...");
+                await _progressService.StartLoading(string.Format(Resources.RemoteSourceViewModel_LoadingPage, CurrentPage));
                 try
                 {
                     var result =
@@ -294,7 +295,11 @@ namespace ChocolateyGui.ViewModels
             catch (Exception ex)
             {
                 Logger.Error(ex, "Failed to load new packages.");
-                await _progressService.ShowMessageAsync("Failed to Load", $"Failed to load remote packages!\n{ex.Message}");
+                await _progressService.ShowMessageAsync(
+                    Resources.RemoteSourceViewModel_FailedToLoad,
+                    string.Format(
+                        Resources.RemoteSourceViewModel_FailedToLoadRemotePackages,
+                        ex.Message));
                 throw;
             }
         }

@@ -661,7 +661,7 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="Unpin" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUnpin}" Icon="{StaticResource UacIcon}"
                   Command="{commands:DataContextCommandAdapter Unpin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">

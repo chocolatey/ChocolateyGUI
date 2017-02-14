@@ -297,9 +297,7 @@ namespace ChocolateyGui.ViewModels
                 Logger.Error(ex, "Failed to load new packages.");
                 await _progressService.ShowMessageAsync(
                     Resources.RemoteSourceViewModel_FailedToLoad,
-                    string.Format(
-                        Resources.RemoteSourceViewModel_FailedToLoadRemotePackages,
-                        ex.Message));
+                    string.Format(Resources.RemoteSourceViewModel_FailedToLoadRemotePackages, ex.Message));
                 throw;
             }
         }

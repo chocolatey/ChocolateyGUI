@@ -297,9 +297,7 @@ namespace ChocolateyGui.ViewModels
             Logger.Error(ex, "Failed to update features list!\nMessage: {Message}\nArguments: {Arguments}", ex.Message, ex.Arguments);
             await _progressService.ShowMessageAsync(
                 Resources.SettingsViewModel_FeatureUpdatesError,
-                string.Format(
-                    Resources.SettingsViewModel_FeatureFailedToUpdate,
-                    string.Join("\v", ex.Arguments)));
+                string.Format(Resources.SettingsViewModel_FeatureFailedToUpdate, string.Join("\v", ex.Arguments)));
         }
     }
 }

@@ -336,10 +336,7 @@ namespace ChocolateyGui.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while installing {Id}, version {Version}.", Id, Version);
                 await _progressService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToInstall,
-                    string.Format(
-                        Resources.PackageViewModel_RanIntoInstallError,
-                        Id,
-                        ex.Message));
+                    string.Format(Resources.PackageViewModel_RanIntoInstallError, Id, ex.Message));
             }
         }
 
@@ -357,10 +354,7 @@ namespace ChocolateyGui.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while reinstalling {Id}, version {Version}.", Id, Version);
                 await _progressService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToReinstall,
-                    string.Format(
-                        Resources.PackageViewModel_RanIntoReinstallError,
-                        Id,
-                        ex.Message));
+                    string.Format(Resources.PackageViewModel_RanIntoReinstallError, Id, ex.Message));
             }
 
             await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
@@ -380,10 +374,7 @@ namespace ChocolateyGui.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while uninstalling {Id}, version {Version}.", Id, Version);
                 await _progressService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToUninstall,
-                    string.Format(
-                        Resources.PackageViewModel_RanIntoUninstallError,
-                        Id,
-                        ex.Message));
+                    string.Format(Resources.PackageViewModel_RanIntoUninstallError, Id, ex.Message));
             }
         }
 
@@ -401,10 +392,7 @@ namespace ChocolateyGui.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while updating {Id}, version {Version}.", Id, Version);
                 await _progressService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToUpdate,
-                    string.Format(
-                        Resources.PackageViewModel_RanIntoUpdateError,
-                        Id,
-                        ex.Message));
+                    string.Format(Resources.PackageViewModel_RanIntoUpdateError, Id, ex.Message));
             }
         }
 
@@ -422,10 +410,7 @@ namespace ChocolateyGui.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while pinning {Id}, version {Version}.", Id, Version);
                 await _progressService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToPin,
-                    string.Format(
-                        Resources.PackageViewModel_RanIntoPinningError,
-                        Id,
-                        ex.Message));
+                    string.Format(Resources.PackageViewModel_RanIntoPinningError, Id, ex.Message));
             }
         }
 
@@ -443,10 +428,7 @@ namespace ChocolateyGui.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while unpinning {Id}, version {Version}.", Id, Version);
                 await _progressService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToUnpin,
-                    string.Format(
-                        Resources.PackageViewModel_RanIntoUnpinError,
-                        Id,
-                        ex.Message));
+                    string.Format(Resources.PackageViewModel_RanIntoUnpinError, Id, ex.Message));
             }
         }
 

@@ -504,6 +504,12 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_Features" xml:space="preserve">
     <value>Features</value>
   </data>
+  <data name="SettingsView_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="SettingsView_On" xml:space="preserve">
+    <value>On</value>
+  </data>
   <data name="SettingsView_Options" xml:space="preserve">
     <value>Options</value>
   </data>

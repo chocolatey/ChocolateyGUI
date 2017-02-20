@@ -18,6 +18,8 @@
         <Style TargetType="{x:Type metro:ToggleSwitch}" BasedOn="{StaticResource ToggleSwitch.Win10.Override}">
             <Setter Property="Margin" Value="0 5"/>
             <Setter Property="metro:ControlsHelper.HeaderMargin" Value="0 0 0 10"/>
+            <Setter Property="OnLabel" Value="{x:Static lang:Resources.SettingsView_On}"/>
+            <Setter Property="OffLabel" Value="{x:Static lang:Resources.SettingsView_Off}"/>
         </Style>
     </UserControl.Resources>
     <DockPanel>

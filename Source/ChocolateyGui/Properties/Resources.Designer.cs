@@ -1064,6 +1064,24 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string SettingsView_Off {
+            get {
+                return ResourceManager.GetString("SettingsView_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string SettingsView_On {
+            get {
+                return ResourceManager.GetString("SettingsView_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string SettingsView_Options {

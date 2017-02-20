@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Argument_cant_be_null_or_empty" xml:space="preserve">
-    <value>Argument can't be null or empty.</value>
-  </data>
   <data name="Bootstrapper_UnhandledException" xml:space="preserve">
     <value>Unhandled Exception</value>
   </data>
@@ -132,15 +129,9 @@
   <data name="ChocolateyDialog_ConsoleOutput" xml:space="preserve">
     <value>Console Output</value>
   </data>
-  <data name="ChocolateyRemotePackageService_Escalating" xml:space="preserve">
-    <value>Escalating</value>
-  </data>
   <data name="ChocolateyRemotePackageService_ExceptionFormat" xml:space="preserve">
     <value>
 Exception: {0}</value>
-  </data>
-  <data name="ChocolateyRemotePackageService_Exiting" xml:space="preserve">
-    <value>Exiting</value>
   </data>
   <data name="ChocolateyRemotePackageService_InstallFailedMessage" xml:space="preserve">
     <value>Failed to install package "{0}", version "{1}".
@@ -206,9 +197,6 @@ Error: {1}{2}</value>
   </data>
   <data name="Controls_PackagesContextMenuUpdate" xml:space="preserve">
     <value>Update</value>
-  </data>
-  <data name="InvalidVersionString" xml:space="preserve">
-    <value>Invalid version string.</value>
   </data>
   <data name="LocalSourceViewModel_Chocolatey" xml:space="preserve">
     <value>Chocolatey</value>
@@ -576,15 +564,8 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="ShellView_ButtonSettings" xml:space="preserve">
     <value>settings</value>
   </data>
-  <data name="SourcesViewModel_SourcesDisplayFormat" xml:space="preserve">
-    <value>Source - {0}</value>
-    <comment>{0} = The display name of the active item</comment>
-  </data>
   <data name="SourcesView_Choco" xml:space="preserve">
     <value>chocolatey</value>
-  </data>
-  <data name="TypeMustBeASemanticVersion" xml:space="preserve">
-    <value>LineType must be a semantic version.</value>
   </data>
   <data name="VersionNumberProvider_VersionFormat" xml:space="preserve">
     <value>Version: {0}</value>

@@ -61,15 +61,6 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Argument can&apos;t be null or empty..
-        /// </summary>
-        public static string Argument_cant_be_null_or_empty {
-            get {
-                return ResourceManager.GetString("Argument_cant_be_null_or_empty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Unhandled Exception.
         /// </summary>
         public static string Bootstrapper_UnhandledException {
@@ -106,30 +97,12 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Escalating.
-        /// </summary>
-        public static string ChocolateyRemotePackageService_Escalating {
-            get {
-                return ResourceManager.GetString("ChocolateyRemotePackageService_Escalating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 
         ///Exception: {0}.
         /// </summary>
         public static string ChocolateyRemotePackageService_ExceptionFormat {
             get {
                 return ResourceManager.GetString("ChocolateyRemotePackageService_ExceptionFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exiting.
-        /// </summary>
-        public static string ChocolateyRemotePackageService_Exiting {
-            get {
-                return ResourceManager.GetString("ChocolateyRemotePackageService_Exiting", resourceCulture);
             }
         }
         
@@ -315,15 +288,6 @@ namespace ChocolateyGui.Properties {
         public static string Controls_PackagesContextMenuUpdate {
             get {
                 return ResourceManager.GetString("Controls_PackagesContextMenuUpdate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid version string..
-        /// </summary>
-        public static string InvalidVersionString {
-            get {
-                return ResourceManager.GetString("InvalidVersionString", resourceCulture);
             }
         }
         
@@ -1064,6 +1028,24 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string SettingsView_Off {
+            get {
+                return ResourceManager.GetString("SettingsView_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string SettingsView_On {
+            get {
+                return ResourceManager.GetString("SettingsView_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string SettingsView_Options {
@@ -1340,24 +1322,6 @@ namespace ChocolateyGui.Properties {
         public static string SourcesView_Choco {
             get {
                 return ResourceManager.GetString("SourcesView_Choco", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Source - {0}.
-        /// </summary>
-        public static string SourcesViewModel_SourcesDisplayFormat {
-            get {
-                return ResourceManager.GetString("SourcesViewModel_SourcesDisplayFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LineType must be a semantic version..
-        /// </summary>
-        public static string TypeMustBeASemanticVersion {
-            get {
-                return ResourceManager.GetString("TypeMustBeASemanticVersion", resourceCulture);
             }
         }
         

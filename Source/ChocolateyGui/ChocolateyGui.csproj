@@ -288,6 +288,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Properties\Resources.sv.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.sv.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Startup\ChocolateyGuiModule.cs" />
@@ -495,7 +500,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.sv.resx" />
+    <EmbeddedResource Include="Properties\Resources.sv.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.sv.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <Resource Include="..\..\ABOUT.md">
       <Link>Resources\ABOUT.md</Link>
     </Resource>

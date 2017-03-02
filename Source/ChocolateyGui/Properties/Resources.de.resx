@@ -345,4 +345,211 @@
   <data name="SourcesView_Choco" xml:space="preserve">
     <value>chocolatey</value>
   </data>
+  <data name="Bootstrapper_UnhandledException" xml:space="preserve">
+    <value>Unbehandelte Ausnahme</value>
+  </data>
+  <data name="ChocolateyCustomSchemeProvider_InvalidHtml" xml:space="preserve">
+    <value>&lt;h3&gt;Ungültiger HTML Text&lt;/h3&gt;</value>
+  </data>
+  <data name="ChocolateyCustomSchemeProvider_UnknownHost" xml:space="preserve">
+    <value>&lt;h1&gt;Unbekannter Rechner&lt;/h1&gt;</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_ExceptionFormat" xml:space="preserve">
+    <value>
+Unbehanelte Ausnahme: {0}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UpdateFailedTitle" xml:space="preserve">
+    <value>Fehler beim Aktualisieren des Pakets.</value>
+  </data>
+  <data name="Controls_PackagesContextMenuDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Controls_PackagesContextMenuInstall" xml:space="preserve">
+    <value>Installieren</value>
+  </data>
+  <data name="Controls_PackagesContextMenuPin" xml:space="preserve">
+    <value>Anheften</value>
+  </data>
+  <data name="Controls_PackagesContextMenuReinstall" xml:space="preserve">
+    <value>Neu Installieren</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUninstall" xml:space="preserve">
+    <value>Deinstallieren</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUnpin" xml:space="preserve">
+    <value>Update zulassen</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUpdate" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="LocalSourceViewModel_Chocolatey" xml:space="preserve">
+    <value>Chocolatey</value>
+  </data>
+  <data name="LocalSourceViewModel_ConfigFiles" xml:space="preserve">
+    <value>Konfigurationsdateien (.config)|*.config</value>
+  </data>
+  <data name="LocalSourceViewModel_Packages" xml:space="preserve">
+    <value>Pakete</value>
+  </data>
+  <data name="LocalSourceViewModel_UpdateAvailableForChocolatey" xml:space="preserve">
+    <value>Es ist ein chocolatey Update verfügbar.</value>
+  </data>
+  <data name="PackageViewModel_DisplayName" xml:space="preserve">
+    <value>Paket - {0}</value>
+  </data>
+  <data name="PackageViewModel_FailedToInstall" xml:space="preserve">
+    <value>Fehler beim Installieren</value>
+  </data>
+  <data name="PackageViewModel_FailedToPin" xml:space="preserve">
+    <value>Failed to Anheften</value>
+  </data>
+  <data name="PackageViewModel_FailedToReinstall" xml:space="preserve">
+    <value>Fehler bei Neuinstallation</value>
+  </data>
+  <data name="PackageViewModel_FailedToUninstall" xml:space="preserve">
+    <value>Fehler bei Deinstallation</value>
+  </data>
+  <data name="PackageViewModel_FailedToUnpin" xml:space="preserve">
+    <value>Fehler beim Update zulassen</value>
+  </data>
+  <data name="PackageViewModel_FailedToUpdate" xml:space="preserve">
+    <value>Fehler beim Aktualisieren</value>
+  </data>
+  <data name="PackageViewModel_InstallingPackage" xml:space="preserve">
+    <value>Installiere Paket</value>
+  </data>
+  <data name="PackageViewModel_LoadingPackageInfo" xml:space="preserve">
+    <value>Lade Paketinformationen</value>
+  </data>
+  <data name="PackageViewModel_PinningPackage" xml:space="preserve">
+    <value>Fixiere Paketversion</value>
+  </data>
+  <data name="PackageViewModel_UninstallingPackage" xml:space="preserve">
+    <value>Deinstalliere Paket</value>
+  </data>
+  <data name="PackageViewModel_UpdatingPackage" xml:space="preserve">
+    <value>Aktualisiere Paket</value>
+  </data>
+  <data name="PackageView_ButtonPin" xml:space="preserve">
+    <value>Anheften</value>
+  </data>
+  <data name="RemoteSourceViewModel_FailedToLoad" xml:space="preserve">
+    <value>Fehler beim Herunterladen</value>
+  </data>
+  <data name="RemoteSourceViewModel_FeedSearchError" xml:space="preserve">
+    <value>Fehler beim Durchsuchen des Feeds</value>
+  </data>
+  <data name="RemoteSourceViewModel_LoadingPage" xml:space="preserve">
+    <value>Lade Paket {0} ...</value>
+  </data>
+  <data name="SettingsViewModel_DisplayName" xml:space="preserve">
+    <value>ChocolateyGUI - Einstellungen</value>
+  </data>
+  <data name="PackageViewModel_UnpinningPackage" xml:space="preserve">
+    <value>Erlaube Aktualisierung von Paket</value>
+  </data>
+  <data name="RemoteSourceViewModel_UnableToConnectToFeed" xml:space="preserve">
+    <value>Fehler beim Laden des Feeds: {0}.  Bitte überprüfe, dass der Feed erreichbar ist und versuche es nochmal.</value>
+  </data>
+  <data name="SettingsViewModel_RemovingSource" xml:space="preserve">
+    <value>Entferne Quelle...</value>
+  </data>
+  <data name="SettingsViewModel_SavingSource" xml:space="preserve">
+    <value>Speichere Quelle</value>
+  </data>
+  <data name="SettingsViewModel_SavingSourceLoading" xml:space="preserve">
+    <value>Speichere Quelle...</value>
+  </data>
+  <data name="SettingsViewModel_SourceMissingId" xml:space="preserve">
+    <value>Quelle benötigt eine Id!</value>
+  </data>
+  <data name="SettingsViewModel_SourceMissingValue" xml:space="preserve">
+    <value>Quelle benötigt einen Wert!</value>
+  </data>
+  <data name="SettingsView_Off" xml:space="preserve">
+    <value>Aus</value>
+  </data>
+  <data name="SettingsView_On" xml:space="preserve">
+    <value>Ein</value>
+  </data>
+  <data name="SettingsView_SourcesDisabled" xml:space="preserve">
+    <value>Deaktiviert</value>
+  </data>
+  <data name="VersionNumberProvider_VersionFormat" xml:space="preserve">
+    <value>Version: {0}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_InstallFailedMessage" xml:space="preserve">
+    <value>Fehler beim Installieren von Paket "{0}", Version "{1}".
+Fehler: {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_InstallFailedTitle" xml:space="preserve">
+    <value>Installieren von Paket fehlgeschlagen.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_PinFailedMessage" xml:space="preserve">
+    <value>Fehler beim Anheften von Paket "{0}", Version "{1}".
+Fehler: {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_PinFailedTitle" xml:space="preserve">
+    <value>Anheften von Paket fehlgeschlagen.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UninstallFailedMessage" xml:space="preserve">
+    <value>Fehler bei Deinstallation von Paket "{0}", Version "{1}".
+Fehler: {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UninstallFailedTitle" xml:space="preserve">
+    <value>Deinstallation von Paket fehlgeschlagen.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UnpinFailedMessage" xml:space="preserve">
+    <value>Fehler beim Zulassen von Updates für Paket "{0}", Version "{1}".
+Fehler {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UnpinFailedTitle" xml:space="preserve">
+    <value>Zulassen von Updates fehlgeschlagen.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UpdateFailedMessage" xml:space="preserve">
+    <value>Fehler beim Aktualisieren von Paket "{0}".
+Fehler: {1}{2}</value>
+  </data>
+  <data name="PackageViewModel_RanIntoInstallError" xml:space="preserve">
+    <value>Fehler während der Installation von {0}.
+{1}</value>
+  </data>
+  <data name="PackageViewModel_RanIntoPinningError" xml:space="preserve">
+    <value>Fehler während Fixierung von {0}.
+{1}</value>
+  </data>
+  <data name="PackageViewModel_RanIntoReinstallError" xml:space="preserve">
+    <value>Fehler während Neuinstallation von {0}.
+{1}</value>
+  </data>
+  <data name="PackageViewModel_RanIntoUninstallError" xml:space="preserve">
+    <value>Fehler während Deinstallation von {0}.
+{1}</value>
+  </data>
+  <data name="PackageViewModel_RanIntoUnpinError" xml:space="preserve">
+    <value>Fehler während Updates für Paket {0} zulassen.
+{1}</value>
+  </data>
+  <data name="PackageViewModel_RanIntoUpdateError" xml:space="preserve">
+    <value>Fehler während Aktualisierung von {0}.
+{1}</value>
+  </data>
+  <data name="PackageViewModel_ReinstallingPackage" xml:space="preserve">
+    <value>Paket neu Installieren</value>
+  </data>
+  <data name="PackageViewModel_StartLoadingFormat" xml:space="preserve">
+    <value>{0} {1}...</value>
+  </data>
+  <data name="RemoteSourceViewModel_FailedToLoadRemotePackages" xml:space="preserve">
+    <value>Fehler beim Laden entfernter Pakete!
+{0}</value>
+  </data>
+  <data name="SettingsViewModel_FeatureFailedToUpdate" xml:space="preserve">
+    <value>Fehler beim Aktualisieren der Features. Fehler:
+{0}</value>
+    <comment>{0} = The exception arguments</comment>
+  </data>
+  <data name="SettingsViewModel_FeatureUpdatesError" xml:space="preserve">
+    <value>Feature Updates Fehler</value>
+  </data>
 </root>

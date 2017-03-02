@@ -208,7 +208,7 @@ Fel: {1}{2}</value>
     <value>Paket</value>
   </data>
   <data name="LocalSourceViewModel_UpdateAvailableForChocolatey" xml:space="preserve">
-    <value>Det finns en uppdatering tillgänglig för chocolatey.</value>
+    <value>Det finns en uppdatering tillgänglig för Chocolatey.</value>
   </data>
   <data name="LocalSourceView_ButtonExport" xml:space="preserve">
     <value>Exportera</value>

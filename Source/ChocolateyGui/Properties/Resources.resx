@@ -208,7 +208,7 @@ Error: {1}{2}</value>
     <value>Packages</value>
   </data>
   <data name="LocalSourceViewModel_UpdateAvailableForChocolatey" xml:space="preserve">
-    <value>There's an update available for chocolatey.</value>
+    <value>There's an update available for Chocolatey.</value>
   </data>
   <data name="LocalSourceView_ButtonExport" xml:space="preserve">
     <value>Export</value>

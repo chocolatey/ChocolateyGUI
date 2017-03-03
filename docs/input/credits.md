@@ -15,7 +15,7 @@ These are the committers to Chocolatey/ChocolateyGUI repository:
 
 ## Contributors
 
-* [Christian Baes](https://github.com/chrissie1) - Created the original version of Chocolatey Explorer, which ChocolateyGUI was built from.
+* [Christiaan Baes](https://github.com/chrissie1) - Created the original version of Chocolatey Explorer, which ChocolateyGUI was built from.
 
 ### Other Contributors
 

@@ -117,232 +117,457 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Bootstrapper_UnhandledException" xml:space="preserve">
+    <value>Oväntat fel</value>
+  </data>
+  <data name="ChocolateyCustomSchemeProvider_InvalidHtml" xml:space="preserve">
+    <value>&lt;h3&gt;Felaktig HTML-sträng&lt;/h3&gt;</value>
+  </data>
+  <data name="ChocolateyCustomSchemeProvider_UnknownHost" xml:space="preserve">
+    <value>&lt;h1&gt;Okänd värd&lt;/h1&gt;</value>
+  </data>
   <data name="ChocolateyDialog_ConsoleOutput" xml:space="preserve">
-    <value>Console Output</value>
+    <value>Konsolutskrift</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_ExceptionFormat" xml:space="preserve">
+    <value>
+Fel: {0}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_InstallFailedMessage" xml:space="preserve">
+    <value>Kunde inte installera paket "{0}", version "{1}".
+Fel: {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_InstallFailedTitle" xml:space="preserve">
+    <value>Kunde inte installera paket.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_PinFailedMessage" xml:space="preserve">
+    <value>Kunde inte låsa paket "{0}", version "{1}".
+Fel: {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_PinFailedTitle" xml:space="preserve">
+    <value>Kunde inte låsa paket.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UninstallFailedMessage" xml:space="preserve">
+    <value>Kunde inte avinstallera paket "{0}", version "{1}".
+Fel: {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UninstallFailedTitle" xml:space="preserve">
+    <value>Kunde inte avinstallera paket.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UnpinFailedMessage" xml:space="preserve">
+    <value>Kunde inte låsa upp paket "{0}", version "{1}".
+Fel {2}{3}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UnpinFailedTitle" xml:space="preserve">
+    <value>Kunde inte låsa upp paket.</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UpdateFailedMessage" xml:space="preserve">
+    <value>Kunde inte uppdatera paket "{0}".
+Fel: {1}{2}</value>
+  </data>
+  <data name="ChocolateyRemotePackageService_UpdateFailedTitle" xml:space="preserve">
+    <value>Kunde inte uppdatera paket.</value>
   </data>
   <data name="Controls_PackageListByAuthor" xml:space="preserve">
-    <value>By: </value>
+    <value>Av: </value>
   </data>
   <data name="Controls_PackageListDownloads" xml:space="preserve">
-    <value>downloads</value>
+    <value>nedladdningar</value>
   </data>
   <data name="Controls_PackageListTags" xml:space="preserve">
-    <value>Tags:</value>
+    <value>Taggar:</value>
+  </data>
+  <data name="Controls_PackagesContextMenuDetails" xml:space="preserve">
+    <value>Detaljer</value>
+  </data>
+  <data name="Controls_PackagesContextMenuInstall" xml:space="preserve">
+    <value>Installera</value>
+  </data>
+  <data name="Controls_PackagesContextMenuPin" xml:space="preserve">
+    <value>Lås</value>
+  </data>
+  <data name="Controls_PackagesContextMenuReinstall" xml:space="preserve">
+    <value>Ominstallera</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUninstall" xml:space="preserve">
+    <value>Avinstallera</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUnpin" xml:space="preserve">
+    <value>Lås upp</value>
+  </data>
+  <data name="Controls_PackagesContextMenuUpdate" xml:space="preserve">
+    <value>Uppdatera</value>
+  </data>
+  <data name="LocalSourceViewModel_Chocolatey" xml:space="preserve">
+    <value>Chocolatey</value>
+  </data>
+  <data name="LocalSourceViewModel_ConfigFiles" xml:space="preserve">
+    <value>Konfigurationsfiler (.config)|*.config</value>
+  </data>
+  <data name="LocalSourceViewModel_Packages" xml:space="preserve">
+    <value>Paket</value>
+  </data>
+  <data name="LocalSourceViewModel_UpdateAvailableForChocolatey" xml:space="preserve">
+    <value>Det finns en uppdatering tillgänglig för chocolatey.</value>
   </data>
   <data name="LocalSourceView_ButtonExport" xml:space="preserve">
-    <value>Export</value>
+    <value>Exportera</value>
   </data>
   <data name="LocalSourceView_ButtonRefreshPkgs" xml:space="preserve">
-    <value>Refresh Packages</value>
+    <value>Kontrollera paket</value>
   </data>
   <data name="LocalSourceView_ButtonUpdateAll" xml:space="preserve">
-    <value>Update All</value>
+    <value>Uppdatera alla</value>
   </data>
   <data name="LocalSourceView_CheckboxMatchExact" xml:space="preserve">
-    <value>Match Word Exactly</value>
+    <value>Matcha ord exakt</value>
   </data>
   <data name="LocalSourceView_CheckboxPkgsWithUpdates" xml:space="preserve">
-    <value>Show Only Packages with Updates</value>
+    <value>Visa enbart paket med uppdateringar</value>
   </data>
   <data name="LocalSourceView_Grid_Authors" xml:space="preserve">
-    <value>Authors</value>
+    <value>Av</value>
   </data>
   <data name="LocalSourceView_Grid_LatestVersion" xml:space="preserve">
-    <value>Latest Version</value>
+    <value>Senaste version</value>
   </data>
   <data name="LocalSourceView_Grid_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Namn</value>
   </data>
   <data name="LocalSourceView_Grid_Version" xml:space="preserve">
     <value>Version</value>
   </data>
   <data name="LocalSourceView_SearchBoxText" xml:space="preserve">
-    <value>Search:</value>
+    <value>Sök:</value>
+  </data>
+  <data name="PackageViewModel_DisplayName" xml:space="preserve">
+    <value>Paket - {0}</value>
+    <comment>{0} = Package Title</comment>
+  </data>
+  <data name="PackageViewModel_FailedToInstall" xml:space="preserve">
+    <value>Kunde inte installera</value>
+  </data>
+  <data name="PackageViewModel_FailedToPin" xml:space="preserve">
+    <value>Kunde inte låsa</value>
+  </data>
+  <data name="PackageViewModel_FailedToReinstall" xml:space="preserve">
+    <value>Kunde inte ominstallera</value>
+  </data>
+  <data name="PackageViewModel_FailedToUninstall" xml:space="preserve">
+    <value>Kunde inte avinstallera</value>
+  </data>
+  <data name="PackageViewModel_FailedToUnpin" xml:space="preserve">
+    <value>Kunde inte låsa upp</value>
+  </data>
+  <data name="PackageViewModel_FailedToUpdate" xml:space="preserve">
+    <value>Kunde inte uppdatera</value>
+  </data>
+  <data name="PackageViewModel_InstallingPackage" xml:space="preserve">
+    <value>Installerar paket</value>
+  </data>
+  <data name="PackageViewModel_LoadingPackageInfo" xml:space="preserve">
+    <value>Laddar paketinformation...</value>
+  </data>
+  <data name="PackageViewModel_PinningPackage" xml:space="preserve">
+    <value>Låser paket</value>
+  </data>
+  <data name="PackageViewModel_RanIntoInstallError" xml:space="preserve">
+    <value>Stötte på ett fel vid installationen av {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoPinningError" xml:space="preserve">
+    <value>Stötte på ett fel vid låsning av {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoReinstallError" xml:space="preserve">
+    <value>Stötte på ett fel vid ominstallationen av {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoUninstallError" xml:space="preserve">
+    <value>Stötte på ett fel vid avinstallationen av {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoUnpinError" xml:space="preserve">
+    <value>Stötte på ett fel vid upplåsning av {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_RanIntoUpdateError" xml:space="preserve">
+    <value>Stötte på ett fel vid uppdateringen av {0}.
+{1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
+  </data>
+  <data name="PackageViewModel_ReinstallingPackage" xml:space="preserve">
+    <value>Ominstallerar paket</value>
+  </data>
+  <data name="PackageViewModel_StartLoadingFormat" xml:space="preserve">
+    <value>{0} {1}...</value>
+    <comment>{0} = The command text
+{1} = The package id
+NOTE: Probably only necessary to change in RTL languages.</comment>
+  </data>
+  <data name="PackageViewModel_UninstallingPackage" xml:space="preserve">
+    <value>Avinstallerar paket</value>
+  </data>
+  <data name="PackageViewModel_UnpinningPackage" xml:space="preserve">
+    <value>Låser upp paket</value>
+  </data>
+  <data name="PackageViewModel_UpdatingPackage" xml:space="preserve">
+    <value>Uppdaterar paket</value>
   </data>
   <data name="PackageView_Authors" xml:space="preserve">
-    <value>Authors:</value>
+    <value>Av:</value>
   </data>
   <data name="PackageView_ButtonInstall" xml:space="preserve">
-    <value>Install</value>
+    <value>Installera</value>
   </data>
   <data name="PackageView_ButtonPin" xml:space="preserve">
-    <value>Pin</value>
+    <value>Lås</value>
   </data>
   <data name="PackageView_ButtonReinstall" xml:space="preserve">
-    <value>Reinstall</value>
+    <value>Ominstallera</value>
   </data>
   <data name="PackageView_ButtonUninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>Avinstallera</value>
   </data>
   <data name="PackageView_ButtonUnpin" xml:space="preserve">
-    <value>Unpin</value>
+    <value>Avmarkera</value>
   </data>
   <data name="PackageView_ButtonUpdate" xml:space="preserve">
-    <value>Update</value>
+    <value>Uppdatera</value>
   </data>
   <data name="PackageView_Dependencies" xml:space="preserve">
-    <value>Dependencies</value>
+    <value>Beroenden</value>
   </data>
   <data name="PackageView_Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Beskrivning</value>
   </data>
   <data name="PackageView_Downloads" xml:space="preserve">
-    <value>Downloads</value>
+    <value>Nedladdningar</value>
   </data>
   <data name="PackageView_Gallery" xml:space="preserve">
-    <value>Gallery</value>
+    <value>Galleri</value>
   </data>
   <data name="PackageView_LastUpdate" xml:space="preserve">
-    <value>Last update</value>
+    <value>Senast uppdaterad</value>
   </data>
   <data name="PackageView_License" xml:space="preserve">
-    <value>License</value>
+    <value>Licens</value>
   </data>
   <data name="PackageView_Maintainers" xml:space="preserve">
-    <value> | Maintainers: </value>
+    <value> | Ansvariga: </value>
   </data>
   <data name="PackageView_PackageID" xml:space="preserve">
-    <value>Package ID</value>
+    <value>Paket-ID</value>
   </data>
   <data name="PackageView_PackageSize" xml:space="preserve">
-    <value>Package Size</value>
+    <value>Paketstorlek</value>
   </data>
   <data name="PackageView_ProjectSite" xml:space="preserve">
-    <value>Project Site</value>
+    <value>Projektsida</value>
   </data>
   <data name="PackageView_ReleaseNotes" xml:space="preserve">
-    <value>Release Notes</value>
+    <value>Ändringslogg</value>
   </data>
   <data name="PackageView_ReportAbuse" xml:space="preserve">
-    <value>Report Abuse</value>
+    <value>Rapportera missbruk</value>
   </data>
   <data name="PackageView_Summary" xml:space="preserve">
-    <value>Summary</value>
+    <value>Sammanfattning</value>
   </data>
   <data name="PackageView_TotalDownloads" xml:space="preserve">
-    <value>Total Downloads</value>
+    <value>Totalt antal nedladdningar</value>
+  </data>
+  <data name="RemoteSourceViewModel_FailedToLoad" xml:space="preserve">
+    <value>Kunde inte ladda</value>
+  </data>
+  <data name="RemoteSourceViewModel_FailedToLoadRemotePackages" xml:space="preserve">
+    <value>Kunde inte ladda fjärrpaket!
+{0}</value>
+    <comment>{0} = The exception message that occured</comment>
+  </data>
+  <data name="RemoteSourceViewModel_FeedSearchError" xml:space="preserve">
+    <value>Fel vid sökning i flöde</value>
+  </data>
+  <data name="RemoteSourceViewModel_LoadingPage" xml:space="preserve">
+    <value>Laddar sida {0}...</value>
+    <comment>{0} = The page that is loading</comment>
+  </data>
+  <data name="RemoteSourceViewModel_UnableToConnectToFeed" xml:space="preserve">
+    <value>Kunde inte ansluta till flöde med källa: {0}.  Kontrollera att detta flöde är tillgängligt och försök igen.</value>
   </data>
   <data name="RemoteSourceView_Authors" xml:space="preserve">
-    <value>Authors:</value>
+    <value>Av:</value>
   </data>
   <data name="RemoteSourceView_ButtonGoBackAPage" xml:space="preserve">
-    <value>Go Back a Page</value>
+    <value>Gå tillbaka en sida</value>
   </data>
   <data name="RemoteSourceView_ButtonGoForwardAPage" xml:space="preserve">
-    <value>Next</value>
+    <value>Nästa</value>
   </data>
   <data name="RemoteSourceView_ButtonGotoFirstPage" xml:space="preserve">
-    <value>Go to First Page</value>
+    <value>Gå till första sidan</value>
   </data>
   <data name="RemoteSourceView_ButtonGotoLastPage" xml:space="preserve">
-    <value>Last</value>
+    <value>Sista</value>
   </data>
   <data name="RemoteSourceView_ButtonRefreshPkgs" xml:space="preserve">
-    <value>Refresh Packages</value>
+    <value>Kontrollera paket</value>
   </data>
   <data name="RemoteSourceView_CheckboxAllVersions" xml:space="preserve">
-    <value>All Versions</value>
+    <value>Alla versioner</value>
   </data>
   <data name="RemoteSourceView_CheckboxIncludePrerelease" xml:space="preserve">
-    <value>Include Prerelease</value>
+    <value>Inkludera förhandsversioner</value>
   </data>
   <data name="RemoteSourceView_CheckboxMatchExactly" xml:space="preserve">
-    <value>Match Word Exactly</value>
+    <value>Matcha ord exakt</value>
   </data>
   <data name="RemoteSourceView_Downloads" xml:space="preserve">
-    <value>downloads</value>
+    <value>nedladdningar</value>
   </data>
   <data name="RemoteSourceView_SearchBoxText" xml:space="preserve">
-    <value>Search:</value>
+    <value>Sök:</value>
+  </data>
+  <data name="Resources_ThisPC" xml:space="preserve">
+    <value>Den här datorn</value>
+  </data>
+  <data name="SettingsViewModel_DisplayName" xml:space="preserve">
+    <value>ChocolateyGUI - Inställningar</value>
+  </data>
+  <data name="SettingsViewModel_FeatureFailedToUpdate" xml:space="preserve">
+    <value>Kunde inte uppdatera funktioner. Fel:
+{0}</value>
+    <comment>{0} = The exception arguments</comment>
+  </data>
+  <data name="SettingsViewModel_FeatureUpdatesError" xml:space="preserve">
+    <value>Fel vid uppdatering av funktioner</value>
+  </data>
+  <data name="SettingsViewModel_RemovingSource" xml:space="preserve">
+    <value>Tar bort källa...</value>
+  </data>
+  <data name="SettingsViewModel_SavingSource" xml:space="preserve">
+    <value>Sparar källa</value>
+  </data>
+  <data name="SettingsViewModel_SavingSourceLoading" xml:space="preserve">
+    <value>Sparar källa...</value>
+  </data>
+  <data name="SettingsViewModel_SourceMissingId" xml:space="preserve">
+    <value>Källa måste ha ett id!!</value>
+  </data>
+  <data name="SettingsViewModel_SourceMissingValue" xml:space="preserve">
+    <value>Källa måste ha ett värde!</value>
   </data>
   <data name="SettingsView_About" xml:space="preserve">
-    <value>About</value>
+    <value>Om</value>
   </data>
   <data name="SettingsView_ButtonCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Avbryt</value>
   </data>
   <data name="SettingsView_ButtonNew" xml:space="preserve">
-    <value>New</value>
+    <value>Ny</value>
   </data>
   <data name="SettingsView_ButtonRemove" xml:space="preserve">
-    <value>Remove</value>
+    <value>Ta bort</value>
   </data>
   <data name="SettingsView_ButtonSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Spara</value>
   </data>
   <data name="SettingsView_ChocoGui" xml:space="preserve">
     <value>Chocolatey Gui</value>
   </data>
   <data name="SettingsView_Credits" xml:space="preserve">
-    <value>Credits</value>
+    <value>Tack till</value>
   </data>
   <data name="SettingsView_Features" xml:space="preserve">
-    <value>Features</value>
+    <value>Funktioner</value>
+  </data>
+  <data name="SettingsView_Off" xml:space="preserve">
+    <value>Av</value>
+  </data>
+  <data name="SettingsView_On" xml:space="preserve">
+    <value>På</value>
   </data>
   <data name="SettingsView_Options" xml:space="preserve">
-    <value>Options</value>
+    <value>Alternativ</value>
   </data>
   <data name="SettingsView_PropertyDescription" xml:space="preserve">
-    <value>Description</value>
+    <value>Beskrivning</value>
   </data>
   <data name="SettingsView_PropertyName" xml:space="preserve">
-    <value>Name</value>
+    <value>Namn</value>
   </data>
   <data name="SettingsView_PropertyValue" xml:space="preserve">
-    <value>Value</value>
+    <value>Värde</value>
   </data>
   <data name="SettingsView_ReleaseNotes" xml:space="preserve">
-    <value>Release Notes</value>
+    <value>Ändringslogg</value>
   </data>
   <data name="SettingsView_Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Inställningar</value>
   </data>
   <data name="SettingsView_Sources" xml:space="preserve">
-    <value>Sources</value>
+    <value>Källor</value>
   </data>
   <data name="SettingsView_SourcesCertificate" xml:space="preserve">
-    <value>Certificate</value>
+    <value>Certifikat</value>
   </data>
   <data name="SettingsView_SourcesCertificatePass" xml:space="preserve">
-    <value>Certificate Pass</value>
+    <value>Certifikatlösenord</value>
+  </data>
+  <data name="SettingsView_SourcesDisabled" xml:space="preserve">
+    <value>Inaktiverad</value>
   </data>
   <data name="SettingsView_SourcesId" xml:space="preserve">
     <value>Id</value>
   </data>
   <data name="SettingsView_SourcesIsDisabled" xml:space="preserve">
-    <value>Is Disabled</value>
+    <value>Är inaktiverad</value>
   </data>
   <data name="SettingsView_SourcesPassword" xml:space="preserve">
-    <value>Password</value>
+    <value>Lösenord</value>
   </data>
   <data name="SettingsView_SourcesPath" xml:space="preserve">
-    <value>Path</value>
+    <value>Sökväg</value>
   </data>
   <data name="SettingsView_SourcesPriority" xml:space="preserve">
-    <value>Priority</value>
+    <value>Prioritet</value>
   </data>
   <data name="SettingsView_SourcesSource" xml:space="preserve">
-    <value>Source</value>
+    <value>Källa</value>
   </data>
   <data name="SettingsView_SourcesUsername" xml:space="preserve">
-    <value>Username</value>
+    <value>Användarnamn</value>
   </data>
   <data name="SettingsView_SubheaderChoco" xml:space="preserve">
     <value>Chocolatey</value>
   </data>
   <data name="SettingsView_ToggleElevateByDefault" xml:space="preserve">
-    <value>Elevate By Default</value>
+    <value>Höj behörigheten automatiskt</value>
   </data>
   <data name="SettingsView_ToggleShowConsoleOutput" xml:space="preserve">
-    <value>Show Console Output</value>
+    <value>Visa konsolutskrift</value>
   </data>
   <data name="ShellView_ButtonAbout" xml:space="preserve">
-    <value>about</value>
+    <value>om</value>
   </data>
   <data name="ShellView_ButtonSettings" xml:space="preserve">
-    <value>settings</value>
+    <value>inställningar</value>
   </data>
   <data name="SourcesView_Choco" xml:space="preserve">
     <value>chocolatey</value>
+  </data>
+  <data name="VersionNumberProvider_VersionFormat" xml:space="preserve">
+    <value>Version: {0}</value>
   </data>
 </root>

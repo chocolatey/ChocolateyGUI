@@ -23,28 +23,9 @@ branches:
     - /hotfix/.*/
 
 #---------------------------------#
-#  notifications configuration    #
-#---------------------------------#
-
-notifications:
-  - provider: Webhook
-    url: https://webhooks.gitter.im/e/4933c447ea42a0480587
-    on_build_success: true
-    on_build_failure: true
-    on_build_status_changed: true
-
-#---------------------------------#
 #  Build Cache                    #
 #---------------------------------#
 
 cache:
 - Source\packages -> Source\**\packages.config
-- Tools -> build.ps1
-
-#---------------------------------#
-#  Skip builds for doc changes    #
-#---------------------------------#
-
-skip_commits:
-  # Regex for matching commit message
-  message: /\(doc\).*/
+- tools -> setup.cake

@@ -16,6 +16,7 @@ using Caliburn.Micro;
 using CefSharp;
 using chocolatey;
 using ChocolateyGui.Services;
+using ChocolateyGui.Properties;
 using ChocolateyGui.Startup;
 using ChocolateyGui.ViewModels;
 using Serilog;
@@ -90,6 +91,8 @@ namespace ChocolateyGui
                 .WriteTo.Async(config =>
                     config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
                 .CreateLogger();
+
+            Internationalization.Initialize();
         }
 
         protected override async void OnStartup(object sender, StartupEventArgs e)
@@ -170,7 +173,7 @@ namespace ChocolateyGui
                 Logger.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
                 MessageBox.Show(
                     e.ExceptionObject.ToString(),
-                    "Unhandled Exception",
+                    Resources.Bootstrapper_UnhandledException,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error,
                     MessageBoxResult.OK,

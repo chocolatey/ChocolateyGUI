@@ -6,6 +6,7 @@
 
 using System.Linq;
 using System.Reflection;
+using ChocolateyGui.Properties;
 
 namespace ChocolateyGui.Providers
 {
@@ -27,7 +28,7 @@ namespace ChocolateyGui.Providers
                     ((AssemblyInformationalVersionAttribute[])assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute)))
                         .First();
 
-                _version = "Version: " + informational.InformationalVersion;
+                _version = string.Format(Resources.VersionNumberProvider_VersionFormat, informational.InformationalVersion);
                 return _version;
             }
         }

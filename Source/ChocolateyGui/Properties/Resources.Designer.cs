@@ -22,7 +22,7 @@ namespace ChocolateyGui.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ChocolateyGui.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChocolateyGui.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace ChocolateyGui.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,29 +61,1276 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Argument can&apos;t be null or empty..
+        ///   Looks up a localized string similar to Unhandled Exception.
         /// </summary>
-        internal static string Argument_cant_be_null_or_empty {
+        public static string Bootstrapper_UnhandledException {
             get {
-                return ResourceManager.GetString("Argument_cant_be_null_or_empty", resourceCulture);
+                return ResourceManager.GetString("Bootstrapper_UnhandledException", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid version string..
+        ///   Looks up a localized string similar to &lt;h3&gt;Invalid HTML String&lt;/h3&gt;.
         /// </summary>
-        internal static string InvalidVersionString {
+        public static string ChocolateyCustomSchemeProvider_InvalidHtml {
             get {
-                return ResourceManager.GetString("InvalidVersionString", resourceCulture);
+                return ResourceManager.GetString("ChocolateyCustomSchemeProvider_InvalidHtml", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LineType must be a semantic version..
+        ///   Looks up a localized string similar to &lt;h1&gt;Unknown Host&lt;/h1&gt;.
         /// </summary>
-        internal static string TypeMustBeASemanticVersion {
+        public static string ChocolateyCustomSchemeProvider_UnknownHost {
             get {
-                return ResourceManager.GetString("TypeMustBeASemanticVersion", resourceCulture);
+                return ResourceManager.GetString("ChocolateyCustomSchemeProvider_UnknownHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Console Output.
+        /// </summary>
+        public static string ChocolateyDialog_ConsoleOutput {
+            get {
+                return ResourceManager.GetString("ChocolateyDialog_ConsoleOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///Exception: {0}.
+        /// </summary>
+        public static string ChocolateyRemotePackageService_ExceptionFormat {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_ExceptionFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to install package &quot;{0}&quot;, version &quot;{1}&quot;.
+        ///Error: {2}{3}.
+        /// </summary>
+        public static string ChocolateyRemotePackageService_InstallFailedMessage {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_InstallFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to install package..
+        /// </summary>
+        public static string ChocolateyRemotePackageService_InstallFailedTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_InstallFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to pin package &quot;{0}&quot;, version &quot;{1}&quot;.
+        ///Error: {2}{3}.
+        /// </summary>
+        public static string ChocolateyRemotePackageService_PinFailedMessage {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_PinFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to pin package..
+        /// </summary>
+        public static string ChocolateyRemotePackageService_PinFailedTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_PinFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to uninstall package &quot;{0}&quot;, version &quot;{1}&quot;.
+        ///Error: {2}{3}.
+        /// </summary>
+        public static string ChocolateyRemotePackageService_UninstallFailedMessage {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_UninstallFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to uninstall package..
+        /// </summary>
+        public static string ChocolateyRemotePackageService_UninstallFailedTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_UninstallFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to unpin package &quot;{0}&quot;, version &quot;{1}&quot;.
+        ///Error {2}{3}.
+        /// </summary>
+        public static string ChocolateyRemotePackageService_UnpinFailedMessage {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_UnpinFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to unpin package..
+        /// </summary>
+        public static string ChocolateyRemotePackageService_UnpinFailedTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_UnpinFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to update package &quot;{0}&quot;.
+        ///Error: {1}{2}.
+        /// </summary>
+        public static string ChocolateyRemotePackageService_UpdateFailedMessage {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_UpdateFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to update package..
+        /// </summary>
+        public static string ChocolateyRemotePackageService_UpdateFailedTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyRemotePackageService_UpdateFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By: .
+        /// </summary>
+        public static string Controls_PackageListByAuthor {
+            get {
+                return ResourceManager.GetString("Controls_PackageListByAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to downloads.
+        /// </summary>
+        public static string Controls_PackageListDownloads {
+            get {
+                return ResourceManager.GetString("Controls_PackageListDownloads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags:.
+        /// </summary>
+        public static string Controls_PackageListTags {
+            get {
+                return ResourceManager.GetString("Controls_PackageListTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Controls_PackagesContextMenuDetails {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string Controls_PackagesContextMenuInstall {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin.
+        /// </summary>
+        public static string Controls_PackagesContextMenuPin {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reinstall.
+        /// </summary>
+        public static string Controls_PackagesContextMenuReinstall {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuReinstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstall.
+        /// </summary>
+        public static string Controls_PackagesContextMenuUninstall {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpin.
+        /// </summary>
+        public static string Controls_PackagesContextMenuUnpin {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuUnpin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Controls_PackagesContextMenuUpdate {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string LocalSourceView_ButtonExport {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ButtonExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh Packages.
+        /// </summary>
+        public static string LocalSourceView_ButtonRefreshPkgs {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ButtonRefreshPkgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update All.
+        /// </summary>
+        public static string LocalSourceView_ButtonUpdateAll {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ButtonUpdateAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Word Exactly.
+        /// </summary>
+        public static string LocalSourceView_CheckboxMatchExact {
+            get {
+                return ResourceManager.GetString("LocalSourceView_CheckboxMatchExact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Only Packages with Updates.
+        /// </summary>
+        public static string LocalSourceView_CheckboxPkgsWithUpdates {
+            get {
+                return ResourceManager.GetString("LocalSourceView_CheckboxPkgsWithUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authors.
+        /// </summary>
+        public static string LocalSourceView_Grid_Authors {
+            get {
+                return ResourceManager.GetString("LocalSourceView_Grid_Authors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latest Version.
+        /// </summary>
+        public static string LocalSourceView_Grid_LatestVersion {
+            get {
+                return ResourceManager.GetString("LocalSourceView_Grid_LatestVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string LocalSourceView_Grid_Name {
+            get {
+                return ResourceManager.GetString("LocalSourceView_Grid_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string LocalSourceView_Grid_Version {
+            get {
+                return ResourceManager.GetString("LocalSourceView_Grid_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search:.
+        /// </summary>
+        public static string LocalSourceView_SearchBoxText {
+            get {
+                return ResourceManager.GetString("LocalSourceView_SearchBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chocolatey.
+        /// </summary>
+        public static string LocalSourceViewModel_Chocolatey {
+            get {
+                return ResourceManager.GetString("LocalSourceViewModel_Chocolatey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Config Files (.config)|*.config.
+        /// </summary>
+        public static string LocalSourceViewModel_ConfigFiles {
+            get {
+                return ResourceManager.GetString("LocalSourceViewModel_ConfigFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packages.
+        /// </summary>
+        public static string LocalSourceViewModel_Packages {
+            get {
+                return ResourceManager.GetString("LocalSourceViewModel_Packages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There&apos;s an update available for chocolatey..
+        /// </summary>
+        public static string LocalSourceViewModel_UpdateAvailableForChocolatey {
+            get {
+                return ResourceManager.GetString("LocalSourceViewModel_UpdateAvailableForChocolatey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authors:.
+        /// </summary>
+        public static string PackageView_Authors {
+            get {
+                return ResourceManager.GetString("PackageView_Authors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string PackageView_ButtonInstall {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin.
+        /// </summary>
+        public static string PackageView_ButtonPin {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reinstall.
+        /// </summary>
+        public static string PackageView_ButtonReinstall {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonReinstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstall.
+        /// </summary>
+        public static string PackageView_ButtonUninstall {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpin.
+        /// </summary>
+        public static string PackageView_ButtonUnpin {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonUnpin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string PackageView_ButtonUpdate {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dependencies.
+        /// </summary>
+        public static string PackageView_Dependencies {
+            get {
+                return ResourceManager.GetString("PackageView_Dependencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string PackageView_Description {
+            get {
+                return ResourceManager.GetString("PackageView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloads.
+        /// </summary>
+        public static string PackageView_Downloads {
+            get {
+                return ResourceManager.GetString("PackageView_Downloads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gallery.
+        /// </summary>
+        public static string PackageView_Gallery {
+            get {
+                return ResourceManager.GetString("PackageView_Gallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last update.
+        /// </summary>
+        public static string PackageView_LastUpdate {
+            get {
+                return ResourceManager.GetString("PackageView_LastUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        public static string PackageView_License {
+            get {
+                return ResourceManager.GetString("PackageView_License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  | Maintainers: .
+        /// </summary>
+        public static string PackageView_Maintainers {
+            get {
+                return ResourceManager.GetString("PackageView_Maintainers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package ID.
+        /// </summary>
+        public static string PackageView_PackageID {
+            get {
+                return ResourceManager.GetString("PackageView_PackageID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package Size.
+        /// </summary>
+        public static string PackageView_PackageSize {
+            get {
+                return ResourceManager.GetString("PackageView_PackageSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Site.
+        /// </summary>
+        public static string PackageView_ProjectSite {
+            get {
+                return ResourceManager.GetString("PackageView_ProjectSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Notes.
+        /// </summary>
+        public static string PackageView_ReleaseNotes {
+            get {
+                return ResourceManager.GetString("PackageView_ReleaseNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Abuse.
+        /// </summary>
+        public static string PackageView_ReportAbuse {
+            get {
+                return ResourceManager.GetString("PackageView_ReportAbuse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Summary.
+        /// </summary>
+        public static string PackageView_Summary {
+            get {
+                return ResourceManager.GetString("PackageView_Summary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Downloads.
+        /// </summary>
+        public static string PackageView_TotalDownloads {
+            get {
+                return ResourceManager.GetString("PackageView_TotalDownloads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package - {0}.
+        /// </summary>
+        public static string PackageViewModel_DisplayName {
+            get {
+                return ResourceManager.GetString("PackageViewModel_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to install.
+        /// </summary>
+        public static string PackageViewModel_FailedToInstall {
+            get {
+                return ResourceManager.GetString("PackageViewModel_FailedToInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to Pin.
+        /// </summary>
+        public static string PackageViewModel_FailedToPin {
+            get {
+                return ResourceManager.GetString("PackageViewModel_FailedToPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to Reinstall.
+        /// </summary>
+        public static string PackageViewModel_FailedToReinstall {
+            get {
+                return ResourceManager.GetString("PackageViewModel_FailedToReinstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to Uninstall.
+        /// </summary>
+        public static string PackageViewModel_FailedToUninstall {
+            get {
+                return ResourceManager.GetString("PackageViewModel_FailedToUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to Unpin.
+        /// </summary>
+        public static string PackageViewModel_FailedToUnpin {
+            get {
+                return ResourceManager.GetString("PackageViewModel_FailedToUnpin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to Update.
+        /// </summary>
+        public static string PackageViewModel_FailedToUpdate {
+            get {
+                return ResourceManager.GetString("PackageViewModel_FailedToUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing package.
+        /// </summary>
+        public static string PackageViewModel_InstallingPackage {
+            get {
+                return ResourceManager.GetString("PackageViewModel_InstallingPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading package information....
+        /// </summary>
+        public static string PackageViewModel_LoadingPackageInfo {
+            get {
+                return ResourceManager.GetString("PackageViewModel_LoadingPackageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pinning package.
+        /// </summary>
+        public static string PackageViewModel_PinningPackage {
+            get {
+                return ResourceManager.GetString("PackageViewModel_PinningPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ran into an error while installing {0}.
+        ///{1}.
+        /// </summary>
+        public static string PackageViewModel_RanIntoInstallError {
+            get {
+                return ResourceManager.GetString("PackageViewModel_RanIntoInstallError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ran into an error while pinning {0}.
+        ///{1}.
+        /// </summary>
+        public static string PackageViewModel_RanIntoPinningError {
+            get {
+                return ResourceManager.GetString("PackageViewModel_RanIntoPinningError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ran into an error while reinstalling {0}.
+        ///{1}.
+        /// </summary>
+        public static string PackageViewModel_RanIntoReinstallError {
+            get {
+                return ResourceManager.GetString("PackageViewModel_RanIntoReinstallError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ran into an error while uninstalling {0}.
+        ///{1}.
+        /// </summary>
+        public static string PackageViewModel_RanIntoUninstallError {
+            get {
+                return ResourceManager.GetString("PackageViewModel_RanIntoUninstallError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ran into an error while unpinning {0}.
+        ///{1}.
+        /// </summary>
+        public static string PackageViewModel_RanIntoUnpinError {
+            get {
+                return ResourceManager.GetString("PackageViewModel_RanIntoUnpinError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ran into an error while updating {0}.
+        ///{1}.
+        /// </summary>
+        public static string PackageViewModel_RanIntoUpdateError {
+            get {
+                return ResourceManager.GetString("PackageViewModel_RanIntoUpdateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reinstalling package.
+        /// </summary>
+        public static string PackageViewModel_ReinstallingPackage {
+            get {
+                return ResourceManager.GetString("PackageViewModel_ReinstallingPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} {1}....
+        /// </summary>
+        public static string PackageViewModel_StartLoadingFormat {
+            get {
+                return ResourceManager.GetString("PackageViewModel_StartLoadingFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstalling package.
+        /// </summary>
+        public static string PackageViewModel_UninstallingPackage {
+            get {
+                return ResourceManager.GetString("PackageViewModel_UninstallingPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpinning package.
+        /// </summary>
+        public static string PackageViewModel_UnpinningPackage {
+            get {
+                return ResourceManager.GetString("PackageViewModel_UnpinningPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating package.
+        /// </summary>
+        public static string PackageViewModel_UpdatingPackage {
+            get {
+                return ResourceManager.GetString("PackageViewModel_UpdatingPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authors:.
+        /// </summary>
+        public static string RemoteSourceView_Authors {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_Authors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go Back a Page.
+        /// </summary>
+        public static string RemoteSourceView_ButtonGoBackAPage {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_ButtonGoBackAPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string RemoteSourceView_ButtonGoForwardAPage {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_ButtonGoForwardAPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to First Page.
+        /// </summary>
+        public static string RemoteSourceView_ButtonGotoFirstPage {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_ButtonGotoFirstPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last.
+        /// </summary>
+        public static string RemoteSourceView_ButtonGotoLastPage {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_ButtonGotoLastPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh Packages.
+        /// </summary>
+        public static string RemoteSourceView_ButtonRefreshPkgs {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_ButtonRefreshPkgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Versions.
+        /// </summary>
+        public static string RemoteSourceView_CheckboxAllVersions {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_CheckboxAllVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Prerelease.
+        /// </summary>
+        public static string RemoteSourceView_CheckboxIncludePrerelease {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_CheckboxIncludePrerelease", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Word Exactly.
+        /// </summary>
+        public static string RemoteSourceView_CheckboxMatchExactly {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_CheckboxMatchExactly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to downloads.
+        /// </summary>
+        public static string RemoteSourceView_Downloads {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_Downloads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search:.
+        /// </summary>
+        public static string RemoteSourceView_SearchBoxText {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_SearchBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to Load.
+        /// </summary>
+        public static string RemoteSourceViewModel_FailedToLoad {
+            get {
+                return ResourceManager.GetString("RemoteSourceViewModel_FailedToLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load remote packages!
+        ///{0}.
+        /// </summary>
+        public static string RemoteSourceViewModel_FailedToLoadRemotePackages {
+            get {
+                return ResourceManager.GetString("RemoteSourceViewModel_FailedToLoadRemotePackages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feed Search Error.
+        /// </summary>
+        public static string RemoteSourceViewModel_FeedSearchError {
+            get {
+                return ResourceManager.GetString("RemoteSourceViewModel_FeedSearchError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading page {0}....
+        /// </summary>
+        public static string RemoteSourceViewModel_LoadingPage {
+            get {
+                return ResourceManager.GetString("RemoteSourceViewModel_LoadingPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to connect to feed with Source: {0}.  Please check that this feed is accessible, and try again..
+        /// </summary>
+        public static string RemoteSourceViewModel_UnableToConnectToFeed {
+            get {
+                return ResourceManager.GetString("RemoteSourceViewModel_UnableToConnectToFeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This PC.
+        /// </summary>
+        public static string Resources_ThisPC {
+            get {
+                return ResourceManager.GetString("Resources_ThisPC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string SettingsView_About {
+            get {
+                return ResourceManager.GetString("SettingsView_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SettingsView_ButtonCancel {
+            get {
+                return ResourceManager.GetString("SettingsView_ButtonCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string SettingsView_ButtonNew {
+            get {
+                return ResourceManager.GetString("SettingsView_ButtonNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string SettingsView_ButtonRemove {
+            get {
+                return ResourceManager.GetString("SettingsView_ButtonRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string SettingsView_ButtonSave {
+            get {
+                return ResourceManager.GetString("SettingsView_ButtonSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chocolatey Gui.
+        /// </summary>
+        public static string SettingsView_ChocoGui {
+            get {
+                return ResourceManager.GetString("SettingsView_ChocoGui", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credits.
+        /// </summary>
+        public static string SettingsView_Credits {
+            get {
+                return ResourceManager.GetString("SettingsView_Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Features.
+        /// </summary>
+        public static string SettingsView_Features {
+            get {
+                return ResourceManager.GetString("SettingsView_Features", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string SettingsView_Off {
+            get {
+                return ResourceManager.GetString("SettingsView_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string SettingsView_On {
+            get {
+                return ResourceManager.GetString("SettingsView_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string SettingsView_Options {
+            get {
+                return ResourceManager.GetString("SettingsView_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string SettingsView_PropertyDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_PropertyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string SettingsView_PropertyName {
+            get {
+                return ResourceManager.GetString("SettingsView_PropertyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string SettingsView_PropertyValue {
+            get {
+                return ResourceManager.GetString("SettingsView_PropertyValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Notes.
+        /// </summary>
+        public static string SettingsView_ReleaseNotes {
+            get {
+                return ResourceManager.GetString("SettingsView_ReleaseNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsView_Settings {
+            get {
+                return ResourceManager.GetString("SettingsView_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sources.
+        /// </summary>
+        public static string SettingsView_Sources {
+            get {
+                return ResourceManager.GetString("SettingsView_Sources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate.
+        /// </summary>
+        public static string SettingsView_SourcesCertificate {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate Pass.
+        /// </summary>
+        public static string SettingsView_SourcesCertificatePass {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesCertificatePass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string SettingsView_SourcesDisabled {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string SettingsView_SourcesId {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Disabled.
+        /// </summary>
+        public static string SettingsView_SourcesIsDisabled {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string SettingsView_SourcesPassword {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path.
+        /// </summary>
+        public static string SettingsView_SourcesPath {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Priority.
+        /// </summary>
+        public static string SettingsView_SourcesPriority {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesPriority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string SettingsView_SourcesSource {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string SettingsView_SourcesUsername {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chocolatey.
+        /// </summary>
+        public static string SettingsView_SubheaderChoco {
+            get {
+                return ResourceManager.GetString("SettingsView_SubheaderChoco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elevate By Default.
+        /// </summary>
+        public static string SettingsView_ToggleElevateByDefault {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleElevateByDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Console Output.
+        /// </summary>
+        public static string SettingsView_ToggleShowConsoleOutput {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleShowConsoleOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ChocolateyGUI - Settings.
+        /// </summary>
+        public static string SettingsViewModel_DisplayName {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to update features. Error:
+        ///{0}.
+        /// </summary>
+        public static string SettingsViewModel_FeatureFailedToUpdate {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_FeatureFailedToUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Updates Error.
+        /// </summary>
+        public static string SettingsViewModel_FeatureUpdatesError {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_FeatureUpdatesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removing source....
+        /// </summary>
+        public static string SettingsViewModel_RemovingSource {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_RemovingSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving Source.
+        /// </summary>
+        public static string SettingsViewModel_SavingSource {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SavingSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving source....
+        /// </summary>
+        public static string SettingsViewModel_SavingSourceLoading {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SavingSourceLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source must have an Id!.
+        /// </summary>
+        public static string SettingsViewModel_SourceMissingId {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SourceMissingId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source must have an value!.
+        /// </summary>
+        public static string SettingsViewModel_SourceMissingValue {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SourceMissingValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to about.
+        /// </summary>
+        public static string ShellView_ButtonAbout {
+            get {
+                return ResourceManager.GetString("ShellView_ButtonAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings.
+        /// </summary>
+        public static string ShellView_ButtonSettings {
+            get {
+                return ResourceManager.GetString("ShellView_ButtonSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to chocolatey.
+        /// </summary>
+        public static string SourcesView_Choco {
+            get {
+                return ResourceManager.GetString("SourcesView_Choco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version: {0}.
+        /// </summary>
+        public static string VersionNumberProvider_VersionFormat {
+            get {
+                return ResourceManager.GetString("VersionNumberProvider_VersionFormat", resourceCulture);
             }
         }
     }

@@ -8,7 +8,7 @@ You can install ChocolateyGUI via Chocolatey itself by executing:
 
 If you are interested in trying out the latest pre-release version of ChocolateyGUI then you can use the following installation command:
 
-```choco install ChocolateyGUI -source https://www.myget.org/F/chocolateygui/ -pre```
+```choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre```
 
 This uses the public ChocolateyGUI feed which is hosted on [MyGet.org](https://www.myget.org) as the source.
 
@@ -37,7 +37,7 @@ Or, you can find us in IRC at #chocolatey.
  * [Build Status Email List](http://groups.google.com/group/chocolatey-build-status)
 
 ### Documentation
-Please see the [wiki](https://github.com/chocolatey/chocolateygui/wiki)
+You can find information about ChocolateyGUI here: [https://chocolatey.github.io/ChocolateyGUI/](https://chocolatey.github.io/ChocolateyGUI/)
 
 ### Requirements
 * .NET Framework 4.5.2
@@ -86,4 +86,4 @@ Committers, you should be very familiar with [COMMITTERS](https://github.com/cho
 
 ## Credits
 
-ChocolateyGUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/legal/CREDITS.md) (just LEGAL/Credits.md in the zip folder)
+ChocolateyGUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/input/credits.md) (just input/credits.md in the zip folder)

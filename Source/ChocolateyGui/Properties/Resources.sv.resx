@@ -519,6 +519,9 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_Sources" xml:space="preserve">
     <value>Källor</value>
   </data>
+  <data name="SettingsView_SourcesByPassProxy" xml:space="preserve">
+    <value />
+  </data>
   <data name="SettingsView_SourcesCertificate" xml:space="preserve">
     <value>Certifikat</value>
   </data>
@@ -542,6 +545,9 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="SettingsView_SourcesPriority" xml:space="preserve">
     <value>Prioritet</value>
+  </data>
+  <data name="SettingsView_SourcesSelfService" xml:space="preserve">
+    <value />
   </data>
   <data name="SettingsView_SourcesSource" xml:space="preserve">
     <value>Källa</value>

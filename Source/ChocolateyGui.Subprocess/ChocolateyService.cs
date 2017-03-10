@@ -398,6 +398,8 @@ namespace ChocolateyGui.Subprocess
                         config.SourceCommand.Certificate = source.Certificate;
                         config.SourceCommand.CertificatePassword = source.CertificatePassword;
                         config.SourceCommand.Priority = source.Priority;
+
+                        // TODO: Put ByPassProxy and SelfService properties here
                     });
 
                 await choco.RunAsync();

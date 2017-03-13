@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Argument_cant_be_null_or_empty" xml:space="preserve">
-    <value>Tomt eller null argument er ikke gyldig.</value>
-  </data>
   <data name="ChocolateyDialog_ConsoleOutput" xml:space="preserve">
     <value>Konsolltekst</value>
   </data>
@@ -129,8 +126,8 @@
   <data name="Controls_PackageListDownloads" xml:space="preserve">
     <value>nedlastinger</value>
   </data>
-  <data name="InvalidVersionString" xml:space="preserve">
-    <value>Ugyldig versjonsstreng.</value>
+  <data name="SettingsView_On" xml:space="preserve">
+    <value>På</value>
   </data>
   <data name="LocalSourceView_ButtonExport" xml:space="preserve">
     <value>Eksporter</value>
@@ -372,15 +369,12 @@
   <data name="ChocolateyCustomSchemeProvider_UnknownHost" xml:space="preserve">
     <value>&lt;h1&gt;Ukjent vert&lt;/h1&gt;</value>
   </data>
-  <data name="ChocolateyRemotePackageService_Escalating" xml:space="preserve">
-    <value>Eskalerer</value>
+  <data name="SettingsView_Off" xml:space="preserve">
+    <value>Av</value>
   </data>
   <data name="ChocolateyRemotePackageService_ExceptionFormat" xml:space="preserve">
     <value>
 Unntak: {0}</value>
-  </data>
-  <data name="ChocolateyRemotePackageService_Exiting" xml:space="preserve">
-    <value>Avslutter</value>
   </data>
   <data name="ChocolateyRemotePackageService_InstallFailedMessage" xml:space="preserve">
     <value>Installeringen av pakken "{0}", versjon "{1}" feilet.
@@ -525,12 +519,6 @@ Feil: {2}{3}</value>
   </data>
   <data name="SettingsViewModel_SavingSourceLoading" xml:space="preserve">
     <value>Lagrer kilde...</value>
-  </data>
-  <data name="SourcesViewModel_SourcesDisplayFormat" xml:space="preserve">
-    <value>Kilde - {0}</value>
-  </data>
-  <data name="TypeMustBeASemanticVersion" xml:space="preserve">
-    <value>Linjetype må være en gyldig semantisk versjon.</value>
   </data>
   <data name="VersionNumberProvider_VersionFormat" xml:space="preserve">
     <value>Versjon: {0}</value>

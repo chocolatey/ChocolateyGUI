@@ -74,7 +74,7 @@ namespace ChocolateyGui.Startup
             });
 
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
-            builder.Register(c => new LiteDatabase(Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")))
+            builder.Register(c => new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true"))
                 .SingleInstance();
         }
     }

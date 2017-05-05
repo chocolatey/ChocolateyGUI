@@ -564,9 +564,9 @@
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="{DynamicResource UpperCaseContentFontSize}" />
         <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
-        <Setter Property="Background" Value="{DynamicResource Brown3Brush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Brown2Brush}" />
-        <Setter Property="Foreground" Value="#FF000000" />
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush2}" />
+        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="Margin" Value="3,0" />
         <Setter Property="Padding" Value="5,6" />
         <Setter Property="BorderThickness" Value="1" />
@@ -628,9 +628,9 @@
                         <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource ControlsDisabledBrush}"
                                    IsHitTestVisible="False" Opacity="0" />
                         <Border x:Name="MouseOverBorder" BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{DynamicResource Brown5Brush}" Opacity="0" />
+                                Background="{DynamicResource AccentColorBrush4}" Opacity="0" />
                         <Border x:Name="PressedBorder" BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{DynamicResource Brown3Brush}" Opacity="0" />
+                                Background="{DynamicResource AccentColorBrush3}" Opacity="0" />
                         <Rectangle x:Name="FocusRectangle" Margin="-1" Opacity="0" />
                         <Rectangle x:Name="FocusInnerRectangle" Opacity="0"
                                    Stroke="{DynamicResource ButtonMouseOverBorderBrush}"

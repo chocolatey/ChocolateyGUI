@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Security.Cryptography.X509Certificates;
 using CefSharp;
 
 namespace ChocolateyGui.Providers
@@ -14,6 +15,12 @@ namespace ChocolateyGui.Providers
         public bool GetAuthCredentials(IWebBrowser browserControl, IBrowser browser, IFrame frame, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
         {
             callback.Dispose();
+            return false;
+        }
+
+        public bool OnSelectClientCertificate(IWebBrowser browserControl, IBrowser browser, bool isProxy, string host, int port,
+            X509Certificate2Collection certificates, ISelectClientCertificateCallback callback)
+        {
             return false;
         }
 
@@ -61,6 +68,11 @@ namespace ChocolateyGui.Providers
         }
 
         public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath)
+        {
+        }
+
+        public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request,
+            IResponse response, ref string newUrl)
         {
         }
 

@@ -131,10 +131,10 @@ namespace ChocolateyGui.Controls
             return new System.Drawing.Size(x, y);
         }
 
-        private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteFileStorage fileStorage, string id)
+        private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteStorage fileStorage, string id)
         {
             imageStream.Position = 0;
-            var fileInfo = fileStorage.Upload(id, imageStream);
+            var fileInfo = fileStorage.Upload(id, null, imageStream);
             fileStorage.SetMetadata(
                 fileInfo.Id,
                 new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));

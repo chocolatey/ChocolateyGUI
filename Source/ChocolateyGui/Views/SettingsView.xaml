@@ -27,7 +27,7 @@
             <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
 						<TextBlock Text="{x:Static lang:Resources.SettingsView_Settings}" Style="{StaticResource TitleTextStyle}"/>
         </StackPanel>
-        <TabControl>
+        <TabControl Background="Transparent">
 						<TabItem Header="{x:Static lang:Resources.SettingsView_Options}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -77,10 +77,10 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 														<TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static lang:Resources.SettingsView_Settings}"/>
-                            <DataGrid Grid.Row="1"
-                                    CanUserAddRows="False" CanUserDeleteRows="False" 
-                                          ItemsSource="{Binding Settings}" AutoGenerateColumns="False"
-                                          cal:Message.Attach="[Event RowEditEnding] = [Action RowEditEnding($eventArgs)]">
+                            <DataGrid Grid.Row="1" BorderBrush="#DDD" BorderThickness="1 1 1 0"
+                                      CanUserAddRows="False" CanUserDeleteRows="False" 
+                                      ItemsSource="{Binding Settings}" AutoGenerateColumns="False"
+                                      cal:Message.Attach="[Event RowEditEnding] = [Action RowEditEnding($eventArgs)]">
                                 <DataGrid.Columns>
 																		<DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyName}" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
 																		<DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyValue}" Width="2*" Binding="{Binding Value}"/>

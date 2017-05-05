@@ -65,6 +65,17 @@ namespace ChocolateyGui.ViewModels
                 throw new ArgumentNullException(nameof(message));
             }
 
+            if (message.Package == null)
+            {
+                throw new ArgumentNullException(nameof(message.Package));
+            }
+
+            var packageViewModel = ActiveItem as PackageViewModel;
+            if (packageViewModel != null && packageViewModel.Package.Id == message.Package.Id)
+            {
+                return;
+            }
+
             var packageVm = IoC.Get<PackageViewModel>();
             packageVm.Package = message.Package;
             SetActiveItem(packageVm);
@@ -87,6 +98,10 @@ namespace ChocolateyGui.ViewModels
 
         public void ShowSettings()
         {
+            if (ActiveItem is SettingsViewModel)
+            {
+                return;
+            }
             SetActiveItem(IoC.Get<SettingsViewModel>());
         }
 

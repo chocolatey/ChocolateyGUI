@@ -26,7 +26,6 @@ namespace ChocolateyGui.ViewModels
         private bool _firstLoad = true;
 
         public SourcesViewModel(
-            ISourceService sourceService,
             IChocolateyPackageService packageService,
             IEventAggregator eventAggregator,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
@@ -34,10 +33,6 @@ namespace ChocolateyGui.ViewModels
         {
             _packageService = packageService;
             _remoteSourceVmFactory = remoteSourceVmFactory;
-            if (sourceService == null)
-            {
-                throw new ArgumentNullException(nameof(sourceService));
-            }
 
             if (localSourceVmFactory == null)
             {

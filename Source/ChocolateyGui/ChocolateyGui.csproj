@@ -46,10 +46,6 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AlphaFS, Version=2.0.0.0, Culture=neutral, PublicKeyToken=4d31a58f7d7ad5c9, processorArchitecture=MSIL">
-      <HintPath>..\packages\AlphaFS.2.0.1\lib\net451\AlphaFS.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Autofac, Version=4.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.5.0\lib\net45\Autofac.dll</HintPath>
     </Reference>
@@ -87,8 +83,8 @@
     <Reference Include="MahApps.Metro.IconPacks.Modern, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.1.9.0\lib\net45\MahApps.Metro.IconPacks.Modern.dll</HintPath>
     </Reference>
-    <Reference Include="Markdig, Version=0.10.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Markdig.0.10.7\lib\net40\Markdig.dll</HintPath>
+    <Reference Include="Markdig, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.0.11.0\lib\net40\Markdig.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
@@ -209,9 +205,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.ValueTuple, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -294,14 +289,6 @@
     <Compile Include="Models\Messages\ShowSettingsMessage.cs" />
     <Compile Include="Models\Messages\ShowSourcesMessage.cs" />
     <Compile Include="Models\Messages\ShowPackageDetailsMessage.cs" />
-    <Compile Include="Models\Messages\SortColumnMessage.cs" />
-    <Compile Include="Models\PackageConfigEntry.cs" />
-    <Compile Include="Models\PackageMetadata.cs" />
-    <Compile Include="Models\ShowMessageEventArgs.cs" />
-    <Compile Include="Models\SourcesChangedEventArgs.cs" />
-    <Compile Include="Models\NuspecPackage.cs" />
-    <Compile Include="Models\PackageConfig.cs" />
-    <Compile Include="Models\PackagesChangedEventArgs.cs" />
     <Compile Include="Models\PackageSearchResults.cs" />
     <Compile Include="Models\PowerShellOutputLine.cs" />
     <Compile Include="Providers\ChocolateyConfigurationProvider.cs" />
@@ -314,11 +301,9 @@
     <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
     <Compile Include="Providers\VersionNumberProvider.cs" />
     <Compile Include="Services\ChocolateyRemotePackageService.cs" />
-    <Compile Include="Services\ChocolateySourcesService.cs" />
     <Compile Include="Services\IChocolateyPackageService.cs" />
     <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\IProgressService.cs" />
-    <Compile Include="Services\ISourceService.cs" />
     <Compile Include="Services\PersistenceService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -335,9 +320,7 @@
     <Compile Include="Utilities\DataContext.cs" />
     <Compile Include="Utilities\Extensions\ChocolateyExtensions.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
-    <Compile Include="Utilities\Extensions\LogExtensions.cs" />
     <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
-    <Compile Include="Utilities\Extensions\StringExtensions.cs" />
     <Compile Include="Utilities\Hacks.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
     <Compile Include="Utilities\TypeConverters\SemanticVersionTypeConverter.cs" />
@@ -347,7 +330,6 @@
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
     <Compile Include="Utilities\Converters\PackageDependenciesToString.cs" />
     <Compile Include="Utilities\Converters\UriToVisibility.cs" />
-    <Compile Include="Utilities\Extensions\LinqExtensions.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
     <Page Include="Controls\Dialogs\ChocolateyDialog.xaml">
       <SubType>Designer</SubType>

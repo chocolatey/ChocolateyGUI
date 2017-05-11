@@ -59,7 +59,6 @@ namespace ChocolateyGui.Startup
             builder.Register<IEventAggregator>(c => new EventAggregator()).InstancePerLifetimeScope();
 
             // Register Services
-            builder.RegisterType<ChocolateySourcesService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
             builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();

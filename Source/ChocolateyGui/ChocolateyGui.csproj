@@ -318,7 +318,6 @@
     <Compile Include="Utilities\Converters\BooleanToVisibilityHidden.cs" />
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\DataContext.cs" />
-    <Compile Include="Utilities\Extensions\ChocolateyExtensions.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
     <Compile Include="Utilities\Hacks.cs" />

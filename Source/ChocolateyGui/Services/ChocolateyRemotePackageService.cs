@@ -145,7 +145,7 @@ namespace ChocolateyGui.Services
                     exceptionMessage);
                 await _progressService.ShowMessageAsync(
                     Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
-                    Resources.ChocolateyRemotePackageService_UninstallFailedMessage);
+                    message);
                 Logger.Warning(result.Exception, "Failed to uninstall {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
                 return;
             }
@@ -169,7 +169,7 @@ namespace ChocolateyGui.Services
                     exceptionMessage);
                 await _progressService.ShowMessageAsync(
                     Resources.ChocolateyRemotePackageService_UpdateFailedTitle,
-                    Resources.ChocolateyRemotePackageService_UpdateFailedMessage);
+                    message);
                 Logger.Warning(result.Exception, "Failed to update {Package}. Errors: {Errors}", id, result.Messages);
                 return;
             }

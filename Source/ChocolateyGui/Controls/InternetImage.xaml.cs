@@ -22,7 +22,7 @@ using CefSharp.OffScreen;
 using ChocolateyGui.Providers.PlatformProvider;
 using ChocolateyGui.Utilities.Extensions;
 using LiteDB;
-using Nito.AsyncEx;
+using Microsoft.VisualStudio.Threading;
 using Serilog;
 using Splat;
 using ILogger = Serilog.ILogger;
@@ -40,7 +40,7 @@ namespace ChocolateyGui.Controls
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly ChromiumWebBrowser RenderBrowser;
         private static readonly Lazy<BitmapSource> ErrorIcon = new Lazy<BitmapSource>(GetErrorImage);
-        private static readonly LiteDatabase Data = Caliburn.Micro.IoC.Get<LiteDatabase>();
+        private static readonly LiteDatabase Data = IoC.Get<LiteDatabase>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
 
         static InternetImage()
@@ -202,7 +202,7 @@ namespace ChocolateyGui.Controls
             float? desiredHeight,
             DateTime absoluteExpiration)
         {
-            using (var upgradeToken = await Lock.UpgradeableReaderLockAsync())
+            using (await Lock.UpgradeableReadLockAsync())
             {
                 var id = $"imagecache/{url.GetHashCode()}";
                 using (var imageStream = new MemoryStream())
@@ -221,7 +221,7 @@ namespace ChocolateyGui.Controls
                         fileStorage.Delete(id);
                     }
 
-                    using (await upgradeToken.UpgradeAsync())
+                    using (await Lock.WriteLockAsync())
                     {
                         // If we couldn't find the image or it expired
                         var html = $@"<style>
@@ -247,7 +247,7 @@ namespace ChocolateyGui.Controls
 
         private async Task<Stream> DownloadUrl(string url, DateTime absoluteExpiration)
         {
-            using (var upgradeToken = await Lock.UpgradeableReaderLockAsync())
+            using (await Lock.UpgradeableReadLockAsync())
             {
                 var id = $"imagecache/{url.GetHashCode()}";
                 var imageStream = new MemoryStream();
@@ -266,7 +266,7 @@ namespace ChocolateyGui.Controls
                     fileStorage.Delete(id);
                 }
 
-                using (await upgradeToken.UpgradeAsync())
+                using (await Lock.WriteLockAsync())
                 {
                     // If we couldn't find the image or it expired
                     using (var client = new HttpClient())

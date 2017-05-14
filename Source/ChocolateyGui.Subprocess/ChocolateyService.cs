@@ -18,7 +18,7 @@ using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
 using ChocolateyGui.Models;
-using Nito.AsyncEx;
+using Microsoft.VisualStudio.Threading;
 using NuGet;
 using WampSharp.V2.Core.Contracts;
 using ChocolateySource = ChocolateyGui.Models.ChocolateySource;
@@ -46,7 +46,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<IReadOnlyList<Package>> GetInstalledPackages()
         {
-            using (await Lock.ReaderLockAsync())
+            using (await Lock.ReadLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
                 choco.Set(
@@ -62,7 +62,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<IReadOnlyList<Tuple<string, string>>> GetOutdatedPackages(bool includePrerelease = false)
         {
-            using (await Lock.ReaderLockAsync())
+            using (await Lock.ReadLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
                 choco.Set(
@@ -96,7 +96,7 @@ namespace ChocolateyGui.Subprocess
             Uri source = null,
             bool force = false)
         {
-            using (await Lock.WriterLockAsync())
+            using (await Lock.WriteLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
                 choco.Set(
@@ -141,7 +141,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<PackageResults> Search(string query, PackageSearchOptions options)
         {
-            using (await Lock.ReaderLockAsync())
+            using (await Lock.ReadLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
                     config =>
@@ -180,7 +180,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<Package> GetByVersionAndIdAsync(string id, string version, bool isPrerelease)
         {
-            using (await Lock.ReaderLockAsync())
+            using (await Lock.ReadLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
                 choco.Set(
@@ -222,7 +222,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<PackageOperationResult> UninstallPackage(string id, string version, bool force = false)
         {
-            using (await Lock.WriterLockAsync())
+            using (await Lock.WriteLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
                 choco.Set(
@@ -244,7 +244,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<PackageOperationResult> UpdatePackage(string id, Uri source = null)
         {
-            using (await Lock.WriterLockAsync())
+            using (await Lock.WriteLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
                 choco.Set(
@@ -261,7 +261,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<PackageOperationResult> PinPackage(string id, string version)
         {
-            using (await Lock.WriterLockAsync())
+            using (await Lock.WriteLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
                 choco.Set(
@@ -288,7 +288,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<PackageOperationResult> UnpinPackage(string id, string version)
         {
-            using (await Lock.WriterLockAsync())
+            using (await Lock.WriteLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
                 choco.Set(
@@ -314,7 +314,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<IReadOnlyList<ChocolateyFeature>> GetFeatures()
         {
-            using (await Lock.ReaderLockAsync())
+            using (await Lock.ReadLockAsync())
             {
                 var xmlService = Hacks.GetInstance<IXmlService>();
                 var config =
@@ -326,7 +326,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task SetFeature(ChocolateyFeature feature)
         {
-            using (await Lock.WriterLockAsync())
+            using (await Lock.WriteLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
                     config =>
@@ -342,7 +342,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<IReadOnlyList<ChocolateySetting>> GetSettings()
         {
-            using (await Lock.ReaderLockAsync())
+            using (await Lock.ReadLockAsync())
             {
                 var xmlService = Hacks.GetInstance<IXmlService>();
                 var config =
@@ -354,7 +354,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task SetSetting(ChocolateySetting setting)
         {
-            using (await Lock.WriterLockAsync())
+            using (await Lock.WriteLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
                     config =>
@@ -371,7 +371,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<IReadOnlyList<ChocolateySource>> GetSources()
         {
-            using (await Lock.ReaderLockAsync())
+            using (await Lock.ReadLockAsync())
             {
                 var xmlService = Hacks.GetInstance<IXmlService>();
                 var config =
@@ -383,7 +383,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task AddSource(ChocolateySource source)
         {
-            using (await Lock.WriterLockAsync())
+            using (await Lock.WriteLockAsync())
             {
                 var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
                     config =>
@@ -438,7 +438,7 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<bool> RemoveSource(string id)
         {
-            using (await Lock.WriterLockAsync())
+            using (await Lock.WriteLockAsync())
             {
                 var xmlService = Hacks.GetInstance<IXmlService>();
                 var chocoCOnfig =

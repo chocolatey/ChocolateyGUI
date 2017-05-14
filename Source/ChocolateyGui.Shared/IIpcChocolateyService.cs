@@ -5,74 +5,77 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using ChocolateyGui.Models;
-using WampSharp.V2.Rpc;
 
 namespace ChocolateyGui
 {
+    [ServiceContract(CallbackContract = typeof(IIpcServiceCallbacks))]
     public interface IIpcChocolateyService
     {
-        [WampProcedure("com.chocolatey.iselevated")]
+        [OperationContract]
+        void Register();
+
+        [OperationContract]
         Task<bool> IsElevated();
 
-        [WampProcedure("com.chocolatey.getinstalled")]
-        Task<IReadOnlyList<Package>> GetInstalledPackages();
+        [OperationContract]
+        Task<Package[]> GetInstalledPackages();
 
-        [WampProcedure("com.chocolatey.getoutdated")]
-        Task<IReadOnlyList<Tuple<string, string>>> GetOutdatedPackages(bool includePrerelease = false);
+        [OperationContract]
+        Task<Tuple<string, string>[]> GetOutdatedPackages(bool includePrerelease = false);
 
-        [WampProcedure("com.chocolatey.search")]
+        [OperationContract]
         Task<PackageResults> Search(string query, PackageSearchOptions options);
 
-        [WampProcedure("com.chocolatey.getbyversionandid")]
+        [OperationContract]
         Task<Package> GetByVersionAndIdAsync(string id, string version, bool isPrerelease);
 
-        [WampProcedure("com.chocolatey.install")]
+        [OperationContract]
         Task<PackageOperationResult> InstallPackage(
             string id,
             string version = null,
             Uri source = null,
             bool force = false);
 
-        [WampProcedure("com.chocolatey.uninstall")]
+        [OperationContract]
         Task<PackageOperationResult> UninstallPackage(string id, string version, bool force = false);
 
-        [WampProcedure("com.chocolatey.update")]
+        [OperationContract]
         Task<PackageOperationResult> UpdatePackage(string id, Uri source = null);
 
-        [WampProcedure("com.chocolatey.pin")]
+        [OperationContract]
         Task<PackageOperationResult> PinPackage(string id, string version);
 
-        [WampProcedure("com.chocolatey.unpin")]
+        [OperationContract]
         Task<PackageOperationResult> UnpinPackage(string id, string version);
 
-        [WampProcedure("com.chocolatey.features")]
-        Task<IReadOnlyList<ChocolateyFeature>> GetFeatures();
+        [OperationContract]
+        Task<ChocolateyFeature[]> GetFeatures();
 
-        [WampProcedure("com.chocolatey.setfeatures")]
+        [OperationContract]
         Task SetFeature(ChocolateyFeature feature);
 
-        [WampProcedure("com.chocolatey.settings")]
-        Task<IReadOnlyList<ChocolateySetting>> GetSettings();
+        [OperationContract]
+        Task<ChocolateySetting[]> GetSettings();
 
-        [WampProcedure("com.chocolatey.setsettings")]
+        [OperationContract]
         Task SetSetting(ChocolateySetting setting);
 
-        [WampProcedure("com.chocolatey.sources")]
-        Task<IReadOnlyList<ChocolateySource>> GetSources();
+        [OperationContract]
+        Task<ChocolateySource[]> GetSources();
 
-        [WampProcedure("com.chocolatey.addsource")]
+        [OperationContract]
         Task AddSource(ChocolateySource source);
 
-        [WampProcedure("com.chocolatey.updatesource")]
+        [OperationContract]
         Task UpdateSource(string id, ChocolateySource source);
 
-        [WampProcedure("com.chocolatey.removesource")]
+        [OperationContract]
         Task<bool> RemoveSource(string id);
 
-        [WampProcedure("com.chocolatey.kill")]
-        void Exit();
+        [OperationContract(IsOneWay = true)]
+        void Exit(bool restartingForAdmin = false);
     }
 }

@@ -5,10 +5,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace ChocolateyGui.Models
 {
+    [DataContract]
     public class PackageOperationResult
     {
         internal static readonly PackageOperationResult SuccessfulCached = new PackageOperationResult
@@ -16,10 +17,13 @@ namespace ChocolateyGui.Models
             Successful = true
         };
 
+        [DataMember]
         public bool Successful { get; set; }
 
-        public IReadOnlyList<string> Messages { get; set; } = new string[0];
+        [DataMember]
+        public string[] Messages { get; set; } = new string[0];
 
+        [DataMember]
         public Exception Exception { get; set; }
     }
 }

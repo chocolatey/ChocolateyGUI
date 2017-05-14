@@ -10,8 +10,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Threading;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using AutoMapper;
@@ -20,35 +19,27 @@ using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Providers;
-using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels.Items;
-using NuGet;
+using Microsoft.VisualStudio.Threading;
 using Serilog;
-using WampSharp.V2;
-using WampSharp.V2.Client;
-using WampSharp.V2.Core.Contracts;
-using WampSharp.V2.Fluent;
 using PackageSearchResults = ChocolateyGui.Models.PackageSearchResults;
 
 namespace ChocolateyGui.Services
 {
     public class ChocolateyRemotePackageService : IChocolateyPackageService, IDisposable
     {
-        private static readonly Serilog.ILogger Logger = Log.ForContext<ChocolateyRemotePackageService>();
+        private static readonly ILogger Logger = Log.ForContext<ChocolateyRemotePackageService>();
         private readonly IProgressService _progressService;
         private readonly IMapper _mapper;
         private readonly IEventAggregator _eventAggregator;
-        private readonly IConfigService _configService;
         private readonly Func<IPackageViewModel> _packageFactory;
-        private readonly AsyncLock _lock = new AsyncLock();
+        private readonly AsyncSemaphore _lock = new AsyncSemaphore(1);
+        private readonly Lazy<bool> _forceElevation;
 
         private Process _chocolateyProcess;
-        private IWampChannel _wampChannel;
         private IIpcChocolateyService _chocolateyService;
         private IDisposable _logStream;
-        private bool _isInitialized;
         private bool? _requiresElevation;
-        private Lazy<bool> _forceElevation;
 
         public ChocolateyRemotePackageService(
             IProgressService progressService,
@@ -60,9 +51,8 @@ namespace ChocolateyGui.Services
             _progressService = progressService;
             _mapper = mapper;
             _eventAggregator = eventAggregator;
-            _configService = configService;
             _packageFactory = packageFactory;
-            _forceElevation = new Lazy<bool>(() => _configService.GetSettings().ElevateByDefault);
+            _forceElevation = new Lazy<bool>(() => configService.GetSettings().ElevateByDefault);
         }
 
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
@@ -89,7 +79,7 @@ namespace ChocolateyGui.Services
         {
             await Initialize();
             var packages = await _chocolateyService.GetInstalledPackages();
-            var vms = packages.Select(p => _mapper.Map(p, _packageFactory()));
+            var vms = packages.Select(p => _mapper.Map(p, _packageFactory())).ToList();
             return vms;
         }
 
@@ -281,7 +271,8 @@ namespace ChocolateyGui.Services
         public void Dispose()
         {
             _logStream?.Dispose();
-            _wampChannel?.Close("Exiting", new GoodbyeDetails { Message = "Exiting" });
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            ((IClientChannel)_chocolateyService).Close();
         }
 
         private async Task<bool> RequiresElevationImpl()
@@ -291,9 +282,17 @@ namespace ChocolateyGui.Services
             return _requiresElevation.Value;
         }
 
-        private Task Initialize(bool requireAdmin = false)
+        private async Task Initialize(bool requireAdmin = false)
         {
-            return Task.Run(() => InitializeImpl(requireAdmin));
+            try
+            {
+                await InitializeImpl(requireAdmin);
+            }
+            catch (Exception ex)
+            {
+                Logger.Fatal(ex, "Failed to initialize the chocolatey server.");
+                throw;
+            }
         }
 
         private async Task InitializeImpl(bool requireAdmin = false)
@@ -301,7 +300,7 @@ namespace ChocolateyGui.Services
             requireAdmin = requireAdmin || _forceElevation.Value;
 
             // Check if we're not already initialized or running, as well as our permissions level.
-            if (_isInitialized)
+            if (_chocolateyProcess != null && !_chocolateyProcess.HasExited)
             {
                 if (!requireAdmin || await _chocolateyService.IsElevated())
                 {
@@ -309,21 +308,19 @@ namespace ChocolateyGui.Services
                 }
             }
 
-            using (await _lock.LockAsync())
+            using (await _lock.EnterAsync())
             {
                 // Double check our initialization and permissions status.
-                if (_isInitialized)
+                if (_chocolateyProcess != null && !_chocolateyProcess.HasExited)
                 {
                     if (!requireAdmin || await _chocolateyService.IsElevated())
                     {
                         return;
                     }
 
-                    _isInitialized = false;
                     _logStream.Dispose();
                     _logStream = null;
-                    _wampChannel.Close("Escalating", new GoodbyeDetails { Message = "Escalating" });
-                    _wampChannel = null;
+                    _chocolateyService.Exit(true);
                     _chocolateyService = null;
 
                     if (!_chocolateyProcess.HasExited)
@@ -335,125 +332,49 @@ namespace ChocolateyGui.Services
                     }
                 }
 
-                var port = 5000;
-                while (!IsPortAvailable(port) && port < 6000)
+                var processes = Process.GetProcessesByName("ChocolateyGui.Subprocess");
+
+                // Do we already have a living subprocess somewhere? (Multiple GUIs running simultaneously)
+                if (processes.Length != 0)
                 {
-                    port++;
+                    _chocolateyProcess = processes[0];
+                    _chocolateyService = CreateClient();
+                    return;
                 }
 
-                if (port >= 6000)
-                {
-                    throw new Exception("Failed to acquire port for GUI Subprocess.");
-                }
-
+                // If we don't have an endpoint already, spin up a new process.
                 var subprocessPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Subprocess/ChocolateyGui.Subprocess.exe");
                 var startInfo = new ProcessStartInfo
-                                    {
-                                        Arguments = port.ToString(),
-                                        UseShellExecute = true,
-                                        FileName = subprocessPath,
-                                        WindowStyle = ProcessWindowStyle.Hidden
-                                    };
+                {
+                    UseShellExecute = true,
+                    FileName = subprocessPath,
+                    WindowStyle = ProcessWindowStyle.Hidden
+                };
 
                 if (requireAdmin)
                 {
                     startInfo.Verb = "runas";
                 }
 
-                using (
-                    var subprocessHandle = new EventWaitHandle(false, EventResetMode.ManualReset, "ChocolateyGui_Wait"))
+                try
                 {
-                    try
-                    {
-                        _chocolateyProcess = Process.Start(startInfo);
-                    }
-                    catch (Win32Exception ex)
-                    {
-                        Logger.Error(ex, "Failed to start chocolatey gui subprocess.");
-                        throw new ApplicationException(
-                            $"Failed to elevate chocolatey: {ex.Message}.");
-                    }
-
-                    Debug.Assert(_chocolateyProcess != null, "_chocolateyProcess != null");
-
-                    if (!subprocessHandle.WaitOne(TimeSpan.FromSeconds(5)))
-                    {
-                        if (_chocolateyProcess.HasExited)
-                        {
-                            LogError();
-                        }
-
-                        if (!_chocolateyProcess.WaitForExit(TimeSpan.FromSeconds(3).Milliseconds)
-                            && !subprocessHandle.WaitOne(0))
-                        {
-                            _chocolateyProcess.Kill();
-                            Log.Logger.Fatal(
-                                "Failed to start Chocolatey subprocess. Process appears to be broken or otherwise non-functional.",
-                                _chocolateyProcess.ExitCode);
-                            throw new ApplicationException($"Failed to start chocolatey subprocess.\n"
-                                                           + $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
-                        }
-                        else
-                        {
-                            if (_chocolateyProcess.HasExited)
-                            {
-                                LogError();
-                            }
-                        }
-                    }
-
-                    if (_chocolateyProcess.WaitForExit(500))
-                    {
-                        LogError();
-                    }
+                    _chocolateyProcess = Process.Start(startInfo);
+                }
+                catch (Win32Exception ex)
+                {
+                    Logger.Error(ex, "Failed to start chocolatey gui subprocess.");
+                    throw new ApplicationException(
+                        $"Failed to elevate chocolatey: {ex.Message}.");
                 }
 
-                var factory = new WampChannelFactory();
-                _wampChannel =
-                    factory.ConnectToRealm("default")
-                        .WebSocketTransport($"ws://127.0.0.1:{port}/ws")
-                        .JsonSerialization()
-                        .Build();
+                Debug.Assert(_chocolateyProcess != null, "_chocolateyProcess != null");
 
-                await _wampChannel.Open().ConfigureAwait(false);
-                _isInitialized = true;
+                if (_chocolateyProcess.WaitForExit(500))
+                {
+                    LogError();
+                }
 
-                _chocolateyService = _wampChannel.RealmProxy.Services.GetCalleeProxy<IIpcChocolateyService>();
-
-                // Create pipe for chocolatey stream output.
-                var logStream = _wampChannel.RealmProxy.Services.GetSubject<StreamingLogMessage>("com.chocolatey.log");
-                _logStream = logStream.Subscribe(
-                    message =>
-                        {
-                            PowerShellLineType powerShellLineType;
-                            switch (message.LogLevel)
-                            {
-                                case StreamingLogLevel.Debug:
-                                    powerShellLineType = PowerShellLineType.Debug;
-                                    break;
-                                case StreamingLogLevel.Verbose:
-                                    powerShellLineType = PowerShellLineType.Verbose;
-                                    break;
-                                case StreamingLogLevel.Info:
-                                    powerShellLineType = PowerShellLineType.Output;
-                                    break;
-                                case StreamingLogLevel.Warn:
-                                    powerShellLineType = PowerShellLineType.Warning;
-                                    break;
-                                case StreamingLogLevel.Error:
-                                    powerShellLineType = PowerShellLineType.Error;
-                                    break;
-                                case StreamingLogLevel.Fatal:
-                                    powerShellLineType = PowerShellLineType.Error;
-                                    break;
-                                default:
-                                    powerShellLineType = PowerShellLineType.Output;
-                                    break;
-                            }
-
-                            _progressService.WriteMessage(message.Message, powerShellLineType);
-                        });
-
+                _chocolateyService = CreateClient();
                 // ReSharper disable once PossibleNullReferenceException
                 ((ElevationStatusProvider)Application.Current.FindResource("Elevation")).IsElevated = await _chocolateyService.IsElevated();
             }
@@ -469,12 +390,37 @@ namespace ChocolateyGui.Services
                                            $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
         }
 
-        private bool IsPortAvailable(int port)
+        private IIpcChocolateyService CreateClient()
         {
-            return IPGlobalProperties
-                .GetIPGlobalProperties()
-                .GetActiveTcpListeners()
-                .All(tcpi => tcpi.Port != port);
+            try
+            {
+                var callback = new ServiceCallbackHandler(_progressService);
+                var context = new InstanceContext(callback);
+
+                var binding =
+                    new NetNamedPipeBinding(NetNamedPipeSecurityMode.Transport)
+                    {
+                        MaxReceivedMessageSize = int.MaxValue - 1,
+                        MaxBufferSize = int.MaxValue - 1,
+                        MaxBufferPoolSize = int.MaxValue - 1,
+                        ReaderQuotas =
+                        {
+                            MaxArrayLength = int.MaxValue - 1,
+                            MaxDepth = 32,
+                            MaxStringContentLength = int.MaxValue - 1
+                        }
+                    };
+                var endpoint = new EndpointAddress("net.pipe://localhost/chocolateygui");
+                var channel =
+                    new DuplexChannelFactory<IIpcChocolateyService>(context, binding, endpoint).CreateChannel();
+                channel.Register();
+                return channel;
+            }
+            catch (Exception ex)
+            {
+                Logger.Fatal(ex, "Failed to create client channel to server.");
+                throw;
+            }
         }
     }
 }

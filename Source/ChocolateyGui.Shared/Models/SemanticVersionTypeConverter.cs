@@ -7,9 +7,8 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using NuGet;
 
-namespace ChocolateyGui.Utilities.TypeConverters
+namespace ChocolateyGui
 {
     public class SemanticVersionTypeConverter : TypeConverter
     {
@@ -21,9 +20,7 @@ namespace ChocolateyGui.Utilities.TypeConverters
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var version = value as string;
-            SemanticVersion semanticVersion;
-
-            if (version != null && SemanticVersion.TryParse(version, out semanticVersion))
+            if (version != null && SemanticVersion.TryParse(version, out SemanticVersion semanticVersion))
             {
                 return semanticVersion;
             }

@@ -18,9 +18,7 @@ using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
-using NuGet;
 using Serilog;
-using WampSharp.V2.Core.Contracts;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.ViewModels
@@ -154,26 +152,12 @@ namespace ChocolateyGui.ViewModels
 
         public async Task UpdateFeature(ChocolateyFeature feature)
         {
-            try
-            {
-                await _packageService.SetFeature(feature);
-            }
-            catch (WampException ex)
-            {
-                await LogError(ex);
-            }
+            await _packageService.SetFeature(feature);
         }
 
         public async Task UpdateSetting(ChocolateySetting setting)
         {
-            try
-            {
-                await _packageService.SetSetting(setting);
-            }
-            catch (WampException ex)
-            {
-                await LogError(ex);
-            }
+            await _packageService.SetSetting(setting);
         }
 
         public void New()
@@ -250,7 +234,10 @@ namespace ChocolateyGui.ViewModels
             WireUpConfig();
 
             var features = await _packageService.GetFeatures();
-            Features.AddRange(features);
+            foreach (var feature in features)
+            {
+                Features.Add(feature);
+            }
 
             _changedFeature = new Subject<ChocolateyFeature>();
             _changedFeature
@@ -259,7 +246,10 @@ namespace ChocolateyGui.ViewModels
                         .Subscribe();
 
             var settings = await _packageService.GetSettings();
-            Settings.AddRange(settings);
+            foreach (var setting in settings)
+            {
+                Settings.Add(setting);
+            }
 
             _changedSetting = new Subject<ChocolateySetting>();
             _changedSetting
@@ -268,7 +258,10 @@ namespace ChocolateyGui.ViewModels
                         .Subscribe();
 
             var sources = await _packageService.GetSources();
-            Sources.AddRange(sources);
+            foreach (var source in sources)
+            {
+                Sources.Add(source);
+            }
         }
 
         private void WireUpConfig()
@@ -289,14 +282,6 @@ namespace ChocolateyGui.ViewModels
             _changedFeature.OnCompleted();
             _changedSetting.OnCompleted();
             _configSubscription.Dispose();
-        }
-
-        private async Task LogError(WampException ex)
-        {
-            Logger.Error(ex, "Failed to update features list!\nMessage: {Message}\nArguments: {Arguments}", ex.Message, ex.Arguments);
-            await _progressService.ShowMessageAsync(
-                Resources.SettingsViewModel_FeatureUpdatesError,
-                string.Format(Resources.SettingsViewModel_FeatureFailedToUpdate, string.Join("\v", ex.Arguments)));
         }
     }
 }

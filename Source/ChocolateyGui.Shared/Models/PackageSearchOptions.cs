@@ -4,28 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace ChocolateyGui.Models
 {
+    [DataContract]
     public struct PackageSearchOptions
     {
-        public PackageSearchOptions(int pageSize, int currentPage)
-            : this()
-        {
-            PageSize = pageSize;
-            CurrentPage = currentPage;
-        }
-
-        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn)
-            : this()
-        {
-            PageSize = pageSize;
-            CurrentPage = currentPage;
-            SortColumn = sortColumn;
-        }
-
-        [JsonConstructor]
         public PackageSearchOptions(
             int pageSize,
             int currentPage,
@@ -45,20 +30,28 @@ namespace ChocolateyGui.Models
             Source = source;
         }
 
-        public int CurrentPage { get; }
+        [DataMember]
+        public int CurrentPage { get; set;  }
 
-        public bool IncludeAllVersions { get; }
+        [DataMember]
+        public bool IncludeAllVersions { get; set; }
 
-        public bool IncludePrerelease { get; }
+        [DataMember]
+        public bool IncludePrerelease { get; set; }
 
-        public bool MatchQuery { get; }
+        [DataMember]
+        public bool MatchQuery { get; set; }
 
-        public string Source { get; }
+        [DataMember]
+        public string Source { get; set; }
 
-        public int PageSize { get; }
+        [DataMember]
+        public int PageSize { get; set; }
 
-        public string SortColumn { get; }
+        [DataMember]
+        public string SortColumn { get; set; }
 
-        public string[] TagsQuery { get; }
+        [DataMember]
+        public string[] TagsQuery { get; set; }
     }
 }

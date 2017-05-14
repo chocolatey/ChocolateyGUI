@@ -13,7 +13,7 @@ using ChocolateyGui.Base;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
-using NuGet;
+using Action = System.Action;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
 namespace ChocolateyGui.ViewModels.Items
@@ -511,6 +511,21 @@ namespace ChocolateyGui.ViewModels.Items
             await _progressService.StartLoading(string.Format(Resources.PackageViewModel_StartLoadingFormat, commandString, id));
             _progressService.WriteMessage(initialProgressText);
             return new DisposableAction(() => _progressService.StopLoading());
+        }
+
+        private class DisposableAction : IDisposable
+        {
+            private readonly Action _disposeAction;
+
+            public DisposableAction(System.Action disposeAction)
+            {
+                _disposeAction = disposeAction;
+            }
+
+            public void Dispose()
+            {
+                _disposeAction();
+            }
         }
     }
 }

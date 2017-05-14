@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)IIpcChocolateyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IIpcServiceCallbacks.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChocolateyFeature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChocolateySetting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChocolateySource.cs" />
@@ -17,6 +18,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\PackageOperationResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PackageSearchOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PackageResults.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SemanticVersion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SemanticVersionTypeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\StreamingLogLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\StreamingLogMessage.cs" />
   </ItemGroup>

@@ -13,10 +13,10 @@ using ChocolateyGui.Base;
 using ChocolateyGui.Controls;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Models;
-using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.Views;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.VisualStudio.Threading;
 using Serilog;
 using Serilog.Events;
 
@@ -24,7 +24,7 @@ namespace ChocolateyGui.Services
 {
     public class ProgressService : ObservableBase, IProgressService
     {
-        private readonly AsyncLock _lock;
+        private readonly AsyncSemaphore _lock;
         private CancellationTokenSource _cst;
         private int _loadingItems;
         private ChocolateyDialogController _progressController;
@@ -34,7 +34,7 @@ namespace ChocolateyGui.Services
             IsLoading = false;
             _loadingItems = 0;
             Output = new ObservableRingBufferCollection<PowerShellOutputLine>(100);
-            _lock = new AsyncLock();
+            _lock = new AsyncSemaphore(1);
         }
 
         public ShellView ShellView { get; set; }
@@ -76,7 +76,7 @@ namespace ChocolateyGui.Services
 
         public async Task<MessageDialogResult> ShowMessageAsync(string title, string message)
         {
-            using (await _lock.LockAsync())
+            using (await _lock.EnterAsync())
             {
                 if (ShellView != null)
                 {
@@ -91,7 +91,7 @@ namespace ChocolateyGui.Services
 
         public async Task StartLoading(string title = null, bool isCancelable = false)
         {
-            using (await _lock.LockAsync())
+            using (await _lock.EnterAsync())
             {
                 var currentCount = Interlocked.Increment(ref _loadingItems);
                 if (currentCount == 1)
@@ -123,7 +123,7 @@ namespace ChocolateyGui.Services
 
         public async Task StopLoading()
         {
-            using (await _lock.LockAsync())
+            using (await _lock.EnterAsync())
             {
                 var currentCount = Interlocked.Decrement(ref _loadingItems);
                 if (currentCount == 0)

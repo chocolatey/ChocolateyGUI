@@ -7,13 +7,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
 using Caliburn.Micro;
 using CefSharp;
-using chocolatey;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Startup;
 using ChocolateyGui.ViewModels;
@@ -31,7 +29,6 @@ namespace ChocolateyGui
             Initialize();
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
         internal static IContainer Container { get; private set; }
@@ -137,15 +134,6 @@ namespace ChocolateyGui
         protected override void OnExit(object sender, EventArgs e)
         {
             Logger.Information("Exiting.");
-        }
-
-        // Monkey patch for confliciting versions of Reactive in Chocolatey and ChocolateyGUI.
-        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            return args.Name ==
-                   "System.Reactive.PlatformServices, Version=0.9.10.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb"
-                ? typeof(Lets).Assembly
-                : null;
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

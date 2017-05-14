@@ -6,7 +6,6 @@
 
 using System;
 using System.Threading.Tasks;
-using NuGet;
 
 namespace ChocolateyGui.ViewModels.Items
 {

@@ -101,7 +101,8 @@ namespace ChocolateyGui.Subprocess
         {
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetLoggerContext(OperationContext.Current, out StreamingLogger logger);
+                StreamingLogger logger;
+                var choco = Lets.GetChocolatey().SetLoggerContext(OperationContext.Current, out logger);
                 choco.Set(
                     config =>
                         {
@@ -125,7 +126,8 @@ namespace ChocolateyGui.Subprocess
                             }
                         });
 
-                var errors = GetErrors(out Action<StreamingLogMessage> grabErrors);
+                Action<StreamingLogMessage> grabErrors;
+                var errors = GetErrors(out grabErrors);
 
                 using (logger.Intercept(grabErrors))
                 {
@@ -228,7 +230,8 @@ namespace ChocolateyGui.Subprocess
         {
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetLoggerContext(OperationContext.Current, out StreamingLogger logger);
+                StreamingLogger logger;
+                var choco = Lets.GetChocolatey().SetLoggerContext(OperationContext.Current, out logger);
                 choco.Set(
                     config =>
                         {
@@ -250,7 +253,8 @@ namespace ChocolateyGui.Subprocess
         {
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetLoggerContext(OperationContext.Current, out StreamingLogger logger);
+                StreamingLogger logger;
+                var choco = Lets.GetChocolatey().SetLoggerContext(OperationContext.Current, out logger);
                 choco.Set(
                     config =>
                         {
@@ -510,7 +514,8 @@ namespace ChocolateyGui.Subprocess
 
         private async Task<PackageOperationResult> RunCommand(GetChocolatey choco, StreamingLogger logger)
         {
-            var errors = GetErrors(out Action<StreamingLogMessage> grabErrors);
+            Action<StreamingLogMessage> grabErrors;
+            var errors = GetErrors(out grabErrors);
 
             using (logger.Intercept(grabErrors))
             {

@@ -35,7 +35,8 @@ namespace ChocolateyGui.Subprocess
 
         internal static GetChocolatey SetLoggerContext(this GetChocolatey chocolatey, OperationContext context)
         {
-            return chocolatey.SetLoggerContext(context, out StreamingLogger _);
+            StreamingLogger ignored;
+            return chocolatey.SetLoggerContext(context, out ignored);
         }
 
         internal static GetChocolatey SetLoggerContext(this GetChocolatey chocolatey, OperationContext context, out StreamingLogger logger)

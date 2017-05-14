@@ -20,7 +20,8 @@ namespace ChocolateyGui
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var version = value as string;
-            if (version != null && SemanticVersion.TryParse(version, out SemanticVersion semanticVersion))
+            SemanticVersion semanticVersion;
+            if (version != null && SemanticVersion.TryParse(version, out semanticVersion))
             {
                 return semanticVersion;
             }

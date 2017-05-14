@@ -144,7 +144,8 @@ namespace ChocolateyGui
                 throw new ArgumentOutOfRangeException(nameof(version));
             }
 
-            if (!TryParse(version, out SemanticVersion semVer))
+            SemanticVersion semVer;
+            if (!TryParse(version, out semVer))
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid Version: {0}", version), nameof(version));
             }
@@ -177,7 +178,8 @@ namespace ChocolateyGui
             }
 
             var match = regex.Match(version.Trim());
-            if (!match.Success || !Version.TryParse(match.Groups["Version"].Value, out Version versionValue))
+            Version versionValue;
+            if (!match.Success || !Version.TryParse(match.Groups["Version"].Value, out versionValue))
             {
                 return false;
             }
@@ -192,7 +194,8 @@ namespace ChocolateyGui
         /// <returns>An instance of SemanticVersion if it parses correctly, null otherwise.</returns>
         public static SemanticVersion ParseOptionalVersion(string version)
         {
-            TryParse(version, out SemanticVersion semVer);
+            SemanticVersion semVer;
+            TryParse(version, out semVer);
             return semVer;
         }
 

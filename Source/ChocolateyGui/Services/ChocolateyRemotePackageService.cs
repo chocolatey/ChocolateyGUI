@@ -271,6 +271,7 @@ namespace ChocolateyGui.Services
         public void Dispose()
         {
             _logStream?.Dispose();
+
             // ReSharper disable once SuspiciousTypeConversion.Global
             ((IClientChannel)_chocolateyService).Close();
         }
@@ -375,6 +376,7 @@ namespace ChocolateyGui.Services
                 }
 
                 _chocolateyService = CreateClient();
+
                 // ReSharper disable once PossibleNullReferenceException
                 ((ElevationStatusProvider)Application.Current.FindResource("Elevation")).IsElevated = await _chocolateyService.IsElevated();
             }

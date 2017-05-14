@@ -6,26 +6,23 @@
 
 using Newtonsoft.Json;
 
-namespace ChocolateyGui.Subprocess.Models
+namespace ChocolateyGui.Models
 {
     public struct PackageSearchOptions
     {
-#pragma warning disable 649
-#pragma warning restore 649
-
         public PackageSearchOptions(int pageSize, int currentPage)
             : this()
         {
-            this.PageSize = pageSize;
-            this.CurrentPage = currentPage;
+            PageSize = pageSize;
+            CurrentPage = currentPage;
         }
 
         public PackageSearchOptions(int pageSize, int currentPage, string sortColumn)
             : this()
         {
-            this.PageSize = pageSize;
-            this.CurrentPage = currentPage;
-            this.SortColumn = sortColumn;
+            PageSize = pageSize;
+            CurrentPage = currentPage;
+            SortColumn = sortColumn;
         }
 
         [JsonConstructor]
@@ -39,12 +36,12 @@ namespace ChocolateyGui.Subprocess.Models
             string source)
             : this()
         {
-            this.PageSize = pageSize;
-            this.CurrentPage = currentPage;
-            this.SortColumn = sortColumn;
-            this.IncludeAllVersions = includeAllVersions;
-            this.IncludePrerelease = includePrerelease;
-            this.MatchQuery = matchWord;
+            PageSize = pageSize;
+            CurrentPage = currentPage;
+            SortColumn = sortColumn;
+            IncludeAllVersions = includeAllVersions;
+            IncludePrerelease = includePrerelease;
+            MatchQuery = matchWord;
             Source = source;
         }
 

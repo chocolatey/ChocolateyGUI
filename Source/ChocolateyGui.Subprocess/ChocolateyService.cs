@@ -17,16 +17,16 @@ using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
-using ChocolateyGui.Subprocess.Models;
+using ChocolateyGui.Models;
 using Nito.AsyncEx;
 using NuGet;
 using WampSharp.V2.Core.Contracts;
-using ChocolateySource = ChocolateyGui.Subprocess.Models.ChocolateySource;
+using ChocolateySource = ChocolateyGui.Models.ChocolateySource;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Subprocess
 {
-    internal class ChocolateyService : IChocolateyService
+    internal class ChocolateyService : IIpcChocolateyService
     {
         private static readonly ILogger Logger = Serilog.Log.ForContext<ChocolateyService>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
@@ -122,8 +122,7 @@ namespace ChocolateyGui.Subprocess
                             }
                         });
 
-                Action<StreamingLogMessage> grabErrors;
-                var errors = GetErrors(out grabErrors);
+                var errors = GetErrors(out Action<StreamingLogMessage> grabErrors);
 
                 using (_streamingLogger.Intercept(grabErrors))
                 {
@@ -140,7 +139,7 @@ namespace ChocolateyGui.Subprocess
             }
         }
 
-        public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
+        public async Task<PackageResults> Search(string query, PackageSearchOptions options)
         {
             using (await Lock.ReaderLockAsync())
             {
@@ -171,11 +170,11 @@ namespace ChocolateyGui.Subprocess
 
                 var packages = (await choco.ListAsync<PackageResult>()).Select(pckge => GetMappedPackage(pckge));
 
-                return new PackageSearchResults
-                           {
-                               Packages = packages,
-                               TotalCount = await Task.Run(() => choco.ListCount())
-                           };
+                return new PackageResults
+                {
+                    Packages = packages,
+                    TotalCount = await Task.Run(() => choco.ListCount())
+                };
             }
         }
 
@@ -502,8 +501,7 @@ namespace ChocolateyGui.Subprocess
 
         private async Task<PackageOperationResult> RunCommand(GetChocolatey choco)
         {
-            Action<StreamingLogMessage> grabErrors;
-            var errors = GetErrors(out grabErrors);
+            var errors = GetErrors(out Action<StreamingLogMessage> grabErrors);
 
             using (_streamingLogger.Intercept(grabErrors))
             {

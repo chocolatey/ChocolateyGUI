@@ -1,18 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="ChocolateyFeature.cs">
+// <copyright company="Chocolatey" file="ChocolateySetting.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ChocolateyGui.Subprocess.Models
+namespace ChocolateyGui.Models
 {
-    public class ChocolateyFeature
+    public class ChocolateySetting
     {
-        public string Name { get; set; }
+        public string Key { get; set; }
 
-        public bool Enabled { get; set; }
-
-        public bool SetExplicitly { get; set; }
+        public string Value { get; set; }
 
         public string Description { get; set; }
     }

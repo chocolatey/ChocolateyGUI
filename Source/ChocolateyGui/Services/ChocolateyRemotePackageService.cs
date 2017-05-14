@@ -20,8 +20,6 @@ using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Providers;
-using ChocolateyGui.Subprocess;
-using ChocolateyGui.Subprocess.Models;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels.Items;
 using NuGet;
@@ -46,7 +44,7 @@ namespace ChocolateyGui.Services
 
         private Process _chocolateyProcess;
         private IWampChannel _wampChannel;
-        private IChocolateyService _chocolateyService;
+        private IIpcChocolateyService _chocolateyService;
         private IDisposable _logStream;
         private bool _isInitialized;
         private bool? _requiresElevation;
@@ -348,7 +346,7 @@ namespace ChocolateyGui.Services
                     throw new Exception("Failed to acquire port for GUI Subprocess.");
                 }
 
-                var subprocessPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ChocolateyGui.Subprocess.exe");
+                var subprocessPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Subprocess/ChocolateyGui.Subprocess.exe");
                 var startInfo = new ProcessStartInfo
                                     {
                                         Arguments = port.ToString(),
@@ -420,7 +418,7 @@ namespace ChocolateyGui.Services
                 await _wampChannel.Open().ConfigureAwait(false);
                 _isInitialized = true;
 
-                _chocolateyService = _wampChannel.RealmProxy.Services.GetCalleeProxy<IChocolateyService>();
+                _chocolateyService = _wampChannel.RealmProxy.Services.GetCalleeProxy<IIpcChocolateyService>();
 
                 // Create pipe for chocolatey stream output.
                 var logStream = _wampChannel.RealmProxy.Services.GetSubject<StreamingLogMessage>("com.chocolatey.log");

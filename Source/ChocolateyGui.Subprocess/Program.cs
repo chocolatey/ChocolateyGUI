@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using chocolatey.infrastructure.app.configuration;
-using ChocolateyGui.Subprocess.Models;
+using ChocolateyGui.Models;
 using NuGet;
 using Serilog;
 using ILogger = Serilog.ILogger;
@@ -85,8 +85,7 @@ namespace ChocolateyGui.Subprocess
                 return 1;
             }
 
-            int port;
-            if (!int.TryParse(args[0], out port))
+            if (!int.TryParse(args[0], out int port))
             {
                 Log.Fatal("Missing port number! Got {args} instead :<.", args);
                 eventHandle.Set();

@@ -102,6 +102,7 @@ namespace ChocolateyGui.ViewModels
             {
                 return;
             }
+
             SetActiveItem(IoC.Get<SettingsViewModel>());
         }
 
@@ -132,7 +133,7 @@ namespace ChocolateyGui.ViewModels
         {
             var sources =
                 (await _chocolateyPackageService.GetSources()).Select(
-                    source => new SourceViewModel {Name = source.Id, Url = source.Value});
+                    source => new SourceViewModel { Name = source.Id, Url = source.Value });
             Sources.AddRange(sources);
         }
     }

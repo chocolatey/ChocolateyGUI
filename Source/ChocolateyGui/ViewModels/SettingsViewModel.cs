@@ -17,7 +17,6 @@ using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
-using ChocolateyGui.Subprocess.Models;
 using ChocolateyGui.Utilities.Extensions;
 using NuGet;
 using Serilog;

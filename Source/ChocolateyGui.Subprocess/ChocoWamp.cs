@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Threading.Tasks;
+using ChocolateyGui.Models;
 using WampSharp.Binding;
 using WampSharp.Fleck;
 using WampSharp.V2;

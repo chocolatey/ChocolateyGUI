@@ -6,7 +6,7 @@
 
 using System;
 
-namespace ChocolateyGui.Subprocess.Models
+namespace ChocolateyGui.Models
 {
     public class ChocolateySource : IEquatable<ChocolateySource>
     {

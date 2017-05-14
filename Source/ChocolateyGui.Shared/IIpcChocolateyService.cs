@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="IChocolateyService.cs">
+// <copyright company="Chocolatey" file="IIpcChocolateyService.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,12 +7,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChocolateyGui.Subprocess.Models;
+using ChocolateyGui.Models;
 using WampSharp.V2.Rpc;
 
-namespace ChocolateyGui.Subprocess
+namespace ChocolateyGui
 {
-    public interface IChocolateyService
+    public interface IIpcChocolateyService
     {
         [WampProcedure("com.chocolatey.iselevated")]
         Task<bool> IsElevated();
@@ -24,7 +24,7 @@ namespace ChocolateyGui.Subprocess
         Task<IReadOnlyList<Tuple<string, string>>> GetOutdatedPackages(bool includePrerelease = false);
 
         [WampProcedure("com.chocolatey.search")]
-        Task<PackageSearchResults> Search(string query, PackageSearchOptions options);
+        Task<PackageResults> Search(string query, PackageSearchOptions options);
 
         [WampProcedure("com.chocolatey.getbyversionandid")]
         Task<Package> GetByVersionAndIdAsync(string id, string version, bool isPrerelease);

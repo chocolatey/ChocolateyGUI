@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ChocolateyGui.Subprocess
+namespace ChocolateyGui.Models
 {
     public class StreamingLogMessage
     {

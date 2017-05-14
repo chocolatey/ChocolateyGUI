@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ChocolateyGui.Subprocess.Models
+namespace ChocolateyGui.Models
 {
     public class PackageOperationResult
     {

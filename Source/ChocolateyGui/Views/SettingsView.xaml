@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:ChocolateyGui.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
-             xmlns:models="clr-namespace:ChocolateyGui.Models"
+             xmlns:models="clr-namespace:ChocolateyGui.Models;assembly=ChocolateyGui.Shared"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              mc:Ignorable="d" 

@@ -16,7 +16,7 @@ using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.registration;
 
-namespace ChocolateyGui.Subprocess
+namespace ChocolateyGui
 {
     public static class Hacks
     {

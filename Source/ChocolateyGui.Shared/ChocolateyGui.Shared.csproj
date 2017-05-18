@@ -44,8 +44,10 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hacks.cs" />
     <Compile Include="IIpcChocolateyService.cs" />
     <Compile Include="IIpcServiceCallbacks.cs" />
+    <Compile Include="IpcDefaults.cs" />
     <Compile Include="Models\ChocolateyFeature.cs" />
     <Compile Include="Models\ChocolateySetting.cs" />
     <Compile Include="Models\ChocolateySource.cs" />

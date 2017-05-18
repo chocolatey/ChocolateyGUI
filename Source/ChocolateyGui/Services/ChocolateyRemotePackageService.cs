@@ -395,23 +395,9 @@ namespace ChocolateyGui.Services
             {
                 var callback = new ServiceCallbackHandler(_progressService);
                 var context = new InstanceContext(callback);
-
-                var binding =
-                    new NetNamedPipeBinding(NetNamedPipeSecurityMode.Transport)
-                    {
-                        MaxReceivedMessageSize = int.MaxValue - 1,
-                        MaxBufferSize = int.MaxValue - 1,
-                        MaxBufferPoolSize = int.MaxValue - 1,
-                        ReaderQuotas =
-                        {
-                            MaxArrayLength = int.MaxValue - 1,
-                            MaxDepth = 32,
-                            MaxStringContentLength = int.MaxValue - 1
-                        }
-                    };
-                var endpoint = new EndpointAddress("net.pipe://localhost/chocolateygui");
+                var endpoint = new EndpointAddress(IpcDefaults.DefaultPipeUri);
                 var channel =
-                    new DuplexChannelFactory<IIpcChocolateyService>(context, binding, endpoint).CreateChannel();
+                    new DuplexChannelFactory<IIpcChocolateyService>(context, IpcDefaults.DefaultBinding, endpoint).CreateChannel();
                 channel.Register();
                 return channel;
             }

@@ -65,22 +65,7 @@ namespace ChocolateyGui.Subprocess
 
                 using (var host = new ServiceHost(typeof(ChocolateyService)))
                 {
-                    // Setup named pipe transport
-                    var binding =
-                        new NetNamedPipeBinding(NetNamedPipeSecurityMode.Transport)
-                        {
-                            MaxReceivedMessageSize = int.MaxValue - 1,
-                            MaxBufferSize = int.MaxValue - 1,
-                            MaxBufferPoolSize = int.MaxValue - 1,
-                            ReaderQuotas =
-                            {
-                                MaxArrayLength = int.MaxValue - 1,
-                                MaxDepth = 32,
-                                MaxStringContentLength = int.MaxValue - 1
-                            }
-                        };
-
-                    host.AddServiceEndpoint(typeof(IIpcChocolateyService), binding, "net.pipe://localhost/chocolateygui");
+                    host.AddServiceEndpoint(typeof(IIpcChocolateyService), IpcDefaults.DefaultBinding, IpcDefaults.DefaultPipeUri);
 
                     var timer = new Timer(Tick);
                     timer.Change(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(30));

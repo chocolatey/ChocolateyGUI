@@ -98,7 +98,6 @@
   <ItemGroup>
     <Compile Include="ChocolateyExtensions.cs" />
     <Compile Include="ChocolateyService.cs" />
-    <Compile Include="Hacks.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamingLogger.cs" />

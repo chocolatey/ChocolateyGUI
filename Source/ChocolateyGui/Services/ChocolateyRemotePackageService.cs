@@ -272,7 +272,11 @@ namespace ChocolateyGui.Services
         public void Dispose()
         {
             // ReSharper disable once SuspiciousTypeConversion.Global
-            ((IClientChannel)_chocolateyService).Close();
+            var clientChannel = _chocolateyService as IClientChannel;
+            if (clientChannel != null && clientChannel.State == CommunicationState.Opened)
+            {
+                clientChannel.Close();
+            }
         }
 
         private async Task<bool> RequiresElevationImpl()

@@ -4,14 +4,20 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ChocolateyGui.Subprocess
+using System.Runtime.Serialization;
+
+namespace ChocolateyGui.Models
 {
+    [DataContract]
     public class StreamingLogMessage
     {
+        [DataMember]
         public string Context { get; set; }
 
+        [DataMember]
         public StreamingLogLevel LogLevel { get; set; }
 
+        [DataMember]
         public string Message { get; set; }
     }
 }

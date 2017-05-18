@@ -1,15 +1,23 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Hacks.cs" company="Chocolatey">
+// <copyright company="Chocolatey" file="ChocolateySetting.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Security.Principal;
+using System.Runtime.Serialization;
 
-namespace ChocolateyGui.Utilities
+namespace ChocolateyGui.Models
 {
-    public static class Hacks
+    [DataContract]
+    public class ChocolateySetting
     {
-        public static bool IsElevated => (WindowsIdentity.GetCurrent().Owner?.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid)).GetValueOrDefault(false);
+        [DataMember]
+        public string Key { get; set; }
+
+        [DataMember]
+        public string Value { get; set; }
+
+        [DataMember]
+        public string Description { get; set; }
     }
 }

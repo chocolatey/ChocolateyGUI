@@ -18,8 +18,14 @@ namespace ChocolateyGui.Providers
             return false;
         }
 
-        public bool OnSelectClientCertificate(IWebBrowser browserControl, IBrowser browser, bool isProxy, string host, int port,
-            X509Certificate2Collection certificates, ISelectClientCertificateCallback callback)
+        public bool OnSelectClientCertificate(
+            IWebBrowser browserControl,
+            IBrowser browser,
+            bool isProxy,
+            string host,
+            int port,
+            X509Certificate2Collection certificates,
+            ISelectClientCertificateCallback callback)
         {
             return false;
         }
@@ -71,8 +77,7 @@ namespace ChocolateyGui.Providers
         {
         }
 
-        public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request,
-            IResponse response, ref string newUrl)
+        public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response, ref string newUrl)
         {
         }
 

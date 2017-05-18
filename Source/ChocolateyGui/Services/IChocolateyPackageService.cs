@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChocolateyGui.Models;
 using ChocolateyGui.ViewModels.Items;
+using NuGet;
 using PackageSearchResults = ChocolateyGui.Models.PackageSearchResults;
 
 namespace ChocolateyGui.Services

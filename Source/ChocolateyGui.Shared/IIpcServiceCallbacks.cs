@@ -8,7 +8,7 @@ using ChocolateyGui.Models;
 namespace ChocolateyGui
 {
     [ServiceContract]
-    internal interface IIpcServiceCallbacks
+    public interface IIpcServiceCallbacks
     {
         [OperationContract(IsOneWay = true)]
         void LogMessage(StreamingLogMessage message);

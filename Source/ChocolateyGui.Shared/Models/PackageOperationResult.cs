@@ -12,7 +12,7 @@ namespace ChocolateyGui.Models
     [DataContract]
     public class PackageOperationResult
     {
-        internal static readonly PackageOperationResult SuccessfulCached = new PackageOperationResult
+        public static readonly PackageOperationResult SuccessfulCached = new PackageOperationResult
         {
             Successful = true
         };

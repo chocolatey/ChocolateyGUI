@@ -118,6 +118,11 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
-  <Import Project="..\ChocolateyGui.Shared\ChocolateyGui.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\ChocolateyGui.Shared\ChocolateyGui.Shared.csproj">
+      <Project>{97ac8cfb-db0d-46ef-99e8-e363c5f45cbf}</Project>
+      <Name>ChocolateyGui.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

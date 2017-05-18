@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NuGet;
+
 namespace ChocolateyGui.Models.Messages
 {
     public class PackageHasUpdateMessage

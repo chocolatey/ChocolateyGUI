@@ -7,8 +7,9 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using NuGet;
 
-namespace ChocolateyGui
+namespace ChocolateyGui.Models
 {
     public class SemanticVersionTypeConverter : TypeConverter
     {

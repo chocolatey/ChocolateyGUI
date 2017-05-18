@@ -21,7 +21,9 @@ using ChocolateyGui.Properties;
 using ChocolateyGui.Providers;
 using ChocolateyGui.ViewModels.Items;
 using Microsoft.VisualStudio.Threading;
+using NuGet;
 using Serilog;
+using ILogger = Serilog.ILogger;
 using PackageSearchResults = ChocolateyGui.Models.PackageSearchResults;
 
 namespace ChocolateyGui.Services
@@ -38,7 +40,6 @@ namespace ChocolateyGui.Services
 
         private Process _chocolateyProcess;
         private IIpcChocolateyService _chocolateyService;
-        private IDisposable _logStream;
         private bool? _requiresElevation;
 
         public ChocolateyRemotePackageService(
@@ -270,8 +271,6 @@ namespace ChocolateyGui.Services
 
         public void Dispose()
         {
-            _logStream?.Dispose();
-
             // ReSharper disable once SuspiciousTypeConversion.Global
             ((IClientChannel)_chocolateyService).Close();
         }
@@ -319,8 +318,6 @@ namespace ChocolateyGui.Services
                         return;
                     }
 
-                    _logStream.Dispose();
-                    _logStream = null;
                     _chocolateyService.Exit(true);
                     _chocolateyService = null;
 

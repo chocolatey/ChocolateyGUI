@@ -399,7 +399,7 @@ namespace ChocolateyGui.Services
             {
                 var callback = new ServiceCallbackHandler(_progressService);
                 var context = new InstanceContext(callback);
-                var endpoint = new EndpointAddress(IpcDefaults.DefaultPipeUri);
+                var endpoint = new EndpointAddress(IpcDefaults.DefaultServiceUri);
                 var channel =
                     new DuplexChannelFactory<IIpcChocolateyService>(context, IpcDefaults.DefaultBinding, endpoint).CreateChannel();
                 channel.Register();

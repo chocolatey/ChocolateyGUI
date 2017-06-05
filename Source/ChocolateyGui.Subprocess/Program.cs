@@ -65,7 +65,7 @@ namespace ChocolateyGui.Subprocess
 
                 using (var host = new ServiceHost(typeof(ChocolateyService)))
                 {
-                    host.AddServiceEndpoint(typeof(IIpcChocolateyService), IpcDefaults.DefaultBinding, IpcDefaults.DefaultPipeUri);
+                    host.AddServiceEndpoint(typeof(IIpcChocolateyService), IpcDefaults.DefaultBinding, IpcDefaults.DefaultServiceUri);
 
                     var timer = new Timer(Tick);
                     timer.Change(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(30));
@@ -105,6 +105,7 @@ namespace ChocolateyGui.Subprocess
             // If we don't have any clients, die.
             if (ChocolateyService.ConnectedClients <= 0)
             {
+                Logger.Information("All clients have disconnected. Closing.");
                 CanceledEvent.Set();
             }
         }

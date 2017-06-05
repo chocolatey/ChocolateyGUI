@@ -5,8 +5,8 @@ namespace ChocolateyGui
 {
     public static class IpcDefaults
     {
-        public static readonly NetNamedPipeBinding DefaultBinding =
-            new NetNamedPipeBinding(NetNamedPipeSecurityMode.Transport)
+        public static readonly NetTcpBinding DefaultBinding = 
+            new NetTcpBinding(SecurityMode.Transport)
             {
                 MaxReceivedMessageSize = int.MaxValue - 1,
                 MaxBufferSize = int.MaxValue - 1,
@@ -16,9 +16,11 @@ namespace ChocolateyGui
                     MaxArrayLength = int.MaxValue - 1,
                     MaxDepth = 32,
                     MaxStringContentLength = int.MaxValue - 1
-                }
+                },
+                SendTimeout = TimeSpan.FromMinutes(10),
+                ReceiveTimeout = TimeSpan.FromMinutes(10)
             };
 
-        public static readonly Uri DefaultPipeUri = new Uri("net.pipe://localhost/chocolateygui");
+        public static readonly Uri DefaultServiceUri = new Uri("net.tcp://localhost:24020");
     }
 }

@@ -16,6 +16,7 @@ using CefSharp;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Startup;
+using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels;
 using Serilog;
 
@@ -75,27 +76,12 @@ namespace ChocolateyGui
             }
 
             var directPath = Path.Combine(logPath, "ChocolateyGui.{Date}.log");
-#if !DEBUG
-            var logLevel = Environment.GetEnvironmentVariable("CHOCOLATEYGUI__LOGLEVEL");
-#endif
 
             var logConfig = new LoggerConfiguration()
                 .WriteTo.Async(config => config.LiterateConsole())
                 .WriteTo.Async(config =>
-                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000));
-#if DEBUG
-            logConfig.MinimumLevel.Debug();
-#else
-            Serilog.Events.LogEventLevel logEventLevel;
-            if (string.IsNullOrWhiteSpace(logLevel) || !Enum.TryParse(logLevel, true, out logEventLevel))
-            {
-                logConfig.MinimumLevel.Information();
-            }
-            else
-            {
-                logConfig.MinimumLevel.Is(Serilog.Events.LogEventLevel.Information);
-            }
-#endif
+                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
+                .SetDefaultLevel();
 
             Logger = Log.Logger = logConfig.CreateLogger();
 

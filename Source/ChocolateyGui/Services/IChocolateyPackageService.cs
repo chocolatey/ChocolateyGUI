@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChocolateyGui.Subprocess.Models;
+using ChocolateyGui.Models;
 using ChocolateyGui.ViewModels.Items;
 using NuGet;
 using PackageSearchResults = ChocolateyGui.Models.PackageSearchResults;

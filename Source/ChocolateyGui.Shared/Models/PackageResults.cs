@@ -1,17 +1,20 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="PackageSearchResults.cs">
+// <copyright company="Chocolatey" file="PackageResults.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System.Runtime.Serialization;
 
-namespace ChocolateyGui.Subprocess.Models
+namespace ChocolateyGui.Models
 {
-    public class PackageSearchResults
+    [DataContract]
+    public class PackageResults
     {
-        public IEnumerable<Package> Packages { get; set; }
+        [DataMember]
+        public Package[] Packages { get; set; }
 
+        [DataMember]
         public int TotalCount { get; set; }
     }
 }

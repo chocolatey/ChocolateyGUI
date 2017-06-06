@@ -4,11 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Subjects;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using chocolatey;
 using chocolatey.infrastructure.results;
+using ChocolateyGui.Models;
 
 namespace ChocolateyGui.Subprocess
 {
@@ -27,6 +31,24 @@ namespace ChocolateyGui.Subprocess
         public static Task<ICollection<PackageResult>> ListPackagesAsync(this GetChocolatey chocolatey)
         {
             return Task.Run(() => (ICollection<PackageResult>)chocolatey.List<PackageResult>().ToList());
+        }
+
+        internal static GetChocolatey SetLoggerContext(this GetChocolatey chocolatey, OperationContext context)
+        {
+            StreamingLogger ignored;
+            return chocolatey.SetLoggerContext(context, out ignored);
+        }
+
+        internal static GetChocolatey SetLoggerContext(this GetChocolatey chocolatey, OperationContext context, out StreamingLogger logger)
+        {
+            var callback = context.GetCallbackChannel<IIpcServiceCallbacks>();
+            var logStream = new Subject<StreamingLogMessage>();
+            logger = new StreamingLogger(logStream);
+            logStream.Subscribe(message =>
+            {
+                callback.LogMessage(message);
+            });
+            return chocolatey.SetCustomLogging(logger);
         }
     }
 }

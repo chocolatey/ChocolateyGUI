@@ -7,6 +7,7 @@
 using System;
 using System.Reactive.Subjects;
 using chocolatey.infrastructure.logging;
+using ChocolateyGui.Models;
 using Serilog;
 
 namespace ChocolateyGui.Subprocess
@@ -14,7 +15,7 @@ namespace ChocolateyGui.Subprocess
     internal class StreamingLogger : ILog
     {
         private static readonly ILogger Logger = Serilog.Log.ForContext<StreamingLogger>();
-        private ISubject<StreamingLogMessage> _subject;
+        private readonly ISubject<StreamingLogMessage> _subject;
         private string _context;
         private Action<StreamingLogMessage> _interceptor;
 

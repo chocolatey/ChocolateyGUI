@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using Caliburn.Micro;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Providers;
@@ -20,27 +21,26 @@ namespace ChocolateyGui.ViewModels
         IHandle<ShowSettingsMessage>,
         IHandle<SettingsGoBackMessage>
     {
+        private readonly IChocolateyPackageService _chocolateyPackageService;
         private readonly IVersionNumberProvider _versionNumberProvider;
         private readonly IEventAggregator _eventAggregator;
         private readonly SourcesViewModel _sourcesViewModel;
         private object _lastActiveItem;
 
         public ShellViewModel(
-            ISourceService sourceService,
+            IChocolateyPackageService chocolateyPackageService,
             IVersionNumberProvider versionNumberProvider,
             IEventAggregator eventAggregator,
             SourcesViewModel sourcesViewModel)
         {
-            if (sourceService == null)
-            {
-                throw new ArgumentNullException(nameof(sourceService));
-            }
-
+            _chocolateyPackageService = chocolateyPackageService;
             _versionNumberProvider = versionNumberProvider;
             _eventAggregator = eventAggregator;
             _sourcesViewModel = sourcesViewModel;
-            Sources = new BindableCollection<SourceViewModel>(sourceService.GetSources());
+            Sources = new BindableCollection<SourceViewModel>();
             ActiveItem = _sourcesViewModel;
+
+            GetSources();
         }
 
         public string AboutInformation
@@ -102,6 +102,7 @@ namespace ChocolateyGui.ViewModels
             {
                 return;
             }
+
             SetActiveItem(IoC.Get<SettingsViewModel>());
         }
 
@@ -126,6 +127,14 @@ namespace ChocolateyGui.ViewModels
             {
                 this.CloseItem(_lastActiveItem);
             }
+        }
+
+        private async void GetSources()
+        {
+            var sources =
+                (await _chocolateyPackageService.GetSources()).Select(
+                    source => new SourceViewModel { Name = source.Id, Url = source.Value });
+            Sources.AddRange(sources);
         }
     }
 }

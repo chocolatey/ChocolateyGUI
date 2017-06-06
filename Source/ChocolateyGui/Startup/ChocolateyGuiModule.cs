@@ -10,14 +10,13 @@ using System.IO;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
+using ChocolateyGui.Models;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
-using ChocolateyGui.Subprocess;
 using ChocolateyGui.ViewModels;
 using ChocolateyGui.ViewModels.Items;
 using ChocolateyGui.Views;
 using LiteDB;
-using NuGet;
 using PackageViewModel = ChocolateyGui.ViewModels.Items.PackageViewModel;
 
 namespace ChocolateyGui.Startup
@@ -60,7 +59,6 @@ namespace ChocolateyGui.Startup
             builder.Register<IEventAggregator>(c => new EventAggregator()).InstancePerLifetimeScope();
 
             // Register Services
-            builder.RegisterType<ChocolateySourcesService>().As<ISourceService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
             builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
@@ -68,7 +66,6 @@ namespace ChocolateyGui.Startup
             // Register Mapper
             var mapperConfiguration = new MapperConfiguration(config =>
             {
-                config.CreateMap<IPackage, IPackageViewModel>();
                 config.CreateMap<IPackageViewModel, IPackageViewModel>()
                     .ForMember(vm => vm.IsInstalled, options => options.Ignore());
                 config.CreateMap<Package, IPackageViewModel>();

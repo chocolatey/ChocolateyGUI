@@ -5,7 +5,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Caliburn.Micro;
-using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 
 namespace ChocolateyGui.Providers

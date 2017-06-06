@@ -11,10 +11,10 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
-using ChocolateyGui.Subprocess.Models;
 
 namespace ChocolateyGui.ViewModels
 {
@@ -26,7 +26,6 @@ namespace ChocolateyGui.ViewModels
         private bool _firstLoad = true;
 
         public SourcesViewModel(
-            ISourceService sourceService,
             IChocolateyPackageService packageService,
             IEventAggregator eventAggregator,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
@@ -34,10 +33,6 @@ namespace ChocolateyGui.ViewModels
         {
             _packageService = packageService;
             _remoteSourceVmFactory = remoteSourceVmFactory;
-            if (sourceService == null)
-            {
-                throw new ArgumentNullException(nameof(sourceService));
-            }
 
             if (localSourceVmFactory == null)
             {
@@ -90,8 +85,7 @@ namespace ChocolateyGui.ViewModels
         {
             Observable.FromEventPattern<PropertyChangedEventArgs>(this, nameof(PropertyChanged))
                 .Where(p => p.EventArgs.PropertyName == nameof(ActiveItem))
-                .Where(p => ActiveItem != null)
-                .Subscribe(p => DisplayName = $"Source - {ActiveItem.DisplayName}");
+                .Subscribe(p => DisplayName = $"Source - {ActiveItem?.DisplayName}");
 
             if (_firstLoad)
             {

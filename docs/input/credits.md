@@ -44,7 +44,6 @@ ChocolateyGUI uses the following awesome frameworks (in no particular order):
 * [Splat](https://github.com/paulcbetts/splat)
 * [SQLLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)
 * [SuperSocket](http://www.supersocket.net/)
-* [WampSharp](https://github.com/Code-Sharp/WampSharp/)
 * [WebSocket4Net](http://websocket4net.codeplex.com/)
 
 ChocolateyGUI is built, with the following fantastic frameworks and services (in no particular order):

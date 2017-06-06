@@ -1,18 +1,15 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StringExtensions.cs" company="Chocolatey">
+// <copyright file="Hacks.cs" company="Chocolatey">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
+using System.Security.Principal;
 
-namespace ChocolateyGui.Utilities.Extensions
+namespace ChocolateyGui
 {
-    public static class StringExtensions
+    public static class Hacks
     {
-        public static bool EqualsIgnoreCase(this string source, string target)
-        {
-            return string.Compare(source, target, StringComparison.OrdinalIgnoreCase) == 0;
-        }
+        public static bool IsElevated => (WindowsIdentity.GetCurrent().Owner?.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid)).GetValueOrDefault(false);
     }
 }

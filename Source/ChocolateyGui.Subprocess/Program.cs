@@ -6,11 +6,11 @@
 
 using System;
 using System.IO;
+using System.ServiceModel;
 using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using chocolatey.infrastructure.app.configuration;
-using ChocolateyGui.Subprocess.Models;
+using ChocolateyGui.Models;
 using NuGet;
 using Serilog;
 using ILogger = Serilog.ILogger;
@@ -31,14 +31,29 @@ namespace ChocolateyGui.Subprocess
 
             var logFolder = Path.Combine(appDataPath, "Logs");
             var directPath = Path.Combine(logFolder, "ChocolateyGui.Subprocess.{Date}.log");
+#if !DEBUG
+            var logLevel = Environment.GetEnvironmentVariable("CHOCOLATEYGUI__LOGLEVEL");
+#endif
 
-            Log.Logger = new LoggerConfiguration()
+            var logConfig = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.Async(config => config.LiterateConsole())
                 .WriteTo.Async(config =>
-                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
-                .CreateLogger();
-
+                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000));
+#if DEBUG
+            logConfig.MinimumLevel.Debug();
+#else
+            Serilog.Events.LogEventLevel logEventLevel;
+            if (string.IsNullOrWhiteSpace(logLevel) || !Enum.TryParse(logLevel, true, out logEventLevel))
+            {
+                logConfig.MinimumLevel.Information();
+            }
+            else
+            {
+                logConfig.MinimumLevel.Is(Serilog.Events.LogEventLevel.Information);
+            }
+#endif
+            Log.Logger = logConfig.CreateLogger();
             Logger = Log.ForContext<Program>();
 
             var source = new CancellationTokenSource();
@@ -50,15 +65,47 @@ namespace ChocolateyGui.Subprocess
             };
 
             CanceledEvent = new ManualResetEventSlim();
-            var eventHandle = EventWaitHandle.OpenExisting("ChocolateyGui_Wait");
 
             try
             {
-                return MainAsync(args, source.Token, eventHandle).GetAwaiter().GetResult();
+                Mapper.Initialize(config =>
+                {
+                    config.CreateMap<IPackage, Package>();
+                    config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
+                    config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();
+                    config.CreateMap<ConfigFileSourceSetting, Models.ChocolateySource>();
+                });
+
+                Logger.Information("Starting Chocolatey Server.");
+
+                using (var host = new ServiceHost(typeof(ChocolateyService)))
+                {
+                    host.AddServiceEndpoint(typeof(IIpcChocolateyService), IpcDefaults.DefaultBinding, IpcDefaults.DefaultServiceUri);
+
+                    var timer = new Timer(Tick);
+                    timer.Change(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(30));
+
+                    // Start!
+                    try
+                    {
+                        host.Open();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Fatal(ex, "Fatal error while running server. Exception: {Exception}", ex);
+                        throw;
+                    }
+
+                    Logger.Information("Started chocolatey server.");
+                    CanceledEvent.Wait(source.Token);
+                    timer.Dispose();
+                }
+
+                Logger.Information("Stopping Chocolatey Server.");
+                return 0; // Success.
             }
             catch (OperationCanceledException)
             {
-                eventHandle.Set();
                 return 1223; // Cancelled.
             }
             catch (Exception ex)
@@ -68,39 +115,14 @@ namespace ChocolateyGui.Subprocess
             }
         }
 
-        private static async Task<int> MainAsync(string[] args, CancellationToken token, EventWaitHandle eventHandle)
+        private static void Tick(object state)
         {
-            Mapper.Initialize(config =>
+            // If we don't have any clients, die.
+            if (ChocolateyService.ConnectedClients <= 0)
             {
-                config.CreateMap<IPackage, Package>();
-                config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
-                config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();
-                config.CreateMap<ConfigFileSourceSetting, Models.ChocolateySource>();
-            });
-
-            if (args.Length != 1)
-            {
-                Log.Fatal("Expected 1 argument and got {ArgumentCount} instead. {Args}", args.Length, args);
-                eventHandle.Set();
-                return 1;
+                Logger.Information("All clients have disconnected. Closing.");
+                CanceledEvent.Set();
             }
-
-            int port;
-            if (!int.TryParse(args[0], out port))
-            {
-                Log.Fatal("Missing port number! Got {args} instead :<.", args);
-                eventHandle.Set();
-                return 1;
-            }
-
-            Logger.Information("Starting WAMP Client on port {port}.", port);
-            var host = new ChocoWamp(port);
-            await host.Start();
-            eventHandle.Set();
-            CanceledEvent.Wait(token);
-            Logger.Information("Stopping WAMP Client.", port);
-
-            return 0; // Success.
         }
     }
 }

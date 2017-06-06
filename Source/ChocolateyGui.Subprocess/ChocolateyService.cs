@@ -7,7 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Subjects;
+using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using chocolatey;
@@ -15,28 +16,31 @@ using chocolatey.infrastructure.app;
 using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
+using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
-using ChocolateyGui.Subprocess.Models;
-using Nito.AsyncEx;
+using ChocolateyGui.Models;
+using Microsoft.VisualStudio.Threading;
 using NuGet;
-using WampSharp.V2.Core.Contracts;
-using ChocolateySource = ChocolateyGui.Subprocess.Models.ChocolateySource;
+using ChocolateySource = ChocolateyGui.Models.ChocolateySource;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Subprocess
 {
-    internal class ChocolateyService : IChocolateyService
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple)]
+    internal class ChocolateyService : IIpcChocolateyService
     {
+#pragma warning disable SA1401 // Fields must be private
+        internal static int ConnectedClients;
+#pragma warning restore SA1401 // Fields must be private
         private static readonly ILogger Logger = Serilog.Log.ForContext<ChocolateyService>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
 
-        private readonly StreamingLogger _streamingLogger;
-
-        public ChocolateyService(ISubject<StreamingLogMessage> loggingSubject)
+        public void Register()
         {
-            Logger.Debug("Connecting to streaming log endpoint.");
-            _streamingLogger = new StreamingLogger(loggingSubject);
+            OperationContext.Current.Channel.Faulted += (sender, args) => Interlocked.Decrement(ref ConnectedClients);
+            OperationContext.Current.Channel.Closed += (sender, args) => Interlocked.Decrement(ref ConnectedClients);
+            Interlocked.Increment(ref ConnectedClients);
         }
 
         public Task<bool> IsElevated()
@@ -44,11 +48,12 @@ namespace ChocolateyGui.Subprocess
             return Task.FromResult(Hacks.IsElevated);
         }
 
-        public async Task<IReadOnlyList<Package>> GetInstalledPackages()
+        public async Task<Package[]> GetInstalledPackages()
         {
-            using (await Lock.ReaderLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
                         {
@@ -56,15 +61,16 @@ namespace ChocolateyGui.Subprocess
                             config.ListCommand.LocalOnly = true;
                         });
                 return
-                    (await choco.ListAsync<PackageResult>()).Select(package => GetMappedPackage(package, true)).ToList();
+                    (await choco.ListAsync<PackageResult>()).Select(package => GetMappedPackage(choco, package, true)).ToArray();
             }
         }
 
-        public async Task<IReadOnlyList<Tuple<string, string>>> GetOutdatedPackages(bool includePrerelease = false)
+        public async Task<Tuple<string, string>[]> GetOutdatedPackages(bool includePrerelease = false)
         {
-            using (await Lock.ReaderLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
                         {
@@ -80,13 +86,13 @@ namespace ChocolateyGui.Subprocess
                     uninstallSuccessAction: null,
                     addUninstallHandler: false);
 
-                var packageInfoService = Hacks.GetPackageInformationService();
+                var packageInfoService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
                 var ids =
                     packageManager.LocalRepository.GetPackages()
                         .Where(p => !packageInfoService.get_package_information(p).IsPinned);
                 var updateable =
                     await Task.Run(() => packageManager.SourceRepository.GetUpdates(ids, false, false).ToList());
-                return updateable.Select(p => Tuple.Create(p.Id, p.Version.ToNormalizedString())).ToList();
+                return updateable.Select(p => Tuple.Create(p.Id, p.Version.ToNormalizedString())).ToArray();
             }
         }
 
@@ -96,9 +102,11 @@ namespace ChocolateyGui.Subprocess
             Uri source = null,
             bool force = false)
         {
-            using (await Lock.WriterLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
+                StreamingLogger logger;
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext, out logger);
                 choco.Set(
                     config =>
                         {
@@ -125,14 +133,14 @@ namespace ChocolateyGui.Subprocess
                 Action<StreamingLogMessage> grabErrors;
                 var errors = GetErrors(out grabErrors);
 
-                using (_streamingLogger.Intercept(grabErrors))
+                using (logger.Intercept(grabErrors))
                 {
                     await choco.RunAsync();
 
                     if (Environment.ExitCode != 0)
                     {
                         Environment.ExitCode = 0;
-                        return new PackageOperationResult { Successful = false, Messages = errors };
+                        return new PackageOperationResult { Successful = false, Messages = errors.ToArray() };
                     }
 
                     return PackageOperationResult.SuccessfulCached;
@@ -140,18 +148,18 @@ namespace ChocolateyGui.Subprocess
             }
         }
 
-        public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
+        public async Task<PackageResults> Search(string query, PackageSearchOptions options)
         {
-            using (await Lock.ReaderLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
+                choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.list.ToString();
                             config.Input = query;
-                            config.AllowUnofficialBuild = true;
                             config.AllVersions = options.IncludeAllVersions;
-                            config.Prerelease = options.IncludePrerelease;
                             config.ListCommand.Page = options.CurrentPage;
                             config.ListCommand.PageSize = options.PageSize;
                             if (string.IsNullOrWhiteSpace(query) || !string.IsNullOrWhiteSpace(options.SortColumn))
@@ -165,25 +173,26 @@ namespace ChocolateyGui.Subprocess
                                 config.Sources = options.Source;
                             }
 #if !DEBUG
-                        config.Verbose = false;
+                            config.Verbose = false;
 #endif // DEBUG
                         });
 
-                var packages = (await choco.ListAsync<PackageResult>()).Select(pckge => GetMappedPackage(pckge));
+                var packages = (await choco.ListAsync<PackageResult>()).Select(pckge => GetMappedPackage(choco, pckge));
 
-                return new PackageSearchResults
-                           {
-                               Packages = packages,
-                               TotalCount = await Task.Run(() => choco.ListCount())
-                           };
+                return new PackageResults
+                {
+                    Packages = packages.ToArray(),
+                    TotalCount = await Task.Run(() => choco.ListCount())
+                };
             }
         }
 
         public async Task<Package> GetByVersionAndIdAsync(string id, string version, bool isPrerelease)
         {
-            using (await Lock.ReaderLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
                         {
@@ -191,7 +200,7 @@ namespace ChocolateyGui.Subprocess
                             config.Input = id;
                             config.Version = version;
 #if !DEBUG
-                config.Verbose = false;
+                            config.Verbose = false;
 #endif // DEBUG
                         });
 
@@ -209,23 +218,25 @@ namespace ChocolateyGui.Subprocess
                         () =>
                             packageManager.SourceRepository.FindPackage(
                                 id,
-                                SemanticVersion.Parse(version),
+                                NuGet.SemanticVersion.Parse(version),
                                 allowPrereleaseVersions: isPrerelease,
                                 allowUnlisted: true));
                 if (rawPackage == null)
                 {
-                    throw new WampException(new Dictionary<string, object>(), "com.chocolatey.no_package");
+                    throw new Exception("No Package Found");
                 }
 
-                return GetMappedPackage(new PackageResult(rawPackage, null, chocoConfig.Sources));
+                return GetMappedPackage(choco, new PackageResult(rawPackage, null, chocoConfig.Sources));
             }
         }
 
         public async Task<PackageOperationResult> UninstallPackage(string id, string version, bool force = false)
         {
-            using (await Lock.WriterLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
+                StreamingLogger logger;
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext, out logger);
                 choco.Set(
                     config =>
                         {
@@ -239,15 +250,17 @@ namespace ChocolateyGui.Subprocess
                             }
                         });
 
-                return await RunCommand(choco);
+                return await RunCommand(choco, logger);
             }
         }
 
         public async Task<PackageOperationResult> UpdatePackage(string id, Uri source = null)
         {
-            using (await Lock.WriterLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
+                StreamingLogger logger;
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext, out logger);
                 choco.Set(
                     config =>
                         {
@@ -256,15 +269,16 @@ namespace ChocolateyGui.Subprocess
                             config.Features.UsePackageExitCodes = false;
                         });
 
-                return await RunCommand(choco);
+                return await RunCommand(choco, logger);
             }
         }
 
         public async Task<PackageOperationResult> PinPackage(string id, string version)
         {
-            using (await Lock.WriterLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
                         {
@@ -289,9 +303,10 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<PackageOperationResult> UnpinPackage(string id, string version)
         {
-            using (await Lock.WriterLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger);
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
                         {
@@ -313,23 +328,23 @@ namespace ChocolateyGui.Subprocess
             }
         }
 
-        public async Task<IReadOnlyList<ChocolateyFeature>> GetFeatures()
+        public async Task<ChocolateyFeature[]> GetFeatures()
         {
-            using (await Lock.ReaderLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.ReadLockAsync())
             {
-                var xmlService = Hacks.GetInstance<IXmlService>();
-                var config =
-                    await Task.Run(
-                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
-                return config.Features.Select(Mapper.Map<ChocolateyFeature>).ToList();
+                var config = await GetConfigFile(operationContext);
+                return config.Features.Select(Mapper.Map<ChocolateyFeature>).ToArray();
             }
         }
 
         public async Task SetFeature(ChocolateyFeature feature)
         {
-            using (await Lock.WriterLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
+                choco.Set(
                     config =>
                     {
                         config.CommandName = "feature";
@@ -341,23 +356,23 @@ namespace ChocolateyGui.Subprocess
             }
         }
 
-        public async Task<IReadOnlyList<ChocolateySetting>> GetSettings()
+        public async Task<ChocolateySetting[]> GetSettings()
         {
-            using (await Lock.ReaderLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.ReadLockAsync())
             {
-                var xmlService = Hacks.GetInstance<IXmlService>();
-                var config =
-                    await Task.Run(
-                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
-                return config.ConfigSettings.Select(Mapper.Map<ChocolateySetting>).ToList();
+                var config = await GetConfigFile(operationContext);
+                return config.ConfigSettings.Select(Mapper.Map<ChocolateySetting>).ToArray();
             }
         }
 
         public async Task SetSetting(ChocolateySetting setting)
         {
-            using (await Lock.WriterLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
+                choco.Set(
                     config =>
                         {
                             config.CommandName = "config";
@@ -370,23 +385,23 @@ namespace ChocolateyGui.Subprocess
             }
         }
 
-        public async Task<IReadOnlyList<ChocolateySource>> GetSources()
+        public async Task<ChocolateySource[]> GetSources()
         {
-            using (await Lock.ReaderLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.ReadLockAsync())
             {
-                var xmlService = Hacks.GetInstance<IXmlService>();
-                var config =
-                    await Task.Run(
-                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
-                return config.Sources.Select(Mapper.Map<ChocolateySource>).ToList();
+                var config = await GetConfigFile(operationContext);
+                return config.Sources.Select(Mapper.Map<ChocolateySource>).ToArray();
             }
         }
 
         public async Task AddSource(ChocolateySource source)
         {
-            using (await Lock.WriterLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
+                choco.Set(
                     config =>
                     {
                         config.CommandName = "source";
@@ -441,20 +456,19 @@ namespace ChocolateyGui.Subprocess
 
         public async Task<bool> RemoveSource(string id)
         {
-            using (await Lock.WriterLockAsync())
+            var operationContext = OperationContext.Current;
+            using (await Lock.WriteLockAsync())
             {
-                var xmlService = Hacks.GetInstance<IXmlService>();
-                var chocoCOnfig =
-                    await Task.Run(
-                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
-                var sources = chocoCOnfig.Sources.Select(Mapper.Map<ChocolateySource>).ToList();
+                var chocoConfig = await GetConfigFile(operationContext);
+                var sources = chocoConfig.Sources.Select(Mapper.Map<ChocolateySource>).ToList();
 
                 if (sources.All(source => source.Id != id))
                 {
                     return false;
                 }
 
-                var choco = Lets.GetChocolatey().SetCustomLogging(_streamingLogger).Set(
+                var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
+                choco.Set(
                         config =>
                         {
                             config.CommandName = "source";
@@ -467,17 +481,18 @@ namespace ChocolateyGui.Subprocess
             }
         }
 
-        public void Exit()
+        public void Exit(bool restartingForAdmin = false)
         {
             Program.CanceledEvent.Set();
         }
 
-        private static Package GetMappedPackage(PackageResult package, bool forceInstalled = false)
+        private static Package GetMappedPackage(GetChocolatey choco, PackageResult package, bool forceInstalled = false)
         {
             var mappedPackage = package == null ? null : Mapper.Map<Package>(package.Package);
             if (mappedPackage != null)
             {
-                var packageInfo = Hacks.GetPackageInformationService().get_package_information(package.Package);
+                var packageInfoService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
+                var packageInfo = packageInfoService.get_package_information(package.Package);
                 mappedPackage.IsPinned = packageInfo.IsPinned;
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
             }
@@ -502,12 +517,12 @@ namespace ChocolateyGui.Subprocess
             return errors;
         }
 
-        private async Task<PackageOperationResult> RunCommand(GetChocolatey choco)
+        private async Task<PackageOperationResult> RunCommand(GetChocolatey choco, StreamingLogger logger)
         {
             Action<StreamingLogMessage> grabErrors;
             var errors = GetErrors(out grabErrors);
 
-            using (_streamingLogger.Intercept(grabErrors))
+            using (logger.Intercept(grabErrors))
             {
                 try
                 {
@@ -515,17 +530,32 @@ namespace ChocolateyGui.Subprocess
                 }
                 catch (Exception ex)
                 {
-                    return new PackageOperationResult { Successful = false, Messages = errors, Exception = ex };
+                    return new PackageOperationResult { Successful = false, Messages = errors.ToArray(), Exception = ex };
                 }
 
                 if (Environment.ExitCode != 0)
                 {
                     Environment.ExitCode = 0;
-                    return new PackageOperationResult { Successful = false, Messages = errors };
+                    return new PackageOperationResult { Successful = false, Messages = errors.ToArray() };
                 }
 
                 return PackageOperationResult.SuccessfulCached;
             }
+        }
+
+        private async Task<ConfigFileSettings> GetConfigFile(OperationContext context = default(OperationContext))
+        {
+            var choco = Lets.GetChocolatey();
+            if (context != null)
+            {
+                choco.SetLoggerContext(context);
+            }
+
+            var xmlService = choco.Container().GetInstance<IXmlService>();
+            var config =
+                await Task.Run(
+                    () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
+            return config;
         }
     }
 }

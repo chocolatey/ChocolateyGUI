@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.Globalization;
 using NuGet;
 
-namespace ChocolateyGui.Utilities.TypeConverters
+namespace ChocolateyGui.Models
 {
     public class SemanticVersionTypeConverter : TypeConverter
     {
@@ -22,7 +22,6 @@ namespace ChocolateyGui.Utilities.TypeConverters
         {
             var version = value as string;
             SemanticVersion semanticVersion;
-
             if (version != null && SemanticVersion.TryParse(version, out semanticVersion))
             {
                 return semanticVersion;

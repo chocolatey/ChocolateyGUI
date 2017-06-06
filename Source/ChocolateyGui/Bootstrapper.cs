@@ -8,19 +8,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
 using Caliburn.Micro;
 using CefSharp;
-using chocolatey;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Startup;
 using ChocolateyGui.ViewModels;
 using Serilog;
-using Serilog.Events;
 
 namespace ChocolateyGui
 {
@@ -33,7 +30,6 @@ namespace ChocolateyGui
             Initialize();
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
         internal static IContainer Container { get; private set; }
@@ -79,18 +75,29 @@ namespace ChocolateyGui
             }
 
             var directPath = Path.Combine(logPath, "ChocolateyGui.{Date}.log");
-
-            Logger = Log.Logger = new LoggerConfiguration()
-#if DEBUG
-                .MinimumLevel.Debug()
+#if !DEBUG
+            var logLevel = Environment.GetEnvironmentVariable("CHOCOLATEYGUI__LOGLEVEL");
 #endif
 
-                // Wamp gets *very* noise. Comment out at your own peril
-                .MinimumLevel.Override("WampSharp", LogEventLevel.Information)
+            var logConfig = new LoggerConfiguration()
                 .WriteTo.Async(config => config.LiterateConsole())
                 .WriteTo.Async(config =>
-                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
-                .CreateLogger();
+                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000));
+#if DEBUG
+            logConfig.MinimumLevel.Debug();
+#else
+            Serilog.Events.LogEventLevel logEventLevel;
+            if (string.IsNullOrWhiteSpace(logLevel) || !Enum.TryParse(logLevel, true, out logEventLevel))
+            {
+                logConfig.MinimumLevel.Information();
+            }
+            else
+            {
+                logConfig.MinimumLevel.Is(Serilog.Events.LogEventLevel.Information);
+            }
+#endif
+
+            Logger = Log.Logger = logConfig.CreateLogger();
 
             Internationalization.Initialize();
         }
@@ -155,15 +162,6 @@ namespace ChocolateyGui
         protected override void OnExit(object sender, EventArgs e)
         {
             Logger.Information("Exiting.");
-        }
-
-        // Monkey patch for confliciting versions of Reactive in Chocolatey and ChocolateyGUI.
-        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            return args.Name ==
-                   "System.Reactive.PlatformServices, Version=0.9.10.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb"
-                ? typeof(Lets).Assembly
-                : null;
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

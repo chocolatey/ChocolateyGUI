@@ -10,8 +10,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Threading;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
@@ -19,37 +18,29 @@ using ChocolateyGui.Base;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
-using ChocolateyGui.Subprocess;
-using ChocolateyGui.Subprocess.Models;
-using ChocolateyGui.Utilities;
+using ChocolateyGui.Providers;
 using ChocolateyGui.ViewModels.Items;
+using Microsoft.VisualStudio.Threading;
 using NuGet;
 using Serilog;
-using WampSharp.V2;
-using WampSharp.V2.Client;
-using WampSharp.V2.Core.Contracts;
-using WampSharp.V2.Fluent;
+using ILogger = Serilog.ILogger;
 using PackageSearchResults = ChocolateyGui.Models.PackageSearchResults;
 
 namespace ChocolateyGui.Services
 {
     public class ChocolateyRemotePackageService : IChocolateyPackageService, IDisposable
     {
-        private static readonly Serilog.ILogger Logger = Log.ForContext<ChocolateyRemotePackageService>();
+        private static readonly ILogger Logger = Log.ForContext<ChocolateyRemotePackageService>();
         private readonly IProgressService _progressService;
         private readonly IMapper _mapper;
         private readonly IEventAggregator _eventAggregator;
-        private readonly IConfigService _configService;
         private readonly Func<IPackageViewModel> _packageFactory;
-        private readonly AsyncLock _lock = new AsyncLock();
+        private readonly AsyncSemaphore _lock = new AsyncSemaphore(1);
+        private readonly Lazy<bool> _forceElevation;
 
         private Process _chocolateyProcess;
-        private IWampChannel _wampChannel;
-        private IChocolateyService _chocolateyService;
-        private IDisposable _logStream;
-        private bool _isInitialized;
+        private IIpcChocolateyService _chocolateyService;
         private bool? _requiresElevation;
-        private Lazy<bool> _forceElevation;
 
         public ChocolateyRemotePackageService(
             IProgressService progressService,
@@ -61,9 +52,8 @@ namespace ChocolateyGui.Services
             _progressService = progressService;
             _mapper = mapper;
             _eventAggregator = eventAggregator;
-            _configService = configService;
             _packageFactory = packageFactory;
-            _forceElevation = new Lazy<bool>(() => _configService.GetSettings().ElevateByDefault);
+            _forceElevation = new Lazy<bool>(() => configService.GetSettings().ElevateByDefault);
         }
 
         public async Task<PackageSearchResults> Search(string query, PackageSearchOptions options)
@@ -82,112 +72,62 @@ namespace ChocolateyGui.Services
         public async Task<IPackageViewModel> GetByVersionAndIdAsync(string id, SemanticVersion version, bool isPrerelease)
         {
             await Initialize();
-            try
-            {
-                var result = await _chocolateyService.GetByVersionAndIdAsync(id, version.ToString(), isPrerelease);
-                return _mapper.Map(result, _packageFactory());
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            var result = await _chocolateyService.GetByVersionAndIdAsync(id, version.ToString(), isPrerelease);
+            return _mapper.Map(result, _packageFactory());
         }
 
         public async Task<IEnumerable<IPackageViewModel>> GetInstalledPackages(bool force = false)
         {
             await Initialize();
-            try
-            {
-                var packages = await _chocolateyService.GetInstalledPackages();
-                var vms = packages.Select(p => _mapper.Map(p, _packageFactory()));
-                return vms;
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            var packages = await _chocolateyService.GetInstalledPackages();
+            var vms = packages.Select(p => _mapper.Map(p, _packageFactory())).ToList();
+            return vms;
         }
 
         public async Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false)
         {
             await Initialize();
-            try
-            {
-                var results = await _chocolateyService.GetOutdatedPackages(includePrerelease);
-                var parsed = results.Select(result => Tuple.Create(result.Item1, new SemanticVersion(result.Item2)));
-                return parsed.ToList();
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            var results = await _chocolateyService.GetOutdatedPackages(includePrerelease);
+            var parsed = results.Select(result => Tuple.Create(result.Item1, new SemanticVersion(result.Item2)));
+            return parsed.ToList();
         }
 
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false)
         {
             await Initialize(true);
-            try
+            if (Elevation.Instance.IsBackgroundRunning)
             {
-                if (Elevation.Instance.IsBackgroundRunning)
-                {
-                    source = null;
-                }
-
-                var result = await _chocolateyService.InstallPackage(id, version?.ToString(), source, force);
-                if (!result.Successful)
-                {
-                var exceptionMessage = result.Exception == null
-                    ? string.Empty
-                    : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
-                var message = string.Format(
-                    Resources.ChocolateyRemotePackageService_InstallFailedMessage,
-                    id,
-                    version,
-                    string.Join("\n", result.Messages),
-                    exceptionMessage);
-                    await _progressService.ShowMessageAsync(
-                    Resources.ChocolateyRemotePackageService_InstallFailedTitle,
-                    message);
-                    Logger.Warning(result.Exception, "Failed to install {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
-                    return;
-                }
-
-                _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Installed, version));
+                source = null;
             }
-            catch (WampConnectionBrokenException ex)
+
+            var result = await _chocolateyService.InstallPackage(id, version?.ToString(), source, force);
+            if (!result.Successful)
             {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
+            var exceptionMessage = result.Exception == null
+                ? string.Empty
+                : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+            var message = string.Format(
+                Resources.ChocolateyRemotePackageService_InstallFailedMessage,
+                id,
+                version,
+                string.Join("\n", result.Messages),
+                exceptionMessage);
+                await _progressService.ShowMessageAsync(
+                Resources.ChocolateyRemotePackageService_InstallFailedTitle,
+                message);
+                Logger.Warning(result.Exception, "Failed to install {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
+                return;
             }
+
+            _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Installed, version));
         }
 
         public async Task UninstallPackage(string id, SemanticVersion version, bool force = false)
         {
             await Initialize(true);
-            try
+            var result = await _chocolateyService.UninstallPackage(id, version.ToString(), force);
+            if (!result.Successful)
             {
-                var result = await _chocolateyService.UninstallPackage(id, version.ToString(), force);
-                if (!result.Successful)
-                {
                 var exceptionMessage = result.Exception == null
                     ? string.Empty
                     : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
@@ -197,39 +137,28 @@ namespace ChocolateyGui.Services
                     version,
                     string.Join("\n", result.Messages),
                     exceptionMessage);
-                    await _progressService.ShowMessageAsync(
+                await _progressService.ShowMessageAsync(
                     Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
-                    Resources.ChocolateyRemotePackageService_UninstallFailedMessage);
-                    Logger.Warning(result.Exception, "Failed to uninstall {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
-                    return;
-                }
-
-                _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Uninstalled, version));
+                    message);
+                Logger.Warning(result.Exception, "Failed to uninstall {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
+                return;
             }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
 
-                throw;
-            }
+            _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Uninstalled, version));
+            return;
         }
 
         public async Task UpdatePackage(string id, Uri source = null)
         {
             await Initialize(true);
-            try
+            if (Elevation.Instance.IsBackgroundRunning)
             {
-                if (Elevation.Instance.IsBackgroundRunning)
-                {
-                    source = null;
-                }
+                source = null;
+            }
 
-                var result = await _chocolateyService.UpdatePackage(id, source);
-                if (!result.Successful)
-                {
+            var result = await _chocolateyService.UpdatePackage(id, source);
+            if (!result.Successful)
+            {
                 var exceptionMessage = result.Exception == null
                     ? string.Empty
                     : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
@@ -238,71 +167,47 @@ namespace ChocolateyGui.Services
                     id,
                     string.Join("\n", result.Messages),
                     exceptionMessage);
-                    await _progressService.ShowMessageAsync(
-                    Resources.ChocolateyRemotePackageService_UpdateFailedTitle,
-                    Resources.ChocolateyRemotePackageService_UpdateFailedMessage);
-                    Logger.Warning(result.Exception, "Failed to update {Package}. Errors: {Errors}", id, result.Messages);
-                    return;
-                }
-
-                _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Updated));
+                await _progressService.ShowMessageAsync(
+                Resources.ChocolateyRemotePackageService_UpdateFailedTitle,
+                message);
+                Logger.Warning(result.Exception, "Failed to update {Package}. Errors: {Errors}", id, result.Messages);
+                return;
             }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
 
-                throw;
-            }
+            _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Updated));
         }
 
         public async Task PinPackage(string id, SemanticVersion version)
         {
             await Initialize(true);
-            try
+            var result = await _chocolateyService.PinPackage(id, version.ToString());
+            if (!result.Successful)
             {
-                var result = await _chocolateyService.PinPackage(id, version.ToString());
-                if (!result.Successful)
-                {
-                var exceptionMessage = result.Exception == null
-                    ? string.Empty
-                    : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
-                var message = string.Format(
-                    Resources.ChocolateyRemotePackageService_PinFailedMessage,
-                    id,
-                    version,
-                    string.Join("\n", result.Messages),
-                    exceptionMessage);
-                    await _progressService.ShowMessageAsync(
+            var exceptionMessage = result.Exception == null
+                ? string.Empty
+                : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+            var message = string.Format(
+                Resources.ChocolateyRemotePackageService_PinFailedMessage,
+                id,
+                version,
+                string.Join("\n", result.Messages),
+                exceptionMessage);
+                await _progressService.ShowMessageAsync(
                     Resources.ChocolateyRemotePackageService_PinFailedTitle,
                     message);
-                    Logger.Warning(result.Exception, "Failed to pin {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
-                    return;
-                }
-
-                _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Pinned, version));
+                Logger.Warning(result.Exception, "Failed to pin {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
+                return;
             }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
 
-                throw;
-            }
+            _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Pinned, version));
         }
 
         public async Task UnpinPackage(string id, SemanticVersion version)
         {
             await Initialize(true);
-            try
+            var result = await _chocolateyService.UnpinPackage(id, version.ToString());
+            if (!result.Successful)
             {
-                var result = await _chocolateyService.UnpinPackage(id, version.ToString());
-                if (!result.Successful)
-                {
                 var exceptionMessage = result.Exception == null
                     ? string.Empty
                     : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
@@ -312,172 +217,66 @@ namespace ChocolateyGui.Services
                     version,
                     string.Join("\n", result.Messages),
                     exceptionMessage);
-                    await _progressService.ShowMessageAsync(
+                await _progressService.ShowMessageAsync(
                     Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
                     message);
-                    Logger.Warning(result.Exception, "Failed to unpin {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
-                    return;
-                }
-
-                _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Unpinned, version));
+                Logger.Warning(result.Exception, "Failed to unpin {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
+                return;
             }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
 
-                throw;
-            }
+            _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Unpinned, version));
         }
 
         public async Task<IReadOnlyList<ChocolateyFeature>> GetFeatures()
         {
             await Initialize();
-            try
-            {
-                return await _chocolateyService.GetFeatures();
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            return await _chocolateyService.GetFeatures();
         }
 
         public async Task SetFeature(ChocolateyFeature feature)
         {
             await Initialize(true);
-            try
+            await _chocolateyService.SetFeature(feature);
+            if (string.Equals(feature.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase))
             {
-                await _chocolateyService.SetFeature(feature);
-                if (string.Equals(feature.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase))
-                {
-                    Elevation.Instance.IsBackgroundRunning = feature.Enabled;
-                }
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
+                Elevation.Instance.IsBackgroundRunning = feature.Enabled;
             }
         }
 
         public async Task<IReadOnlyList<ChocolateySetting>> GetSettings()
         {
             await Initialize();
-            try
-            {
-                return await _chocolateyService.GetSettings();
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            return await _chocolateyService.GetSettings();
         }
 
         public async Task SetSetting(ChocolateySetting setting)
         {
             await Initialize(true);
-            try
-            {
-                await _chocolateyService.SetSetting(setting);
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            await _chocolateyService.SetSetting(setting);
         }
 
         public async Task<IReadOnlyList<ChocolateySource>> GetSources()
         {
             await Initialize();
-            try
-            {
-                return await _chocolateyService.GetSources();
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            return await _chocolateyService.GetSources();
         }
 
         public async Task AddSource(ChocolateySource source)
         {
             await Initialize(true);
-            try
-            {
-                await _chocolateyService.AddSource(source);
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            await _chocolateyService.AddSource(source);
         }
 
         public async Task UpdateSource(string id, ChocolateySource source)
         {
             await Initialize(true);
-            try
-            {
-                await _chocolateyService.UpdateSource(id, source);
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            await _chocolateyService.UpdateSource(id, source);
         }
 
         public async Task<bool> RemoveSource(string id)
         {
             await Initialize(true);
-            try
-            {
-                return await _chocolateyService.RemoveSource(id);
-            }
-            catch (WampConnectionBrokenException ex)
-            {
-                if (ex.CloseType == WampSharp.V2.Realm.SessionCloseType.Goodbye)
-                {
-                    throw new ConnectionClosedException();
-                }
-
-                throw;
-            }
+            return await _chocolateyService.RemoveSource(id);
         }
 
         public ValueTask<bool> RequiresElevation()
@@ -487,8 +286,12 @@ namespace ChocolateyGui.Services
 
         public void Dispose()
         {
-            _logStream?.Dispose();
-            _wampChannel?.Close("Exiting", new GoodbyeDetails { Message = "Exiting" });
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var clientChannel = _chocolateyService as IClientChannel;
+            if (clientChannel != null && clientChannel.State == CommunicationState.Opened)
+            {
+                clientChannel.Close();
+            }
         }
 
         private async Task<bool> RequiresElevationImpl()
@@ -498,9 +301,17 @@ namespace ChocolateyGui.Services
             return _requiresElevation.Value;
         }
 
-        private Task Initialize(bool requireAdmin = false)
+        private async Task Initialize(bool requireAdmin = false)
         {
-            return Task.Run(() => InitializeImpl(requireAdmin));
+            try
+            {
+                await InitializeImpl(requireAdmin);
+            }
+            catch (Exception ex)
+            {
+                Logger.Fatal(ex, "Failed to initialize the chocolatey server.");
+                throw;
+            }
         }
 
         private async Task InitializeImpl(bool requireAdmin = false)
@@ -508,7 +319,7 @@ namespace ChocolateyGui.Services
             requireAdmin = requireAdmin || _forceElevation.Value;
 
             // Check if we're not already initialized or running, as well as our permissions level.
-            if (_isInitialized)
+            if (_chocolateyProcess != null && !_chocolateyProcess.HasExited)
             {
                 if (!requireAdmin || await _chocolateyService.IsElevated())
                 {
@@ -516,21 +327,17 @@ namespace ChocolateyGui.Services
                 }
             }
 
-            using (await _lock.LockAsync())
+            using (await _lock.EnterAsync())
             {
                 // Double check our initialization and permissions status.
-                if (_isInitialized)
+                if (_chocolateyProcess != null && !_chocolateyProcess.HasExited)
                 {
                     if (!requireAdmin || await _chocolateyService.IsElevated())
                     {
                         return;
                     }
 
-                    _isInitialized = false;
-                    _logStream.Dispose();
-                    _logStream = null;
-                    _wampChannel.Close("Escalating", new GoodbyeDetails { Message = "Escalating" });
-                    _wampChannel = null;
+                    _chocolateyService.Exit(true);
                     _chocolateyService = null;
 
                     if (!_chocolateyProcess.HasExited)
@@ -542,124 +349,49 @@ namespace ChocolateyGui.Services
                     }
                 }
 
-                var port = 5000;
-                while (!IsPortAvailable(port) && port < 6000)
+                var processes = Process.GetProcessesByName("ChocolateyGui.Subprocess");
+
+                // Do we already have a living subprocess somewhere? (Multiple GUIs running simultaneously)
+                if (processes.Length != 0)
                 {
-                    port++;
+                    _chocolateyProcess = processes[0];
+                    _chocolateyService = CreateClient();
+                    return;
                 }
 
-                if (port >= 6000)
-                {
-                    throw new Exception("Failed to acquire port for GUI Subprocess.");
-                }
-
-                var subprocessPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ChocolateyGui.Subprocess.exe");
+                // If we don't have an endpoint already, spin up a new process.
+                var subprocessPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Subprocess/ChocolateyGui.Subprocess.exe");
                 var startInfo = new ProcessStartInfo
-                                    {
-                                        Arguments = port.ToString(),
-                                        UseShellExecute = true,
-                                        FileName = subprocessPath,
-                                        WindowStyle = ProcessWindowStyle.Hidden
-                                    };
+                {
+                    UseShellExecute = true,
+                    FileName = subprocessPath,
+                    WindowStyle = ProcessWindowStyle.Hidden
+                };
 
                 if (requireAdmin)
                 {
                     startInfo.Verb = "runas";
                 }
 
-                using (
-                    var subprocessHandle = new EventWaitHandle(false, EventResetMode.ManualReset, "ChocolateyGui_Wait"))
+                try
                 {
-                    try
-                    {
-                        _chocolateyProcess = Process.Start(startInfo);
-                    }
-                    catch (Win32Exception ex)
-                    {
-                        Logger.Error(ex, "Failed to start chocolatey gui subprocess.");
-                        throw new ApplicationException(
-                            $"Failed to elevate chocolatey: {ex.Message}.");
-                    }
-
-                    Debug.Assert(_chocolateyProcess != null, "_chocolateyProcess != null");
-
-                    if (!subprocessHandle.WaitOne(TimeSpan.FromSeconds(5)))
-                    {
-                        if (_chocolateyProcess.HasExited)
-                        {
-                            LogError();
-                        }
-
-                        if (!_chocolateyProcess.WaitForExit(TimeSpan.FromSeconds(3).Milliseconds)
-                            && !subprocessHandle.WaitOne(0))
-                        {
-                            _chocolateyProcess.Kill();
-                            Log.Logger.Fatal(
-                                "Failed to start Chocolatey subprocess. Process appears to be broken or otherwise non-functional.",
-                                _chocolateyProcess.ExitCode);
-                            throw new ApplicationException($"Failed to start chocolatey subprocess.\n"
-                                                           + $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
-                        }
-                        else
-                        {
-                            if (_chocolateyProcess.HasExited)
-                            {
-                                LogError();
-                            }
-                        }
-                    }
-
-                    if (_chocolateyProcess.WaitForExit(500))
-                    {
-                        LogError();
-                    }
+                    _chocolateyProcess = Process.Start(startInfo);
+                }
+                catch (Win32Exception ex)
+                {
+                    Logger.Error(ex, "Failed to start chocolatey gui subprocess.");
+                    throw new ApplicationException(
+                        $"Failed to elevate chocolatey: {ex.Message}.");
                 }
 
-                var factory = new WampChannelFactory();
-                _wampChannel =
-                    factory.ConnectToRealm("default")
-                        .WebSocketTransport($"ws://127.0.0.1:{port}/ws")
-                        .JsonSerialization()
-                        .Build();
+                Debug.Assert(_chocolateyProcess != null, "_chocolateyProcess != null");
 
-                await _wampChannel.Open().ConfigureAwait(false);
-                _isInitialized = true;
+                if (_chocolateyProcess.WaitForExit(500))
+                {
+                    LogError();
+                }
 
-                _chocolateyService = _wampChannel.RealmProxy.Services.GetCalleeProxy<IChocolateyService>();
-
-                // Create pipe for chocolatey stream output.
-                var logStream = _wampChannel.RealmProxy.Services.GetSubject<StreamingLogMessage>("com.chocolatey.log");
-                _logStream = logStream.Subscribe(
-                    message =>
-                        {
-                            PowerShellLineType powerShellLineType;
-                            switch (message.LogLevel)
-                            {
-                                case StreamingLogLevel.Debug:
-                                    powerShellLineType = PowerShellLineType.Debug;
-                                    break;
-                                case StreamingLogLevel.Verbose:
-                                    powerShellLineType = PowerShellLineType.Verbose;
-                                    break;
-                                case StreamingLogLevel.Info:
-                                    powerShellLineType = PowerShellLineType.Output;
-                                    break;
-                                case StreamingLogLevel.Warn:
-                                    powerShellLineType = PowerShellLineType.Warning;
-                                    break;
-                                case StreamingLogLevel.Error:
-                                    powerShellLineType = PowerShellLineType.Error;
-                                    break;
-                                case StreamingLogLevel.Fatal:
-                                    powerShellLineType = PowerShellLineType.Error;
-                                    break;
-                                default:
-                                    powerShellLineType = PowerShellLineType.Output;
-                                    break;
-                            }
-
-                            _progressService.WriteMessage(message.Message, powerShellLineType);
-                        });
+                _chocolateyService = CreateClient();
 
                 // ReSharper disable once PossibleNullReferenceException
                 Elevation.Instance.IsElevated = await _chocolateyService.IsElevated();
@@ -676,12 +408,23 @@ namespace ChocolateyGui.Services
                                            $"You can check the log file at {Path.Combine(Bootstrapper.AppDataPath, "ChocolateyGui.Subprocess.[Date].log")} for errors");
         }
 
-        private bool IsPortAvailable(int port)
+        private IIpcChocolateyService CreateClient()
         {
-            return IPGlobalProperties
-                .GetIPGlobalProperties()
-                .GetActiveTcpListeners()
-                .All(tcpi => tcpi.Port != port);
+            try
+            {
+                var callback = new ServiceCallbackHandler(_progressService);
+                var context = new InstanceContext(callback);
+                var endpoint = new EndpointAddress(IpcDefaults.DefaultServiceUri);
+                var channel =
+                    new DuplexChannelFactory<IIpcChocolateyService>(context, IpcDefaults.DefaultBinding, endpoint).CreateChannel();
+                channel.Register();
+                return channel;
+            }
+            catch (Exception ex)
+            {
+                Logger.Fatal(ex, "Failed to create client channel to server.");
+                throw;
+            }
         }
     }
 }

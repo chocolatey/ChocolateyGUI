@@ -16,6 +16,7 @@ using chocolatey.infrastructure.app;
 using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
+using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
 using ChocolateyGui.Models;
@@ -30,7 +31,7 @@ namespace ChocolateyGui.Subprocess
     internal class ChocolateyService : IIpcChocolateyService
     {
 #pragma warning disable SA1401 // Fields must be private
-        public static int ConnectedClients;
+        internal static int ConnectedClients;
 #pragma warning restore SA1401 // Fields must be private
         private static readonly ILogger Logger = Serilog.Log.ForContext<ChocolateyService>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
@@ -60,7 +61,7 @@ namespace ChocolateyGui.Subprocess
                             config.ListCommand.LocalOnly = true;
                         });
                 return
-                    (await choco.ListAsync<PackageResult>()).Select(package => GetMappedPackage(package, true)).ToArray();
+                    (await choco.ListAsync<PackageResult>()).Select(package => GetMappedPackage(choco, package, true)).ToArray();
             }
         }
 
@@ -85,7 +86,7 @@ namespace ChocolateyGui.Subprocess
                     uninstallSuccessAction: null,
                     addUninstallHandler: false);
 
-                var packageInfoService = Hacks.GetPackageInformationService();
+                var packageInfoService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
                 var ids =
                     packageManager.LocalRepository.GetPackages()
                         .Where(p => !packageInfoService.get_package_information(p).IsPinned);
@@ -176,7 +177,7 @@ namespace ChocolateyGui.Subprocess
 #endif // DEBUG
                         });
 
-                var packages = (await choco.ListAsync<PackageResult>()).Select(pckge => GetMappedPackage(pckge));
+                var packages = (await choco.ListAsync<PackageResult>()).Select(pckge => GetMappedPackage(choco, pckge));
 
                 return new PackageResults
                 {
@@ -225,7 +226,7 @@ namespace ChocolateyGui.Subprocess
                     throw new Exception("No Package Found");
                 }
 
-                return GetMappedPackage(new PackageResult(rawPackage, null, chocoConfig.Sources));
+                return GetMappedPackage(choco, new PackageResult(rawPackage, null, chocoConfig.Sources));
             }
         }
 
@@ -332,10 +333,7 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var xmlService = Hacks.GetInstance<IXmlService>();
-                var config =
-                    await Task.Run(
-                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
+                var config = await GetConfigFile(operationContext);
                 return config.Features.Select(Mapper.Map<ChocolateyFeature>).ToArray();
             }
         }
@@ -363,10 +361,7 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var xmlService = Hacks.GetInstance<IXmlService>();
-                var config =
-                    await Task.Run(
-                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
+                var config = await GetConfigFile(operationContext);
                 return config.ConfigSettings.Select(Mapper.Map<ChocolateySetting>).ToArray();
             }
         }
@@ -395,10 +390,7 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var xmlService = Hacks.GetInstance<IXmlService>();
-                var config =
-                    await Task.Run(
-                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
+                var config = await GetConfigFile(operationContext);
                 return config.Sources.Select(Mapper.Map<ChocolateySource>).ToArray();
             }
         }
@@ -465,11 +457,8 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var xmlService = Hacks.GetInstance<IXmlService>();
-                var chocoCOnfig =
-                    await Task.Run(
-                        () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
-                var sources = chocoCOnfig.Sources.Select(Mapper.Map<ChocolateySource>).ToList();
+                var chocoConfig = await GetConfigFile(operationContext);
+                var sources = chocoConfig.Sources.Select(Mapper.Map<ChocolateySource>).ToList();
 
                 if (sources.All(source => source.Id != id))
                 {
@@ -495,12 +484,13 @@ namespace ChocolateyGui.Subprocess
             Program.CanceledEvent.Set();
         }
 
-        private static Package GetMappedPackage(PackageResult package, bool forceInstalled = false)
+        private static Package GetMappedPackage(GetChocolatey choco, PackageResult package, bool forceInstalled = false)
         {
             var mappedPackage = package == null ? null : Mapper.Map<Package>(package.Package);
             if (mappedPackage != null)
             {
-                var packageInfo = Hacks.GetPackageInformationService().get_package_information(package.Package);
+                var packageInfoService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
+                var packageInfo = packageInfoService.get_package_information(package.Package);
                 mappedPackage.IsPinned = packageInfo.IsPinned;
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
             }
@@ -549,6 +539,21 @@ namespace ChocolateyGui.Subprocess
 
                 return PackageOperationResult.SuccessfulCached;
             }
+        }
+
+        private async Task<ConfigFileSettings> GetConfigFile(OperationContext context = default(OperationContext))
+        {
+            var choco = Lets.GetChocolatey();
+            if (context != null)
+            {
+                choco.SetLoggerContext(context);
+            }
+
+            var xmlService = choco.Container().GetInstance<IXmlService>();
+            var config =
+                await Task.Run(
+                    () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
+            return config;
         }
     }
 }

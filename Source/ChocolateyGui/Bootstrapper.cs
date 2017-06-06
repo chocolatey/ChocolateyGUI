@@ -16,7 +16,6 @@ using ChocolateyGui.Properties;
 using ChocolateyGui.Startup;
 using ChocolateyGui.ViewModels;
 using Serilog;
-using Serilog.Events;
 
 namespace ChocolateyGui
 {
@@ -74,18 +73,29 @@ namespace ChocolateyGui
             }
 
             var directPath = Path.Combine(logPath, "ChocolateyGui.{Date}.log");
-
-            Logger = Log.Logger = new LoggerConfiguration()
-#if DEBUG
-                .MinimumLevel.Debug()
+#if !DEBUG
+            var logLevel = Environment.GetEnvironmentVariable("CHOCOLATEYGUI__LOGLEVEL");
 #endif
 
-                // Wamp gets *very* noise. Comment out at your own peril
-                .MinimumLevel.Override("WampSharp", LogEventLevel.Information)
+            var logConfig = new LoggerConfiguration()
                 .WriteTo.Async(config => config.LiterateConsole())
                 .WriteTo.Async(config =>
-                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
-                .CreateLogger();
+                    config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000));
+#if DEBUG
+            logConfig.MinimumLevel.Debug();
+#else
+            Serilog.Events.LogEventLevel logEventLevel;
+            if (string.IsNullOrWhiteSpace(logLevel) || !Enum.TryParse(logLevel, true, out logEventLevel))
+            {
+                logConfig.MinimumLevel.Information();
+            }
+            else
+            {
+                logConfig.MinimumLevel.Is(Serilog.Events.LogEventLevel.Information);
+            }
+#endif
+
+            Logger = Log.Logger = logConfig.CreateLogger();
 
             Internationalization.Initialize();
         }

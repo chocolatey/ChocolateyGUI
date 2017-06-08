@@ -5,7 +5,7 @@ ChocolateyGUI, formerly known as Chocolatey Explorer or Chocolatey PackageManage
 * [Making a chocolatey package for ChocolateyGUI](http://blogs.lessthandot.com/index.php/DesktopDev/MSTech/making-a-chocolatey-package/)
 * [ChocolateyGUI](http://blogs.lessthandot.com/index.php/DesktopDev/MSTech/chocolatey-gui/)
 
-In 2013, Christiaan handed over maintainance of ChocolateyGUI to [Gary Ewan Park](http://www.gep13.co.uk/about/), who later, under the supervision of [Rob Reynolds](https://twitter.com/ferventcoder) (creator of [Chocolatey](https://chocolatey.org/)), brought the application under the main Chocolatey Organisation on [GitHub](https://github.com/chocolatey).
+In 2013, Christian handed over maintainance of ChocolateyGUI to [Gary Ewan Park](http://www.gep13.co.uk/about/), who later, under the supervision of [Rob Reynolds](https://twitter.com/ferventcoder) (creator of [Chocolatey](https://chocolatey.org/)), brought the application under the main Chocolatey Organisation on [GitHub](https://github.com/chocolatey).
 
 Since then, with a set of major contributions from [Richard Simpson](https://twitter.com/richardsimp), ChocolateyGUI has changed from a Windows Forms application to a WPF application, with a much richer User Interface.
 

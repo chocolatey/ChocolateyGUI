@@ -8,6 +8,7 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 using CefSharp;
 using CefSharp.Wpf;
@@ -140,6 +141,8 @@ namespace ChocolateyGui.Controls
             _browser = new ChromiumWebBrowser { RequestHandler = new ChocoRequestHandler() };
             _browser.IsBrowserInitializedChanged += FirstStart;
             PART_BrowserHost.Content = _browser;
+            RenderOptions.SetBitmapScalingMode(_browser, BitmapScalingMode.NearestNeighbor);
+            PART_BrowserHost.UseLayoutRounding = true;
         }
 
         private void InitializedBrowser()

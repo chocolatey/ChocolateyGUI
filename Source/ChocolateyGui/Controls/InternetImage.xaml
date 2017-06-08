@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="64" d:DesignWidth="64">
     <Grid>
-        <Image x:Name="PART_Image"/>
+        <Image x:Name="PART_Image" RenderOptions.BitmapScalingMode="Fant" />
         <controls:ProgressRing x:Name="PART_Loading" IsActive="True" />
     </Grid>
 </UserControl>

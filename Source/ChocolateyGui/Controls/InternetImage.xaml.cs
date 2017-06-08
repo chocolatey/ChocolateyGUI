@@ -19,7 +19,7 @@ using Caliburn.Micro;
 using CefSharp;
 using CefSharp.Internals;
 using CefSharp.OffScreen;
-using ChocolateyGui.Providers.PlatformProvider;
+using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using LiteDB;
 using Microsoft.VisualStudio.Threading;
@@ -80,6 +80,8 @@ namespace ChocolateyGui.Controls
                 this.ToObservable(IconUrlProperty, () => IconUrl)
                     .Subscribe(async url => await SetImage(url));
             }
+
+            Loaded += (o, e) => RenderBrowser.Size = GetCurrentSize();
         }
 
         public string IconUrl
@@ -125,9 +127,9 @@ namespace ChocolateyGui.Controls
 
         private static System.Drawing.Size GetBitmapSize()
         {
-            var scale = new Windows7PlatformProvider().GetDpiScaleFactor();
-            var x = (int)Math.Round(64 * scale.Item1);
-            var y = (int)Math.Round(64 * scale.Item2);
+            var scale = NativeMethods.GetScaleFactor();
+            var x = (int)Math.Round(64 * scale);
+            var y = (int)Math.Round(64 * scale);
             return new System.Drawing.Size(x, y);
         }
 
@@ -140,6 +142,14 @@ namespace ChocolateyGui.Controls
                 new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
 
             imageStream.Position = 0;
+        }
+
+        private System.Drawing.Size GetCurrentSize()
+        {
+            var scale = NativeMethods.GetScaleFactor();
+            var x = (int)Math.Round(ActualWidth * scale);
+            var y = (int)Math.Round(ActualHeight * scale);
+            return new System.Drawing.Size(x, y);
         }
 
         private async Task SetImage(string url)
@@ -162,7 +172,7 @@ namespace ChocolateyGui.Controls
 
             PART_Loading.IsActive = true;
 
-            var size = GetBitmapSize();
+            var size = GetCurrentSize();
             var expiration = DateTime.UtcNow + TimeSpan.FromDays(1);
 
             var imagePart = uri.Segments.Last();

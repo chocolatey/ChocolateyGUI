@@ -75,24 +75,18 @@ namespace ChocolateyGui.Subprocess
                     config =>
                         {
                             config.CommandName = "outdated";
+                            config.PackageNames = ApplicationParameters.AllPackages;
+                            config.UpgradeCommand.NotifyOnlyAvailableUpgrades = true;
                             config.RegularOutput = false;
                             config.Prerelease = false;
                         });
 
-                var packageManager = NugetCommon.GetPackageManager(
-                    choco.GetConfiguration(),
-                    new ChocolateyNugetLogger(),
-                    installSuccessAction: null,
-                    uninstallSuccessAction: null,
-                    addUninstallHandler: false);
-
-                var packageInfoService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
-                var ids =
-                    packageManager.LocalRepository.GetPackages()
-                        .Where(p => !packageInfoService.get_package_information(p).IsPinned);
-                var updateable =
-                    await Task.Run(() => packageManager.SourceRepository.GetUpdates(ids, false, false).ToList());
-                return updateable.Select(p => Tuple.Create(p.Id, p.Version.ToNormalizedString())).ToArray();
+                var nugetService = choco.Container().GetInstance<INugetService>();
+                var packages = await Task.Run(() => nugetService.upgrade_noop(choco.GetConfiguration(), null));
+                return packages
+                    .Where(p => !p.Value.Inconclusive)
+                    .Select(p => Tuple.Create(p.Value.Package.Id, p.Value.Package.Version.ToNormalizedString()))
+                    .ToArray();
             }
         }
 
@@ -195,38 +189,28 @@ namespace ChocolateyGui.Subprocess
                 var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
-                        {
-                            config.CommandName = CommandNameType.list.ToString();
-                            config.Input = id;
-                            config.Version = version;
+                    {
+                        config.CommandName = "list";
+                        config.Input = id;
+                        config.ListCommand.Exact = true;
+                        config.Version = version;
+                        config.QuietOutput = true;
+                        config.RegularOutput = false;
 #if !DEBUG
-                            config.Verbose = false;
+                        config.Verbose = false;
 #endif // DEBUG
-                        });
+                    });
 
                 var chocoConfig = choco.GetConfiguration();
-                var nugetLogger = new ChocolateyNugetLogger();
-                var packageManager = NugetCommon.GetPackageManager(
-                    chocoConfig,
-                    nugetLogger,
-                    installSuccessAction: null,
-                    uninstallSuccessAction: null,
-                    addUninstallHandler: false);
-
-                var rawPackage =
-                    await Task.Run(
-                        () =>
-                            packageManager.SourceRepository.FindPackage(
-                                id,
-                                NuGet.SemanticVersion.Parse(version),
-                                allowPrereleaseVersions: isPrerelease,
-                                allowUnlisted: true));
-                if (rawPackage == null)
+                var packageService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
+                var nugetLogger = choco.Container().GetInstance<NuGet.ILogger>();
+                var nugetPackage = (NugetList.GetPackages(chocoConfig, nugetLogger) as IQueryable<IPackage>).FirstOrDefault();
+                if (nugetPackage == null)
                 {
                     throw new Exception("No Package Found");
                 }
 
-                return GetMappedPackage(choco, new PackageResult(rawPackage, null, chocoConfig.Sources));
+                return GetMappedPackage(choco, new PackageResult(nugetPackage, null, chocoConfig.Sources));
             }
         }
 

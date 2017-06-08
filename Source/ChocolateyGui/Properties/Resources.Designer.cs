@@ -409,7 +409,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There&apos;s an update available for chocolatey..
+        ///   Looks up a localized string similar to There&apos;s an update available for Chocolatey..
         /// </summary>
         public static string LocalSourceViewModel_UpdateAvailableForChocolatey {
             get {
@@ -934,6 +934,24 @@ namespace ChocolateyGui.Properties {
         public static string RemoteSourceViewModel_LoadingPage {
             get {
                 return ResourceManager.GetString("RemoteSourceViewModel_LoadingPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A-Z.
+        /// </summary>
+        public static string RemoteSourceViewModel_SortSelectionAtoZ {
+            get {
+                return ResourceManager.GetString("RemoteSourceViewModel_SortSelectionAtoZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popularity.
+        /// </summary>
+        public static string RemoteSourceViewModel_SortSelectionPopularity {
+            get {
+                return ResourceManager.GetString("RemoteSourceViewModel_SortSelectionPopularity", resourceCulture);
             }
         }
         

@@ -403,6 +403,12 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Loading page {0}...</value>
     <comment>{0} = The page that is loading</comment>
   </data>
+  <data name="RemoteSourceViewModel_SortSelectionAtoZ" xml:space="preserve">
+    <value>A-Z</value>
+  </data>
+  <data name="RemoteSourceViewModel_SortSelectionPopularity" xml:space="preserve">
+    <value>Popularity</value>
+  </data>
   <data name="RemoteSourceViewModel_UnableToConnectToFeed" xml:space="preserve">
     <value>Unable to connect to feed with Source: {0}.  Please check that this feed is accessible, and try again.</value>
   </data>

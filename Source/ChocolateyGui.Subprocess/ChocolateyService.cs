@@ -204,7 +204,8 @@ namespace ChocolateyGui.Subprocess
                 var chocoConfig = choco.GetConfiguration();
                 var packageService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
                 var nugetLogger = choco.Container().GetInstance<NuGet.ILogger>();
-                var nugetPackage = (NugetList.GetPackages(chocoConfig, nugetLogger) as IQueryable<IPackage>).FirstOrDefault();
+                var semvar = new SemanticVersion(version);
+                var nugetPackage = (NugetList.GetPackages(chocoConfig, nugetLogger) as IQueryable<IPackage>).FirstOrDefault(p => p.Version == semvar);
                 if (nugetPackage == null)
                 {
                     throw new Exception("No Package Found");

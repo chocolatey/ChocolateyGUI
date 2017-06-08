@@ -124,7 +124,7 @@
     <value>Von: </value>
   </data>
   <data name="Controls_PackageListDownloads" xml:space="preserve">
-    <value>downloads</value>
+    <value>Downloads</value>
   </data>
   <data name="Controls_PackageListTags" xml:space="preserve">
     <value>Tags:</value>
@@ -142,10 +142,10 @@
     <value>Nur ganze Wörter</value>
   </data>
   <data name="LocalSourceView_CheckboxPkgsWithUpdates" xml:space="preserve">
-    <value>nur Pakete mit Updates</value>
+    <value>Nur Pakete mit Updates</value>
   </data>
   <data name="LocalSourceView_Grid_Authors" xml:space="preserve">
-    <value>Autoren</value>
+    <value>Urheber</value>
   </data>
   <data name="LocalSourceView_Grid_LatestVersion" xml:space="preserve">
     <value>Aktuelle Version</value>
@@ -160,7 +160,7 @@
     <value>Suche: </value>
   </data>
   <data name="PackageView_Authors" xml:space="preserve">
-    <value>Autoren: </value>
+    <value>Urheber: </value>
   </data>
   <data name="PackageView_ButtonInstall" xml:space="preserve">
     <value>Installieren</value>
@@ -172,7 +172,7 @@
     <value>Deinstallieren</value>
   </data>
   <data name="PackageView_ButtonUnpin" xml:space="preserve">
-    <value>Unpin</value>
+    <value>Updates zulassen</value>
   </data>
   <data name="PackageView_ButtonUpdate" xml:space="preserve">
     <value>Update</value>
@@ -220,7 +220,7 @@
     <value>Downloads Gesamt</value>
   </data>
   <data name="RemoteSourceView_Authors" xml:space="preserve">
-    <value>Autoren: </value>
+    <value>Urheber: </value>
   </data>
   <data name="RemoteSourceView_ButtonGoBackAPage" xml:space="preserve">
     <value>Zurück</value>
@@ -232,7 +232,7 @@
     <value>Erste Seite</value>
   </data>
   <data name="RemoteSourceView_ButtonGotoLastPage" xml:space="preserve">
-    <value>Letze</value>
+    <value>Letze Seite</value>
   </data>
   <data name="RemoteSourceView_ButtonRefreshPkgs" xml:space="preserve">
     <value>Paketliste aktualisieren</value>
@@ -247,7 +247,7 @@
     <value>Nur ganze Wörter</value>
   </data>
   <data name="RemoteSourceView_Downloads" xml:space="preserve">
-    <value>downloads</value>
+    <value>Downloads</value>
   </data>
   <data name="RemoteSourceView_SearchBoxText" xml:space="preserve">
     <value>Suche:</value>
@@ -401,7 +401,7 @@ Unbehanelte Ausnahme: {0}</value>
     <value>Fehler beim Installieren</value>
   </data>
   <data name="PackageViewModel_FailedToPin" xml:space="preserve">
-    <value>Fehler beim Anheften</value>
+    <value>Fehler beim Sperren der Updates</value>
   </data>
   <data name="PackageViewModel_FailedToReinstall" xml:space="preserve">
     <value>Fehler bei Neuinstallation</value>
@@ -410,7 +410,7 @@ Unbehanelte Ausnahme: {0}</value>
     <value>Fehler bei Deinstallation</value>
   </data>
   <data name="PackageViewModel_FailedToUnpin" xml:space="preserve">
-    <value>Fehler bei Veränderung des Updateverhaltens</value>
+    <value>Fehler bei Zulassen von Updates</value>
   </data>
   <data name="PackageViewModel_FailedToUpdate" xml:space="preserve">
     <value>Fehler beim Aktualisieren</value>
@@ -431,7 +431,7 @@ Unbehanelte Ausnahme: {0}</value>
     <value>Aktualisiere Paket</value>
   </data>
   <data name="PackageView_ButtonPin" xml:space="preserve">
-    <value>Anheften</value>
+    <value>Updates sperren</value>
   </data>
   <data name="RemoteSourceViewModel_FailedToLoad" xml:space="preserve">
     <value>Fehler beim Herunterladen</value>
@@ -440,7 +440,7 @@ Unbehanelte Ausnahme: {0}</value>
     <value>Fehler beim Durchsuchen der Paketliste</value>
   </data>
   <data name="RemoteSourceViewModel_LoadingPage" xml:space="preserve">
-    <value>Lade Paket {0} ...</value>
+    <value>Lade Seite {0} ...</value>
   </data>
   <data name="SettingsViewModel_DisplayName" xml:space="preserve">
     <value>ChocolateyGUI - Einstellungen</value>
@@ -551,5 +551,8 @@ Fehler: {1}{2}</value>
   </data>
   <data name="SettingsViewModel_FeatureUpdatesError" xml:space="preserve">
     <value>Feature Updates Fehler</value>
+  </data>
+  <data name="RemoteSourceViewModel_SortSelectionPopularity" xml:space="preserve">
+    <value>Beliebtheit</value>
   </data>
 </root>

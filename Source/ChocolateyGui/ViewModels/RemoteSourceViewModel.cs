@@ -39,7 +39,7 @@ namespace ChocolateyGui.ViewModels
         private int _pageCount = 1;
         private int _pageSize = 50;
         private string _searchQuery;
-        private string _sortSelection = "Popularity";
+        private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
 
         public RemoteSourceViewModel(
             IChocolateyPackageService chocolateyPackageService,
@@ -115,8 +115,8 @@ namespace ChocolateyGui.ViewModels
 
         public IReadOnlyList<string> SortOptions { get; } = new List<string>
         {
-            "Popularity",
-            "A-Z"
+            Resources.RemoteSourceViewModel_SortSelectionPopularity,
+            Resources.RemoteSourceViewModel_SortSelectionAtoZ
         };
 
         public string SortSelection
@@ -248,7 +248,7 @@ namespace ChocolateyGui.ViewModels
             {
                 _hasLoaded = false;
 
-                var sort = SortSelection == "Popularity" ? "DownloadCount" : "Title";
+                var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
 
                 await _progressService.StartLoading(string.Format(Resources.RemoteSourceViewModel_LoadingPage, CurrentPage));
                 try

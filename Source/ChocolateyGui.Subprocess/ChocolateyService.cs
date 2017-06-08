@@ -24,6 +24,7 @@ using Microsoft.VisualStudio.Threading;
 using NuGet;
 using ChocolateySource = ChocolateyGui.Models.ChocolateySource;
 using ILogger = Serilog.ILogger;
+using chocolatey.infrastructure.configuration;
 
 namespace ChocolateyGui.Subprocess
 {
@@ -60,6 +61,7 @@ namespace ChocolateyGui.Subprocess
                             config.CommandName = CommandNameType.list.ToString();
                             config.ListCommand.LocalOnly = true;
                         });
+                var chocoConfig = choco.GetConfiguration();
                 return
                     (await choco.ListAsync<PackageResult>()).Select(package => GetMappedPackage(choco, package, true)).ToArray();
             }
@@ -70,6 +72,7 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
+                var originalConfig = Config.get_configuration_settings().deep_copy();
                 var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
@@ -81,8 +84,11 @@ namespace ChocolateyGui.Subprocess
                             config.Prerelease = false;
                         });
 
+                var chocoConfig = choco.GetConfiguration();
+                Config.initialize_with(originalConfig);
+
                 var nugetService = choco.Container().GetInstance<INugetService>();
-                var packages = await Task.Run(() => nugetService.upgrade_noop(choco.GetConfiguration(), null));
+                var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
                 return packages
                     .Where(p => !p.Value.Inconclusive)
                     .Select(p => Tuple.Create(p.Value.Package.Id, p.Value.Package.Version.ToNormalizedString()))
@@ -186,6 +192,7 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
+                var originalConfig = Config.get_configuration_settings().deep_copy();
                 var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
@@ -202,6 +209,8 @@ namespace ChocolateyGui.Subprocess
                     });
 
                 var chocoConfig = choco.GetConfiguration();
+                Config.initialize_with(originalConfig);
+
                 var packageService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
                 var nugetLogger = choco.Container().GetInstance<NuGet.ILogger>();
                 var semvar = new SemanticVersion(version);

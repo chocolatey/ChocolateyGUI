@@ -17,6 +17,7 @@ using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.app.services;
+using chocolatey.infrastructure.configuration;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
 using ChocolateyGui.Models;
@@ -24,7 +25,6 @@ using Microsoft.VisualStudio.Threading;
 using NuGet;
 using ChocolateySource = ChocolateyGui.Models.ChocolateySource;
 using ILogger = Serilog.ILogger;
-using chocolatey.infrastructure.configuration;
 
 namespace ChocolateyGui.Subprocess
 {
@@ -54,6 +54,7 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
+                var originalConfig = Config.get_configuration_settings().deep_copy();
                 var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
@@ -62,6 +63,8 @@ namespace ChocolateyGui.Subprocess
                             config.ListCommand.LocalOnly = true;
                         });
                 var chocoConfig = choco.GetConfiguration();
+                Config.initialize_with(originalConfig);
+
                 return
                     (await choco.ListAsync<PackageResult>()).Select(package => GetMappedPackage(choco, package, true)).ToArray();
             }

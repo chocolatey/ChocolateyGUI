@@ -165,6 +165,9 @@
   <data name="PackageView_ButtonInstall" xml:space="preserve">
     <value>Installieren</value>
   </data>
+  <data name="PackageView_ButtonPin" xml:space="preserve">
+    <value>Pin</value>
+  </data>
   <data name="PackageView_ButtonReinstall" xml:space="preserve">
     <value>Erneut Installieren</value>
   </data>

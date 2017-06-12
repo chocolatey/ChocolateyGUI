@@ -41,7 +41,6 @@ namespace ChocolateyGui
 
         internal static bool IsExiting { get; private set; }
 
-
         public Task OnExitAsync()
         {
             IsExiting = true;
@@ -145,7 +144,7 @@ namespace ChocolateyGui
                 {
                     return;
                 }
-                
+
                 MessageBox.Show(
                     e.ExceptionObject.ToString(),
                     Resources.Bootstrapper_UnhandledException,

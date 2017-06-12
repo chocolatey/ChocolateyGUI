@@ -223,7 +223,7 @@ namespace ChocolateyGui.Subprocess
 
                 var chocoConfig = choco.GetConfiguration();
                 Config.initialize_with(originalConfig);
-                
+
                 var nugetLogger = choco.Container().GetInstance<NuGet.ILogger>();
                 var semvar = new SemanticVersion(version);
                 var nugetPackage = (NugetList.GetPackages(chocoConfig, nugetLogger) as IQueryable<IPackage>).FirstOrDefault(p => p.Version == semvar);

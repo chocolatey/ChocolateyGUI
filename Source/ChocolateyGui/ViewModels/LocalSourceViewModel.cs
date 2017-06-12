@@ -20,6 +20,7 @@ using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
 using Serilog;
+using ChocolateyGui.Base;
 
 namespace ChocolateyGui.ViewModels
 {
@@ -304,6 +305,10 @@ namespace ChocolateyGui.ViewModels
                 {
                     await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Item1, update.Item2));
                 }
+            }
+            catch (ConnectionClosedException)
+            {
+                Logger.Warning("Threw connection closed message while processing load packages.");
             }
             catch (Exception ex)
             {

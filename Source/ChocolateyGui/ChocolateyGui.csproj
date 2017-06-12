@@ -183,6 +183,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Base\ConnectionClosedException.cs" />
     <Compile Include="Controls\InternetImage.xaml.cs">
       <DependentUpon>InternetImage.xaml</DependentUpon>
     </Compile>

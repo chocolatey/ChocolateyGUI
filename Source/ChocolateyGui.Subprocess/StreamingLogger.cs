@@ -6,6 +6,7 @@
 
 using System;
 using System.Reactive.Subjects;
+using System.Threading;
 using chocolatey.infrastructure.logging;
 using ChocolateyGui.Models;
 using Serilog;
@@ -16,12 +17,14 @@ namespace ChocolateyGui.Subprocess
     {
         private static readonly ILogger Logger = Serilog.Log.ForContext<StreamingLogger>();
         private readonly ISubject<StreamingLogMessage> _subject;
+        private readonly CancellationToken _cancellationToken;
         private string _context;
         private Action<StreamingLogMessage> _interceptor;
 
-        public StreamingLogger(ISubject<StreamingLogMessage> subject)
+        public StreamingLogger(ISubject<StreamingLogMessage> subject, CancellationToken cancellationToken)
         {
             _subject = subject;
+            _cancellationToken = cancellationToken;
         }
 
         public void InitializeFor(string loggerName)
@@ -37,6 +40,12 @@ namespace ChocolateyGui.Subprocess
         public void Debug(string message, params object[] formatting)
         {
             Logger.Debug(message, formatting);
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,
@@ -50,6 +59,12 @@ namespace ChocolateyGui.Subprocess
         public void Debug(Func<string> message)
         {
             Logger.Debug(message());
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,
@@ -63,6 +78,12 @@ namespace ChocolateyGui.Subprocess
         public void Info(string message, params object[] formatting)
         {
             Logger.Information(message, formatting);
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,
@@ -76,6 +97,12 @@ namespace ChocolateyGui.Subprocess
         public void Info(Func<string> message)
         {
             Logger.Information(message());
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,
@@ -89,6 +116,12 @@ namespace ChocolateyGui.Subprocess
         public void Warn(string message, params object[] formatting)
         {
             Logger.Warning(message, formatting);
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,
@@ -102,6 +135,12 @@ namespace ChocolateyGui.Subprocess
         public void Warn(Func<string> message)
         {
             Logger.Warning(message());
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,
@@ -115,6 +154,12 @@ namespace ChocolateyGui.Subprocess
         public void Error(string message, params object[] formatting)
         {
             Logger.Error(message, formatting);
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,
@@ -128,6 +173,12 @@ namespace ChocolateyGui.Subprocess
         public void Error(Func<string> message)
         {
             Logger.Error(message());
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,
@@ -141,6 +192,12 @@ namespace ChocolateyGui.Subprocess
         public void Fatal(string message, params object[] formatting)
         {
             Logger.Fatal(message, formatting);
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,
@@ -154,6 +211,12 @@ namespace ChocolateyGui.Subprocess
         public void Fatal(Func<string> message)
         {
             Logger.Fatal(message());
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
             var logMessage = new StreamingLogMessage
             {
                 Context = _context,

@@ -7,6 +7,7 @@
 using System;
 using System.Windows;
 using ChocolateyGui.Utilities;
+using Serilog;
 
 namespace ChocolateyGui
 {
@@ -36,7 +37,20 @@ namespace ChocolateyGui
 
             var application = new App();
             application.InitializeComponent();
-            application.Run();
+            try
+            {
+                application.Run();
+            }
+            catch (Exception ex)
+            {
+                if (Bootstrapper.IsExiting)
+                {
+                    Log.Logger?.Error(ex, "Exception propagated to root while shutting down.");
+                    return;
+                }
+
+                throw;
+            }
         }
     }
 }

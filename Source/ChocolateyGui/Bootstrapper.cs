@@ -39,8 +39,12 @@ namespace ChocolateyGui
 
         internal static string LocalAppDataPath { get; private set; }
 
+        internal static bool IsExiting { get; private set; }
+
+
         public Task OnExitAsync()
         {
+            IsExiting = true;
             Log.CloseAndFlush();
             Cef.Shutdown();
             Container.Dispose();
@@ -137,6 +141,11 @@ namespace ChocolateyGui
             if (e.IsTerminating)
             {
                 Logger.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
+                if (IsExiting)
+                {
+                    return;
+                }
+                
                 MessageBox.Show(
                     e.ExceptionObject.ToString(),
                     Resources.Bootstrapper_UnhandledException,

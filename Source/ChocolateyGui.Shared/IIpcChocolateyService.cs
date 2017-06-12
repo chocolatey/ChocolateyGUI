@@ -11,7 +11,7 @@ using ChocolateyGui.Models;
 
 namespace ChocolateyGui
 {
-    [ServiceContract(CallbackContract = typeof(IIpcServiceCallbacks))]
+    [ServiceContract(CallbackContract = typeof(IIpcServiceCallbacks), SessionMode = SessionMode.Required)]
     public interface IIpcChocolateyService
     {
         [OperationContract]
@@ -74,6 +74,9 @@ namespace ChocolateyGui
 
         [OperationContract]
         Task<bool> RemoveSource(string id);
+
+        [OperationContract(IsOneWay = true)]
+        void Unregister();
 
         [OperationContract(IsOneWay = true)]
         void Exit(bool restartingForAdmin = false);

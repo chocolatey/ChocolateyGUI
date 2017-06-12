@@ -5,10 +5,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using chocolatey;
 using chocolatey.infrastructure.results;
@@ -18,14 +20,17 @@ namespace ChocolateyGui.Subprocess
 {
     public static class ChocolateyExtensions
     {
-        public static Task RunAsync(this GetChocolatey chocolatey)
+        private static readonly ConcurrentDictionary<string, CancellationTokenSource> _cancellationTokenSources =
+            new ConcurrentDictionary<string, CancellationTokenSource>(StringComparer.OrdinalIgnoreCase);
+
+        public static Task RunAsync(this GetChocolatey chocolatey, CancellationToken cancellationToken)
         {
-            return Task.Run(() => chocolatey.Run());
+            return Task.Run(() => chocolatey.Run(), cancellationToken);
         }
 
-        public static Task<ICollection<T>> ListAsync<T>(this GetChocolatey chocolatey)
+        public static Task<ICollection<T>> ListAsync<T>(this GetChocolatey chocolatey, CancellationToken cancellationToken)
         {
-            return Task.Run(() => (ICollection<T>)chocolatey.List<T>().ToList());
+            return Task.Run(() => (ICollection<T>)chocolatey.List<T>().ToList(), cancellationToken);
         }
 
         public static Task<ICollection<PackageResult>> ListPackagesAsync(this GetChocolatey chocolatey)
@@ -43,12 +48,39 @@ namespace ChocolateyGui.Subprocess
         {
             var callback = context.GetCallbackChannel<IIpcServiceCallbacks>();
             var logStream = new Subject<StreamingLogMessage>();
-            logger = new StreamingLogger(logStream);
+            logger = new StreamingLogger(logStream, context.GetCancellationToken());
             logStream.Subscribe(message =>
             {
                 callback.LogMessage(message);
             });
             return chocolatey.SetCustomLogging(logger);
+        }
+
+        internal static CancellationToken GetCancellationToken(this OperationContext context)
+        {
+            var sessionId = context.SessionId;
+            if (string.IsNullOrWhiteSpace(sessionId))
+            {
+                throw new InvalidOperationException("Missing SessionId");
+            }
+
+            var cts = _cancellationTokenSources.GetOrAdd(sessionId, id => new CancellationTokenSource());
+            return cts.Token;
+        }
+
+        internal static void EndSession(this OperationContext context)
+        {
+            var sessionId = context.SessionId;
+            if (string.IsNullOrWhiteSpace(sessionId))
+            {
+                throw new InvalidOperationException("Missing SessionId");
+            }
+
+            CancellationTokenSource cts;
+            if (_cancellationTokenSources.TryGetValue(sessionId, out cts))
+            {
+                cts.Cancel();
+            }
         }
     }
 }

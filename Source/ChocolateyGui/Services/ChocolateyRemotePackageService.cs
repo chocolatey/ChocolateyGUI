@@ -275,6 +275,7 @@ namespace ChocolateyGui.Services
             var clientChannel = _chocolateyService as IClientChannel;
             if (clientChannel != null && clientChannel.State == CommunicationState.Opened)
             {
+                _chocolateyService.Unregister();
                 clientChannel.Close();
             }
         }

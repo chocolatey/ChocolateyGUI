@@ -40,8 +40,17 @@ namespace ChocolateyGui.Subprocess
         public void Register()
         {
             OperationContext.Current.Channel.Faulted += (sender, args) => Interlocked.Decrement(ref ConnectedClients);
-            OperationContext.Current.Channel.Closed += (sender, args) => Interlocked.Decrement(ref ConnectedClients);
             Interlocked.Increment(ref ConnectedClients);
+        }
+
+        public void Unregister()
+        {
+            OperationContext.Current.EndSession();
+            Interlocked.Decrement(ref ConnectedClients);
+            if (ConnectedClients <= 0)
+            {
+                Exit();
+            }
         }
 
         public Task<bool> IsElevated()
@@ -54,7 +63,6 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var originalConfig = Config.get_configuration_settings().deep_copy();
                 var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
@@ -62,11 +70,11 @@ namespace ChocolateyGui.Subprocess
                             config.CommandName = CommandNameType.list.ToString();
                             config.ListCommand.LocalOnly = true;
                         });
-                var chocoConfig = choco.GetConfiguration();
-                Config.initialize_with(originalConfig);
 
                 return
-                    (await choco.ListAsync<PackageResult>()).Select(package => GetMappedPackage(choco, package, true)).ToArray();
+                    (await choco.ListAsync<PackageResult>(operationContext.GetCancellationToken()))
+                    .Select(package => GetMappedPackage(choco, package, true))
+                    .ToArray();
             }
         }
 
@@ -138,7 +146,7 @@ namespace ChocolateyGui.Subprocess
 
                 using (logger.Intercept(grabErrors))
                 {
-                    await choco.RunAsync();
+                    await choco.RunAsync(operationContext.GetCancellationToken());
 
                     if (Environment.ExitCode != 0)
                     {
@@ -180,7 +188,9 @@ namespace ChocolateyGui.Subprocess
 #endif // DEBUG
                         });
 
-                var packages = (await choco.ListAsync<PackageResult>()).Select(pckge => GetMappedPackage(choco, pckge));
+                var packages =
+                    (await choco.ListAsync<PackageResult>(operationContext.GetCancellationToken())).Select(
+                        pckge => GetMappedPackage(choco, pckge));
 
                 return new PackageResults
                 {
@@ -213,8 +223,7 @@ namespace ChocolateyGui.Subprocess
 
                 var chocoConfig = choco.GetConfiguration();
                 Config.initialize_with(originalConfig);
-
-                var packageService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
+                
                 var nugetLogger = choco.Container().GetInstance<NuGet.ILogger>();
                 var semvar = new SemanticVersion(version);
                 var nugetPackage = (NugetList.GetPackages(chocoConfig, nugetLogger) as IQueryable<IPackage>).FirstOrDefault(p => p.Version == semvar);
@@ -247,7 +256,7 @@ namespace ChocolateyGui.Subprocess
                             }
                         });
 
-                return await RunCommand(choco, logger);
+                return await RunCommand(choco, logger, operationContext.GetCancellationToken());
             }
         }
 
@@ -266,7 +275,7 @@ namespace ChocolateyGui.Subprocess
                             config.Features.UsePackageExitCodes = false;
                         });
 
-                return await RunCommand(choco, logger);
+                return await RunCommand(choco, logger, operationContext.GetCancellationToken());
             }
         }
 
@@ -287,7 +296,7 @@ namespace ChocolateyGui.Subprocess
 
                 try
                 {
-                    await choco.RunAsync();
+                    await choco.RunAsync(operationContext.GetCancellationToken());
                 }
                 catch (Exception ex)
                 {
@@ -314,7 +323,7 @@ namespace ChocolateyGui.Subprocess
                         });
                 try
                 {
-                    await choco.RunAsync();
+                    await choco.RunAsync(operationContext.GetCancellationToken());
                 }
                 catch (Exception ex)
                 {
@@ -349,7 +358,7 @@ namespace ChocolateyGui.Subprocess
                         config.FeatureCommand.Name = feature.Name;
                     });
 
-                await choco.RunAsync();
+                await choco.RunAsync(operationContext.GetCancellationToken());
             }
         }
 
@@ -378,7 +387,7 @@ namespace ChocolateyGui.Subprocess
                             config.ConfigCommand.ConfigValue = setting.Value;
                         });
 
-                await choco.RunAsync();
+                await choco.RunAsync(operationContext.GetCancellationToken());
             }
         }
 
@@ -412,7 +421,7 @@ namespace ChocolateyGui.Subprocess
                         config.SourceCommand.Priority = source.Priority;
                     });
 
-                await choco.RunAsync();
+                await choco.RunAsync(operationContext.GetCancellationToken());
 
                 if (source.Disabled)
                 {
@@ -423,7 +432,7 @@ namespace ChocolateyGui.Subprocess
                                 config.SourceCommand.Command = SourceCommandType.disable;
                                 config.SourceCommand.Name = source.Id;
                             });
-                    await choco.RunAsync();
+                    await choco.RunAsync(operationContext.GetCancellationToken());
                 }
                 else
                 {
@@ -434,7 +443,7 @@ namespace ChocolateyGui.Subprocess
                            config.SourceCommand.Command = SourceCommandType.enable;
                            config.SourceCommand.Name = source.Id;
                        });
-                    await choco.RunAsync();
+                    await choco.RunAsync(operationContext.GetCancellationToken());
                 }
             }
         }
@@ -471,7 +480,7 @@ namespace ChocolateyGui.Subprocess
                             config.SourceCommand.Name = id;
                         });
 
-                await choco.RunAsync();
+                await choco.RunAsync(operationContext.GetCancellationToken());
                 return true;
             }
         }
@@ -512,7 +521,7 @@ namespace ChocolateyGui.Subprocess
             return errors;
         }
 
-        private async Task<PackageOperationResult> RunCommand(GetChocolatey choco, StreamingLogger logger)
+        private async Task<PackageOperationResult> RunCommand(GetChocolatey choco, StreamingLogger logger, CancellationToken cancellationToken)
         {
             Action<StreamingLogMessage> grabErrors;
             var errors = GetErrors(out grabErrors);
@@ -521,7 +530,7 @@ namespace ChocolateyGui.Subprocess
             {
                 try
                 {
-                    await choco.RunAsync();
+                    await choco.RunAsync(cancellationToken);
                 }
                 catch (Exception ex)
                 {

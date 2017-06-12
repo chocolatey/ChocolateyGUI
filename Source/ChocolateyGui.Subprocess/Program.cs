@@ -66,6 +66,7 @@ namespace ChocolateyGui.Subprocess
 
                 using (var host = new ServiceHost(typeof(ChocolateyService)))
                 {
+                    host.CloseTimeout = TimeSpan.FromMinutes(2);
                     host.AddServiceEndpoint(typeof(IIpcChocolateyService), IpcDefaults.DefaultBinding, IpcDefaults.DefaultServiceUri);
 
                     var timer = new Timer(Tick);

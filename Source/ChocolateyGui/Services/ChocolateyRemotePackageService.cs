@@ -12,9 +12,9 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
+using ChocolateyGui.Base;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
@@ -95,21 +95,26 @@ namespace ChocolateyGui.Services
         public async Task InstallPackage(string id, SemanticVersion version = null, Uri source = null, bool force = false)
         {
             await Initialize(true);
+            if (Elevation.Instance.IsBackgroundRunning)
+            {
+                source = null;
+            }
+
             var result = await _chocolateyService.InstallPackage(id, version?.ToString(), source, force);
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null
-                    ? string.Empty
-                    : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
-                var message = string.Format(
-                    Resources.ChocolateyRemotePackageService_InstallFailedMessage,
-                    id,
-                    version,
-                    string.Join("\n", result.Messages),
-                    exceptionMessage);
+            var exceptionMessage = result.Exception == null
+                ? string.Empty
+                : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+            var message = string.Format(
+                Resources.ChocolateyRemotePackageService_InstallFailedMessage,
+                id,
+                version,
+                string.Join("\n", result.Messages),
+                exceptionMessage);
                 await _progressService.ShowMessageAsync(
-                    Resources.ChocolateyRemotePackageService_InstallFailedTitle,
-                    message);
+                Resources.ChocolateyRemotePackageService_InstallFailedTitle,
+                message);
                 Logger.Warning(result.Exception, "Failed to install {Package}, version {Version}. Errors: {Errors}", id, version, result.Messages);
                 return;
             }
@@ -140,11 +145,17 @@ namespace ChocolateyGui.Services
             }
 
             _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(id, PackageChangeType.Uninstalled, version));
+            return;
         }
 
         public async Task UpdatePackage(string id, Uri source = null)
         {
             await Initialize(true);
+            if (Elevation.Instance.IsBackgroundRunning)
+            {
+                source = null;
+            }
+
             var result = await _chocolateyService.UpdatePackage(id, source);
             if (!result.Successful)
             {
@@ -157,8 +168,8 @@ namespace ChocolateyGui.Services
                     string.Join("\n", result.Messages),
                     exceptionMessage);
                 await _progressService.ShowMessageAsync(
-                    Resources.ChocolateyRemotePackageService_UpdateFailedTitle,
-                    message);
+                Resources.ChocolateyRemotePackageService_UpdateFailedTitle,
+                message);
                 Logger.Warning(result.Exception, "Failed to update {Package}. Errors: {Errors}", id, result.Messages);
                 return;
             }
@@ -172,15 +183,15 @@ namespace ChocolateyGui.Services
             var result = await _chocolateyService.PinPackage(id, version.ToString());
             if (!result.Successful)
             {
-                var exceptionMessage = result.Exception == null
-                    ? string.Empty
-                    : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
-                var message = string.Format(
-                    Resources.ChocolateyRemotePackageService_PinFailedMessage,
-                    id,
-                    version,
-                    string.Join("\n", result.Messages),
-                    exceptionMessage);
+            var exceptionMessage = result.Exception == null
+                ? string.Empty
+                : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+            var message = string.Format(
+                Resources.ChocolateyRemotePackageService_PinFailedMessage,
+                id,
+                version,
+                string.Join("\n", result.Messages),
+                exceptionMessage);
                 await _progressService.ShowMessageAsync(
                     Resources.ChocolateyRemotePackageService_PinFailedTitle,
                     message);
@@ -226,6 +237,10 @@ namespace ChocolateyGui.Services
         {
             await Initialize(true);
             await _chocolateyService.SetFeature(feature);
+            if (string.Equals(feature.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase))
+            {
+                Elevation.Instance.IsBackgroundRunning = feature.Enabled;
+            }
         }
 
         public async Task<IReadOnlyList<ChocolateySetting>> GetSettings()
@@ -380,7 +395,7 @@ namespace ChocolateyGui.Services
                 _chocolateyService = CreateClient();
 
                 // ReSharper disable once PossibleNullReferenceException
-                ((ElevationStatusProvider)Application.Current.FindResource("Elevation")).IsElevated = await _chocolateyService.IsElevated();
+                Elevation.Instance.IsElevated = await _chocolateyService.IsElevated();
             }
         }
 

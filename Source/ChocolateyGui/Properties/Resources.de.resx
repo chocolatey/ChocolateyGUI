@@ -165,6 +165,9 @@
   <data name="PackageView_ButtonInstall" xml:space="preserve">
     <value>Installieren</value>
   </data>
+  <data name="PackageView_ButtonPin" xml:space="preserve">
+    <value>Pin</value>
+  </data>
   <data name="PackageView_ButtonReinstall" xml:space="preserve">
     <value>Erneut Installieren</value>
   </data>
@@ -300,6 +303,9 @@
   <data name="SettingsView_Sources" xml:space="preserve">
     <value>Quellen</value>
   </data>
+  <data name="SettingsView_SourcesByPassProxy" xml:space="preserve">
+    <value />
+  </data>
   <data name="SettingsView_SourcesCertificate" xml:space="preserve">
     <value>Zertifikat</value>
   </data>
@@ -320,6 +326,9 @@
   </data>
   <data name="SettingsView_SourcesPriority" xml:space="preserve">
     <value>Priorität</value>
+  </data>
+  <data name="SettingsView_SourcesSelfService" xml:space="preserve">
+    <value />
   </data>
   <data name="SettingsView_SourcesSource" xml:space="preserve">
     <value>Quelle</value>

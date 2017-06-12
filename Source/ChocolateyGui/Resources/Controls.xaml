@@ -8,7 +8,7 @@
                     xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
                     xmlns:commands="clr-namespace:ChocolateyGui.Commands"
                     xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
-                    xmlns:providers="clr-namespace:ChocolateyGui.Providers"
+                    xmlns:app="clr-namespace:ChocolateyGui"
                     xmlns:lang="clr-namespace:ChocolateyGui.Properties"
                     mc:Ignorable="d">
 
@@ -25,15 +25,31 @@
     <converters:StringListToString x:Key="StringListToString" />
     <converters:BooleanInverter x:Key="BooleanInverter" />
 
-    <providers:ElevationStatusProvider x:Key="Elevation" />
-    
     <Style x:Key="UacIconStyle" TargetType="{x:Type Image}">
         <Setter Property="Source" Value="{x:Static utilities:NativeMethods.UacIcon}"/>
-        <Setter Property="Visibility" Value="{Binding Path=IsElevated, Source={StaticResource Elevation}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
+        <Setter Property="Visibility" Value="{Binding Path=IsElevated, Source={x:Static app:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
     </Style>
 
     <Image x:Key="UacIcon" x:Shared="False"
           Style="{StaticResource UacIconStyle}"
+          Width="16" Height="16"/>
+
+    <Style x:Key="PrimaryUacIconStyle" TargetType="{x:Type Image}">
+        <Setter Property="Source" Value="{x:Static utilities:NativeMethods.UacIcon}"/>
+        <Setter Property="Visibility" Value="{Binding Path=CanDoCentralActions, Source={x:Static app:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
+    </Style>
+
+    <Image x:Key="PrimaryUacIcon" x:Shared="False"
+          Style="{StaticResource PrimaryUacIconStyle}"
+          Width="16" Height="16"/>
+
+    <Style x:Key="TertiaryUacIconStyle" TargetType="{x:Type Image}">
+        <Setter Property="Source" Value="{x:Static utilities:NativeMethods.UacIcon}"/>
+        <Setter Property="Visibility" Value="{Binding Path=CanDoTertiaryActions, Source={x:Static app:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
+    </Style>
+
+    <Image x:Key="TertiaryUacIcon" x:Shared="False"
+          Style="{StaticResource TertiaryUacIconStyle}"
           Width="16" Height="16"/>
 
     <system:Double x:Key="ToggleSwitchFontSize">15</system:Double>
@@ -649,10 +665,10 @@
     <ContextMenu x:Key="PackagesContextMenu"
                  DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
                  d:DataContext="{d:DesignInstance Type=items:PackageViewModel}">
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuInstall}" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuInstall}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
                   Command="{commands:DataContextCommandAdapter Install}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuPin}" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuPin}" Icon="{StaticResource TertiaryUacIcon}"
                   Command="{commands:DataContextCommandAdapter Pin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -661,7 +677,7 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUnpin}" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUnpin}" Icon="{StaticResource TertiaryUacIcon}"
                   Command="{commands:DataContextCommandAdapter Unpin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -670,13 +686,13 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUninstall}" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUninstall}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Uninstall}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuReinstall}" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuReinstall}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Reinstall}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUpdate}" Icon="{StaticResource UacIcon}"
+        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUpdate}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Update}" />
         <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuDetails}" Command="{commands:DataContextCommandAdapter ViewDetails}" />

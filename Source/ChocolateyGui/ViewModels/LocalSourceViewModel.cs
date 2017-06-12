@@ -14,6 +14,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 using Caliburn.Micro;
+using ChocolateyGui.Base;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
@@ -304,6 +305,10 @@ namespace ChocolateyGui.ViewModels
                 {
                     await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Item1, update.Item2));
                 }
+            }
+            catch (ConnectionClosedException)
+            {
+                Logger.Warning("Threw connection closed message while processing load packages.");
             }
             catch (Exception ex)
             {

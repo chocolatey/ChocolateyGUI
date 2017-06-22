@@ -28,7 +28,7 @@ using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Subprocess
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true)]
     internal class ChocolateyService : IIpcChocolateyService
     {
 #pragma warning disable SA1401 // Fields must be private

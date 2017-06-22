@@ -38,7 +38,7 @@ namespace ChocolateyGui.Services
 
         Task SetFeature(ChocolateyFeature feature);
 
-        ValueTask<bool> RequiresElevation();
+        ValueTask<bool> CanBeElevated();
 
         Task<IReadOnlyList<ChocolateySetting>> GetSettings();
 

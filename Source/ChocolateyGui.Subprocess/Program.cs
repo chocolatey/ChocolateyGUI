@@ -18,6 +18,8 @@ using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Subprocess
 {
+    using chocolatey;
+
     public class Program
     {
         public static ManualResetEventSlim CanceledEvent { get; private set; }
@@ -49,6 +51,10 @@ namespace ChocolateyGui.Subprocess
                 CanceledEvent.Set();
                 source.Cancel();
             };
+
+            // Do not remove! Load Chocolatey once so all config gets set
+            // properly for future calls
+            var choco = Lets.GetChocolatey();
 
             CanceledEvent = new ManualResetEventSlim();
 

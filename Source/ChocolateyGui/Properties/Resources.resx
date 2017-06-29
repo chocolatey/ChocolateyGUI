@@ -576,4 +576,16 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="VersionNumberProvider_VersionFormat" xml:space="preserve">
     <value>Version: {0}</value>
   </data>
+  <data name="SettingsView_SourcesByPassProxy" xml:space="preserve">
+    <value>ByPass Proxy</value>
+  </data>
+  <data name="SettingsView_SourcesSelfService" xml:space="preserve">
+    <value>Self Service</value>
+  </data>
+  <data name="SettingsView_SourcesIsByPassProxy" xml:space="preserve">
+    <value>Is Proxy ByPassed</value>
+  </data>
+  <data name="SettingsView_SourcesIsSelfService" xml:space="preserve">
+    <value>Is Self Service</value>
+  </data>
 </root>

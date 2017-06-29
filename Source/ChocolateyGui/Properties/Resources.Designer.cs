@@ -1127,6 +1127,15 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ByPass Proxy.
+        /// </summary>
+        public static string SettingsView_SourcesByPassProxy {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesByPassProxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Certificate.
         /// </summary>
         public static string SettingsView_SourcesCertificate {
@@ -1163,11 +1172,29 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Proxy ByPassed.
+        /// </summary>
+        public static string SettingsView_SourcesIsByPassProxy {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesIsByPassProxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Disabled.
         /// </summary>
         public static string SettingsView_SourcesIsDisabled {
             get {
                 return ResourceManager.GetString("SettingsView_SourcesIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Self Service.
+        /// </summary>
+        public static string SettingsView_SourcesIsSelfService {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesIsSelfService", resourceCulture);
             }
         }
         
@@ -1195,6 +1222,15 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_SourcesPriority {
             get {
                 return ResourceManager.GetString("SettingsView_SourcesPriority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self Service.
+        /// </summary>
+        public static string SettingsView_SourcesSelfService {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesSelfService", resourceCulture);
             }
         }
         

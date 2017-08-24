@@ -2,7 +2,7 @@
 
 Environment.SetVariableNames();
 
-BuildParameters.SetParameters(context: Context, 
+BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./Source",
                             title: "ChocolateyGUI",
@@ -17,6 +17,7 @@ BuildParameters.SetParameters(context: Context,
                             shouldExecuteGitLink: false);
 
 ToolSettings.SetToolSettings(context: Context,
-                             buildPlatformTarget: PlatformTarget.x86);
+                             buildPlatformTarget: PlatformTarget.x86,
+                             buildMSBuildToolVersion: MSBuildToolVersion.VS2015);
 
 Build.Run();

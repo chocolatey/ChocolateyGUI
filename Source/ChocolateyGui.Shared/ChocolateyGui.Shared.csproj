@@ -49,6 +49,9 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Hacks.cs" />
     <Compile Include="IIpcChocolateyService.cs" />
     <Compile Include="IIpcServiceCallbacks.cs" />

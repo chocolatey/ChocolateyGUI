@@ -97,6 +97,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="ChocolateyExtensions.cs" />
     <Compile Include="ChocolateyService.cs" />
     <Compile Include="Program.cs" />

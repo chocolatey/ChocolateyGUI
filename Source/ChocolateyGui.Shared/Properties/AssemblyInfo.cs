@@ -1,7 +1,17 @@
-﻿using System.Reflection;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="AssemblyInfo.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Reflection;
 
 [assembly: AssemblyTitle("ChocolateyGui.Shared")]
-[assembly: AssemblyProduct("ChocolateyGui.Shared")]
-
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyDescription("Contains shared code used by ChocolateyGUI.")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]

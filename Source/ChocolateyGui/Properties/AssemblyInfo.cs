@@ -10,28 +10,18 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-// General Information about an assembly is controlled through the following
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
 [assembly: AssemblyTitle("ChocolateyGui")]
 [assembly: AssemblyDescription("GUI for Chocolatey")]
-[assembly: AssemblyProduct("ChocolateyGui")]
-[assembly: AssemblyFileVersion("0.14.0.0")]
-[assembly: AssemblyVersion("0.14.0.0")]
-[assembly: AssemblyInformationalVersion("0.14.0.0-dev")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Chocolatey")]
-[assembly:
-    AssemblyCopyright(
-        "Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(false)]
 
-// Setting ComVisible to false makes the types in this assembly not visible
-// to COM components.  If you need to access a type in this assembly from
-// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 [assembly: ThemeInfo(
 

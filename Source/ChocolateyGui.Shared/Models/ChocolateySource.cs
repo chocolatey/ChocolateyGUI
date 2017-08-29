@@ -36,9 +36,9 @@ namespace ChocolateyGui.Models
         [DataMember]
         public string CertificatePassword { get; set; }
 
-        public bool ByPassProxy { get; set; }
+        public bool BypassProxy { get; set; }
 
-        public bool SelfService { get; set; }
+        public bool AllowSelfService { get; set; }
 
         public bool Equals(ChocolateySource other)
         {
@@ -60,8 +60,9 @@ namespace ChocolateyGui.Models
                 && Priority == other.Priority
                 && string.Equals(Certificate, other.Certificate)
                 && string.Equals(CertificatePassword, other.CertificatePassword)
-                && ByPassProxy == other.ByPassProxy
-                && SelfService == other.SelfService;
+                && BypassProxy == other.BypassProxy
+                && AllowSelfService == other.AllowSelfService
+                ;
         }
 
         public override bool Equals(object obj)
@@ -96,8 +97,8 @@ namespace ChocolateyGui.Models
                 hashCode = (hashCode * 397) ^ Priority;
                 hashCode = (hashCode * 397) ^ (Certificate?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (CertificatePassword?.GetHashCode() ?? 0);
-                hashCode = (hashCode * 397) ^ ByPassProxy.GetHashCode();
-                hashCode = (hashCode * 397) ^ SelfService.GetHashCode();
+                hashCode = (hashCode * 397) ^ BypassProxy.GetHashCode();
+                hashCode = (hashCode * 397) ^ AllowSelfService.GetHashCode();
                 return hashCode;
             }
         }

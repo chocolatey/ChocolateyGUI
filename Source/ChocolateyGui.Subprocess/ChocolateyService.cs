@@ -419,8 +419,8 @@ namespace ChocolateyGui.Subprocess
                         config.SourceCommand.Certificate = source.Certificate;
                         config.SourceCommand.CertificatePassword = source.CertificatePassword;
                         config.SourceCommand.Priority = source.Priority;
-                        config.SourceCommand.BypassProxy = source.ByPassProxy;
-                        config.SourceCommand.AllowSelfService = source.SelfService;
+                        config.SourceCommand.BypassProxy = source.BypassProxy;
+                        config.SourceCommand.AllowSelfService = source.AllowSelfService;
                     });
 
                 await choco.RunAsync(operationContext.GetCancellationToken());

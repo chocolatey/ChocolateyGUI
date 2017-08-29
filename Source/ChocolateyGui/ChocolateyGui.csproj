@@ -62,6 +62,7 @@
     </Reference>
     <Reference Include="chocolatey, Version=0.10.7.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb, processorArchitecture=MSIL">
       <HintPath>..\packages\chocolatey.lib.0.10.7\lib\chocolatey.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="LiteDB, Version=3.1.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">

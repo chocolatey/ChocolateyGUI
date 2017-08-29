@@ -83,7 +83,6 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var originalConfig = Config.get_configuration_settings().deep_copy();
                 var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
@@ -92,11 +91,10 @@ namespace ChocolateyGui.Subprocess
                             config.PackageNames = ApplicationParameters.AllPackages;
                             config.UpgradeCommand.NotifyOnlyAvailableUpgrades = true;
                             config.RegularOutput = false;
+                            config.QuietOutput = true;
                             config.Prerelease = false;
                         });
-
                 var chocoConfig = choco.GetConfiguration();
-                Config.initialize_with(originalConfig);
 
                 var nugetService = choco.Container().GetInstance<INugetService>();
                 var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
@@ -205,7 +203,6 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var originalConfig = Config.get_configuration_settings().deep_copy();
                 var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
@@ -220,9 +217,7 @@ namespace ChocolateyGui.Subprocess
                         config.Verbose = false;
 #endif // DEBUG
                     });
-
                 var chocoConfig = choco.GetConfiguration();
-                Config.initialize_with(originalConfig);
 
                 var nugetLogger = choco.Container().GetInstance<NuGet.ILogger>();
                 var semvar = new SemanticVersion(version);

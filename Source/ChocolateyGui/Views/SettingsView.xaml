@@ -116,6 +116,7 @@
                             <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesDisabled}" Width="Auto" Binding="{Binding Disabled}"/>
                             <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesByPassProxy}" Width="Auto" Binding="{Binding BypassProxy}"/>
                             <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesSelfService}" Width="Auto" Binding="{Binding AllowSelfService}"/>
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesSelfService}" Width="Auto" Binding="{Binding VisibleToAdminsOnly}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <DockPanel Grid.Row="2" Grid.Column="0" Margin="5">

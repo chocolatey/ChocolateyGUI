@@ -421,6 +421,7 @@ namespace ChocolateyGui.Subprocess
                         config.SourceCommand.Priority = source.Priority;
                         config.SourceCommand.BypassProxy = source.BypassProxy;
                         config.SourceCommand.AllowSelfService = source.AllowSelfService;
+                        config.SourceCommand.VisibleToAdminsOnly = source.VisibleToAdminsOnly;
                     });
 
                 await choco.RunAsync(operationContext.GetCancellationToken());

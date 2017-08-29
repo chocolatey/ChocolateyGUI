@@ -40,6 +40,8 @@ namespace ChocolateyGui.Models
 
         public bool AllowSelfService { get; set; }
 
+        public bool VisibleToAdminsOnly { get; set; }
+
         public bool Equals(ChocolateySource other)
         {
             if (ReferenceEquals(null, other))
@@ -62,6 +64,7 @@ namespace ChocolateyGui.Models
                 && string.Equals(CertificatePassword, other.CertificatePassword)
                 && BypassProxy == other.BypassProxy
                 && AllowSelfService == other.AllowSelfService
+                && VisibleToAdminsOnly == other.VisibleToAdminsOnly
                 ;
         }
 
@@ -99,6 +102,7 @@ namespace ChocolateyGui.Models
                 hashCode = (hashCode * 397) ^ (CertificatePassword?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ BypassProxy.GetHashCode();
                 hashCode = (hashCode * 397) ^ AllowSelfService.GetHashCode();
+                hashCode = (hashCode * 397) ^ VisibleToAdminsOnly.GetHashCode();
                 return hashCode;
             }
         }

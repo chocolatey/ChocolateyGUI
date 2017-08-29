@@ -303,7 +303,7 @@
   <data name="SettingsView_Sources" xml:space="preserve">
     <value>Quellen</value>
   </data>
-  <data name="SettingsView_SourcesByPassProxy" xml:space="preserve">
+  <data name="SettingsView_SourcesBypassProxy" xml:space="preserve">
     <value />
   </data>
   <data name="SettingsView_SourcesCertificate" xml:space="preserve">

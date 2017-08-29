@@ -114,9 +114,9 @@
                             <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesCertificatePass}" Width="*" Binding="{Binding CertificatePassword}" />
                             <metro:DataGridNumericUpDownColumn Header="{x:Static lang:Resources.SettingsView_SourcesPriority}" Binding="{Binding Priority}"/>
                             <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesDisabled}" Width="Auto" Binding="{Binding Disabled}"/>
-                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesByPassProxy}" Width="Auto" Binding="{Binding BypassProxy}"/>
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesBypassProxy}" Width="Auto" Binding="{Binding BypassProxy}"/>
                             <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesSelfService}" Width="Auto" Binding="{Binding AllowSelfService}"/>
-                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesSelfService}" Width="Auto" Binding="{Binding VisibleToAdminsOnly}"/>
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesAdminOnly}" Width="Auto" Binding="{Binding VisibleToAdminsOnly}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <DockPanel Grid.Row="2" Grid.Column="0" Margin="5">
@@ -189,7 +189,7 @@
                             <CheckBox Grid.Row="3" Grid.Column="3"
                                  VerticalAlignment="Center" IsChecked="{Binding SelectedSource.Disabled}"/>
 
-                            <TextBlock Grid.Row="4" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesIsByPassProxy}"/>
+                            <TextBlock Grid.Row="4" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesIsBypassProxy}"/>
                             <CheckBox Grid.Row="4" Grid.Column="3"
                                  VerticalAlignment="Center" IsChecked="{Binding SelectedSource.BypassProxy}"/>
 

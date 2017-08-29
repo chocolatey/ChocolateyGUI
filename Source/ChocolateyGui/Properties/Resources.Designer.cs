@@ -1127,11 +1127,20 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ByPass Proxy.
+        ///   Looks up a localized string similar to Admin Only.
         /// </summary>
-        public static string SettingsView_SourcesByPassProxy {
+        public static string SettingsView_SourcesAdminOnly {
             get {
-                return ResourceManager.GetString("SettingsView_SourcesByPassProxy", resourceCulture);
+                return ResourceManager.GetString("SettingsView_SourcesAdminOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bypass Proxy.
+        /// </summary>
+        public static string SettingsView_SourcesBypassProxy {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesBypassProxy", resourceCulture);
             }
         }
         
@@ -1172,11 +1181,11 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is Proxy ByPassed.
+        ///   Looks up a localized string similar to Is Proxy Bypassed.
         /// </summary>
-        public static string SettingsView_SourcesIsByPassProxy {
+        public static string SettingsView_SourcesIsBypassProxy {
             get {
-                return ResourceManager.GetString("SettingsView_SourcesIsByPassProxy", resourceCulture);
+                return ResourceManager.GetString("SettingsView_SourcesIsBypassProxy", resourceCulture);
             }
         }
         

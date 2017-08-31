@@ -17,7 +17,6 @@ using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.app.services;
-using chocolatey.infrastructure.configuration;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
 using ChocolateyGui.Models;

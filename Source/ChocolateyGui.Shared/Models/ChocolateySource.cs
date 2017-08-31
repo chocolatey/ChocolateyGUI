@@ -64,8 +64,7 @@ namespace ChocolateyGui.Models
                 && string.Equals(CertificatePassword, other.CertificatePassword)
                 && BypassProxy == other.BypassProxy
                 && AllowSelfService == other.AllowSelfService
-                && VisibleToAdminsOnly == other.VisibleToAdminsOnly
-                ;
+                && VisibleToAdminsOnly == other.VisibleToAdminsOnly;
         }
 
         public override bool Equals(object obj)

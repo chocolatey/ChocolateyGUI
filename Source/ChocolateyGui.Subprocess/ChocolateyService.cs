@@ -17,7 +17,6 @@ using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.app.services;
-using chocolatey.infrastructure.configuration;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
 using ChocolateyGui.Models;
@@ -83,7 +82,6 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var originalConfig = Config.get_configuration_settings().deep_copy();
                 var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
@@ -92,11 +90,10 @@ namespace ChocolateyGui.Subprocess
                             config.PackageNames = ApplicationParameters.AllPackages;
                             config.UpgradeCommand.NotifyOnlyAvailableUpgrades = true;
                             config.RegularOutput = false;
+                            config.QuietOutput = true;
                             config.Prerelease = false;
                         });
-
                 var chocoConfig = choco.GetConfiguration();
-                Config.initialize_with(originalConfig);
 
                 var nugetService = choco.Container().GetInstance<INugetService>();
                 var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
@@ -205,7 +202,6 @@ namespace ChocolateyGui.Subprocess
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var originalConfig = Config.get_configuration_settings().deep_copy();
                 var choco = Lets.GetChocolatey().SetLoggerContext(operationContext);
                 choco.Set(
                     config =>
@@ -220,9 +216,7 @@ namespace ChocolateyGui.Subprocess
                         config.Verbose = false;
 #endif // DEBUG
                     });
-
                 var chocoConfig = choco.GetConfiguration();
-                Config.initialize_with(originalConfig);
 
                 var nugetLogger = choco.Container().GetInstance<NuGet.ILogger>();
                 var semvar = new SemanticVersion(version);
@@ -419,8 +413,9 @@ namespace ChocolateyGui.Subprocess
                         config.SourceCommand.Certificate = source.Certificate;
                         config.SourceCommand.CertificatePassword = source.CertificatePassword;
                         config.SourceCommand.Priority = source.Priority;
-                        config.SourceCommand.BypassProxy = source.ByPassProxy;
-                        config.SourceCommand.AllowSelfService = source.SelfService;
+                        config.SourceCommand.BypassProxy = source.BypassProxy;
+                        config.SourceCommand.AllowSelfService = source.AllowSelfService;
+                        config.SourceCommand.VisibleToAdminsOnly = source.VisibleToAdminsOnly;
                     });
 
                 await choco.RunAsync(operationContext.GetCancellationToken());

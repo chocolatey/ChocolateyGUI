@@ -36,10 +36,13 @@ namespace ChocolateyGui.Models
         [DataMember]
         public string CertificatePassword { get; set; }
 
+        [DataMember]
         public bool BypassProxy { get; set; }
 
+        [DataMember]
         public bool AllowSelfService { get; set; }
 
+        [DataMember]
         public bool VisibleToAdminsOnly { get; set; }
 
         public bool Equals(ChocolateySource other)

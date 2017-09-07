@@ -1181,6 +1181,15 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Visible to Admins Only.
+        /// </summary>
+        public static string SettingsView_SourcesIsAdminOnly {
+            get {
+                return ResourceManager.GetString("SettingsView_SourcesIsAdminOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Proxy Bypassed.
         /// </summary>
         public static string SettingsView_SourcesIsBypassProxy {

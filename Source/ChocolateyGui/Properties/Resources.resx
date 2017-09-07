@@ -591,4 +591,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_SourcesAdminOnly" xml:space="preserve">
     <value>Admin Only</value>
   </data>
+  <data name="SettingsView_SourcesIsAdminOnly" xml:space="preserve">
+    <value>Visible to Admins Only</value>
+  </data>
 </root>

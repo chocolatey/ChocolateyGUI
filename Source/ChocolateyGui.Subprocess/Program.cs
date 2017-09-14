@@ -52,11 +52,11 @@ namespace ChocolateyGui.Subprocess
                 source.Cancel();
             };
 
+            CanceledEvent = new ManualResetEventSlim();
+
             // Do not remove! Load Chocolatey once so all config gets set
             // properly for future calls
             var choco = Lets.GetChocolatey();
-
-            CanceledEvent = new ManualResetEventSlim();
 
             try
             {

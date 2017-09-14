@@ -22,6 +22,9 @@ using Serilog;
 
 namespace ChocolateyGui
 {
+    using chocolatey;
+    using Log = Serilog.Log;
+
     public class Bootstrapper : BootstrapperBase
     {
         internal const string ApplicationName = "ChocolateyGUI";
@@ -95,8 +98,12 @@ namespace ChocolateyGui
         {
             try
             {
-                var packageSerice = Container.Resolve<IChocolateyPackageService>();
-                var features = await packageSerice.GetFeatures();
+                // Do not remove! Load Chocolatey once so all config gets set
+                // properly for future calls
+                var choco = Lets.GetChocolatey();
+
+                var packageService = Container.Resolve<IChocolateyPackageService>();
+                var features = await packageService.GetFeatures();
 
                 var backgroundFeature = features.FirstOrDefault(feature => string.Equals(feature.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase));
                 var elevationProvider = Elevation.Instance;

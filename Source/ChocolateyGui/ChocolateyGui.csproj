@@ -206,6 +206,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.sv.resx</DependentUpon>
     </Compile>
+    <Compile Include="SerilogLogger.cs" />
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Services\ServiceCallbackHandler.cs" />

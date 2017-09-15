@@ -6,7 +6,7 @@ using ChocolateyGui.Models;
 
 namespace ChocolateyGui.Services
 {
-    public class ServiceCallbackHandler : IIpcServiceCallbacks
+    public class ServiceCallbackHandler : IChocolateyServiceCallbacks
     {
         private readonly IProgressService _progressService;
 
@@ -15,27 +15,27 @@ namespace ChocolateyGui.Services
             _progressService = progressService;
         }
 
-        public void LogMessage(StreamingLogMessage message)
+        public void LogMessage(LogMessage message)
         {
             PowerShellLineType powerShellLineType;
             switch (message.LogLevel)
             {
-                case StreamingLogLevel.Debug:
+                case LogLevel.Debug:
                     powerShellLineType = PowerShellLineType.Debug;
                     break;
-                case StreamingLogLevel.Verbose:
+                case LogLevel.Verbose:
                     powerShellLineType = PowerShellLineType.Verbose;
                     break;
-                case StreamingLogLevel.Info:
+                case LogLevel.Info:
                     powerShellLineType = PowerShellLineType.Output;
                     break;
-                case StreamingLogLevel.Warn:
+                case LogLevel.Warn:
                     powerShellLineType = PowerShellLineType.Warning;
                     break;
-                case StreamingLogLevel.Error:
+                case LogLevel.Error:
                     powerShellLineType = PowerShellLineType.Error;
                     break;
-                case StreamingLogLevel.Fatal:
+                case LogLevel.Fatal:
                     powerShellLineType = PowerShellLineType.Error;
                     break;
                 default:

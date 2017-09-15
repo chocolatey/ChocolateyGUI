@@ -19,6 +19,8 @@ using MemoryCache = System.Runtime.Caching.MemoryCache;
 
 namespace ChocolateyGui.ViewModels.Items
 {
+    using Models;
+
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
     public class PackageViewModel :
         ObservableBase,
@@ -30,7 +32,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private readonly MemoryCache _cache = MemoryCache.Default;
 
-        private readonly IChocolateyPackageService _chocolateyService;
+        private readonly IChocolateyService _chocolateyService;
         private readonly IEventAggregator _eventAggregator;
 
         private readonly IMapper _mapper;
@@ -103,7 +105,7 @@ namespace ChocolateyGui.ViewModels.Items
         private int _versionDownloadCount;
 
         public PackageViewModel(
-            IChocolateyPackageService chocolateyService,
+            IChocolateyService chocolateyService,
             IEventAggregator eventAggregator,
             IMapper mapper,
             IProgressService progressService)
@@ -329,7 +331,7 @@ namespace ChocolateyGui.ViewModels.Items
             {
                 using (await StartProgressDialog(Resources.PackageViewModel_InstallingPackage, Resources.PackageViewModel_InstallingPackage, Id))
                 {
-                    await _chocolateyService.InstallPackage(Id, Version, Source).ConfigureAwait(false);
+                    await _chocolateyService.InstallPackage(Id, Version.ToString(), Source).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -347,7 +349,7 @@ namespace ChocolateyGui.ViewModels.Items
             {
                 using (await StartProgressDialog(Resources.PackageViewModel_ReinstallingPackage, Resources.PackageViewModel_ReinstallingPackage, Id))
                 {
-                    await _chocolateyService.InstallPackage(Id, Version, Source, true).ConfigureAwait(false);
+                    await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -367,7 +369,7 @@ namespace ChocolateyGui.ViewModels.Items
             {
                 using (await StartProgressDialog(Resources.PackageViewModel_UninstallingPackage, Resources.PackageViewModel_UninstallingPackage, Id))
                 {
-                    await _chocolateyService.UninstallPackage(Id, Version, true).ConfigureAwait(false);
+                    await _chocolateyService.UninstallPackage(Id, Version.ToString(), true).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -403,7 +405,7 @@ namespace ChocolateyGui.ViewModels.Items
             {
                 using (await StartProgressDialog(Resources.PackageViewModel_PinningPackage, Resources.PackageViewModel_PinningPackage, Id))
                 {
-                    await _chocolateyService.PinPackage(Id, Version).ConfigureAwait(false);
+                    await _chocolateyService.PinPackage(Id, Version.ToString()).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -421,7 +423,7 @@ namespace ChocolateyGui.ViewModels.Items
             {
                 using (await StartProgressDialog(Resources.PackageViewModel_UnpinningPackage, Resources.PackageViewModel_UnpinningPackage, Id))
                 {
-                    await _chocolateyService.UnpinPackage(Id, Version).ConfigureAwait(false);
+                    await _chocolateyService.UnpinPackage(Id, Version.ToString()).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -492,10 +494,8 @@ namespace ChocolateyGui.ViewModels.Items
             await _progressService.StartLoading(Resources.PackageViewModel_LoadingPackageInfo);
             try
             {
-                var package =
-                    await
-                        _chocolateyService.GetByVersionAndIdAsync(_id, _version, _isPrerelease).ConfigureAwait(false);
-                _mapper.Map<IPackageViewModel, IPackageViewModel>(package, this);
+                var package = await _chocolateyService.GetByVersionAndIdAsync(_id, _version.ToString(), _isPrerelease).ConfigureAwait(false);
+                _mapper.Map<Package, IPackageViewModel>(package, this);
             }
             catch (Exception ex)
             {

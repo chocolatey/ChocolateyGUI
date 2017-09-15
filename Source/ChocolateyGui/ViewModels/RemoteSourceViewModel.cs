@@ -24,10 +24,12 @@ using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
+    using AutoMapper;
+
     public sealed class RemoteSourceViewModel : Screen, ISourceViewModelBase
     {
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
-        private readonly IChocolateyPackageService _chocolateyPackageService;
+        private readonly IChocolateyService _chocolateyPackageService;
         private readonly IProgressService _progressService;
         private readonly IEventAggregator _eventAggregator;
         private int _currentPage = 1;
@@ -42,7 +44,7 @@ namespace ChocolateyGui.ViewModels
         private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
 
         public RemoteSourceViewModel(
-            IChocolateyPackageService chocolateyPackageService,
+            IChocolateyService chocolateyPackageService,
             IProgressService progressService,
             IEventAggregator eventAggregator,
             ChocolateySource source)
@@ -276,7 +278,7 @@ namespace ChocolateyGui.ViewModels
                             p.IsInstalled = true;
                         }
 
-                        Packages.Add(p);
+                        Packages.Add(Mapper.Map<IPackageViewModel>(p));
                     });
 
                     if (PageCount < CurrentPage)

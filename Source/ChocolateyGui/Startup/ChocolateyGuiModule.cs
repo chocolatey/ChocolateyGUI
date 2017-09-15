@@ -35,7 +35,7 @@ namespace ChocolateyGui.Startup
 
             var configurationProvider = new ChocolateyConfigurationProvider();
             builder.RegisterInstance(configurationProvider).As<IChocolateyConfigurationProvider>().SingleInstance();
-            builder.RegisterType<ChocolateyRemotePackageService>().As<IChocolateyPackageService>().SingleInstance();
+            builder.RegisterType<ChocolateyService>().As<IChocolateyService>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterAssemblyTypes(viewModelAssembly)

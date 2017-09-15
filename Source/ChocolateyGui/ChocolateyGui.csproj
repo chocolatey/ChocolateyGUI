@@ -187,6 +187,10 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Base\ConnectionClosedException.cs" />
+    <Compile Include="ChocolateyExtensions.cs" />
+    <Compile Include="Models\LogLevel.cs" />
+    <Compile Include="Models\LogMessage.cs" />
+    <Compile Include="Services\ChocolateyService.cs" />
     <Compile Include="Controls\InternetImage.xaml.cs">
       <DependentUpon>InternetImage.xaml</DependentUpon>
     </Compile>
@@ -194,8 +198,17 @@
       <DependentUpon>MarkdownViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="DesignMode.cs" />
+    <Compile Include="Hacks.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
+    <Compile Include="Models\ChocolateyFeature.cs" />
+    <Compile Include="Models\ChocolateySetting.cs" />
+    <Compile Include="Models\ChocolateySource.cs" />
     <Compile Include="Models\Messages\SourcesUpdatedMessage.cs" />
+    <Compile Include="Models\Package.cs" />
+    <Compile Include="Models\PackageOperationResult.cs" />
+    <Compile Include="Models\PackageResults.cs" />
+    <Compile Include="Models\PackageSearchOptions.cs" />
+    <Compile Include="Models\SemanticVersionTypeConverter.cs" />
     <Compile Include="Properties\Resources.de.Designer.cs">
       <DependentUpon>Resources.de.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -209,6 +222,8 @@
     <Compile Include="SerilogLogger.cs" />
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IConfigService.cs" />
+    <Compile Include="Services\IChocolateyService.cs" />
+    <Compile Include="Services\IChocolateyServiceCallbacks.cs" />
     <Compile Include="Services\ServiceCallbackHandler.cs" />
     <Compile Include="Startup\ChocolateyGuiModule.cs" />
     <Compile Include="Bootstrapper.cs" />
@@ -244,8 +259,6 @@
     <Compile Include="Providers\IVersionNumberProvider.cs" />
     <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
     <Compile Include="Providers\VersionNumberProvider.cs" />
-    <Compile Include="Services\ChocolateyRemotePackageService.cs" />
-    <Compile Include="Services\IChocolateyPackageService.cs" />
     <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\PersistenceService.cs" />
@@ -261,6 +274,7 @@
     <Compile Include="Utilities\Converters\BooleanToVisibilityHidden.cs" />
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\DataContext.cs" />
+    <Compile Include="Utilities\DefaultsExtensions.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
@@ -456,12 +470,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ChocolateyGui.Shared\ChocolateyGui.Shared.csproj">
-      <Project>{97ac8cfb-db0d-46ef-99e8-e363c5f45cbf}</Project>
-      <Name>ChocolateyGui.Shared</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />

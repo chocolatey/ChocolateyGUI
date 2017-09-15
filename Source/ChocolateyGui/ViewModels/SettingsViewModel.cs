@@ -33,7 +33,7 @@ namespace ChocolateyGui.ViewModels
                                                                            nameof(ShowConsoleOutput)
                                                                        };
 
-        private readonly IChocolateyPackageService _packageService;
+        private readonly IChocolateyService _packageService;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
 
@@ -48,7 +48,7 @@ namespace ChocolateyGui.ViewModels
         private bool _isNewItem;
 
         public SettingsViewModel(
-            IChocolateyPackageService packageService,
+            IChocolateyService packageService,
             IProgressService progressService,
             IConfigService configService,
             IEventAggregator eventAggregator)

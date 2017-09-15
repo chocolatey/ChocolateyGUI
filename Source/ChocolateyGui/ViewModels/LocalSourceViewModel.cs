@@ -27,7 +27,7 @@ namespace ChocolateyGui.ViewModels
     public sealed class LocalSourceViewModel : Screen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
     {
         private static readonly ILogger Logger = Log.ForContext<LocalSourceViewModel>();
-        private readonly IChocolateyPackageService _chocolateyService;
+        private readonly IChocolateyService _chocolateyService;
         private readonly List<IPackageViewModel> _packages;
         private readonly IPersistenceService _persistenceService;
         private readonly IProgressService _progressService;
@@ -44,7 +44,7 @@ namespace ChocolateyGui.ViewModels
         private bool _firstLoadComplete = true;
 
         public LocalSourceViewModel(
-            IChocolateyPackageService chocolateyService,
+            IChocolateyService chocolateyService,
             IProgressService progressService,
             IPersistenceService persistenceService,
             IEventAggregator eventAggregator,

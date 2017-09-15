@@ -8,20 +8,27 @@ namespace ChocolateyGui
 {
     using System;
     using chocolatey.infrastructure.logging;
+    using Models;
     using Serilog;
 
     public class SerilogLogger : ILog
     {
         private readonly ILogger _logger;
+        private Action<LogMessage> _interceptor;
 
         public SerilogLogger(ILogger logger)
         {
             _logger = logger;
         }
 
+        public IDisposable Intercept(Action<LogMessage> interceptor)
+        {
+            return new InterceptMessages(this, interceptor);
+        }
+
         public void InitializeFor(string loggerName)
         {
-            //skip for now
+            // skip for now
         }
 
         public void Debug(string message, params object[] formatting)
@@ -72,6 +79,22 @@ namespace ChocolateyGui
         public void Fatal(Func<string> message)
         {
             _logger.Fatal(message());
+        }
+
+        public class InterceptMessages : IDisposable
+        {
+            private readonly SerilogLogger _logger;
+
+            public InterceptMessages(SerilogLogger logger, Action<LogMessage> interceptor)
+            {
+                _logger = logger;
+                logger._interceptor = interceptor;
+            }
+
+            public void Dispose()
+            {
+                _logger._interceptor = null;
+            }
         }
     }
 }

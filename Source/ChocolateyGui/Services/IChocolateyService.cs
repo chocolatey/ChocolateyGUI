@@ -12,13 +12,12 @@ namespace ChocolateyGui.Services
 {
     using System.Collections.Generic;
     using NuGet;
-    using ViewModels.Items;
 
     public interface IChocolateyService
     {
         Task<bool> IsElevated();
 
-        Task<IEnumerable<IPackageViewModel>> GetInstalledPackages();
+        Task<IEnumerable<Package>> GetInstalledPackages();
 
         Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false);
 

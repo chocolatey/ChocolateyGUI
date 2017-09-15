@@ -32,6 +32,7 @@ namespace ChocolateyGui.ViewModels
         private readonly IChocolateyService _chocolateyPackageService;
         private readonly IProgressService _progressService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IMapper _mapper;
         private int _currentPage = 1;
         private bool _hasLoaded;
         private bool _includeAllVersions;
@@ -47,12 +48,14 @@ namespace ChocolateyGui.ViewModels
             IChocolateyService chocolateyPackageService,
             IProgressService progressService,
             IEventAggregator eventAggregator,
-            ChocolateySource source)
+            ChocolateySource source,
+            IMapper mapper)
         {
             Source = source;
             _chocolateyPackageService = chocolateyPackageService;
             _progressService = progressService;
             _eventAggregator = eventAggregator;
+            _mapper = mapper;
 
             Packages = new ObservableCollection<IPackageViewModel>();
             DisplayName = source.Id;
@@ -278,7 +281,7 @@ namespace ChocolateyGui.ViewModels
                             p.IsInstalled = true;
                         }
 
-                        Packages.Add(Mapper.Map<Items.PackageViewModel>(p));
+                        Packages.Add(_mapper.Map<Items.PackageViewModel>(p));
                     });
 
                     if (PageCount < CurrentPage)

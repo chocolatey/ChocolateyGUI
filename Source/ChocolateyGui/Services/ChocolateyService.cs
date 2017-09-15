@@ -32,14 +32,12 @@ namespace ChocolateyGui.Services
         private static readonly ILogger Logger = Serilog.Log.ForContext<ChocolateyService>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
         private readonly IMapper _mapper;
-        private readonly Func<IPackageViewModel> _packageFactory;
 #pragma warning disable SA1401 // Fields must be private
 #pragma warning restore SA1401 // Fields must be private
 
-        public ChocolateyService(IMapper mapper, Func<IPackageViewModel> packageFactory)
+        public ChocolateyService(IMapper mapper)
         {
             _mapper = mapper;
-            _packageFactory = packageFactory;
         }
 
         public Task<bool> IsElevated()
@@ -47,7 +45,7 @@ namespace ChocolateyGui.Services
             return Task.FromResult(Hacks.IsElevated);
         }
 
-        public async Task<IEnumerable<IPackageViewModel>> GetInstalledPackages()
+        public async Task<IEnumerable<Package>> GetInstalledPackages()
         {
             var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
@@ -60,12 +58,9 @@ namespace ChocolateyGui.Services
                             config.ListCommand.LocalOnly = true;
                         });
 
-                var packages = (await choco.ListAsync<PackageResult>())
-                    .Select(package => GetMappedPackage(choco, package, true))
+               return (await choco.ListAsync<PackageResult>())
+                    .Select(package => GetMappedPackage(choco, package, _mapper, true))
                     .ToArray();
-
-                var vms = packages.Select(p => _mapper.Map(p, _packageFactory())).ToList();
-                return vms;
             }
         }
 
@@ -182,7 +177,7 @@ namespace ChocolateyGui.Services
 
                 var packages =
                     (await choco.ListAsync<PackageResult>()).Select(
-                        pckge => GetMappedPackage(choco, pckge));
+                        pckge => GetMappedPackage(choco, pckge, _mapper));
 
                 return new PackageResults
                 {
@@ -221,7 +216,7 @@ namespace ChocolateyGui.Services
                     throw new Exception("No Package Found");
                 }
 
-                return GetMappedPackage(choco, new PackageResult(nugetPackage, null, chocoConfig.Sources));
+                return GetMappedPackage(choco, new PackageResult(nugetPackage, null, chocoConfig.Sources), _mapper);
             }
         }
 
@@ -329,7 +324,7 @@ namespace ChocolateyGui.Services
             using (await Lock.ReadLockAsync())
             {
                 var config = await GetConfigFile(operationContext);
-                return config.Features.Select(Mapper.Map<ChocolateyFeature>).ToArray();
+                return config.Features.Select(_mapper.Map<ChocolateyFeature>).ToArray();
             }
         }
 
@@ -357,7 +352,7 @@ namespace ChocolateyGui.Services
             using (await Lock.ReadLockAsync())
             {
                 var config = await GetConfigFile(operationContext);
-                return config.ConfigSettings.Select(Mapper.Map<ChocolateySetting>).ToArray();
+                return config.ConfigSettings.Select(_mapper.Map<ChocolateySetting>).ToArray();
             }
         }
 
@@ -386,7 +381,7 @@ namespace ChocolateyGui.Services
             using (await Lock.ReadLockAsync())
             {
                 var config = await GetConfigFile(operationContext);
-                return config.Sources.Select(Mapper.Map<ChocolateySource>).ToArray();
+                return config.Sources.Select(_mapper.Map<ChocolateySource>).ToArray();
             }
         }
 
@@ -456,7 +451,7 @@ namespace ChocolateyGui.Services
             using (await Lock.WriteLockAsync())
             {
                 var chocoConfig = await GetConfigFile(operationContext);
-                var sources = chocoConfig.Sources.Select(Mapper.Map<ChocolateySource>).ToList();
+                var sources = chocoConfig.Sources.Select(_mapper.Map<ChocolateySource>).ToList();
 
                 if (sources.All(source => source.Id != id))
                 {
@@ -477,9 +472,9 @@ namespace ChocolateyGui.Services
             }
         }
 
-        private static Package GetMappedPackage(GetChocolatey choco, PackageResult package, bool forceInstalled = false)
+        private static Package GetMappedPackage(GetChocolatey choco, PackageResult package, IMapper mapper, bool forceInstalled = false)
         {
-            var mappedPackage = package == null ? null : Mapper.Map<Package>(package.Package);
+            var mappedPackage = package == null ? null : mapper.Map<Package>(package.Package);
             if (mappedPackage != null)
             {
                 var packageInfoService = choco.Container().GetInstance<IChocolateyPackageInformationService>();

@@ -24,6 +24,8 @@ using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
+    using AutoMapper;
+
     public sealed class LocalSourceViewModel : Screen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
     {
         private static readonly ILogger Logger = Log.ForContext<LocalSourceViewModel>();
@@ -32,6 +34,7 @@ namespace ChocolateyGui.ViewModels
         private readonly IPersistenceService _persistenceService;
         private readonly IProgressService _progressService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IMapper _mapper;
         private bool _exportAll = true;
         private bool _hasLoaded;
         private bool _matchWord;
@@ -48,7 +51,8 @@ namespace ChocolateyGui.ViewModels
             IProgressService progressService,
             IPersistenceService persistenceService,
             IEventAggregator eventAggregator,
-            string displayName)
+            string displayName,
+            IMapper mapper)
         {
             _chocolateyService = chocolateyService;
             _progressService = progressService;
@@ -64,6 +68,7 @@ namespace ChocolateyGui.ViewModels
             }
 
             _eventAggregator = eventAggregator;
+            _mapper = mapper;
             _eventAggregator.Subscribe(this);
         }
 
@@ -290,7 +295,9 @@ namespace ChocolateyGui.ViewModels
                 _packages.Clear();
                 Packages.Clear();
 
-                var packages = await _chocolateyService.GetInstalledPackages();
+                var packages = (await _chocolateyService.GetInstalledPackages())
+                    .Select(p => _mapper.Map<Items.PackageViewModel>(p)).ToList();
+
                 foreach (var packageViewModel in packages)
                 {
                     _packages.Add(packageViewModel);

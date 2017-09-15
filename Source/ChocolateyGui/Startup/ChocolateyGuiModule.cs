@@ -21,6 +21,9 @@ using PackageViewModel = ChocolateyGui.ViewModels.Items.PackageViewModel;
 
 namespace ChocolateyGui.Startup
 {
+    using chocolatey.infrastructure.app.configuration;
+    using NuGet;
+
     internal class ChocolateyGuiModule : Module
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Not Relevant")]
@@ -68,7 +71,11 @@ namespace ChocolateyGui.Startup
             {
                 config.CreateMap<IPackageViewModel, IPackageViewModel>()
                     .ForMember(vm => vm.IsInstalled, options => options.Ignore());
-                config.CreateMap<Package, IPackageViewModel>();
+                // TODO: config.CreateMap<Package, IPackageViewModel>().ConstructUsing((ResolutionContext rc) => container.Resolve<IPackageViewModel>());
+                config.CreateMap<IPackage, Package>();
+                config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
+                config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();
+                config.CreateMap<ConfigFileSourceSetting, Models.ChocolateySource>();
             });
 
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();

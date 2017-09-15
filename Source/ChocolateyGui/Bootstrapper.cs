@@ -24,6 +24,8 @@ namespace ChocolateyGui
 {
     using AutoMapper;
     using chocolatey;
+    using Models;
+    using ViewModels.Items;
     using ILogger = Serilog.ILogger;
     using Log = Serilog.Log;
 
@@ -103,6 +105,12 @@ namespace ChocolateyGui
                 // Do not remove! Load Chocolatey once so all config gets set
                 // properly for future calls
                 var choco = Lets.GetChocolatey();
+
+
+                Mapper.Initialize(config =>
+                {
+                    config.CreateMap<Package, IPackageViewModel>().ConstructUsing(rc => Container.Resolve<IPackageViewModel>());
+                });
 
                 var packageService = Container.Resolve<IChocolateyService>();
                 var features = await packageService.GetFeatures();

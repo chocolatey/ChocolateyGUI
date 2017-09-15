@@ -296,7 +296,7 @@ namespace ChocolateyGui.ViewModels
                 Packages.Clear();
 
                 var packages = (await _chocolateyService.GetInstalledPackages())
-                    .Select(p => _mapper.Map<Items.PackageViewModel>(p)).ToList();
+                    .Select(p => Mapper.Map<IPackageViewModel>(p)).ToList();
 
                 foreach (var packageViewModel in packages)
                 {

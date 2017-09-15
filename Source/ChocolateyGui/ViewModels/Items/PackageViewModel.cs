@@ -495,7 +495,7 @@ namespace ChocolateyGui.ViewModels.Items
             try
             {
                 var package = await _chocolateyService.GetByVersionAndIdAsync(_id, _version.ToString(), _isPrerelease).ConfigureAwait(false);
-                _mapper.Map<Package, IPackageViewModel>(package, this);
+                Mapper.Map<Package, IPackageViewModel>(package, this);
             }
             catch (Exception ex)
             {

@@ -4,11 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Runtime.Serialization;
-
 namespace ChocolateyGui.Models
 {
-    [DataContract]
     public struct PackageSearchOptions
     {
         public PackageSearchOptions(
@@ -30,28 +27,20 @@ namespace ChocolateyGui.Models
             Source = source;
         }
 
-        [DataMember]
         public int CurrentPage { get; set;  }
 
-        [DataMember]
         public bool IncludeAllVersions { get; set; }
 
-        [DataMember]
         public bool IncludePrerelease { get; set; }
 
-        [DataMember]
         public bool MatchQuery { get; set; }
 
-        [DataMember]
         public string Source { get; set; }
 
-        [DataMember]
         public int PageSize { get; set; }
 
-        [DataMember]
         public string SortColumn { get; set; }
 
-        [DataMember]
         public string[] TagsQuery { get; set; }
     }
 }

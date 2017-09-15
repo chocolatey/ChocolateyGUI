@@ -5,44 +5,31 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Runtime.Serialization;
 
 namespace ChocolateyGui.Models
 {
-    [DataContract]
     public class ChocolateySource : IEquatable<ChocolateySource>
     {
-        [DataMember]
         public string Id { get; set; }
 
-        [DataMember]
         public string Value { get; set; }
 
-        [DataMember]
         public bool Disabled { get; set; }
 
-        [DataMember]
         public string UserName { get; set; }
 
-        [DataMember]
         public string Password { get; set; }
 
-        [DataMember]
         public int Priority { get; set; }
 
-        [DataMember]
         public string Certificate { get; set; }
 
-        [DataMember]
         public string CertificatePassword { get; set; }
 
-        [DataMember]
         public bool BypassProxy { get; set; }
 
-        [DataMember]
         public bool AllowSelfService { get; set; }
 
-        [DataMember]
         public bool VisibleToAdminsOnly { get; set; }
 
         public bool Equals(ChocolateySource other)

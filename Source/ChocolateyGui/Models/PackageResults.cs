@@ -4,17 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Runtime.Serialization;
-
 namespace ChocolateyGui.Models
 {
-    [DataContract]
     public class PackageResults
     {
-        [DataMember]
         public Package[] Packages { get; set; }
 
-        [DataMember]
         public int TotalCount { get; set; }
     }
 }

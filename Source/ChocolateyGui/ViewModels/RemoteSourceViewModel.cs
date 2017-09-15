@@ -278,7 +278,7 @@ namespace ChocolateyGui.ViewModels
                             p.IsInstalled = true;
                         }
 
-                        Packages.Add(Mapper.Map<IPackageViewModel>(p));
+                        Packages.Add(Mapper.Map<Items.PackageViewModel>(p));
                     });
 
                     if (PageCount < CurrentPage)

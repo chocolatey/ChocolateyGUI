@@ -30,6 +30,7 @@ namespace ChocolateyGui.Utilities
             {
                 loggerConfig.MinimumLevel.Is(logEventLevel);
             }
+
             return loggerConfig;
 #endif
         }

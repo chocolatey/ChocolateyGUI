@@ -23,7 +23,6 @@ namespace ChocolateyGui.Services
     using Microsoft.VisualStudio.Threading;
     using Models;
     using NuGet;
-    using ViewModels.Items;
     using ChocolateySource = Models.ChocolateySource;
     using ILogger = Serilog.ILogger;
 

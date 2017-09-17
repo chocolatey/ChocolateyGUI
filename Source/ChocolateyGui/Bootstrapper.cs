@@ -106,7 +106,6 @@ namespace ChocolateyGui
                 // properly for future calls
                 var choco = Lets.GetChocolatey();
 
-
                 Mapper.Initialize(config =>
                 {
                     config.CreateMap<Package, IPackageViewModel>().ConstructUsing(rc => Container.Resolve<IPackageViewModel>());

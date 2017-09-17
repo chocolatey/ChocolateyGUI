@@ -354,6 +354,8 @@ namespace ChocolateyGui.ViewModels.Items
 
                         return;
                     }
+
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
                 }
             }
             catch (Exception ex)
@@ -415,6 +417,8 @@ namespace ChocolateyGui.ViewModels.Items
 
                         return;
                     }
+
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Uninstalled, Version));
                 }
             }
             catch (Exception ex)
@@ -455,6 +459,8 @@ namespace ChocolateyGui.ViewModels.Items
 
                         return;
                     }
+
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Updated));
                 }
             }
             catch (Exception ex)
@@ -496,6 +502,8 @@ namespace ChocolateyGui.ViewModels.Items
 
                         return;
                     }
+
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Pinned, Version));
                 }
             }
             catch (Exception ex)
@@ -537,6 +545,8 @@ namespace ChocolateyGui.ViewModels.Items
 
                         return;
                     }
+
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Unpinned, Version));
                 }
             }
             catch (Exception ex)

@@ -15,6 +15,7 @@ namespace ChocolateyGui
     {
         private readonly ILogger _logger;
         private Action<LogMessage> _interceptor;
+        private string _context;
 
         public SerilogLogger(ILogger logger)
         {
@@ -28,57 +29,147 @@ namespace ChocolateyGui
 
         public void InitializeFor(string loggerName)
         {
-            // skip for now
+            _context = loggerName;
         }
 
         public void Debug(string message, params object[] formatting)
         {
             _logger.Debug(message, formatting);
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Debug,
+                Message = string.Format(message, formatting)
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public void Debug(Func<string> message)
         {
             _logger.Debug(message());
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Debug,
+                Message = message()
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public void Info(string message, params object[] formatting)
         {
             _logger.Information(message, formatting);
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Info,
+                Message = string.Format(message, formatting)
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public void Info(Func<string> message)
         {
             _logger.Information(message());
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Info,
+                Message = message()
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public void Warn(string message, params object[] formatting)
         {
             _logger.Warning(message, formatting);
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Warn,
+                Message = string.Format(message, formatting)
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public void Warn(Func<string> message)
         {
             _logger.Warning(message());
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Warn,
+                Message = message()
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public void Error(string message, params object[] formatting)
         {
             _logger.Error(message, formatting);
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Error,
+                Message = string.Format(message, formatting)
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public void Error(Func<string> message)
         {
             _logger.Error(message());
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Error,
+                Message = message()
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public void Fatal(string message, params object[] formatting)
         {
             _logger.Fatal(message, formatting);
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Fatal,
+                Message = string.Format(message, formatting)
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public void Fatal(Func<string> message)
         {
             _logger.Fatal(message());
+
+            var logMessage = new LogMessage
+            {
+                Context = _context,
+                LogLevel = LogLevel.Fatal,
+                Message = message()
+            };
+
+            _interceptor?.Invoke(logMessage);
         }
 
         public class InterceptMessages : IDisposable

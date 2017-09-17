@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
              xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:cal="http://www.caliburnproject.org" 
+             xmlns:cal="http://www.caliburnproject.org"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              mc:Ignorable="d"
@@ -62,7 +62,7 @@
                     Command="{commands:DataContextCommandAdapter Executed=GoToLast, CanExecute=CanGoToLast}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
     </Grid>
-        
+
         <ListBox Grid.Row="1" x:Name="Packages" ItemsSource="{Binding Packages}"
                  VerticalAlignment="Stretch"
                  HorizontalContentAlignment="Stretch"
@@ -110,12 +110,18 @@
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
                                 <TextBlock FontSize="14"
-                                           AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}">
+                                           AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}"
+                                           IsHitTestVisible="false">
                                     <Run Text="{x:Static lang:Resources.RemoteSourceView_Authors}" />
                                     <Run Style="{StaticResource ColoredDetailsTextLine}" Text="{Binding Authors, Converter={StaticResource StringListToString}}" />
                                 </TextBlock>
                             </StackPanel>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" FontWeight="SemiBold" FontSize="20" HorizontalAlignment="Right">
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="1" Grid.RowSpan="2"
+                                       FontWeight="SemiBold"
+                                       FontSize="20"
+                                       HorizontalAlignment="Right"
+                                       IsHitTestVisible="false">
                                 <Run Text="{Binding DownloadCount, StringFormat=N0}"/>
                                 <Run Text="{x:Static lang:Resources.RemoteSourceView_Downloads}"/>
                             </TextBlock>

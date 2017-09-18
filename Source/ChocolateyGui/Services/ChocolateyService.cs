@@ -25,18 +25,21 @@ namespace ChocolateyGui.Services
     using NuGet;
     using ChocolateySource = Models.ChocolateySource;
     using ILogger = Serilog.ILogger;
+    using System.Reactive.Subjects;
 
     internal class ChocolateyService : IChocolateyService
     {
         private static readonly ILogger Logger = Serilog.Log.ForContext<ChocolateyService>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
         private readonly IMapper _mapper;
+        private readonly IProgressService _progressService;
 #pragma warning disable SA1401 // Fields must be private
 #pragma warning restore SA1401 // Fields must be private
 
-        public ChocolateyService(IMapper mapper)
+        public ChocolateyService(IMapper mapper, IProgressService progressService)
         {
             _mapper = mapper;
+            _progressService = progressService;
         }
 
         public Task<bool> IsElevated()
@@ -46,10 +49,9 @@ namespace ChocolateyGui.Services
 
         public async Task<IEnumerable<Package>> GetInstalledPackages()
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                     config =>
                         {
@@ -65,10 +67,9 @@ namespace ChocolateyGui.Services
 
         public async Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                     config =>
                         {
@@ -99,10 +100,9 @@ namespace ChocolateyGui.Services
             Uri source = null,
             bool force = false)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var logger = new SerilogLogger(Logger);
+                var logger = new SerilogLogger(Logger, _progressService);
                 var choco = Lets.GetChocolatey().SetCustomLogging(logger);
                 choco.Set(
                     config =>
@@ -147,10 +147,9 @@ namespace ChocolateyGui.Services
 
         public async Task<PackageResults> Search(string query, PackageSearchOptions options)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                     config =>
                         {
@@ -188,10 +187,9 @@ namespace ChocolateyGui.Services
 
         public async Task<Package> GetByVersionAndIdAsync(string id, string version, bool isPrerelease)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                     config =>
                     {
@@ -221,10 +219,9 @@ namespace ChocolateyGui.Services
 
         public async Task<PackageOperationResult> UninstallPackage(string id, string version, bool force = false)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var logger = new SerilogLogger(Logger);
+                var logger = new SerilogLogger(Logger, _progressService);
                 var choco = Lets.GetChocolatey().SetCustomLogging(logger);
                 choco.Set(
                     config =>
@@ -245,10 +242,9 @@ namespace ChocolateyGui.Services
 
         public async Task<PackageOperationResult> UpdatePackage(string id, Uri source = null)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var logger = new SerilogLogger(Logger);
+                var logger = new SerilogLogger(Logger, _progressService);
                 var choco = Lets.GetChocolatey().SetCustomLogging(logger);
                 choco.Set(
                     config =>
@@ -264,10 +260,9 @@ namespace ChocolateyGui.Services
 
         public async Task<PackageOperationResult> PinPackage(string id, string version)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                     config =>
                         {
@@ -292,10 +287,9 @@ namespace ChocolateyGui.Services
 
         public async Task<PackageOperationResult> UnpinPackage(string id, string version)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                     config =>
                         {
@@ -319,20 +313,18 @@ namespace ChocolateyGui.Services
 
         public async Task<ChocolateyFeature[]> GetFeatures()
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var config = await GetConfigFile(operationContext);
+                var config = await GetConfigFile();
                 return config.Features.Select(_mapper.Map<ChocolateyFeature>).ToArray();
             }
         }
 
         public async Task SetFeature(ChocolateyFeature feature)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                     config =>
                     {
@@ -347,20 +339,18 @@ namespace ChocolateyGui.Services
 
         public async Task<ChocolateySetting[]> GetSettings()
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var config = await GetConfigFile(operationContext);
+                var config = await GetConfigFile();
                 return config.ConfigSettings.Select(_mapper.Map<ChocolateySetting>).ToArray();
             }
         }
 
         public async Task SetSetting(ChocolateySetting setting)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                     config =>
                         {
@@ -376,20 +366,18 @@ namespace ChocolateyGui.Services
 
         public async Task<ChocolateySource[]> GetSources()
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.ReadLockAsync())
             {
-                var config = await GetConfigFile(operationContext);
+                var config = await GetConfigFile();
                 return config.Sources.Select(_mapper.Map<ChocolateySource>).ToArray();
             }
         }
 
         public async Task AddSource(ChocolateySource source)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                     config =>
                     {
@@ -446,10 +434,9 @@ namespace ChocolateyGui.Services
 
         public async Task<bool> RemoveSource(string id)
         {
-            var operationContext = OperationContext.Current;
             using (await Lock.WriteLockAsync())
             {
-                var chocoConfig = await GetConfigFile(operationContext);
+                var chocoConfig = await GetConfigFile();
                 var sources = chocoConfig.Sources.Select(_mapper.Map<ChocolateySource>).ToList();
 
                 if (sources.All(source => source.Id != id))
@@ -457,7 +444,7 @@ namespace ChocolateyGui.Services
                     return false;
                 }
 
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger));
+                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
                 choco.Set(
                         config =>
                         {
@@ -528,14 +515,9 @@ namespace ChocolateyGui.Services
             }
         }
 
-        private async Task<ConfigFileSettings> GetConfigFile(OperationContext context = default(OperationContext))
+        private async Task<ConfigFileSettings> GetConfigFile()
         {
             var choco = Lets.GetChocolatey();
-            if (context != null)
-            {
-                choco.SetCustomLogging(new SerilogLogger(Logger));
-            }
-
             var xmlService = choco.Container().GetInstance<IXmlService>();
             var config =
                 await Task.Run(

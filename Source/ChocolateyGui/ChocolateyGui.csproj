@@ -223,8 +223,6 @@
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Services\IChocolateyService.cs" />
-    <Compile Include="Services\IChocolateyServiceCallbacks.cs" />
-    <Compile Include="Services\ServiceCallbackHandler.cs" />
     <Compile Include="Startup\ChocolateyGuiModule.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />

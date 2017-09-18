@@ -34,42 +34,5 @@ namespace ChocolateyGui
         {
             return Task.Run(() => (ICollection<PackageResult>)chocolatey.List<PackageResult>().ToList());
         }
-
-        // internal static GetChocolatey SetLoggerContext(this GetChocolatey chocolatey)
-        // {
-        //    SerilogLogger ignored;
-        //    return chocolatey.SetLoggerContext(out ignored);
-        // }
-
-        // internal static GetChocolatey SetLoggerContext(this GetChocolatey chocolatey, out SerilogLogger logger)
-        // {
-        //    logger = new SerilogLogger(Logger);
-        //    return chocolatey.SetCustomLogging(logger);
-        // }
-
-        // internal static CancellationToken GetCancellationToken(this OperationContext context)
-        // {
-        //    var sessionId = context.SessionId;
-        //    if (string.IsNullOrWhiteSpace(sessionId))
-        //    {
-        //        throw new InvalidOperationException("Missing SessionId");
-        //    }
-        //    var cts = _cancellationTokenSources.GetOrAdd(sessionId, id => new CancellationTokenSource());
-        //    return cts.Token;
-        // }
-
-        // internal static void EndSession(this OperationContext context)
-        // {
-        //    var sessionId = context.SessionId;
-        //    if (string.IsNullOrWhiteSpace(sessionId))
-        //    {
-        //        throw new InvalidOperationException("Missing SessionId");
-        //    }
-        //    CancellationTokenSource cts;
-        //    if (_cancellationTokenSources.TryGetValue(sessionId, out cts))
-        //    {
-        //        cts.Cancel();
-        //    }
-        // }
     }
 }

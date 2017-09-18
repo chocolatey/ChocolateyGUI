@@ -10,16 +10,19 @@ namespace ChocolateyGui
     using chocolatey.infrastructure.logging;
     using Models;
     using Serilog;
+    using Services;
 
     public class SerilogLogger : ILog
     {
         private readonly ILogger _logger;
         private Action<LogMessage> _interceptor;
         private string _context;
+        private IProgressService _progressService;
 
-        public SerilogLogger(ILogger logger)
+        public SerilogLogger(ILogger logger, IProgressService progressService)
         {
             _logger = logger;
+            _progressService = progressService;
         }
 
         public IDisposable Intercept(Action<LogMessage> interceptor)
@@ -72,6 +75,7 @@ namespace ChocolateyGui
             };
 
             _interceptor?.Invoke(logMessage);
+            _progressService.WriteMessage(logMessage.Message, PowerShellLineType.Output);
         }
 
         public void Info(Func<string> message)
@@ -86,6 +90,7 @@ namespace ChocolateyGui
             };
 
             _interceptor?.Invoke(logMessage);
+            _progressService.WriteMessage(logMessage.Message, PowerShellLineType.Output);
         }
 
         public void Warn(string message, params object[] formatting)
@@ -100,6 +105,7 @@ namespace ChocolateyGui
             };
 
             _interceptor?.Invoke(logMessage);
+            _progressService.WriteMessage(logMessage.Message, PowerShellLineType.Warning);
         }
 
         public void Warn(Func<string> message)
@@ -114,6 +120,7 @@ namespace ChocolateyGui
             };
 
             _interceptor?.Invoke(logMessage);
+            _progressService.WriteMessage(logMessage.Message, PowerShellLineType.Warning);
         }
 
         public void Error(string message, params object[] formatting)
@@ -128,6 +135,7 @@ namespace ChocolateyGui
             };
 
             _interceptor?.Invoke(logMessage);
+            _progressService.WriteMessage(logMessage.Message, PowerShellLineType.Error);
         }
 
         public void Error(Func<string> message)
@@ -142,6 +150,7 @@ namespace ChocolateyGui
             };
 
             _interceptor?.Invoke(logMessage);
+            _progressService.WriteMessage(logMessage.Message, PowerShellLineType.Error);
         }
 
         public void Fatal(string message, params object[] formatting)
@@ -156,6 +165,7 @@ namespace ChocolateyGui
             };
 
             _interceptor?.Invoke(logMessage);
+            _progressService.WriteMessage(logMessage.Message, PowerShellLineType.Error);
         }
 
         public void Fatal(Func<string> message)
@@ -170,6 +180,7 @@ namespace ChocolateyGui
             };
 
             _interceptor?.Invoke(logMessage);
+            _progressService.WriteMessage(logMessage.Message, PowerShellLineType.Error);
         }
 
         public class InterceptMessages : IDisposable

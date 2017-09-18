@@ -156,7 +156,7 @@ namespace ChocolateyGui.ViewModels
             {
                 await _packageService.SetFeature(feature);
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 // TODO: Needs to be put in resource section
                 await _progressService.ShowMessageAsync(
@@ -207,7 +207,7 @@ namespace ChocolateyGui.ViewModels
                 _originalId = SelectedSource?.Id;
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 // TODO: Needs to be put in resource section
                 await _progressService.ShowMessageAsync(
@@ -230,7 +230,7 @@ namespace ChocolateyGui.ViewModels
                 SelectedSource = null;
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 // TODO: Needs to be put in resource section
                 await _progressService.ShowMessageAsync(

@@ -57,9 +57,9 @@ namespace ChocolateyGui.Services
                             config.ListCommand.LocalOnly = true;
                         });
 
-               return (await choco.ListAsync<PackageResult>())
-                    .Select(package => GetMappedPackage(choco, package, _mapper, true))
-                    .ToArray();
+                return (await choco.ListAsync<PackageResult>())
+                     .Select(package => GetMappedPackage(choco, package, _mapper, true))
+                     .ToArray();
             }
         }
 

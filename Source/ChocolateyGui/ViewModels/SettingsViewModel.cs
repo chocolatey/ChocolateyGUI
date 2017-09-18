@@ -152,7 +152,17 @@ namespace ChocolateyGui.ViewModels
 
         public async Task UpdateFeature(ChocolateyFeature feature)
         {
-            await _packageService.SetFeature(feature);
+            try
+            {
+                await _packageService.SetFeature(feature);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                // TODO: Needs to be put in resource section
+                await _progressService.ShowMessageAsync(
+                    "Unable to perform action",
+                    "You may not have the appropriate permissions to perform this action.");
+            }
         }
 
         public async Task UpdateSetting(ChocolateySetting setting)
@@ -197,6 +207,13 @@ namespace ChocolateyGui.ViewModels
                 _originalId = SelectedSource?.Id;
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                // TODO: Needs to be put in resource section
+                await _progressService.ShowMessageAsync(
+                    "Unable to perform action",
+                    "You may not have the appropriate permissions to perform this action.");
+            }
             finally
             {
                 await _progressService.StopLoading();
@@ -212,6 +229,13 @@ namespace ChocolateyGui.ViewModels
                 Sources.Remove(SelectedSource);
                 SelectedSource = null;
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                // TODO: Needs to be put in resource section
+                await _progressService.ShowMessageAsync(
+                    "Unable to perform action",
+                    "You may not have the appropriate permissions to perform this action.");
             }
             finally
             {

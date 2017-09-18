@@ -9,7 +9,6 @@ namespace ChocolateyGui.Services
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.ServiceModel;
     using System.Threading.Tasks;
     using AutoMapper;
     using chocolatey;
@@ -25,7 +24,6 @@ namespace ChocolateyGui.Services
     using NuGet;
     using ChocolateySource = Models.ChocolateySource;
     using ILogger = Serilog.ILogger;
-    using System.Reactive.Subjects;
 
     internal class ChocolateyService : IChocolateyService
     {

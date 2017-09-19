@@ -4,9 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
@@ -14,6 +11,9 @@ using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using NuGet;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Action = System.Action;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
@@ -25,7 +25,6 @@ namespace ChocolateyGui.ViewModels.Items
     public class PackageViewModel :
         ObservableBase,
         IPackageViewModel,
-        IHandleWithTask<PackageChangedMessage>,
         IHandle<PackageHasUpdateMessage>
     {
         private static readonly Serilog.ILogger Logger = Serilog.Log.ForContext<PackageViewModel>();
@@ -355,6 +354,7 @@ namespace ChocolateyGui.ViewModels.Items
                         return;
                     }
 
+                    IsInstalled = true;
                     _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
                 }
             }
@@ -418,6 +418,7 @@ namespace ChocolateyGui.ViewModels.Items
                         return;
                     }
 
+                    IsInstalled = false;
                     _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Uninstalled, Version));
                 }
             }
@@ -503,6 +504,7 @@ namespace ChocolateyGui.ViewModels.Items
                         return;
                     }
 
+                    IsPinned = true;
                     _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Pinned, Version));
                 }
             }
@@ -546,6 +548,7 @@ namespace ChocolateyGui.ViewModels.Items
                         return;
                     }
 
+                    IsPinned = false;
                     _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Unpinned, Version));
                 }
             }
@@ -569,37 +572,6 @@ namespace ChocolateyGui.ViewModels.Items
             }
 
             await _eventAggregator.PublishOnUIThreadAsync(new ShowPackageDetailsMessage(this)).ConfigureAwait(false);
-        }
-
-        public Task Handle(PackageChangedMessage message)
-        {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-
-            if (message.Id != Id)
-            {
-                return Task.FromResult(true);
-            }
-
-            switch (message.ChangeType)
-            {
-                case PackageChangeType.Installed:
-                    IsInstalled = true;
-                    break;
-                case PackageChangeType.Uninstalled:
-                    IsInstalled = false;
-                    break;
-                case PackageChangeType.Pinned:
-                    IsPinned = true;
-                    break;
-                case PackageChangeType.Unpinned:
-                    IsPinned = false;
-                    break;
-            }
-
-            return Task.FromResult(true);
         }
 
         public void Handle(PackageHasUpdateMessage message)

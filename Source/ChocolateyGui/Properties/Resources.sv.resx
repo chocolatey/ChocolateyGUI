@@ -341,7 +341,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Avinstallera</value>
   </data>
   <data name="PackageView_ButtonUnpin" xml:space="preserve">
-    <value>Avmarkera</value>
+    <value>Lås upp</value>
   </data>
   <data name="PackageView_ButtonUpdate" xml:space="preserve">
     <value>Uppdatera</value>
@@ -402,6 +402,12 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="RemoteSourceViewModel_LoadingPage" xml:space="preserve">
     <value>Laddar sida {0}...</value>
     <comment>{0} = The page that is loading</comment>
+  </data>
+  <data name="RemoteSourceViewModel_SortSelectionAtoZ" xml:space="preserve">
+    <value>A-Ö</value>
+  </data>
+  <data name="RemoteSourceViewModel_SortSelectionPopularity" xml:space="preserve">
+    <value>Popularitet</value>
   </data>
   <data name="RemoteSourceViewModel_UnableToConnectToFeed" xml:space="preserve">
     <value>Kunde inte ansluta till flöde med källa: {0}.  Kontrollera att detta flöde är tillgängligt och försök igen.</value>
@@ -519,9 +525,6 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_Sources" xml:space="preserve">
     <value>Källor</value>
   </data>
-  <data name="SettingsView_SourcesBypassProxy" xml:space="preserve">
-    <value />
-  </data>
   <data name="SettingsView_SourcesCertificate" xml:space="preserve">
     <value>Certifikat</value>
   </data>
@@ -546,9 +549,6 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_SourcesPriority" xml:space="preserve">
     <value>Prioritet</value>
   </data>
-  <data name="SettingsView_SourcesSelfService" xml:space="preserve">
-    <value />
-  </data>
   <data name="SettingsView_SourcesSource" xml:space="preserve">
     <value>Källa</value>
   </data>
@@ -572,5 +572,23 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="VersionNumberProvider_VersionFormat" xml:space="preserve">
     <value>Version: {0}</value>
+  </data>
+  <data name="SettingsView_SourcesBypassProxy" xml:space="preserve">
+    <value>Bypass Proxy</value>
+  </data>
+  <data name="SettingsView_SourcesSelfService" xml:space="preserve">
+    <value>Self Service</value>
+  </data>
+  <data name="SettingsView_SourcesIsBypassProxy" xml:space="preserve">
+    <value>Använd Bypass Proxy</value>
+  </data>
+  <data name="SettingsView_SourcesIsSelfService" xml:space="preserve">
+    <value>Använd Self Service</value>
+  </data>
+  <data name="SettingsView_SourcesAdminOnly" xml:space="preserve">
+    <value>Enbart administratörer</value>
+  </data>
+  <data name="SettingsView_SourcesIsAdminOnly" xml:space="preserve">
+    <value>Enbart synlig för administratörer</value>
   </data>
 </root>

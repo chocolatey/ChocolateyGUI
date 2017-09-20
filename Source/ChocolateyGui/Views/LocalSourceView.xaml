@@ -25,12 +25,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="0,5" Style="{StaticResource LeftSourceListItem}">
-			<Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Resources.LocalSourceView_SearchBoxText}"/>
+            <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Resources.LocalSourceView_SearchBoxText}"/>
             <TextBox x:Name="SearchTextBox" Width="300" Padding="0,2,0,-2" FontSize="14"
                      Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
-						<CheckBox Name="MatchCheckBox" Margin="5" Content="{x:Static lang:Resources.LocalSourceView_CheckboxMatchExact}" IsChecked="{Binding MatchWord}" />
+            <CheckBox Name="MatchCheckBox" Margin="5" Content="{x:Static lang:Resources.LocalSourceView_CheckboxMatchExact}" IsChecked="{Binding MatchWord}" />
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-						<CheckBox Name="UpdatesCheckBox" Margin="5" Content="{x:Static lang:Resources.LocalSourceView_CheckboxPkgsWithUpdates}"
+            <CheckBox Name="UpdatesCheckBox" Margin="5" Content="{x:Static lang:Resources.LocalSourceView_CheckboxPkgsWithUpdates}"
                       IsChecked="{Binding ShowOnlyPackagesWithUpdate}" />
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -46,7 +46,7 @@
                   AutoGenerateColumns="False" IsReadOnly="True"
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>
-								<DataGridTemplateColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Name}" Width="2*">
+                <DataGridTemplateColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Name}" Width="2*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                             <StackPanel Orientation="Horizontal">
@@ -56,10 +56,10 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-								<DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Authors}"
+                <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Authors}"
                                     Binding="{Binding Authors, Converter={StaticResource ListToString}}" Width="1*" />
-								<DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
-								<DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_LatestVersion}" Binding="{Binding LatestVersion, IsAsync=True}" Width="1*" />
+                <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
+                <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_LatestVersion}" Binding="{Binding LatestVersion, IsAsync=True}" Width="1*" />
             </DataGrid.Columns>
         </DataGrid>
         <controls:ProgressRing Grid.Row="1" IsActive="{Binding FirstLoadComplete}"/>

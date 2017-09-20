@@ -29,7 +29,6 @@ namespace ChocolateyGui.ViewModels
 
         private static readonly HashSet<string> ConfigProperties = new HashSet<string>
                                                                        {
-                                                                           nameof(ElevateByDefault),
                                                                            nameof(ShowConsoleOutput)
                                                                        };
 
@@ -67,20 +66,6 @@ namespace ChocolateyGui.ViewModels
         public ObservableCollection<ChocolateySetting> Settings { get; } = new ObservableCollection<ChocolateySetting>();
 
         public ObservableCollection<ChocolateySource> Sources { get; } = new ObservableCollection<ChocolateySource>();
-
-        public bool ElevateByDefault
-        {
-            get
-            {
-                return _config.ElevateByDefault;
-            }
-
-            set
-            {
-                _config.ElevateByDefault = value;
-                NotifyOfPropertyChange();
-            }
-        }
 
         public bool ShowConsoleOutput
         {

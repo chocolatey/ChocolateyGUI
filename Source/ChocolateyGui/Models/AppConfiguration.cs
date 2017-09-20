@@ -10,8 +10,6 @@ namespace ChocolateyGui.Models
     {
         public string Id { get; set; }
 
-        public bool ElevateByDefault { get; set; }
-
         public bool ShowConsoleOutput { get; set; }
     }
 }

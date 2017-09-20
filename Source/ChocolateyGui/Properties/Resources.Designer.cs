@@ -1280,15 +1280,6 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Elevate By Default.
-        /// </summary>
-        public static string SettingsView_ToggleElevateByDefault {
-            get {
-                return ResourceManager.GetString("SettingsView_ToggleElevateByDefault", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Show Console Output.
         /// </summary>
         public static string SettingsView_ToggleShowConsoleOutput {

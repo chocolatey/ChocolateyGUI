@@ -40,7 +40,6 @@
                         </Grid.RowDefinitions>
                         <TextBlock Margin="5 5 5 3" Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Static lang:Resources.SettingsView_ChocoGui}"/>
                         <StackPanel Margin="5 0" Grid.Row="1" Width="300" HorizontalAlignment="Left">
-                            <metro:ToggleSwitch Header="{x:Static lang:Resources.SettingsView_ToggleElevateByDefault}" IsChecked="{Binding ElevateByDefault}"/>
                             <metro:ToggleSwitch Header="{x:Static lang:Resources.SettingsView_ToggleShowConsoleOutput}" IsChecked="{Binding ShowConsoleOutput}"/>
                         </StackPanel>
                     </Grid>

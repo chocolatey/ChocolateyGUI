@@ -72,7 +72,6 @@ namespace ChocolateyGui.Startup
                 config.CreateMap<IPackageViewModel, IPackageViewModel>()
                     .ForMember(vm => vm.IsInstalled, options => options.Ignore());
 
-                // TODO: config.CreateMap<Package, IPackageViewModel>().ConstructUsing(rc => container.Resolve<IPackageViewModel>());
                 config.CreateMap<IPackage, Package>();
                 config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
                 config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();

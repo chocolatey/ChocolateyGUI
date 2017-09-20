@@ -256,6 +256,9 @@ namespace ChocolateyGui.ViewModels
                 var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
 
                 await _progressService.StartLoading(string.Format(Resources.RemoteSourceViewModel_LoadingPage, CurrentPage));
+
+                _progressService.WriteMessage(Resources.RemoteSourceViewModel_FetchingPackages);
+
                 try
                 {
                     var result =

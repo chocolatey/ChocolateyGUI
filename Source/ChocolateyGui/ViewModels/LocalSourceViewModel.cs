@@ -130,6 +130,8 @@ namespace ChocolateyGui.ViewModels
             try
             {
                 await _progressService.StartLoading(Resources.LocalSourceViewModel_Packages, true);
+
+                _progressService.WriteMessage(Resources.LocalSourceViewModel_FetchingPackages);
                 var token = _progressService.GetCancellationToken();
                 var packages = Packages.Where(p => p.CanUpdate && !p.IsPinned).ToList();
                 double current = 0.0f;

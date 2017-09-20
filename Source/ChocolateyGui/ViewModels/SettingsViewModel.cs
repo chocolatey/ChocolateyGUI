@@ -143,10 +143,9 @@ namespace ChocolateyGui.ViewModels
             }
             catch (UnauthorizedAccessException)
             {
-                // TODO: Needs to be put in resource section
                 await _progressService.ShowMessageAsync(
-                    "Unable to perform action",
-                    "You may not have the appropriate permissions to perform this action.");
+                    Resources.General_UnauthorisedException_Title,
+                    Resources.General_UnauthorisedException_Description);
             }
         }
 
@@ -194,10 +193,9 @@ namespace ChocolateyGui.ViewModels
             }
             catch (UnauthorizedAccessException)
             {
-                // TODO: Needs to be put in resource section
                 await _progressService.ShowMessageAsync(
-                    "Unable to perform action",
-                    "You may not have the appropriate permissions to perform this action.");
+                    Resources.General_UnauthorisedException_Title,
+                    Resources.General_UnauthorisedException_Description);
             }
             finally
             {
@@ -217,10 +215,9 @@ namespace ChocolateyGui.ViewModels
             }
             catch (UnauthorizedAccessException)
             {
-                // TODO: Needs to be put in resource section
                 await _progressService.ShowMessageAsync(
-                    "Unable to perform action",
-                    "You may not have the appropriate permissions to perform this action.");
+                    Resources.General_UnauthorisedException_Title,
+                    Resources.General_UnauthorisedException_Description);
             }
             finally
             {

@@ -10,7 +10,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("ChocolateyGui")]
+[assembly: AssemblyTitle("Chocolatey GUI")]
 [assembly: AssemblyDescription("GUI for Chocolatey")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]

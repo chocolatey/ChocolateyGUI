@@ -1019,7 +1019,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chocolatey Gui.
+        ///   Looks up a localized string similar to Chocolatey GUI.
         /// </summary>
         public static string SettingsView_ChocoGui {
             get {

@@ -484,7 +484,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Spara</value>
   </data>
   <data name="SettingsView_ChocoGui" xml:space="preserve">
-    <value>Chocolatey Gui</value>
+    <value>Chocolatey GUI</value>
   </data>
   <data name="SettingsView_Credits" xml:space="preserve">
     <value>Tack till</value>

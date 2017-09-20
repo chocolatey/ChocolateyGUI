@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/chocolatey/ChocolateyGUI</projectUrl>
     <projectSourceUrl>https://github.com/chocolatey/ChocolateyGUI</projectSourceUrl>
     <packageSourceUrl>https://github.com/chocolatey/ChocolateyGUI/tree/develop/ChocolateyPackage</packageSourceUrl>
-	  <iconUrl>https://cdn.rawgit.com/chocolatey/choco/8b6217061a4efe6543622e903996bb8eac012db2/docs/images/Choco_Icon.png</iconUrl>
+    <iconUrl>https://cdn.rawgit.com/chocolatey/choco/8b6217061a4efe6543622e903996bb8eac012db2/docs/images/Choco_Icon.png</iconUrl>
     <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE</licenseUrl>
     <bugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</bugTrackerUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -26,11 +26,11 @@ Chocolatey GUI is a nice GUI on top of the Chocolatey command line tool.
 ## Notes
 This package will only work correctly on Windows 7 SP1, Windows Server 2008 R2 SP1,
 Windows Server 2008 SP2 and above, and requires .NET Framework 4.5.2 at minimum.
-	</description>
+  </description>
     <summary>A GUI for Chocolatey</summary>
-	<releaseNotes>
+  <releaseNotes>
 All release notes for Chocolatey GUI can be found on the GitHub site - https://github.com/chocolatey/ChocolateyGUI/releases
-	</releaseNotes>
+  </releaseNotes>
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>
       <dependency id="Chocolatey" version="[0.10.3, 0.11)" />
@@ -38,7 +38,7 @@ All release notes for Chocolatey GUI can be found on the GitHub site - https://g
   </metadata>
   <files>
     <file src="chocolateyInstall.ps1" target="tools"/>
-	  <file src="chocolateyUninstall.ps1" target="tools"/>
-	  <file src="..\..\BuildArtifacts\ChocolateyGUI.msi" target="tools"/>
+    <file src="chocolateyUninstall.ps1" target="tools"/>
+    <file src="..\..\BuildArtifacts\ChocolateyGUI.msi" target="tools"/>
   </files>
 </package>

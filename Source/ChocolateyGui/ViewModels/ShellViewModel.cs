@@ -21,14 +21,14 @@ namespace ChocolateyGui.ViewModels
         IHandle<ShowSettingsMessage>,
         IHandle<SettingsGoBackMessage>
     {
-        private readonly IChocolateyPackageService _chocolateyPackageService;
+        private readonly IChocolateyService _chocolateyPackageService;
         private readonly IVersionNumberProvider _versionNumberProvider;
         private readonly IEventAggregator _eventAggregator;
         private readonly SourcesViewModel _sourcesViewModel;
         private object _lastActiveItem;
 
         public ShellViewModel(
-            IChocolateyPackageService chocolateyPackageService,
+            IChocolateyService chocolateyPackageService,
             IVersionNumberProvider versionNumberProvider,
             IEventAggregator eventAggregator,
             SourcesViewModel sourcesViewModel)

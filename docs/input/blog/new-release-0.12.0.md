@@ -1,11 +1,11 @@
 ---
-Title: ChocolateyGUI 0.12.0
+Title: Chocolatey GUI 0.12.0
 Category: Release
 Author: gep13
 Published: 28/2/2015
 ---
 
-This release is a complete re-architecture of ChocolateyGUI, switching from a Windows Forms Application to a WPF Application.  All credit goes to [Richard Simpson](https://github.com/RichiCoder1) for the amazing amount of work put into this.  In addition, we have added a more stringent build process, making use of tools like FxCop, StyleCop, DupFinder and InspectCode, as well as Continuous Integration services like AppVeyor and TeamCity CodeBetter.
+This release is a complete re-architecture of Chocolatey GUI, switching from a Windows Forms Application to a WPF Application.  All credit goes to [Richard Simpson](https://github.com/RichiCoder1) for the amazing amount of work put into this.  In addition, we have added a more stringent build process, making use of tools like FxCop, StyleCop, DupFinder and InspectCode, as well as Continuous Integration services like AppVeyor and TeamCity CodeBetter.
 
 ## Features
 
@@ -27,7 +27,7 @@ This release is a complete re-architecture of ChocolateyGUI, switching from a Wi
 - [**#101**](https://github.com/chocolatey/ChocolateyGUI/issues/101) Navigate back to Local Source List after uninstalling or updating a package.
 - [**#96**](https://github.com/chocolatey/ChocolateyGUI/issues/96) Implement Package Service
 - [**#94**](https://github.com/chocolatey/ChocolateyGUI/issues/94) Add Package View Page
-- [**#92**](https://github.com/chocolatey/ChocolateyGUI/issues/92) ChocolateyGUI should show license information for packages
+- [**#92**](https://github.com/chocolatey/ChocolateyGUI/issues/92) Chocolatey GUI should show license information for packages
 - [**#91**](https://github.com/chocolatey/ChocolateyGUI/issues/91) Update Readme with information about contributing
 - [**#90**](https://github.com/chocolatey/ChocolateyGUI/issues/90) Update Wix package to include output from WPF Project
 - [**#81**](https://github.com/chocolatey/ChocolateyGUI/issues/81) Update information in Help | About Page
@@ -70,17 +70,17 @@ This release is a complete re-architecture of ChocolateyGUI, switching from a Wi
 - [**#193**](https://github.com/chocolatey/ChocolateyGUI/issues/193) Not all installed packages get listed
 - [**#174**](https://github.com/chocolatey/ChocolateyGUI/issues/174) Fix Broken Markdown.cs
 - [**#127**](https://github.com/chocolatey/ChocolateyGUI/issues/127) Potential issue with "INSTALLED" checkbox
-- [**#126**](https://github.com/chocolatey/ChocolateyGUI/issues/126) Unable to run latest ChocolateyGUI package from MyGet
-- [**#123**](https://github.com/chocolatey/ChocolateyGUI/issues/123) When not running ChocolateyGUI, each package update present UAC prompt
+- [**#126**](https://github.com/chocolatey/ChocolateyGUI/issues/126) Unable to run latest Chocolatey GUI package from MyGet
+- [**#123**](https://github.com/chocolatey/ChocolateyGUI/issues/123) When not running Chocolatey GUI, each package update present UAC prompt
 - [**#120**](https://github.com/chocolatey/ChocolateyGUI/issues/120) Index was outside the bounds of the array
 - [**#117**](https://github.com/chocolatey/ChocolateyGUI/issues/117) [BUG] Packages appear twice in Local Tab
 - [**#116**](https://github.com/chocolatey/ChocolateyGUI/issues/116) [BUG] Delete button can't always be seen
 - [**#105**](https://github.com/chocolatey/ChocolateyGUI/issues/105) Details Page: Items not quite lined up
 - [**#104**](https://github.com/chocolatey/ChocolateyGUI/issues/104) Problem with searching when on second page of results
 - [**#100**](https://github.com/chocolatey/ChocolateyGUI/issues/100) Remove packages from Local package list when they're uninstalled
-- [**#97**](https://github.com/chocolatey/ChocolateyGUI/issues/97) Fix cuninst of ChocolateyGUI
+- [**#97**](https://github.com/chocolatey/ChocolateyGUI/issues/97) Fix cuninst of Chocolatey GUI
 - [**#85**](https://github.com/chocolatey/ChocolateyGUI/issues/85) Unable to get packages and package information from behind proxy.
 - [**#70**](https://github.com/chocolatey/ChocolateyGUI/issues/70) Problem adding new package source
 - [**#67**](https://github.com/chocolatey/ChocolateyGUI/issues/67) Unhandled Exception
 
-**NOTE**:  This blog post was created after the actual release occured, and is added to here in order to preserve the history of the ChocolateyGUI project.
+**NOTE**:  This blog post was created after the actual release occured, and is added to here in order to preserve the history of the Chocolatey GUI project.

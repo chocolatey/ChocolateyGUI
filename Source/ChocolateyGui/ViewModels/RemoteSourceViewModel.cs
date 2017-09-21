@@ -24,12 +24,15 @@ using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
+    using AutoMapper;
+
     public sealed class RemoteSourceViewModel : Screen, ISourceViewModelBase
     {
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
-        private readonly IChocolateyPackageService _chocolateyPackageService;
+        private readonly IChocolateyService _chocolateyPackageService;
         private readonly IProgressService _progressService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IMapper _mapper;
         private int _currentPage = 1;
         private bool _hasLoaded;
         private bool _includeAllVersions;
@@ -42,15 +45,17 @@ namespace ChocolateyGui.ViewModels
         private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
 
         public RemoteSourceViewModel(
-            IChocolateyPackageService chocolateyPackageService,
+            IChocolateyService chocolateyPackageService,
             IProgressService progressService,
             IEventAggregator eventAggregator,
-            ChocolateySource source)
+            ChocolateySource source,
+            IMapper mapper)
         {
             Source = source;
             _chocolateyPackageService = chocolateyPackageService;
             _progressService = progressService;
             _eventAggregator = eventAggregator;
+            _mapper = mapper;
 
             Packages = new ObservableCollection<IPackageViewModel>();
             DisplayName = source.Id;
@@ -251,6 +256,9 @@ namespace ChocolateyGui.ViewModels
                 var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
 
                 await _progressService.StartLoading(string.Format(Resources.RemoteSourceViewModel_LoadingPage, CurrentPage));
+
+                _progressService.WriteMessage(Resources.RemoteSourceViewModel_FetchingPackages);
+
                 try
                 {
                     var result =
@@ -276,7 +284,7 @@ namespace ChocolateyGui.ViewModels
                             p.IsInstalled = true;
                         }
 
-                        Packages.Add(p);
+                        Packages.Add(Mapper.Map<IPackageViewModel>(p));
                     });
 
                     if (PageCount < CurrentPage)

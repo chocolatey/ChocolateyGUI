@@ -29,11 +29,10 @@ namespace ChocolateyGui.ViewModels
 
         private static readonly HashSet<string> ConfigProperties = new HashSet<string>
                                                                        {
-                                                                           nameof(ElevateByDefault),
                                                                            nameof(ShowConsoleOutput)
                                                                        };
 
-        private readonly IChocolateyPackageService _packageService;
+        private readonly IChocolateyService _packageService;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
 
@@ -48,7 +47,7 @@ namespace ChocolateyGui.ViewModels
         private bool _isNewItem;
 
         public SettingsViewModel(
-            IChocolateyPackageService packageService,
+            IChocolateyService packageService,
             IProgressService progressService,
             IConfigService configService,
             IEventAggregator eventAggregator)
@@ -67,20 +66,6 @@ namespace ChocolateyGui.ViewModels
         public ObservableCollection<ChocolateySetting> Settings { get; } = new ObservableCollection<ChocolateySetting>();
 
         public ObservableCollection<ChocolateySource> Sources { get; } = new ObservableCollection<ChocolateySource>();
-
-        public bool ElevateByDefault
-        {
-            get
-            {
-                return _config.ElevateByDefault;
-            }
-
-            set
-            {
-                _config.ElevateByDefault = value;
-                NotifyOfPropertyChange();
-            }
-        }
 
         public bool ShowConsoleOutput
         {
@@ -152,7 +137,16 @@ namespace ChocolateyGui.ViewModels
 
         public async Task UpdateFeature(ChocolateyFeature feature)
         {
-            await _packageService.SetFeature(feature);
+            try
+            {
+                await _packageService.SetFeature(feature);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                await _progressService.ShowMessageAsync(
+                    Resources.General_UnauthorisedException_Title,
+                    Resources.General_UnauthorisedException_Description);
+            }
         }
 
         public async Task UpdateSetting(ChocolateySetting setting)
@@ -197,6 +191,12 @@ namespace ChocolateyGui.ViewModels
                 _originalId = SelectedSource?.Id;
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
             }
+            catch (UnauthorizedAccessException)
+            {
+                await _progressService.ShowMessageAsync(
+                    Resources.General_UnauthorisedException_Title,
+                    Resources.General_UnauthorisedException_Description);
+            }
             finally
             {
                 await _progressService.StopLoading();
@@ -212,6 +212,12 @@ namespace ChocolateyGui.ViewModels
                 Sources.Remove(SelectedSource);
                 SelectedSource = null;
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
+            }
+            catch (UnauthorizedAccessException)
+            {
+                await _progressService.ShowMessageAsync(
+                    Resources.General_UnauthorisedException_Title,
+                    Resources.General_UnauthorisedException_Description);
             }
             finally
             {

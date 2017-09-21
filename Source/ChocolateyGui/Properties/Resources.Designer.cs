@@ -292,6 +292,24 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You may not have the appropriate permissions to perform this action..
+        /// </summary>
+        public static string General_UnauthorisedException_Description {
+            get {
+                return ResourceManager.GetString("General_UnauthorisedException_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to perform action.
+        /// </summary>
+        public static string General_UnauthorisedException_Title {
+            get {
+                return ResourceManager.GetString("General_UnauthorisedException_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
         public static string LocalSourceView_ButtonExport {
@@ -396,6 +414,15 @@ namespace ChocolateyGui.Properties {
         public static string LocalSourceViewModel_ConfigFiles {
             get {
                 return ResourceManager.GetString("LocalSourceViewModel_ConfigFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fetching packages....
+        /// </summary>
+        public static string LocalSourceViewModel_FetchingPackages {
+            get {
+                return ResourceManager.GetString("LocalSourceViewModel_FetchingPackages", resourceCulture);
             }
         }
         
@@ -929,6 +956,15 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fetching packages....
+        /// </summary>
+        public static string RemoteSourceViewModel_FetchingPackages {
+            get {
+                return ResourceManager.GetString("RemoteSourceViewModel_FetchingPackages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading page {0}....
         /// </summary>
         public static string RemoteSourceViewModel_LoadingPage {
@@ -1019,7 +1055,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chocolatey Gui.
+        ///   Looks up a localized string similar to Chocolatey GUI.
         /// </summary>
         public static string SettingsView_ChocoGui {
             get {
@@ -1276,15 +1312,6 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_SubheaderChoco {
             get {
                 return ResourceManager.GetString("SettingsView_SubheaderChoco", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Elevate By Default.
-        /// </summary>
-        public static string SettingsView_ToggleElevateByDefault {
-            get {
-                return ResourceManager.GetString("SettingsView_ToggleElevateByDefault", resourceCulture);
             }
         }
         

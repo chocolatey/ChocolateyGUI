@@ -1,4 +1,10 @@
-﻿using Serilog;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="DefaultsExtensions.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using Serilog;
 using Serilog.Events;
 #if !DEBUG
 using System;
@@ -24,6 +30,7 @@ namespace ChocolateyGui.Utilities
             {
                 loggerConfig.MinimumLevel.Is(logEventLevel);
             }
+
             return loggerConfig;
 #endif
         }

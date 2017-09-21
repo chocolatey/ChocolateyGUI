@@ -145,20 +145,23 @@
                                 <TextBlock Text="{Binding Version}" Foreground="{DynamicResource TextHighlightBrush}"
                                            FontSize="16" Margin="5,0,0,0" VerticalAlignment="Bottom" />
                             </StackPanel>
-                            <TextBlock Grid.Row="1">
+                            <TextBlock Grid.Row="1"
+                                       IsHitTestVisible="false">
                                 <Run Text="{x:Static lang:Resources.Controls_PackageListByAuthor}" />
                                 <Run Text="{Binding Authors}" Foreground="{DynamicResource TextHighlightBrush}" />
                             </TextBlock>
                             <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="{Binding Summary}" FontSize="12" />
                             <StackPanel Grid.Row="3" Orientation="Horizontal">
-                                <TextBlock>
+                                <TextBlock IsHitTestVisible="false">
                                     <Run Text="{Binding DownloadCount}" FontWeight="SemiBold" />
                                     <Run Text=" {x:Static lang:Strings.Controls_PackageListDownloads}" />
                                 </TextBlock>
-                                <TextBlock FontWeight="Light" Padding="5,0">
+                                <TextBlock FontWeight="Light" 
+                                           Padding="5,0"
+                                           IsHitTestVisible="false">
                                     <Run Text="|" />
                                 </TextBlock>
-                                <TextBlock>
+                                <TextBlock IsHitTestVisible="false">
                                     <Run FontWeight="SemiBold" Text="{x:Static lang:Resources.Controls_PackageListTags}" /><Run Text=" " />
                                     <Run Text="{Binding Tags}" Foreground="{DynamicResource TextHighlightBrush}" />
                                 </TextBlock>

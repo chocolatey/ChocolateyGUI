@@ -1,5 +1,5 @@
 ---
-Title: ChocolateyGUI 0.12.2
+Title: Chocolatey GUI 0.12.2
 Category: Release
 Author: gep13
 Published: 3/3/2015
@@ -14,4 +14,4 @@ This release includes the following:
 - [**#222**](https://github.com/chocolatey/ChocolateyGUI/issues/222) Update appveyor.yml configuration
 
 
-**NOTE**:  This blog post was created after the actual release occured, and is added to here in order to preserve the history of the ChocolateyGUI project.
+**NOTE**:  This blog post was created after the actual release occured, and is added to here in order to preserve the history of the Chocolatey GUI project.

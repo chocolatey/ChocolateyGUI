@@ -22,6 +22,13 @@ using Serilog;
 
 namespace ChocolateyGui
 {
+    using AutoMapper;
+    using chocolatey;
+    using Models;
+    using ViewModels.Items;
+    using ILogger = Serilog.ILogger;
+    using Log = Serilog.Log;
+
     public class Bootstrapper : BootstrapperBase
     {
         internal const string ApplicationName = "ChocolateyGUI";
@@ -95,14 +102,24 @@ namespace ChocolateyGui
         {
             try
             {
-                var packageSerice = Container.Resolve<IChocolateyPackageService>();
-                var features = await packageSerice.GetFeatures();
+                // Do not remove! Load Chocolatey once so all config gets set
+                // properly for future calls
+                var choco = Lets.GetChocolatey();
+
+                Mapper.Initialize(config =>
+                {
+                    config.CreateMap<Package, IPackageViewModel>().ConstructUsing(rc => Container.Resolve<IPackageViewModel>());
+                });
+
+                var packageService = Container.Resolve<IChocolateyService>();
+                var features = await packageService.GetFeatures();
 
                 var backgroundFeature = features.FirstOrDefault(feature => string.Equals(feature.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase));
                 var elevationProvider = Elevation.Instance;
                 elevationProvider.IsBackgroundRunning = backgroundFeature?.Enabled ?? false;
 
                 App.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
+
                 DisplayRootViewFor<ShellViewModel>();
             }
             catch (Exception ex)

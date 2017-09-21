@@ -40,21 +40,27 @@
         <StackPanel DockPanel.Dock="Top" Margin="20,0,0,0">
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                <TextBlock Style="{StaticResource TitleTextStyle}" AutomationProperties.Name="{Binding Title}">
+                <TextBlock Style="{StaticResource TitleTextStyle}" 
+                           AutomationProperties.Name="{Binding Title}"
+                           IsHitTestVisible="false">
                     <Run Text="{Binding Title}" />
                 </TextBlock>
-                <TextBlock AutomationProperties.Name="{Binding Version}" VerticalAlignment="Bottom">
+                <TextBlock AutomationProperties.Name="{Binding Version}" 
+                           VerticalAlignment="Bottom"
+                           IsHitTestVisible="false">
                     <Run Text="{Binding Version}" Style="{StaticResource SubtitleRunTextStyle}" />
                 </TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Style="{StaticResource SubtitleTextStyle}"
-                           AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}">
+                           AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}"
+                           IsHitTestVisible="false">
                     <Run Text="{x:Static lang:Resources.PackageView_Authors}" />
                     <Run Text="{Binding Authors, Converter={StaticResource StringListToString}}" />
                 </TextBlock>
                 <TextBlock Style="{StaticResource SubtitleTextStyle}"
-                           AutomationProperties.Name="{Binding Owners, Converter={StaticResource StringListToString}}">
+                           AutomationProperties.Name="{Binding Owners, Converter={StaticResource StringListToString}}"
+                           IsHitTestVisible="false">
                     <Run Text="{x:Static lang:Resources.PackageView_Maintainers}" />
                     <Run Text="{Binding Owners, Converter={StaticResource StringListToString}}" />
                 </TextBlock>

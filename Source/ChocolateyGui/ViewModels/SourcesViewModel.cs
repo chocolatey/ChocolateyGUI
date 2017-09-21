@@ -20,13 +20,13 @@ namespace ChocolateyGui.ViewModels
 {
     public sealed class SourcesViewModel : Conductor<ISourceViewModelBase>.Collection.OneActive, IHandleWithTask<SourcesUpdatedMessage>
     {
-        private readonly IChocolateyPackageService _packageService;
+        private readonly IChocolateyService _packageService;
         private readonly CreateRemove _remoteSourceVmFactory;
 
         private bool _firstLoad = true;
 
         public SourcesViewModel(
-            IChocolateyPackageService packageService,
+            IChocolateyService packageService,
             IEventAggregator eventAggregator,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
             CreateRemove remoteSourceVmFactory)

@@ -1,16 +1,17 @@
-# ChocolateyGUI
-ChocolateyGUI is a user interface for [Chocolatey NuGet](http://chocolatey.org) (a Machine Package Manager for Windows).
+# Chocolatey GUI
+
+Chocolatey GUI is a user interface for [Chocolatey NuGet](http://chocolatey.org) (a Machine Package Manager for Windows).
 
 ## Installation
-You can install ChocolateyGUI via Chocolatey itself by executing:
- 
+You can install Chocolatey GUI via Chocolatey itself by executing:
+
 ```choco install ChocolateyGUI```
 
-If you are interested in trying out the latest pre-release version of ChocolateyGUI then you can use the following installation command:
+If you are interested in trying out the latest pre-release version of Chocolatey GUI then you can use the following installation command:
 
 ```choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre```
 
-This uses the public ChocolateyGUI feed which is hosted on [MyGet.org](https://www.myget.org) as the source.
+This uses the public Chocolatey GUI feed which is hosted on [MyGet.org](https://www.myget.org) as the source.
 
 ## Build Status
 
@@ -21,7 +22,7 @@ TeamCity  | AppVeyor
 
 ## Chat Room
 
-Come join in the conversation about ChocolateyGUI in our Gitter Chat Room
+Come join in the conversation about Chocolatey GUI in our Gitter Chat Room
 
 [![Gitter chat](https://badges.gitter.im/chocolatey/ChocolateyGUI.png)](https://gitter.im/chocolatey/ChocolateyGUI)
 
@@ -37,7 +38,8 @@ Or, you can find us in IRC at #chocolatey.
  * [Build Status Email List](http://groups.google.com/group/chocolatey-build-status)
 
 ### Documentation
-You can find information about ChocolateyGUI here: [https://chocolatey.github.io/ChocolateyGUI/](https://chocolatey.github.io/ChocolateyGUI/)
+
+You can find information about Chocolatey GUI here: [https://chocolatey.github.io/ChocolateyGUI/](https://chocolatey.github.io/ChocolateyGUI/)
 
 ### Requirements
 * .NET Framework 4.5.2
@@ -48,13 +50,13 @@ Apache 2.0 - see [LICENSE](https://github.com/chocolatey/chocolateygui/blob/deve
 
 ## Submitting Issues
 
-If you have found an issue with ChocolateyGUI, this is the place to submit. 
+If you have found an issue with Chocolatey GUI, this is the place to submit.
 
 Observe the following help for submitting an issue:
 
 Prerequisites:
 
- * The issue has to do with ChocolateyGUI itself and is not a package or website issue.
+ * The issue has to do with Chocolatey GUI itself and is not a package or website issue.
  * Please check to see if your issue already exists with a quick search of the issues. Start with one relevant term and then add if you get too many results.
  * You are not submitting an Enhancement. Enhancements should observe [CONTRIBUTING](https://github.com/chocolatey/chocolateygui/blob/develop/CONTRIBUTING.md) guidlines.
 
@@ -82,8 +84,8 @@ Committers, you should be very familiar with [COMMITTERS](https://github.com/cho
 * **Install** and **uninstall** packages
 * See detailed **package information**
 
-![ChocolateyGUI](https://github.com/chocolatey/ChocolateyGUI/blob/10809890189206cece4b64ab038f33d11cf7b840/docs/Screenshots/Application_Loaded.png)
+![Chocolatey GUI](https://github.com/chocolatey/ChocolateyGUI/blob/10809890189206cece4b64ab038f33d11cf7b840/docs/Screenshots/Application_Loaded.png)
 
 ## Credits
 
-ChocolateyGUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/input/credits.md) (just input/credits.md in the zip folder)
+Chocolatey GUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/input/credits.md) (just input/credits.md in the zip folder)

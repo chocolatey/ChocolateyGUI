@@ -1,5 +1,5 @@
 ---
-Title: ChocolateyGUI 0.15.0
+Title: Chocolatey GUI 0.15.0
 Category: Release
 Author: gep13
 ---

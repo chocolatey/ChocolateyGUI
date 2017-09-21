@@ -1,8 +1,8 @@
 $scriptPath =  $(Split-Path $MyInvocation.MyCommand.Path)
 
 $packageArgs = @{
-	packageName = 'ChocolateyGUI'
-	softwareName   = 'ChocolateyGUI'
+	packageName = 'Chocolatey GUI'
+	softwareName   = 'Chocolatey GUI'
 	fileType = 'msi'
 	silentArgs = '/quiet'
 	file = Join-Path $scriptPath 'ChocolateyGUI.msi'

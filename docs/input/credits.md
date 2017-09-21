@@ -2,28 +2,28 @@
 Title: Credits
 ---
 
-ChocolateyGUI has been the thoughts and work of the following people:
+Chocolatey GUI has been the thoughts and work of the following people:
 
 # Committers & Contributors
 
 ## Committers
 
-These are the committers to Chocolatey/ChocolateyGUI repository:
+These are the committers to Chocolatey/Chocolatey GUI repository:
 
-* [Gary Ewan Park](https://github.com/gep13) - Committer, ChocolateyGUI, community feed moderator
+* [Gary Ewan Park](https://github.com/gep13) - Committer, Chocolatey GUI, community feed moderator
 * [Richard Simpson](https://github.com/RichiCoder1) - Created and maintains the new Chocolatey GUI
 
 ## Contributors
 
-* [Christiaan Baes](https://github.com/chrissie1) - Created the original version of Chocolatey Explorer, which ChocolateyGUI was built from.
+* [Christiaan Baes](https://github.com/chrissie1) - Created the original version of Chocolatey Explorer, which Chocolatey GUI was built from.
 
 ### Other Contributors
 
-* [ChocolateyGUI](https://github.com/chocolatey/chocolateygui/graphs/contributors)
+* [Chocolatey GUI](https://github.com/chocolatey/chocolateygui/graphs/contributors)
 
 # Frameworks
 
-ChocolateyGUI uses the following awesome frameworks (in no particular order):
+Chocolatey GUI uses the following awesome frameworks (in no particular order):
 
 * [AlphaFS](https://github.com/alphaleonis/AlphaFS)
 * [AsyncEx](https://github.com/StephenCleary/AsyncEx)
@@ -46,7 +46,7 @@ ChocolateyGUI uses the following awesome frameworks (in no particular order):
 * [SuperSocket](http://www.supersocket.net/)
 * [WebSocket4Net](http://websocket4net.codeplex.com/)
 
-ChocolateyGUI is built, with the following fantastic frameworks and services (in no particular order):
+Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
 
 * [Cake](http://cakebuild.net/)
 * [NuGet.exe](https://www.nuget.org/)
@@ -54,14 +54,14 @@ ChocolateyGUI is built, with the following fantastic frameworks and services (in
 * [AppVeyor](http://www.appveyor.com/)
 * [MyGet](http://www.myget.org/)
 
-ChocolateyGUI is tested and analyzed with the following rockstar frameworks (in no particular order):
+Chocolatey GUI is tested and analyzed with the following rockstar frameworks (in no particular order):
 
 * [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx)
 * [StyleCop.Analyzers](https://github.com/DotNetAnalyzers/StyleCopAnalyzers)
 * [InspectCode](https://confluence.jetbrains.com/display/NETCOM/Introducing+InspectCode)
 * [DupFinder](https://confluence.jetbrains.com/display/NETCOM/Introducing+dupFinder)
 
-We would like to credit other super sweet tools/frameworks/services that aid in the development of ChocolateyGUI:
+We would like to credit other super sweet tools/frameworks/services that aid in the development of Chocolatey GUI:
 
 * [ReSharper](https://www.jetbrains.com/resharper/)
 * [NuGet Framework](https://www.nuget.org/)

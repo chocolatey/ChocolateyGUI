@@ -1,4 +1,4 @@
-$packageName = "ChocolateyGUI";
+$packageName = "Chocolatey GUI";
 $fileType = 'msi';
 $silentArgs = '/qr /norestart'
 $validExitCodes = @(0)

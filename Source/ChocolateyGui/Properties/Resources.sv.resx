@@ -591,4 +591,16 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_SourcesIsAdminOnly" xml:space="preserve">
     <value>Enbart synlig för administratörer</value>
   </data>
+  <data name="General_UnauthorisedException_Description" xml:space="preserve">
+    <value>Du verkar inte har lämpliga rättigheter för att utföra denna åtgärd.</value>
+  </data>
+  <data name="General_UnauthorisedException_Title" xml:space="preserve">
+    <value>Kunde inte utföra åtgärd</value>
+  </data>
+  <data name="LocalSourceViewModel_FetchingPackages" xml:space="preserve">
+    <value>Hämtar paket...</value>
+  </data>
+  <data name="RemoteSourceViewModel_FetchingPackages" xml:space="preserve">
+    <value>Hämtar paket...</value>
+  </data>
 </root>

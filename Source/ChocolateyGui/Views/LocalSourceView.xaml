@@ -42,8 +42,8 @@
             <Button Command="{commands:DataContextCommandAdapter ExportAll, CanExportAll}"
                     Style="{StaticResource SquareButtonStyle}" Margin="4,0,0,0" Content="{x:Static lang:Resources.LocalSourceView_ButtonExport}" />
         </StackPanel>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Packages}" Background="{StaticResource ControlBackgroundBrush}"
-                  AutoGenerateColumns="False" IsReadOnly="True"
+        <DataGrid Grid.Row="1" ItemsSource="{Binding PackageSource}" Background="{StaticResource ControlBackgroundBrush}"
+                  AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
                   MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Name}" Width="2*">
@@ -62,7 +62,7 @@
                 <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_LatestVersion}" Binding="{Binding LatestVersion, IsAsync=True}" Width="1*" />
             </DataGrid.Columns>
         </DataGrid>
-        <controls:ProgressRing Grid.Row="1" IsActive="{Binding FirstLoadComplete}"/>
+        <controls:ProgressRing Grid.Row="1" IsActive="{Binding FirstLoadIncomplete}"/>
         <ProgressBar Grid.Row="1" Height="10" VerticalAlignment="Bottom" IsIndeterminate="True" x:Name="PART_Loading"
                      Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibility}}"/>
     </Grid>

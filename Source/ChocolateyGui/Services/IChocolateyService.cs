@@ -4,14 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using ChocolateyGui.Models;
 using System;
 using System.Threading.Tasks;
-using ChocolateyGui.Models;
 
 namespace ChocolateyGui.Services
 {
-    using System.Collections.Generic;
     using NuGet;
+    using System.Collections.Generic;
 
     public interface IChocolateyService
     {
@@ -19,7 +19,7 @@ namespace ChocolateyGui.Services
 
         Task<IEnumerable<Package>> GetInstalledPackages();
 
-        Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false);
+        Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null);
 
         Task<PackageResults> Search(string query, PackageSearchOptions options);
 

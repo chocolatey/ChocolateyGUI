@@ -4,15 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using System.Xml;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
 using ChocolateyGui.Models.Messages;
@@ -21,6 +12,16 @@ using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
 using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Xml;
 
 namespace ChocolateyGui.ViewModels
 {
@@ -44,7 +45,7 @@ namespace ChocolateyGui.ViewModels
         private string _sortColumn;
         private bool _sortDescending;
         private bool _isLoading;
-        private bool _firstLoadComplete = true;
+        private bool _firstLoadIncomplete = true;
 
         public LocalSourceViewModel(
             IChocolateyService chocolateyService,
@@ -59,8 +60,11 @@ namespace ChocolateyGui.ViewModels
             _persistenceService = persistenceService;
 
             DisplayName = displayName;
-            Packages = new ObservableCollection<IPackageViewModel>();
+
             _packages = new List<IPackageViewModel>();
+            Packages = new ObservableCollection<IPackageViewModel>();
+            PackageSource = CollectionViewSource.GetDefaultView(Packages);
+            PackageSource.Filter = FilterPackage;
 
             if (eventAggregator == null)
             {
@@ -90,6 +94,8 @@ namespace ChocolateyGui.ViewModels
             set { this.SetPropertyValue(ref _packageViewModels, value); }
         }
 
+        public ICollectionView PackageSource { get; }
+
         public string SearchQuery
         {
             get { return _searchQuery; }
@@ -114,10 +120,10 @@ namespace ChocolateyGui.ViewModels
             set { this.SetPropertyValue(ref _isLoading, value); }
         }
 
-        public bool FirstLoadComplete
+        public bool FirstLoadIncomplete
         {
-            get { return _firstLoadComplete; }
-            set { this.SetPropertyValue(ref _firstLoadComplete, value); }
+            get { return _firstLoadIncomplete; }
+            set { this.SetPropertyValue(ref _firstLoadIncomplete, value); }
         }
 
         public bool CanUpdateAll()
@@ -217,7 +223,39 @@ namespace ChocolateyGui.ViewModels
 
         public async Task Handle(PackageChangedMessage message)
         {
-            await LoadPackages();
+            switch (message.ChangeType)
+            {
+                case PackageChangeType.Pinned:
+                    PackageSource.Refresh();
+                    break;
+                case PackageChangeType.Unpinned:
+                    var package = Packages.First(p => p.Id == message.Id);
+                    if (package.LatestVersion != null)
+                    {
+                        PackageSource.Refresh();
+                    }
+                    else
+                    {
+                        var outOfDatePackages =
+                            await _chocolateyService.GetOutdatedPackages(package.IsPrerelease, package.Id);
+                        foreach (var update in outOfDatePackages)
+                        {
+                            await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Item1, update.Item2));
+                        }
+
+                        PackageSource.Refresh();
+                    }
+
+                    break;
+
+                case PackageChangeType.Uninstalled:
+                    Packages.Remove(Packages.First(p => p.Id == message.Id));
+                    break;
+
+                default:
+                    await LoadPackages();
+                    break;
+            }
         }
 
 #pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
@@ -240,7 +278,7 @@ namespace ChocolateyGui.ViewModels
                             eventPattern.EventArgs.PropertyName == "SearchQuery" ||
                             eventPattern.EventArgs.PropertyName == "ShowOnlyPackagesWithUpdate")
                     .ObserveOnDispatcher()
-                    .Subscribe(eventPattern => FilterPackages());
+                    .Subscribe(eventPattern => PackageSource.Refresh());
 
                 _hasLoaded = true;
 
@@ -260,33 +298,34 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
-        private void FilterPackages()
+        private bool FilterPackage(object packageObject)
         {
-            Packages.Clear();
-            var query = _packages.AsEnumerable();
+            var package = (IPackageViewModel) packageObject;
+            var include = true;
             if (!string.IsNullOrWhiteSpace(SearchQuery))
             {
-                query = MatchWord
-                    ? query.Where(
-                        package =>
-                            string.Compare(
-                                package.Title ?? package.Id,
-                                SearchQuery,
-                                StringComparison.OrdinalIgnoreCase) == 0)
-                    : query.Where(
-                        package =>
-                            CultureInfo.CurrentCulture.CompareInfo.IndexOf(
-                                package.Title ?? package.Id,
-                                SearchQuery,
-                                CompareOptions.OrdinalIgnoreCase) >= 0);
+                if (MatchWord)
+                {
+                    include &= string.Compare(
+                        package.Title ?? package.Id,
+                        SearchQuery,
+                        StringComparison.OrdinalIgnoreCase) == 0;
+                }
+                else
+                {
+                    include &= CultureInfo.CurrentCulture.CompareInfo.IndexOf(
+                                   package.Title ?? package.Id,
+                                   SearchQuery,
+                                   CompareOptions.OrdinalIgnoreCase) >= 0;
+                }
             }
 
             if (ShowOnlyPackagesWithUpdate)
             {
-                query = query.Where(p => p.CanUpdate && !p.IsPinned);
+                include &= package.CanUpdate && !package.IsPinned;
             }
 
-            Packages = new ObservableCollection<IPackageViewModel>(query);
+            return include;
         }
 
         private async Task LoadPackages()
@@ -298,22 +337,23 @@ namespace ChocolateyGui.ViewModels
                 Packages.Clear();
 
                 var packages = (await _chocolateyService.GetInstalledPackages())
-                    .Select(p => Mapper.Map<IPackageViewModel>(p)).ToList();
+                    .Select(Mapper.Map<IPackageViewModel>).ToList();
 
                 foreach (var packageViewModel in packages)
                 {
                     _packages.Add(packageViewModel);
+                    Packages.Add(packageViewModel);
                 }
 
-                FilterPackages();
-
-                FirstLoadComplete = false;
+                FirstLoadIncomplete = false;
 
                 var updates = await _chocolateyService.GetOutdatedPackages();
                 foreach (var update in updates)
                 {
                     await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Item1, update.Item2));
                 }
+
+                PackageSource.Refresh();
             }
             catch (ConnectionClosedException)
             {

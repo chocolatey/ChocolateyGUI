@@ -6,10 +6,6 @@
 
 namespace ChocolateyGui.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using AutoMapper;
     using chocolatey;
     using chocolatey.infrastructure.app;
@@ -22,6 +18,10 @@ namespace ChocolateyGui.Services
     using Microsoft.VisualStudio.Threading;
     using Models;
     using NuGet;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using ChocolateySource = Models.ChocolateySource;
     using ILogger = Serilog.ILogger;
 
@@ -63,7 +63,7 @@ namespace ChocolateyGui.Services
             }
         }
 
-        public async Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false)
+        public async Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null)
         {
             using (await Lock.ReadLockAsync())
             {
@@ -72,7 +72,7 @@ namespace ChocolateyGui.Services
                     config =>
                         {
                             config.CommandName = "outdated";
-                            config.PackageNames = ApplicationParameters.AllPackages;
+                            config.PackageNames = packageName ?? ApplicationParameters.AllPackages;
                             config.UpgradeCommand.NotifyOnlyAvailableUpgrades = true;
                             config.RegularOutput = false;
                             config.QuietOutput = true;

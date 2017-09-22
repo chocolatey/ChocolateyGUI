@@ -4,15 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using ChocolateyGui.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChocolateyGui.Models;
+using NuGet;
 
 namespace ChocolateyGui.Services
 {
-    using NuGet;
-    using System.Collections.Generic;
-
     public interface IChocolateyService
     {
         Task<bool> IsElevated();

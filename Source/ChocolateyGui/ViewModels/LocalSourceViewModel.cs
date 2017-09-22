@@ -4,14 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Caliburn.Micro;
-using ChocolateyGui.Base;
-using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Properties;
-using ChocolateyGui.Services;
-using ChocolateyGui.Utilities.Extensions;
-using ChocolateyGui.ViewModels.Items;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,11 +14,18 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Xml;
+using AutoMapper;
+using Caliburn.Micro;
+using ChocolateyGui.Base;
+using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Properties;
+using ChocolateyGui.Services;
+using ChocolateyGui.Utilities.Extensions;
+using ChocolateyGui.ViewModels.Items;
+using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
-    using AutoMapper;
-
     public sealed class LocalSourceViewModel : Screen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
     {
         private static readonly ILogger Logger = Log.ForContext<LocalSourceViewModel>();
@@ -300,7 +299,7 @@ namespace ChocolateyGui.ViewModels
 
         private bool FilterPackage(object packageObject)
         {
-            var package = (IPackageViewModel) packageObject;
+            var package = (IPackageViewModel)packageObject;
             var include = true;
             if (!string.IsNullOrWhiteSpace(SearchQuery))
             {

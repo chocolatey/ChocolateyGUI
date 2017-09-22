@@ -4,23 +4,22 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
+using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using NuGet;
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Action = System.Action;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
 namespace ChocolateyGui.ViewModels.Items
 {
-    using Models;
-
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
     public class PackageViewModel :
         ObservableBase,

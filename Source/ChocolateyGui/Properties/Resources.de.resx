@@ -166,7 +166,7 @@
     <value>Installieren</value>
   </data>
   <data name="PackageView_ButtonPin" xml:space="preserve">
-    <value>Pin</value>
+    <value>Updates sperren</value>
   </data>
   <data name="PackageView_ButtonReinstall" xml:space="preserve">
     <value>Erneut Installieren</value>
@@ -280,7 +280,7 @@
     <value>Credits</value>
   </data>
   <data name="SettingsView_Features" xml:space="preserve">
-    <value>Featurse</value>
+    <value>Features</value>
   </data>
   <data name="SettingsView_Options" xml:space="preserve">
     <value>Optionen</value>
@@ -304,7 +304,7 @@
     <value>Quellen</value>
   </data>
   <data name="SettingsView_SourcesBypassProxy" xml:space="preserve">
-    <value />
+    <value>Proxy ignorieren</value>
   </data>
   <data name="SettingsView_SourcesCertificate" xml:space="preserve">
     <value>Zertifikat</value>
@@ -328,7 +328,7 @@
     <value>Priorität</value>
   </data>
   <data name="SettingsView_SourcesSelfService" xml:space="preserve">
-    <value />
+    <value>Service Modus</value>
   </data>
   <data name="SettingsView_SourcesSource" xml:space="preserve">
     <value>Quelle</value>
@@ -402,6 +402,7 @@ Unbehanelte Ausnahme: {0}</value>
   </data>
   <data name="PackageViewModel_DisplayName" xml:space="preserve">
     <value>Paket - {0}</value>
+    <comment>{0} = Package Title</comment>
   </data>
   <data name="PackageViewModel_FailedToInstall" xml:space="preserve">
     <value>Fehler beim Installieren</value>
@@ -436,9 +437,6 @@ Unbehanelte Ausnahme: {0}</value>
   <data name="PackageViewModel_UpdatingPackage" xml:space="preserve">
     <value>Aktualisiere Paket</value>
   </data>
-  <data name="PackageView_ButtonPin" xml:space="preserve">
-    <value>Updates sperren</value>
-  </data>
   <data name="RemoteSourceViewModel_FailedToLoad" xml:space="preserve">
     <value>Fehler beim Herunterladen</value>
   </data>
@@ -447,6 +445,7 @@ Unbehanelte Ausnahme: {0}</value>
   </data>
   <data name="RemoteSourceViewModel_LoadingPage" xml:space="preserve">
     <value>Lade Seite {0} ...</value>
+    <comment>{0} = The page that is loading</comment>
   </data>
   <data name="SettingsViewModel_DisplayName" xml:space="preserve">
     <value>ChocolateyGUI - Einstellungen</value>
@@ -519,36 +518,52 @@ Fehler: {1}{2}</value>
   <data name="PackageViewModel_RanIntoInstallError" xml:space="preserve">
     <value>Fehler während der Installation von {0}.
 {1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
   </data>
   <data name="PackageViewModel_RanIntoPinningError" xml:space="preserve">
     <value>Fehler während Fixierung von {0}.
 {1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
   </data>
   <data name="PackageViewModel_RanIntoReinstallError" xml:space="preserve">
     <value>Fehler während Neuinstallation von {0}.
 {1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
   </data>
   <data name="PackageViewModel_RanIntoUninstallError" xml:space="preserve">
     <value>Fehler während Deinstallation von {0}.
 {1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
   </data>
   <data name="PackageViewModel_RanIntoUnpinError" xml:space="preserve">
     <value>Fehler während Updates für Paket {0} zulassen.
 {1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
   </data>
   <data name="PackageViewModel_RanIntoUpdateError" xml:space="preserve">
     <value>Fehler während Aktualisierung von {0}.
 {1}</value>
+    <comment>{0} = The package Id
+{1} = The exception message</comment>
   </data>
   <data name="PackageViewModel_ReinstallingPackage" xml:space="preserve">
     <value>Paket neu Installieren</value>
   </data>
   <data name="PackageViewModel_StartLoadingFormat" xml:space="preserve">
     <value>{0} {1}...</value>
+    <comment>{0} = The command text
+{1} = The package id
+NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="RemoteSourceViewModel_FailedToLoadRemotePackages" xml:space="preserve">
     <value>Fehler beim Laden entfernter Pakete!
 {0}</value>
+    <comment>{0} = The exception message that occured</comment>
   </data>
   <data name="SettingsViewModel_FeatureFailedToUpdate" xml:space="preserve">
     <value>Fehler beim Aktualisieren der Features. Fehler:
@@ -560,5 +575,32 @@ Fehler: {1}{2}</value>
   </data>
   <data name="RemoteSourceViewModel_SortSelectionPopularity" xml:space="preserve">
     <value>Beliebtheit</value>
+  </data>
+  <data name="SettingsView_SourcesIsBypassProxy" xml:space="preserve">
+    <value>Proxy deaktiviert</value>
+  </data>
+  <data name="SettingsView_SourcesIsSelfService" xml:space="preserve">
+    <value>Service Modus</value>
+  </data>
+  <data name="SettingsView_SourcesAdminOnly" xml:space="preserve">
+    <value>Nur für Administratoren</value>
+  </data>
+  <data name="SettingsView_SourcesIsAdminOnly" xml:space="preserve">
+    <value>Sichtbar nur für Administratoren</value>
+  </data>
+  <data name="General_UnauthorisedException_Description" xml:space="preserve">
+    <value>Ihnen fehlen die Berechtigungen für diese Aktion.</value>
+  </data>
+  <data name="General_UnauthorisedException_Title" xml:space="preserve">
+    <value>Aktion nicht ausführbar</value>
+  </data>
+  <data name="LocalSourceViewModel_FetchingPackages" xml:space="preserve">
+    <value>Aktualisiere Paketliste...</value>
+  </data>
+  <data name="RemoteSourceViewModel_FetchingPackages" xml:space="preserve">
+    <value>Aktualisiere Paketliste...</value>
+  </data>
+  <data name="RemoteSourceViewModel_SortSelectionAtoZ" xml:space="preserve">
+    <value>A-Z</value>
   </data>
 </root>

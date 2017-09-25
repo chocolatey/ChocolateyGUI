@@ -23,7 +23,6 @@ using PackageViewModel = ChocolateyGui.ViewModels.Items.PackageViewModel;
 
 namespace ChocolateyGui.Startup
 {
-
     internal class ChocolateyGuiModule : Module
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Not Relevant")]

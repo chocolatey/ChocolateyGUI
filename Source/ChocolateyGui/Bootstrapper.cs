@@ -11,24 +11,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
+using AutoMapper;
 using Caliburn.Micro;
 using CefSharp;
+using chocolatey;
+using ChocolateyGui.Models;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Startup;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels;
+using ChocolateyGui.ViewModels.Items;
 using Serilog;
+using ILogger = Serilog.ILogger;
+using Log = Serilog.Log;
 
 namespace ChocolateyGui
 {
-    using AutoMapper;
-    using chocolatey;
-    using Models;
-    using ViewModels.Items;
-    using ILogger = Serilog.ILogger;
-    using Log = Serilog.Log;
-
     public class Bootstrapper : BootstrapperBase
     {
         internal const string ApplicationName = "ChocolateyGUI";

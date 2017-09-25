@@ -10,6 +10,7 @@ using System.IO;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
+using chocolatey.infrastructure.app.configuration;
 using ChocolateyGui.Models;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
@@ -17,12 +18,11 @@ using ChocolateyGui.ViewModels;
 using ChocolateyGui.ViewModels.Items;
 using ChocolateyGui.Views;
 using LiteDB;
+using NuGet;
 using PackageViewModel = ChocolateyGui.ViewModels.Items.PackageViewModel;
 
 namespace ChocolateyGui.Startup
 {
-    using chocolatey.infrastructure.app.configuration;
-    using NuGet;
 
     internal class ChocolateyGuiModule : Module
     {

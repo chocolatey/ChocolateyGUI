@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
@@ -24,8 +25,6 @@ using Serilog;
 
 namespace ChocolateyGui.ViewModels
 {
-    using AutoMapper;
-
     public sealed class RemoteSourceViewModel : Screen, ISourceViewModelBase
     {
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();

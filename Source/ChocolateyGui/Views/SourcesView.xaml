@@ -3,10 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
-             xmlns:cal="http://www.caliburnproject.org"
-             xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              mc:Ignorable="d"
              d:DesignHeight="760" d:DesignWidth="1300"
              d:DataContext="{d:DesignInstance viewModels:SourcesViewModel}">
@@ -20,19 +17,19 @@
                               Background="Transparent"
                               BorderBrush="Transparent"
                               Padding="5,0,-1,0"
-                              Margin="0,95,0,0"
+                              Margin="0,100,0,0"
                               ItemContainerStyle="{DynamicResource SourcesListItemContainerStyle}"
                               SelectedItem="{Binding ActiveItem}" />
                 </Grid>
             </StackPanel>
             <ContentControl x:Name="ActiveItem" />
         </DockPanel>
-        <Image Grid.Row="0" Grid.Column="0" x:Name="ChocolateyLogo" Source="{StaticResource ChocolateyLogo}" RenderTransformOrigin="0.592,0.403" Margin="23,-172,1149,544" >
+        <Image Height="150" Margin="15,-55,0,0" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="ChocolateyLogo" Source="{StaticResource ChocolateyLogo}" RenderTransformOrigin="-0.2,0.8" >
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform Angle="-8.082"/>
+                    <RotateTransform Angle="-5"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Image.RenderTransform>
@@ -41,7 +38,7 @@
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ChocolateyLogo">
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-0.083"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </BeginStoryboard>
@@ -50,8 +47,8 @@
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ChocolateyLogo">
-                                <EasingDoubleKeyFrame KeyTime="0" Value="-0.911"/>
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-11.83"/>
+                                <EasingDoubleKeyFrame KeyTime="0" Value="-1"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-5"/>
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </BeginStoryboard>

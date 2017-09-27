@@ -120,6 +120,9 @@ namespace ChocolateyGui.Views
                 // ReSharper disable once PossibleNullReferenceException
                 bootstrapper.OnExitAsync().ContinueWith(t => Execute.OnUIThread(Close));
 #pragma warning restore 4014
+
+                // fire other Closing events too
+                base.OnClosing(e);
             }
         }
 

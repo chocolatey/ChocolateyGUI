@@ -10,10 +10,12 @@
                    xmlns:cal="http://www.caliburnproject.org"
                    xmlns:lang="clr-namespace:ChocolateyGui.Properties"
                    diagnostics:PresentationTraceSources.TraceLevel="High"
-                   mc:Ignorable="d" Height="768" Width="1366" GlowBrush="{StaticResource HighlightBrush}"
+                   mc:Ignorable="d"
+                   Height="768"
+                   Width="1366"
+                   GlowBrush="{StaticResource HighlightBrush}"
                    d:DataContext="{d:DesignInstance Type=local:ShellViewModel}"
                    SaveWindowPosition="True"
-                   Icon="../chocolateyicon.ico"
                    TitleForeground="Transparent">
     <Window.CommandBindings>
         <CommandBinding

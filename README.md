@@ -43,7 +43,7 @@ You can find information about Chocolatey GUI here: [https://chocolatey.github.i
 
 ### Requirements
 * .NET Framework 4.5.2
-* Windows 7 SP1 or Windows Server 2008 R2
+* Windows 7 SP1 through Windows 10 (1708) or Windows Server 2008 R2 SP1 through Windows Server 2016
 
 ### License / Credits
 Apache 2.0 - see [LICENSE](https://github.com/chocolatey/chocolateygui/blob/develop/LICENSE) and [NOTICE](https://github.com/chocolatey/chocolateygui/blob/develop/NOTICE) files.

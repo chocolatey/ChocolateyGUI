@@ -5,19 +5,17 @@
                    xmlns:local="clr-namespace:ChocolateyGui.ViewModels"
                    xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:commands="clr-namespace:ChocolateyGui.Commands"
-                   xmlns:diagnostics="clr-namespace:System.Diagnostics;assembly=WindowsBase"
                    xmlns:cal="http://www.caliburnproject.org"
                    xmlns:lang="clr-namespace:ChocolateyGui.Properties"
-                   diagnostics:PresentationTraceSources.TraceLevel="High"
-                   mc:Ignorable="d"
-                   Height="768"
-                   Width="1366"
+                   mc:Ignorable="d" 
+                   Height="768" Width="1366"
                    GlowBrush="{StaticResource HighlightBrush}"
                    d:DataContext="{d:DesignInstance Type=local:ShellViewModel}"
                    SaveWindowPosition="True"
-                   TitleForeground="Transparent">
-    <Window.CommandBindings>
+                   Icon="../chocolateyicon.ico"
+                   TitleForeground="Transparent" 
+                   ShowDialogsOverTitleBar="False">
+  <Window.CommandBindings>
         <CommandBinding
             Command="NavigationCommands.GoToPage"
             Executed="PerformGoToPage"

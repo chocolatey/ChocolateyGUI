@@ -12,6 +12,7 @@ indent_style = space
 # Code files
 [*.cs,*.csx,*.vb,*.vbx]
 indent_size = 4
+end_of_line = crlf
 
 # Xml project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
@@ -24,6 +25,7 @@ indent_size = 2
 # Xaml files
 [*.xaml]
 indent_size = 2
+end_of_line = crlf
 
 # JSON files
 [*.json]

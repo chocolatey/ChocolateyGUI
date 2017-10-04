@@ -12,7 +12,6 @@
                    GlowBrush="{StaticResource HighlightBrush}"
                    d:DataContext="{d:DesignInstance Type=local:ShellViewModel}"
                    SaveWindowPosition="True"
-                   Icon="../chocolateyicon.ico"
                    TitleForeground="Transparent" 
                    ShowDialogsOverTitleBar="False">
   <Window.CommandBindings>

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
@@ -42,6 +43,8 @@ namespace ChocolateyGui
         internal static IContainer Container { get; private set; }
 
         internal static ILogger Logger { get; private set; }
+
+        internal static string ApplicationFilesPath { get; } = Path.GetDirectoryName((Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).Location);
 
         internal static string AppDataPath { get; private set; }
 

@@ -52,6 +52,13 @@ namespace ChocolateyGui.Views
 
             CheckOperatingSystemCompatibility();
 
+            // Certain things like Cef (our markdown browser engine) get unhappy when GUI is started from a different cwd.
+            // If we're in a different one, reset it to our app files directory.
+            if (Path.GetDirectoryName(Environment.CurrentDirectory) != Bootstrapper.ApplicationFilesPath)
+            {
+                Environment.CurrentDirectory = Bootstrapper.ApplicationFilesPath;
+            }
+
             var settings = new CefSettings();
             settings.RegisterScheme(new CefCustomScheme { SchemeName = ChocolateyCustomSchemeProvider.SchemeName, SchemeHandlerFactory = new ChocolateyCustomSchemeProvider() });
             settings.CefCommandLineArgs.Add("no-proxy-server", "1");

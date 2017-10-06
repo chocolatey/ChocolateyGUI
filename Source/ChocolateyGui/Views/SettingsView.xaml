@@ -123,7 +123,7 @@
                             <TextBlock Text="Source" Margin="15 5 0 0" Style="{StaticResource SubtitleTextBlockStyle}"/>
                             <Button x:Name="New" HorizontalAlignment="Right" VerticalAlignment="Center" Width="80" Padding="5" Content="{x:Static lang:Resources.SettingsView_ButtonNew}"/>
                         </Grid>
-                        <Grid>
+                        <Grid Grid.IsSharedSizeScope="True">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="35"/>
@@ -133,11 +133,11 @@
                                 <RowDefinition Height="38"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition MinWidth="100" SharedSizeGroup="LabelColumn1" />
                                 <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition MinWidth="100" SharedSizeGroup="LabelColumn1" />
                                 <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition MinWidth="100" SharedSizeGroup="LabelColumn2" />
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
 

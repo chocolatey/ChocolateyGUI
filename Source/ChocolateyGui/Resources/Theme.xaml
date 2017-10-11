@@ -18,6 +18,8 @@
 
     <Color x:Key="BackgroundColor">#F0EEE0</Color>
 
+    <Color x:Key="BodyColor">#333333</Color>
+
     <!-- re-set brushes too -->
     <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="AccentBaseColorBrush" Color="{StaticResource AccentBaseColor}" options:Freeze="True" />
@@ -28,6 +30,8 @@
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="{StaticResource BackgroundColor}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
+  
+    <SolidColorBrush x:Key="BodyColorBrush" Color="{StaticResource BodyColor}" options:Freeze="True"/>
 
     <LinearGradientBrush x:Key="ProgressBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5" options:Freeze="True">
         <GradientStop Color="{StaticResource HighlightColor}" Offset="0" />

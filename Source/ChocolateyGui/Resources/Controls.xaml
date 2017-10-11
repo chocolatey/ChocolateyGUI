@@ -453,30 +453,30 @@
     </Style>
 
     <Style x:Key="TitleTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
         <Setter Property="FontSize" Value="48" />
         <Setter Property="Margin" Value="3,0,0,5" />
     </Style>
 
     <Style x:Key="SubtitleTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
         <Setter Property="FontSize" Value="22" />
         <Setter Property="Margin" Value="3,0,0,10" />
     </Style>
 
     <Style x:Key="SubtitleRunTextStyle" TargetType="{x:Type Run}">
-        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
         <Setter Property="FontSize" Value="22" />
     </Style>
 
     <Style x:Key="SectionHeaderTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Margin" Value="3,0,0,3" />
     </Style>
 
     <Style x:Key="DescriptionTextStyle" TargetType="{x:Type Run}">
-        <Setter Property="Foreground" Value="#FF000000" />
+        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
         <Setter Property="FontSize" Value="16" />
     </Style>
 

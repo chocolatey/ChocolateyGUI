@@ -14,15 +14,16 @@ namespace ChocolateyGui.Base
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void SetPropertyValue<T>(ref T property, T value, [CallerMemberName] string propertyName = "")
+        public bool SetPropertyValue<T>(ref T property, T value, [CallerMemberName] string propertyName = "")
         {
             if (EqualityComparer<T>.Default.Equals(property, value))
             {
-                return;
+                return false;
             }
 
             property = value;
             NotifyPropertyChanged(propertyName);
+            return true;
         }
 
         public void NotifyPropertyChanged(string propertyName)

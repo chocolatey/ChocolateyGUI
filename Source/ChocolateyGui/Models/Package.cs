@@ -33,6 +33,8 @@ namespace ChocolateyGui.Models
 
         public bool IsPinned { get; set; }
 
+        public bool IsSideBySide { get; set; }
+
         public bool IsLatestVersion { get; set; }
 
         public bool IsPrerelease { get; set; }

@@ -36,6 +36,8 @@ namespace ChocolateyGui.ViewModels.Items
 
         bool IsPinned { get; set; }
 
+        bool IsSideBySide { get; set; }
+
         bool IsLatestVersion { get; set; }
 
         bool IsPrerelease { get; set; }

@@ -205,7 +205,7 @@ namespace ChocolateyGui.ViewModels.Items
                 }
             }
         }
- 
+
         public bool IsSideBySide
         {
             get
@@ -616,6 +616,7 @@ namespace ChocolateyGui.ViewModels.Items
                 package.IsLatestVersion = this.IsLatestVersion;
                 package.IsPinned = this.IsPinned;
                 package.IsPrerelease = this.IsPrerelease;
+                package.IsSideBySide = this.IsSideBySide;
 
                 Mapper.Map<Package, IPackageViewModel>(package, this);
             }

@@ -590,6 +590,14 @@ namespace ChocolateyGui.ViewModels.Items
             try
             {
                 var package = await _chocolateyService.GetByVersionAndIdAsync(_id, _version.ToString(), _isPrerelease).ConfigureAwait(false);
+
+                // Remember current values before mapping to updated version
+                package.IsAbsoluteLatestVersion = this.IsAbsoluteLatestVersion;
+                package.IsInstalled = this.IsInstalled;
+                package.IsLatestVersion = this.IsLatestVersion;
+                package.IsPinned = this.IsPinned;
+                package.IsPrerelease = this.IsPrerelease;
+
                 Mapper.Map<Package, IPackageViewModel>(package, this);
             }
             catch (Exception ex)

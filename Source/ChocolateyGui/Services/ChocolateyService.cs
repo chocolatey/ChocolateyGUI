@@ -465,6 +465,7 @@ namespace ChocolateyGui.Services
                 var packageInfo = packageInfoService.get_package_information(package.Package);
                 mappedPackage.IsPinned = packageInfo.IsPinned;
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
+                mappedPackage.IsSideBySide = packageInfo.IsSideBySide;
             }
 
             return mappedPackage;

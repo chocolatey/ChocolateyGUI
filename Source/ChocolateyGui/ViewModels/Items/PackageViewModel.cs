@@ -59,6 +59,7 @@ namespace ChocolateyGui.ViewModels.Items
         private bool _isInstalled;
 
         private bool _isPinned;
+        private bool _isSideBySide;
 
         private bool _isLatestVersion;
 
@@ -133,7 +134,7 @@ namespace ChocolateyGui.ViewModels.Items
             set { SetPropertyValue(ref _authors, value); }
         }
 
-        public bool CanUpdate => IsInstalled && !IsPinned && LatestVersion != null && LatestVersion > Version;
+        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && LatestVersion != null && LatestVersion > Version;
 
         public string Copyright
         {
@@ -198,8 +199,26 @@ namespace ChocolateyGui.ViewModels.Items
 
             set
             {
-                SetPropertyValue(ref _isPinned, value);
-                NotifyPropertyChanged(nameof(CanUpdate));
+                if (SetPropertyValue(ref _isPinned, value))
+                {
+                    NotifyPropertyChanged(nameof(CanUpdate));
+                }
+            }
+        }
+ 
+        public bool IsSideBySide
+        {
+            get
+            {
+                return _isSideBySide;
+            }
+
+            set
+            {
+                if (SetPropertyValue(ref _isSideBySide, value))
+                {
+                    NotifyPropertyChanged(nameof(CanUpdate));
+                }
             }
         }
 

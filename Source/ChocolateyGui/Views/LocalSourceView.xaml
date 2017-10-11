@@ -50,7 +50,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                             <StackPanel Orientation="Horizontal">
-                                <iconPacks:PackIconEntypo Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BoolToHidden}}" />
+                                <iconPacks:PackIconEntypo ToolTip="Pinned" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BoolToHidden}}" />
+                                <iconPacks:PackIconEntypo ToolTip="Installed Side by Side with another version of the same package." Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BoolToHidden}}" />
                                 <TextBlock Text="{Binding Title}"/>
                             </StackPanel>
                         </DataTemplate>

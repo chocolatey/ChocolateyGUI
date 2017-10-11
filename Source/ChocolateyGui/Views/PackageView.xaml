@@ -188,10 +188,8 @@
         <Grid Margin="25,5,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
                 <RowDefinition Height="5*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -202,28 +200,23 @@
             <TextBlock Grid.Row="1" Text="{Binding Id}" ScrollViewer.CanContentScroll="True" TextWrapping="Wrap"
                        Style="{StaticResource PageTextBlockStyle}"
                        Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}" />
-            <TextBlock Grid.Row="2" Text="{x:Static lang:Resources.PackageView_Summary}" Style="{StaticResource SectionHeaderTextStyle}"
-                       Visibility="{Binding Summary, Converter={StaticResource NullToVisibility}}" />
-            <TextBlock Grid.Row="3" Text="{Binding Summary}" ScrollViewer.CanContentScroll="True" TextWrapping="Wrap"
-                       Style="{StaticResource PageTextBlockStyle}"
-                       Visibility="{Binding Summary, Converter={StaticResource NullToVisibility}}" />
-            <TextBlock Grid.Row="4" Text="{x:Static lang:Resources.PackageView_Description}" Style="{StaticResource SectionHeaderTextStyle}" />
+            <TextBlock Grid.Row="2" Text="{x:Static lang:Resources.PackageView_Description}" Style="{StaticResource SectionHeaderTextStyle}" />
             <controls:MarkdownViewer 
                 AutomationProperties.Name="Package Description"
-                Grid.Row="5"
+                Grid.Row="3"
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Stretch"
                 Margin="5 0"
                 MarkdownString="{Binding Description}" />
-            <StackPanel Grid.Row="6" Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
+            <StackPanel Grid.Row="4" Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                 <TextBlock Text="{x:Static lang:Resources.PackageView_Dependencies}" Style="{StaticResource SectionHeaderTextStyle}" />
                 <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"
                            Margin="5" Style="{StaticResource PageTextBlockStyle}"
                            AutomationProperties.Name="Package Dependencies" />
             </StackPanel>
-            <TextBlock Grid.Row="7" Text="{x:Static lang:Resources.PackageView_ReleaseNotes}" Style="{StaticResource SectionHeaderTextStyle}"
+            <TextBlock Grid.Row="5" Text="{x:Static lang:Resources.PackageView_ReleaseNotes}" Style="{StaticResource SectionHeaderTextStyle}"
                        Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}" />
-            <controls:MarkdownViewer Grid.Row="8"
+            <controls:MarkdownViewer Grid.Row="6"
                                       AutomationProperties.Name="Package Release Notes"
                                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                       Margin="5 0"

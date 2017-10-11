@@ -239,7 +239,7 @@ namespace ChocolateyGui.Controls
                             body {{ margin: 0 }}
                             </style>
                             <img src=""{url}"">";
-                        html = MarkdownViewer.HtmlTemplate.Replace("{{content}}", html);
+                        html = MarkdownViewer.HtmlTemplate.Value.Replace("{{content}}", html);
                         await LoadHtmlAsync(RenderBrowser, html, "http://rawhtml/svg");
 
                         using (var result = await RenderBrowser.ScreenshotAsync(true))

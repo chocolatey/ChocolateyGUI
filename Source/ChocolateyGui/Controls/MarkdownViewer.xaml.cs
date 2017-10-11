@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -35,32 +36,33 @@ namespace ChocolateyGui.Controls
             typeof(MarkdownViewer),
             new PropertyMetadata(default(string)));
 
-        internal const string HtmlTemplate = @"
-<!doctype html>
+        internal static readonly Lazy<string> HtmlTemplate = new Lazy<string>(() =>
+$@"
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset=""utf-8"">
         <title>Markdown</title>
         <style>
-            html, body {
-                font-family: ""Segoe UI"", sans-serif;
-                font-size: 14px;
-                line-height: 1.4;
-                margin: 0;
-                margin-top: -5px;
-                padding: 0;
-            }
-
-            h1,h2,h3,h4,h5 {
-                line-height: 1.2;
-            }
+            {DefaultCss.Value}
         </style>
     </head>
     <body>
-        {{content}}
+        {{{{content}}}}
     </body>
 </html>
-";
+");
+
+        internal static readonly Lazy<string> DefaultCss = new Lazy<string>(() =>
+        {
+            var assembly = typeof(MarkdownViewer).Assembly;
+            var resource = assembly.GetManifestResourceStream(typeof(MarkdownViewer), "DefaultMarkdownStyle.css");
+            Debug.Assert(resource != null, nameof(resource) + " != null");
+            using (var streamReader = new StreamReader(resource))
+            {
+                return streamReader.ReadToEnd();
+            }
+        });
 
         private static readonly MarkdownPipeline DefaultPipeline =
             new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
@@ -175,7 +177,7 @@ namespace ChocolateyGui.Controls
             }
 
             var newHtml = Markdown.ToHtml(markdown ?? string.Empty, DefaultPipeline);
-            var displayHtml = HtmlTemplate.Replace("{{content}}", newHtml);
+            var displayHtml = HtmlTemplate.Value.Replace("{{content}}", newHtml);
             var url = $"http://rawhtml/{newHtml.GetHashCode()}";
             _browser.LoadHtml(displayHtml, url);
         }

@@ -400,6 +400,24 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Installed Side by Side with another version of the same package..
+        /// </summary>
+        public static string LocalSourceView_ToolTip_InstalledSideBySide {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ToolTip_InstalledSideBySide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pinned.
+        /// </summary>
+        public static string LocalSourceView_ToolTip_Pinned {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ToolTip_Pinned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chocolatey.
         /// </summary>
         public static string LocalSourceViewModel_Chocolatey {

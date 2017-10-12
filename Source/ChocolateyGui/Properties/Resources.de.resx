@@ -603,4 +603,10 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="RemoteSourceViewModel_SortSelectionAtoZ" xml:space="preserve">
     <value>A-Z</value>
   </data>
+  <data name="LocalSourceView_ToolTip_InstalledSideBySide" xml:space="preserve">
+    <value>Seite an Seite mit einer anderen Version desselben Pakets installiert.</value>
+  </data>
+  <data name="LocalSourceView_ToolTip_Pinned" xml:space="preserve">
+    <value>Updates deaktiviert</value>
+  </data>
 </root>

@@ -1,7 +1,7 @@
 create:
   include-footer: true
   footer-heading: Where to get it
-  footer-content: You can download this release from [chocolatey](https://chocolatey.org/packages/chocolateyGUI/{milestone}
+  footer-content: You can download this release from [chocolatey](https://chocolatey.org/packages/chocolateyGUI/{milestone})
   footer-includes-milestone: true
   milestone-replace-text: '{milestone}'
 export:

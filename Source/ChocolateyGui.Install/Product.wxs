@@ -27,7 +27,7 @@
       <![CDATA[CHOCOLATEY_INSTALL]]>
     </Condition>
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." AllowSameVersionUpgrades="yes" />
 
     <?if $(var.ChocolateyGui.Configuration) = "Debug"?>
     <MediaTemplate EmbedCab="yes" CompressionLevel="none" />

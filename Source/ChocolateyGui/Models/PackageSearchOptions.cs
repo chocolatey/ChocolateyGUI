@@ -8,114 +8,39 @@ namespace ChocolateyGui.Models
 {
     public struct PackageSearchOptions
     {
-        private readonly int _currentPage;
-
-        private readonly bool _includeAllVersions;
-
-        private readonly bool _includedPrerelease;
-
-        private readonly bool _matchQuery;
-
-        private readonly int _pageSize;
-
-        private readonly string _sortColumn;
-
-        private readonly bool _sortDescending;
-
-#pragma warning disable 649
-        private readonly string[] _tagsQuery;
-#pragma warning restore 649
-
-        public PackageSearchOptions(int pageSize, int currentPage)
+        public PackageSearchOptions(
+            int pageSize,
+            int currentPage,
+            string sortColumn,
+            bool includePrerelease,
+            bool includeAllVersions,
+            bool matchWord,
+            string source)
             : this()
         {
-            this._pageSize = pageSize;
-            this._currentPage = currentPage;
+            PageSize = pageSize;
+            CurrentPage = currentPage;
+            SortColumn = sortColumn;
+            IncludeAllVersions = includeAllVersions;
+            IncludePrerelease = includePrerelease;
+            MatchQuery = matchWord;
+            Source = source;
         }
 
-        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool sortDescending)
-            : this()
-        {
-            this._pageSize = pageSize;
-            this._currentPage = currentPage;
-            this._sortColumn = sortColumn;
-            this._sortDescending = sortDescending;
-        }
+        public int CurrentPage { get; set;  }
 
-        public PackageSearchOptions(int pageSize, int currentPage, string sortColumn, bool sortDescending, bool includePrerelease, bool includeAllVersions, bool matchWord)
-            : this()
-        {
-            this._pageSize = pageSize;
-            this._currentPage = currentPage;
-            this._sortColumn = sortColumn;
-            this._sortDescending = sortDescending;
-            this._includeAllVersions = includeAllVersions;
-            this._includedPrerelease = includePrerelease;
-            this._matchQuery = matchWord;
-        }
+        public bool IncludeAllVersions { get; set; }
 
-        public int CurrentPage
-        {
-            get
-            {
-                return this._currentPage;
-            }
-        }
+        public bool IncludePrerelease { get; set; }
 
-        public bool IncludeAllVersions
-        {
-            get
-            {
-                return this._includeAllVersions;
-            }
-        }
+        public bool MatchQuery { get; set; }
 
-        public bool IncludePrerelease
-        {
-            get
-            {
-                return this._includedPrerelease;
-            }
-        }
+        public string Source { get; set; }
 
-        public bool MatchQuery
-        {
-            get
-            {
-                return this._matchQuery;
-            }
-        }
+        public int PageSize { get; set; }
 
-        public int PageSize
-        {
-            get
-            {
-                return this._pageSize;
-            }
-        }
+        public string SortColumn { get; set; }
 
-        public string SortColumn
-        {
-            get
-            {
-                return this._sortColumn;
-            }
-        }
-
-        public bool SortDescending
-        {
-            get
-            {
-                return this._sortDescending;
-            }
-        }
-
-        public string[] TagsQuery
-        {
-            get
-            {
-                return this._tagsQuery;
-            }
-        }
+        public string[] TagsQuery { get; set; }
     }
 }

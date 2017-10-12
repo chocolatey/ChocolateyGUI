@@ -4,33 +4,34 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Windows;
+using System.Windows.Input;
+using ChocolateyGui.Utilities;
+
 namespace ChocolateyGui.Commands
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Input;
-
     /// <summary>
-    ///     A <see cref="RoutedCommandBinding"/> implementation that handles a
-    ///     <see cref="RoutedCommand"/> by executing methods of the DataContext of the
-    ///     <see cref="UIElement"/> whose <see cref="UIElement.CommandBindings"/> collection
-    ///     contains the <see cref="DataContextCommandBinding"/>.
+    ///     A <see cref="RoutedCommandBinding" /> implementation that handles a
+    ///     <see cref="RoutedCommand" /> by executing methods of the DataContext of the
+    ///     <see cref="UIElement" /> whose <see cref="UIElement.CommandBindings" /> collection
+    ///     contains the <see cref="DataContextCommandBinding" />.
     /// </summary>
     public class DataContextCommandBinding : RoutedCommandBinding
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="DataContextCommandBinding"/> class.
+        ///     Initializes a new instance of the <see cref="DataContextCommandBinding" /> class.
         /// </summary>
         public DataContextCommandBinding()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataContextCommandBinding"/> class by
-        ///     using the specified <see cref="ICommand"/>.
+        ///     Initializes a new instance of the <see cref="DataContextCommandBinding" /> class by
+        ///     using the specified <see cref="ICommand" />.
         /// </summary>
         /// <param name="command">
-        /// The command.
+        ///     The command.
         /// </param>
         public DataContextCommandBinding(ICommand command)
             : base(command)
@@ -39,7 +40,7 @@ namespace ChocolateyGui.Commands
 
         /// <summary>
         ///     Gets or sets the Name of the method of the DataContext that is executed when the command associated
-        ///     with this <see cref="DataContextCommandBinding"/> initiates a check to determine
+        ///     with this <see cref="DataContextCommandBinding" /> initiates a check to determine
         ///     whether the command can be executed on the current command target.
         /// </summary>
         /// <remarks>
@@ -52,7 +53,7 @@ namespace ChocolateyGui.Commands
 
         /// <summary>
         ///     Gets or sets the Name of the method of the DataContext that is executed when the command associated
-        ///     with this <see cref="DataContextCommandBinding"/> executes.
+        ///     with this <see cref="DataContextCommandBinding" /> executes.
         /// </summary>
         /// <remarks>
         ///     The corresponding method must have one of two signatures below, with the first
@@ -64,7 +65,7 @@ namespace ChocolateyGui.Commands
 
         /// <summary>
         ///     Gets or sets the Name of the method of the DataContext that is executed when the command associated
-        ///     with this <see cref="DataContextCommandBinding"/> initiates a check to determine
+        ///     with this <see cref="DataContextCommandBinding" /> initiates a check to determine
         ///     whether the command can be executed on the current command target.
         /// </summary>
         /// <remarks>
@@ -77,7 +78,7 @@ namespace ChocolateyGui.Commands
 
         /// <summary>
         ///     Gets or sets the Name of the method of the DataContext that is executed when the command associated
-        ///     with this <see cref="DataContextCommandBinding"/> executes.
+        ///     with this <see cref="DataContextCommandBinding" /> executes.
         /// </summary>
         /// <remarks>
         ///     The corresponding method must have one of two signatures below, with the first
@@ -88,8 +89,8 @@ namespace ChocolateyGui.Commands
         public new string PreviewExecuted { get; set; }
 
         /// <summary>
-        ///     The method that is called when the CanExecute <see cref="RoutedEvent"/> for the
-        ///     <see cref="ICommand"/> associated with this <see cref="DataContextCommandBinding"/>
+        ///     The method that is called when the CanExecute <see cref="RoutedEvent" /> for the
+        ///     <see cref="ICommand" /> associated with this <see cref="DataContextCommandBinding" />
         ///     should be handled.
         /// </summary>
         /// <param name="sender">The command target on which the command is executing.</param>
@@ -101,9 +102,16 @@ namespace ChocolateyGui.Commands
                 throw new ArgumentNullException("e");
             }
 
-            var target = GetDataContext(sender);
+            var target = DataContext.GetDataContext(sender);
             bool canExecute;
-            if (!CommandExecutionManager.TryExecuteCommand(target, e.Parameter, false, this.Executed, this.CanExecute, out canExecute))
+            if (
+                !CommandExecutionManager.TryExecuteCommand(
+                    target,
+                    e.Parameter,
+                    false,
+                    Executed,
+                    CanExecute,
+                    out canExecute))
             {
                 return;
             }
@@ -113,8 +121,8 @@ namespace ChocolateyGui.Commands
         }
 
         /// <summary>
-        ///     The method that is called when the Executed <see cref="RoutedEvent"/> for the
-        ///     <see cref="ICommand"/> associated with this <see cref="DataContextCommandBinding"/>
+        ///     The method that is called when the Executed <see cref="RoutedEvent" /> for the
+        ///     <see cref="ICommand" /> associated with this <see cref="DataContextCommandBinding" />
         ///     should be handled.
         /// </summary>
         /// <param name="sender">The command target on which the command is executing.</param>
@@ -126,14 +134,14 @@ namespace ChocolateyGui.Commands
                 throw new ArgumentNullException("e");
             }
 
-            var target = GetDataContext(sender);
+            var target = DataContext.GetDataContext(sender);
             bool canExecute;
             if (CommandExecutionManager.TryExecuteCommand(
                 target,
                 e.Parameter,
                 true,
-                this.Executed,
-                this.CanExecute,
+                Executed,
+                CanExecute,
                 out canExecute))
             {
                 e.Handled = true;
@@ -141,8 +149,8 @@ namespace ChocolateyGui.Commands
         }
 
         /// <summary>
-        ///     The method that is called when the PreviewCanExecute <see cref="RoutedEvent"/> for the
-        ///     <see cref="ICommand"/> associated with this <see cref="DataContextCommandBinding"/>
+        ///     The method that is called when the PreviewCanExecute <see cref="RoutedEvent" /> for the
+        ///     <see cref="ICommand" /> associated with this <see cref="DataContextCommandBinding" />
         ///     should be handled.
         /// </summary>
         /// <param name="sender">The command target on which the command is executing.</param>
@@ -154,9 +162,16 @@ namespace ChocolateyGui.Commands
                 throw new ArgumentNullException("e");
             }
 
-            var target = GetDataContext(sender);
+            var target = DataContext.GetDataContext(sender);
             bool canExecute;
-            if (!CommandExecutionManager.TryExecuteCommand(target, e.Parameter, false, this.PreviewExecuted, this.PreviewCanExecute, out canExecute))
+            if (
+                !CommandExecutionManager.TryExecuteCommand(
+                    target,
+                    e.Parameter,
+                    false,
+                    PreviewExecuted,
+                    PreviewCanExecute,
+                    out canExecute))
             {
                 return;
             }
@@ -166,9 +181,9 @@ namespace ChocolateyGui.Commands
         }
 
         /// <summary>
-        ///     The method that is called when the PreviewExecuted <see cref="RoutedEvent"/> for
-        ///     the <see cref="ICommand"/> associated with this
-        ///     <see cref="DataContextCommandBinding"/> should be handled.
+        ///     The method that is called when the PreviewExecuted <see cref="RoutedEvent" /> for
+        ///     the <see cref="ICommand" /> associated with this
+        ///     <see cref="DataContextCommandBinding" /> should be handled.
         /// </summary>
         /// <param name="sender">The command target on which the command is executing.</param>
         /// <param name="e">The event data.</param>
@@ -179,30 +194,18 @@ namespace ChocolateyGui.Commands
                 throw new ArgumentNullException("e");
             }
 
-            var target = GetDataContext(sender);
+            var target = DataContext.GetDataContext(sender);
             bool canExecute;
             if (CommandExecutionManager.TryExecuteCommand(
                 target,
                 e.Parameter,
                 true,
-                this.PreviewExecuted,
-                this.PreviewCanExecute,
+                PreviewExecuted,
+                PreviewCanExecute,
                 out canExecute))
             {
                 e.Handled = true;
             }
-        }
-
-        private static object GetDataContext(object element)
-        {
-            var fe = element as FrameworkElement;
-            if (fe != null)
-            {
-                return fe.DataContext;
-            }
-
-            var fce = element as FrameworkContentElement;
-            return fce == null ? null : fce.DataContext;
         }
     }
 }

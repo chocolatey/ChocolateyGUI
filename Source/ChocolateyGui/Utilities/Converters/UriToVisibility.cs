@@ -4,15 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+
 namespace ChocolateyGui.Utilities.Converters
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Data;
-
     public class UriToVisibility : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || (value is string && string.IsNullOrWhiteSpace((string)value)))
             {
@@ -26,7 +27,7 @@ namespace ChocolateyGui.Utilities.Converters
             object value,
             Type targetType,
             object parameter,
-            System.Globalization.CultureInfo culture)
+            CultureInfo culture)
         {
             throw new NotImplementedException();
         }

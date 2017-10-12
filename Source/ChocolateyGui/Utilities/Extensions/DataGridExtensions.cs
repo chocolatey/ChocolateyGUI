@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ChocoPM.Extensions
-{
-    using System.ComponentModel;
-    using System.Windows.Controls;
-    using System.Windows.Data;
+using System.ComponentModel;
+using System.Windows.Controls;
+using System.Windows.Data;
 
+namespace ChocolateyGui.Utilities.Extensions
+{
     internal static class DataGridExtensions
     {
         public static string GetSortMemberPath(this DataGridColumn column)
@@ -62,5 +62,5 @@ namespace ChocoPM.Extensions
 
             return index;
         }
-    }   
+    }
 }

@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="ChocolateyGui.Views.LocalSourceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:commands="clr-namespace:ChocolateyGui.Commands"
+             xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
+             xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:lang="clr-namespace:ChocolateyGui.Properties"
+             mc:Ignorable="d"
+             d:DesignHeight="768" d:DesignWidth="1366"
+             d:DataContext="{d:DesignInstance viewModels:LocalSourceViewModel}">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:BooleanToVisibilityHidden x:Key="BoolToHidden" />
+        <converters:StringListToString x:Key="ListToString" />
+    </UserControl.Resources>
+    <Grid Background="{StaticResource AccentColorBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="0,5" Style="{StaticResource LeftSourceListItem}">
+            <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Resources.LocalSourceView_SearchBoxText}"/>
+            <TextBox x:Name="SearchTextBox" Width="300" Padding="0,2,0,-2" FontSize="14"
+                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Name="MatchCheckBox" Margin="5" Content="{x:Static lang:Resources.LocalSourceView_CheckboxMatchExact}" IsChecked="{Binding MatchWord}" />
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            <CheckBox Name="UpdatesCheckBox" Margin="5" Content="{x:Static lang:Resources.LocalSourceView_CheckboxPkgsWithUpdates}"
+                      IsChecked="{Binding ShowOnlyPackagesWithUpdate}" />
+        </StackPanel>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                    Margin="10,5">
+            <Button Command="{commands:DataContextCommandAdapter RefreshPackages, CanRefreshPackages}"
+                    Style="{StaticResource SquareButtonStyle}" Content="{x:Static lang:Resources.LocalSourceView_ButtonRefreshPkgs}" Margin="4,0,4,0" />
+            <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}"
+                    Style="{StaticResource SquareButtonStyle}" Margin="4,0,4,0" Content="{x:Static lang:Resources.LocalSourceView_ButtonUpdateAll}" />
+            <Button Command="{commands:DataContextCommandAdapter ExportAll, CanExportAll}"
+                    Style="{StaticResource SquareButtonStyle}" Margin="4,0,0,0" Content="{x:Static lang:Resources.LocalSourceView_ButtonExport}" />
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding PackageSource}" Background="{StaticResource ControlBackgroundBrush}"
+                  AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
+                  MouseDoubleClick="PackageDoubleClick" Style="{DynamicResource PackagesGridStyle}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Name}" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type items:IPackageViewModel}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconEntypo ToolTip="Pinned" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BoolToHidden}}" />
+                                <iconPacks:PackIconEntypo ToolTip="Installed Side by Side with another version of the same package." Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BoolToHidden}}" />
+                                <TextBlock Text="{Binding Title}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Authors}"
+                                    Binding="{Binding Authors, Converter={StaticResource ListToString}}" Width="1*" />
+                <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
+                <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_LatestVersion}" Binding="{Binding LatestVersion, IsAsync=True}" Width="1*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <controls:ProgressRing Grid.Row="1" IsActive="{Binding FirstLoadIncomplete}"/>
+        <ProgressBar Grid.Row="1" Height="10" VerticalAlignment="Bottom" IsIndeterminate="True" x:Name="PART_Loading"
+                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibility}}"/>
+    </Grid>
+</UserControl>

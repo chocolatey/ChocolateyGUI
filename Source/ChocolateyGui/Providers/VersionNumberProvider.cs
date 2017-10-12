@@ -4,20 +4,32 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Linq;
+using System.Reflection;
+using ChocolateyGui.Properties;
+
 namespace ChocolateyGui.Providers
 {
-    using System;
-
     public class VersionNumberProvider : IVersionNumberProvider
     {
+        private string _version;
+
         public virtual string Version
         {
             get
             {
-                var assembly = this.GetType().Assembly;
-                var fullName = assembly.FullName;
-                var i = fullName.IndexOf("Version=", StringComparison.Ordinal);
-                return i < 0 ? fullName : fullName.Substring(i).Split(' ', ',')[0];
+                if (_version != null)
+                {
+                    return _version;
+                }
+
+                var assembly = GetType().Assembly;
+                var informational =
+                    ((AssemblyInformationalVersionAttribute[])assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute)))
+                        .First();
+
+                _version = string.Format(Resources.VersionNumberProvider_VersionFormat, informational.InformationalVersion);
+                return _version;
             }
         }
     }

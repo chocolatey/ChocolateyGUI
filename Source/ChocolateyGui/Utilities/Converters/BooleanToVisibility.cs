@@ -4,22 +4,43 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Windows;
+using System.Windows.Data;
+
 namespace ChocolateyGui.Utilities.Converters
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Data;
-
-    public class BooleanToVisibility : DependencyObject, IValueConverter
+    public class BooleanToVisibility : DependencyObject, IValueConverter, IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((value == null || (bool)value == false) ^ (parameter != null && bool.Parse((string)parameter))) ? Visibility.Collapsed : Visibility.Visible;
+            return IsCollapsed(value, parameter)
+                ? Visibility.Collapsed
+                : Visibility.Visible;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var collapsed = values.Aggregate(false, (current, value) => current || IsCollapsed(value, parameter));
+            return collapsed ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static bool IsCollapsed(object value, object parameter)
+        {
+            var boolVal = (value != null && value != DependencyProperty.UnsetValue) && (bool)value;
+            return boolVal == false ^ (parameter != null && bool.Parse((string)parameter));
         }
     }
 }

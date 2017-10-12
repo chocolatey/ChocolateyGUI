@@ -4,23 +4,24 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
+using ChocolateyGui.Controls;
+using ChocolateyGui.Models;
+using MahApps.Metro.Controls.Dialogs;
+
 namespace ChocolateyGui.Services
 {
-    using System;
-    using System.ComponentModel;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using ChocolateyGui.Controls;
-    using ChocolateyGui.Models;
-    using MahApps.Metro.Controls.Dialogs;
-   
     public interface IProgressService : INotifyPropertyChanged, IProgress<double>
     {
         bool IsLoading { get; }
 
         ObservableRingBufferCollection<PowerShellOutputLine> Output { get; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
         CancellationToken GetCancellationToken();
 
         Task<MessageDialogResult> ShowMessageAsync(string title, string message);

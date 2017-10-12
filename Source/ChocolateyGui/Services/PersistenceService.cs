@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.IO;
+using Microsoft.Win32;
+
 namespace ChocolateyGui.Services
 {
-    using System.IO;
-    using Microsoft.Win32;
-
     public class PersistenceService : IPersistenceService
     {
         public Stream OpenFile(string defaultExtension, string filter)

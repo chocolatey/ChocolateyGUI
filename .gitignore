@@ -192,3 +192,8 @@ BuildArtifacts
 
 # Temporary files that kdiff generates
 *.orig
+
+# Build related
+tools/
+BuildArtifacts/
+\.vs/

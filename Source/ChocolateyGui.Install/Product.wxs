@@ -1,121 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <?define MainExe=$(var.ChocolateyGui.TargetFileName)?>
   <?define Version=!(bind.fileVersion.$(var.MainExe))?>
-  <?define ProductName="ChocolateyGUI" ?>
+  <?define ProductName="Chocolatey GUI" ?>
   <?define Language="1033" ?>
   <?define Manufacturer="Chocolatey"?>
+  <?define ChocolateyGui_TargetDir=$(var.ChocolateyGui.TargetDir)?>
 
-  <Product Id="*" Name="$(var.ProductName) $(var.Version)" Language="$(var.Language)" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5b146155">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+  <Product Id="*" Name="$(var.ProductName)" Language="$(var.Language)" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5b146155">
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
 
-    <PropertyRef Id="NETFRAMEWORK40FULL"/>
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED" />
+    <SetProperty Id="CHOCOLATEY_INSTALL" Value="$(env.ChocolateyInstall)" Before="LaunchConditions" Sequence="first"  />
 
-    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET 4.0 Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK40FULL]]>
+
+    <Condition Message="This application requires .NET Framework 4.5.2. Please install the .NET 4.5.2 Framework then run this installer again.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED]]>
     </Condition>
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-    <MediaTemplate EmbedCab="yes" />
+    <Condition Message="This application only runs in Windows 7 SP1 or later.">
+      <![CDATA[Installed OR (VersionNT >= 601)]]>
+    </Condition>
 
-    <Icon Id="icon.ico" SourceFile="$(var.ChocolateyGui.ProjectDir)\chocolateyicon.ico"/>
+    <Condition Message="Chocolatey must already be installed.">
+      <![CDATA[CHOCOLATEY_INSTALL]]>
+    </Condition>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." AllowSameVersionUpgrades="yes" />
+
+    <?if $(var.ChocolateyGui.Configuration) = "Debug"?>
+    <MediaTemplate EmbedCab="yes" CompressionLevel="none" />
+    <?else?>
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+    <?endif?>
+
+    <Icon Id="icon.ico" SourceFile="$(var.ChocolateyGui.ProjectDir)\chocolateyicon.ico" />
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
-    <Feature Id="ProductFeature" Title="ChocolateyGUI" Level="1">
-      <ComponentGroupRef Id="ChocolateyComponents" />
+    <Feature Id="ProductFeature" Title="Chocolatey GUI" Level="1">
+      <ComponentGroupRef Id="ChocolateyExe" />
+      <ComponentGroupRef Id="ApplicationContent" />
       <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="CreateAppDataFolder" />
+      <ComponentRef Id="CreateUserAppDataFolder" />
+      <MergeRef Id="VCRedist" />
     </Feature>
   </Product>
 
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="ChocolateyGUI" />
+        <Directory Id="INSTALLFOLDER" Name="Chocolatey GUI" />
       </Directory>
       <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="ChocolateyGUI"/>
+        <Component Id="ApplicationShortcut" Guid="A508A8D8-4F82-4AA9-AB70-E1022B9A9EAC">
+          <Shortcut Id="ApplicationStartMenuShortcut" Advertise="no"
+                    Name="Chocolatey GUI"
+                    Description="GUI for Chocolatey"
+                    Target="[INSTALLFOLDER]ChocolateyGui.exe"
+                    WorkingDirectory="INSTALLFOLDER"
+                    Icon="icon.ico" />
+        </Component>
       </Directory>
+      <Directory Id="CommonAppDataFolder">
+        <Directory Id="CommonAppStuff" Name="Chocolatey GUI">
+          <Component Id="CreateAppDataFolder" Guid="D534FECA-E69F-4DE6-A2CD-192C6149BCC2">
+            <CreateFolder>
+              <Permission User="Everyone" GenericAll="yes" />
+            </CreateFolder>
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="LocalAppDataFolder">
+        <Directory Id="UserAppStuff" Name="Chocolatey GUI">
+          <Component Id="CreateUserAppDataFolder" Guid="265AADCF-FCC7-45F1-8E2B-506F0B426D37">
+            <CreateFolder />
+            <RemoveFolder Id="UserAppStuff" On="uninstall" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Merge Id="VCRedist" SourceFile="Microsoft_VC120_CRT_x86.msm" DiskId="1" Language="0" />
     </Directory>
   </Fragment>
 
   <Fragment>
-    <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="{4747347F-5DBC-44C6-A56A-AA9473606DEC}">
-        <Shortcut Id="ApplicationStartMenuShortcut"
-              Name="ChocolateyGUI"
-              Description="GUI for Chocolatey"
-              Target="[INSTALLFOLDER]ChocolateyGui.exe"
-              WorkingDirectory="INSTALLFOLDER"
-              Icon ="icon.ico"/>
-        <Shortcut Id="Uninstall"
-                          Name="Uninstall ChocolateyGUI"
-                          Description="Uninstalls ChocolateyGUI"
-                          Target="[System64Folder]msiexec.exe"
-                          Arguments="/x [ProductCode]"/>
-        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-        <RegistryValue Root="HKCU" Key="Software\Microsoft\ChocolateyGUI" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-      </Component>
-    </DirectoryRef>
-  </Fragment>
-
-  <Fragment>
-    <ComponentGroup Id="ChocolateyComponents" Directory="INSTALLFOLDER">
+    <ComponentGroup Id="ChocolateyExe" Directory="INSTALLFOLDER">
       <Component Id="ChocolateyGui.exe" Guid="f8164f91-fa5c-0001-0001-9beb5a044699">
-        <File Id="ChocolateyGui.exe" Source="$(var.ChocolateyGui.TargetPath)" KeyPath="yes" Checksum="yes"/>
+        <File Id="ChocolateyGui.exe" Source="$(var.ChocolateyGui.TargetPath)" KeyPath="yes" Checksum="yes" />
       </Component>
-      <Component Id="ChocolateyGui.exe.config" Guid="f8164f91-fa5c-0004-0002-9beb5b044699">
-        <File Id="ChocolateyGui.exe.config" Source="$(var.ChocolateyGui.TargetDir)\ChocolateyGui.exe.config" KeyPath="yes"/>
-      </Component>
-      <Component Id="Autofac.dll" Guid="3D998CFD-929C-45DD-8EC9-849D7DB383E1">
-        <File Id="Autofac.dll" Source="$(var.ChocolateyGui.TargetDir)\Autofac.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="AutoMapper.dll" Guid="271807E2-0EFB-4A69-8184-4902A8DE0728">
-        <File Id="AutoMapper.dll" Source="$(var.ChocolateyGui.TargetDir)\AutoMapper.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="AutoMapper.Net4.dll" Guid="AC45B646-B968-43CC-BF19-EBF6E2DC74DC">
-        <File Id="AutoMapper.Net4.dll" Source="$(var.ChocolateyGui.TargetDir)\AutoMapper.Net4.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="log4net.dll" Guid="0E8D8943-24F9-4934-86D5-AB314BFDC23E">
-        <File Id="log4net.dll" Source="$(var.ChocolateyGui.TargetDir)\log4net.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="MahApps.Metro.dll" Guid="3B37657E-820C-40F8-92F4-6A282418D90B">
-        <File Id="MahApps.Metro.dll" Source="$(var.ChocolateyGui.TargetDir)\MahApps.Metro.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Microsoft.Data.Edm.dll" Guid="68E8D1B2-3D2D-4EA2-8C24-26B433EEDD3E">
-        <File Id="Microsoft.Data.Edm.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Data.Edm.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Microsoft.Data.OData.dll" Guid="91C20061-9C15-4A6D-8D31-BBF640F62CFA">
-        <File Id="Microsoft.Data.OData.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Data.OData.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Microsoft.Data.Services.Client.dll" Guid="5099E03B-295A-4091-897C-7E68B7E76D17">
-        <File Id="Microsoft.Data.Services.Client.dll" Source="$(var.ChocolateyGui.TargetDir)\Microsoft.Data.Services.Client.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Mindscape.Raygun4Net.dll" Guid="C17C5A82-CA98-4702-94EB-DA01839D891E">
-        <File Id="Mindscape.Raygun4Net.dll" Source="$(var.ChocolateyGui.TargetDir)\Mindscape.Raygun4Net.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="System.Reactive.Core.dll" Guid="11AFB91C-B27E-4212-B963-9580FE7C07DA">
-        <File Id="System.Reactive.Core.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Core.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="System.Reactive.Interfaces.dll" Guid="AB49D8BA-C4AA-4DD6-807E-D38D0BE1DF43">
-        <File Id="System.Reactive.Interfaces.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Interfaces.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="System.Reactive.Linq.dll" Guid="73F5FCC7-34CA-423B-A684-EC1F388F42AC">
-        <File Id="System.Reactive.Linq.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Linq.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="System.Reactive.PlatformServices.dll" Guid="CEBA9F63-6B82-4A71-A6A1-119CFB4E2EA8">
-        <File Id="System.Reactive.PlatformServices.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.PlatformServices.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="System.Reactive.Windows.Threading.dll" Guid="50F1967D-B04C-4C18-A5EF-DFE6E43DB7B1">
-        <File Id="System.Reactive.Windows.Threading.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Reactive.Windows.Threading.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="System.Spatial.dll" Guid="0FEE0EEE-5D77-48F6-AB4C-BB616E00C76A">
-        <File Id="System.Spatial.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Spatial.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="System.Windows.Interactivity.dll" Guid="C3AEADB7-B6E3-4952-9969-8C56F92E6470">
-        <File Id="System.Windows.Interactivity.dll" Source="$(var.ChocolateyGui.TargetDir)\System.Windows.Interactivity.dll" KeyPath="yes"/>
-      </Component>
-      <Component Id="Newtonsoft.Json.dll" Guid="28267AA6-C039-4C3E-8869-056E98CD2C37">
-        <File Id="Newtonsoft.Json.dll" Source="$(var.ChocolateyGui.TargetDir)\Newtonsoft.Json.dll" KeyPath="yes"/>
+      <Component Id="ChocolateyGui.exe.config" Guid="6C3AE56F-1AA3-4145-BFA9-345BBCC5C3D1">
+        <File Id="ChocolateyGui.exe.config" Source="$(var.ChocolateyGui_TargetDir)/ChocolateyGui.exe.config" KeyPath="yes" Checksum="yes" />
       </Component>
     </ComponentGroup>
   </Fragment>

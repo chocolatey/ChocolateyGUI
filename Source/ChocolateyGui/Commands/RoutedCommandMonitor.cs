@@ -4,18 +4,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using Expression = System.Linq.Expressions.Expression;
+
 namespace ChocolateyGui.Commands
 {
-    using System;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Input;
-    using Expression = System.Linq.Expressions.Expression;
-
     /// <summary>
-    ///     This class listens to WPF's <see cref="RoutedEvent"/> system for
-    ///     <see cref="RoutedCommand"/> events and invokes the appropriate methods of the
-    ///     <see cref="RoutedCommandBinding"/> class when necessary.
+    ///     This class listens to WPF's <see cref="RoutedEvent" /> system for
+    ///     <see cref="RoutedCommand" /> events and invokes the appropriate methods of the
+    ///     <see cref="RoutedCommandBinding" /> class when necessary.
     /// </summary>
     internal static class RoutedCommandMonitor
     {
@@ -31,13 +31,13 @@ namespace ChocolateyGui.Commands
 
         private static readonly CommandBindingsProvider<UIElement3D> UIElement3DCommandBindingsProvider
             = new CommandBindingsProvider<UIElement3D>();
-        
+
         private static readonly CommandBindingsProvider<ContentElement> ContentElementCommandBindingsProvider
             = new CommandBindingsProvider<ContentElement>();
 
         /// <summary>
         ///     The RoutedCommandBinding class calls this method inside its static constructor in
-        ///     order to cause the <see cref="RoutedCommandMonitor"/> to initialize its RoutedEvent
+        ///     order to cause the <see cref="RoutedCommandMonitor" /> to initialize its RoutedEvent
         ///     listeners.
         /// </summary>
         internal static void Init()
@@ -122,8 +122,8 @@ namespace ChocolateyGui.Commands
             }
 
             foreach (var binding in commandBindings
-                                        .OfType<RoutedCommandBinding>()
-                                        .Where(binding => binding.Command == command && (!e.Handled || binding.ViewHandledEvents)))
+                .OfType<RoutedCommandBinding>()
+                .Where(binding => binding.Command == command && (!e.Handled || binding.ViewHandledEvents)))
             {
                 if (e.RoutedEvent == CommandManager.PreviewCanExecuteEvent)
                 {
@@ -152,19 +152,19 @@ namespace ChocolateyGui.Commands
         }
 
         /// <summary>
-        /// Provides access to the CommandBindingsInternal property for a target type.
+        ///     Provides access to the CommandBindingsInternal property for a target type.
         /// </summary>
         /// <typeparam name="TElementType">
-        /// Specified Target LineType
+        ///     Specified Target LineType
         /// </typeparam>
         private class CommandBindingsProvider<TElementType>
         {
             // _GetCommandBindings is an Func that is used to access the
             // CommandBindingsInternal property of UIElements, UIElement3D sand ContentElements.
             private Func<TElementType, CommandBindingCollection> _getCommandBindings;
-                ////Delegate.CreateDelegate(typeof(CommandBindingsInternalGetter), null,
-                ////typeof(TElementType).GetProperty("CommandBindingsInternal", BindingFlags.Instance | BindingFlags.NonPublic)
-                ////.GetGetMethod(true));
+            ////Delegate.CreateDelegate(typeof(CommandBindingsInternalGetter), null,
+            ////typeof(TElementType).GetProperty("CommandBindingsInternal", BindingFlags.Instance | BindingFlags.NonPublic)
+            ////.GetGetMethod(true));
 
             /// <summary>
             ///     Gets the collection of CommandBindings or null the collection is not
@@ -173,15 +173,17 @@ namespace ChocolateyGui.Commands
             /// <returns>The collection of CommandBindings</returns>
             internal Func<TElementType, CommandBindingCollection> GetCommandBindings
             {
-                get 
+                get
                 {
-                    if (this._getCommandBindings == null)
+                    if (_getCommandBindings == null)
                     {
                         var param = Expression.Parameter(typeof(TElementType));
-                        this._getCommandBindings = Expression.Lambda<Func<TElementType, CommandBindingCollection>>(Expression.Property(param, "CommandBindingsInternal"), param).Compile();
+                        _getCommandBindings =
+                            Expression.Lambda<Func<TElementType, CommandBindingCollection>>(
+                                Expression.Property(param, "CommandBindingsInternal"), param).Compile();
                     }
 
-                    return this._getCommandBindings;
+                    return _getCommandBindings;
                 }
             }
         }

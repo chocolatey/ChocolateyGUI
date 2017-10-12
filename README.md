@@ -1,31 +1,34 @@
-# ChocolateyGUI
-ChocolateyGUI is a user interface for [Chocolatey NuGet](http://chocolatey.org) (a Machine Package Manager for Windows).
+# Chocolatey GUI
+
+Chocolatey GUI is a user interface for [Chocolatey NuGet](http://chocolatey.org) (a Machine Package Manager for Windows).
 
 ## Installation
-You can install ChocolateyGUI via Chocolatey itself by executing:
- 
+You can install Chocolatey GUI via Chocolatey itself by executing:
+
 ```choco install ChocolateyGUI```
 
-If you are interested in trying out the latest pre-release version of ChocolateyGUI then you can use the following installation command:
+If you are interested in trying out the latest pre-release version of Chocolatey GUI then you can use the following installation command:
 
-```choco install ChocolateyGUI -source https://www.myget.org/F/chocolateygui/ -pre```
+```choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre```
 
-This uses the public ChocolateyGUI feed which is hosted on [MyGet.org](https://www.myget.org) as the source.
+This uses the public Chocolatey GUI feed which is hosted on [MyGet.org](https://www.myget.org) as the source.
 
 ## Build Status
 
 TeamCity  | AppVeyor
 ------------- | -------------
-[![TeamCity Build Status](http://img.shields.io/teamcity/codebetter/bt613.svg)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt613) | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/21psh7flvro8buhm/branch/develop?svg=true)](https://ci.appveyor.com/project/GaryEwanPark/chocolateygui)
+[![TeamCity Build Status](http://img.shields.io/teamcity/codebetter/bt613.svg)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt613) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/t7p3ywv3msu5ahl7/branch/develop?svg=true)](https://ci.appveyor.com/project/chocolatey/chocolateygui/branch/develop)
 
 
 ## Chat Room
 
-Come join in the conversation about ChocolateyGUI in our Gitter Chat Room
+Come join in the conversation about Chocolatey GUI in our Gitter Chat Room
 
 [![Gitter chat](https://badges.gitter.im/chocolatey/ChocolateyGUI.png)](https://gitter.im/chocolatey/ChocolateyGUI)
 
 Or, you can find us in IRC at #chocolatey.
+
+<a href="https://zenhub.io"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 
 ## Information
 
@@ -35,24 +38,25 @@ Or, you can find us in IRC at #chocolatey.
  * [Build Status Email List](http://groups.google.com/group/chocolatey-build-status)
 
 ### Documentation
-Please see the [wiki](https://github.com/chocolatey/chocolateygui/wiki)
+
+You can find information about Chocolatey GUI here: [https://chocolatey.github.io/ChocolateyGUI/](https://chocolatey.github.io/ChocolateyGUI/)
 
 ### Requirements
-* .NET Framework 4.0
-* PowerShell 2.0+
+* .NET Framework 4.5.2
+* Windows 7 SP1 through Windows 10 (1708) or Windows Server 2008 R2 SP1 through Windows Server 2016
 
 ### License / Credits
 Apache 2.0 - see [LICENSE](https://github.com/chocolatey/chocolateygui/blob/develop/LICENSE) and [NOTICE](https://github.com/chocolatey/chocolateygui/blob/develop/NOTICE) files.
 
 ## Submitting Issues
 
-If you have found an issue with ChocolateyGUI, this is the place to submit. 
+If you have found an issue with Chocolatey GUI, this is the place to submit.
 
 Observe the following help for submitting an issue:
 
 Prerequisites:
 
- * The issue has to do with ChocolateyGUI itself and is not a package or website issue.
+ * The issue has to do with Chocolatey GUI itself and is not a package or website issue.
  * Please check to see if your issue already exists with a quick search of the issues. Start with one relevant term and then add if you get too many results.
  * You are not submitting an Enhancement. Enhancements should observe [CONTRIBUTING](https://github.com/chocolatey/chocolateygui/blob/develop/CONTRIBUTING.md) guidlines.
 
@@ -80,16 +84,8 @@ Committers, you should be very familiar with [COMMITTERS](https://github.com/cho
 * **Install** and **uninstall** packages
 * See detailed **package information**
 
-![image](https://cloud.githubusercontent.com/assets/1271146/4349077/4a3e3cbc-41a7-11e4-8806-63048ea626f3.png)
-
-## Blog Posts and external articles
-
-**NOTE:** Some of these articles refer to an older, Windows Forms, implementation of ChocolateyGUI, but they are still relevant.
-
-* [All new ChocolateyGUI](http://blogs.lessthandot.com/index.php/SysAdmins/OS/Windows/all-new-chocolateygui) by chrissie1
-* [Making a chocolatey package for ChocolateyGUI.](http://blogs.lessthandot.com/index.php/DesktopDev/MSTech/making-a-chocolatey-package) by chrissie1
-* [ChocolateyGUI](http://blogs.lessthandot.com/index.php/DesktopDev/MSTech/chocolatey-gui) by chrissie1
+![Chocolatey GUI](https://github.com/chocolatey/ChocolateyGUI/blob/10809890189206cece4b64ab038f33d11cf7b840/docs/Screenshots/Application_Loaded.png)
 
 ## Credits
 
-ChocolateyGUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/legal/CREDITS.md) (just LEGAL/Credits.md in the zip folder)
+Chocolatey GUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/input/credits.md) (just input/credits.md in the zip folder)

@@ -19,7 +19,6 @@ namespace ChocolateyGui.ViewModels.Windows
 
     public class MainWindowViewModel : ObservableBase, IMainWindowViewModel, IWeakEventListener
     {
-        private readonly Lazy<IPackageService> _packageService;
         private readonly IProgressService _progressService;
         private readonly ISourceService _sourceService;
         private readonly IVersionNumberProvider _versionNumberProvider;
@@ -28,7 +27,7 @@ namespace ChocolateyGui.ViewModels.Windows
         private string _newSourceUrl;
         private SourceViewModel _selectedSourceViewModel;
 
-        public MainWindowViewModel(ISourceService sourceService, IProgressService progressService, Lazy<IPackageService> packageServiceLazy, IVersionNumberProvider versionNumberProvider)
+        public MainWindowViewModel(ISourceService sourceService, IProgressService progressService, IVersionNumberProvider versionNumberProvider)
         {
             if (sourceService == null)
             {
@@ -37,7 +36,6 @@ namespace ChocolateyGui.ViewModels.Windows
 
             this._sourceService = sourceService;
             this._progressService = progressService;
-            this._packageService = packageServiceLazy;
             this._versionNumberProvider = versionNumberProvider;
             this.Sources = new ObservableCollection<SourceViewModel>(this._sourceService.GetSources());
 
@@ -109,6 +107,7 @@ namespace ChocolateyGui.ViewModels.Windows
 
         public ObservableCollection<SourceViewModel> Sources { get; set; }
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         public async void AddSource()
         {
             if (string.IsNullOrWhiteSpace(this.NewSourceName))
@@ -142,16 +141,11 @@ namespace ChocolateyGui.ViewModels.Windows
                 return;
             }
 
-            if (!(await this._packageService.Value.TestSourceUrl(url)))
-            {
-                this._progressService.ShowMessageAsync("New Source", "Failed to query source.").ConfigureAwait(false);
-                return;
-            }
-
             this._sourceService.AddSource(new SourceViewModel { Name = this.NewSourceName, Url = this.NewSourceUrl });
             this.NewSourceName = string.Empty;
             this.NewSourceUrl = string.Empty;
         }
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
         public bool CanAddSource()
         {
@@ -198,7 +192,7 @@ namespace ChocolateyGui.ViewModels.Windows
             if (sender is ISourceService)
             {
                 var eventArgs = e as SourcesChangedEventArgs;
-                if (eventArgs.AddedSources != null && eventArgs.AddedSources.Count > 0)
+                if (eventArgs != null && (eventArgs.AddedSources != null && eventArgs.AddedSources.Count > 0))
                 {
                     foreach (var source in eventArgs.AddedSources)
                     {
@@ -206,7 +200,7 @@ namespace ChocolateyGui.ViewModels.Windows
                     }
                 }
 
-                if (eventArgs.RemovedSources != null && eventArgs.RemovedSources.Count > 0)
+                if (eventArgs != null && (eventArgs.RemovedSources != null && eventArgs.RemovedSources.Count > 0))
                 {
                     foreach (var source in eventArgs.RemovedSources)
                     {

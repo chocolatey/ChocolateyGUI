@@ -4,30 +4,31 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace ChocolateyGui.Base
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-
     public abstract class ObservableBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void SetPropertyValue<T>(ref T property, T value, [CallerMemberName] string propertyName = "")
+        public bool SetPropertyValue<T>(ref T property, T value, [CallerMemberName] string propertyName = "")
         {
             if (EqualityComparer<T>.Default.Equals(property, value))
             {
-                return;
+                return false;
             }
 
             property = value;
-            this.NotifyPropertyChanged(propertyName);
+            NotifyPropertyChanged(propertyName);
+            return true;
         }
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            var propertyChangedEvent = this.PropertyChanged;
+            var propertyChangedEvent = PropertyChanged;
             if (propertyChangedEvent != null)
             {
                 propertyChangedEvent(this, new PropertyChangedEventArgs(propertyName));

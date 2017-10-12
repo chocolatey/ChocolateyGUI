@@ -4,33 +4,39 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using AutoMapper;
+using Caliburn.Micro;
+using ChocolateyGui.Base;
+using ChocolateyGui.Models;
+using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Properties;
+using ChocolateyGui.Services;
+using NuGet;
+using Action = System.Action;
+using MemoryCache = System.Runtime.Caching.MemoryCache;
+
 namespace ChocolateyGui.ViewModels.Items
 {
-    using System;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Runtime.Caching;
-    using System.Runtime.CompilerServices;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using ChocolateyGui.Base;
-    using ChocolateyGui.Models;
-    using ChocolateyGui.Services;
-    using ChocolateyGui.Utilities;
-    using ChocolateyGui.Views.Controls;
-    
     [DebuggerDisplay("Id = {Id}, Version = {Version}")]
-    public class PackageViewModel : ObservableBase, IPackageViewModel, IWeakEventListener
+    public class PackageViewModel :
+        ObservableBase,
+        IPackageViewModel,
+        IHandle<PackageHasUpdateMessage>
     {
+        private static readonly Serilog.ILogger Logger = Serilog.Log.ForContext<PackageViewModel>();
+
         private readonly MemoryCache _cache = MemoryCache.Default;
 
-        private readonly IChocolateyPackageService _chocolateyService;
+        private readonly IChocolateyService _chocolateyService;
+        private readonly IEventAggregator _eventAggregator;
 
-        private readonly INavigationService _navigationService;
+        private readonly IMapper _mapper;
+        private readonly IProgressService _progressService;
 
-        private readonly IPackageService _packageService;
-
-        private string _authors;
+        private string[] _authors;
 
         private string _copyright;
 
@@ -50,7 +56,10 @@ namespace ChocolateyGui.ViewModels.Items
 
         private bool _isAbsoluteLatestVersion;
 
-        private Lazy<bool> _isInstalled;
+        private bool _isInstalled;
+
+        private bool _isPinned;
+        private bool _isSideBySide;
 
         private bool _isLatestVersion;
 
@@ -64,7 +73,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private string _licenseUrl = string.Empty;
 
-        private string _owners;
+        private string[] _owners;
 
         private string _packageHash;
 
@@ -74,7 +83,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         private string _projectUrl = string.Empty;
 
-        private DateTime _published;
+        private DateTimeOffset _published;
 
         private string _releaseNotes;
 
@@ -94,330 +103,553 @@ namespace ChocolateyGui.ViewModels.Items
 
         private int _versionDownloadCount;
 
-        public PackageViewModel(IPackageService packageService, IChocolateyPackageService chocolateyService, INavigationService navigationService)
+        public PackageViewModel(
+            IChocolateyService chocolateyService,
+            IEventAggregator eventAggregator,
+            IMapper mapper,
+            IProgressService progressService)
         {
-            this._packageService = packageService;
-            this._chocolateyService = chocolateyService;
-            this._navigationService = navigationService;
-            PackagesChangedEventManager.AddListener(this._chocolateyService, this);
-
-            this._isInstalled = new Lazy<bool>(() => this._chocolateyService.IsPackageInstalled(this.Id, this.Version));
-        }
-
-        public string Authors
-        {
-            get { return this._authors; }
-            set { this.SetPropertyValue(ref this._authors, value); }
-        }
-
-        public bool CanUpdate
-        {
-            get { return this.IsInstalled && this.LatestVersion != null && this.LatestVersion > this.Version; }
-        }
-
-        public string Copyright
-        {
-            get { return this._copyright; }
-            set { this.SetPropertyValue(ref this._copyright, value); }
+            _chocolateyService = chocolateyService;
+            _eventAggregator = eventAggregator;
+            _mapper = mapper;
+            _progressService = progressService;
+            eventAggregator?.Subscribe(this);
         }
 
         public DateTime Created
         {
-            get { return this._created; }
-            set { this.SetPropertyValue(ref this._created, value); }
-        }
-
-        public string Dependencies
-        {
-            get { return this._dependencies; }
-            set { this.SetPropertyValue(ref this._dependencies, value); }
-        }
-
-        public string Description
-        {
-            get { return this._description; }
-            set { this.SetPropertyValue(ref this._description, value); }
-        }
-
-        public int DownloadCount
-        {
-            get { return this._downloadCount; }
-            set { this.SetPropertyValue(ref this._downloadCount, value); }
-        }
-
-        public string GalleryDetailsUrl
-        {
-            get { return this._galleryDetailsUrl; }
-            set { this.SetPropertyValue(ref this._galleryDetailsUrl, value); }
-        }
-
-        public string IconUrl
-        {
-            get { return this._iconUrl; }
-            set { this.SetPropertyValue(ref this._iconUrl, value); }
-        }
-
-        public string Id
-        {
-            get { return this._id; }
-            set { this.SetPropertyValue(ref this._id, value); }
-        }
-
-        public bool IsAbsoluteLatestVersion
-        {
-            get { return this._isAbsoluteLatestVersion; }
-            set { this.SetPropertyValue(ref this._isAbsoluteLatestVersion, value); }
-        }
-
-        public bool IsInstalled
-        {
-            get { return this._isInstalled.Value; }
-        }
-
-        public bool IsLatestVersion
-        {
-            get { return this._isLatestVersion; }
-            set { this.SetPropertyValue(ref this._isLatestVersion, value); }
-        }
-
-        public bool IsPrerelease
-        {
-            get { return this._isPrerelease; }
-            set { this.SetPropertyValue(ref this._isPrerelease, value); }
-        }
-
-        public string Language
-        {
-            get { return this._language; }
-            set { this.SetPropertyValue(ref this._language, value); }
+            get { return _created; }
+            set { SetPropertyValue(ref _created, value); }
         }
 
         public DateTime LastUpdated
         {
-            get { return this._lastUpdated; }
-            set { this.SetPropertyValue(ref this._lastUpdated, value); }
+            get { return _lastUpdated; }
+            set { SetPropertyValue(ref _lastUpdated, value); }
+        }
+
+        public string[] Authors
+        {
+            get { return _authors; }
+            set { SetPropertyValue(ref _authors, value); }
+        }
+
+        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && LatestVersion != null && LatestVersion > Version;
+
+        public string Copyright
+        {
+            get { return _copyright; }
+            set { SetPropertyValue(ref _copyright, value); }
+        }
+
+        public string Dependencies
+        {
+            get { return _dependencies; }
+            set { SetPropertyValue(ref _dependencies, value); }
+        }
+
+        public string Description
+        {
+            get { return _description; }
+            set { SetPropertyValue(ref _description, value); }
+        }
+
+        public int DownloadCount
+        {
+            get { return _downloadCount; }
+            set { SetPropertyValue(ref _downloadCount, value); }
+        }
+
+        public string GalleryDetailsUrl
+        {
+            get { return _galleryDetailsUrl; }
+            set { SetPropertyValue(ref _galleryDetailsUrl, value); }
+        }
+
+        public string IconUrl
+        {
+            get { return _iconUrl; }
+            set { SetPropertyValue(ref _iconUrl, value); }
+        }
+
+        public string Id
+        {
+            get { return _id; }
+            set { SetPropertyValue(ref _id, value); }
+        }
+
+        public bool IsAbsoluteLatestVersion
+        {
+            get { return _isAbsoluteLatestVersion; }
+            set { SetPropertyValue(ref _isAbsoluteLatestVersion, value); }
+        }
+
+        public bool IsInstalled
+        {
+            get { return _isInstalled; }
+            set { SetPropertyValue(ref _isInstalled, value); }
+        }
+
+        public bool IsPinned
+        {
+            get
+            {
+                return _isPinned;
+            }
+
+            set
+            {
+                if (SetPropertyValue(ref _isPinned, value))
+                {
+                    NotifyPropertyChanged(nameof(CanUpdate));
+                }
+            }
+        }
+
+        public bool IsSideBySide
+        {
+            get
+            {
+                return _isSideBySide;
+            }
+
+            set
+            {
+                if (SetPropertyValue(ref _isSideBySide, value))
+                {
+                    NotifyPropertyChanged(nameof(CanUpdate));
+                }
+            }
+        }
+
+        public bool IsLatestVersion
+        {
+            get { return _isLatestVersion; }
+            set { SetPropertyValue(ref _isLatestVersion, value); }
+        }
+
+        public bool IsPrerelease
+        {
+            get { return _isPrerelease; }
+            set { SetPropertyValue(ref _isPrerelease, value); }
+        }
+
+        public string Language
+        {
+            get { return _language; }
+            set { SetPropertyValue(ref _language, value); }
         }
 
         public SemanticVersion LatestVersion
         {
-            get { return this._latestVersion; }
-            set { this.SetPropertyValue(ref this._latestVersion, value); }
+            get { return _latestVersion; }
+            set { SetPropertyValue(ref _latestVersion, value); }
         }
 
         public string LicenseUrl
         {
-            get { return this._licenseUrl; }
-            set { this.SetPropertyValue(ref this._licenseUrl, value); }
+            get { return _licenseUrl; }
+            set { SetPropertyValue(ref _licenseUrl, value); }
         }
 
-        public string Owners
+        public string[] Owners
         {
-            get { return this._owners; }
-            set { this.SetPropertyValue(ref this._owners, value); }
+            get { return _owners; }
+            set { SetPropertyValue(ref _owners, value); }
         }
 
         public string PackageHash
         {
-            get { return this._packageHash; }
-            set { this.SetPropertyValue(ref this._packageHash, value); }
+            get { return _packageHash; }
+            set { SetPropertyValue(ref _packageHash, value); }
         }
 
         public string PackageHashAlgorithm
         {
-            get { return this._packageHashAlgorithm; }
-            set { this.SetPropertyValue(ref this._packageHashAlgorithm, value); }
+            get { return _packageHashAlgorithm; }
+            set { SetPropertyValue(ref _packageHashAlgorithm, value); }
         }
 
         public long PackageSize
         {
-            get { return this._packageSize; }
-            set { this.SetPropertyValue(ref this._packageSize, value); }
+            get { return _packageSize; }
+            set { SetPropertyValue(ref _packageSize, value); }
         }
 
         public string ProjectUrl
         {
-            get { return this._projectUrl; }
-            set { this.SetPropertyValue(ref this._projectUrl, value); }
+            get { return _projectUrl; }
+            set { SetPropertyValue(ref _projectUrl, value); }
         }
 
-        public DateTime Published
+        public DateTimeOffset Published
         {
-            get { return this._published; }
-            set { this.SetPropertyValue(ref this._published, value); }
+            get { return _published; }
+            set { SetPropertyValue(ref _published, value); }
         }
 
         public string ReleaseNotes
         {
-            get { return this._releaseNotes; }
-            set { this.SetPropertyValue(ref this._releaseNotes, value); }
+            get { return _releaseNotes; }
+            set { SetPropertyValue(ref _releaseNotes, value); }
         }
 
         public string ReportAbuseUrl
         {
-            get { return this._reportAbuseUrl; }
-            set { this.SetPropertyValue(ref this._reportAbuseUrl, value); }
+            get { return _reportAbuseUrl; }
+            set { SetPropertyValue(ref _reportAbuseUrl, value); }
         }
 
         public string RequireLicenseAcceptance
         {
-            get { return this._requireLicenseAcceptance; }
-            set { this.SetPropertyValue(ref this._requireLicenseAcceptance, value); }
+            get { return _requireLicenseAcceptance; }
+            set { SetPropertyValue(ref _requireLicenseAcceptance, value); }
         }
 
         public Uri Source
         {
-            get { return this._source; }
-            set { this.SetPropertyValue(ref this._source, value); }
+            get { return _source; }
+            set { SetPropertyValue(ref _source, value); }
         }
 
         public string Summary
         {
-            get { return this._summary; }
-            set { this.SetPropertyValue(ref this._summary, value); }
+            get { return _summary; }
+            set { SetPropertyValue(ref _summary, value); }
         }
 
         public string Tags
         {
-            get { return this._tags; }
-            set { this.SetPropertyValue(ref this._tags, value); }
+            get { return _tags; }
+            set { SetPropertyValue(ref _tags, value); }
         }
 
         public string Title
         {
-            get { return string.IsNullOrWhiteSpace(this._title) ? this.Id : this._title; }
-            set { this.SetPropertyValue(ref this._title, value); }
+            get { return string.IsNullOrWhiteSpace(_title) ? Id : _title; }
+            set { SetPropertyValue(ref _title, value); }
         }
 
         public SemanticVersion Version
         {
-            get { return this._version; }
-            set { this.SetPropertyValue(ref this._version, value); }
+            get { return _version; }
+            set { SetPropertyValue(ref _version, value); }
         }
 
         public int VersionDownloadCount
         {
-            get { return this._versionDownloadCount; }
-            set { this.SetPropertyValue(ref this._versionDownloadCount, value); }
-        }
-
-        private string MemoryCacheKey
-        {
-            get { return string.Format(CultureInfo.CurrentCulture, "PackageViewModel.{0}{1}", this.Id, this.Version); }
-        }
-
-        public bool CanGoBack()
-        {
-            return this._navigationService.CanGoBack;
-        }
-
-        public async Task EnsureIsLoaded()
-        {
-            if (this.Published == DateTime.MinValue)
-            {
-                await this._packageService.EnsureIsLoaded(this, this.Source);
-            }
-        }
-
-        public void GoBack()
-        {
-            if (this._navigationService.CanGoBack)
-            {
-                this._navigationService.GoBack();
-            }
+            get { return _versionDownloadCount; }
+            set { SetPropertyValue(ref _versionDownloadCount, value); }
         }
 
         public async Task Install()
         {
-            await this._chocolateyService.InstallPackage(this.Id, this.Version, this.Source).ConfigureAwait(false);
-        }
-
-        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
-        {
-            if (sender is IChocolateyPackageService && e is PackagesChangedEventArgs)
+            try
             {
-                this._isInstalled = new Lazy<bool>(() => this._chocolateyService.IsPackageInstalled(this.Id, this.Version));
-                this.NotifyPropertyChanged("IsInstalled");
-                this.NotifyPropertyChanged("CanUpdate");
-            }
-
-            return true;
-        }
-
-        public async Task RetrieveLatestVersion()
-        {
-            SemanticVersion version;
-            if ((version = (SemanticVersion)this._cache.Get(string.Format("LatestVersion_{0}", this.Id))) != null)
-            {
-                this.LatestVersion = version;
-                return;
-            }
-
-            var latest = await this._packageService.GetLatest(this.Id, this.IsPrerelease, this.Source);
-
-            if (latest != null)
-            {
-                version = latest.Version;
-
-                if (latest.Source != null)
+                using (await StartProgressDialog(Resources.PackageViewModel_InstallingPackage, Resources.PackageViewModel_InstallingPackage, Id))
                 {
-                    this.Source = latest.Source;
+                    var result = await _chocolateyService.InstallPackage(Id, Version.ToString(), Source).ConfigureAwait(false);
+
+                    if (!result.Successful)
+                    {
+                        var exceptionMessage = result.Exception == null
+                            ? string.Empty
+                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+
+                        var message = string.Format(
+                            Resources.ChocolateyRemotePackageService_InstallFailedMessage,
+                            Id,
+                            Version,
+                            string.Join("\n", result.Messages),
+                            exceptionMessage);
+
+                        await _progressService.ShowMessageAsync(
+                            Resources.ChocolateyRemotePackageService_InstallFailedTitle,
+                            message);
+
+                        Logger.Warning(result.Exception, "Failed to install {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
+
+                        return;
+                    }
+
+                    IsInstalled = true;
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
                 }
             }
-            else
+            catch (Exception ex)
             {
-                version = this.Version;
+                Logger.Error(ex, "Ran into an error while installing {Id}, version {Version}.", Id, Version);
+
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToInstall,
+                    string.Format(Resources.PackageViewModel_RanIntoInstallError, Id, ex.Message));
             }
-
-            this._cache.Set(
-                string.Format("LatestVersion_{0}", this.Id),
-                version,
-                new CacheItemPolicy
-                    {
-                        AbsoluteExpiration = DateTime.Now.AddHours(1)
-                    });
-
-            this.LatestVersion = version;
         }
 
         public async Task Reinstall()
         {
-            await this._chocolateyService.InstallPackage(this.Id, this.Version, this.Source, true).ConfigureAwait(false);
-
-            if (this.CanGoBack())
+            try
             {
-                this._navigationService.GoBack();
+                using (await StartProgressDialog(Resources.PackageViewModel_ReinstallingPackage, Resources.PackageViewModel_ReinstallingPackage, Id))
+                {
+                    await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true).ConfigureAwait(false);
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while reinstalling {Id}, version {Version}.", Id, Version);
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToReinstall,
+                    string.Format(Resources.PackageViewModel_RanIntoReinstallError, Id, ex.Message));
+            }
+
+            await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
         }
 
         public async Task Uninstall()
         {
-            await this._chocolateyService.UninstallPackage(this.Id, this.Version, true).ConfigureAwait(false);
-
-            if (this.CanGoBack())
+            try
             {
-                this._navigationService.GoBack();
+                using (await StartProgressDialog(Resources.PackageViewModel_UninstallingPackage, Resources.PackageViewModel_UninstallingPackage, Id))
+                {
+                    var result = await _chocolateyService.UninstallPackage(Id, Version.ToString(), true).ConfigureAwait(false);
+
+                    if (!result.Successful)
+                    {
+                        var exceptionMessage = result.Exception == null
+                            ? string.Empty
+                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+
+                        var message = string.Format(
+                            Resources.ChocolateyRemotePackageService_UninstallFailedMessage,
+                            Id,
+                            Version,
+                            string.Join("\n", result.Messages),
+                            exceptionMessage);
+
+                        await _progressService.ShowMessageAsync(
+                            Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
+                            message);
+
+                        Logger.Warning(result.Exception, "Failed to uninstall {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
+
+                        return;
+                    }
+
+                    IsInstalled = false;
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Uninstalled, Version));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while uninstalling {Id}, version {Version}.", Id, Version);
+
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToUninstall,
+                    string.Format(Resources.PackageViewModel_RanIntoUninstallError, Id, ex.Message));
             }
         }
 
         public async Task Update()
         {
-            await this._chocolateyService.UpdatePackage(this.Id, this.Source).ConfigureAwait(false);
-
-            if (this.CanGoBack())
+            try
             {
-                this._navigationService.GoBack();
+                using (await StartProgressDialog(Resources.PackageViewModel_UpdatingPackage, Resources.PackageViewModel_UpdatingPackage, Id))
+                {
+                    var result = await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
+
+                    if (!result.Successful)
+                    {
+                        var exceptionMessage = result.Exception == null
+                            ? string.Empty
+                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+
+                        var message = string.Format(
+                            Resources.ChocolateyRemotePackageService_UpdateFailedMessage,
+                            Id,
+                            string.Join("\n", result.Messages),
+                            exceptionMessage);
+
+                        await _progressService.ShowMessageAsync(
+                            Resources.ChocolateyRemotePackageService_UpdateFailedTitle,
+                            message);
+
+                        Logger.Warning(result.Exception, "Failed to update {Package}. Errors: {Errors}", Id, result.Messages);
+
+                        return;
+                    }
+
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Updated));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while updating {Id}, version {Version}.", Id, Version);
+
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToUpdate,
+                    string.Format(Resources.PackageViewModel_RanIntoUpdateError, Id, ex.Message));
             }
         }
 
-        public async void ViewDetails()
+        public async Task Pin()
         {
-            await this.EnsureIsLoaded();
-            this._navigationService.Navigate(typeof(PackageControl), this);
+            try
+            {
+                using (await StartProgressDialog(Resources.PackageViewModel_PinningPackage, Resources.PackageViewModel_PinningPackage, Id))
+                {
+                    var result = await _chocolateyService.PinPackage(Id, Version.ToString()).ConfigureAwait(false);
+
+                    if (!result.Successful)
+                    {
+                        var exceptionMessage = result.Exception == null
+                            ? string.Empty
+                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+
+                        var message = string.Format(
+                            Resources.ChocolateyRemotePackageService_PinFailedMessage,
+                            Id,
+                            Version,
+                            string.Join("\n", result.Messages),
+                            exceptionMessage);
+
+                        await _progressService.ShowMessageAsync(
+                            Resources.ChocolateyRemotePackageService_PinFailedTitle,
+                            message);
+
+                        Logger.Warning(result.Exception, "Failed to pin {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
+
+                        return;
+                    }
+
+                    IsPinned = true;
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Pinned, Version));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while pinning {Id}, version {Version}.", Id, Version);
+
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToPin,
+                    string.Format(Resources.PackageViewModel_RanIntoPinningError, Id, ex.Message));
+            }
         }
 
-        private string MemoryCachePropertyKey([CallerMemberName] string propertyName = "")
+        public async Task Unpin()
         {
-            return this.MemoryCacheKey + "." + propertyName;
+            try
+            {
+                using (await StartProgressDialog(Resources.PackageViewModel_UnpinningPackage, Resources.PackageViewModel_UnpinningPackage, Id))
+                {
+                    var result = await _chocolateyService.UnpinPackage(Id, Version.ToString()).ConfigureAwait(false);
+
+                    if (!result.Successful)
+                    {
+                        var exceptionMessage = result.Exception == null
+                            ? string.Empty
+                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+
+                        var message = string.Format(
+                            Resources.ChocolateyRemotePackageService_UnpinFailedMessage,
+                            Id,
+                            Version,
+                            string.Join("\n", result.Messages),
+                            exceptionMessage);
+
+                        await _progressService.ShowMessageAsync(
+                            Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
+                            message);
+
+                        Logger.Warning(result.Exception, "Failed to unpin {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
+
+                        return;
+                    }
+
+                    IsPinned = false;
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Unpinned, Version));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while unpinning {Id}, version {Version}.", Id, Version);
+
+                await _progressService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToUnpin,
+                    string.Format(Resources.PackageViewModel_RanIntoUnpinError, Id, ex.Message));
+            }
+        }
+
+#pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
+        public async void ViewDetails()
+#pragma warning restore RECS0165 // Asynchronous methods should return a Task instead of void
+        {
+            if (DownloadCount == -1)
+            {
+                await PopulateDetails().ConfigureAwait(false);
+            }
+
+            await _eventAggregator.PublishOnUIThreadAsync(new ShowPackageDetailsMessage(this)).ConfigureAwait(false);
+        }
+
+        public void Handle(PackageHasUpdateMessage message)
+        {
+            if (message.Id != Id)
+            {
+                return;
+            }
+
+            LatestVersion = message.Version;
+            IsLatestVersion = false;
+        }
+
+        private async Task PopulateDetails()
+        {
+            await _progressService.StartLoading(Resources.PackageViewModel_LoadingPackageInfo);
+            try
+            {
+                var package = await _chocolateyService.GetByVersionAndIdAsync(_id, _version.ToString(), _isPrerelease).ConfigureAwait(false);
+
+                // Remember current values before mapping to updated version
+                package.IsAbsoluteLatestVersion = this.IsAbsoluteLatestVersion;
+                package.IsInstalled = this.IsInstalled;
+                package.IsLatestVersion = this.IsLatestVersion;
+                package.IsPinned = this.IsPinned;
+                package.IsPrerelease = this.IsPrerelease;
+                package.IsSideBySide = this.IsSideBySide;
+
+                Mapper.Map<Package, IPackageViewModel>(package, this);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Error while populating details for package {Id}, version {Version}.", Id, Version);
+            }
+            finally
+            {
+                await _progressService.StopLoading();
+            }
+        }
+
+        private async Task<IDisposable> StartProgressDialog(string commandString, string initialProgressText, string id = "")
+        {
+            await _progressService.StartLoading(string.Format(Resources.PackageViewModel_StartLoadingFormat, commandString, id));
+            _progressService.WriteMessage(initialProgressText);
+            return new DisposableAction(() => _progressService.StopLoading());
+        }
+
+        private class DisposableAction : IDisposable
+        {
+            private readonly Action _disposeAction;
+
+            public DisposableAction(System.Action disposeAction)
+            {
+                _disposeAction = disposeAction;
+            }
+
+            public void Dispose()
+            {
+                _disposeAction();
+            }
         }
     }
 }

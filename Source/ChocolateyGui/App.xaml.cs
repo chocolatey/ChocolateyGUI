@@ -4,76 +4,52 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Windows;
+using ChocolateyGui.Utilities;
+using Serilog;
+
 namespace ChocolateyGui
 {
-    using System;
-    using System.Windows;
-    using Autofac;
-    using ChocolateyGui.IoC;
-    using ChocolateyGui.Services;
-    using ChocolateyGui.Utilities.Extensions;
-    using ChocolateyGui.Views.Windows;
-
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///     Interaction logic for App.xaml
     /// </summary>
     public partial class App
     {
-        static App()
+        internal static SplashScreen SplashScreen { get; set; }
+
+        [STAThread]
+        public static void Main(string[] args)
         {
-            Container = AutoFacConfiguration.RegisterAutoFac();
-
-            Log = typeof(App).GetLogger();
-
-            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-
-            Log.Info("Starting...");
-        }
-
-        internal static IContainer Container { get; private set; }
-
-        private static ILogService Log { get; set; }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            if (e == null)
+            var dpi = NativeMethods.GetScaleFactor();
+            var img = "chocolatey.png";
+            if (dpi >= 2f)
             {
-                throw new ArgumentNullException("e");
+                img = "chocolatey@3.png";
+            }
+            else if (dpi > 1.00f)
+            {
+                img = "chocolatey@2.png";
             }
 
-            Log.InfoFormat("Exiting with code {0}.", e.ApplicationExitCode);
-            Log.ForceFlush();
-        }
+            SplashScreen = new SplashScreen(img);
+            SplashScreen.Show(true, true);
 
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            var mainWindow = Container.Resolve<MainWindow>();
-            MainWindow = mainWindow;
-            MainWindow.Show();
-        }
-
-        private static void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
-        {
-            Log.Debug("First Chance Exception", e.Exception);
-        }
-
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            if (e.IsTerminating)
+            var application = new App();
+            application.InitializeComponent();
+            try
             {
-                Log.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
-                MessageBox.Show(
-                    e.ExceptionObject.ToString(),
-                    "Unhandled Exception",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error,
-                    MessageBoxResult.OK,
-                    MessageBoxOptions.ServiceNotification);
+                application.Run();
             }
-            else
+            catch (Exception ex)
             {
-                Log.Error("Unhandled Exception", e.ExceptionObject as Exception);
+                if (Bootstrapper.IsExiting)
+                {
+                    Log.Logger?.Error(ex, "Exception propagated to root while shutting down.");
+                    return;
+                }
+
+                throw;
             }
         }
     }

@@ -29,7 +29,7 @@
     <OutputPath>..\..\BuildArtifacts\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <SuppressPdbOutput>True</SuppressPdbOutput>
-    <SuppressIces>ICE38;ICE43;ICE18</SuppressIces>
+    <SuppressIces>ICE38;ICE43;ICE18;ICE61</SuppressIces>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />

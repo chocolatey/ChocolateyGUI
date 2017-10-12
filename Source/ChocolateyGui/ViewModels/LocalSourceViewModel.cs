@@ -135,6 +135,7 @@ namespace ChocolateyGui.ViewModels
             try
             {
                 await _progressService.StartLoading(Resources.LocalSourceViewModel_Packages, true);
+                IsLoading = true;
 
                 _progressService.WriteMessage(Resources.LocalSourceViewModel_FetchingPackages);
                 var token = _progressService.GetCancellationToken();
@@ -145,6 +146,7 @@ namespace ChocolateyGui.ViewModels
                     if (token.IsCancellationRequested)
                     {
                         await _progressService.StopLoading();
+                        IsLoading = false;
                         return;
                     }
 
@@ -153,6 +155,7 @@ namespace ChocolateyGui.ViewModels
                 }
 
                 await _progressService.StopLoading();
+                IsLoading = false;
                 ShowOnlyPackagesWithUpdate = false;
                 RefreshPackages();
             }
@@ -329,6 +332,11 @@ namespace ChocolateyGui.ViewModels
 
         private async Task LoadPackages()
         {
+            if (IsLoading)
+            {
+                return;
+            }
+
             IsLoading = true;
             try
             {

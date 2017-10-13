@@ -549,4 +549,43 @@ Feil: {2}{3}</value>
   <data name="SettingsViewModel_SourceMissingValue" xml:space="preserve">
     <value>Kilde må ha en verdi!</value>
   </data>
+  <data name="RemoteSourceViewModel_SortSelectionPopularity" xml:space="preserve">
+    <value>Popularitet</value>
+  </data>
+  <data name="SettingsView_SourcesBypassProxy" xml:space="preserve">
+    <value>Omgå proxy</value>
+  </data>
+  <data name="SettingsView_SourcesSelfService" xml:space="preserve">
+    <value>Selvbetjening</value>
+  </data>
+  <data name="SettingsView_SourcesIsBypassProxy" xml:space="preserve">
+    <value>Er proxy omgått</value>
+  </data>
+  <data name="SettingsView_SourcesIsSelfService" xml:space="preserve">
+    <value>Er selvbetjent</value>
+  </data>
+  <data name="SettingsView_SourcesAdminOnly" xml:space="preserve">
+    <value>Bare administrator</value>
+  </data>
+  <data name="SettingsView_SourcesIsAdminOnly" xml:space="preserve">
+    <value>Kunsynlig for administratore</value>
+  </data>
+  <data name="General_UnauthorisedException_Description" xml:space="preserve">
+    <value>Du har kanskje ikke de riktige tillatelsene for å utføre denne handlingen.</value>
+  </data>
+  <data name="General_UnauthorisedException_Title" xml:space="preserve">
+    <value>Ikke i stand til å utføre handlingen</value>
+  </data>
+  <data name="LocalSourceViewModel_FetchingPackages" xml:space="preserve">
+    <value>Henter pakker...</value>
+  </data>
+  <data name="RemoteSourceViewModel_FetchingPackages" xml:space="preserve">
+    <value>Henter pakker...</value>
+  </data>
+  <data name="LocalSourceView_ToolTip_Pinned" xml:space="preserve">
+    <value>Festet</value>
+  </data>
+  <data name="LocalSourceView_ToolTip_InstalledSideBySide" xml:space="preserve">
+    <value>Installer side ved side med en annen versjon av pakken.</value>
+  </data>
 </root>

@@ -603,4 +603,10 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="RemoteSourceViewModel_FetchingPackages" xml:space="preserve">
     <value>Fetching packages...</value>
   </data>
+  <data name="LocalSourceView_ToolTip_InstalledSideBySide" xml:space="preserve">
+    <value>Installed Side by Side with another version of the same package.</value>
+  </data>
+  <data name="LocalSourceView_ToolTip_Pinned" xml:space="preserve">
+    <value>Pinned</value>
+  </data>
 </root>

@@ -73,6 +73,17 @@ namespace ChocolateyGui.Controls
             return new System.Drawing.Size(x, y);
         }
 
+        private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteStorage fileStorage, string id)
+        {
+            imageStream.Position = 0;
+            var fileInfo = fileStorage.Upload(id, null, imageStream);
+            fileStorage.SetMetadata(
+                fileInfo.Id,
+                new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
+
+            imageStream.Position = 0;
+        }
+
         private async Task<IBitmap> LoadImage(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
         {
             var imageStream = await DownloadUrl(url, desiredWidth, desiredHeight, absoluteExpiration);
@@ -134,22 +145,10 @@ namespace ChocolateyGui.Controls
                         fileInfo.Delete();
                     }
 
-
                     UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
                     return imageStream;
                 }
             }
-        }
-
-        private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteStorage fileStorage, string id)
-        {
-            imageStream.Position = 0;
-            var fileInfo = fileStorage.Upload(id, null, imageStream);
-            fileStorage.SetMetadata(
-                fileInfo.Id,
-                new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
-
-            imageStream.Position = 0;
         }
 
         private System.Drawing.Size GetCurrentSize()
@@ -169,23 +168,10 @@ namespace ChocolateyGui.Controls
                 return;
             }
 
-            Uri uri;
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
-            {
-                Logger.Warning("Got an invalid img url: \"{IconUrl}\".", url);
-                PART_Image.Source = ErrorIcon.Value;
-                PART_Loading.IsActive = false;
-                return;
-            }
-
             PART_Loading.IsActive = true;
 
             var size = GetCurrentSize();
             var expiration = DateTime.UtcNow + TimeSpan.FromDays(1);
-
-            var imagePart = uri.Segments.Last();
-            var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
-
             BitmapSource source;
             try
             {

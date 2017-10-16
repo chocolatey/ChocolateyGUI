@@ -10,7 +10,7 @@ indent_style = space
 # (Please don't specify an indent_size here; that has too many unintended consequences.)
 
 # Code files
-[*.cs,*.csx,*.vb,*.vbx]
+[*.{cs,csx,vb,vbx}]
 indent_size = 4
 end_of_line = crlf
 
@@ -32,7 +32,7 @@ end_of_line = crlf
 indent_size = 2
 
 # Dotnet code style settings:
-[*.{cs, vb}]
+[*.{cs,vb}]
 # Avoid "this." and "Me." if not necessary
 dotnet_style_qualification_for_field = false:suggestion
 dotnet_style_qualification_for_property = false:suggestion

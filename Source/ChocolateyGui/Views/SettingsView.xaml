@@ -9,6 +9,7 @@
              xmlns:models="clr-namespace:ChocolateyGui.Models"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:lang="clr-namespace:ChocolateyGui.Properties"
+             xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
              mc:Ignorable="d"
              Background="{StaticResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel, IsDesignTimeCreatable=False}"
@@ -21,6 +22,10 @@
             <Setter Property="OffLabel" Value="{x:Static lang:Resources.SettingsView_Off}"/>
         </Style>
     </UserControl.Resources>
+
+    <FrameworkElement.CommandBindings>
+        <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="HandleMarkdownLink" />
+    </FrameworkElement.CommandBindings>
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
@@ -231,30 +236,30 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
                         Style="{StaticResource SectionHeaderTextStyle}" Text="{x:Static lang:Resources.SettingsView_About}"/>
-                    <controls:MarkdownViewer
+                    <markdig:MarkdownViewer
                             AutomationProperties.Name="About"
                             Grid.Row="1" Grid.Column="0"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             Margin="5 0"
-                            MarkdownSource="pack://application:,,,/../../Resources/ABOUT.md" />
+                            controls:MarkdownEx.Url="pack://application:,,,/../../Resources/ABOUT.md" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource SectionHeaderTextStyle}" Text="{x:Static lang:Resources.SettingsView_Credits}"/>
-                    <controls:MarkdownViewer
+                    <markdig:MarkdownViewer
                             AutomationProperties.Name="Credits"
                             Grid.Row="3" Grid.Column="0"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             Margin="5 0"
-                            MarkdownSource="pack://application:,,,/../../Resources/CREDITS.md" />
+                            controls:MarkdownEx.Url="pack://application:,,,/../../Resources/CREDITS.md" />
 
                     <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource SectionHeaderTextStyle}" Text="{x:Static lang:Resources.SettingsView_ReleaseNotes}"/>
-                    <controls:MarkdownViewer
+                    <markdig:MarkdownViewer
                             AutomationProperties.Name="Release Notes"
                             Grid.Row="1" Grid.Column="1" Grid.RowSpan="3"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             Margin="5 0"
-                            MarkdownSource="pack://application:,,,/../../Resources/CHANGELOG.md" />
+                            controls:MarkdownEx.Url="pack://application:,,,/../../Resources/CHANGELOG.md"/>
                 </Grid>
             </TabItem>
         </TabControl>

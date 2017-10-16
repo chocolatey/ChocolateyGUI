@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;
-using CefSharp;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
@@ -57,15 +56,6 @@ namespace ChocolateyGui.Views
             if (Path.GetDirectoryName(Environment.CurrentDirectory) != Bootstrapper.ApplicationFilesPath)
             {
                 Environment.CurrentDirectory = Bootstrapper.ApplicationFilesPath;
-            }
-
-            var settings = new CefSettings();
-            settings.RegisterScheme(new CefCustomScheme { SchemeName = ChocolateyCustomSchemeProvider.SchemeName, SchemeHandlerFactory = new ChocolateyCustomSchemeProvider() });
-            settings.CefCommandLineArgs.Add("no-proxy-server", "1");
-            settings.CachePath = Path.Combine(Bootstrapper.LocalAppDataPath, "CefCache");
-            if (!Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null))
-            {
-                return;
             }
         }
 

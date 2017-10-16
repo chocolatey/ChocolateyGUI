@@ -17,10 +17,12 @@ using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
+using ImageMagick;
 using LiteDB;
 using Microsoft.VisualStudio.Threading;
 using Serilog;
 using Splat;
+using FileMode = System.IO.FileMode;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Controls
@@ -71,13 +73,13 @@ namespace ChocolateyGui.Controls
             return new System.Drawing.Size(x, y);
         }
 
-        private static async Task<IBitmap> LoadImage(string url, float? desiredWidth, float? desiredHeight, DateTime absoluteExpiration)
+        private async Task<IBitmap> LoadImage(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
         {
-            var imageStream = await DownloadUrl(url, absoluteExpiration);
+            var imageStream = await DownloadUrl(url, desiredWidth, desiredHeight, absoluteExpiration);
             return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
         }
 
-        private static async Task<Stream> DownloadUrl(string url, DateTime absoluteExpiration)
+        private async Task<Stream> DownloadUrl(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
         {
             using (await Lock.UpgradeableReadLockAsync())
             {
@@ -105,8 +107,33 @@ namespace ChocolateyGui.Controls
                     {
                         var response = await client.GetAsync(url);
                         response.EnsureSuccessStatusCode();
-                        await response.Content.CopyToAsync(imageStream);
+
+                        var extension = GetExtension(url);
+                        var tempFile = Path.GetTempFileName();
+                        var fileInfo = new FileInfo(tempFile);
+                        fileInfo.MoveTo(tempFile.Replace(".tmp", $".{extension}"));
+                        using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
+                        {
+                            await response.Content.CopyToAsync(fileStream);
+                        }
+
+                        using (var image = new MagickImage(fileInfo))
+                        {
+                            var size = new MagickGeometry((int)desiredWidth, (int)desiredHeight)
+                            {
+                                FillArea = true
+                            };
+                            if (!string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
+                            {
+                                image.Resize(size);
+                            }
+
+                            image.Write(imageStream, MagickFormat.Png);
+                        }
+
+                        fileInfo.Delete();
                     }
+
 
                     UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
                     return imageStream;
@@ -160,25 +187,40 @@ namespace ChocolateyGui.Controls
             var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
 
             BitmapSource source;
-            if (fileTypeSeperator > 0 &&
-                imagePart.Substring(fileTypeSeperator + 1).Equals("svg", StringComparison.InvariantCultureIgnoreCase))
+            try
             {
-                source = null;
+                source = (await LoadImage(url, size.Width, size.Height, expiration)).ToNative();
             }
-            else
+            catch (HttpRequestException)
             {
-                try
-                {
-                    source = (await LoadImage(url, size.Width, size.Height, expiration)).ToNative();
-                }
-                catch (HttpRequestException)
-                {
-                    source = ErrorIcon.Value;
-                }
+                source = ErrorIcon.Value;
+            }
+            catch (ArgumentException)
+            {
+                Logger.Warning("Got an invalid img url: \"{IconUrl}\".", url);
+                source = ErrorIcon.Value;
             }
 
             PART_Image.Source = source;
             PART_Loading.IsActive = false;
+        }
+
+        private string GetExtension(string url)
+        {
+            Uri uri;
+            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
+            {
+                throw new ArgumentException(nameof(url));
+            }
+
+            var imagePart = uri.Segments.Last();
+            var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
+            if (fileTypeSeperator <= 0)
+            {
+                return string.Empty;
+            }
+
+            return imagePart.Substring(fileTypeSeperator + 1);
         }
     }
 }

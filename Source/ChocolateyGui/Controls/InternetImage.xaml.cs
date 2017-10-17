@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -16,15 +15,14 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
-using CefSharp;
-using CefSharp.Internals;
-using CefSharp.OffScreen;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
+using ImageMagick;
 using LiteDB;
 using Microsoft.VisualStudio.Threading;
 using Serilog;
 using Splat;
+using FileMode = System.IO.FileMode;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Controls
@@ -38,82 +36,24 @@ namespace ChocolateyGui.Controls
             "IconUrl", typeof(string), typeof(InternetImage), new PropertyMetadata(default(string)));
 
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
-        private static readonly ChromiumWebBrowser RenderBrowser;
         private static readonly Lazy<BitmapSource> ErrorIcon = new Lazy<BitmapSource>(GetErrorImage);
         private static readonly LiteDatabase Data = IoC.Get<LiteDatabase>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
 
-        static InternetImage()
-        {
-            var browserSettings = new BrowserSettings
-            {
-                WindowlessFrameRate = 1,
-            };
-
-            RenderBrowser = new ChromiumWebBrowser(string.Empty, browserSettings)
-            {
-                Size = GetBitmapSize()
-            };
-        }
-
         public InternetImage()
         {
             InitializeComponent();
-
-            if (!RenderBrowser.IsBrowserInitialized)
-            {
-                RenderBrowser.BrowserInitialized += async (sender, args) =>
-                {
-                    await Execute.OnUIThreadAsync(async () =>
-                    {
-                        await SetImage(IconUrl);
-                        this.ToObservable(IconUrlProperty, () => IconUrl)
-                            .Subscribe(async url => await SetImage(url));
-                    });
-                };
-            }
-            else
-            {
 #pragma warning disable 4014
-                SetImage(IconUrl);
+            SetImage(IconUrl);
 #pragma warning restore 4014
-                this.ToObservable(IconUrlProperty, () => IconUrl)
-                    .Subscribe(async url => await SetImage(url));
-            }
-
-            Loaded += (o, e) => RenderBrowser.Size = GetCurrentSize();
+            this.ToObservable(IconUrlProperty, () => IconUrl)
+                .Subscribe(async url => await SetImage(url));
         }
 
         public string IconUrl
         {
             get { return (string)GetValue(IconUrlProperty); }
             set { SetValue(IconUrlProperty, value); }
-        }
-
-        private static Task LoadHtmlAsync(IWebBrowser browser, string html, string address)
-        {
-            // If using .Net 4.6 then use TaskCreationOptions.RunContinuationsAsynchronously
-            // and switch to tcs.TrySetResult below - no need for the custom extension method
-            var tcs = new TaskCompletionSource<bool>();
-
-            EventHandler<FrameLoadEndEventArgs> handler = null;
-            handler = (sender, args) =>
-            {
-                browser.FrameLoadEnd -= handler;
-
-                // This is required when using a standard TaskCompletionSource
-                // Extension method found in the CefSharp.Internals namespace
-                tcs.TrySetResultAsync(true);
-            };
-
-            browser.FrameLoadEnd += handler;
-
-            if (!string.IsNullOrEmpty(address))
-            {
-                browser.LoadHtml(html, address);
-            }
-
-            return tcs.Task;
         }
 
         private static BitmapSource GetErrorImage()
@@ -144,118 +84,13 @@ namespace ChocolateyGui.Controls
             imageStream.Position = 0;
         }
 
-        private System.Drawing.Size GetCurrentSize()
+        private async Task<IBitmap> LoadImage(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
         {
-            var scale = NativeMethods.GetScaleFactor();
-            var x = (int)Math.Round(ActualWidth * scale);
-            var y = (int)Math.Round(ActualHeight * scale);
-            return new System.Drawing.Size(x, y);
-        }
-
-        private async Task SetImage(string url)
-        {
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                PART_Image.Source = null;
-                PART_Loading.IsActive = false;
-                return;
-            }
-
-            Uri uri;
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
-            {
-                Logger.Warning("Got an invalid img url: \"{IconUrl}\".", url);
-                PART_Image.Source = ErrorIcon.Value;
-                PART_Loading.IsActive = false;
-                return;
-            }
-
-            PART_Loading.IsActive = true;
-
-            var size = GetCurrentSize();
-            var expiration = DateTime.UtcNow + TimeSpan.FromDays(1);
-
-            var imagePart = uri.Segments.Last();
-            var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
-
-            BitmapSource source;
-            if (fileTypeSeperator > 0 &&
-                imagePart.Substring(fileTypeSeperator + 1).Equals("svg", StringComparison.InvariantCultureIgnoreCase))
-            {
-                source = (await LoadSvg(url, size.Width, size.Height, expiration)).ToNative();
-            }
-            else
-            {
-                try
-                {
-                    source = (await LoadImage(url, size.Width, size.Height, expiration)).ToNative();
-                }
-                catch (HttpRequestException)
-                {
-                    source = ErrorIcon.Value;
-                }
-            }
-
-            PART_Image.Source = source;
-            PART_Loading.IsActive = false;
-        }
-
-        private async Task<IBitmap> LoadImage(string url, float? desiredWidth, float? desiredHeight, DateTime absoluteExpiration)
-        {
-            var imageStream = await DownloadUrl(url, absoluteExpiration);
+            var imageStream = await DownloadUrl(url, desiredWidth, desiredHeight, absoluteExpiration);
             return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
         }
 
-        private async Task<IBitmap> LoadSvg(
-            string url,
-            float? desiredWidth,
-            float? desiredHeight,
-            DateTime absoluteExpiration)
-        {
-            using (await Lock.UpgradeableReadLockAsync())
-            {
-                var id = $"imagecache/{url.GetHashCode()}";
-                using (var imageStream = new MemoryStream())
-                {
-                    var fileStorage = Data.FileStorage;
-                    if (fileStorage.Exists(id))
-                    {
-                        var info = fileStorage.FindById(id);
-                        var expires = info.Metadata["Expires"].AsDateTime;
-                        if (expires > DateTime.UtcNow)
-                        {
-                            info.CopyTo(imageStream);
-                            return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
-                        }
-
-                        fileStorage.Delete(id);
-                    }
-
-                    using (await Lock.WriteLockAsync())
-                    {
-                        // If we couldn't find the image or it expired
-                        var html = $@"<style>
-                            img {{ width: 100%; height: auto; }}
-                            body {{ margin: 0 }}
-                            </style>
-                            <img src=""{url}"">";
-                        html = MarkdownViewer.HtmlTemplate.Value.Replace("{{content}}", html);
-                        await LoadHtmlAsync(RenderBrowser, html, "http://rawhtml/svg");
-
-                        using (var result = await RenderBrowser.ScreenshotAsync(true))
-                        {
-                            result.Save(imageStream, ImageFormat.Png);
-                            imageStream.Position = 0;
-                        }
-
-                        UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
-                        return await BitmapLoader.Current.Load(imageStream, null, null);
-                    }
-                }
-            }
-        }
-
-        private async Task<Stream> DownloadUrl(string url, DateTime absoluteExpiration)
+        private async Task<Stream> DownloadUrl(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
         {
             using (await Lock.UpgradeableReadLockAsync())
             {
@@ -283,13 +118,95 @@ namespace ChocolateyGui.Controls
                     {
                         var response = await client.GetAsync(url);
                         response.EnsureSuccessStatusCode();
-                        await response.Content.CopyToAsync(imageStream);
+
+                        var extension = GetExtension(url);
+                        var tempFile = Path.GetTempFileName();
+                        var fileInfo = new FileInfo(tempFile);
+                        fileInfo.MoveTo(tempFile.Replace(".tmp", $".{extension}"));
+                        using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
+                        {
+                            await response.Content.CopyToAsync(fileStream);
+                        }
+
+                        using (var image = new MagickImage(fileInfo))
+                        {
+                            var size = new MagickGeometry((int)desiredWidth, (int)desiredHeight)
+                            {
+                                FillArea = true
+                            };
+                            if (!string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
+                            {
+                                image.Resize(size);
+                            }
+
+                            image.Write(imageStream, MagickFormat.Png);
+                        }
+
+                        fileInfo.Delete();
                     }
 
                     UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
                     return imageStream;
                 }
             }
+        }
+
+        private System.Drawing.Size GetCurrentSize()
+        {
+            var scale = NativeMethods.GetScaleFactor();
+            var x = (int)Math.Round(ActualWidth * scale);
+            var y = (int)Math.Round(ActualHeight * scale);
+            return new System.Drawing.Size(x, y);
+        }
+
+        private async Task SetImage(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                PART_Image.Source = null;
+                PART_Loading.IsActive = false;
+                return;
+            }
+
+            PART_Loading.IsActive = true;
+
+            var size = GetCurrentSize();
+            var expiration = DateTime.UtcNow + TimeSpan.FromDays(1);
+            BitmapSource source;
+            try
+            {
+                source = (await LoadImage(url, size.Width, size.Height, expiration)).ToNative();
+            }
+            catch (HttpRequestException)
+            {
+                source = ErrorIcon.Value;
+            }
+            catch (ArgumentException)
+            {
+                Logger.Warning("Got an invalid img url: \"{IconUrl}\".", url);
+                source = ErrorIcon.Value;
+            }
+
+            PART_Image.Source = source;
+            PART_Loading.IsActive = false;
+        }
+
+        private string GetExtension(string url)
+        {
+            Uri uri;
+            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
+            {
+                throw new ArgumentException(nameof(url));
+            }
+
+            var imagePart = uri.Segments.Last();
+            var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
+            if (fileTypeSeperator <= 0)
+            {
+                return string.Empty;
+            }
+
+            return imagePart.Substring(fileTypeSeperator + 1);
         }
     }
 }

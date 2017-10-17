@@ -24,7 +24,6 @@
     <converters:BooleanToTickString x:Key="BooleanToTickString" />
     <converters:StringListToString x:Key="StringListToString" />
     <converters:BooleanInverter x:Key="BooleanInverter" />
-    <converters:PackUriToStringConverter x:Key="PackUriToString" />
 
     <Style x:Key="UacIconStyle" TargetType="{x:Type Image}">
         <Setter Property="Source" Value="{x:Static utilities:NativeMethods.UacIcon}"/>

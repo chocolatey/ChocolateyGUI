@@ -274,7 +274,6 @@
     <Compile Include="Utilities\Converters\BooleanToTickString.cs" />
     <Compile Include="Utilities\Converters\BooleanInverter.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityHidden.cs" />
-    <Compile Include="Utilities\Converters\PackUriToStringConverter.cs" />
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\DataContext.cs" />
     <Compile Include="Utilities\DefaultsExtensions.cs" />

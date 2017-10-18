@@ -1,11 +1,14 @@
-$scriptPath =  $(Split-Path $MyInvocation.MyCommand.Path)
+$ErrorActionPreference = 'Stop';
+$toolsDir     = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+$fileLocation = Join-Path $toolsDir 'ChocolateyGUI.msi'
 
 $packageArgs = @{
-	packageName = 'Chocolatey GUI'
-	softwareName   = 'Chocolatey GUI'
-	fileType = 'msi'
-	silentArgs = '/quiet'
-	file = Join-Path $scriptPath 'ChocolateyGUI.msi'
+  packageName   = $env:ChocolateyPackageName
+  softwareName  = 'Chocolatey GUI'
+  file          = $fileLocation
+  fileType      = 'msi'
+  silentArgs    = "/qn /norestart /l*v `"$env:TEMP\$env:ChocolateyPackageName.$env:ChocolateyPackageVersion.log`""
+  validExitCodes= @(0,1641,3010)
 }
 
 Install-ChocolateyInstallPackage @packageArgs

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocolateyGui", "ChocolateyGui\ChocolateyGui.csproj", "{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}"
 EndProject
@@ -24,6 +24,8 @@ Global
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
+		WIX|Any CPU = WIX|Any CPU
+		WIX|x86 = WIX|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}.Debug|Any CPU.ActiveCfg = Debug|x86
@@ -32,12 +34,17 @@ Global
 		{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}.Release|Any CPU.ActiveCfg = Release|x86
 		{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}.Release|x86.ActiveCfg = Release|x86
 		{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}.Release|x86.Build.0 = Release|x86
+		{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}.WIX|Any CPU.ActiveCfg = Release|x86
+		{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}.WIX|x86.ActiveCfg = Release|x86
 		{411C7212-286F-4F26-994A-568E943D0E60}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{411C7212-286F-4F26-994A-568E943D0E60}.Debug|x86.ActiveCfg = Debug|x86
 		{411C7212-286F-4F26-994A-568E943D0E60}.Debug|x86.Build.0 = Debug|x86
 		{411C7212-286F-4F26-994A-568E943D0E60}.Release|Any CPU.ActiveCfg = Release|x86
 		{411C7212-286F-4F26-994A-568E943D0E60}.Release|x86.ActiveCfg = Release|x86
 		{411C7212-286F-4F26-994A-568E943D0E60}.Release|x86.Build.0 = Release|x86
+		{411C7212-286F-4F26-994A-568E943D0E60}.WIX|Any CPU.ActiveCfg = Release|x86
+		{411C7212-286F-4F26-994A-568E943D0E60}.WIX|x86.ActiveCfg = Release|x86
+		{411C7212-286F-4F26-994A-568E943D0E60}.WIX|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

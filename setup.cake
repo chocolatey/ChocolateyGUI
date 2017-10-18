@@ -32,7 +32,7 @@ var CERT_ALGORITHM = EnvironmentVariable("CERT_ALGORITHM") ?? "Sha256";
 // So for now, we will just look to sign the executables prior to building MSI
 Task("SignExecutable")
     .WithCriteria(() => {
-       return FileExists(CERT_PATH);
+       return !string.IsNullOrWhiteSpace(CERT_PATH) && FileExists(CERT_PATH);
     })
     .Does(() =>
     {
@@ -108,7 +108,7 @@ Task("BuildMSI")
 Task("SignMSI")
     .IsDependentOn("BuildMSI")
     .WithCriteria(() => {
-       return FileExists(CERT_PATH);
+       return !string.IsNullOrWhiteSpace(CERT_PATH) && FileExists(CERT_PATH);
     })
     .Does(() =>
     {

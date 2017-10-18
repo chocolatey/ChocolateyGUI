@@ -10,9 +10,14 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:controls="clr-namespace:ChocolateyGui.Controls"
              xmlns:lang="clr-namespace:ChocolateyGui.Properties"
+             xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
              mc:Ignorable="d"
              d:DesignHeight="786" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:PackageViewModel}">
+    
+    <FrameworkElement.CommandBindings>
+        <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="HandleMarkdownLink" />
+    </FrameworkElement.CommandBindings>
 
     <UserControl.Resources>
         <converters:UriToVisibility x:Key="UriToVisibilty" />
@@ -201,13 +206,13 @@
                        Style="{StaticResource PageTextBlockStyle}"
                        Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}" />
             <TextBlock Grid.Row="2" Text="{x:Static lang:Resources.PackageView_Description}" Style="{StaticResource SectionHeaderTextStyle}" />
-            <controls:MarkdownViewer 
+            <markdig:MarkdownViewer 
                 AutomationProperties.Name="Package Description"
                 Grid.Row="3"
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Stretch"
                 Margin="5 0"
-                MarkdownString="{Binding Description}" />
+                Markdown="{Binding Description}" />
             <StackPanel Grid.Row="4" Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                 <TextBlock Text="{x:Static lang:Resources.PackageView_Dependencies}" Style="{StaticResource SectionHeaderTextStyle}" />
                 <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"
@@ -216,12 +221,12 @@
             </StackPanel>
             <TextBlock Grid.Row="5" Text="{x:Static lang:Resources.PackageView_ReleaseNotes}" Style="{StaticResource SectionHeaderTextStyle}"
                        Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}" />
-            <controls:MarkdownViewer Grid.Row="6"
+            <markdig:MarkdownViewer Grid.Row="6"
                                       AutomationProperties.Name="Package Release Notes"
                                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                       Margin="5 0"
                                       Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}"
-                                      MarkdownString="{Binding ReleaseNotes}" />
+                                      Markdown="{Binding ReleaseNotes}" />
 
         </Grid>
     </DockPanel>

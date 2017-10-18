@@ -7,6 +7,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace ChocolateyGui.Views
 {
@@ -26,6 +27,11 @@ namespace ChocolateyGui.Views
             var navigateUri = hl.NavigateUri.ToString();
             Process.Start(new ProcessStartInfo(navigateUri));
             e.Handled = true;
+        }
+
+        private void HandleMarkdownLink(object sender, ExecutedRoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Parameter.ToString()));
         }
     }
 }

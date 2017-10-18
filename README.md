@@ -74,6 +74,12 @@ Submitting a ticket:
 
 If you would like to contribute code or help squash a bug or two, that's awesome. Please familiarize yourself with [CONTRIBUTING](https://github.com/chocolatey/chocolateygui/blob/develop/CONTRIBUTING.md).
 
+### Building
+
+* `choco install wixtoolset -y`
+* If you have Visual Studio 2017 installed, you may need to set `FXCOPDIR` environment variable. You can typically find that at `"C:\Program Files (x86)\Microsoft Visual Studio\2017\<sku>\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"`. Run something like `[Environment]::SetEnvironmentVariable("FXCOPDIR","C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Team Tools\Static Analysis Tools\FxCop", 'User')` (for build machines, use `Machine` instead of `User`).
+* Run `build.ps1`, this will run Cake and it will go through the build script.
+
 ## Committers
 
 Committers, you should be very familiar with [COMMITTERS](https://github.com/chocolatey/chocolateygui/blob/develop/COMMITTERS.md).

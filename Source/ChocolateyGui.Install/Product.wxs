@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <?define MainExe=$(var.ChocolateyGui.TargetFileName)?>
+  <?define MainExe="ChocolateyGui.exe"?>
+  <?define GuiTargetPath="$(var.GuiTargetDir)\$(var.MainExe)" ?>
   <?define Version=!(bind.fileVersion.$(var.MainExe))?>
   <?define ProductName="Chocolatey GUI" ?>
   <?define Language="1033" ?>
   <?define Manufacturer="Chocolatey"?>
-  <?define ChocolateyGui_TargetDir=$(var.ChocolateyGui.TargetDir)?>
 
   <Product Id="*" Name="$(var.ProductName)" Language="$(var.Language)" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5b146155">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
@@ -29,13 +29,13 @@
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." AllowSameVersionUpgrades="yes" />
 
-    <?if $(var.ChocolateyGui.Configuration) = "Debug"?>
+    <?if $(var.Configuration) = "Debug"?>
     <MediaTemplate EmbedCab="yes" CompressionLevel="none" />
     <?else?>
     <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
     <?endif?>
 
-    <Icon Id="icon.ico" SourceFile="$(var.ChocolateyGui.ProjectDir)\chocolateyicon.ico" />
+    <Icon Id="icon.ico" SourceFile="$(var.GuiProjectFolder)\chocolateyicon.ico" />
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
     <Feature Id="ProductFeature" Title="Chocolatey GUI" Level="1">
@@ -87,10 +87,10 @@
   <Fragment>
     <ComponentGroup Id="ChocolateyExe" Directory="INSTALLFOLDER">
       <Component Id="ChocolateyGui.exe" Guid="f8164f91-fa5c-0001-0001-9beb5a044699">
-        <File Id="ChocolateyGui.exe" Source="$(var.ChocolateyGui.TargetPath)" KeyPath="yes" Checksum="yes" />
+        <File Id="ChocolateyGui.exe" Source="$(var.GuiTargetPath)" KeyPath="yes" Checksum="yes" />
       </Component>
       <Component Id="ChocolateyGui.exe.config" Guid="6C3AE56F-1AA3-4145-BFA9-345BBCC5C3D1">
-        <File Id="ChocolateyGui.exe.config" Source="$(var.ChocolateyGui_TargetDir)/ChocolateyGui.exe.config" KeyPath="yes" Checksum="yes" />
+        <File Id="ChocolateyGui.exe.config" Source="$(var.GuiTargetDir)/ChocolateyGui.exe.config" KeyPath="yes" Checksum="yes" />
       </Component>
     </ComponentGroup>
   </Fragment>

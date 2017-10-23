@@ -39,5 +39,6 @@ install:
 #---------------------------------#
 
 cache:
+- '%TRANSLATION_DIR%'
 - Source\packages -> Source\**\packages.config
 - tools -> setup.cake

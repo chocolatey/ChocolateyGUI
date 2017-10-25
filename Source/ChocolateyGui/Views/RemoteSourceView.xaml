@@ -6,8 +6,6 @@
              xmlns:commands="clr-namespace:ChocolateyGui.Commands"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
              xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:cal="http://www.caliburnproject.org"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              mc:Ignorable="d"
@@ -20,7 +18,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,5"
+        <StackPanel Orientation="Horizontal" Margin="0,5"
                     Style="{StaticResource LeftSourceListItem}">
             <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Resources.RemoteSourceView_SearchBoxText}"/>
             <TextBox x:Name="SearchTextBox" Width="200" Padding="0,2,0,-2" FontSize="14"
@@ -38,7 +36,7 @@
                     Style="{StaticResource SquareButtonStyle}" Content="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0,4,0,4" />
         </StackPanel>
 
-        <Grid Grid.Row="2" DockPanel.Dock="Bottom" Margin="4">
+        <Grid Grid.Row="2" Margin="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -63,31 +61,32 @@
                     Style="{DynamicResource PaginationButtonStyle}"/>
         </Grid>
 
-        <ListBox Grid.Row="1" x:Name="Packages" ItemsSource="{Binding Packages}"
+        <ListBox Grid.Row="1" x:Name="Packages" ItemsSource="{Binding Packages, Mode=OneWay}"
+                 Style="{StaticResource VirtualisedMetroListBox}"
                  VerticalAlignment="Stretch"
                  HorizontalContentAlignment="Stretch"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  MouseDoubleClick="Packages_OnMouseDoubleClick">
+            <ListBox.Resources>
+                <Style x:Key="ColoredDetailsText" TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource AccentBaseColorBrush}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                            <Setter Property="Foreground" Value="White"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style x:Key="ColoredDetailsTextLine" TargetType="Run">
+                    <Setter Property="Foreground" Value="{StaticResource AccentBaseColorBrush}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                            <Setter Property="Foreground" Value="White"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Resources>
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="items:IPackageViewModel">
-                    <DataTemplate.Resources>
-                        <Style x:Key="ColoredDetailsText" TargetType="TextBlock">
-                            <Setter Property="Foreground" Value="{StaticResource AccentBaseColorBrush}"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                        <Style x:Key="ColoredDetailsTextLine" TargetType="Run">
-                            <Setter Property="Foreground" Value="{StaticResource AccentBaseColorBrush}"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataTemplate.Resources>
                     <Grid x:Name="PackageDetailsGrid" Height="105" Margin="5" HorizontalAlignment="Stretch" Background="Transparent"
                           ContextMenu="{StaticResource PackagesContextMenu}">
                         <Grid.RowDefinitions>
@@ -95,52 +94,54 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+
                         <Grid x:Name="PART_Top" Grid.Row="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock x:Name="Title" Style="{StaticResource ColoredDetailsText}" FontSize="26" Text="{Binding Title}"/>
-                                <TextBlock x:Name="Version" Margin="5 0 0 0" Style="{StaticResource ColoredDetailsText}" FontSize="26" Text="{Binding Version}"/>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                            <TextBlock x:Name="TitleVersion" Grid.Row="0" Grid.Column="0"
+                                       TextTrimming="CharacterEllipsis"
+                                       Style="{StaticResource ColoredDetailsText}" FontSize="26">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="Title" Mode="OneWay" />
+                                        <Binding Path="Version" Mode="OneWay" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
                                 <TextBlock FontSize="14"
-                                           AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}"
-                                           IsHitTestVisible="false">
+                                           AutomationProperties.Name="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
+                                           IsHitTestVisible="False">
                                     <Run Text="{x:Static lang:Resources.RemoteSourceView_Authors}" />
-                                    <Run Style="{StaticResource ColoredDetailsTextLine}" Text="{Binding Authors, Converter={StaticResource StringListToString}}" />
+                                    <Run Style="{StaticResource ColoredDetailsTextLine}" Text="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}" />
                                 </TextBlock>
                             </StackPanel>
-                            <TextBlock Grid.Row="0"
-                                       Grid.Column="1" Grid.RowSpan="2"
-                                       FontWeight="SemiBold"
-                                       FontSize="20"
-                                       HorizontalAlignment="Right"
-                                       IsHitTestVisible="false">
-                                <Run Text="{Binding DownloadCount, StringFormat=N0}"/>
-                                <Run Text="{x:Static lang:Resources.RemoteSourceView_Downloads}"/>
-                            </TextBlock>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" IsHitTestVisible="False">
+                                <TextBlock FontWeight="SemiBold" FontSize="20" Text="{Binding DownloadCount, Mode=OneWay, StringFormat=N0}" Style="{StaticResource ColoredDetailsText}" VerticalAlignment="Center" />
+                                <iconPacks:PackIconFontAwesome Kind="Download" Width="16" Height="16" Margin="5 1 0 0" VerticalAlignment="Center" />
+                            </StackPanel>
                         </Grid>
+
                         <Grid x:Name="PART_Body" Grid.Row="1">
-                            <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{Binding Description}"/>
+                            <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{Binding Description, Mode=OneWay}"/>
                         </Grid>
+                        
                         <Grid x:Name="PART_Bottom" Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
                                 <TextBlock x:Name="TagsLabel" FontSize="14">Tags:</TextBlock>
-                                <TextBlock x:Name="Tags" Margin="5 0 0 0" Style="{StaticResource ColoredDetailsText}" FontSize="14" Text="{Binding Tags}"></TextBlock>
+                                <TextBlock x:Name="Tags" Margin="5 0 0 0" Style="{StaticResource ColoredDetailsText}" TextTrimming="CharacterEllipsis" FontSize="14" Text="{Binding Tags, Mode=OneWay}" />
                             </StackPanel>
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                                <iconPacks:PackIconEntypo Kind="Check" Width="15" Height="15" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}" />
-                            </StackPanel>
+                            <iconPacks:PackIconEntypo Grid.Column="1" Kind="Check" Width="16" Height="16" VerticalAlignment="Center" Visibility="{Binding IsInstalled, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                         </Grid>
                     </Grid>
                 </DataTemplate>

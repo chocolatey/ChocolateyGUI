@@ -8,7 +8,6 @@
              xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:lang="clr-namespace:ChocolateyGui.Properties"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}">
@@ -27,23 +26,28 @@
             </Grid.ColumnDefinitions>
             <WrapPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5" Style="{StaticResource LeftSourceListItem}">
                 <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
-                    <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Resources.RemoteSourceView_SearchBoxText}"/>
+                    <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
+                           Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Resources.RemoteSourceView_SearchBoxText}"/>
                     <TextBox x:Name="SearchTextBox" Width="200" FontSize="14"
-                     VerticalContentAlignment="Center"
-                     controls:TextBoxHelper.Watermark="{x:Static lang:Resources.RemoteSourceView_SearchBoxText}"
-                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+                             VerticalAlignment="Center"
+                             Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
-                <CheckBox Name="AllVersionsCheckBox" Margin="5" Content="{x:Static lang:Resources.RemoteSourceView_CheckboxAllVersions}"
-                      IsChecked="{Binding IncludeAllVersions}" />
-                <CheckBox Name="PrereleaseCheckBox" Margin="5" Content="{x:Static lang:Resources.RemoteSourceView_CheckboxIncludePrerelease}"
-                      IsChecked="{Binding IncludePrerelease}" />
-                <CheckBox Name="MatchCheckBox" Margin="5" Content="{x:Static lang:Resources.RemoteSourceView_CheckboxMatchExactly}" IsChecked="{Binding MatchWord}" />
-                <ComboBox Name="SortBox" Margin="5" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
+                <CheckBox Name="AllVersionsCheckBox" Margin="5"
+                          Content="{x:Static lang:Resources.RemoteSourceView_CheckboxAllVersions}"
+                          IsChecked="{Binding IncludeAllVersions}" />
+                <CheckBox Name="PrereleaseCheckBox" Margin="5"
+                          Content="{x:Static lang:Resources.RemoteSourceView_CheckboxIncludePrerelease}"
+                          IsChecked="{Binding IncludePrerelease}" />
+                <CheckBox Name="MatchCheckBox" Margin="5"
+                          Content="{x:Static lang:Resources.RemoteSourceView_CheckboxMatchExactly}"
+                          IsChecked="{Binding MatchWord}" />
+                <ComboBox Name="SortBox" Margin="5 1" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
             </WrapPanel>
-            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Margin="10,5">
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,6">
                 <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}"
-                    Style="{StaticResource SquareButtonStyle}" ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0,4,0,4">
+                        ToolTipService.ShowOnDisabled="True"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource SquareButtonStyle}" ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0">
                     <iconPacks:PackIconFontAwesome Kind="Refresh" />
                 </Button>
             </StackPanel>
@@ -149,8 +153,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Orientation="Horizontal" IsHitTestVisible="False">
-                                <!-- TODO add lang:Resource for this -->
-                                <TextBlock x:Name="TagsLabel" FontSize="14" Text="Tags:" />
+                                <TextBlock x:Name="TagsLabel" FontSize="14" Text="{x:Static lang:Resources.Controls_PackageListTags}" />
                                 <TextBlock x:Name="Tags" FontSize="14" Margin="5 0 0 0" Text="{Binding Tags, Mode=OneWay}"
                                            TextTrimming="CharacterEllipsis"
                                            AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}"

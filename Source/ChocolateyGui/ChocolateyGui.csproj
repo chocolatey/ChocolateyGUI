@@ -77,6 +77,9 @@
     <Reference Include="MahApps.Metro.IconPacks.Entypo, Version=1.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Entypo.1.9.1\lib\net45\MahApps.Metro.IconPacks.Entypo.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.FontAwesome, Version=1.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.FontAwesome.1.9.1\lib\net45\MahApps.Metro.IconPacks.FontAwesome.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro.IconPacks.Modern, Version=1.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.1.9.1\lib\net45\MahApps.Metro.IconPacks.Modern.dll</HintPath>
     </Reference>

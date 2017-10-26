@@ -8,6 +8,7 @@
              xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:lang="clr-namespace:ChocolateyGui.Properties"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}">
@@ -18,31 +19,43 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Margin="0,5"
-                    Style="{StaticResource LeftSourceListItem}">
-            <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Resources.RemoteSourceView_SearchBoxText}"/>
-            <TextBox x:Name="SearchTextBox" Width="200" Padding="0,2,0,-2" FontSize="14"
-                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Name="AllVersionsCheckBox" Margin="10,5,5,5" Content="{x:Static lang:Resources.RemoteSourceView_CheckboxAllVersions}"
-                      IsChecked="{Binding IncludeAllVersions}" />
-            <CheckBox Name="PrereleaseCheckBox" Margin="5" Content="{x:Static lang:Resources.RemoteSourceView_CheckboxIncludePrerelease}"
-                      IsChecked="{Binding IncludePrerelease}" />
-            <CheckBox Name="MatchCheckBox" Margin="5" Content="{x:Static lang:Resources.RemoteSourceView_CheckboxMatchExactly}" IsChecked="{Binding MatchWord}" />
-            <ComboBox Name="SortBox" Margin="5" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
-                    Margin="10,5">
-            <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}"
-                    Style="{StaticResource SquareButtonStyle}" Content="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0,4,0,4" />
-        </StackPanel>
 
-        <Grid Grid.Row="2" Margin="4">
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <WrapPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5" Style="{StaticResource LeftSourceListItem}">
+                <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
+                    <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Resources.RemoteSourceView_SearchBoxText}"/>
+                    <TextBox x:Name="SearchTextBox" Width="200" FontSize="14"
+                     VerticalContentAlignment="Center"
+                     controls:TextBoxHelper.Watermark="{x:Static lang:Resources.RemoteSourceView_SearchBoxText}"
+                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                <CheckBox Name="AllVersionsCheckBox" Margin="5" Content="{x:Static lang:Resources.RemoteSourceView_CheckboxAllVersions}"
+                      IsChecked="{Binding IncludeAllVersions}" />
+                <CheckBox Name="PrereleaseCheckBox" Margin="5" Content="{x:Static lang:Resources.RemoteSourceView_CheckboxIncludePrerelease}"
+                      IsChecked="{Binding IncludePrerelease}" />
+                <CheckBox Name="MatchCheckBox" Margin="5" Content="{x:Static lang:Resources.RemoteSourceView_CheckboxMatchExactly}" IsChecked="{Binding MatchWord}" />
+                <ComboBox Name="SortBox" Margin="5" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
+            </WrapPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Margin="10,5">
+                <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}"
+                    Style="{StaticResource SquareButtonStyle}" ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0,4,0,4">
+                    <iconPacks:PackIconFontAwesome Kind="Refresh" />
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="4" Grid.IsSharedSizeScope="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
+                <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
                 <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
+                <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Name="FirstPage" Content="{x:Static lang:Resources.RemoteSourceView_ButtonGotoFirstPage}" AutomationProperties.Name="Go to First Page" ToolTip="First"
                     Command="{commands:DataContextCommandAdapter Executed=GoToFirst, CanExecute=CanGoToFirst}"

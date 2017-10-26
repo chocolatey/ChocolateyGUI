@@ -27,7 +27,16 @@ namespace ChocolateyGui.Views
                 throw new ArgumentNullException(nameof(eventAggregator));
             }
 
+            InitializeComponent();
+
             eventAggregator.Subscribe(this);
+
+            this.Loaded += RemoteSourceViewOnLoaded;
+        }
+
+        private void RemoteSourceViewOnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.SearchTextBox.Focus();
         }
 
         public void Handle(ResetScrollPositionMessage message)

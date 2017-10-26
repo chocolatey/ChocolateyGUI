@@ -117,10 +117,18 @@
                             <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesCertificate}" Width="*" Binding="{Binding Certificate}" />
                             <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesCertificatePass}" Width="*" Binding="{Binding CertificatePassword}" />
                             <metro:DataGridNumericUpDownColumn Header="{x:Static lang:Resources.SettingsView_SourcesPriority}" Binding="{Binding Priority}"/>
-                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesDisabled}" Width="Auto" Binding="{Binding Disabled}"/>
-                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesBypassProxy}" Width="Auto" Binding="{Binding BypassProxy}"/>
-                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesSelfService}" Width="Auto" Binding="{Binding AllowSelfService}"/>
-                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesAdminOnly}" Width="Auto" Binding="{Binding VisibleToAdminsOnly}"/>
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesDisabled}" Width="Auto" Binding="{Binding Disabled}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesBypassProxy}" Width="Auto" Binding="{Binding BypassProxy}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesSelfService}" Width="Auto" Binding="{Binding AllowSelfService}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesAdminOnly}" Width="Auto" Binding="{Binding VisibleToAdminsOnly}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <DockPanel Grid.Row="2" Grid.Column="0" Margin="5">
@@ -156,7 +164,7 @@
                                     <Setter Property="Margin" Value="5"/>
                                     <Setter Property="IsReadOnly" Value="{Binding SelectedSource, Converter={StaticResource BooleanInverter}}"/>
                                 </Style>
-                                <Style TargetType="CheckBox">
+                                <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
                                     <Setter Property="Margin" Value="10 0 0 0 "/>
                                     <Setter Property="IsEnabled" Value="{Binding SelectedSource}"/>
                                 </Style>

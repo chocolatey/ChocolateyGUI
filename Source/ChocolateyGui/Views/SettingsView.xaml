@@ -139,11 +139,11 @@
                         <Grid Grid.IsSharedSizeScope="True">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="35"/>
-                                <RowDefinition Height="35"/>
-                                <RowDefinition Height="35"/>
-                                <RowDefinition Height="35"/>
-                                <RowDefinition Height="38"/>
+                                <RowDefinition MinHeight="35"/>
+                                <RowDefinition MinHeight="35"/>
+                                <RowDefinition MinHeight="35"/>
+                                <RowDefinition MinHeight="35"/>
+                                <RowDefinition MinHeight="38"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition MinWidth="100" SharedSizeGroup="LabelColumn1" />
@@ -160,71 +160,64 @@
                                     <Setter Property="HorizontalAlignment" Value="Right"/>
                                     <Setter Property="VerticalAlignment" Value="Center"/>
                                 </Style>
-                                <Style TargetType="TextBox">
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                                     <Setter Property="Margin" Value="5"/>
                                     <Setter Property="IsReadOnly" Value="{Binding SelectedSource, Converter={StaticResource BooleanInverter}}"/>
                                 </Style>
-                                <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
                                     <Setter Property="Margin" Value="10 0 0 0 "/>
                                     <Setter Property="IsEnabled" Value="{Binding SelectedSource}"/>
                                 </Style>
-                                <Style TargetType="metro:NumericUpDown">
+                                <Style TargetType="{x:Type metro:NumericUpDown}" BasedOn="{StaticResource {x:Type metro:NumericUpDown}}">
                                     <Setter Property="Margin" Value="5 "/>
                                     <Setter Property="IsReadOnly" Value="{Binding SelectedSource, Converter={StaticResource BooleanInverter}}"/>
                                 </Style>
                             </Grid.Resources>
 
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static lang:Resources.SettingsView_SourcesId}"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding SelectedSource.Id}"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedSource.Id}"/>
 
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static lang:Resources.SettingsView_SourcesSource}"/>
-                            <TextBox Grid.Row="2" Grid.Column="1"
-                                 VerticalContentAlignment="Center"  Text="{Binding SelectedSource.Value}"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedSource.Value}"/>
 
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="{x:Static lang:Resources.SettingsView_SourcesUsername}"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"  Text="{Binding SelectedSource.UserName}"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedSource.UserName}"/>
 
                             <TextBlock Grid.Row="4" Grid.Column="0" Text="{x:Static lang:Resources.SettingsView_SourcesPassword}"/>
-                            <TextBox Grid.Row="4" Grid.Column="1"
-                                 VerticalContentAlignment="Center"  Text="{Binding SelectedSource.Password}"/>
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedSource.Password}"/>
 
                             <TextBlock Grid.Row="5" Grid.Column="0" Text="{x:Static lang:Resources.SettingsView_SourcesPriority}"/>
                             <metro:NumericUpDown Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center" Value="{Binding SelectedSource.Priority}"/>
 
                             <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesCertificate}"/>
-                            <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" VerticalContentAlignment="Center"  Text="{Binding SelectedSource.Certificate}"/>
+                            <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Text="{Binding SelectedSource.Certificate}"/>
 
                             <TextBlock Grid.Row="2" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesCertificatePass}"/>
-                            <TextBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"
-                                 VerticalContentAlignment="Center"  Text="{Binding SelectedSource.CertificatePassword}"/>
+                            <TextBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Text="{Binding SelectedSource.CertificatePassword}"/>
 
                             <TextBlock Grid.Row="3" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesIsDisabled}"/>
-                            <CheckBox Grid.Row="3" Grid.Column="3"
-                                 VerticalAlignment="Center" IsChecked="{Binding SelectedSource.Disabled}"/>
+                            <CheckBox Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding SelectedSource.Disabled}"/>
 
                             <TextBlock Grid.Row="3" Grid.Column="4" Text="{x:Static lang:Resources.SettingsView_SourcesIsBypassProxy}"/>
-                            <CheckBox Grid.Row="3" Grid.Column="5"
-                                 VerticalAlignment="Center" IsChecked="{Binding SelectedSource.BypassProxy}"/>
+                            <CheckBox Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" IsChecked="{Binding SelectedSource.BypassProxy}"/>
 
                             <TextBlock Grid.Row="4" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesIsSelfService}"/>
-                            <CheckBox Grid.Row="4" Grid.Column="3"
-                                 VerticalAlignment="Center" IsChecked="{Binding SelectedSource.AllowSelfService}"/>
+                            <CheckBox Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding SelectedSource.AllowSelfService}"/>
 
                             <TextBlock Grid.Row="4" Grid.Column="4" Text="{x:Static lang:Resources.SettingsView_SourcesIsAdminOnly}"/>
-                            <CheckBox Grid.Row="4" Grid.Column="5"
-                                 VerticalAlignment="Center" IsChecked="{Binding SelectedSource.VisibleToAdminsOnly}"/>
+                            <CheckBox Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" IsChecked="{Binding SelectedSource.VisibleToAdminsOnly}"/>
                             <StackPanel Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal" Margin="15 0 0 0">
                                 <Button x:Name="Save"
-                                Padding="5 5" Margin="5 0" Width="80"
-                                HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonSave}"/>
+                                        Padding="5 5" Margin="5 0" Width="80"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonSave}"/>
 
                                 <Button x:Name="Remove"
-                                Padding="5 5" Width="80" Margin="5 0 "
-                                HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonRemove}"/>
+                                        Padding="5 5" Width="80" Margin="5 0 "
+                                        HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonRemove}"/>
 
                                 <Button x:Name="Cancel"
-                                Padding="5 5" Width="80" Margin="5 0 "
-                                HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonCancel}"/>
+                                        Padding="5 5" Width="80" Margin="5 0 "
+                                        HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonCancel}"/>
                             </StackPanel>
                         </Grid>
                     </DockPanel>

@@ -12,14 +12,22 @@
         <DockPanel>
             <StackPanel DockPanel.Dock="Left" Background="{StaticResource BackgroundColorBrush}">
                 <Grid DockPanel.Dock="Left" MinWidth="250" MaxWidth="300">
-                    <ListView x:Name="SourcesListView"
-                              ItemsSource="{Binding Items}"
-                              Background="Transparent"
-                              BorderBrush="Transparent"
-                              Padding="5,0,-1,0"
-                              Margin="0,100,0,0"
-                              ItemContainerStyle="{DynamicResource SourcesListItemContainerStyle}"
-                              SelectedItem="{Binding ActiveItem}" />
+                    <ListBox x:Name="SourcesListView"
+                             ItemsSource="{Binding Items}"
+                             Background="Transparent"
+                             BorderBrush="Transparent"
+                             Padding="5,0,-1,0"
+                             Margin="0,100,0,0"
+                             ItemContainerStyle="{DynamicResource SourcesListBoxItemContainerStyle}"
+                             SelectedItem="{Binding ActiveItem}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="Tb"
+                                           Style="{StaticResource SouceItemTextBlockStyle}"
+                                           Text="{Binding DisplayName}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </StackPanel>
             <ContentControl x:Name="ActiveItem" />

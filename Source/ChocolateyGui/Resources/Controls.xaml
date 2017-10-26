@@ -70,126 +70,65 @@
         <Setter Property="Foreground" Value="Black" />
     </Style>
 
-    <Style x:Key="SourcesListItemContainerStyle" TargetType="{x:Type ListViewItem}">
+    <Style x:Key="SourcesListBoxItemContainerStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+        <Setter Property="BorderThickness" Value="2,0,0,0" />
+        <Setter Property="Padding" Value="20,10" />
+        <Setter Property="Margin" Value="0,5,0,0" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="MinHeight" Value="25" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush3}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
-                            Padding="20, 10" Margin="0,5,0,0" BorderThickness="2,0,0,0"
-                            BorderBrush="{StaticResource AccentColorBrush3}">
-                        <TextBlock x:Name="Tb" Style="{StaticResource SouceItemTextBlockStyle}" Text="{Binding DisplayName}"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="LightGray" />
-                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource AccentColorBrush2}" />
-                            <Setter Property="Foreground" TargetName="Tb"
-                                    Value="{StaticResource IdealForegroundColorBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource HighlightBrush}" />
-                            <Setter Property="Foreground" TargetName="Tb"
-                                    Value="{StaticResource IdealForegroundColorBrush}" />
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="LightGray" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource AccentColorBrush}" />
-                            <Setter Property="Foreground" TargetName="Tb"
-                                    Value="{StaticResource IdealForegroundColorBrush}" />
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="White" />
-                        </MultiTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="PackagesListItemContainerStyle" TargetType="{x:Type ListViewItem}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="MinHeight" Value="25" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <ControlTemplate.Resources>
-                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}">
-                            <Setter Property="Foreground" Value="Black" />
-                        </Style>
-                    </ControlTemplate.Resources>
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
-                            Padding="20, 10" Margin="0,5,0,0">
-                        <Grid d:DataContext="{d:DesignInstance {x:Type items:PackageViewModel}}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Title}" Foreground="{DynamicResource TextHighlightBrush}"
-                                           FontSize="26" />
-                                <TextBlock Text="{Binding Version}" Foreground="{DynamicResource TextHighlightBrush}"
-                                           FontSize="16" Margin="5,0,0,0" VerticalAlignment="Bottom" />
-                            </StackPanel>
-                            <TextBlock Grid.Row="1"
-                                       IsHitTestVisible="false">
-                                <Run Text="{x:Static lang:Resources.Controls_PackageListByAuthor}" />
-                                <Run Text="{Binding Authors}" Foreground="{DynamicResource TextHighlightBrush}" />
-                            </TextBlock>
-                            <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="{Binding Summary}" FontSize="12" />
-                            <StackPanel Grid.Row="3" Orientation="Horizontal">
-                                <TextBlock IsHitTestVisible="false">
-                                    <Run Text="{Binding DownloadCount}" FontWeight="SemiBold" />
-                                    <Run Text=" {x:Static lang:Strings.Controls_PackageListDownloads}" />
-                                </TextBlock>
-                                <TextBlock FontWeight="Light" 
-                                           Padding="5,0"
-                                           IsHitTestVisible="false">
-                                    <Run Text="|" />
-                                </TextBlock>
-                                <TextBlock IsHitTestVisible="false">
-                                    <Run FontWeight="SemiBold" Text="{x:Static lang:Resources.Controls_PackageListTags}" /><Run Text=" " />
-                                    <Run Text="{Binding Tags}" Foreground="{DynamicResource TextHighlightBrush}" />
-                                </TextBlock>
-                            </StackPanel>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="#FFb4884f" />
-                            <Setter Property="Background" TargetName="Bd" Value="#EEE4E4E4" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="LightGray" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Bd" Value="#99FFFFFF" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource HighlightBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="LightGray" />
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                        </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="Selector.IsSelectionActive" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="#EEE4E4E4" />
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="#FFb4884f" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource WhiteBrush}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
 
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
         <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />

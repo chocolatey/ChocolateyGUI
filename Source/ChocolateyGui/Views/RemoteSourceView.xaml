@@ -114,13 +114,12 @@
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
-                            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                                <TextBlock FontSize="14"
+                            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" IsHitTestVisible="False">
+                                <TextBlock FontSize="14" Text="{x:Static lang:Resources.RemoteSourceView_Authors}" />
+                                <TextBlock FontSize="14" Margin="5 0 0 0" Text="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
+                                           TextTrimming="CharacterEllipsis"
                                            AutomationProperties.Name="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
-                                           IsHitTestVisible="False">
-                                    <Run Text="{x:Static lang:Resources.RemoteSourceView_Authors}" />
-                                    <Run Style="{StaticResource ColoredDetailsTextLine}" Text="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}" />
-                                </TextBlock>
+                                           Style="{StaticResource ColoredDetailsText}" />
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" IsHitTestVisible="False">
                                 <TextBlock FontWeight="SemiBold" FontSize="20" Text="{Binding DownloadCount, Mode=OneWay, StringFormat=N0}" Style="{StaticResource ColoredDetailsText}" VerticalAlignment="Center" />
@@ -137,9 +136,13 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                <TextBlock x:Name="TagsLabel" FontSize="14">Tags:</TextBlock>
-                                <TextBlock x:Name="Tags" Margin="5 0 0 0" Style="{StaticResource ColoredDetailsText}" TextTrimming="CharacterEllipsis" FontSize="14" Text="{Binding Tags, Mode=OneWay}" />
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" IsHitTestVisible="False">
+                                <!-- TODO add lang:Resource for this -->
+                                <TextBlock x:Name="TagsLabel" FontSize="14" Text="Tags:" />
+                                <TextBlock x:Name="Tags" FontSize="14" Margin="5 0 0 0" Text="{Binding Tags, Mode=OneWay}"
+                                           TextTrimming="CharacterEllipsis"
+                                           AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}"
+                                           Style="{StaticResource ColoredDetailsText}" />
                             </StackPanel>
                             <iconPacks:PackIconEntypo Grid.Column="1" Kind="Check" Width="16" Height="16" VerticalAlignment="Center" Visibility="{Binding IsInstalled, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                         </Grid>

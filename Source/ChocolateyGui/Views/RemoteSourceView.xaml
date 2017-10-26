@@ -51,8 +51,15 @@
                     Command="{commands:DataContextCommandAdapter Executed=GoToPrevious, CanExecute=CanGoToPrevious}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
             <TextBlock Grid.Column="2" Name="CurrentPage" AutomationProperties.Name="Current Page"
-                       HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding CurrentPage}"
-                       Style="{StaticResource PageCountTextStyle}"/>
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Style="{StaticResource PageCountTextStyle}">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0} / {1}">
+                        <Binding Path="CurrentPage" Mode="OneWay" />
+                        <Binding Path="PageCount" Mode="OneWay" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
             <Button Grid.Column="3" Name="ForwardPage" Content="{x:Static lang:Resources.RemoteSourceView_ButtonGoForwardAPage}" AutomationProperties.Name="Go Forward a Page" ToolTip="Forward"
                     Command="{commands:DataContextCommandAdapter Executed=GoToNext, CanExecute=CanGoToNext}"
                     Style="{DynamicResource PaginationButtonStyle}"/>

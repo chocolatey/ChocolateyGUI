@@ -76,14 +76,6 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-                <Style x:Key="ColoredDetailsTextLine" TargetType="Run">
-                    <Setter Property="Foreground" Value="{StaticResource AccentBaseColorBrush}"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
-                            <Setter Property="Foreground" Value="White"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
             </ListBox.Resources>
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="items:IPackageViewModel">

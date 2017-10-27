@@ -20,6 +20,13 @@ namespace ChocolateyGui.Views
             InitializeComponent();
 
             PART_Loading.Margin = new Thickness(0, 0, 13, 0);
+
+            this.Loaded += LocalSourceViewOnLoaded;
+        }
+
+        private void LocalSourceViewOnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.SearchTextBox.Focus();
         }
 
         private void PackageDoubleClick(object sender, MouseButtonEventArgs e)

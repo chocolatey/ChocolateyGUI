@@ -277,6 +277,12 @@
         <Setter Property="ToolTip" Value="Back" />
     </Style>
 
+    <Style x:Key="IconFlatButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroFlatButton}">
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+    </Style>
+
     <Style x:Key="PaginationButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="FontWeight" Value="Bold" />

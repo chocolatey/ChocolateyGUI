@@ -47,7 +47,7 @@
                 <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
-                        Style="{StaticResource SquareButtonStyle}" ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0">
+                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0">
                     <iconPacks:PackIconFontAwesome Kind="Refresh" />
                 </Button>
             </StackPanel>

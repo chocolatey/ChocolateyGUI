@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
+using ChocolateyGui.Enums;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
@@ -42,6 +43,7 @@ namespace ChocolateyGui.ViewModels
         private int _pageSize = 50;
         private string _searchQuery;
         private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
+        private ListViewMode _listViewMode;
 
         public RemoteSourceViewModel(
             IChocolateyService chocolateyPackageService,
@@ -65,6 +67,12 @@ namespace ChocolateyGui.ViewModels
             }
 
             _eventAggregator.Subscribe(this);
+        }
+
+        public ListViewMode ListViewMode
+        {
+            get { return _listViewMode; }
+            set { this.SetPropertyValue(ref _listViewMode, value); }
         }
 
         public ChocolateySource Source { get; }

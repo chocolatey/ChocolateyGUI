@@ -34,17 +34,17 @@ namespace ChocolateyGui.Views
             this.Loaded += RemoteSourceViewOnLoaded;
         }
 
-        private void RemoteSourceViewOnLoaded(object sender, RoutedEventArgs e)
-        {
-            this.SearchTextBox.Focus();
-        }
-
         public void Handle(ResetScrollPositionMessage message)
         {
             if (Packages.Items.Count > 0)
             {
                 Packages.ScrollIntoView(Packages.Items[0]);
             }
+        }
+
+        private void RemoteSourceViewOnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.SearchTextBox.Focus();
         }
 
         private void Packages_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)

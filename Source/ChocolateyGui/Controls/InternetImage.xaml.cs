@@ -6,19 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
+using System.Windows.Media;
 using Caliburn.Micro;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using ImageMagick;
 using LiteDB;
+using MahApps.Metro.IconPacks;
 using Microsoft.VisualStudio.Threading;
 using Serilog;
 using Splat;
@@ -36,7 +35,8 @@ namespace ChocolateyGui.Controls
             "IconUrl", typeof(string), typeof(InternetImage), new PropertyMetadata(default(string)));
 
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
-        private static readonly Lazy<BitmapSource> ErrorIcon = new Lazy<BitmapSource>(GetErrorImage);
+        private static readonly Lazy<ImageSource> ErrorIcon = new Lazy<ImageSource>(GetErrorImage);
+        private static readonly Lazy<ImageSource> EmptyIcon = new Lazy<ImageSource>(GetEmptyImage);
         private static readonly LiteDatabase Data = IoC.Get<LiteDatabase>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
 
@@ -56,21 +56,36 @@ namespace ChocolateyGui.Controls
             set { SetValue(IconUrlProperty, value); }
         }
 
-        private static BitmapSource GetErrorImage()
+        private static ImageSource GetErrorImage()
         {
-            var size = GetBitmapSize();
-            return Imaging.CreateBitmapSourceFromHIcon(
-                SystemIcons.Error.Handle,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(size.Width, size.Height));
+            var packIcon = new PackIconEntypo() { Kind = PackIconEntypoKind.CircleWithCross };
+
+            var pen = new Pen();
+            pen.Freeze();
+            var geometry = Geometry.Parse(packIcon.Data);
+            var geometryDrawing = new GeometryDrawing(Brushes.OrangeRed, pen, geometry);
+            var drawingGroup = new DrawingGroup();
+            drawingGroup.Children.Add(geometryDrawing);
+            drawingGroup.Transform = new ScaleTransform(3.5, 3.5);
+            var drawingImage = new DrawingImage { Drawing = drawingGroup };
+            drawingImage.Freeze();
+            return drawingImage;
         }
 
-        private static System.Drawing.Size GetBitmapSize()
+        private static ImageSource GetEmptyImage()
         {
-            var scale = NativeMethods.GetScaleFactor();
-            var x = (int)Math.Round(64 * scale);
-            var y = (int)Math.Round(64 * scale);
-            return new System.Drawing.Size(x, y);
+            var packIcon = new PackIconEntypo() { Kind = PackIconEntypoKind.Block };
+
+            var pen = new Pen();
+            pen.Freeze();
+            var geometry = Geometry.Parse(packIcon.Data);
+            var geometryDrawing = new GeometryDrawing(Brushes.LightGray, pen, geometry);
+            var drawingGroup = new DrawingGroup();
+            drawingGroup.Children.Add(geometryDrawing);
+            drawingGroup.Transform = new ScaleTransform(3.5, 3.5);
+            var drawingImage = new DrawingImage { Drawing = drawingGroup };
+            drawingImage.Freeze();
+            return drawingImage;
         }
 
         private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteStorage fileStorage, string id)
@@ -163,7 +178,7 @@ namespace ChocolateyGui.Controls
         {
             if (string.IsNullOrWhiteSpace(url))
             {
-                PART_Image.Source = null;
+                PART_Image.Source = url != null ? GetEmptyImage() : null;
                 PART_Loading.IsActive = false;
                 return;
             }
@@ -172,7 +187,7 @@ namespace ChocolateyGui.Controls
 
             var size = GetCurrentSize();
             var expiration = DateTime.UtcNow + TimeSpan.FromDays(1);
-            BitmapSource source;
+            ImageSource source;
             try
             {
                 source = (await LoadImage(url, size.Width, size.Height, expiration)).ToNative();

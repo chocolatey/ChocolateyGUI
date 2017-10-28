@@ -35,8 +35,8 @@ namespace ChocolateyGui.Controls
             "IconUrl", typeof(string), typeof(InternetImage), new PropertyMetadata(default(string)));
 
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
-        private static readonly Lazy<ImageSource> ErrorIcon = new Lazy<ImageSource>(GetErrorImage);
-        private static readonly Lazy<ImageSource> EmptyIcon = new Lazy<ImageSource>(GetEmptyImage);
+        private static readonly Lazy<ImageSource> ErrorIcon = new Lazy<ImageSource>(() => GetPackIconEntypoImage(PackIconEntypoKind.CircleWithCross, Brushes.OrangeRed));
+        private static readonly Lazy<ImageSource> EmptyIcon = new Lazy<ImageSource>(() => GetPackIconEntypoImage(PackIconEntypoKind.Block, Brushes.LightGray));
         private static readonly LiteDatabase Data = IoC.Get<LiteDatabase>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
 
@@ -56,30 +56,14 @@ namespace ChocolateyGui.Controls
             set { SetValue(IconUrlProperty, value); }
         }
 
-        private static ImageSource GetErrorImage()
+        private static ImageSource GetPackIconEntypoImage(PackIconEntypoKind packIconKind, Brush brush)
         {
-            var packIcon = new PackIconEntypo() { Kind = PackIconEntypoKind.CircleWithCross };
+            var packIcon = new PackIconEntypo { Kind = packIconKind };
 
             var pen = new Pen();
             pen.Freeze();
             var geometry = Geometry.Parse(packIcon.Data);
-            var geometryDrawing = new GeometryDrawing(Brushes.OrangeRed, pen, geometry);
-            var drawingGroup = new DrawingGroup();
-            drawingGroup.Children.Add(geometryDrawing);
-            drawingGroup.Transform = new ScaleTransform(3.5, 3.5);
-            var drawingImage = new DrawingImage { Drawing = drawingGroup };
-            drawingImage.Freeze();
-            return drawingImage;
-        }
-
-        private static ImageSource GetEmptyImage()
-        {
-            var packIcon = new PackIconEntypo() { Kind = PackIconEntypoKind.Block };
-
-            var pen = new Pen();
-            pen.Freeze();
-            var geometry = Geometry.Parse(packIcon.Data);
-            var geometryDrawing = new GeometryDrawing(Brushes.LightGray, pen, geometry);
+            var geometryDrawing = new GeometryDrawing(brush, pen, geometry);
             var drawingGroup = new DrawingGroup();
             drawingGroup.Children.Add(geometryDrawing);
             drawingGroup.Transform = new ScaleTransform(3.5, 3.5);
@@ -178,7 +162,7 @@ namespace ChocolateyGui.Controls
         {
             if (string.IsNullOrWhiteSpace(url))
             {
-                PART_Image.Source = url != null ? GetEmptyImage() : null;
+                PART_Image.Source = url != null ? EmptyIcon.Value : null;
                 PART_Loading.IsActive = false;
                 return;
             }

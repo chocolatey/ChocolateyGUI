@@ -96,11 +96,13 @@
 
             <DataTemplate x:Key="PackageTileTemplate" DataType="{x:Type items:IPackageViewModel}">
                 <Grid Width="180" Height="180"
+                      Margin="2"
                       Background="Transparent"
                       ContextMenu="{StaticResource PackagesContextMenu}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
@@ -112,10 +114,19 @@
                                             Width="100"
                                             Height="100"/>
                     <TextBlock Grid.Row="2"
+                               Margin="2"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"
+                               FontSize="12"
+                               Text="{Binding Version}" />
+                    <TextBlock Grid.Row="3"
+                               Margin="2"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                TextTrimming="CharacterEllipsis"
                                FontSize="14"
+                               FontWeight="Bold"
                                Text="{Binding Title}" />
                 </Grid>
             </DataTemplate>

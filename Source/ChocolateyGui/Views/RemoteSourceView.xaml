@@ -19,12 +19,12 @@
         <ResourceDictionary>
             <models:EnumToBoolConverter x:Key="EnumToBoolConverter" />
 
-            <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
 
-            <Style TargetType="{x:Type ListView}">
+            <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource VirtualisedMetroListView}">
                 <Style.Resources>
                     <!--  this is necessary to prevent nasty can not find stuff like  -->
                     <!--  ItemsPanel Cannot find source for binding with reference 'RelativeSource FindAncestor, AncestorType='System.Windows.Controls.ItemsControl', AncestorLevel='1''. BindingExpression:Path=HorizontalContentAlignment; DataItem=null; target element is 'ListViewItem' (Name=''); target property is 'HorizontalContentAlignment' (type 'HorizontalAlignment')  -->
@@ -45,8 +45,9 @@
                                     </Style.Triggers>
                                 </Style>
                             </DataTemplate.Resources>
+                            
                             <Grid x:Name="PackageDetailsGrid" Height="105" Margin="5" HorizontalAlignment="Stretch" Background="Transparent"
-                          ContextMenu="{StaticResource PackagesContextMenu}">
+                                  ContextMenu="{StaticResource PackagesContextMenu}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
@@ -63,8 +64,8 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock x:Name="TitleVersion" Grid.Row="0" Grid.Column="0"
-                                       TextTrimming="CharacterEllipsis"
-                                       Style="{StaticResource ColoredDetailsText}" FontSize="26">
+                                               TextTrimming="CharacterEllipsis"
+                                               Style="{StaticResource ColoredDetailsText}" FontSize="26">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
                                                 <Binding Path="Title" Mode="OneWay" />
@@ -75,9 +76,9 @@
                                     <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" IsHitTestVisible="False">
                                         <TextBlock FontSize="14" Text="{x:Static lang:Resources.RemoteSourceView_Authors}" />
                                         <TextBlock FontSize="14" Margin="5 0 0 0" Text="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
-                                           TextTrimming="CharacterEllipsis"
-                                           AutomationProperties.Name="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
-                                           Style="{StaticResource ColoredDetailsText}" />
+                                                   TextTrimming="CharacterEllipsis"
+                                                   AutomationProperties.Name="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
+                                                   Style="{StaticResource ColoredDetailsText}" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" IsHitTestVisible="False">
                                         <TextBlock FontWeight="SemiBold" FontSize="20" Text="{Binding DownloadCount, Mode=OneWay, StringFormat=N0}" Style="{StaticResource ColoredDetailsText}" VerticalAlignment="Center" />
@@ -97,9 +98,9 @@
                                     <StackPanel Grid.Column="0" Orientation="Horizontal" IsHitTestVisible="False">
                                         <TextBlock x:Name="TagsLabel" FontSize="14" Text="{x:Static lang:Resources.Controls_PackageListTags}" />
                                         <TextBlock x:Name="Tags" FontSize="14" Margin="5 0 0 0" Text="{Binding Tags, Mode=OneWay}"
-                                           TextTrimming="CharacterEllipsis"
-                                           AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}"
-                                           Style="{StaticResource ColoredDetailsText}" />
+                                                   TextTrimming="CharacterEllipsis"
+                                                   AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}"
+                                                   Style="{StaticResource ColoredDetailsText}" />
                                     </StackPanel>
                                     <iconPacks:PackIconEntypo Grid.Column="1" Kind="Check" Width="16" Height="16" VerticalAlignment="Center" Visibility="{Binding IsInstalled, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                                 </Grid>
@@ -129,11 +130,11 @@
                                             </Image.Source>
                                         </Image>-->
                                         <controls:InternetImage AutomationProperties.Name="Package Icon" IconUrl="{Binding IconUrl, IsAsync=True}"
-                   Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top"
-                   Margin="0,0,20,0" />
+                                                                Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                                                Margin="0,0,20,0" />
                                         <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right"
-                                   VerticalAlignment="Center"
-                                   Text="{Binding Title}" />
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Title}" />
                                     </Grid>
                                 </DataTemplate>
                             </Setter.Value>
@@ -231,10 +232,10 @@
         </Grid>
 
         <ListView Grid.Row="1" x:Name="Packages" ItemsSource="{Binding Packages, Mode=OneWay}"
-                 VerticalAlignment="Stretch"
-                 HorizontalContentAlignment="Stretch"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 MouseDoubleClick="Packages_OnMouseDoubleClick">
+                  VerticalAlignment="Stretch"
+                  HorizontalContentAlignment="Stretch"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  MouseDoubleClick="Packages_OnMouseDoubleClick">
         </ListView>
     </Grid>
 </UserControl>

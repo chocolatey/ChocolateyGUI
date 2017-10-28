@@ -77,10 +77,7 @@ namespace ChocolateyGui.Controls
         {
             imageStream.Position = 0;
             var fileInfo = fileStorage.Upload(id, null, imageStream);
-            fileStorage.SetMetadata(
-                fileInfo.Id,
-                new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
-
+            fileInfo.Metadata.Add(new KeyValuePair<string, BsonValue>("Expires", absoluteExpiration));
             imageStream.Position = 0;
         }
 

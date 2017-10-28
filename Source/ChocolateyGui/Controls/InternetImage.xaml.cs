@@ -105,7 +105,10 @@ namespace ChocolateyGui.Controls
                         return imageStream;
                     }
 
-                    fileStorage.Delete(id);
+                    using (await Lock.WriteLockAsync())
+                    {
+                        fileStorage.Delete(id);
+                    }
                 }
 
                 using (await Lock.WriteLockAsync())

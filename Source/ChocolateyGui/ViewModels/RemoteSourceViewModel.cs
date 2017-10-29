@@ -281,6 +281,7 @@ namespace ChocolateyGui.ViewModels
                                     MatchWord,
                                     Source.Value));
                     var installed = await _chocolateyPackageService.GetInstalledPackages();
+                    var outdated = await _chocolateyPackageService.GetOutdatedPackages();
 
                     PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
                     Packages.Clear();
@@ -289,6 +290,10 @@ namespace ChocolateyGui.ViewModels
                         if (installed.Any(package => package.Id == p.Id))
                         {
                             p.IsInstalled = true;
+                        }
+                        if (outdated.Any(package => package.Item1 == p.Id))
+                        {
+                            p.IsLatestVersion = false;
                         }
 
                         Packages.Add(Mapper.Map<IPackageViewModel>(p));

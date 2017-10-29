@@ -264,15 +264,19 @@
                 <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
-                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0">
+                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0,0,2,0">
                     <iconPacks:PackIconFontAwesome Kind="Refresh" />
                 </Button>
-                <RadioButton Margin="1"
-                   Content="Standard"
-                   IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Standard}}" />
-                <RadioButton Margin="1"
-                   Content="Tile"
-                   IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Tile}}" />
+                <RadioButton Margin="6,0,1,0"
+                             Style="{DynamicResource ListViewModeRadioButtonStyle}"
+                             IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Standard}}">
+                    <iconPacks:PackIconModern Kind="TextAlignJustify" />
+                </RadioButton>
+                <RadioButton Margin="1,0,0,0"
+                             Style="{DynamicResource ListViewModeRadioButtonStyle}"
+                             IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Tile}}">
+                    <iconPacks:PackIconModern Kind="TilesFour" />
+                </RadioButton>
             </StackPanel>
         </Grid>
 

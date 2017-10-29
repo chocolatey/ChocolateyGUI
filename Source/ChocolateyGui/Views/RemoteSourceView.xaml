@@ -17,6 +17,7 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <models:EnumToBoolConverter x:Key="EnumToBoolConverter" />
 
             <DataTemplate x:Key="PackageListTemplate" DataType="{x:Type items:IPackageViewModel}">
@@ -96,44 +97,57 @@
 
             <DataTemplate x:Key="PackageTileTemplate" DataType="{x:Type items:IPackageViewModel}">
                 <Grid Width="180" Height="180"
-                      Margin="2"
                       Background="Transparent"
                       ContextMenu="{StaticResource PackagesContextMenu}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <controls:InternetImage Grid.Row="1"
+                    <controls:InternetImage Grid.Row="0"
                                             AutomationProperties.Name="Package Icon"
                                             IconUrl="{Binding IconUrl, IsAsync=True}"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             Width="100"
                                             Height="100"/>
-                    <TextBlock Grid.Row="2"
-                               Margin="2"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Center"
-                               TextTrimming="CharacterEllipsis"
-                               FontSize="12"
-                               Text="{Binding Version}" />
-                    <TextBlock Grid.Row="3"
-                               Margin="2"
-                               HorizontalAlignment="Center"
+                    
+                    <iconPacks:PackIconEntypo Grid.Row="0" Grid.RowSpan="3"
+                                              Width="24" Height="24"
+                                              Kind="Pin" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2 4"
+                                              Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BoolToVis}}"/>
+
+                    <TextBlock Grid.Row="1"
+                               Margin="2 0"
+                               HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                TextTrimming="CharacterEllipsis"
                                FontSize="14"
                                FontWeight="Bold"
                                Text="{Binding Title}" />
+                    <TextBlock Grid.Row="2"
+                               Margin="2"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"
+                               FontSize="14"
+                               Text="{Binding Version}" />
                 </Grid>
             </DataTemplate>
 
             <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="ListViewItemTileStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
             </Style>
 
             <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource VirtualisedMetroListView}">
@@ -149,6 +163,7 @@
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding ListViewMode, Mode=OneWay}" Value="{x:Static enums:ListViewMode.Tile}">
                         <Setter Property="ItemTemplate" Value="{StaticResource PackageTileTemplate}" />
+                        <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewItemTileStyle}" />
                         <Setter Property="ItemsPanel">
                             <Setter.Value>
                                 <ItemsPanelTemplate>

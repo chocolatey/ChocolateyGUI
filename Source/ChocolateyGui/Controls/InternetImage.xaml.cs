@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
@@ -36,7 +37,7 @@ namespace ChocolateyGui.Controls
 
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly Lazy<ImageSource> ErrorIcon = new Lazy<ImageSource>(() => GetPackIconEntypoImage(PackIconEntypoKind.CircleWithCross, Brushes.OrangeRed));
-        private static readonly Lazy<ImageSource> EmptyIcon = new Lazy<ImageSource>(() => GetPackIconEntypoImage(PackIconEntypoKind.Block, Brushes.LightGray));
+        private static readonly Lazy<ImageSource> EmptyIcon = new Lazy<ImageSource>(GetEmptyImage);
         private static readonly LiteDatabase Data = IoC.Get<LiteDatabase>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
 
@@ -72,6 +73,13 @@ namespace ChocolateyGui.Controls
             return drawingImage;
         }
 
+        private static ImageSource GetEmptyImage()
+        {
+            var image = new BitmapImage(new Uri("pack://application:,,,/ChocolateyGui;component/chocolatey@4.png", UriKind.RelativeOrAbsolute));
+            image.Freeze();
+            return image;
+        }
+
         private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteStorage fileStorage, string id)
         {
             imageStream.Position = 0;
@@ -88,11 +96,11 @@ namespace ChocolateyGui.Controls
 
         private async Task<Stream> DownloadUrl(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
         {
+            var id = $"imagecache/{url.GetHashCode()}";
+            var imageStream = new MemoryStream();
+
             using (await Lock.UpgradeableReadLockAsync())
             {
-                var id = $"imagecache/{url.GetHashCode()}";
-                var imageStream = new MemoryStream();
-
                 var fileStorage = Data.FileStorage;
                 if (fileStorage.Exists(id))
                 {
@@ -103,50 +111,53 @@ namespace ChocolateyGui.Controls
                         info.CopyTo(imageStream);
                         return imageStream;
                     }
+                }
+            }
 
-                    using (await Lock.WriteLockAsync())
-                    {
-                        fileStorage.Delete(id);
-                    }
+            // If we couldn't find the image or it expired
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                var extension = GetExtension(url);
+                var tempFile = Path.GetTempFileName();
+                var fileInfo = new FileInfo(tempFile);
+                fileInfo.MoveTo(tempFile.Replace(".tmp", $".{extension}"));
+                using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
+                {
+                    await response.Content.CopyToAsync(fileStream);
                 }
 
+                using (var image = new MagickImage(fileInfo))
+                {
+                    var size = new MagickGeometry((int)desiredWidth, (int)desiredHeight)
+                    {
+                        FillArea = true
+                    };
+                    if (!string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
+                    {
+                        image.Resize(size);
+                    }
+
+                    image.Write(imageStream, MagickFormat.Png);
+                    imageStream.Flush();
+                }
+
+                fileInfo.Delete();
+            }
+
+            using (await Lock.UpgradeableReadLockAsync())
+            {
+                var fileStorage = Data.FileStorage;
                 using (await Lock.WriteLockAsync())
                 {
-                    // If we couldn't find the image or it expired
-                    using (var client = new HttpClient())
-                    {
-                        var response = await client.GetAsync(url);
-                        response.EnsureSuccessStatusCode();
-
-                        var extension = GetExtension(url);
-                        var tempFile = Path.GetTempFileName();
-                        var fileInfo = new FileInfo(tempFile);
-                        fileInfo.MoveTo(tempFile.Replace(".tmp", $".{extension}"));
-                        using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
-                        {
-                            await response.Content.CopyToAsync(fileStream);
-                        }
-
-                        using (var image = new MagickImage(fileInfo))
-                        {
-                            var size = new MagickGeometry((int)desiredWidth, (int)desiredHeight)
-                            {
-                                FillArea = true
-                            };
-                            if (!string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
-                            {
-                                image.Resize(size);
-                            }
-
-                            image.Write(imageStream, MagickFormat.Png);
-                        }
-
-                        fileInfo.Delete();
-                    }
-
+                    // we don't need to delete the file, cause a upload does
+                    // Upload: Send file or stream to database. Can be used with file or Stream. If file already exists, file content is overwritten.
                     UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
-                    return imageStream;
                 }
+
+                return imageStream;
             }
         }
 
@@ -183,6 +194,11 @@ namespace ChocolateyGui.Controls
             catch (ArgumentException)
             {
                 Logger.Warning("Got an invalid img url: \"{IconUrl}\".", url);
+                source = ErrorIcon.Value;
+            }
+            catch (Exception exception)
+            {
+                Logger.Warning(exception, "Something went wrong with: \"{IconUrl}\".", url);
                 source = ErrorIcon.Value;
             }
 

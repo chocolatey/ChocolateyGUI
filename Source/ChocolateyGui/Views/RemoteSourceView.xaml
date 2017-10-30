@@ -316,6 +316,7 @@
                   VerticalAlignment="Stretch"
                   HorizontalContentAlignment="Stretch"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.IsDeferredScrollingEnabled="False"
                   MouseDoubleClick="Packages_OnMouseDoubleClick">
         </ListView>
     </Grid>

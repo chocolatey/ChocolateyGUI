@@ -98,10 +98,10 @@ namespace ChocolateyGui.Controls
         {
             var id = $"imagecache/{url.GetHashCode()}";
             var imageStream = new MemoryStream();
+            var fileStorage = Data.FileStorage;
 
             using (await Lock.UpgradeableReadLockAsync())
             {
-                var fileStorage = Data.FileStorage;
                 if (fileStorage.Exists(id))
                 {
                     var info = fileStorage.FindById(id);
@@ -147,18 +147,14 @@ namespace ChocolateyGui.Controls
                 fileInfo.Delete();
             }
 
-            using (await Lock.UpgradeableReadLockAsync())
+            using (await Lock.WriteLockAsync())
             {
-                var fileStorage = Data.FileStorage;
-                using (await Lock.WriteLockAsync())
-                {
-                    // we don't need to delete the file, cause a upload does
-                    // Upload: Send file or stream to database. Can be used with file or Stream. If file already exists, file content is overwritten.
-                    UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
-                }
-
-                return imageStream;
+                // we don't need to delete the file, cause a upload does
+                // Upload: Send file or stream to database. Can be used with file or Stream. If file already exists, file content is overwritten.
+                UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
             }
+
+            return imageStream;
         }
 
         private System.Drawing.Size GetCurrentSize()

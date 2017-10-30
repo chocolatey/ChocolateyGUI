@@ -53,10 +53,10 @@ namespace ChocolateyGui.Views
 
             while (obj != null && obj != Packages)
             {
-                if (obj.GetType() == typeof(ListBoxItem))
+                var listBoxItem = obj as ListBoxItem;
+                if (listBoxItem != null)
                 {
-                    var item = (ListBoxItem)obj;
-                    var context = (IPackageViewModel)item.DataContext;
+                    var context = (IPackageViewModel)listBoxItem.DataContext;
                     context.ViewDetails();
                 }
 

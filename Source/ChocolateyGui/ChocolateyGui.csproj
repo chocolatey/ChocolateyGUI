@@ -200,6 +200,8 @@
     <Compile Include="Base\ConnectionClosedException.cs" />
     <Compile Include="ChocolateyExtensions.cs" />
     <Compile Include="Controls\MarkdownEx.cs" />
+    <Compile Include="Enums\ListViewMode.cs" />
+    <Compile Include="Models\EnumToBoolConverter.cs" />
     <Compile Include="Models\LogLevel.cs" />
     <Compile Include="Models\LogMessage.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
@@ -463,6 +465,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.*.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="chocolatey%404.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\cef.redist.x64.3.2987.1601\build\cef.redist.x64.targets" Condition="Exists('..\packages\cef.redist.x64.3.2987.1601\build\cef.redist.x64.targets')" />

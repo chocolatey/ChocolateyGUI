@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
+using ChocolateyGui.Enums;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
@@ -42,6 +43,7 @@ namespace ChocolateyGui.ViewModels
         private int _pageSize = 50;
         private string _searchQuery;
         private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
+        private ListViewMode _listViewMode;
 
         public RemoteSourceViewModel(
             IChocolateyService chocolateyPackageService,
@@ -65,6 +67,12 @@ namespace ChocolateyGui.ViewModels
             }
 
             _eventAggregator.Subscribe(this);
+        }
+
+        public ListViewMode ListViewMode
+        {
+            get { return _listViewMode; }
+            set { this.SetPropertyValue(ref _listViewMode, value); }
         }
 
         public ChocolateySource Source { get; }
@@ -273,14 +281,19 @@ namespace ChocolateyGui.ViewModels
                                     MatchWord,
                                     Source.Value));
                     var installed = await _chocolateyPackageService.GetInstalledPackages();
+                    var outdated = await _chocolateyPackageService.GetOutdatedPackages();
 
                     PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
                     Packages.Clear();
                     result.Packages.ToList().ForEach(p =>
                     {
-                        if (installed.Any(package => package.Id == p.Id))
+                        if (installed.Any(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)))
                         {
                             p.IsInstalled = true;
+                        }
+                        if (outdated.Any(package => string.Equals(package.Item1, p.Id, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            p.IsLatestVersion = false;
                         }
 
                         Packages.Add(Mapper.Map<IPackageViewModel>(p));

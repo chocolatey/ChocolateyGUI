@@ -287,11 +287,11 @@ namespace ChocolateyGui.ViewModels
                     Packages.Clear();
                     result.Packages.ToList().ForEach(p =>
                     {
-                        if (installed.Any(package => package.Id == p.Id))
+                        if (installed.Any(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)))
                         {
                             p.IsInstalled = true;
                         }
-                        if (outdated.Any(package => package.Item1 == p.Id))
+                        if (outdated.Any(package => string.Equals(package.Item1, p.Id, StringComparison.OrdinalIgnoreCase)))
                         {
                             p.IsLatestVersion = false;
                         }

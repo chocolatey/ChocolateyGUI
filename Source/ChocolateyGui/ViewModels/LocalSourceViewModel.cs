@@ -17,6 +17,7 @@ using System.Xml;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
+using ChocolateyGui.Enums;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
@@ -45,6 +46,7 @@ namespace ChocolateyGui.ViewModels
         private bool _sortDescending;
         private bool _isLoading;
         private bool _firstLoadIncomplete = true;
+        private ListViewMode _listViewMode;
 
         public LocalSourceViewModel(
             IChocolateyService chocolateyService,
@@ -73,6 +75,12 @@ namespace ChocolateyGui.ViewModels
             _eventAggregator = eventAggregator;
             _mapper = mapper;
             _eventAggregator.Subscribe(this);
+        }
+
+        public ListViewMode ListViewMode
+        {
+            get { return _listViewMode; }
+            set { this.SetPropertyValue(ref _listViewMode, value); }
         }
 
         public bool ShowOnlyPackagesWithUpdate

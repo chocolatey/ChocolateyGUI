@@ -95,24 +95,6 @@
                 </Grid>
             </DataTemplate>
 
-            <ControlTemplate x:Key="OverlayTemplate" TargetType="ContentControl">
-                <Grid x:Name="OutOfDateOverlay" ClipToBounds="True">
-                    <Grid Height="20" Width="200">
-                        <Grid.RenderTransform>
-                            <TranslateTransform X="55" Y="-55" />
-                        </Grid.RenderTransform>
-                        <Grid.LayoutTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="45" />
-                            </TransformGroup>
-                        </Grid.LayoutTransform>
-                        <Rectangle Fill="{TemplateBinding Background}" />
-                        <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
-                                   Foreground="{TemplateBinding Foreground}" />
-                    </Grid>
-                </Grid>
-            </ControlTemplate>
-
             <DataTemplate x:Key="PackageTileTemplate" DataType="{x:Type items:IPackageViewModel}">
                 <Grid Width="180" Height="180"
                       Background="Transparent"
@@ -132,6 +114,7 @@
                                             Height="100"/>
 
                     <iconPacks:PackIconEntypo Grid.Row="0" Grid.RowSpan="3"
+                                              Opacity="0.8"
                                               Width="24" Height="24"
                                               Kind="Pin" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2 4"
                                               Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BoolToVis}}" />
@@ -142,7 +125,7 @@
                                     Content="Installed"
                                     Background="#007F00"
                                     Foreground="White"
-                                    Template="{StaticResource OverlayTemplate}" />
+                                    Template="{DynamicResource TileOverlayTemplate}" />
 
                     <ContentControl x:Name="OutOfDateOverlay" ClipToBounds="True" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed"
                                     IsTabStop="False"
@@ -150,7 +133,7 @@
                                     Content="out-of-date"
                                     Background="#A90000"
                                     Foreground="White"
-                                    Template="{StaticResource OverlayTemplate}" />
+                                    Template="{DynamicResource TileOverlayTemplate}" />
 
                     <TextBlock Grid.Row="1"
                                Margin="4 0"
@@ -190,16 +173,6 @@
             <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
-            </Style>
-
-            <Style x:Key="ListViewItemTileStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
-                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                <Setter Property="Margin" Value="2" />
-                <Setter Property="Padding" Value="0" />
-                <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
-                <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
             </Style>
 
             <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource VirtualisedMetroListView}">
@@ -317,7 +290,6 @@
                   HorizontalContentAlignment="Stretch"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ScrollViewer.IsDeferredScrollingEnabled="False"
-                  MouseDoubleClick="Packages_OnMouseDoubleClick">
-        </ListView>
+                  MouseDoubleClick="Packages_OnMouseDoubleClick" />
     </Grid>
 </UserControl>

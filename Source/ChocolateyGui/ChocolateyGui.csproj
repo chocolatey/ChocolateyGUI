@@ -204,6 +204,7 @@
     <Compile Include="Models\EnumToBoolConverter.cs" />
     <Compile Include="Models\LogLevel.cs" />
     <Compile Include="Models\LogMessage.cs" />
+    <Compile Include="Utilities\Converters\NullToValue.cs" />
     <Compile Include="Utilities\PackageAuthorsComparer.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
     <Compile Include="Controls\InternetImage.xaml.cs">
@@ -278,7 +279,6 @@
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
     <Compile Include="Utilities\Converters\PackageDependenciesToString.cs" />
-    <Compile Include="Utilities\Converters\UriToVisibility.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
     <Page Include="Controls\Dialogs\ChocolateyDialog.xaml">
       <SubType>Designer</SubType>

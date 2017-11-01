@@ -25,20 +25,13 @@ branches:
 #---------------------------------#
 #  Transifex                      #
 #---------------------------------#
-init:
-- ps: |
-    $encoding = New-Object System.Text.UTF8Encoding($false)
-    $text = "[https://www.transifex.com]`r`nhostname = https://www.transifex.com`r`npassword = $env:TRANSIFEX_TOKEN`r`nusername = api"
-    [System.IO.File]::WriteAllText("$env:USERPROFILE\.transifexrc", $text, $encoding)
-    if (!(Test-Path $env:TRANSLATION_DIR)) { mkdir $env:TRANSLATION_DIR }
 install:
-- cmd: pip install transifex-client
+- choco install transifex-client --version 0.12.4
 
 #---------------------------------#
 #  Build Cache                    #
 #---------------------------------#
 
 cache:
-- '%TRANSLATION_DIR%'
 - Source\packages -> Source\**\packages.config
 - tools -> setup.cake

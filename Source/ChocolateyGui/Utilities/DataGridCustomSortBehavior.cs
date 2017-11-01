@@ -1,4 +1,10 @@
-﻿using System.ComponentModel;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="DataGridCustomSortBehavior.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;

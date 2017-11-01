@@ -79,26 +79,8 @@ namespace ChocolateyGui.ViewModels
 
         public ListViewMode ListViewMode
         {
-            get
-            {
-                return _listViewMode;
-            }
-
-            set
-            {
-                if (this.SetPropertyValue(ref _listViewMode, value))
-                {
-                    if (value == ListViewMode.Tile)
-                    {
-                        // reset custom sorting for now
-                        var listColView = PackageSource as ListCollectionView;
-                        if (listColView != null)
-                        {
-                            listColView.CustomSort = null;
-                        }
-                    }
-                }
-            }
+            get { return _listViewMode; }
+            set { this.SetPropertyValue(ref _listViewMode, value); }
         }
 
         public bool ShowOnlyPackagesWithUpdate
@@ -302,11 +284,27 @@ namespace ChocolateyGui.ViewModels
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                     .Where(
                         eventPattern =>
-                            eventPattern.EventArgs.PropertyName == "MatchWord" ||
-                            eventPattern.EventArgs.PropertyName == "SearchQuery" ||
-                            eventPattern.EventArgs.PropertyName == "ShowOnlyPackagesWithUpdate")
+                            eventPattern.EventArgs.PropertyName == nameof(MatchWord) ||
+                            eventPattern.EventArgs.PropertyName == nameof(SearchQuery) ||
+                            eventPattern.EventArgs.PropertyName == nameof(ShowOnlyPackagesWithUpdate))
                     .ObserveOnDispatcher()
                     .Subscribe(eventPattern => PackageSource.Refresh());
+
+                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                    .Where(eventPattern => eventPattern.EventArgs.PropertyName == nameof(ListViewMode))
+                    .ObserveOnDispatcher()
+                    .Subscribe(eventPattern =>
+                    {
+                        if (ListViewMode == ListViewMode.Tile)
+                        {
+                            // reset custom sorting for now
+                            var listColView = PackageSource as ListCollectionView;
+                            if (listColView != null)
+                            {
+                                listColView.CustomSort = null;
+                            }
+                        }
+                    });
 
                 _hasLoaded = true;
 

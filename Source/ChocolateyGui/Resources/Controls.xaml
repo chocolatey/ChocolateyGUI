@@ -138,6 +138,34 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
+    <Style x:Key="ListViewItemTileStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
+    </Style>
+
+    <ControlTemplate x:Key="TileOverlayTemplate" TargetType="ContentControl">
+        <Grid ClipToBounds="True">
+            <Grid Height="20" Width="200">
+                <Grid.RenderTransform>
+                    <TranslateTransform X="55" Y="-55" />
+                </Grid.RenderTransform>
+                <Grid.LayoutTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="45" />
+                    </TransformGroup>
+                </Grid.LayoutTransform>
+                <Rectangle Fill="{TemplateBinding Background}" />
+                <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                           Foreground="{TemplateBinding Foreground}" />
+            </Grid>
+        </Grid>
+    </ControlTemplate>
+
     <Style x:Key="ListViewModeRadioButtonStyle" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
         <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />

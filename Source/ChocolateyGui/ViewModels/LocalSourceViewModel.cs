@@ -79,8 +79,26 @@ namespace ChocolateyGui.ViewModels
 
         public ListViewMode ListViewMode
         {
-            get { return _listViewMode; }
-            set { this.SetPropertyValue(ref _listViewMode, value); }
+            get
+            {
+                return _listViewMode;
+            }
+
+            set
+            {
+                if (this.SetPropertyValue(ref _listViewMode, value))
+                {
+                    if (value == ListViewMode.Tile)
+                    {
+                        // reset custom sorting for now
+                        var listColView = PackageSource as ListCollectionView;
+                        if (listColView != null)
+                        {
+                            listColView.CustomSort = null;
+                        }
+                    }
+                }
+            }
         }
 
         public bool ShowOnlyPackagesWithUpdate

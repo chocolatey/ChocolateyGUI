@@ -204,6 +204,7 @@
     <Compile Include="Models\EnumToBoolConverter.cs" />
     <Compile Include="Models\LogLevel.cs" />
     <Compile Include="Models\LogMessage.cs" />
+    <Compile Include="Utilities\PackageAuthorsComparer.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
     <Compile Include="Controls\InternetImage.xaml.cs">
       <DependentUpon>InternetImage.xaml</DependentUpon>
@@ -266,9 +267,11 @@
     <Compile Include="Utilities\Converters\BooleanToVisibilityHidden.cs" />
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\DataContext.cs" />
+    <Compile Include="Utilities\DataGridCustomSortBehavior.cs" />
     <Compile Include="Utilities\DefaultsExtensions.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
+    <Compile Include="Utilities\IDataGridColumnComparer.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
     <Compile Include="ViewModels\ISourceViewModelBase.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />

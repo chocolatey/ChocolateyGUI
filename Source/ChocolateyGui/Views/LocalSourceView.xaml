@@ -13,6 +13,8 @@
              xmlns:enums="clr-namespace:ChocolateyGui.Enums" 
              xmlns:models="clr-namespace:ChocolateyGui.Models" 
              xmlns:controls="clr-namespace:ChocolateyGui.Controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:LocalSourceViewModel}">
@@ -21,7 +23,10 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <converters:BooleanToVisibilityHidden x:Key="BoolToHidden" />
         <converters:StringListToString x:Key="ListToString" />
+
         <models:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+
+        <utilities:PackageAuthorsComparer x:Key="PackageAuthorsComparer" />
 
         <DataTemplate x:Key="PackageTileTemplate" DataType="{x:Type items:IPackageViewModel}">
             <Grid Width="180" Height="180"
@@ -195,8 +200,11 @@
                                           Background="{StaticResource ControlBackgroundBrush}"
                                           AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
                                           Style="{DynamicResource PackagesGridStyle}">
+                                    <i:Interaction.Behaviors>
+                                        <utilities:DataGridCustomSortBehavior />
+                                    </i:Interaction.Behaviors>
                                     <DataGrid.Columns>
-                                        <DataGridTemplateColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Name}" Width="2*">
+                                        <DataGridTemplateColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Name}" SortMemberPath="Title" Width="2*">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <StackPanel Orientation="Horizontal">
@@ -208,6 +216,7 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
                                         <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Authors}"
+                                                            utilities:DataGridCustomSortBehavior.CustomComparer="{StaticResource PackageAuthorsComparer}"
                                                             Binding="{Binding Authors, Converter={StaticResource ListToString}}" Width="1*" />
                                         <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
                                         <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_LatestVersion}" Binding="{Binding LatestVersion, IsAsync=True}" Width="1*" />

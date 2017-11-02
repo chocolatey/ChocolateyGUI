@@ -18,12 +18,13 @@
     <FrameworkElement.CommandBindings>
         <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="HandleMarkdownLink" />
     </FrameworkElement.CommandBindings>
-
     <UserControl.Resources>
-        <converters:UriToVisibility x:Key="UriToVisibilty" />
+        <converters:NullToVisibility x:Key="UriToVisibilty" />
         <converters:NullToVisibility x:Key="NullToVisibility" />
+        <converters:NullToValue x:Key="NullToGridLength" TrueValue="Auto" FalseValue="3*" />
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString" />
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString" />
+
         <Style x:Key="PrimaryUacActionStyle" BasedOn="{StaticResource PrimaryUacIconStyle}" TargetType="Image">
             <Setter Property="Width" Value="16"/>
             <Setter Property="Height" Value="16"/>
@@ -193,12 +194,12 @@
         <Grid Margin="25,5,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="5*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="3*" />
+                <RowDefinition Height="{Binding ReleaseNotes, Converter={StaticResource NullToGridLength}}" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{x:Static lang:Resources.PackageView_PackageID}" Style="{StaticResource SectionHeaderTextStyle}"
                        Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}" />
@@ -206,13 +207,12 @@
                        Style="{StaticResource PageTextBlockStyle}"
                        Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}" />
             <TextBlock Grid.Row="2" Text="{x:Static lang:Resources.PackageView_Description}" Style="{StaticResource SectionHeaderTextStyle}" />
-            <markdig:MarkdownViewer 
-                AutomationProperties.Name="Package Description"
-                Grid.Row="3"
-                VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch"
-                Margin="5 0"
-                Markdown="{Binding Description}" />
+            <markdig:MarkdownViewer AutomationProperties.Name="Package Description"
+                                    Grid.Row="3"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Margin="5 0"
+                                    Markdown="{Binding Description}" />
             <StackPanel Grid.Row="4" Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                 <TextBlock Text="{x:Static lang:Resources.PackageView_Dependencies}" Style="{StaticResource SectionHeaderTextStyle}" />
                 <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"
@@ -222,11 +222,11 @@
             <TextBlock Grid.Row="5" Text="{x:Static lang:Resources.PackageView_ReleaseNotes}" Style="{StaticResource SectionHeaderTextStyle}"
                        Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}" />
             <markdig:MarkdownViewer Grid.Row="6"
-                                      AutomationProperties.Name="Package Release Notes"
-                                      VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                      Margin="5 0"
-                                      Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}"
-                                      Markdown="{Binding ReleaseNotes}" />
+                                    AutomationProperties.Name="Package Release Notes"
+                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                    Margin="5 0"
+                                    Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}"
+                                    Markdown="{Binding ReleaseNotes}" />
 
         </Grid>
     </DockPanel>

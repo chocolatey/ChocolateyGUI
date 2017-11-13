@@ -1,7 +1,21 @@
 #load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease
 #tool choco:?package=transifex-client&version=0.12.4
 
-Environment.SetVariableNames();
+if(BuildSystem.IsLocalBuild)
+{
+    Environment.SetVariableNames(
+        githubUserNameVariable: "CHOCOLATEYGUI_GITHUB_USERNAME",
+        githubPasswordVariable: "CHOCOLATEYGUI_GITHUB_PASSWORD",
+        appVeyorApiTokenVariable: "CHOCOLATEYGUI_APPVEYOR_API_TOKEN",
+        wyamAccessTokenVariable: "CHOCOLATEYGUI_WYAM_ACCESS_TOKEN",
+        wyamDeployRemoteVariable: "CHOCOLATEYGUI_WYAM_DEPLOY_REMOTE",
+        wyamDeployBranchVariable: "CHOCOLATEYGUI_WYAM_DEPLOY_BRANCH"
+    );
+}
+else
+{
+    Environment.SetVariableNames();
+}
 
 BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,

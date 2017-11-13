@@ -197,3 +197,7 @@ BuildArtifacts
 tools/
 BuildArtifacts/
 \.vs/
+
+# Transifex related
+Resources.*.resx
+!Resources.resx

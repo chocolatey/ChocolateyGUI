@@ -194,7 +194,10 @@ BuildArtifacts
 *.orig
 
 # Build related
-tools/
+tools/**
+!tools/packages.config
+!tools/Addins/packages.config
+!tools/Modules/packages.config
 BuildArtifacts/
 \.vs/
 

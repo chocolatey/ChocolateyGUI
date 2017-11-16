@@ -133,7 +133,7 @@
                     </DataGrid>
                     <DockPanel Grid.Row="2" Grid.Column="0" Margin="5">
                         <Grid DockPanel.Dock="Top">
-                            <TextBlock Text="Source" Margin="15 5 0 0" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Text="{x:Static lang:Resources.SettingsView_SourcesSource}" Margin="15 5 0 0" Style="{StaticResource SubtitleTextBlockStyle}"/>
                             <Button x:Name="New" HorizontalAlignment="Right" VerticalAlignment="Center" Width="80" Padding="5" Content="{x:Static lang:Resources.SettingsView_ButtonNew}"/>
                         </Grid>
                         <Grid Grid.IsSharedSizeScope="True">

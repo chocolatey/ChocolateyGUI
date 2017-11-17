@@ -609,4 +609,25 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="LocalSourceView_ToolTip_Pinned" xml:space="preserve">
     <value>Pinned</value>
   </data>
+  <data name="LocalSourceView_ButtonListView" xml:space="preserve">
+    <value>List View</value>
+  </data>
+  <data name="LocalSourceView_ButtonTileView" xml:space="preserve">
+    <value>Tile View</value>
+  </data>
+  <data name="LocalSourceView_OverlayOutdated" xml:space="preserve">
+    <value>Out Of Date</value>
+  </data>
+  <data name="RemoteSourceView_ButtonListView" xml:space="preserve">
+    <value>List View</value>
+  </data>
+  <data name="RemoteSourceView_ButtonTileView" xml:space="preserve">
+    <value>Tile View</value>
+  </data>
+  <data name="RemoteSourceView_OverlayOutdated" xml:space="preserve">
+    <value>Out Of Date</value>
+  </data>
+  <data name="RemoteSourceView_OverlayInstalled" xml:space="preserve">
+    <value>Installed</value>
+  </data>
 </root>

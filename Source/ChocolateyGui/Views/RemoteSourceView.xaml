@@ -122,7 +122,7 @@
                     <ContentControl x:Name="IsInstalledOverlay" ClipToBounds="True" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed"
                                     IsTabStop="False"
                                     Focusable="False"
-                                    Content="Installed"
+                                    Content="{x:Static lang:Resources.RemoteSourceView_OverlayInstalled}"
                                     Background="#007F00"
                                     Foreground="White"
                                     Template="{DynamicResource TileOverlayTemplate}" />
@@ -130,7 +130,7 @@
                     <ContentControl x:Name="OutOfDateOverlay" ClipToBounds="True" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed"
                                     IsTabStop="False"
                                     Focusable="False"
-                                    Content="out-of-date"
+                                    Content="{x:Static lang:Resources.RemoteSourceView_OverlayOutdated}"
                                     Background="#A90000"
                                     Foreground="White"
                                     Template="{DynamicResource TileOverlayTemplate}" />
@@ -237,17 +237,21 @@
                 <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
-                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}" Margin="0,0,2,0">
+                        Style="{DynamicResource IconFlatButtonStyle}"
+                        ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}"
+                        Margin="0,0,2,0">
                     <iconPacks:PackIconFontAwesome Kind="Refresh" />
                 </Button>
                 <RadioButton Margin="6,0,1,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"
-                             IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Standard}}">
+                             IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Standard}}"
+                             ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonListView}">
                     <iconPacks:PackIconModern Kind="TextAlignJustify" />
                 </RadioButton>
                 <RadioButton Margin="1,0,0,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"
-                             IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Tile}}">
+                             IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Tile}}"
+                             ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonTileView}">
                     <iconPacks:PackIconModern Kind="TilesFour" />
                 </RadioButton>
             </StackPanel>

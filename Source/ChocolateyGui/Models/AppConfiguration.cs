@@ -11,5 +11,9 @@ namespace ChocolateyGui.Models
         public string Id { get; set; }
 
         public bool ShowConsoleOutput { get; set; }
+
+        public bool DefaultToTileViewForLocalSource { get; set; }
+
+        public bool DefaultToTileViewForRemoteSource { get; set; }
     }
 }

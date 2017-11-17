@@ -1397,6 +1397,24 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default to Tile View for Local Source.
+        /// </summary>
+        public static string SettingsView_ToggleDefaultTileViewLocal {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default to Tile View for Remote Source.
+        /// </summary>
+        public static string SettingsView_ToggleDefaultTileViewRemote {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewRemote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Console Output.
         /// </summary>
         public static string SettingsView_ToggleShowConsoleOutput {

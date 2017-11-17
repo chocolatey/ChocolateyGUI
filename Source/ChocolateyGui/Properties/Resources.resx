@@ -630,4 +630,10 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="RemoteSourceView_OverlayInstalled" xml:space="preserve">
     <value>Installed</value>
   </data>
+  <data name="SettingsView_ToggleDefaultTileViewLocal" xml:space="preserve">
+    <value>Default to Tile View for Local Source</value>
+  </data>
+  <data name="SettingsView_ToggleDefaultTileViewRemote" xml:space="preserve">
+    <value>Default to Tile View for Remote Source</value>
+  </data>
 </root>

@@ -14,12 +14,12 @@ namespace ChocolateyGui.Services
     {
         private readonly LiteDatabase _database;
 
-        public event EventHandler SettingsChanged;
-
         public ConfigService(LiteDatabase database)
         {
             _database = database;
         }
+
+        public event EventHandler SettingsChanged;
 
         public AppConfiguration GetSettings()
         {
@@ -38,6 +38,7 @@ namespace ChocolateyGui.Services
             {
                 settingsCollection.Insert(settings);
             }
+
             SettingsChanged?.Invoke(settings, EventArgs.Empty);
         }
     }

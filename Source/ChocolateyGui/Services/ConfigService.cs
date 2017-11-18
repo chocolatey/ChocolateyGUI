@@ -4,6 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using ChocolateyGui.Models;
 using LiteDB;
 
@@ -12,6 +13,8 @@ namespace ChocolateyGui.Services
     public class ConfigService : IConfigService
     {
         private readonly LiteDatabase _database;
+
+        public event EventHandler SettingsChanged;
 
         public ConfigService(LiteDatabase database)
         {
@@ -35,6 +38,7 @@ namespace ChocolateyGui.Services
             {
                 settingsCollection.Insert(settings);
             }
+            SettingsChanged?.Invoke(settings, EventArgs.Empty);
         }
     }
 }

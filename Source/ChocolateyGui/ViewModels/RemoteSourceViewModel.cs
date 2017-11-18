@@ -209,6 +209,10 @@ namespace ChocolateyGui.ViewModels
         {
             try
             {
+                Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
+                    .ObserveOnDispatcher()
+                    .Subscribe(eventPattern => ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard);
+
 #pragma warning disable 4014
                 LoadPackages();
 #pragma warning restore 4014

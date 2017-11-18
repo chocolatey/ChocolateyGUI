@@ -18,6 +18,7 @@ using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
 using ChocolateyGui.Enums;
+using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
@@ -283,6 +284,10 @@ namespace ChocolateyGui.ViewModels
                 {
                     return;
                 }
+
+                Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
+                    .ObserveOnDispatcher()
+                    .Subscribe(eventPattern => ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard);
 
                 await LoadPackages();
 

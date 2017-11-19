@@ -31,6 +31,7 @@ namespace ChocolateyGui.ViewModels
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyService _chocolateyPackageService;
         private readonly IProgressService _progressService;
+        private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
         private int _currentPage = 1;
@@ -48,6 +49,7 @@ namespace ChocolateyGui.ViewModels
         public RemoteSourceViewModel(
             IChocolateyService chocolateyPackageService,
             IProgressService progressService,
+            IConfigService configService,
             IEventAggregator eventAggregator,
             ChocolateySource source,
             IMapper mapper)
@@ -55,8 +57,11 @@ namespace ChocolateyGui.ViewModels
             Source = source;
             _chocolateyPackageService = chocolateyPackageService;
             _progressService = progressService;
+            _configService = configService;
             _eventAggregator = eventAggregator;
             _mapper = mapper;
+
+            ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
 
             Packages = new ObservableCollection<IPackageViewModel>();
             DisplayName = source.Id;
@@ -204,6 +209,10 @@ namespace ChocolateyGui.ViewModels
         {
             try
             {
+                Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
+                    .ObserveOnDispatcher()
+                    .Subscribe(eventPattern => ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard);
+
 #pragma warning disable 4014
                 LoadPackages();
 #pragma warning restore 4014

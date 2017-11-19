@@ -18,6 +18,7 @@ using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
 using ChocolateyGui.Enums;
+using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
@@ -34,6 +35,7 @@ namespace ChocolateyGui.ViewModels
         private readonly List<IPackageViewModel> _packages;
         private readonly IPersistenceService _persistenceService;
         private readonly IProgressService _progressService;
+        private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
         private bool _exportAll = true;
@@ -52,6 +54,7 @@ namespace ChocolateyGui.ViewModels
             IChocolateyService chocolateyService,
             IProgressService progressService,
             IPersistenceService persistenceService,
+            IConfigService configService,
             IEventAggregator eventAggregator,
             string displayName,
             IMapper mapper)
@@ -59,6 +62,9 @@ namespace ChocolateyGui.ViewModels
             _chocolateyService = chocolateyService;
             _progressService = progressService;
             _persistenceService = persistenceService;
+            _configService = configService;
+
+            ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
 
             DisplayName = displayName;
 
@@ -278,6 +284,10 @@ namespace ChocolateyGui.ViewModels
                 {
                     return;
                 }
+
+                Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
+                    .ObserveOnDispatcher()
+                    .Subscribe(eventPattern => ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard);
 
                 await LoadPackages();
 

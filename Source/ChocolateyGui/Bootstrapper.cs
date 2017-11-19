@@ -30,7 +30,7 @@ namespace ChocolateyGui
 {
     public class Bootstrapper : BootstrapperBase
     {
-        internal const string ApplicationName = "ChocolateyGUI";
+        internal const string ApplicationName = "Chocolatey GUI";
 
         public Bootstrapper()
         {

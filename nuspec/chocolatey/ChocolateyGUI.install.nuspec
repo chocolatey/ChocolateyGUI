@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>chocolateygui</id>
+    <id>chocolateygui.install</id>
     <version>$version$</version>
     <title>Chocolatey GUI</title>
     <authors>Chocolatey</authors>
@@ -32,7 +32,14 @@ All release notes for Chocolatey GUI can be found on the GitHub site - https://g
   </releaseNotes>
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>
-      <dependency id="chocolateygui.install" />
+      <dependency id="Chocolatey" version="[0.10.3, 0.11)" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="chocolateyInstall.ps1" target="tools"/>
+    <file src="chocolateyUninstall.ps1" target="tools"/>
+    <file src="..\..\BuildArtifacts\ChocolateyGUI.msi" target="tools"/>
+    <file src="..\..\LICENSE" target="tools\LICENSE"/>
+    <file src="VERIFICATION.txt" target="tools"/>
+  </files>
 </package>

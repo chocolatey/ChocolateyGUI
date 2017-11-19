@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>chocolateygui</id>
+    <id>chocolateygui.portable</id>
     <version>$version$</version>
     <title>Chocolatey GUI</title>
     <authors>Chocolatey</authors>
@@ -31,8 +31,10 @@ This package will only work correctly on Windows 7 SP1 through Windows 10 (1708)
 All release notes for Chocolatey GUI can be found on the GitHub site - https://github.com/chocolatey/ChocolateyGUI/releases
   </releaseNotes>
     <tags>chocolateygui chocolatey admin foss</tags>
-    <dependencies>
-      <dependency id="chocolateygui.install" />
-    </dependencies>
   </metadata>
+  <files>
+    <file src="..\..\BuildArtifacts\temp\_PublishedApplications\ChocolateyGui\**\*.*"/>
+    <file src="..\..\LICENSE" />
+    <file src="VERIFICATION.txt"/>
+  </files>
 </package>

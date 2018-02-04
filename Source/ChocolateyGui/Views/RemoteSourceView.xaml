@@ -221,6 +221,10 @@
                     <TextBox x:Name="SearchTextBox" Width="200" FontSize="14"
                              VerticalAlignment="Center"
                              Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Command="{commands:DataContextCommandAdapter LoadPackages, CanLoadRemotePackages}"
+                            Content="Search"
+                            IsDefault="True"
+                            Style="{DynamicResource IconFlatButtonStyle}" />
                 </StackPanel>
                 <CheckBox Name="AllVersionsCheckBox" Margin="5"
                           Content="{x:Static lang:Resources.RemoteSourceView_CheckboxAllVersions}"
@@ -234,7 +238,7 @@
                 <ComboBox Name="SortBox" Margin="5 1" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
             </WrapPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,6">
-                <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanRefreshRemotePackages}"
+                <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanLoadRemotePackages}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
                         Style="{DynamicResource IconFlatButtonStyle}"

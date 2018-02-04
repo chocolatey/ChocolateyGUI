@@ -15,5 +15,7 @@ namespace ChocolateyGui.Models
         public bool DefaultToTileViewForLocalSource { get; set; }
 
         public bool DefaultToTileViewForRemoteSource { get; set; }
+
+        public bool UseDelayedSearch { get; set; }
     }
 }

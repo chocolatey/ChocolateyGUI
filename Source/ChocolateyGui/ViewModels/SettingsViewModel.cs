@@ -31,7 +31,8 @@ namespace ChocolateyGui.ViewModels
                                                                        {
                                                                            nameof(ShowConsoleOutput),
                                                                            nameof(DefaultToTileViewForLocalSource),
-                                                                           nameof(DefaultToTileViewForRemoteSource)
+                                                                           nameof(DefaultToTileViewForRemoteSource),
+                                                                           nameof(UseDelayedSearch)
                                                                        };
 
         private readonly IChocolateyService _packageService;
@@ -107,6 +108,20 @@ namespace ChocolateyGui.ViewModels
             set
             {
                 _config.DefaultToTileViewForRemoteSource = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public bool UseDelayedSearch
+        {
+            get
+            {
+                return _config.UseDelayedSearch;
+            }
+
+            set
+            {
+                _config.UseDelayedSearch = value;
                 NotifyOfPropertyChange();
             }
         }

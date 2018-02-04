@@ -10,8 +10,8 @@
 
 namespace ChocolateyGui.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -1420,6 +1420,15 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_ToggleShowConsoleOutput {
             get {
                 return ResourceManager.GetString("SettingsView_ToggleShowConsoleOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use delayed search.
+        /// </summary>
+        public static string SettingsView_UseDelayedSearch {
+            get {
+                return ResourceManager.GetString("SettingsView_UseDelayedSearch", resourceCulture);
             }
         }
         

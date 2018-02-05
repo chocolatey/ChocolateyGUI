@@ -276,7 +276,7 @@ namespace ChocolateyGui.ViewModels
         {
             try
             {
-                if (!_hasLoaded && Packages.Any())
+                if (!CanLoadRemotePackages() && Packages.Any())
                 {
                     return;
                 }

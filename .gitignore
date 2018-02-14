@@ -204,3 +204,6 @@ BuildArtifacts/
 # Transifex related
 Resources.*.resx
 !Resources.resx
+
+# Documentation related
+docs

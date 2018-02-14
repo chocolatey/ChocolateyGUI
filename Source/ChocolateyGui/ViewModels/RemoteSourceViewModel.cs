@@ -46,6 +46,8 @@ namespace ChocolateyGui.ViewModels
         private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
         private ListViewMode _listViewMode;
 
+        private IDisposable _searchQuerySubscription;
+
         public RemoteSourceViewModel(
             IChocolateyService chocolateyPackageService,
             IProgressService progressService,
@@ -188,7 +190,7 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
-        public bool CanRefreshRemotePackages()
+        public bool CanLoadRemotePackages()
         {
             return _hasLoaded;
         }
@@ -200,73 +202,15 @@ namespace ChocolateyGui.ViewModels
 #pragma warning restore 4014
         }
 
-        protected override void OnViewAttached(object view, object context)
-        {
-            _eventAggregator.Subscribe(view);
-        }
-
-        protected override void OnInitialize()
+        public async Task LoadPackages()
         {
             try
             {
-                Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
-                    .ObserveOnDispatcher()
-                    .Subscribe(eventPattern => ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard);
-
-#pragma warning disable 4014
-                LoadPackages();
-#pragma warning restore 4014
-
-                var immediateProperties = new[]
+                if (!CanLoadRemotePackages() && Packages.Any())
                 {
-                    "IncludeAllVersions", "IncludePrerelease", "MatchWord", "SortSelection"
-                };
+                    return;
+                }
 
-                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                    .Where(e => e.EventArgs.PropertyName == "SearchQuery")
-                    .Throttle(TimeSpan.FromMilliseconds(500))
-                    .DistinctUntilChanged()
-                    .ObserveOnDispatcher()
-#pragma warning disable 4014
-                    .Subscribe(e => LoadPackages());
-#pragma warning restore 4014
-
-                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                    .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
-                    .ObserveOnDispatcher()
-#pragma warning disable 4014
-                    .Subscribe(e => LoadPackages());
-#pragma warning restore 4014
-
-                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                    .Where(e => e.EventArgs.PropertyName == "CurrentPage")
-                    .Throttle(TimeSpan.FromMilliseconds(300))
-                    .DistinctUntilChanged()
-                    .ObserveOnDispatcher()
-#pragma warning disable 4014
-                    .Subscribe(e => LoadPackages());
-#pragma warning restore 4014
-            }
-            catch (InvalidOperationException ex)
-            {
-                Logger.Error(ex, "Failed to intialize remote source view model.");
-                MessageBox.Show(
-                    string.Format(
-                        CultureInfo.InvariantCulture,
-                        Resources.RemoteSourceViewModel_UnableToConnectToFeed,
-                        Source.Value),
-                    Resources.RemoteSourceViewModel_FeedSearchError,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error,
-                    MessageBoxResult.OK,
-                    MessageBoxOptions.ServiceNotification);
-            }
-        }
-
-        private async Task LoadPackages()
-        {
-            try
-            {
                 _hasLoaded = false;
 
                 var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
@@ -329,6 +273,88 @@ namespace ChocolateyGui.ViewModels
                     string.Format(Resources.RemoteSourceViewModel_FailedToLoadRemotePackages, ex.Message));
                 throw;
             }
+        }
+
+        protected override void OnViewAttached(object view, object context)
+        {
+            _eventAggregator.Subscribe(view);
+        }
+
+        protected override void OnInitialize()
+        {
+            try
+            {
+                Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
+                    .ObserveOnDispatcher()
+                    .Subscribe(eventPattern =>
+                    {
+                        var appConfig = (AppConfiguration)eventPattern.Sender;
+
+                        _searchQuerySubscription?.Dispose();
+                        if (appConfig.UseDelayedSearch)
+                        {
+                            SubscribeToLoadPackagesOnSearchQueryChange();
+                        }
+
+                        ListViewMode = appConfig.DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard;
+                    });
+
+#pragma warning disable 4014
+                LoadPackages();
+#pragma warning restore 4014
+
+                var immediateProperties = new[]
+                {
+                    "IncludeAllVersions", "IncludePrerelease", "MatchWord", "SortSelection"
+                };
+
+                if (_configService.GetSettings().UseDelayedSearch)
+                {
+                    SubscribeToLoadPackagesOnSearchQueryChange();
+                }
+
+                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                    .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
+                    .ObserveOnDispatcher()
+#pragma warning disable 4014
+                    .Subscribe(e => LoadPackages());
+#pragma warning restore 4014
+
+                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                    .Where(e => e.EventArgs.PropertyName == "CurrentPage")
+                    .Throttle(TimeSpan.FromMilliseconds(300))
+                    .DistinctUntilChanged()
+                    .ObserveOnDispatcher()
+#pragma warning disable 4014
+                    .Subscribe(e => LoadPackages());
+#pragma warning restore 4014
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logger.Error(ex, "Failed to intialize remote source view model.");
+                MessageBox.Show(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        Resources.RemoteSourceViewModel_UnableToConnectToFeed,
+                        Source.Value),
+                    Resources.RemoteSourceViewModel_FeedSearchError,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.ServiceNotification);
+            }
+        }
+
+        private void SubscribeToLoadPackagesOnSearchQueryChange()
+        {
+            _searchQuerySubscription = Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                .Where(e => e.EventArgs.PropertyName == "SearchQuery")
+                .Throttle(TimeSpan.FromMilliseconds(500))
+                .DistinctUntilChanged()
+                .ObserveOnDispatcher()
+#pragma warning disable 4014
+                .Subscribe(e => LoadPackages());
+#pragma warning restore 4014
         }
     }
 }

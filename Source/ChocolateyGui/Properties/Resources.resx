@@ -636,4 +636,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_ToggleDefaultTileViewRemote" xml:space="preserve">
     <value>Default to Tile View for Remote Source</value>
   </data>
+  <data name="SettingsView_UseDelayedSearch" xml:space="preserve">
+    <value>Use delayed search</value>
+  </data>
 </root>

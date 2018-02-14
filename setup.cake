@@ -9,7 +9,8 @@ if(BuildSystem.IsLocalBuild)
         appVeyorApiTokenVariable: "CHOCOLATEYGUI_APPVEYOR_API_TOKEN",
         wyamAccessTokenVariable: "CHOCOLATEYGUI_WYAM_ACCESS_TOKEN",
         wyamDeployRemoteVariable: "CHOCOLATEYGUI_WYAM_DEPLOY_REMOTE",
-        wyamDeployBranchVariable: "CHOCOLATEYGUI_WYAM_DEPLOY_BRANCH"
+        wyamDeployBranchVariable: "CHOCOLATEYGUI_WYAM_DEPLOY_BRANCH",
+        transifexApiTokenVariable: "CHOCOLATEYGUI_TRANSIFEX_API_TOKEN"
     );
 }
 else
@@ -32,8 +33,7 @@ BuildParameters.SetParameters(context: Context,
                             shouldExecuteGitLink: false);
 
 ToolSettings.SetToolSettings(context: Context,
-                             buildPlatformTarget: PlatformTarget.x86,
-                             buildMSBuildToolVersion: MSBuildToolVersion.VS2015);
+                             buildPlatformTarget: PlatformTarget.x86);
 
 //var SIGN_TOOL = EnvironmentVariable("SIGN_TOOL") ?? @"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\signtool.exe";
 var CERT_PATH = EnvironmentVariable("CHOCOLATEY_OFFICIAL_CERT") ?? "";
@@ -106,6 +106,7 @@ Task("BuildMSI")
                 .SetPlatformTarget(ToolSettings.BuildPlatformTarget)
                 .UseToolVersion(ToolSettings.BuildMSBuildToolVersion)
                 .WithProperty("TreatWarningsAsErrors","true")
+                .WithProperty("MSBuildExtensionsPath32", "C:/Program Files (x86)/MSBuild")
                 .WithTarget("Build")
                 .SetMaxCpuCount(ToolSettings.MaxCpuCount)
                 .SetConfiguration("WIX")

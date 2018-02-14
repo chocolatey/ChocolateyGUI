@@ -1,10 +1,4 @@
----
-Title: Credits
----
-
 Chocolatey GUI has been the thoughts and work of the following people:
-
-# Committers & Contributors
 
 ## Committers
 
@@ -17,11 +11,11 @@ These are the committers to Chocolatey/Chocolatey GUI repository:
 
 * [Christiaan Baes](https://github.com/chrissie1) - Created the original version of Chocolatey Explorer, which Chocolatey GUI was built from.
 
-### Other Contributors
+## Other Contributors
 
 * [Chocolatey GUI](https://github.com/chocolatey/chocolateygui/graphs/contributors)
 
-# Frameworks
+## Frameworks
 
 Chocolatey GUI uses the following awesome frameworks (in no particular order):
 

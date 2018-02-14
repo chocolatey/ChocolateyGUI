@@ -6,25 +6,23 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
-using CefSharp;
-using CefSharp.Internals;
-using CefSharp.OffScreen;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
+using ImageMagick;
 using LiteDB;
+using MahApps.Metro.IconPacks;
 using Microsoft.VisualStudio.Threading;
 using Serilog;
 using Splat;
+using FileMode = System.IO.FileMode;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Controls
@@ -38,50 +36,19 @@ namespace ChocolateyGui.Controls
             "IconUrl", typeof(string), typeof(InternetImage), new PropertyMetadata(default(string)));
 
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
-        private static readonly ChromiumWebBrowser RenderBrowser;
-        private static readonly Lazy<BitmapSource> ErrorIcon = new Lazy<BitmapSource>(GetErrorImage);
+        private static readonly Lazy<ImageSource> ErrorIcon = new Lazy<ImageSource>(() => GetPackIconEntypoImage(PackIconEntypoKind.CircleWithCross, Brushes.OrangeRed));
+        private static readonly Lazy<ImageSource> EmptyIcon = new Lazy<ImageSource>(GetEmptyImage);
         private static readonly LiteDatabase Data = IoC.Get<LiteDatabase>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
-
-        static InternetImage()
-        {
-            var browserSettings = new BrowserSettings
-            {
-                WindowlessFrameRate = 1,
-            };
-
-            RenderBrowser = new ChromiumWebBrowser(string.Empty, browserSettings)
-            {
-                Size = GetBitmapSize()
-            };
-        }
 
         public InternetImage()
         {
             InitializeComponent();
-
-            if (!RenderBrowser.IsBrowserInitialized)
-            {
-                RenderBrowser.BrowserInitialized += async (sender, args) =>
-                {
-                    await Execute.OnUIThreadAsync(async () =>
-                    {
-                        await SetImage(IconUrl);
-                        this.ToObservable(IconUrlProperty, () => IconUrl)
-                            .Subscribe(async url => await SetImage(url));
-                    });
-                };
-            }
-            else
-            {
 #pragma warning disable 4014
-                SetImage(IconUrl);
+            SetImage(IconUrl);
 #pragma warning restore 4014
-                this.ToObservable(IconUrlProperty, () => IconUrl)
-                    .Subscribe(async url => await SetImage(url));
-            }
-
-            Loaded += (o, e) => RenderBrowser.Size = GetCurrentSize();
+            this.ToObservable(IconUrlProperty, () => IconUrl)
+                .Subscribe(async url => await SetImage(url));
         }
 
         public string IconUrl
@@ -90,58 +57,104 @@ namespace ChocolateyGui.Controls
             set { SetValue(IconUrlProperty, value); }
         }
 
-        private static Task LoadHtmlAsync(IWebBrowser browser, string html, string address)
+        private static ImageSource GetPackIconEntypoImage(PackIconEntypoKind packIconKind, Brush brush)
         {
-            // If using .Net 4.6 then use TaskCreationOptions.RunContinuationsAsynchronously
-            // and switch to tcs.TrySetResult below - no need for the custom extension method
-            var tcs = new TaskCompletionSource<bool>();
+            var packIcon = new PackIconEntypo { Kind = packIconKind };
 
-            EventHandler<FrameLoadEndEventArgs> handler = null;
-            handler = (sender, args) =>
-            {
-                browser.FrameLoadEnd -= handler;
-
-                // This is required when using a standard TaskCompletionSource
-                // Extension method found in the CefSharp.Internals namespace
-                tcs.TrySetResultAsync(true);
-            };
-
-            browser.FrameLoadEnd += handler;
-
-            if (!string.IsNullOrEmpty(address))
-            {
-                browser.LoadHtml(html, address);
-            }
-
-            return tcs.Task;
+            var pen = new Pen();
+            pen.Freeze();
+            var geometry = Geometry.Parse(packIcon.Data);
+            var geometryDrawing = new GeometryDrawing(brush, pen, geometry);
+            var drawingGroup = new DrawingGroup();
+            drawingGroup.Children.Add(geometryDrawing);
+            drawingGroup.Transform = new ScaleTransform(3.5, 3.5);
+            var drawingImage = new DrawingImage { Drawing = drawingGroup };
+            drawingImage.Freeze();
+            return drawingImage;
         }
 
-        private static BitmapSource GetErrorImage()
+        private static ImageSource GetEmptyImage()
         {
-            var size = GetBitmapSize();
-            return Imaging.CreateBitmapSourceFromHIcon(
-                SystemIcons.Error.Handle,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(size.Width, size.Height));
-        }
-
-        private static System.Drawing.Size GetBitmapSize()
-        {
-            var scale = NativeMethods.GetScaleFactor();
-            var x = (int)Math.Round(64 * scale);
-            var y = (int)Math.Round(64 * scale);
-            return new System.Drawing.Size(x, y);
+            var image = new BitmapImage(new Uri("pack://application:,,,/ChocolateyGui;component/chocolatey@4.png", UriKind.RelativeOrAbsolute));
+            image.Freeze();
+            return image;
         }
 
         private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteStorage fileStorage, string id)
         {
             imageStream.Position = 0;
             var fileInfo = fileStorage.Upload(id, null, imageStream);
-            fileStorage.SetMetadata(
-                fileInfo.Id,
-                new BsonDocument(new Dictionary<string, BsonValue> { { "Expires", absoluteExpiration } }));
-
+            fileInfo.Metadata.Add(new KeyValuePair<string, BsonValue>("Expires", absoluteExpiration));
             imageStream.Position = 0;
+        }
+
+        private async Task<IBitmap> LoadImage(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
+        {
+            var imageStream = await DownloadUrl(url, desiredWidth, desiredHeight, absoluteExpiration);
+            return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
+        }
+
+        private async Task<Stream> DownloadUrl(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
+        {
+            var id = $"imagecache/{url.GetHashCode()}";
+            var imageStream = new MemoryStream();
+            var fileStorage = Data.FileStorage;
+
+            using (await Lock.UpgradeableReadLockAsync())
+            {
+                if (fileStorage.Exists(id))
+                {
+                    var info = fileStorage.FindById(id);
+                    var expires = info.Metadata["Expires"].AsDateTime;
+                    if (expires > DateTime.UtcNow)
+                    {
+                        info.CopyTo(imageStream);
+                        return imageStream;
+                    }
+                }
+            }
+
+            // If we couldn't find the image or it expired
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                var extension = GetExtension(url);
+                var tempFile = Path.GetTempFileName();
+                var fileInfo = new FileInfo(tempFile);
+                fileInfo.MoveTo(tempFile.Replace(".tmp", $".{extension}"));
+                using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
+                {
+                    await response.Content.CopyToAsync(fileStream);
+                }
+
+                using (var image = new MagickImage(fileInfo))
+                {
+                    var size = new MagickGeometry((int)desiredWidth, (int)desiredHeight)
+                    {
+                        FillArea = true
+                    };
+                    if (!string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
+                    {
+                        image.Resize(size);
+                    }
+
+                    image.Write(imageStream, MagickFormat.Png);
+                    imageStream.Flush();
+                }
+
+                fileInfo.Delete();
+            }
+
+            using (await Lock.WriteLockAsync())
+            {
+                // we don't need to delete the file, cause a upload does
+                // Upload: Send file or stream to database. Can be used with file or Stream. If file already exists, file content is overwritten.
+                UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
+            }
+
+            return imageStream;
         }
 
         private System.Drawing.Size GetCurrentSize()
@@ -156,16 +169,7 @@ namespace ChocolateyGui.Controls
         {
             if (string.IsNullOrWhiteSpace(url))
             {
-                PART_Image.Source = null;
-                PART_Loading.IsActive = false;
-                return;
-            }
-
-            Uri uri;
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
-            {
-                Logger.Warning("Got an invalid img url: \"{IconUrl}\".", url);
-                PART_Image.Source = ErrorIcon.Value;
+                PART_Image.Source = url != null ? EmptyIcon.Value : null;
                 PART_Loading.IsActive = false;
                 return;
             }
@@ -174,122 +178,46 @@ namespace ChocolateyGui.Controls
 
             var size = GetCurrentSize();
             var expiration = DateTime.UtcNow + TimeSpan.FromDays(1);
-
-            var imagePart = uri.Segments.Last();
-            var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
-
-            BitmapSource source;
-            if (fileTypeSeperator > 0 &&
-                imagePart.Substring(fileTypeSeperator + 1).Equals("svg", StringComparison.InvariantCultureIgnoreCase))
+            ImageSource source;
+            try
             {
-                source = (await LoadSvg(url, size.Width, size.Height, expiration)).ToNative();
+                source = (await LoadImage(url, size.Width, size.Height, expiration)).ToNative();
             }
-            else
+            catch (HttpRequestException)
             {
-                try
-                {
-                    source = (await LoadImage(url, size.Width, size.Height, expiration)).ToNative();
-                }
-                catch (HttpRequestException)
-                {
-                    source = ErrorIcon.Value;
-                }
+                source = ErrorIcon.Value;
+            }
+            catch (ArgumentException)
+            {
+                Logger.Warning("Got an invalid img url: \"{IconUrl}\".", url);
+                source = ErrorIcon.Value;
+            }
+            catch (Exception exception)
+            {
+                Logger.Warning(exception, "Something went wrong with: \"{IconUrl}\".", url);
+                source = ErrorIcon.Value;
             }
 
             PART_Image.Source = source;
             PART_Loading.IsActive = false;
         }
 
-        private async Task<IBitmap> LoadImage(string url, float? desiredWidth, float? desiredHeight, DateTime absoluteExpiration)
+        private string GetExtension(string url)
         {
-            var imageStream = await DownloadUrl(url, absoluteExpiration);
-            return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
-        }
-
-        private async Task<IBitmap> LoadSvg(
-            string url,
-            float? desiredWidth,
-            float? desiredHeight,
-            DateTime absoluteExpiration)
-        {
-            using (await Lock.UpgradeableReadLockAsync())
+            Uri uri;
+            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
             {
-                var id = $"imagecache/{url.GetHashCode()}";
-                using (var imageStream = new MemoryStream())
-                {
-                    var fileStorage = Data.FileStorage;
-                    if (fileStorage.Exists(id))
-                    {
-                        var info = fileStorage.FindById(id);
-                        var expires = info.Metadata["Expires"].AsDateTime;
-                        if (expires > DateTime.UtcNow)
-                        {
-                            info.CopyTo(imageStream);
-                            return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
-                        }
-
-                        fileStorage.Delete(id);
-                    }
-
-                    using (await Lock.WriteLockAsync())
-                    {
-                        // If we couldn't find the image or it expired
-                        var html = $@"<style>
-                            img {{ width: 100%; height: auto; }}
-                            body {{ margin: 0 }}
-                            </style>
-                            <img src=""{url}"">";
-                        html = MarkdownViewer.HtmlTemplate.Value.Replace("{{content}}", html);
-                        await LoadHtmlAsync(RenderBrowser, html, "http://rawhtml/svg");
-
-                        using (var result = await RenderBrowser.ScreenshotAsync(true))
-                        {
-                            result.Save(imageStream, ImageFormat.Png);
-                            imageStream.Position = 0;
-                        }
-
-                        UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
-                        return await BitmapLoader.Current.Load(imageStream, null, null);
-                    }
-                }
+                throw new ArgumentException(nameof(url));
             }
-        }
 
-        private async Task<Stream> DownloadUrl(string url, DateTime absoluteExpiration)
-        {
-            using (await Lock.UpgradeableReadLockAsync())
+            var imagePart = uri.Segments.Last();
+            var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
+            if (fileTypeSeperator <= 0)
             {
-                var id = $"imagecache/{url.GetHashCode()}";
-                var imageStream = new MemoryStream();
-
-                var fileStorage = Data.FileStorage;
-                if (fileStorage.Exists(id))
-                {
-                    var info = fileStorage.FindById(id);
-                    var expires = info.Metadata["Expires"].AsDateTime;
-                    if (expires > DateTime.UtcNow)
-                    {
-                        info.CopyTo(imageStream);
-                        return imageStream;
-                    }
-
-                    fileStorage.Delete(id);
-                }
-
-                using (await Lock.WriteLockAsync())
-                {
-                    // If we couldn't find the image or it expired
-                    using (var client = new HttpClient())
-                    {
-                        var response = await client.GetAsync(url);
-                        response.EnsureSuccessStatusCode();
-                        await response.Content.CopyToAsync(imageStream);
-                    }
-
-                    UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
-                    return imageStream;
-                }
+                return string.Empty;
             }
+
+            return imagePart.Substring(fileTypeSeperator + 1);
         }
     }
 }

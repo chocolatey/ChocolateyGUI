@@ -17,6 +17,8 @@ using System.Xml;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
+using ChocolateyGui.Enums;
+using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
@@ -33,6 +35,7 @@ namespace ChocolateyGui.ViewModels
         private readonly List<IPackageViewModel> _packages;
         private readonly IPersistenceService _persistenceService;
         private readonly IProgressService _progressService;
+        private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
         private bool _exportAll = true;
@@ -45,11 +48,13 @@ namespace ChocolateyGui.ViewModels
         private bool _sortDescending;
         private bool _isLoading;
         private bool _firstLoadIncomplete = true;
+        private ListViewMode _listViewMode;
 
         public LocalSourceViewModel(
             IChocolateyService chocolateyService,
             IProgressService progressService,
             IPersistenceService persistenceService,
+            IConfigService configService,
             IEventAggregator eventAggregator,
             string displayName,
             IMapper mapper)
@@ -57,6 +62,9 @@ namespace ChocolateyGui.ViewModels
             _chocolateyService = chocolateyService;
             _progressService = progressService;
             _persistenceService = persistenceService;
+            _configService = configService;
+
+            ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
 
             DisplayName = displayName;
 
@@ -73,6 +81,12 @@ namespace ChocolateyGui.ViewModels
             _eventAggregator = eventAggregator;
             _mapper = mapper;
             _eventAggregator.Subscribe(this);
+        }
+
+        public ListViewMode ListViewMode
+        {
+            get { return _listViewMode; }
+            set { this.SetPropertyValue(ref _listViewMode, value); }
         }
 
         public bool ShowOnlyPackagesWithUpdate
@@ -271,16 +285,36 @@ namespace ChocolateyGui.ViewModels
                     return;
                 }
 
+                Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
+                    .ObserveOnDispatcher()
+                    .Subscribe(eventPattern => ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard);
+
                 await LoadPackages();
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                     .Where(
                         eventPattern =>
-                            eventPattern.EventArgs.PropertyName == "MatchWord" ||
-                            eventPattern.EventArgs.PropertyName == "SearchQuery" ||
-                            eventPattern.EventArgs.PropertyName == "ShowOnlyPackagesWithUpdate")
+                            eventPattern.EventArgs.PropertyName == nameof(MatchWord) ||
+                            eventPattern.EventArgs.PropertyName == nameof(SearchQuery) ||
+                            eventPattern.EventArgs.PropertyName == nameof(ShowOnlyPackagesWithUpdate))
                     .ObserveOnDispatcher()
                     .Subscribe(eventPattern => PackageSource.Refresh());
+
+                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                    .Where(eventPattern => eventPattern.EventArgs.PropertyName == nameof(ListViewMode))
+                    .ObserveOnDispatcher()
+                    .Subscribe(eventPattern =>
+                    {
+                        if (ListViewMode == ListViewMode.Tile)
+                        {
+                            // reset custom sorting for now
+                            var listColView = PackageSource as ListCollectionView;
+                            if (listColView != null)
+                            {
+                                listColView.CustomSort = null;
+                            }
+                        }
+                    });
 
                 _hasLoaded = true;
 

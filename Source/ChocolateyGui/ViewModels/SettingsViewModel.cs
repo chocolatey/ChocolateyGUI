@@ -29,7 +29,10 @@ namespace ChocolateyGui.ViewModels
 
         private static readonly HashSet<string> ConfigProperties = new HashSet<string>
                                                                        {
-                                                                           nameof(ShowConsoleOutput)
+                                                                           nameof(ShowConsoleOutput),
+                                                                           nameof(DefaultToTileViewForLocalSource),
+                                                                           nameof(DefaultToTileViewForRemoteSource),
+                                                                           nameof(UseDelayedSearch)
                                                                        };
 
         private readonly IChocolateyService _packageService;
@@ -77,6 +80,48 @@ namespace ChocolateyGui.ViewModels
             set
             {
                 _config.ShowConsoleOutput = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public bool DefaultToTileViewForLocalSource
+        {
+            get
+            {
+                return _config.DefaultToTileViewForLocalSource;
+            }
+
+            set
+            {
+                _config.DefaultToTileViewForLocalSource = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public bool DefaultToTileViewForRemoteSource
+        {
+            get
+            {
+                return _config.DefaultToTileViewForRemoteSource;
+            }
+
+            set
+            {
+                _config.DefaultToTileViewForRemoteSource = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public bool UseDelayedSearch
+        {
+            get
+            {
+                return _config.UseDelayedSearch;
+            }
+
+            set
+            {
+                _config.UseDelayedSearch = value;
                 NotifyOfPropertyChange();
             }
         }

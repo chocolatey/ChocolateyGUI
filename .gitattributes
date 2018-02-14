@@ -2,6 +2,8 @@
 
 # Custom for Visual Studio
 *.cs     diff=csharp
+*.resx text whitespace=-trailing-space
+*.Designer.cs diff=csharp whitespace=-trailing-space
 *.sln    merge=union
 *.csproj merge=union
 *.vbproj merge=union

@@ -19,6 +19,7 @@
 
                 <ResourceDictionary Source="Resources/Icons.xaml" />
                 <ResourceDictionary Source="Resources/Controls.xaml" />
+                <ResourceDictionary Source="Resources/ControlStyles/Markdown.xaml" />
                 <ResourceDictionary>
                     <chocolateyGui:Bootstrapper x:Key="Bootstrapper" />
                 </ResourceDictionary>

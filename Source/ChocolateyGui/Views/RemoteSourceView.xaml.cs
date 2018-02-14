@@ -27,7 +27,11 @@ namespace ChocolateyGui.Views
                 throw new ArgumentNullException(nameof(eventAggregator));
             }
 
+            InitializeComponent();
+
             eventAggregator.Subscribe(this);
+
+            this.Loaded += RemoteSourceViewOnLoaded;
         }
 
         public void Handle(ResetScrollPositionMessage message)
@@ -38,16 +42,21 @@ namespace ChocolateyGui.Views
             }
         }
 
+        private void RemoteSourceViewOnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.SearchTextBox.Focus();
+        }
+
         private void Packages_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var obj = (DependencyObject)e.OriginalSource;
 
             while (obj != null && obj != Packages)
             {
-                if (obj.GetType() == typeof(ListBoxItem))
+                var listBoxItem = obj as ListBoxItem;
+                if (listBoxItem != null)
                 {
-                    var item = (ListBoxItem)obj;
-                    var context = (IPackageViewModel)item.DataContext;
+                    var context = (IPackageViewModel)listBoxItem.DataContext;
                     context.ViewDetails();
                 }
 

@@ -14,7 +14,6 @@ using System.Windows;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
-using CefSharp;
 using chocolatey;
 using ChocolateyGui.Models;
 using ChocolateyGui.Properties;
@@ -31,7 +30,7 @@ namespace ChocolateyGui
 {
     public class Bootstrapper : BootstrapperBase
     {
-        internal const string ApplicationName = "ChocolateyGUI";
+        internal const string ApplicationName = "Chocolatey GUI";
 
         public Bootstrapper()
         {
@@ -56,7 +55,6 @@ namespace ChocolateyGui
         {
             IsExiting = true;
             Log.CloseAndFlush();
-            Cef.Shutdown();
             Container.Dispose();
             return Task.FromResult(true);
         }

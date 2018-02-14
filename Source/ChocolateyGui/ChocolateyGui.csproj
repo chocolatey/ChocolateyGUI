@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\CefSharp.Wpf.57.0.0\build\CefSharp.Wpf.props" Condition="Exists('..\packages\CefSharp.Wpf.57.0.0\build\CefSharp.Wpf.props')" />
-  <Import Project="..\packages\CefSharp.OffScreen.57.0.0\build\CefSharp.OffScreen.props" Condition="Exists('..\packages\CefSharp.OffScreen.57.0.0\build\CefSharp.OffScreen.props')" />
-  <Import Project="..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -71,17 +68,26 @@
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Magick.NET-Q16-x86, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=x86">
+      <HintPath>..\packages\Magick.NET-Q16-x86.7.0.7.700\lib\net40\Magick.NET-Q16-x86.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro.IconPacks.Entypo, Version=1.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Entypo.1.9.1\lib\net45\MahApps.Metro.IconPacks.Entypo.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.FontAwesome, Version=1.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.FontAwesome.1.9.1\lib\net45\MahApps.Metro.IconPacks.FontAwesome.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro.IconPacks.Modern, Version=1.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.1.9.1\lib\net45\MahApps.Metro.IconPacks.Modern.dll</HintPath>
     </Reference>
     <Reference Include="Markdig, Version=0.13.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Markdig.0.13.3\lib\net40\Markdig.dll</HintPath>
+    </Reference>
+    <Reference Include="Markdig.Wpf, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.Wpf.0.2.1\lib\net45\Markdig.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Threading, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Threading.15.4.4\lib\net45\Microsoft.VisualStudio.Threading.dll</HintPath>
@@ -193,14 +199,16 @@
     </Compile>
     <Compile Include="Base\ConnectionClosedException.cs" />
     <Compile Include="ChocolateyExtensions.cs" />
+    <Compile Include="Controls\MarkdownEx.cs" />
+    <Compile Include="Enums\ListViewMode.cs" />
+    <Compile Include="Models\EnumToBoolConverter.cs" />
     <Compile Include="Models\LogLevel.cs" />
     <Compile Include="Models\LogMessage.cs" />
+    <Compile Include="Utilities\Converters\NullToValue.cs" />
+    <Compile Include="Utilities\PackageAuthorsComparer.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
     <Compile Include="Controls\InternetImage.xaml.cs">
       <DependentUpon>InternetImage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MarkdownViewer.xaml.cs">
-      <DependentUpon>MarkdownViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="DesignMode.cs" />
     <Compile Include="Hacks.cs" />
@@ -214,16 +222,6 @@
     <Compile Include="Models\PackageResults.cs" />
     <Compile Include="Models\PackageSearchOptions.cs" />
     <Compile Include="Models\SemanticVersionTypeConverter.cs" />
-    <Compile Include="Properties\Resources.de.Designer.cs">
-      <DependentUpon>Resources.de.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.sv.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.sv.resx</DependentUpon>
-    </Compile>
     <Compile Include="SerilogLogger.cs" />
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\IConfigService.cs" />
@@ -254,8 +252,6 @@
     <Compile Include="Models\PackageSearchResults.cs" />
     <Compile Include="Models\PowerShellOutputLine.cs" />
     <Compile Include="Providers\ChocolateyConfigurationProvider.cs" />
-    <Compile Include="Providers\ChocolateyCustomSchemeProvider.cs" />
-    <Compile Include="Providers\ChocoRequestHandler.cs" />
     <Compile Include="Elevation.cs" />
     <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IPlatformProvider.cs" />
@@ -266,37 +262,29 @@
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\PersistenceService.cs" />
     <Compile Include="Services\ProgressService.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Startup\Internationalization.cs" />
     <Compile Include="Utilities\Converters\BooleanToTickString.cs" />
     <Compile Include="Utilities\Converters\BooleanInverter.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityHidden.cs" />
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\DataContext.cs" />
+    <Compile Include="Utilities\DataGridCustomSortBehavior.cs" />
     <Compile Include="Utilities\DefaultsExtensions.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
+    <Compile Include="Utilities\IDataGridColumnComparer.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
     <Compile Include="ViewModels\ISourceViewModelBase.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
     <Compile Include="Utilities\Converters\PackageDependenciesToString.cs" />
-    <Compile Include="Utilities\Converters\UriToVisibility.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
     <Page Include="Controls\Dialogs\ChocolateyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\InternetImage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\MarkdownViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -309,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\ControlStyles\Flyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ControlStyles\Markdown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -402,24 +394,16 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.nb.resx" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.de.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.sv.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.sv.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <Resource Include="..\..\ABOUT.md">
       <Link>Resources\ABOUT.md</Link>
     </Resource>
@@ -479,7 +463,14 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\DefaultMarkdownStyle.css" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.*.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="chocolatey%404.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\cef.redist.x64.3.2987.1601\build\cef.redist.x64.targets" Condition="Exists('..\packages\cef.redist.x64.3.2987.1601\build\cef.redist.x64.targets')" />
@@ -489,20 +480,12 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\cef.redist.x64.3.2987.1601\build\cef.redist.x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.3.2987.1601\build\cef.redist.x64.targets'))" />
     <Error Condition="!Exists('..\packages\cef.redist.x86.3.2987.1601\build\cef.redist.x86.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.3.2987.1601\build\cef.redist.x86.targets'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.props'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.targets'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.OffScreen.57.0.0\build\CefSharp.OffScreen.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.OffScreen.57.0.0\build\CefSharp.OffScreen.props'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.OffScreen.57.0.0\build\CefSharp.OffScreen.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.OffScreen.57.0.0\build\CefSharp.OffScreen.targets'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.Wpf.57.0.0\build\CefSharp.Wpf.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.57.0.0\build\CefSharp.Wpf.props'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.Wpf.57.0.0\build\CefSharp.Wpf.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.57.0.0\build\CefSharp.Wpf.targets'))" />
     <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets'))" />
     <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets'))" />
     <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets'))" />
+    <Error Condition="!Exists('..\packages\Magick.NET-Q16-x86.7.0.7.700\build\net40\Magick.NET-Q16-x86.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Magick.NET-Q16-x86.7.0.7.700\build\net40\Magick.NET-Q16-x86.targets'))" />
   </Target>
   <Import Project="..\packages\cef.redist.x86.3.2987.1601\build\cef.redist.x86.targets" Condition="Exists('..\packages\cef.redist.x86.3.2987.1601\build\cef.redist.x86.targets')" />
-  <Import Project="..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.targets')" />
-  <Import Project="..\packages\CefSharp.OffScreen.57.0.0\build\CefSharp.OffScreen.targets" Condition="Exists('..\packages\CefSharp.OffScreen.57.0.0\build\CefSharp.OffScreen.targets')" />
-  <Import Project="..\packages\CefSharp.Wpf.57.0.0\build\CefSharp.Wpf.targets" Condition="Exists('..\packages\CefSharp.Wpf.57.0.0\build\CefSharp.Wpf.targets')" />
   <Target Name="AfterBuild">
     <CreateItem Include="..\ChocolateyGui.Subprocess\bin\$(Configuration)\**\*.*">
       <Output TaskParameter="Include" ItemName="SubprocessFiles" />
@@ -513,4 +496,5 @@
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets')" />
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets')" />
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets')" />
+  <Import Project="..\packages\Magick.NET-Q16-x86.7.0.7.700\build\net40\Magick.NET-Q16-x86.targets" Condition="Exists('..\packages\Magick.NET-Q16-x86.7.0.7.700\build\net40\Magick.NET-Q16-x86.targets')" />
 </Project>

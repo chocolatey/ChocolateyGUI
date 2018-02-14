@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
+using ChocolateyGui.Enums;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
@@ -30,6 +31,7 @@ namespace ChocolateyGui.ViewModels
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyService _chocolateyPackageService;
         private readonly IProgressService _progressService;
+        private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
         private int _currentPage = 1;
@@ -42,10 +44,14 @@ namespace ChocolateyGui.ViewModels
         private int _pageSize = 50;
         private string _searchQuery;
         private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
+        private ListViewMode _listViewMode;
+
+        private IDisposable _searchQuerySubscription;
 
         public RemoteSourceViewModel(
             IChocolateyService chocolateyPackageService,
             IProgressService progressService,
+            IConfigService configService,
             IEventAggregator eventAggregator,
             ChocolateySource source,
             IMapper mapper)
@@ -53,8 +59,11 @@ namespace ChocolateyGui.ViewModels
             Source = source;
             _chocolateyPackageService = chocolateyPackageService;
             _progressService = progressService;
+            _configService = configService;
             _eventAggregator = eventAggregator;
             _mapper = mapper;
+
+            ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
 
             Packages = new ObservableCollection<IPackageViewModel>();
             DisplayName = source.Id;
@@ -65,6 +74,12 @@ namespace ChocolateyGui.ViewModels
             }
 
             _eventAggregator.Subscribe(this);
+        }
+
+        public ListViewMode ListViewMode
+        {
+            get { return _listViewMode; }
+            set { this.SetPropertyValue(ref _listViewMode, value); }
         }
 
         public ChocolateySource Source { get; }
@@ -175,7 +190,7 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
-        public bool CanRefreshRemotePackages()
+        public bool CanLoadRemotePackages()
         {
             return _hasLoaded;
         }
@@ -187,6 +202,79 @@ namespace ChocolateyGui.ViewModels
 #pragma warning restore 4014
         }
 
+        public async Task LoadPackages()
+        {
+            try
+            {
+                if (!CanLoadRemotePackages() && Packages.Any())
+                {
+                    return;
+                }
+
+                _hasLoaded = false;
+
+                var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
+
+                await _progressService.StartLoading(string.Format(Resources.RemoteSourceViewModel_LoadingPage, CurrentPage));
+
+                _progressService.WriteMessage(Resources.RemoteSourceViewModel_FetchingPackages);
+
+                try
+                {
+                    var result =
+                        await
+                            _chocolateyPackageService.Search(
+                                SearchQuery,
+                                new PackageSearchOptions(
+                                    PageSize,
+                                    CurrentPage - 1,
+                                    sort,
+                                    IncludePrerelease,
+                                    IncludeAllVersions,
+                                    MatchWord,
+                                    Source.Value));
+                    var installed = await _chocolateyPackageService.GetInstalledPackages();
+                    var outdated = await _chocolateyPackageService.GetOutdatedPackages();
+
+                    PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
+                    Packages.Clear();
+                    result.Packages.ToList().ForEach(p =>
+                    {
+                        if (installed.Any(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            p.IsInstalled = true;
+                        }
+                        if (outdated.Any(package => string.Equals(package.Item1, p.Id, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            p.IsLatestVersion = false;
+                        }
+
+                        Packages.Add(Mapper.Map<IPackageViewModel>(p));
+                    });
+
+                    if (PageCount < CurrentPage)
+                    {
+                        CurrentPage = PageCount == 0 ? 1 : PageCount;
+                    }
+                }
+                finally
+                {
+                    await _progressService.StopLoading();
+                    _hasLoaded = true;
+                }
+
+                await _eventAggregator.PublishOnUIThreadAsync(new ResetScrollPositionMessage());
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Failed to load new packages.");
+                await _progressService.ShowMessageAsync(
+                    Resources.RemoteSourceViewModel_FailedToLoad,
+                    string.Format(Resources.RemoteSourceViewModel_FailedToLoadRemotePackages, ex.Message));
+                throw;
+            }
+        }
+
         protected override void OnViewAttached(object view, object context)
         {
             _eventAggregator.Subscribe(view);
@@ -196,6 +284,21 @@ namespace ChocolateyGui.ViewModels
         {
             try
             {
+                Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
+                    .ObserveOnDispatcher()
+                    .Subscribe(eventPattern =>
+                    {
+                        var appConfig = (AppConfiguration)eventPattern.Sender;
+
+                        _searchQuerySubscription?.Dispose();
+                        if (appConfig.UseDelayedSearch)
+                        {
+                            SubscribeToLoadPackagesOnSearchQueryChange();
+                        }
+
+                        ListViewMode = appConfig.DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard;
+                    });
+
 #pragma warning disable 4014
                 LoadPackages();
 #pragma warning restore 4014
@@ -205,14 +308,10 @@ namespace ChocolateyGui.ViewModels
                     "IncludeAllVersions", "IncludePrerelease", "MatchWord", "SortSelection"
                 };
 
-                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                    .Where(e => e.EventArgs.PropertyName == "SearchQuery")
-                    .Throttle(TimeSpan.FromMilliseconds(500))
-                    .DistinctUntilChanged()
-                    .ObserveOnDispatcher()
-#pragma warning disable 4014
-                    .Subscribe(e => LoadPackages());
-#pragma warning restore 4014
+                if (_configService.GetSettings().UseDelayedSearch)
+                {
+                    SubscribeToLoadPackagesOnSearchQueryChange();
+                }
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
                     .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
@@ -246,67 +345,16 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
-        private async Task LoadPackages()
+        private void SubscribeToLoadPackagesOnSearchQueryChange()
         {
-            try
-            {
-                _hasLoaded = false;
-
-                var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
-
-                await _progressService.StartLoading(string.Format(Resources.RemoteSourceViewModel_LoadingPage, CurrentPage));
-
-                _progressService.WriteMessage(Resources.RemoteSourceViewModel_FetchingPackages);
-
-                try
-                {
-                    var result =
-                        await
-                            _chocolateyPackageService.Search(
-                                SearchQuery,
-                                new PackageSearchOptions(
-                                    PageSize,
-                                    CurrentPage - 1,
-                                    sort,
-                                    IncludePrerelease,
-                                    IncludeAllVersions,
-                                    MatchWord,
-                                    Source.Value));
-                    var installed = await _chocolateyPackageService.GetInstalledPackages();
-
-                    PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
-                    Packages.Clear();
-                    result.Packages.ToList().ForEach(p =>
-                    {
-                        if (installed.Any(package => package.Id == p.Id))
-                        {
-                            p.IsInstalled = true;
-                        }
-
-                        Packages.Add(Mapper.Map<IPackageViewModel>(p));
-                    });
-
-                    if (PageCount < CurrentPage)
-                    {
-                        CurrentPage = PageCount == 0 ? 1 : PageCount;
-                    }
-                }
-                finally
-                {
-                    await _progressService.StopLoading();
-                    _hasLoaded = true;
-                }
-
-                await _eventAggregator.PublishOnUIThreadAsync(new ResetScrollPositionMessage());
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "Failed to load new packages.");
-                await _progressService.ShowMessageAsync(
-                    Resources.RemoteSourceViewModel_FailedToLoad,
-                    string.Format(Resources.RemoteSourceViewModel_FailedToLoadRemotePackages, ex.Message));
-                throw;
-            }
+            _searchQuerySubscription = Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
+                .Where(e => e.EventArgs.PropertyName == "SearchQuery")
+                .Throttle(TimeSpan.FromMilliseconds(500))
+                .DistinctUntilChanged()
+                .ObserveOnDispatcher()
+#pragma warning disable 4014
+                .Subscribe(e => LoadPackages());
+#pragma warning restore 4014
         }
     }
 }

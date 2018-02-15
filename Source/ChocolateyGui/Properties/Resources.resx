@@ -639,4 +639,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_UseDelayedSearch" xml:space="preserve">
     <value>Use delayed search</value>
   </data>
+  <data name="PackageView_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
 </root>

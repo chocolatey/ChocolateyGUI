@@ -8,7 +8,7 @@
     <owners>Chocolatey</owners>
     <projectUrl>https://github.com/chocolatey/ChocolateyGUI</projectUrl>
     <projectSourceUrl>https://github.com/chocolatey/ChocolateyGUI</projectSourceUrl>
-    <packageSourceUrl>https://github.com/chocolatey/ChocolateyGUI/tree/develop/ChocolateyPackage</packageSourceUrl>
+    <packageSourceUrl>https://github.com/chocolatey/ChocolateyGUI/tree/develop/nuspec/chocolatey</packageSourceUrl>
     <iconUrl>https://raw.githubusercontent.com/chocolatey/choco/master/docs/logo/chocolateyicon.gif</iconUrl>
     <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE</licenseUrl>
     <bugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</bugTrackerUrl>

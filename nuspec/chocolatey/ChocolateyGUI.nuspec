@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/chocolatey/ChocolateyGUI</projectUrl>
     <projectSourceUrl>https://github.com/chocolatey/ChocolateyGUI</projectSourceUrl>
     <packageSourceUrl>https://github.com/chocolatey/ChocolateyGUI/tree/develop/ChocolateyPackage</packageSourceUrl>
-    <iconUrl>https://cdn.rawgit.com/chocolatey/choco/8b6217061a4efe6543622e903996bb8eac012db2/docs/images/Choco_Icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/chocolatey/choco/master/docs/logo/chocolateyicon.gif</iconUrl>
     <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE</licenseUrl>
     <bugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</bugTrackerUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

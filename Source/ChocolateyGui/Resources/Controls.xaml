@@ -53,7 +53,7 @@
           Width="16" Height="16"/>
 
     <system:Double x:Key="ToggleSwitchFontSize">15</system:Double>
-    
+
     <Style x:Key="SourceBaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular" />
         <Setter Property="FontSize" Value="14" />
@@ -737,6 +737,9 @@
                     <Setter Property="Margin" Value="0" />
                     <Setter Property="ContextMenu" Value="{StaticResource PackagesContextMenu}" />
                     <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLatestVersion}" Value="False">
+                            <Setter Property="Background" Value="#ffffe6"/>
+                        </DataTrigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
                             <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />

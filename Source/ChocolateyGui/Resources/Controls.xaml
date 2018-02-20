@@ -738,7 +738,7 @@
                     <Setter Property="ContextMenu" Value="{StaticResource PackagesContextMenu}" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsLatestVersion}" Value="False">
-                            <Setter Property="Background" Value="#ffffe6"/>
+                            <Setter Property="Background" Value="#FFDBCA"/>
                         </DataTrigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />

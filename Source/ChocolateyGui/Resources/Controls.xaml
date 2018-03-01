@@ -21,6 +21,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <converters:BooleanToVisibility x:Key="BooleanToVisibility" />
+    <converters:BooleanToVisibilityInverted x:Key="BooleanToVisibilityInverted" />
     <converters:BooleanToTickString x:Key="BooleanToTickString" />
     <converters:StringListToString x:Key="StringListToString" />
     <converters:BooleanInverter x:Key="BooleanInverter" />
@@ -737,9 +738,6 @@
                     <Setter Property="Margin" Value="0" />
                     <Setter Property="ContextMenu" Value="{StaticResource PackagesContextMenu}" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsLatestVersion}" Value="False">
-                            <Setter Property="Background" Value="#FFDBCA"/>
-                        </DataTrigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
                             <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />

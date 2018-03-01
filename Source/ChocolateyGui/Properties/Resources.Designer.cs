@@ -411,9 +411,9 @@ namespace ChocolateyGui.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Out Of Date.
         /// </summary>
-        public static string LocalSourceView_OverlayOutdated {
+        public static string LocalSourceView_Outdated {
             get {
-                return ResourceManager.GetString("LocalSourceView_OverlayOutdated", resourceCulture);
+                return ResourceManager.GetString("LocalSourceView_Outdated", resourceCulture);
             }
         }
         

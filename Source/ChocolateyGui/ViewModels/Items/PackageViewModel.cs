@@ -342,6 +342,11 @@ namespace ChocolateyGui.ViewModels.Items
             set { SetPropertyValue(ref _versionDownloadCount, value); }
         }
 
+        public bool IsDownloadCountAvailable
+        {
+            get { return DownloadCount != -1; }
+        }
+
         public async Task Install()
         {
             try

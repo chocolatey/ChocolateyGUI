@@ -156,6 +156,7 @@ namespace ChocolateyGui.Services
                             config.AllVersions = options.IncludeAllVersions;
                             config.ListCommand.Page = options.CurrentPage;
                             config.ListCommand.PageSize = options.PageSize;
+                            config.Prerelease = options.IncludePrerelease;
                             if (string.IsNullOrWhiteSpace(query) || !string.IsNullOrWhiteSpace(options.SortColumn))
                             {
                                 config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn)

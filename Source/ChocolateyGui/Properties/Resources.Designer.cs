@@ -1235,6 +1235,15 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search in all Repos.
+        /// </summary>
+        public static string SettingsView_SearchInAllRepos {
+            get {
+                return ResourceManager.GetString("SettingsView_SearchInAllRepos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string SettingsView_Settings {

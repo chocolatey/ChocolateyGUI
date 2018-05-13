@@ -232,7 +232,8 @@ namespace ChocolateyGui.ViewModels
                                     IncludePrerelease,
                                     IncludeAllVersions,
                                     MatchWord,
-                                    Source.Value));
+                                    Source.Value,
+                                    _configService.GetSettings().SearchInAllRepositories));
                     var installed = await _chocolateyPackageService.GetInstalledPackages();
                     var outdated = await _chocolateyPackageService.GetOutdatedPackages();
 

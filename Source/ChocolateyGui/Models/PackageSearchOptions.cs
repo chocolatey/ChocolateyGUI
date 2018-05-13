@@ -15,7 +15,8 @@ namespace ChocolateyGui.Models
             bool includePrerelease,
             bool includeAllVersions,
             bool matchWord,
-            string source)
+            string source,
+            bool searchInALlRepos)
             : this()
         {
             PageSize = pageSize;
@@ -25,6 +26,7 @@ namespace ChocolateyGui.Models
             IncludePrerelease = includePrerelease;
             MatchQuery = matchWord;
             Source = source;
+            SearchInAllRepos = searchInALlRepos;
         }
 
         public int CurrentPage { get; set;  }
@@ -32,6 +34,8 @@ namespace ChocolateyGui.Models
         public bool IncludeAllVersions { get; set; }
 
         public bool IncludePrerelease { get; set; }
+
+        public bool SearchInAllRepos { get; set; }
 
         public bool MatchQuery { get; set; }
 

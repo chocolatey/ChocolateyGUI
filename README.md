@@ -1,6 +1,6 @@
 # Chocolatey GUI
 
-Chocolatey GUI is a user interface for [Chocolatey NuGet](http://chocolatey.org) (a Machine Package Manager for Windows).
+Chocolatey GUI is a user interface for [Chocolatey](http://chocolatey.org) (the Machine Package Manager for Windows).
 
 ## Installation
 You can install Chocolatey GUI via Chocolatey itself by executing:

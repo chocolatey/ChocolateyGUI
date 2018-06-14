@@ -69,7 +69,8 @@
                                        AutomationProperties.Name="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
                                        Style="{StaticResource ColoredDetailsText}" />
                         </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" IsHitTestVisible="False">
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" IsHitTestVisible="False"
+                                    Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}">
                             <TextBlock FontWeight="SemiBold" FontSize="20" Text="{Binding DownloadCount, Mode=OneWay, StringFormat=N0}" Style="{StaticResource ColoredDetailsText}" VerticalAlignment="Center" />
                             <iconPacks:PackIconFontAwesome Kind="Download" Width="16" Height="16" Margin="5 1 0 0" VerticalAlignment="Center" />
                         </StackPanel>

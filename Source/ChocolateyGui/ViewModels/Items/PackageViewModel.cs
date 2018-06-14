@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Base;
-using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
@@ -342,6 +341,11 @@ namespace ChocolateyGui.ViewModels.Items
             set { SetPropertyValue(ref _versionDownloadCount, value); }
         }
 
+        public bool IsDownloadCountAvailable
+        {
+            get { return DownloadCount != -1; }
+        }
+
         public async Task Install()
         {
             try
@@ -584,11 +588,6 @@ namespace ChocolateyGui.ViewModels.Items
         public async void ViewDetails()
 #pragma warning restore RECS0165 // Asynchronous methods should return a Task instead of void
         {
-            if (DownloadCount == -1)
-            {
-                await PopulateDetails().ConfigureAwait(false);
-            }
-
             await _eventAggregator.PublishOnUIThreadAsync(new ShowPackageDetailsMessage(this)).ConfigureAwait(false);
         }
 
@@ -601,33 +600,6 @@ namespace ChocolateyGui.ViewModels.Items
 
             LatestVersion = message.Version;
             IsLatestVersion = false;
-        }
-
-        private async Task PopulateDetails()
-        {
-            await _progressService.StartLoading(Resources.PackageViewModel_LoadingPackageInfo);
-            try
-            {
-                var package = await _chocolateyService.GetByVersionAndIdAsync(_id, _version.ToString(), _isPrerelease).ConfigureAwait(false);
-
-                // Remember current values before mapping to updated version
-                package.IsAbsoluteLatestVersion = this.IsAbsoluteLatestVersion;
-                package.IsInstalled = this.IsInstalled;
-                package.IsLatestVersion = this.IsLatestVersion;
-                package.IsPinned = this.IsPinned;
-                package.IsPrerelease = this.IsPrerelease;
-                package.IsSideBySide = this.IsSideBySide;
-
-                Mapper.Map<Package, IPackageViewModel>(package, this);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "Error while populating details for package {Id}, version {Version}.", Id, Version);
-            }
-            finally
-            {
-                await _progressService.StopLoading();
-            }
         }
 
         private async Task<IDisposable> StartProgressDialog(string commandString, string initialProgressText, string id = "")

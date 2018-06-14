@@ -21,6 +21,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <converters:BooleanToVisibility x:Key="BooleanToVisibility" />
+    <converters:BooleanToVisibilityInverted x:Key="BooleanToVisibilityInverted" />
     <converters:BooleanToTickString x:Key="BooleanToTickString" />
     <converters:StringListToString x:Key="StringListToString" />
     <converters:BooleanInverter x:Key="BooleanInverter" />
@@ -53,7 +54,7 @@
           Width="16" Height="16"/>
 
     <system:Double x:Key="ToggleSwitchFontSize">15</system:Double>
-    
+
     <Style x:Key="SourceBaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular" />
         <Setter Property="FontSize" Value="14" />

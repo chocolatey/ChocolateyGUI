@@ -84,7 +84,7 @@ namespace ChocolateyGui.Services
                 var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
                 var results = packages
                     .Where(p => !p.Value.Inconclusive)
-                    .Select(p => Tuple.Create(p.Value.Package.Id, p.Value.Package.Version.ToNormalizedString()))
+                    .Select(p => Tuple.Create(p.Value.Package.Id.ToLower(), p.Value.Package.Version.ToNormalizedString()))
                     .ToArray();
                 var parsed = results.Select(result => Tuple.Create(result.Item1, new SemanticVersion(result.Item2)));
 

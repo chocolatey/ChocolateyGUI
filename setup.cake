@@ -33,7 +33,10 @@ BuildParameters.SetParameters(context: Context,
                             shouldExecuteGitLink: false);
 
 ToolSettings.SetToolSettings(context: Context,
-                             buildPlatformTarget: PlatformTarget.x86);
+                             buildPlatformTarget: PlatformTarget.x86,
+                             dupFinderExcludePattern: new string[] {
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Converters/BooleanToVisibilityInverted.cs"
+                            });
 
 //var SIGN_TOOL = EnvironmentVariable("SIGN_TOOL") ?? @"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\signtool.exe";
 var CERT_PATH = EnvironmentVariable("CHOCOLATEY_OFFICIAL_CERT") ?? "";

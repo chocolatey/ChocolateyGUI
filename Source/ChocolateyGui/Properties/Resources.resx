@@ -474,7 +474,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsViewModel_SourceMissingValue" xml:space="preserve">
     <value>Source must have an value!</value>
   </data>
-  <data name="SettingsView_About" xml:space="preserve">
+  <data name="AboutView_About" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="SettingsView_ButtonCancel" xml:space="preserve">
@@ -492,7 +492,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_ChocoGui" xml:space="preserve">
     <value>Chocolatey GUI</value>
   </data>
-  <data name="SettingsView_Credits" xml:space="preserve">
+  <data name="AboutView_Credits" xml:space="preserve">
     <value>Credits</value>
   </data>
   <data name="SettingsView_Features" xml:space="preserve">
@@ -516,7 +516,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_PropertyValue" xml:space="preserve">
     <value>Value</value>
   </data>
-  <data name="SettingsView_ReleaseNotes" xml:space="preserve">
+  <data name="AboutView_ReleaseNotes" xml:space="preserve">
     <value>Release Notes</value>
   </data>
   <data name="SettingsView_Settings" xml:space="preserve">
@@ -641,5 +641,8 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="PackageView_Version" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="AboutView_History" xml:space="preserve">
+    <value>History</value>
   </data>
 </root>

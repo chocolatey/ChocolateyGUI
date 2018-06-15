@@ -61,6 +61,42 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string AboutView_About {
+            get {
+                return ResourceManager.GetString("AboutView_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credits.
+        /// </summary>
+        public static string AboutView_Credits {
+            get {
+                return ResourceManager.GetString("AboutView_Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string AboutView_History {
+            get {
+                return ResourceManager.GetString("AboutView_History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Notes.
+        /// </summary>
+        public static string AboutView_ReleaseNotes {
+            get {
+                return ResourceManager.GetString("AboutView_ReleaseNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unhandled Exception.
         /// </summary>
         public static string Bootstrapper_UnhandledException {
@@ -1100,15 +1136,6 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        public static string SettingsView_About {
-            get {
-                return ResourceManager.GetString("SettingsView_About", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string SettingsView_ButtonCancel {
@@ -1150,15 +1177,6 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_ChocoGui {
             get {
                 return ResourceManager.GetString("SettingsView_ChocoGui", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Credits.
-        /// </summary>
-        public static string SettingsView_Credits {
-            get {
-                return ResourceManager.GetString("SettingsView_Credits", resourceCulture);
             }
         }
         
@@ -1222,15 +1240,6 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_PropertyValue {
             get {
                 return ResourceManager.GetString("SettingsView_PropertyValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Release Notes.
-        /// </summary>
-        public static string SettingsView_ReleaseNotes {
-            get {
-                return ResourceManager.GetString("SettingsView_ReleaseNotes", resourceCulture);
             }
         }
         

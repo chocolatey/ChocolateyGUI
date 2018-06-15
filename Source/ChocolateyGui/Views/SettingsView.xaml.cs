@@ -4,8 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Diagnostics;
-using System.Windows.Input;
 using Caliburn.Micro;
 using ChocolateyGui.Models.Messages;
 
@@ -25,11 +23,6 @@ namespace ChocolateyGui.Views
         public void Handle(SourcesUpdatedMessage message)
         {
             SourcesGrid.Items.Refresh();
-        }
-
-        private void HandleMarkdownLink(object sender, ExecutedRoutedEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Parameter.ToString()));
         }
     }
 }

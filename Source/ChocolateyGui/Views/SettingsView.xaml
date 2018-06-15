@@ -23,15 +23,12 @@
         </Style>
     </UserControl.Resources>
 
-    <FrameworkElement.CommandBindings>
-        <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="HandleMarkdownLink" />
-    </FrameworkElement.CommandBindings>
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
             <TextBlock Text="{x:Static lang:Resources.SettingsView_Settings}" Style="{StaticResource TitleTextStyle}"/>
         </StackPanel>
-        <TabControl Background="Transparent">
+        <TabControl Background="Transparent" metro:TabControlHelper.Underlined="TabPanel">
             <TabItem Header="{x:Static lang:Resources.SettingsView_Options}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -224,46 +221,6 @@
                             </StackPanel>
                         </Grid>
                     </DockPanel>
-                </Grid>
-            </TabItem>
-            <TabItem Header="{x:Static lang:Resources.SettingsView_About}">
-                <Grid Background="White">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0"
-                        Style="{StaticResource SectionHeaderTextStyle}" Text="{x:Static lang:Resources.SettingsView_About}"/>
-                    <markdig:MarkdownViewer
-                            AutomationProperties.Name="About"
-                            Grid.Row="1" Grid.Column="0"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                            Margin="5 0"
-                            controls:MarkdownEx.Url="pack://application:,,,/../../Resources/ABOUT.md" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource SectionHeaderTextStyle}" Text="{x:Static lang:Resources.SettingsView_Credits}"/>
-                    <markdig:MarkdownViewer
-                            AutomationProperties.Name="Credits"
-                            Grid.Row="3" Grid.Column="0"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                            Margin="5 0"
-                            controls:MarkdownEx.Url="pack://application:,,,/../../Resources/CREDITS.md" />
-
-                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource SectionHeaderTextStyle}" Text="{x:Static lang:Resources.SettingsView_ReleaseNotes}"/>
-                    <markdig:MarkdownViewer
-                            AutomationProperties.Name="Release Notes"
-                            Grid.Row="1" Grid.Column="1" Grid.RowSpan="3"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                            Margin="5 0"
-                            controls:MarkdownEx.Url="pack://application:,,,/../../Resources/CHANGELOG.md"/>
                 </Grid>
             </TabItem>
         </TabControl>

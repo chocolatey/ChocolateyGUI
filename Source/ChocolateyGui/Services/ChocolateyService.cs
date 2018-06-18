@@ -31,13 +31,15 @@ namespace ChocolateyGui.Services
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
         private readonly IMapper _mapper;
         private readonly IProgressService _progressService;
+        private readonly IChocolateyConfigSettingsService _configSettingsService;
 #pragma warning disable SA1401 // Fields must be private
 #pragma warning restore SA1401 // Fields must be private
 
-        public ChocolateyService(IMapper mapper, IProgressService progressService)
+        public ChocolateyService(IMapper mapper, IProgressService progressService, IChocolateyConfigSettingsService configSettingsService)
         {
             _mapper = mapper;
             _progressService = progressService;
+            _configSettingsService = configSettingsService;
         }
 
         public Task<bool> IsElevated()
@@ -365,11 +367,10 @@ namespace ChocolateyGui.Services
 
         public async Task<ChocolateySource[]> GetSources()
         {
-            using (await Lock.ReadLockAsync())
-            {
-                var config = await GetConfigFile();
-                return config.Sources.Select(_mapper.Map<ChocolateySource>).ToArray();
-            }
+            var configuration = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService)).GetConfiguration();
+            var sources = _configSettingsService.source_list(configuration);
+            var mappedSources = sources.Select(_mapper.Map<ChocolateySource>).ToArray();
+            return mappedSources;
         }
 
         public async Task AddSource(ChocolateySource source)

@@ -367,10 +367,12 @@ namespace ChocolateyGui.Services
 
         public async Task<ChocolateySource[]> GetSources()
         {
-            var configuration = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService)).GetConfiguration();
-            var sources = _configSettingsService.source_list(configuration);
-            var mappedSources = sources.Select(_mapper.Map<ChocolateySource>).ToArray();
-            return mappedSources;
+            using (await Lock.ReadLockAsync())
+            {
+                var sources = _configSettingsService.source_list(_choco.GetConfiguration());
+                var mappedSources = sources.Select(_mapper.Map<ChocolateySource>).ToArray();
+                return mappedSources;
+            }
         }
 
         public async Task AddSource(ChocolateySource source)

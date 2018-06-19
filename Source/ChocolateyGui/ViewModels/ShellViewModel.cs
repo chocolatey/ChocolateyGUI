@@ -41,8 +41,6 @@ namespace ChocolateyGui.ViewModels
             _sourcesViewModel = sourcesViewModel;
             Sources = new BindableCollection<SourceViewModel>();
             ActiveItem = _sourcesViewModel;
-
-            GetSources();
         }
 
         public string AboutInformation

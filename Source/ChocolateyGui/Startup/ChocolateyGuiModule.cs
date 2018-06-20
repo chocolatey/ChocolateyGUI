@@ -10,7 +10,9 @@ using System.IO;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
+using chocolatey;
 using chocolatey.infrastructure.app.configuration;
+using chocolatey.infrastructure.app.services;
 using ChocolateyGui.Models;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
@@ -19,6 +21,7 @@ using ChocolateyGui.ViewModels.Items;
 using ChocolateyGui.Views;
 using LiteDB;
 using NuGet;
+using ChocolateySource = chocolatey.infrastructure.app.configuration.ChocolateySource;
 using PackageViewModel = ChocolateyGui.ViewModels.Items.PackageViewModel;
 
 namespace ChocolateyGui.Startup
@@ -48,6 +51,10 @@ namespace ChocolateyGui.Startup
 
             builder.RegisterType<PackageViewModel>().As<IPackageViewModel>();
 
+            var choco = Lets.GetChocolatey();
+            builder.RegisterInstance(choco.Container().GetInstance<IChocolateyConfigSettingsService>())
+                .As<IChocolateyConfigSettingsService>().SingleInstance();
+
             // Register Views
             builder.RegisterAssemblyTypes(viewAssemlby)
                 .Where(type => type.Name.EndsWith("View", StringComparison.Ordinal))
@@ -75,6 +82,8 @@ namespace ChocolateyGui.Startup
                 config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
                 config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();
                 config.CreateMap<ConfigFileSourceSetting, Models.ChocolateySource>();
+                config.CreateMap<ChocolateySource, Models.ChocolateySource>()
+                    .ForMember(dest => dest.VisibleToAdminsOnly, opt => opt.MapFrom(src => src.VisibleToAdminOnly));
             });
 
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();

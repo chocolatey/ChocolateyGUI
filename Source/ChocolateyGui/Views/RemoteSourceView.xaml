@@ -72,7 +72,7 @@
                         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" IsHitTestVisible="False"
                                     Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}">
                             <TextBlock FontWeight="SemiBold" FontSize="20" Text="{Binding DownloadCount, Mode=OneWay, StringFormat=N0}" Style="{StaticResource ColoredDetailsText}" VerticalAlignment="Center" />
-                            <iconPacks:PackIconFontAwesome Kind="Download" Width="16" Height="16" Margin="5 1 0 0" VerticalAlignment="Center" />
+                            <iconPacks:PackIconFontAwesome Kind="DownloadSolid" Width="16" Height="16" Margin="5 1 0 0" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
 
@@ -249,7 +249,7 @@
                         Style="{DynamicResource IconFlatButtonStyle}"
                         ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}"
                         Margin="0,0,2,0">
-                    <iconPacks:PackIconFontAwesome Kind="Refresh" />
+                    <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
                 </Button>
                 <RadioButton Margin="6,0,1,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"

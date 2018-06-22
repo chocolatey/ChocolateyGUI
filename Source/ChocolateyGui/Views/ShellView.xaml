@@ -33,8 +33,12 @@
 
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
-            <Button x:Name="ShowSettings" Content="{x:Static lang:Resources.ShellView_ButtonSettings}" ClickMode="Release" cal:Message.Attach="ShowSettings()"/>
-            <Button x:Name="ShowAbout" Content="{x:Static lang:Resources.ShellView_ButtonAbout}" ClickMode="Release" cal:Message.Attach="ShowAbout()"/>
+            <Button x:Name="ShowSettings"
+                    IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"
+                    Content="{x:Static lang:Resources.ShellView_ButtonSettings}" ClickMode="Release" cal:Message.Attach="ShowSettings()"/>
+            <Button x:Name="ShowAbout"
+                    IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"
+                    Content="{x:Static lang:Resources.ShellView_ButtonAbout}" ClickMode="Release" cal:Message.Attach="ShowAbout()"/>
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 

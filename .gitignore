@@ -211,3 +211,7 @@ docs
 # Wyam Related
 config.wyam.dll
 config.wyam.hash
+
+# JetBrains Rider
+.idea/
+*.sln.iml

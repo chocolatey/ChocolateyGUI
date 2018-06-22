@@ -157,15 +157,15 @@
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
                         Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static lang:Resources.LocalSourceView_ButtonRefreshPkgs}" Margin="0,0,2,0">
-                    <iconPacks:PackIconFontAwesome Kind="Refresh" />
+                    <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
                 </Button>
                 <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
                         Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static lang:Resources.LocalSourceView_ButtonUpdateAll}" Margin="2,0,2,0">
                     <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconFontAwesome Kind="Refresh" />
-                        <iconPacks:PackIconFontAwesome Kind="Asterisk" Margin="2 0 0 0" />
+                        <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
+                        <iconPacks:PackIconFontAwesome Kind="AsteriskSolid" Margin="2 0 0 0" />
                     </StackPanel>
                 </Button>
                 <Button Command="{commands:DataContextCommandAdapter ExportAll, CanExportAll}"
@@ -174,7 +174,7 @@
                         Style="{DynamicResource IconFlatButtonStyle}"
                         ToolTip="{x:Static lang:Resources.LocalSourceView_ButtonExport}"
                         Margin="2,0,2,0">
-                    <iconPacks:PackIconFontAwesome Kind="FloppyOutline" />
+                    <iconPacks:PackIconFontAwesome Kind="SaveRegular" />
                 </Button>
                 <RadioButton Margin="6,0,1,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"

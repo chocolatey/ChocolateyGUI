@@ -33,7 +33,7 @@
   </PropertyGroup>
   <PropertyGroup>
   	<_GuiProjectFolder>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\ChocolateyGui'))</_GuiProjectFolder>
-  	<_GuiTargetDir>$(_GuiProjectFolder)\bin\$(Platform)\$(Configuration)</_GuiTargetDir>
+  	<_GuiTargetDir>$(_GuiProjectFolder)\bin\$(Configuration)</_GuiTargetDir>
   	<DefineConstants>$(DefineConstants);GuiProjectFolder=$(_GuiProjectFolder);GuiTargetDir=$(_GuiTargetDir)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>

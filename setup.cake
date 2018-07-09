@@ -1,3 +1,4 @@
+#module nuget:?package=Cake.Chocolatey.Module&version=0.3.0
 #load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease
 #tool choco:?package=transifex-client&version=0.12.4
 
@@ -33,7 +34,6 @@ BuildParameters.SetParameters(context: Context,
                             shouldExecuteGitLink: false);
 
 ToolSettings.SetToolSettings(context: Context,
-                             buildPlatformTarget: PlatformTarget.x86,
                              dupFinderExcludePattern: new string[] {
                                 BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Converters/BooleanToVisibilityInverted.cs"
                             });
@@ -106,7 +106,7 @@ Task("BuildMSI")
         Information("Building MSI", BuildParameters.SolutionFilePath);
 
         var msbuildSettings = new MSBuildSettings()
-                .SetPlatformTarget(ToolSettings.BuildPlatformTarget)
+                .SetPlatformTarget(PlatformTarget.x86)
                 .UseToolVersion(ToolSettings.BuildMSBuildToolVersion)
                 .WithProperty("TreatWarningsAsErrors","true")
                 .WithProperty("MSBuildExtensionsPath32", "C:/Program Files (x86)/MSBuild")

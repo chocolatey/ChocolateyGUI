@@ -3,6 +3,7 @@
 #---------------------------------#
 
 build_script:
+  - ps: .\build.ps1 --bootstrap
   - ps: .\build.ps1 -Target AppVeyor
 
 #---------------------------------#

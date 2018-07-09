@@ -1,3 +1,4 @@
+#module nuget:?package=Cake.Chocolatey.Module&version=0.3.0
 #load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease
 #tool choco:?package=transifex-client&version=0.12.4
 

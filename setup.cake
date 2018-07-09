@@ -33,7 +33,6 @@ BuildParameters.SetParameters(context: Context,
                             shouldExecuteGitLink: false);
 
 ToolSettings.SetToolSettings(context: Context,
-                             buildPlatformTarget: PlatformTarget.x86,
                              dupFinderExcludePattern: new string[] {
                                 BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Converters/BooleanToVisibilityInverted.cs"
                             });
@@ -106,7 +105,7 @@ Task("BuildMSI")
         Information("Building MSI", BuildParameters.SolutionFilePath);
 
         var msbuildSettings = new MSBuildSettings()
-                .SetPlatformTarget(ToolSettings.BuildPlatformTarget)
+                .SetPlatformTarget(PlatformTarget.x86)
                 .UseToolVersion(ToolSettings.BuildMSBuildToolVersion)
                 .WithProperty("TreatWarningsAsErrors","true")
                 .WithProperty("MSBuildExtensionsPath32", "C:/Program Files (x86)/MSBuild")

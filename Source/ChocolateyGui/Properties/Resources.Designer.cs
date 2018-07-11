@@ -1415,38 +1415,74 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default to Tile View for Local Source.
+        ///   Looks up a localized string similar to Default to using the Tile View for the Local Source View.  It is still possible to toggle between Tile and List view when running the application..
         /// </summary>
-        public static string SettingsView_ToggleDefaultTileViewLocal {
+        public static string SettingsView_ToggleDefaultTileViewLocalDescription {
             get {
-                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewLocal", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewLocalDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default to Tile View for Remote Source.
+        ///   Looks up a localized string similar to Use Tile View for Local Source.
         /// </summary>
-        public static string SettingsView_ToggleDefaultTileViewRemote {
+        public static string SettingsView_ToggleDefaultTileViewLocalTitle {
             get {
-                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewRemote", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewLocalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deafult to using the Tile View for all Remote Sources.  It is still possible to toggle between Tile and List view when running the application..
+        /// </summary>
+        public static string SettingsView_ToggleDefaultTileViewRemoteDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewRemoteDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Tile View for Remote Sources.
+        /// </summary>
+        public static string SettingsView_ToggleDefaultTileViewRemoteTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewRemoteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When a long running process is happening in the application, enabling this option will show all console output from the commands being executed..
+        /// </summary>
+        public static string SettingsView_ToggleShowConsoleOutputDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleShowConsoleOutputDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Show Console Output.
         /// </summary>
-        public static string SettingsView_ToggleShowConsoleOutput {
+        public static string SettingsView_ToggleShowConsoleOutputTitle {
             get {
-                return ResourceManager.GetString("SettingsView_ToggleShowConsoleOutput", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleShowConsoleOutputTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use delayed search.
+        ///   Looks up a localized string similar to When enabled, after a small delay, changing the search term on a Remote Source will cause the query to immediately be executed.  When disabled, it is necessary to manaully trigger the search by clicking the search button..
         /// </summary>
-        public static string SettingsView_UseDelayedSearch {
+        public static string SettingsView_ToggleUseDelayedSearchDescription {
             get {
-                return ResourceManager.GetString("SettingsView_UseDelayedSearch", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleUseDelayedSearchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Delayed Search.
+        /// </summary>
+        public static string SettingsView_UseDelayedSearchTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_UseDelayedSearchTitle", resourceCulture);
             }
         }
         

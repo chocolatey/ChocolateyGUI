@@ -77,10 +77,10 @@
                         <ScrollViewer Margin="5 0" Grid.Row="1" Width="300" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemTemplate="{StaticResource ChocolateyGUISettingTemplate}">
                                 <ItemsControl.Items>
-                                    <models:ChocolateyGUISetting Title="Console Output" Description="{x:Static lang:Resources.SettingsView_ToggleShowConsoleOutput}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowConsoleOutput}" />
-                                    <models:ChocolateyGUISetting Title="Local Source Tile View" Description="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewLocal}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForLocalSource}" />
-                                    <models:ChocolateyGUISetting Title="Remote Source Tile View" Description="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewRemote}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForRemoteSource}" />
-                                    <models:ChocolateyGUISetting Title="Delayed Search" Description="{x:Static lang:Resources.SettingsView_UseDelayedSearch}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.UseDelayedSearch}" />
+                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleShowConsoleOutputTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleShowConsoleOutputDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowConsoleOutput}" />
+                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewLocalTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewLocalDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForLocalSource}" />
+                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewRemoteTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewRemoteDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForRemoteSource}" />
+                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_UseDelayedSearchTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleUseDelayedSearchDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.UseDelayedSearch}" />
                                 </ItemsControl.Items>
                             </ItemsControl>
                         </ScrollViewer>

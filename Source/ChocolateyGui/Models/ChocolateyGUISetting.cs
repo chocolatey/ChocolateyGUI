@@ -11,7 +11,7 @@ namespace ChocolateyGui.Models
     public class ChocolateyGUISetting : DependencyObject
     {
         public static readonly DependencyProperty EnabledProperty = DependencyProperty.Register(
-            nameof(Enabled),
+            "Enabled",
             typeof(bool),
             typeof(ChocolateyGUISetting),
             new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits));

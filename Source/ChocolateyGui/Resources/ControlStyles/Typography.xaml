@@ -47,6 +47,7 @@
         <Setter Property="FontSize" Value="{StaticResource BaseFontSize}"/>
         <Setter Property="LineHeight" Value="{StaticResource BaseLineHeight}"/>
         <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
     <Style x:Key="BodyTextBlockStyle" TargetType="{x:Type TextBlock}">

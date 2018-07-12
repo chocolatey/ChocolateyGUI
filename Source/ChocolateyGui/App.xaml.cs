@@ -8,12 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 using chocolatey;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.commandline;
-using chocolatey.infrastructure.logging;
 using ChocolateyGui.Attributes;
 using ChocolateyGui.Models;
 using ChocolateyGui.Services;
@@ -29,19 +29,14 @@ namespace ChocolateyGui
     public partial class App
     {
         internal const string ApplicationName = "Chocolatey GUI";
-        private const string NO_CHANGE_MESSAGE = "Nothing to change. Config already set.";
-
-        // Usage of this PInvoke came from this blog post:
-        // https://blog.rsuter.com/write-application-can-act-console-application-wpf-gui-application/
-        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        static extern bool FreeConsole();
-
-        internal static SplashScreen SplashScreen { get; set; }
+        private const string NoChangeMessage = "Nothing to change. Config already set.";
 
         public App()
         {
             InitializeComponent();
         }
+
+        internal static SplashScreen SplashScreen { get; set; }
 
         [STAThread]
         public static void Main(string[] args)
@@ -86,6 +81,11 @@ namespace ChocolateyGui
             }
         }
 
+        // Usage of this PInvoke came from this blog post:
+        // https://blog.rsuter.com/write-application-can-act-console-application-wpf-gui-application/
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        private static extern bool FreeConsole();
+
         private static void ParseArgumentsAndRunCommand(string[] args)
         {
             var commandName = string.Empty;
@@ -96,16 +96,18 @@ namespace ChocolateyGui
             var regularOutput = true;
 
             optionSet
-                .Add("?|help|h",
+                .Add(
+                    "?|help|h",
                     "Prints out the help menu.",
                     option => helpRequested = option != null)
-                .Add("n=|name=",
+                .Add(
+                    "n=|name=",
                     "Name - the name of the feature. Defaults to empty.",
                     option => featureName = option.remove_surrounding_quotes())
-                .Add("r|limitoutput|limit-output",
+                .Add(
+                    "r|limitoutput|limit-output",
                     "LimitOutput - Limit the output to essential information",
-                    option => regularOutput = option == null)
-                ;
+                    option => regularOutput = option == null);
 
             IList<string> commandArgs = new List<string>();
 
@@ -152,7 +154,7 @@ namespace ChocolateyGui
             }
 
             var featureCommand = FeatureCommandType.unknown;
-            string unparsedCommand = unparsedArguments.DefaultIfEmpty(string.Empty).FirstOrDefault();
+            var unparsedCommand = unparsedArguments.DefaultIfEmpty(string.Empty).FirstOrDefault();
             Enum.TryParse(unparsedCommand, true, out featureCommand);
             if (featureCommand == FeatureCommandType.unknown)
             {
@@ -173,25 +175,24 @@ namespace ChocolateyGui
 
             var database = new LiteDatabase($"filename={Path.Combine(localAppDataPath, "data.db")};upgrade=true");
             var configService = new ConfigService(database);
+            var configuration = configService.GetSettings();
 
             switch (featureCommand)
             {
                 case FeatureCommandType.list:
-                    ListFeatures(configService, regularOutput);
+                    ListFeatures(configuration, regularOutput);
                     break;
                 case FeatureCommandType.disable:
-                    DisableFeature(configService, featureName);
+                    DisableFeature(configService, configuration, featureName);
                     break;
                 case FeatureCommandType.enable:
-                    EnableFeature(configService, featureName);
+                    EnableFeature(configService, configuration, featureName);
                     break;
             }
         }
 
-        private static void ListFeatures(IConfigService configService, bool regularOutput)
+        private static void ListFeatures(AppConfiguration configuration, bool regularOutput)
         {
-            var settings = configService.GetSettings();
-
             var properties = typeof(AppConfiguration).GetProperties();
             foreach (var property in properties)
             {
@@ -203,7 +204,7 @@ namespace ChocolateyGui
                     var attribute = attributes.Length > 0 ? (LocalizedDescriptionAttribute)attributes[0] : null;
                     var descriptionText = attribute?.Description;
 
-                    var propertyValue = (bool)property.GetValue(settings);
+                    var propertyValue = (bool)property.GetValue(configuration);
 
                     if (regularOutput)
                     {
@@ -217,51 +218,56 @@ namespace ChocolateyGui
             }
         }
 
-        private static void DisableFeature(IConfigService configService, string featureName)
+        private static PropertyInfo GetFeatureProperty(string featureName)
         {
             var featureProperty = typeof(AppConfiguration).GetProperties().FirstOrDefault(f => f.Name.ToLowerInvariant() == featureName.ToLowerInvariant());
+
             if (featureProperty == null)
             {
                 Console.WriteLine("Feature '{0}' not found", featureName);
-                return;
+                Environment.Exit(-1);
             }
 
-            var settings = configService.GetSettings();
-            var featureValue = (bool)featureProperty.GetValue(settings);
+            return featureProperty;
+        }
+
+        private static bool GetFeatureValue(AppConfiguration configuration, PropertyInfo featureProperty)
+        {
+            var featureValue = (bool)featureProperty.GetValue(configuration);
+            return featureValue;
+        }
+
+        private static void DisableFeature(IConfigService configService, AppConfiguration configuration, string featureName)
+        {
+            var featureProperty = GetFeatureProperty(featureName);
+            var featureValue = GetFeatureValue(configuration, featureProperty);
 
             if (featureValue)
             {
-                featureProperty.SetValue(settings, false);
-                configService.UpdateSettings(settings);
+                featureProperty.SetValue(configuration, false);
+                configService.UpdateSettings(configuration);
                 Console.WriteLine("Disabled {0}", featureName);
             }
             else
             {
-                Console.WriteLine(NO_CHANGE_MESSAGE);
+                Console.WriteLine(NoChangeMessage);
             }
         }
 
-        private static void EnableFeature(IConfigService configService, string featureName)
+        private static void EnableFeature(IConfigService configService, AppConfiguration configuration, string featureName)
         {
-            var featureProperty = typeof(AppConfiguration).GetProperties().FirstOrDefault(f => f.Name.ToLowerInvariant() == featureName.ToLowerInvariant());
-            if (featureProperty == null)
-            {
-                Console.WriteLine("Feature '{0}' not found", featureName);
-                return;
-            }
-
-            var settings = configService.GetSettings();
-            var featureValue = (bool)featureProperty.GetValue(settings);
+            var featureProperty = GetFeatureProperty(featureName);
+            var featureValue = GetFeatureValue(configuration, featureProperty);
 
             if (!featureValue)
             {
-                featureProperty.SetValue(settings, true);
-                configService.UpdateSettings(settings);
+                featureProperty.SetValue(configuration, true);
+                configService.UpdateSettings(configuration);
                 Console.WriteLine("Enabled {0}", featureName);
             }
             else
             {
-                Console.WriteLine(NO_CHANGE_MESSAGE);
+                Console.WriteLine(NoChangeMessage);
             }
         }
 

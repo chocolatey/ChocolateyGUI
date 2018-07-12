@@ -226,7 +226,7 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Attributes\LocalisedDescriptionAttribute.cs" />
+    <Compile Include="Attributes\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Base\ConnectionClosedException.cs" />
     <Compile Include="ChocolateyExtensions.cs" />
     <Compile Include="Controls\MarkdownEx.cs" />

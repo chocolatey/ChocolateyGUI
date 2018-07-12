@@ -1415,7 +1415,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default to using the Tile View for the Local Source View.  It is still possible to toggle between Tile and List view when running the application..
+        ///   Looks up a localized string similar to Default to tile instead of list view. It is still possible to switch during use..
         /// </summary>
         public static string SettingsView_ToggleDefaultTileViewLocalDescription {
             get {
@@ -1433,7 +1433,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deafult to using the Tile View for all Remote Sources.  It is still possible to toggle between Tile and List view when running the application..
+        ///   Looks up a localized string similar to Default to tile instead of list view. It is still possible to switch during use..
         /// </summary>
         public static string SettingsView_ToggleDefaultTileViewRemoteDescription {
             get {
@@ -1451,7 +1451,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When a long running process is happening in the application, enabling this option will show all console output from the commands being executed..
+        ///   Looks up a localized string similar to Shows output from the commands being executed when a job is running..
         /// </summary>
         public static string SettingsView_ToggleShowConsoleOutputDescription {
             get {
@@ -1469,7 +1469,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When enabled, after a small delay, changing the search term on a Remote Source will cause the query to immediately be executed.  When disabled, it is necessary to manaully trigger the search by clicking the search button..
+        ///   Looks up a localized string similar to Enables live search, which returns results after a short delay without clicking the search button..
         /// </summary>
         public static string SettingsView_ToggleUseDelayedSearchDescription {
             get {

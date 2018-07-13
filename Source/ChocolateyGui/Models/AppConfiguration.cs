@@ -4,18 +4,24 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using ChocolateyGui.Attributes;
+
 namespace ChocolateyGui.Models
 {
     public class AppConfiguration
     {
         public string Id { get; set; }
 
+        [LocalizedDescription("SettingsView_ToggleShowConsoleOutputDescription")]
         public bool ShowConsoleOutput { get; set; }
 
+        [LocalizedDescription("SettingsView_ToggleDefaultTileViewLocalDescription")]
         public bool DefaultToTileViewForLocalSource { get; set; }
 
+        [LocalizedDescription("SettingsView_ToggleDefaultTileViewRemoteDescription")]
         public bool DefaultToTileViewForRemoteSource { get; set; }
 
+        [LocalizedDescription("SettingsView_ToggleUseDelayedSearchDescription")]
         public bool UseDelayedSearch { get; set; }
     }
 }

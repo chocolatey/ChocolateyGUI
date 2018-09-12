@@ -1,4 +1,5 @@
 ---
+Order: 10
 Description: Localization In Chocolatey GUI
 ---
 

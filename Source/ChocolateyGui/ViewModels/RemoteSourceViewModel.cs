@@ -63,8 +63,6 @@ namespace ChocolateyGui.ViewModels
             _eventAggregator = eventAggregator;
             _mapper = mapper;
 
-            ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
-
             Packages = new ObservableCollection<IPackageViewModel>();
             DisplayName = source.Id;
 
@@ -284,6 +282,8 @@ namespace ChocolateyGui.ViewModels
         {
             try
             {
+                ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
+
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
                     .Subscribe(eventPattern =>

@@ -64,8 +64,6 @@ namespace ChocolateyGui.ViewModels
             _persistenceService = persistenceService;
             _configService = configService;
 
-            ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
-
             DisplayName = displayName;
 
             _packages = new List<IPackageViewModel>();
@@ -285,9 +283,16 @@ namespace ChocolateyGui.ViewModels
                     return;
                 }
 
+                ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
+
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
-                    .Subscribe(eventPattern => ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard);
+                    .Subscribe(eventPattern =>
+                    {
+                        ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForLocalSource
+                                ? ListViewMode.Tile
+                                : ListViewMode.Standard;
+                    });
 
                 await LoadPackages();
 

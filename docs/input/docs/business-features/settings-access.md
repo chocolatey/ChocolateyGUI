@@ -20,6 +20,6 @@ When this setting is turned off, a non-admin user will no longer be able to acce
 
 # Resources
 
-To view a short video about how this setting can be applied, click on the image below:
+Below is a short video which shows this feature in action:
 
-[![Chocolatey GUI for Business Access to Settings](http://img.youtube.com/vi/VCTHWo7cgW0/0.jpg)](http://www.youtube.com/watch?v=VCTHWo7cgW0 "Chocolatey GUI for Business Access to Settings")
+<iframe width="900" height="506" src="https://www.youtube.com/embed/VCTHWo7cgW0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

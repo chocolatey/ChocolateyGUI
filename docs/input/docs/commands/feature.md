@@ -33,6 +33,6 @@ chocolateygui feature enable -n-bob
 
 # Resources
 
-To view a short video about how this command is used, click on the image below:
+Below is a short video which shows this in action:
 
-[![Chocolatey GUI Feature Command](http://img.youtube.com/vi/_AkDNQFoCtc/0.jpg)](http://www.youtube.com/watch?v=_AkDNQFoCtc "Chocolatey GUI Feature Command")
+<iframe width="900" height="506" src="https://www.youtube.com/embed/_AkDNQFoCtc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

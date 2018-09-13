@@ -289,7 +289,7 @@ namespace ChocolateyGui.ViewModels
                     .ObserveOnDispatcher()
                     .Subscribe(eventPattern =>
                     {
-                        ListViewMode = ((AppConfiguration) eventPattern.Sender).DefaultToTileViewForLocalSource
+                        ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForLocalSource
                                 ? ListViewMode.Tile
                                 : ListViewMode.Standard;
                     });

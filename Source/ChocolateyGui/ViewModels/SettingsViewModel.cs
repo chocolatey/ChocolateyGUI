@@ -154,6 +154,7 @@ namespace ChocolateyGui.ViewModels
 
                 NotifyOfPropertyChange(nameof(CanSave));
                 NotifyOfPropertyChange(nameof(CanRemove));
+                NotifyOfPropertyChange(nameof(CanCanel));
             }
         }
 
@@ -272,7 +273,7 @@ namespace ChocolateyGui.ViewModels
 
         public void Cancel()
         {
-            SelectedSource = null;
+            DraftSource = new ChocolateySource(SelectedSource);
         }
 
         public void Back()

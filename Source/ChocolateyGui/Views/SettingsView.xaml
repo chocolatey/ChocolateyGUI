@@ -135,6 +135,7 @@
                                Grid.Row="1" Grid.Column="0"
                                CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
                                cal:Message.Attach="[Event SelectionChanged] = [Action SourceSelectionChanged(SourcesGrid.CurrentItem)]"
+                               SelectionMode="Single"
                                ItemsSource="{Binding Sources}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesId}" Width="*" Binding="{Binding Id}"/>

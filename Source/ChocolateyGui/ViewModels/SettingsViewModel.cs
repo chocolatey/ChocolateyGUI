@@ -247,10 +247,10 @@ namespace ChocolateyGui.ViewModels
                 else
                 {
                     await _packageService.UpdateSource(_originalId, DraftSource);
+                    Sources[Sources.IndexOf(SelectedSource)] = DraftSource;
                 }
 
                 _originalId = DraftSource?.Id;
-                SelectedSource.Update(DraftSource);
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
             }
             catch (UnauthorizedAccessException)

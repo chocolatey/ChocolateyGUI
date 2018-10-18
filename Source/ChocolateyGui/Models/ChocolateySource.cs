@@ -12,7 +12,22 @@ namespace ChocolateyGui.Models
     {
         public ChocolateySource(ChocolateySource source)
         {
-            Update(source);
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            Id = source.Id;
+            Value = source.Value;
+            Disabled = source.Disabled;
+            UserName = source.UserName;
+            Password = source.Password;
+            Priority = source.Priority;
+            Certificate = source.Certificate;
+            CertificatePassword = source.CertificatePassword;
+            BypassProxy = source.BypassProxy;
+            AllowSelfService = source.AllowSelfService;
+            VisibleToAdminsOnly = source.VisibleToAdminsOnly;
         }
 
         public ChocolateySource()
@@ -103,26 +118,6 @@ namespace ChocolateyGui.Models
                 hashCode = (hashCode * 397) ^ VisibleToAdminsOnly.GetHashCode();
                 return hashCode;
             }
-        }
-
-        public void Update(ChocolateySource source)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            Id = source.Id;
-            Value = source.Value;
-            Disabled = source.Disabled;
-            UserName = source.UserName;
-            Password = source.Password;
-            Priority = source.Priority;
-            Certificate = source.Certificate;
-            CertificatePassword = source.CertificatePassword;
-            BypassProxy = source.BypassProxy;
-            AllowSelfService = source.AllowSelfService;
-            VisibleToAdminsOnly = source.VisibleToAdminsOnly;
         }
     }
 }

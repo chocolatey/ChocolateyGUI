@@ -9,6 +9,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
+             xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
              mc:Ignorable="d"
              Background="{StaticResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel, IsDesignTimeCreatable=False}"
@@ -21,6 +22,7 @@
             <Setter Property="OffLabel" Value="{x:Static lang:Resources.SettingsView_Off}"/>
         </Style>
 
+        <converters:NullToValue x:Key="NullToFalse" TrueValue="False" FalseValue="True" />
         <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
 
         <DataTemplate x:Key="ChocolateyGUISettingTemplate" DataType="models:ChocolateyGUISetting">
@@ -194,7 +196,7 @@
                                 </Style>
                                 <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
                                     <Setter Property="Margin" Value="10 0 0 0 "/>
-                                    <Setter Property="IsEnabled" Value="{Binding DraftSource}"/>
+                                    <Setter Property="IsEnabled" Value="{Binding DraftSource, Converter={StaticResource NullToFalse}}"/>
                                 </Style>
                                 <Style TargetType="{x:Type metro:NumericUpDown}" BasedOn="{StaticResource {x:Type metro:NumericUpDown}}">
                                     <Setter Property="Margin" Value="5 "/>

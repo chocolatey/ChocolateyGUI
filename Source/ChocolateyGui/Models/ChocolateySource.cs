@@ -10,6 +10,30 @@ namespace ChocolateyGui.Models
 {
     public class ChocolateySource : IEquatable<ChocolateySource>
     {
+        public ChocolateySource(ChocolateySource source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            Id = source.Id;
+            Value = source.Value;
+            Disabled = source.Disabled;
+            UserName = source.UserName;
+            Password = source.Password;
+            Priority = source.Priority;
+            Certificate = source.Certificate;
+            CertificatePassword = source.CertificatePassword;
+            BypassProxy = source.BypassProxy;
+            AllowSelfService = source.AllowSelfService;
+            VisibleToAdminsOnly = source.VisibleToAdminsOnly;
+        }
+
+        public ChocolateySource()
+        {
+        }
+
         public string Id { get; set; }
 
         public string Value { get; set; }

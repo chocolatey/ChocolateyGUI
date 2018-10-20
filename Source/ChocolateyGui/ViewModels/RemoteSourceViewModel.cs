@@ -234,7 +234,7 @@ namespace ChocolateyGui.ViewModels
                     var installed = await _chocolateyPackageService.GetInstalledPackages();
                     var outdated = await _chocolateyPackageService.GetOutdatedPackages();
 
-                    PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
+                    PageCount = (int)Math.Ceiling((double)result.TotalCount / (double)PageSize);
                     Packages.Clear();
                     result.Packages.ToList().ForEach(p =>
                     {

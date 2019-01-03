@@ -215,3 +215,9 @@ config.wyam.hash
 
 # Auto-generated docs
 docs/input/tasks
+
+# Vagrant
+.vagrant/
+
+# Mac
+.DS_Store

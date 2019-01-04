@@ -76,7 +76,7 @@ System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalizatio
 application.Run();
 ```
 
-**NOTE:** If you are unsure what you should replace `<lang>` with, refer to [here](https://msdn.microsoft.com/en-us/library/cc233982.aspx)
+**NOTE:** If you are unsure what you should replace `<lang>` with, a list of available cultures and their corresponding codes tags can be found [here](https://msdn.microsoft.com/en-us/library/cc233982.aspx).
 
 **NOTE:** There is an [open issue](https://github.com/chocolatey/ChocolateyGUI/issues/533) that would allow runtime modification of the current locale, but this hasn't been implemented yet.
 Once this has been implemented, this code change will no longer be required.

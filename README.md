@@ -79,9 +79,14 @@ If you would like to contribute code or help squash a bug or two, that's awesome
 
 ### Building
 
+* It is assumed that a version of Visual Studio 2017 is already installed on the machine being used to complete the build
 * `choco install wixtoolset -y`
-* If you have Visual Studio 2017 installed, you may need to set `FXCOPDIR` environment variable. You can typically find that at `"C:\Program Files (x86)\Microsoft Visual Studio\2017\<sku>\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"`. Run something like `[Environment]::SetEnvironmentVariable("FXCOPDIR","C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Team Tools\Static Analysis Tools\FxCop", 'User')` (for build machines, use `Machine` instead of `User`).
-* Run `build.ps1`, this will run Cake and it will go through the build script.
+* **OPTIONAL:** If you have Visual Studio 2017 installed, you may need to set `FXCOPDIR` environment variable. You can typically find that at `"C:\Program Files (x86)\Microsoft Visual Studio\2017\<sku>\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"`. Run something like `[Environment]::SetEnvironmentVariable("FXCOPDIR","C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Team Tools\Static Analysis Tools\FxCop", 'User')` (for build machines, use `Machine` instead of `User`).
+* From and Administrative PowerShell Window, navigate to the folder where you have cloned the Chocolatey GUI repository and run `build.ps1`, this will run Cake and it will go through the build script.
+
+### Localization
+
+If you are interested in helping with the effort in translating the various portions of the Chocolatey GUI UI into different languages, you can find out more about using the [transifex](https://www.transifex.com/) service in this [how to article](https://chocolatey.github.io/ChocolateyGUI/docs/localization-howto).
 
 ## Committers
 

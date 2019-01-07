@@ -37,6 +37,7 @@ If a language hasn't yet been created for the Chocolatey GUI project that you wo
 This can be done via the [Chocolatey GUI dashboard](https://www.transifex.com/chocolatey/chocolatey-gui/dashboard/).
 **NOTE:** Adding a new language to the project will require approval.
 If a request goes unapproved for a period of time, reach out on the Chocolatey GUI [Gitter](https://gitter.im/chocolatey/ChocolateyGUI) room for help.
+**NOTE:** If you are requesting a new language that uses a full language code, for example `zh_CN` rather than a language code similar to `de`, please get in touch with one of the project maintainers, as a Pull Request similar to [this](https://github.com/chocolatey/ChocolateyGUI/pull/634) will be required.
 
 ## Testing Other Languages
 

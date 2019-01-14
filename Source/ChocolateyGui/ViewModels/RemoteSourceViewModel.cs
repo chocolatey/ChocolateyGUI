@@ -22,7 +22,9 @@ using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
+using NuGet;
 using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.ViewModels
 {
@@ -238,6 +240,7 @@ namespace ChocolateyGui.ViewModels
 
                     PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
                     Packages.Clear();
+
                     result.Packages.ToList().ForEach(p =>
                     {
                         if (installed.Any(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)))
@@ -251,6 +254,11 @@ namespace ChocolateyGui.ViewModels
 
                         Packages.Add(Mapper.Map<IPackageViewModel>(p));
                     });
+
+                    if (_configService.GetSettings().ExcludeInstalledSoftware)
+                    {
+                        Packages.RemoveAll(x => x.IsInstalled);
+                    }
 
                     if (PageCount < CurrentPage)
                     {

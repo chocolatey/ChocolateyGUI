@@ -49,6 +49,7 @@
                             <metro:ToggleSwitch Header="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewLocal}" IsChecked="{Binding DefaultToTileViewForLocalSource}"/>
                             <metro:ToggleSwitch Header="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewRemote}" IsChecked="{Binding DefaultToTileViewForRemoteSource}"/>
                             <metro:ToggleSwitch Header="{x:Static lang:Resources.SettingsView_UseDelayedSearch}" IsChecked="{Binding UseDelayedSearch}" />
+                            <metro:ToggleSwitch Header="{x:Static lang:Resources.SettingsView_ExcludeInstalledSoftware}" IsChecked="{Binding ExcludeInstalledSoftware}"/>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="1" Background="White" Margin="5">

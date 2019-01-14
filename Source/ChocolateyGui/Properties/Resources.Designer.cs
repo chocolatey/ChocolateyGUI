@@ -1451,6 +1451,24 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exclude installed packages.
+        /// </summary>
+        public static string SettingsView_ToggleExcludeInstalledPackages {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleExcludeInstalledPackages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not show packages that are already installed when viewing sources.
+        /// </summary>
+        public static string SettingsView_ToggleExcludeInstalledPackagesDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleExcludeInstalledPackagesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shows output from the commands being executed when a job is running..
         /// </summary>
         public static string SettingsView_ToggleShowConsoleOutputDescription {

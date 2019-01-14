@@ -32,7 +32,8 @@ namespace ChocolateyGui.ViewModels
                                                                            nameof(ShowConsoleOutput),
                                                                            nameof(DefaultToTileViewForLocalSource),
                                                                            nameof(DefaultToTileViewForRemoteSource),
-                                                                           nameof(UseDelayedSearch)
+                                                                           nameof(UseDelayedSearch),
+                                                                           nameof(ExcludeInstalledPackages)
                                                                        };
 
         private readonly IChocolateyService _packageService;
@@ -123,6 +124,20 @@ namespace ChocolateyGui.ViewModels
             set
             {
                 _config.UseDelayedSearch = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public bool ExcludeInstalledPackages
+        {
+            get
+            {
+                return _config.ExcludeInstalledPackages;
+            }
+
+            set
+            {
+                _config.ExcludeInstalledPackages = value;
                 NotifyOfPropertyChange();
             }
         }

@@ -23,5 +23,8 @@ namespace ChocolateyGui.Models
 
         [LocalizedDescription("SettingsView_ToggleUseDelayedSearchDescription")]
         public bool UseDelayedSearch { get; set; }
+
+        [LocalizedDescription("SettingsView_ToggleExcludeInstalledPackagesDescription")]
+        public bool ExcludeInstalledPackages { get; set; }
     }
 }

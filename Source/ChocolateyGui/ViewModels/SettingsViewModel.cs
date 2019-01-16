@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="SettingsViewModel.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
@@ -17,6 +17,8 @@ using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
+using ChocolateyGui.Startup;
+using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using Serilog;
 using ILogger = Serilog.ILogger;
@@ -32,7 +34,8 @@ namespace ChocolateyGui.ViewModels
                                                                            nameof(ShowConsoleOutput),
                                                                            nameof(DefaultToTileViewForLocalSource),
                                                                            nameof(DefaultToTileViewForRemoteSource),
-                                                                           nameof(UseDelayedSearch)
+                                                                           nameof(UseDelayedSearch),
+                                                                           nameof(UseLanguage)
                                                                        };
 
         private readonly IChocolateyService _packageService;
@@ -126,6 +129,27 @@ namespace ChocolateyGui.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+
+        public string UseLanguage
+        {
+            get
+            {
+                return _config.UseLanguage;
+            }
+
+            set
+            {
+                _config.UseLanguage = value;
+                NotifyOfPropertyChange();
+                Internationalization.UpdateLanguage(value);
+            }
+        }
+
+        public ObservableCollection<string> AllLanguages { get; } = new ObservableCollection<string>
+        {
+            "en",
+            "nb"
+        };
 
         public bool CanSave => SelectedSource != null;
 

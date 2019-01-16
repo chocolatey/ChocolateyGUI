@@ -657,4 +657,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_UseDelayedSearchTitle" xml:space="preserve">
     <value>Use Delayed Search</value>
   </data>
+  <data name="SettingsView_SelectedLanguage" xml:space="preserve">
+    <value>Selected Language</value>
+  </data>
 </root>

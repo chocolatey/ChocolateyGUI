@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="AppConfiguration.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
@@ -23,5 +23,8 @@ namespace ChocolateyGui.Models
 
         [LocalizedDescription("SettingsView_ToggleUseDelayedSearchDescription")]
         public bool UseDelayedSearch { get; set; }
+
+        [LocalizedDescription("SettingsView_SelectedLanguage")]
+        public string UseLanguage { get; set; }
     }
 }

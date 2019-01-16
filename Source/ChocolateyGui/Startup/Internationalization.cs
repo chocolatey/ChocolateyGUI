@@ -1,4 +1,4 @@
-﻿// <copyright file="Internationalization.cs" company="Chocolatey">
+// <copyright file="Internationalization.cs" company="Chocolatey">
 // Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 

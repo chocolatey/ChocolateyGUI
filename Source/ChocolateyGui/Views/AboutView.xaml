@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ChocolateyGui.Views.AboutView"
+<UserControl x:Class="ChocolateyGui.Views.AboutView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:ChocolateyGui.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
-             xmlns:lang="clr-namespace:ChocolateyGui.Properties"
+             xmlns:lang="clr-namespace:ChocolateyGui.Extensions"
              xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
              mc:Ignorable="d"
              Background="{StaticResource BackgroundColorBrush}"
@@ -25,10 +25,10 @@
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-            <TextBlock Text="{x:Static lang:Resources.AboutView_About}" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Text="{lang:Localize AboutView_About}" Style="{StaticResource TitleTextStyle}" />
         </StackPanel>
         <TabControl Background="Transparent" metro:TabControlHelper.Underlined="TabPanel">
-            <TabItem Header="{x:Static lang:Resources.AboutView_History}">
+            <TabItem Header="{lang:Localize AboutView_History}">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -45,7 +45,7 @@
                             controls:MarkdownEx.Url="pack://application:,,,/../../Resources/ABOUT.md" />
                 </Grid>
             </TabItem>
-            <TabItem Header="{x:Static lang:Resources.AboutView_Credits}">
+            <TabItem Header="{lang:Localize AboutView_Credits}">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -62,7 +62,7 @@
                             controls:MarkdownEx.Url="pack://application:,,,/../../Resources/CREDITS.md" />
                 </Grid>
             </TabItem>
-            <TabItem Header="{x:Static lang:Resources.AboutView_ReleaseNotes}">
+            <TabItem Header="{lang:Localize AboutView_ReleaseNotes}">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

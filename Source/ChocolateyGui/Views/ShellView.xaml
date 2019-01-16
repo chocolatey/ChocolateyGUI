@@ -1,4 +1,4 @@
-﻿<metro:MetroWindow x:Class="ChocolateyGui.Views.ShellView"
+<metro:MetroWindow x:Class="ChocolateyGui.Views.ShellView"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
                    xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:cal="http://www.caliburnproject.org"
-                   xmlns:lang="clr-namespace:ChocolateyGui.Properties"
+                   xmlns:lang="clr-namespace:ChocolateyGui.Extensions"
                    mc:Ignorable="d"
                    Height="768" Width="1366"
                    GlowBrush="{StaticResource HighlightBrush}"
@@ -35,10 +35,10 @@
         <metro:WindowCommands>
             <Button x:Name="ShowSettings"
                     IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"
-                    Content="{x:Static lang:Resources.ShellView_ButtonSettings}" ClickMode="Release" cal:Message.Attach="ShowSettings()"/>
+                    Content="{lang:Localize ShellView_ButtonSettings}" ClickMode="Release" cal:Message.Attach="ShowSettings()" />
             <Button x:Name="ShowAbout"
                     IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"
-                    Content="{x:Static lang:Resources.ShellView_ButtonAbout}" ClickMode="Release" cal:Message.Attach="ShowAbout()"/>
+                    Content="{lang:Localize ShellView_ButtonAbout}" ClickMode="Release" cal:Message.Attach="ShowAbout()" />
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 

@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,7 +9,7 @@
                     xmlns:commands="clr-namespace:ChocolateyGui.Commands"
                     xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
                     xmlns:app="clr-namespace:ChocolateyGui"
-                    xmlns:lang="clr-namespace:ChocolateyGui.Properties"
+                    xmlns:lang="clr-namespace:ChocolateyGui.Extensions"
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -451,10 +451,10 @@
     <ContextMenu x:Key="PackagesContextMenu"
                  DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
                  d:DataContext="{d:DesignInstance Type=items:PackageViewModel}">
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuInstall}" Icon="{StaticResource PrimaryUacIcon}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuInstall}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
                   Command="{commands:DataContextCommandAdapter Install}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuPin}" Icon="{StaticResource TertiaryUacIcon}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuPin}" Icon="{StaticResource TertiaryUacIcon}"
                   Command="{commands:DataContextCommandAdapter Pin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -463,7 +463,7 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUnpin}" Icon="{StaticResource TertiaryUacIcon}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuUnpin}" Icon="{StaticResource TertiaryUacIcon}"
                   Command="{commands:DataContextCommandAdapter Unpin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -472,16 +472,16 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUninstall}" Icon="{StaticResource PrimaryUacIcon}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuUninstall}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Uninstall}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuReinstall}" Icon="{StaticResource PrimaryUacIcon}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuReinstall}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Reinstall}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUpdate}" Icon="{StaticResource PrimaryUacIcon}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuUpdate}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Update}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuDetails}" Command="{commands:DataContextCommandAdapter ViewDetails}" />
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuDetails}" Command="{commands:DataContextCommandAdapter ViewDetails}" />
     </ContextMenu>
 
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}">

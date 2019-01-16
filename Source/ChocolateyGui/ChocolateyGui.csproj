@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -310,6 +310,7 @@
     <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
     <Compile Include="Utilities\IDataGridColumnComparer.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
+    <Compile Include="Utilities\TranslationSource.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\ISourceViewModelBase.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />

@@ -22,6 +22,7 @@ using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
+using ChocolateyGui.Utilities;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.ViewModels.Items;
 using Serilog;
@@ -49,6 +50,7 @@ namespace ChocolateyGui.ViewModels
         private bool _isLoading;
         private bool _firstLoadIncomplete = true;
         private ListViewMode _listViewMode;
+        private string _resourceId;
 
         public LocalSourceViewModel(
             IChocolateyService chocolateyService,
@@ -57,14 +59,27 @@ namespace ChocolateyGui.ViewModels
             IConfigService configService,
             IEventAggregator eventAggregator,
             string displayName,
-            IMapper mapper)
+            IMapper mapper,
+            TranslationSource translator)
         {
             _chocolateyService = chocolateyService;
             _progressService = progressService;
             _persistenceService = persistenceService;
             _configService = configService;
 
-            DisplayName = displayName;
+            if (displayName[0] == '[' && displayName[displayName.Length - 1] == ']')
+            {
+                _resourceId = displayName.Trim('[', ']');
+                DisplayName = translator[_resourceId];
+                translator.PropertyChanged += (sender, e) =>
+                {
+                    DisplayName = translator[_resourceId];
+                };
+            }
+            else
+            {
+                DisplayName = displayName;
+            }
 
             _packages = new List<IPackageViewModel>();
             Packages = new ObservableCollection<IPackageViewModel>();

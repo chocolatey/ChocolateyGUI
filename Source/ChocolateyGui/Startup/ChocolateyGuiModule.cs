@@ -16,6 +16,7 @@ using chocolatey.infrastructure.app.services;
 using ChocolateyGui.Models;
 using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
+using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels;
 using ChocolateyGui.ViewModels.Items;
 using ChocolateyGui.Views;
@@ -89,6 +90,8 @@ namespace ChocolateyGui.Startup
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
             builder.Register(c => new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true"))
                 .SingleInstance();
+
+            builder.Register(c => TranslationSource.Instance).SingleInstance();
         }
     }
 }

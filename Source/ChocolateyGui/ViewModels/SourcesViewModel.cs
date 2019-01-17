@@ -15,6 +15,7 @@ using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
+using ChocolateyGui.Utilities;
 
 namespace ChocolateyGui.ViewModels
 {
@@ -44,7 +45,7 @@ namespace ChocolateyGui.ViewModels
                 throw new ArgumentNullException(nameof(remoteSourceVmFactory));
             }
 
-            Items.Add(localSourceVmFactory(Resources.Resources_ThisPC));
+            Items.Add(localSourceVmFactory("[Resources_ThisPC]"));
 
 #pragma warning disable 4014
             LoadSources();

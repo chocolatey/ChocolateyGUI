@@ -14,7 +14,7 @@ namespace ChocolateyGui.Utilities
     public sealed class TranslationSource : ObservableBase
     {
         private readonly ResourceManager resourceManager = Resources.ResourceManager;
-        private CultureInfo currentCulture = null;
+        private CultureInfo currentCulture;
 
         public static TranslationSource Instance { get; } = new TranslationSource();
 
@@ -27,7 +27,7 @@ namespace ChocolateyGui.Utilities
 
             set
             {
-                if (currentCulture != value)
+                if (!object.Equals(currentCulture, value))
                 {
                     currentCulture = value;
                     NotifyPropertyChanged(string.Empty); // We call with an empty string on purpose to force an update for all resource strings.

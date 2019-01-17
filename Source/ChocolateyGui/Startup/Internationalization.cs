@@ -20,9 +20,12 @@ namespace ChocolateyGui.Startup
 
         public static void UpdateLanguage(string languageCode)
         {
-            TranslationSource.Instance.CurrentCulture = CultureInfo.GetCultureInfo(languageCode);
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.DefaultThreadCurrentUICulture = TranslationSource.Instance.CurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture = CultureInfo.DefaultThreadCurrentCulture;
+            var culture = CultureInfo.GetCultureInfo(languageCode);
+            TranslationSource.Instance.CurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
         }
     }
 }

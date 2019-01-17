@@ -77,15 +77,18 @@
                         </Grid.RowDefinitions>
                         <TextBlock Margin="5 5 5 3" Style="{StaticResource SubheaderTextBlockStyle}" Text="{lang:Localize SettingsView_ChocoGui}" />
                         <ScrollViewer Margin="5 0" Grid.Row="1" Width="300" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto">
-                            <ItemsControl ItemTemplate="{StaticResource ChocolateyGUISettingTemplate}">
-                                <ItemsControl.Items>
-                                    <metro:SplitButton ItemsSource="{Binding Source={StaticResource BindingProxy}, Path=Data.AllLanguages}" SelectedItem="{Binding Source={StaticResource BindingProxy}, Path=Data.UseLanguage}" />
-                                    <models:ChocolateyGUISetting Title="{lang:Localize SettingsView_ToggleShowConsoleOutputTitle}" Description="{lang:Localize SettingsView_ToggleShowConsoleOutputDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowConsoleOutput}" />
-                                    <models:ChocolateyGUISetting Title="{lang:Localize SettingsView_ToggleDefaultTileViewLocalTitle}" Description="{lang:Localize SettingsView_ToggleDefaultTileViewLocalDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForLocalSource}" />
-                                    <models:ChocolateyGUISetting Title="{lang:Localize SettingsView_ToggleDefaultTileViewRemoteTitle}" Description="{lang:Localize SettingsView_ToggleDefaultTileViewRemoteDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForRemoteSource}" />
-                                    <models:ChocolateyGUISetting Title="{lang:Localize SettingsView_UseDelayedSearchTitle}" Description="{lang:Localize SettingsView_ToggleUseDelayedSearchDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.UseDelayedSearch}" />
-                                </ItemsControl.Items>
-                            </ItemsControl>
+                            <StackPanel>
+                                <TextBlock Text="{lang:Localize SettingsView_SelectedLanguage}" Style="{StaticResource BaseAltTextBlockStyle}" TextWrapping="Wrap" />
+                                <ComboBox ItemsSource="{Binding AllLanguages}" SelectedValue="{Binding UseLanguage}" />
+                                <ItemsControl ItemTemplate="{StaticResource ChocolateyGUISettingTemplate}">
+                                    <ItemsControl.Items>
+                                        <models:ChocolateyGUISetting Title="{lang:Localize SettingsView_ToggleShowConsoleOutputTitle}" Description="{lang:Localize SettingsView_ToggleShowConsoleOutputDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowConsoleOutput}" />
+                                        <models:ChocolateyGUISetting Title="{lang:Localize SettingsView_ToggleDefaultTileViewLocalTitle}" Description="{lang:Localize SettingsView_ToggleDefaultTileViewLocalDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForLocalSource}" />
+                                        <models:ChocolateyGUISetting Title="{lang:Localize SettingsView_ToggleDefaultTileViewRemoteTitle}" Description="{lang:Localize SettingsView_ToggleDefaultTileViewRemoteDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForRemoteSource}" />
+                                        <models:ChocolateyGUISetting Title="{lang:Localize SettingsView_UseDelayedSearchTitle}" Description="{lang:Localize SettingsView_ToggleUseDelayedSearchDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.UseDelayedSearch}" />
+                                    </ItemsControl.Items>
+                                </ItemsControl>
+                            </StackPanel>
                         </ScrollViewer>
                     </Grid>
                     <Grid Grid.Column="1" Background="White" Margin="5">

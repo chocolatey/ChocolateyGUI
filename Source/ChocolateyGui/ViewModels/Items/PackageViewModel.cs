@@ -593,7 +593,7 @@ namespace ChocolateyGui.ViewModels.Items
 
         public void Handle(PackageHasUpdateMessage message)
         {
-            if (message.Id != Id)
+            if (!string.Equals(message.Id, Id, StringComparison.OrdinalIgnoreCase))
             {
                 return;
             }

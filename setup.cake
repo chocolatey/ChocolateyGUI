@@ -1,4 +1,5 @@
-#load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease
+#module nuget:?package=Cake.Chocolatey.Module&version=0.3.0
+#load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&version=0.3.0-unstable0457
 #tool choco:?package=transifex-client&version=0.12.4
 
 if(BuildSystem.IsLocalBuild)
@@ -33,7 +34,9 @@ BuildParameters.SetParameters(context: Context,
                             shouldExecuteGitLink: false);
 
 ToolSettings.SetToolSettings(context: Context,
-                             buildPlatformTarget: PlatformTarget.x86);
+                             dupFinderExcludePattern: new string[] {
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Converters/BooleanToVisibilityInverted.cs"
+                            });
 
 //var SIGN_TOOL = EnvironmentVariable("SIGN_TOOL") ?? @"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\signtool.exe";
 var CERT_PATH = EnvironmentVariable("CHOCOLATEY_OFFICIAL_CERT") ?? "";
@@ -103,7 +106,7 @@ Task("BuildMSI")
         Information("Building MSI", BuildParameters.SolutionFilePath);
 
         var msbuildSettings = new MSBuildSettings()
-                .SetPlatformTarget(ToolSettings.BuildPlatformTarget)
+                .SetPlatformTarget(PlatformTarget.x86)
                 .UseToolVersion(ToolSettings.BuildMSBuildToolVersion)
                 .WithProperty("TreatWarningsAsErrors","true")
                 .WithProperty("MSBuildExtensionsPath32", "C:/Program Files (x86)/MSBuild")

@@ -21,6 +21,7 @@
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:BooleanToVisibilityInverted x:Key="BoolToVisInverted" />
         <converters:BooleanToVisibilityHidden x:Key="BoolToHidden" />
         <converters:StringListToString x:Key="ListToString" />
 
@@ -63,7 +64,7 @@
                 <ContentControl x:Name="OutOfDateOverlay" ClipToBounds="True" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed"
                                 IsTabStop="False"
                                 Focusable="False"
-                                Content="{x:Static lang:Resources.LocalSourceView_OverlayOutdated}"
+                                Content="{x:Static lang:Resources.LocalSourceView_Outdated}"
                                 Background="#A90000"
                                 Foreground="White"
                                 Template="{DynamicResource TileOverlayTemplate}" />
@@ -156,15 +157,15 @@
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
                         Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static lang:Resources.LocalSourceView_ButtonRefreshPkgs}" Margin="0,0,2,0">
-                    <iconPacks:PackIconFontAwesome Kind="Refresh" />
+                    <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
                 </Button>
                 <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
                         Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static lang:Resources.LocalSourceView_ButtonUpdateAll}" Margin="2,0,2,0">
                     <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconFontAwesome Kind="Refresh" />
-                        <iconPacks:PackIconFontAwesome Kind="Asterisk" Margin="2 0 0 0" />
+                        <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
+                        <iconPacks:PackIconFontAwesome Kind="AsteriskSolid" Margin="2 0 0 0" />
                     </StackPanel>
                 </Button>
                 <Button Command="{commands:DataContextCommandAdapter ExportAll, CanExportAll}"
@@ -173,7 +174,7 @@
                         Style="{DynamicResource IconFlatButtonStyle}"
                         ToolTip="{x:Static lang:Resources.LocalSourceView_ButtonExport}"
                         Margin="2,0,2,0">
-                    <iconPacks:PackIconFontAwesome Kind="FloppyOutline" />
+                    <iconPacks:PackIconFontAwesome Kind="SaveRegular" />
                 </Button>
                 <RadioButton Margin="6,0,1,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"
@@ -223,7 +224,30 @@
                                                             utilities:DataGridCustomSortBehavior.CustomComparer="{StaticResource PackageAuthorsComparer}"
                                                             Binding="{Binding Authors, Converter={StaticResource ListToString}}" Width="1*" />
                                         <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
-                                        <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_LatestVersion}" Binding="{Binding LatestVersion, IsAsync=True}" Width="1*" />
+                                        <DataGridTemplateColumn Width="0.7*"
+                                                                Header="{x:Static lang:Resources.LocalSourceView_Grid_LatestVersion}">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type items:IPackageViewModel}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="0.5*" />
+                                                            <ColumnDefinition Width="0.5*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding LatestVersion, IsAsync=True}" VerticalAlignment="Center" Grid.Column="0"/>
+                                                        <TextBlock Text="{x:Static lang:Resources.LocalSourceView_Outdated}"
+                                                                   Grid.Column="1"
+                                                                   Background="#A90000"
+                                                                   Foreground="White"
+                                                                   Padding="3"
+                                                                   VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"
+                                                                   TextAlignment="Center"
+                                                                   Visibility="{Binding IsLatestVersion, Converter={StaticResource BoolToVisInverted}}"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DataTemplate>

@@ -47,6 +47,7 @@ namespace ChocolateyGui.ViewModels
         private IDisposable _configSubscription;
         private AppConfiguration _config;
         private ChocolateySource _selectedSource;
+        private ChocolateySource _draftSource;
         private string _originalId;
         private bool _isNewItem;
 
@@ -145,7 +146,7 @@ namespace ChocolateyGui.ViewModels
 
         public bool CanRemove => SelectedSource != null && !_isNewItem;
 
-        public bool CanCanel => SelectedSource != null;
+        public bool CanCancel => SelectedSource != null;
 
         public ChocolateySource SelectedSource
         {
@@ -167,8 +168,23 @@ namespace ChocolateyGui.ViewModels
                     _originalId = value?.Id;
                 }
 
+                DraftSource = value == null ? null : new ChocolateySource(value);
                 NotifyOfPropertyChange(nameof(CanSave));
                 NotifyOfPropertyChange(nameof(CanRemove));
+                NotifyOfPropertyChange(nameof(CanCancel));
+            }
+        }
+
+        public ChocolateySource DraftSource
+        {
+            get
+            {
+                return _draftSource;
+            }
+
+            set
+            {
+                this.SetPropertyValue(ref _draftSource, value);
             }
         }
 
@@ -221,13 +237,13 @@ namespace ChocolateyGui.ViewModels
 
         public async void Save()
         {
-            if (string.IsNullOrWhiteSpace(SelectedSource.Id))
+            if (string.IsNullOrWhiteSpace(DraftSource.Id))
             {
                 await _progressService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingId);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(SelectedSource.Value))
+            if (string.IsNullOrWhiteSpace(DraftSource.Value))
             {
                 await _progressService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingValue);
                 return;
@@ -238,17 +254,18 @@ namespace ChocolateyGui.ViewModels
             {
                 if (_isNewItem)
                 {
-                    await _packageService.AddSource(SelectedSource);
+                    await _packageService.AddSource(DraftSource);
                     _isNewItem = false;
-                    Sources.Add(SelectedSource);
+                    Sources.Add(DraftSource);
                     NotifyOfPropertyChange(nameof(CanRemove));
                 }
                 else
                 {
-                    await _packageService.UpdateSource(_originalId, SelectedSource);
+                    await _packageService.UpdateSource(_originalId, DraftSource);
+                    Sources[Sources.IndexOf(SelectedSource)] = DraftSource;
                 }
 
-                _originalId = SelectedSource?.Id;
+                _originalId = DraftSource?.Id;
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
             }
             catch (UnauthorizedAccessException)
@@ -287,7 +304,7 @@ namespace ChocolateyGui.ViewModels
 
         public void Cancel()
         {
-            SelectedSource = null;
+            DraftSource = new ChocolateySource(SelectedSource);
         }
 
         public void Back()

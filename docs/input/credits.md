@@ -19,27 +19,22 @@ These are the committers to Chocolatey/Chocolatey GUI repository:
 
 Chocolatey GUI uses the following awesome frameworks (in no particular order):
 
-* [AlphaFS](https://github.com/alphaleonis/AlphaFS)
-* [AsyncEx](https://github.com/StephenCleary/AsyncEx)
 * [Autofac](http://autofac.org/)
 * [AutoMapper](http://automapper.org/)
 * [Caliburn.Micro](https://github.com/Caliburn-Micro/Caliburn.Micro)
-* [Castle.Core](http://www.castleproject.org/)
 * [CefSharp](https://github.com/cefsharp/CefSharp)
 * [LiteDB](https://github.com/mbdavid/LiteDB)
 * [log4net](http://logging.apache.org/log4net/)
+* [Magick.NET](https://github.com/dlemstra/Magick.NET)
 * [MahApps.Metro](http://mahapps.com/)
 * [Markdig](https://github.com/lunet-io/markdig)
-* [MsgPack](https://github.com/msgpack/msgpack)
+* [Markdig.Wpf](https://github.com/Kryptos-FR/markdig.wpf)
 * [Raygun](https://raygun.io/)
-* [Json.NET](http://www.newtonsoft.com/json)
 * [Rx](http://rx.codeplex.com/)
 * [Serilog](https://github.com/serilog/serilog)
 * [Splat](https://github.com/paulcbetts/splat)
 * [SQLLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)
-* [SuperSocket](http://www.supersocket.net/)
-* [WebSocket4Net](http://websocket4net.codeplex.com/)
-
+ 
 Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
 
 * [Cake](http://cakebuild.net/)

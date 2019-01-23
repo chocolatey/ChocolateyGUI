@@ -3,6 +3,7 @@
 #---------------------------------#
 
 build_script:
+  - ps: .\build.ps1 --bootstrap
   - ps: .\build.ps1 -Target AppVeyor
 
 #---------------------------------#
@@ -28,4 +29,4 @@ branches:
 
 cache:
 - Source\packages -> Source\**\packages.config
-- tools -> setup.cake
+- tools -> setup.cake, tools\packages.config

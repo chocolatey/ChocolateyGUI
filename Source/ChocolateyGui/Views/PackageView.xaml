@@ -24,6 +24,7 @@
         <converters:NullToValue x:Key="NullToGridLength" TrueValue="Auto" FalseValue="3*" />
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString" />
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString" />
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
 
         <Style x:Key="PrimaryUacActionStyle" BasedOn="{StaticResource PrimaryUacIconStyle}" TargetType="Image">
             <Setter Property="Width" Value="16"/>
@@ -46,15 +47,10 @@
         <StackPanel DockPanel.Dock="Top" Margin="20,0,0,0">
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                <TextBlock Style="{StaticResource TitleTextStyle}" 
+                <TextBlock Style="{StaticResource TitleTextStyle}"
                            AutomationProperties.Name="{Binding Title}"
                            IsHitTestVisible="false">
                     <Run Text="{Binding Title}" />
-                </TextBlock>
-                <TextBlock AutomationProperties.Name="{Binding Version}" 
-                           VerticalAlignment="Bottom"
-                           IsHitTestVisible="false">
-                    <Run Text="{Binding Version}" Style="{StaticResource SubtitleRunTextStyle}" />
                 </TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -139,14 +135,22 @@
         </Grid>
 
         <StackPanel DockPanel.Dock="Left" Margin="20,0,0,0">
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_Version}"
+                   Target="{Binding ElementName=Version}" />
+            <TextBlock x:Name="Version" Text="{Binding Version}"
+                       Style="{StaticResource PackageResourceValue}" />
             <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_Downloads}"
-                   Target="{Binding ElementName=VersionDownloadCount}" />
+                   Target="{Binding ElementName=VersionDownloadCount}"
+                   Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
             <TextBlock x:Name="VersionDownloadCount" Text="{Binding VersionDownloadCount, StringFormat=N0}"
-                       Style="{StaticResource PackageResourceValue}" />
+                       Style="{StaticResource PackageResourceValue}"
+                       Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
             <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_TotalDownloads}"
-                   Target="{Binding ElementName=DownloadCount}" />
+                   Target="{Binding ElementName=DownloadCount}"
+                   Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
             <TextBlock x:Name="DownloadCount" Text="{Binding DownloadCount, StringFormat=N0}"
-                       Style="{StaticResource PackageResourceValue}" />
+                       Style="{StaticResource PackageResourceValue}"
+                       Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
             <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_LastUpdate}"
                    Target="{Binding ElementName=Published}" />
             <TextBlock x:Name="Published" Text="{Binding Published, StringFormat=g}" Style="{StaticResource PackageResourceValue}" />

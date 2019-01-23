@@ -19,7 +19,9 @@ namespace ChocolateyGui.ViewModels
         IHandle<ShowPackageDetailsMessage>,
         IHandle<ShowSourcesMessage>,
         IHandle<ShowSettingsMessage>,
-        IHandle<SettingsGoBackMessage>
+        IHandle<ShowAboutMessage>,
+        IHandle<SettingsGoBackMessage>,
+        IHandle<AboutGoBackMessage>
     {
         private readonly IChocolateyService _chocolateyPackageService;
         private readonly IVersionNumberProvider _versionNumberProvider;
@@ -39,8 +41,6 @@ namespace ChocolateyGui.ViewModels
             _sourcesViewModel = sourcesViewModel;
             Sources = new BindableCollection<SourceViewModel>();
             ActiveItem = _sourcesViewModel;
-
-            GetSources();
         }
 
         public string AboutInformation
@@ -91,9 +91,19 @@ namespace ChocolateyGui.ViewModels
             ShowSettings();
         }
 
+        public void Handle(ShowAboutMessage message)
+        {
+            ShowAbout();
+        }
+
         public void Handle(SettingsGoBackMessage message)
         {
-            SetActiveItem(_lastActiveItem);
+            SetActiveItem(_sourcesViewModel);
+        }
+
+        public void Handle(AboutGoBackMessage message)
+        {
+            SetActiveItem(_sourcesViewModel);
         }
 
         public void ShowSettings()
@@ -104,6 +114,16 @@ namespace ChocolateyGui.ViewModels
             }
 
             SetActiveItem(IoC.Get<SettingsViewModel>());
+        }
+
+        public void ShowAbout()
+        {
+            if (ActiveItem is AboutViewModel)
+            {
+                return;
+            }
+
+            SetActiveItem(IoC.Get<AboutViewModel>());
         }
 
         protected override void OnInitialize()

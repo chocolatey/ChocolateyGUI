@@ -61,6 +61,42 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string AboutView_About {
+            get {
+                return ResourceManager.GetString("AboutView_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credits.
+        /// </summary>
+        public static string AboutView_Credits {
+            get {
+                return ResourceManager.GetString("AboutView_Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string AboutView_History {
+            get {
+                return ResourceManager.GetString("AboutView_History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Notes.
+        /// </summary>
+        public static string AboutView_ReleaseNotes {
+            get {
+                return ResourceManager.GetString("AboutView_ReleaseNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unhandled Exception.
         /// </summary>
         public static string Bootstrapper_UnhandledException {
@@ -411,9 +447,9 @@ namespace ChocolateyGui.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Out Of Date.
         /// </summary>
-        public static string LocalSourceView_OverlayOutdated {
+        public static string LocalSourceView_Outdated {
             get {
-                return ResourceManager.GetString("LocalSourceView_OverlayOutdated", resourceCulture);
+                return ResourceManager.GetString("LocalSourceView_Outdated", resourceCulture);
             }
         }
         
@@ -675,6 +711,15 @@ namespace ChocolateyGui.Properties {
         public static string PackageView_TotalDownloads {
             get {
                 return ResourceManager.GetString("PackageView_TotalDownloads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string PackageView_Version {
+            get {
+                return ResourceManager.GetString("PackageView_Version", resourceCulture);
             }
         }
         
@@ -1091,15 +1136,6 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        public static string SettingsView_About {
-            get {
-                return ResourceManager.GetString("SettingsView_About", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string SettingsView_ButtonCancel {
@@ -1142,16 +1178,7 @@ namespace ChocolateyGui.Properties {
             get {
                 return ResourceManager.GetString("SettingsView_ChocoGui", resourceCulture);
             }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Credits.
-        /// </summary>
-        public static string SettingsView_Credits {
-            get {
-                return ResourceManager.GetString("SettingsView_Credits", resourceCulture);
-            }
-        }
+        }       
         
         /// <summary>
         ///   Looks up a localized string similar to Exclude installed software.
@@ -1222,15 +1249,6 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_PropertyValue {
             get {
                 return ResourceManager.GetString("SettingsView_PropertyValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Release Notes.
-        /// </summary>
-        public static string SettingsView_ReleaseNotes {
-            get {
-                return ResourceManager.GetString("SettingsView_ReleaseNotes", resourceCulture);
             }
         }
         
@@ -1406,38 +1424,74 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default to Tile View for Local Source.
+        ///   Looks up a localized string similar to Default to tile instead of list view. It is still possible to switch during use..
         /// </summary>
-        public static string SettingsView_ToggleDefaultTileViewLocal {
+        public static string SettingsView_ToggleDefaultTileViewLocalDescription {
             get {
-                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewLocal", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewLocalDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default to Tile View for Remote Source.
+        ///   Looks up a localized string similar to Use Tile View for Local Source.
         /// </summary>
-        public static string SettingsView_ToggleDefaultTileViewRemote {
+        public static string SettingsView_ToggleDefaultTileViewLocalTitle {
             get {
-                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewRemote", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewLocalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default to tile instead of list view. It is still possible to switch during use..
+        /// </summary>
+        public static string SettingsView_ToggleDefaultTileViewRemoteDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewRemoteDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Tile View for Remote Sources.
+        /// </summary>
+        public static string SettingsView_ToggleDefaultTileViewRemoteTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleDefaultTileViewRemoteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows output from the commands being executed when a job is running..
+        /// </summary>
+        public static string SettingsView_ToggleShowConsoleOutputDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleShowConsoleOutputDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Show Console Output.
         /// </summary>
-        public static string SettingsView_ToggleShowConsoleOutput {
+        public static string SettingsView_ToggleShowConsoleOutputTitle {
             get {
-                return ResourceManager.GetString("SettingsView_ToggleShowConsoleOutput", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleShowConsoleOutputTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use delayed search.
+        ///   Looks up a localized string similar to Enables live search, which returns results after a short delay without clicking the search button..
         /// </summary>
-        public static string SettingsView_UseDelayedSearch {
+        public static string SettingsView_ToggleUseDelayedSearchDescription {
             get {
-                return ResourceManager.GetString("SettingsView_UseDelayedSearch", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleUseDelayedSearchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Delayed Search.
+        /// </summary>
+        public static string SettingsView_UseDelayedSearchTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_UseDelayedSearchTitle", resourceCulture);
             }
         }
         

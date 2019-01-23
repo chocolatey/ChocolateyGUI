@@ -474,7 +474,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsViewModel_SourceMissingValue" xml:space="preserve">
     <value>Source must have an value!</value>
   </data>
-  <data name="SettingsView_About" xml:space="preserve">
+  <data name="AboutView_About" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="SettingsView_ButtonCancel" xml:space="preserve">
@@ -492,7 +492,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_ChocoGui" xml:space="preserve">
     <value>Chocolatey GUI</value>
   </data>
-  <data name="SettingsView_Credits" xml:space="preserve">
+  <data name="AboutView_Credits" xml:space="preserve">
     <value>Credits</value>
   </data>
   <data name="SettingsView_Features" xml:space="preserve">
@@ -516,7 +516,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_PropertyValue" xml:space="preserve">
     <value>Value</value>
   </data>
-  <data name="SettingsView_ReleaseNotes" xml:space="preserve">
+  <data name="AboutView_ReleaseNotes" xml:space="preserve">
     <value>Release Notes</value>
   </data>
   <data name="SettingsView_Settings" xml:space="preserve">
@@ -558,8 +558,8 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_SubheaderChoco" xml:space="preserve">
     <value>Chocolatey</value>
   </data>
-  <data name="SettingsView_ToggleShowConsoleOutput" xml:space="preserve">
-    <value>Show Console Output</value>
+  <data name="SettingsView_ToggleShowConsoleOutputDescription" xml:space="preserve">
+    <value>Shows output from the commands being executed when a job is running.</value>
   </data>
   <data name="ShellView_ButtonAbout" xml:space="preserve">
     <value>about</value>
@@ -615,7 +615,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="LocalSourceView_ButtonTileView" xml:space="preserve">
     <value>Tile View</value>
   </data>
-  <data name="LocalSourceView_OverlayOutdated" xml:space="preserve">
+  <data name="LocalSourceView_Outdated" xml:space="preserve">
     <value>Out Of Date</value>
   </data>
   <data name="RemoteSourceView_ButtonListView" xml:space="preserve">
@@ -630,14 +630,32 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="RemoteSourceView_OverlayInstalled" xml:space="preserve">
     <value>Installed</value>
   </data>
-  <data name="SettingsView_ToggleDefaultTileViewLocal" xml:space="preserve">
-    <value>Default to Tile View for Local Source</value>
+  <data name="SettingsView_ToggleDefaultTileViewLocalDescription" xml:space="preserve">
+    <value>Default to tile instead of list view. It is still possible to switch during use.</value>
   </data>
-  <data name="SettingsView_ToggleDefaultTileViewRemote" xml:space="preserve">
-    <value>Default to Tile View for Remote Source</value>
+  <data name="SettingsView_ToggleDefaultTileViewRemoteDescription" xml:space="preserve">
+    <value>Default to tile instead of list view. It is still possible to switch during use.</value>
   </data>
-  <data name="SettingsView_UseDelayedSearch" xml:space="preserve">
-    <value>Use delayed search</value>
+  <data name="SettingsView_ToggleUseDelayedSearchDescription" xml:space="preserve">
+    <value>Enables live search, which returns results after a short delay without clicking the search button.</value>
+  </data>
+  <data name="PackageView_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="AboutView_History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="SettingsView_ToggleDefaultTileViewLocalTitle" xml:space="preserve">
+    <value>Use Tile View for Local Source</value>
+  </data>
+  <data name="SettingsView_ToggleDefaultTileViewRemoteTitle" xml:space="preserve">
+    <value>Use Tile View for Remote Sources</value>
+  </data>
+  <data name="SettingsView_ToggleShowConsoleOutputTitle" xml:space="preserve">
+    <value>Show Console Output</value>
+  </data>
+  <data name="SettingsView_UseDelayedSearchTitle" xml:space="preserve">
+    <value>Use Delayed Search</value>
   </data>
   <data name="SettingsView_ExcludeInstalledSoftware" xml:space="preserve">
     <value>Exclude installed software</value>

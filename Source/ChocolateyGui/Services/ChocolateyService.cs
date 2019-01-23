@@ -31,13 +31,17 @@ namespace ChocolateyGui.Services
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
         private readonly IMapper _mapper;
         private readonly IProgressService _progressService;
+        private readonly IChocolateyConfigSettingsService _configSettingsService;
+        private GetChocolatey _choco;
 #pragma warning disable SA1401 // Fields must be private
 #pragma warning restore SA1401 // Fields must be private
 
-        public ChocolateyService(IMapper mapper, IProgressService progressService)
+        public ChocolateyService(IMapper mapper, IProgressService progressService, IChocolateyConfigSettingsService configSettingsService)
         {
             _mapper = mapper;
             _progressService = progressService;
+            _configSettingsService = configSettingsService;
+            _choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
         }
 
         public Task<bool> IsElevated()
@@ -49,16 +53,15 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.list.ToString();
                             config.ListCommand.LocalOnly = true;
                         });
 
-                return (await choco.ListAsync<PackageResult>())
-                     .Select(package => GetMappedPackage(choco, package, _mapper, true))
+                return (await _choco.ListAsync<PackageResult>())
+                     .Select(package => GetMappedPackage(_choco, package, _mapper, true))
                      .ToArray();
             }
         }
@@ -67,8 +70,7 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = "outdated";
@@ -78,13 +80,13 @@ namespace ChocolateyGui.Services
                             config.QuietOutput = true;
                             config.Prerelease = false;
                         });
-                var chocoConfig = choco.GetConfiguration();
+                var chocoConfig = _choco.GetConfiguration();
 
-                var nugetService = choco.Container().GetInstance<INugetService>();
+                var nugetService = _choco.Container().GetInstance<INugetService>();
                 var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
                 var results = packages
                     .Where(p => !p.Value.Inconclusive)
-                    .Select(p => Tuple.Create(p.Value.Package.Id, p.Value.Package.Version.ToNormalizedString()))
+                    .Select(p => Tuple.Create(p.Value.Package.Id.ToLower(), p.Value.Package.Version.ToNormalizedString()))
                     .ToArray();
                 var parsed = results.Select(result => Tuple.Create(result.Item1, new SemanticVersion(result.Item2)));
 
@@ -147,8 +149,7 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.list.ToString();
@@ -156,6 +157,7 @@ namespace ChocolateyGui.Services
                             config.AllVersions = options.IncludeAllVersions;
                             config.ListCommand.Page = options.CurrentPage;
                             config.ListCommand.PageSize = options.PageSize;
+                            config.Prerelease = options.IncludePrerelease;
                             if (string.IsNullOrWhiteSpace(query) || !string.IsNullOrWhiteSpace(options.SortColumn))
                             {
                                 config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn)
@@ -172,13 +174,13 @@ namespace ChocolateyGui.Services
                         });
 
                 var packages =
-                    (await choco.ListAsync<PackageResult>()).Select(
-                        pckge => GetMappedPackage(choco, pckge, _mapper));
+                    (await _choco.ListAsync<PackageResult>()).Select(
+                        pckge => GetMappedPackage(_choco, pckge, _mapper));
 
                 return new PackageResults
                 {
                     Packages = packages.ToArray(),
-                    TotalCount = await Task.Run(() => choco.ListCount())
+                    TotalCount = await Task.Run(() => _choco.ListCount())
                 };
             }
         }
@@ -187,8 +189,7 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.ReadLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                     config =>
                     {
                         config.CommandName = "list";
@@ -201,9 +202,9 @@ namespace ChocolateyGui.Services
                         config.Verbose = false;
 #endif // DEBUG
                     });
-                var chocoConfig = choco.GetConfiguration();
+                var chocoConfig = _choco.GetConfiguration();
 
-                var nugetLogger = choco.Container().GetInstance<NuGet.ILogger>();
+                var nugetLogger = _choco.Container().GetInstance<NuGet.ILogger>();
                 var semvar = new SemanticVersion(version);
                 var nugetPackage = (NugetList.GetPackages(chocoConfig, nugetLogger) as IQueryable<IPackage>).FirstOrDefault(p => p.Version == semvar);
                 if (nugetPackage == null)
@@ -211,7 +212,7 @@ namespace ChocolateyGui.Services
                     throw new Exception("No Package Found");
                 }
 
-                return GetMappedPackage(choco, new PackageResult(nugetPackage, null, chocoConfig.Sources), _mapper);
+                return GetMappedPackage(_choco, new PackageResult(nugetPackage, null, chocoConfig.Sources), _mapper);
             }
         }
 
@@ -260,8 +261,7 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = "pin";
@@ -272,7 +272,7 @@ namespace ChocolateyGui.Services
 
                 try
                 {
-                    await choco.RunAsync();
+                    await _choco.RunAsync();
                 }
                 catch (Exception ex)
                 {
@@ -287,8 +287,7 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = "pin";
@@ -298,7 +297,7 @@ namespace ChocolateyGui.Services
                         });
                 try
                 {
-                    await choco.RunAsync();
+                    await _choco.RunAsync();
                 }
                 catch (Exception ex)
                 {
@@ -322,8 +321,7 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                     config =>
                     {
                         config.CommandName = "feature";
@@ -331,7 +329,7 @@ namespace ChocolateyGui.Services
                         config.FeatureCommand.Name = feature.Name;
                     });
 
-                await choco.RunAsync();
+                await _choco.RunAsync();
             }
         }
 
@@ -348,8 +346,7 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = "config";
@@ -358,7 +355,7 @@ namespace ChocolateyGui.Services
                             config.ConfigCommand.ConfigValue = setting.Value;
                         });
 
-                await choco.RunAsync();
+                await _choco.RunAsync();
             }
         }
 
@@ -366,8 +363,9 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.ReadLockAsync())
             {
-                var config = await GetConfigFile();
-                return config.Sources.Select(_mapper.Map<ChocolateySource>).ToArray();
+                var sources = _configSettingsService.source_list(_choco.GetConfiguration());
+                var mappedSources = sources.Select(_mapper.Map<ChocolateySource>).ToArray();
+                return mappedSources;
             }
         }
 
@@ -375,8 +373,7 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.WriteLockAsync())
             {
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                     config =>
                     {
                         config.CommandName = "source";
@@ -393,29 +390,29 @@ namespace ChocolateyGui.Services
                         config.SourceCommand.VisibleToAdminsOnly = source.VisibleToAdminsOnly;
                     });
 
-                await choco.RunAsync();
+                await _choco.RunAsync();
 
                 if (source.Disabled)
                 {
-                    choco.Set(
+                    _choco.Set(
                         config =>
                             {
                                 config.CommandName = "source";
                                 config.SourceCommand.Command = SourceCommandType.disable;
                                 config.SourceCommand.Name = source.Id;
                             });
-                    await choco.RunAsync();
+                    await _choco.RunAsync();
                 }
                 else
                 {
-                    choco.Set(
+                    _choco.Set(
                        config =>
                        {
                            config.CommandName = "source";
                            config.SourceCommand.Command = SourceCommandType.enable;
                            config.SourceCommand.Name = source.Id;
                        });
-                    await choco.RunAsync();
+                    await _choco.RunAsync();
                 }
             }
         }
@@ -442,8 +439,7 @@ namespace ChocolateyGui.Services
                     return false;
                 }
 
-                var choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
-                choco.Set(
+                _choco.Set(
                         config =>
                         {
                             config.CommandName = "source";
@@ -451,7 +447,7 @@ namespace ChocolateyGui.Services
                             config.SourceCommand.Name = id;
                         });
 
-                await choco.RunAsync();
+                await _choco.RunAsync();
                 return true;
             }
         }
@@ -516,8 +512,7 @@ namespace ChocolateyGui.Services
 
         private async Task<ConfigFileSettings> GetConfigFile()
         {
-            var choco = Lets.GetChocolatey();
-            var xmlService = choco.Container().GetInstance<IXmlService>();
+            var xmlService = _choco.Container().GetInstance<IXmlService>();
             var config =
                 await Task.Run(
                     () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));

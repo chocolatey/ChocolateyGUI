@@ -65,8 +65,6 @@ namespace ChocolateyGui.ViewModels
             _eventAggregator = eventAggregator;
             _mapper = mapper;
 
-            ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
-
             Packages = new ObservableCollection<IPackageViewModel>();
             DisplayName = source.Id;
 
@@ -238,7 +236,7 @@ namespace ChocolateyGui.ViewModels
                     var installed = await _chocolateyPackageService.GetInstalledPackages();
                     var outdated = await _chocolateyPackageService.GetOutdatedPackages();
 
-                    PageCount = (int)(((double)result.TotalCount / (double)PageSize) + 0.5);
+                    PageCount = (int)Math.Ceiling((double)result.TotalCount / (double)PageSize);
                     Packages.Clear();
 
                     result.Packages.ToList().ForEach(p =>
@@ -292,6 +290,8 @@ namespace ChocolateyGui.ViewModels
         {
             try
             {
+                ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
+
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
                     .Subscribe(eventPattern =>

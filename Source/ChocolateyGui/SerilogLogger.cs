@@ -15,7 +15,7 @@ namespace ChocolateyGui
     public class SerilogLogger : ILog
     {
         private readonly ILogger _logger;
-        private Action<LogMessage> _interceptor;
+        private Action<Models.LogMessage> _interceptor;
         private string _context;
         private IProgressService _progressService;
 
@@ -25,7 +25,7 @@ namespace ChocolateyGui
             _progressService = progressService;
         }
 
-        public IDisposable Intercept(Action<LogMessage> interceptor)
+        public IDisposable Intercept(Action<Models.LogMessage> interceptor)
         {
             return new InterceptMessages(this, interceptor);
         }
@@ -39,7 +39,7 @@ namespace ChocolateyGui
         {
             _logger.Debug(message, formatting);
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Debug,
@@ -53,7 +53,7 @@ namespace ChocolateyGui
         {
             _logger.Debug(message());
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Debug,
@@ -67,7 +67,7 @@ namespace ChocolateyGui
         {
             _logger.Information(message, formatting);
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Info,
@@ -82,7 +82,7 @@ namespace ChocolateyGui
         {
             _logger.Information(message());
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Info,
@@ -97,7 +97,7 @@ namespace ChocolateyGui
         {
             _logger.Warning(message, formatting);
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Warn,
@@ -112,7 +112,7 @@ namespace ChocolateyGui
         {
             _logger.Warning(message());
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Warn,
@@ -127,7 +127,7 @@ namespace ChocolateyGui
         {
             _logger.Error(message, formatting);
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Error,
@@ -142,7 +142,7 @@ namespace ChocolateyGui
         {
             _logger.Error(message());
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Error,
@@ -157,7 +157,7 @@ namespace ChocolateyGui
         {
             _logger.Fatal(message, formatting);
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Fatal,
@@ -172,7 +172,7 @@ namespace ChocolateyGui
         {
             _logger.Fatal(message());
 
-            var logMessage = new LogMessage
+            var logMessage = new Models.LogMessage
             {
                 Context = _context,
                 LogLevel = LogLevel.Fatal,
@@ -187,7 +187,7 @@ namespace ChocolateyGui
         {
             private readonly SerilogLogger _logger;
 
-            public InterceptMessages(SerilogLogger logger, Action<LogMessage> interceptor)
+            public InterceptMessages(SerilogLogger logger, Action<Models.LogMessage> interceptor)
             {
                 _logger = logger;
                 logger._interceptor = interceptor;

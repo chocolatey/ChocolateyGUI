@@ -162,26 +162,26 @@
 
             <StackPanel Margin="5,5,0,40">
                 <TextBlock
-                    Visibility="{Binding ProjectUrl, FallbackValue=Collapsed, Converter={StaticResource UriToVisibilty}}">
-                    <Hyperlink NavigateUri="{Binding ProjectUrl, FallbackValue=about:blank}" RequestNavigate="HandleLinkClick">
+                    Visibility="{Binding ProjectUrl, Converter={StaticResource UriToVisibilty}}">
+                    <Hyperlink NavigateUri="{Binding ProjectUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
                         <Run Text="{x:Static lang:Resources.PackageView_ProjectSite}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock
-                    Visibility="{Binding LicenseUrl, FallbackValue=Collapsed, Converter={StaticResource UriToVisibilty}}">
-                    <Hyperlink NavigateUri="{Binding LicenseUrl, FallbackValue=about:blank}" RequestNavigate="HandleLinkClick">
+                    Visibility="{Binding LicenseUrl, Converter={StaticResource UriToVisibilty}}">
+                    <Hyperlink NavigateUri="{Binding LicenseUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
                         <Run Text="{x:Static lang:Resources.PackageView_License}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock
-                    Visibility="{Binding GalleryDetailsUrl, FallbackValue=Collapsed, Converter={StaticResource UriToVisibilty}}">
-                    <Hyperlink NavigateUri="{Binding GalleryDetailsUrl, FallbackValue=about:blank}" RequestNavigate="HandleLinkClick">
+                    Visibility="{Binding GalleryDetailsUrl, Converter={StaticResource UriToVisibilty}}">
+                    <Hyperlink NavigateUri="{Binding GalleryDetailsUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
                         <Run Text="{x:Static lang:Resources.PackageView_Gallery}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock
-                    Visibility="{Binding ReportAbuseUrl, FallbackValue=Collapsed, Converter={StaticResource UriToVisibilty}}">
-                    <Hyperlink NavigateUri="{Binding ReportAbuseUrl, FallbackValue=about:blank}" RequestNavigate="HandleLinkClick">
+                    Visibility="{Binding ReportAbuseUrl, Converter={StaticResource UriToVisibilty}}">
+                    <Hyperlink NavigateUri="{Binding ReportAbuseUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
                         <Run Text="{x:Static lang:Resources.PackageView_ReportAbuse}" />
                     </Hyperlink>
                 </TextBlock>

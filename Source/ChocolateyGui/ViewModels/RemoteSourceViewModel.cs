@@ -339,7 +339,7 @@ namespace ChocolateyGui.ViewModels
             }
             catch (InvalidOperationException ex)
             {
-                Logger.Error(ex, "Failed to intialize remote source view model.");
+                Logger.Error(ex, "Failed to initialize remote source view model.");
                 MessageBox.Show(
                     string.Format(
                         CultureInfo.InvariantCulture,

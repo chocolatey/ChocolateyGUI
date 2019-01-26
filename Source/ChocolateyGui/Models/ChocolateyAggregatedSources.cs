@@ -1,15 +1,17 @@
-﻿using ChocolateyGui.Properties;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ChocolateyAggregatedSources.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using ChocolateyGui.Properties;
 
 namespace ChocolateyGui.Models
 {
     public class ChocolateyAggregatedSources : ChocolateySource
     {
-        public ChocolateyAggregatedSources() {
+        public ChocolateyAggregatedSources()
+        {
             Id = Resources.SourcesView_AggregatedSourcesId;
         }
     }

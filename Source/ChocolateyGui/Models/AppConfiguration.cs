@@ -26,5 +26,8 @@ namespace ChocolateyGui.Models
 
         [LocalizedDescription("SettingsView_ToggleExcludeInstalledPackagesDescription")]
         public bool ExcludeInstalledPackages { get; set; }
+
+        [LocalizedDescription("SettingsView_ToggleShowAggregatedSourceViewDescription")]
+        public bool ShowAggregatedSourceView { get; set; }
     }
 }

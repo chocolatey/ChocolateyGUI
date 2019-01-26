@@ -232,6 +232,7 @@
     <Compile Include="ChocolateyExtensions.cs" />
     <Compile Include="Controls\MarkdownEx.cs" />
     <Compile Include="Enums\ListViewMode.cs" />
+    <Compile Include="Models\ChocolateyAggregatedSources.cs" />
     <Compile Include="Models\ChocolateyGUISetting.cs" />
     <Compile Include="Models\EnumToBoolConverter.cs" />
     <Compile Include="Models\LogLevel.cs" />

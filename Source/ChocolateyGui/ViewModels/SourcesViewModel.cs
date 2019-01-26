@@ -22,16 +22,19 @@ namespace ChocolateyGui.ViewModels
     {
         private readonly IChocolateyService _packageService;
         private readonly CreateRemove _remoteSourceVmFactory;
+        private readonly IConfigService _configService;
 
         private bool _firstLoad = true;
 
         public SourcesViewModel(
             IChocolateyService packageService,
+            IConfigService configService,
             IEventAggregator eventAggregator,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
             CreateRemove remoteSourceVmFactory)
         {
             _packageService = packageService;
+            _configService = configService;
             _remoteSourceVmFactory = remoteSourceVmFactory;
 
             if (localSourceVmFactory == null)
@@ -61,6 +64,12 @@ namespace ChocolateyGui.ViewModels
 
             var sources = await _packageService.GetSources();
             var vms = new List<RemoteSourceViewModel>();
+
+            if (_configService.GetSettings().ShowAggregatedSourceView)
+            {
+                vms.Add(_remoteSourceVmFactory(new ChocolateyAggregatedSources()));
+            }
+
             foreach (var source in sources.Where(s => !s.Disabled).OrderBy(s => s.Priority))
             {
                 vms.Add(_remoteSourceVmFactory(source));

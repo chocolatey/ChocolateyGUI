@@ -60,14 +60,15 @@ namespace ChocolateyGui.ViewModels
 
         public async Task LoadSources()
         {
-            var oldItems = Items.Skip(1).Cast<RemoteSourceViewModel>().ToList();
+            var oldItems = Items.Skip(1).Cast<ISourceViewModelBase>().ToList();
 
             var sources = await _packageService.GetSources();
-            var vms = new List<RemoteSourceViewModel>();
+            var vms = new List<ISourceViewModelBase>();
 
             if (_configService.GetSettings().ShowAggregatedSourceView)
             {
                 vms.Add(_remoteSourceVmFactory(new ChocolateyAggregatedSources()));
+                vms.Add(new SourceSeparatorViewModel());
             }
 
             foreach (var source in sources.Where(s => !s.Disabled).OrderBy(s => s.Priority))

@@ -131,6 +131,24 @@
         </Setter>
     </Style>
 
+    <Style x:Key="SourcesSeparatorContainerStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource SourcesListBoxItemContainerStyle}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="5,5" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                        <Separator Margin="{TemplateBinding Padding}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
         <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
     </Style>

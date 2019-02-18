@@ -399,6 +399,8 @@
     <Compile Include="ViewModels\Items\IPackageViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\SourceSeparatorViewModel.cs" />
+    <Compile Include="ViewModels\SourcesListBoxItemStyleSelector.cs" />
     <Compile Include="ViewModels\SourcesViewModel.cs" />
     <Compile Include="ViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\RemoteSourceViewModel.cs" />

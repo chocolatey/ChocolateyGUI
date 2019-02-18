@@ -8,12 +8,13 @@ namespace ChocolateyGui.ViewModels
 {
     public sealed class SourceSeparatorViewModel : ISourceViewModelBase
     {
-        public string DisplayName
+        private const string DISPLAYNAME = "Separator";
+
+        public SourceSeparatorViewModel()
         {
-            get
-            {
-                return "Separator";
-            }
+            DisplayName = DISPLAYNAME;
         }
+
+        public string DisplayName { get; }
     }
 }

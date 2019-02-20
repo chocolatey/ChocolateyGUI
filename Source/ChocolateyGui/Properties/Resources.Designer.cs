@@ -1469,6 +1469,24 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show additoinal source combining all sources in one place..
+        /// </summary>
+        public static string SettingsView_ToggleShowAggregatedSourceViewDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleShowAggregatedSourceViewDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aggregated Sources View.
+        /// </summary>
+        public static string SettingsView_ToggleShowAggregatedSourceViewTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleShowAggregatedSourceViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shows output from the commands being executed when a job is running..
         /// </summary>
         public static string SettingsView_ToggleShowConsoleOutputDescription {
@@ -1592,6 +1610,15 @@ namespace ChocolateyGui.Properties {
         public static string ShellView_ButtonSettings {
             get {
                 return ResourceManager.GetString("ShellView_ButtonSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Sources.
+        /// </summary>
+        public static string SourcesView_AggregatedSourcesId {
+            get {
+                return ResourceManager.GetString("SourcesView_AggregatedSourcesId", resourceCulture);
             }
         }
         

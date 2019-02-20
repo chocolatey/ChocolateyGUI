@@ -22,16 +22,19 @@ namespace ChocolateyGui.ViewModels
     {
         private readonly IChocolateyService _packageService;
         private readonly CreateRemove _remoteSourceVmFactory;
+        private readonly IConfigService _configService;
 
         private bool _firstLoad = true;
 
         public SourcesViewModel(
             IChocolateyService packageService,
+            IConfigService configService,
             IEventAggregator eventAggregator,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
             CreateRemove remoteSourceVmFactory)
         {
             _packageService = packageService;
+            _configService = configService;
             _remoteSourceVmFactory = remoteSourceVmFactory;
 
             if (localSourceVmFactory == null)
@@ -57,10 +60,17 @@ namespace ChocolateyGui.ViewModels
 
         public async Task LoadSources()
         {
-            var oldItems = Items.Skip(1).Cast<RemoteSourceViewModel>().ToList();
+            var oldItems = Items.Skip(1).Cast<ISourceViewModelBase>().ToList();
 
             var sources = await _packageService.GetSources();
-            var vms = new List<RemoteSourceViewModel>();
+            var vms = new List<ISourceViewModelBase>();
+
+            if (_configService.GetSettings().ShowAggregatedSourceView)
+            {
+                vms.Add(_remoteSourceVmFactory(new ChocolateyAggregatedSources()));
+                vms.Add(new SourceSeparatorViewModel());
+            }
+
             foreach (var source in sources.Where(s => !s.Disabled).OrderBy(s => s.Priority))
             {
                 vms.Add(_remoteSourceVmFactory(source));

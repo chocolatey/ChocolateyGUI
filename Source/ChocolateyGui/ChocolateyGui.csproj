@@ -232,6 +232,7 @@
     <Compile Include="ChocolateyExtensions.cs" />
     <Compile Include="Controls\MarkdownEx.cs" />
     <Compile Include="Enums\ListViewMode.cs" />
+    <Compile Include="Models\ChocolateyAggregatedSources.cs" />
     <Compile Include="Models\ChocolateyGUISetting.cs" />
     <Compile Include="Models\EnumToBoolConverter.cs" />
     <Compile Include="Models\LogLevel.cs" />
@@ -398,6 +399,8 @@
     <Compile Include="ViewModels\Items\IPackageViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\SourceSeparatorViewModel.cs" />
+    <Compile Include="ViewModels\SourcesListBoxItemStyleSelector.cs" />
     <Compile Include="ViewModels\SourcesViewModel.cs" />
     <Compile Include="ViewModels\PackageViewModel.cs" />
     <Compile Include="ViewModels\RemoteSourceViewModel.cs" />

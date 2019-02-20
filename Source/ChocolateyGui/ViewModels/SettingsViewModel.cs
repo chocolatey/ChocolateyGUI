@@ -33,7 +33,8 @@ namespace ChocolateyGui.ViewModels
                                                                            nameof(DefaultToTileViewForLocalSource),
                                                                            nameof(DefaultToTileViewForRemoteSource),
                                                                            nameof(UseDelayedSearch),
-                                                                           nameof(ExcludeInstalledPackages)
+                                                                           nameof(ExcludeInstalledPackages),
+                                                                           nameof(ShowAggregatedSourceView)
                                                                        };
 
         private readonly IChocolateyService _packageService;
@@ -138,6 +139,21 @@ namespace ChocolateyGui.ViewModels
             set
             {
                 _config.ExcludeInstalledPackages = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public bool ShowAggregatedSourceView
+        {
+            get
+            {
+                return _config.ShowAggregatedSourceView;
+            }
+
+            set
+            {
+                _config.ShowAggregatedSourceView = value;
+                _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
                 NotifyOfPropertyChange();
             }
         }

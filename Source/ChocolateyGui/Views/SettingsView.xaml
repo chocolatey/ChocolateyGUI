@@ -84,6 +84,7 @@
                                     <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewRemoteTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewRemoteDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForRemoteSource}" />
                                     <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleExcludeInstalledPackages}" Description="{x:Static lang:Resources.SettingsView_ToggleExcludeInstalledPackagesDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.ExcludeInstalledPackages}"/>
                                     <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_UseDelayedSearchTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleUseDelayedSearchDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.UseDelayedSearch}" />
+                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleShowAggregatedSourceViewTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleShowAggregatedSourceViewDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAggregatedSourceView}" />
                                 </ItemsControl.Items>
                             </ItemsControl>
                         </ScrollViewer>

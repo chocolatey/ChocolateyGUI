@@ -18,8 +18,11 @@
                              BorderBrush="Transparent"
                              Padding="5,0,-1,0"
                              Margin="0,100,0,0"
-                             ItemContainerStyle="{DynamicResource SourcesListBoxItemContainerStyle}"
                              SelectedItem="{Binding ActiveItem}">
+                        <ListBox.ItemContainerStyleSelector>
+                            <viewModels:SourcesListBoxItemStyleSelector ListBoxItemContainerStyleKey="{StaticResource SourcesListBoxItemContainerStyle}"
+                                                                        SeparatorContainerStyleKey="{StaticResource SourcesSeparatorContainerStyle}"/>
+                        </ListBox.ItemContainerStyleSelector>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock x:Name="Tb"

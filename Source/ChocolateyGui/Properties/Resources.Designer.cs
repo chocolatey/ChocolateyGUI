@@ -1469,7 +1469,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show additoinal source combining all sources in one place..
+        ///   Looks up a localized string similar to Show additional source combining all sources in one place..
         /// </summary>
         public static string SettingsView_ToggleShowAggregatedSourceViewDescription {
             get {

@@ -664,7 +664,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Do not show packages that are already installed when viewing sources</value>
   </data>
   <data name="SettingsView_ToggleShowAggregatedSourceViewDescription" xml:space="preserve">
-    <value>Show additoinal source combining all sources in one place.</value>
+    <value>Show additional source combining all sources in one place.</value>
   </data>
   <data name="SettingsView_ToggleShowAggregatedSourceViewTitle" xml:space="preserve">
     <value>Aggregated Sources View</value>

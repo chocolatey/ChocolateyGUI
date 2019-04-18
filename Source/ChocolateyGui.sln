@@ -13,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C6760D8F
 		..\appveyor.yml = ..\appveyor.yml
 		..\nuspec\chocolatey\ChocolateyGUI.nuspec = ..\nuspec\chocolatey\ChocolateyGUI.nuspec
 		..\nuspec\chocolatey\chocolateyInstall.ps1 = ..\nuspec\chocolatey\chocolateyInstall.ps1
-		..\nuspec\chocolatey\chocolateyUninstall.ps1 = ..\nuspec\chocolatey\chocolateyUninstall.ps1
 		..\GitHubReleaseManager.yaml = ..\GitHubReleaseManager.yaml
 		..\setup.cake = ..\setup.cake
 	EndProjectSection

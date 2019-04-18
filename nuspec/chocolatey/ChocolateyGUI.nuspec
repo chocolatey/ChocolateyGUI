@@ -24,7 +24,7 @@ Chocolatey GUI is a nice GUI on top of the Chocolatey command line tool.
 * See detailed **package information**
 
 ## Notes
-This package will only work correctly on Windows 7 SP1 through Windows 10 (1708) or Windows Server 2008 R2 SP1 through Windows Server 2016, and requires .NET Framework 4.5.2 at minimum. 
+This package will only work correctly on Windows 7 SP1 through Windows 10 (1708) or Windows Server 2008 R2 SP1 through Windows Server 2016, and requires .NET Framework 4.5.2 at minimum.
   </description>
     <summary>A GUI for Chocolatey</summary>
   <releaseNotes>

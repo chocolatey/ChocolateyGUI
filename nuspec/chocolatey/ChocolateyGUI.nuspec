@@ -33,6 +33,7 @@ All release notes for Chocolatey GUI can be found on the GitHub site - https://g
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>
       <dependency id="Chocolatey" version="0.10.3" />
+      <dependency id="dotnet4.5.2" version="4.5.2.20140902" />
     </dependencies>
   </metadata>
   <files>

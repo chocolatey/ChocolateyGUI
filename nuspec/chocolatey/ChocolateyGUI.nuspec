@@ -32,7 +32,7 @@ All release notes for Chocolatey GUI can be found on the GitHub site - https://g
   </releaseNotes>
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>
-      <dependency id="Chocolatey" version="[0.10.3, 0.11)" />
+      <dependency id="Chocolatey" version="0.10.3" />
     </dependencies>
   </metadata>
   <files>

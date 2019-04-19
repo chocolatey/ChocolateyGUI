@@ -11,6 +11,7 @@
              xmlns:controls="clr-namespace:ChocolateyGui.Controls"
              xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="786" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:PackageViewModel}">
@@ -198,40 +199,43 @@
         <Grid Margin="25,5,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="5*" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="{Binding ReleaseNotes, Converter={StaticResource NullToGridLength}}" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{x:Static lang:Resources.PackageView_PackageID}" Style="{StaticResource SectionHeaderTextStyle}"
-                       Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}" />
-            <TextBlock Grid.Row="1" Text="{Binding Id}" ScrollViewer.CanContentScroll="True" TextWrapping="Wrap"
-                       Style="{StaticResource PageTextBlockStyle}"
-                       Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}" />
-            <TextBlock Grid.Row="2" Text="{x:Static lang:Resources.PackageView_Description}" Style="{StaticResource SectionHeaderTextStyle}" />
-            <markdig:MarkdownViewer AutomationProperties.Name="Package Description"
-                                    Grid.Row="3"
-                                    VerticalAlignment="Stretch"
-                                    HorizontalAlignment="Stretch"
-                                    Margin="5 0"
-                                    Markdown="{Binding Description}" />
-            <StackPanel Grid.Row="4" Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
-                <TextBlock Text="{x:Static lang:Resources.PackageView_Dependencies}" Style="{StaticResource SectionHeaderTextStyle}" />
+            <mah:MetroHeader Grid.Row="0"
+                             Style="{StaticResource SectionHeaderStyle}"
+                             Header="{x:Static lang:Resources.PackageView_PackageID}"
+                             Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}">
+                <TextBlock Text="{Binding Id}"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource PageTextBlockStyle}" />
+            </mah:MetroHeader>
+            <mah:MetroHeader Grid.Row="1"
+                             Style="{StaticResource SectionHeaderStyle}"
+                             Header="{x:Static lang:Resources.PackageView_Description}">
+                <markdig:MarkdownViewer AutomationProperties.Name="Package Description"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Markdown="{Binding Description}" />
+            </mah:MetroHeader>
+            <mah:MetroHeader Grid.Row="2"
+                             Style="{StaticResource SectionHeaderStyle}"
+                             Header="{x:Static lang:Resources.PackageView_Dependencies}"
+                             Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                 <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"
-                           Margin="5" Style="{StaticResource PageTextBlockStyle}"
+                           Style="{StaticResource PageTextBlockStyle}"
                            AutomationProperties.Name="Package Dependencies" />
-            </StackPanel>
-            <TextBlock Grid.Row="5" Text="{x:Static lang:Resources.PackageView_ReleaseNotes}" Style="{StaticResource SectionHeaderTextStyle}"
-                       Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}" />
-            <markdig:MarkdownViewer Grid.Row="6"
-                                    AutomationProperties.Name="Package Release Notes"
-                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                    Margin="5 0"
-                                    Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}"
-                                    Markdown="{Binding ReleaseNotes}" />
-
+            </mah:MetroHeader>
+            <mah:MetroHeader Grid.Row="3"
+                             Style="{StaticResource SectionHeaderStyle}"
+                             Header="{x:Static lang:Resources.PackageView_ReleaseNotes}"
+                             Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}">
+                <markdig:MarkdownViewer AutomationProperties.Name="Package Release Notes"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Markdown="{Binding ReleaseNotes}" />
+            </mah:MetroHeader>
         </Grid>
     </DockPanel>
 </UserControl>

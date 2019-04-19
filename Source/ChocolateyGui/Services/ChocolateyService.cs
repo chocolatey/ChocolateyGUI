@@ -60,9 +60,26 @@ namespace ChocolateyGui.Services
                             config.ListCommand.LocalOnly = true;
                         });
 
-                return (await _choco.ListAsync<PackageResult>())
-                     .Select(package => GetMappedPackage(_choco, package, _mapper, true))
-                     .ToArray();
+                var chocoConfig = _choco.GetConfiguration();
+
+                // Not entirely sure what is going on here.  When there are no sources defined, for example, when they
+                // are all disabled, the ListAsync command isn't returning any packages installed locally.  When in this
+                // situation, use the nugetService directly to get the list of installed packages.
+                if (chocoConfig.Sources != null)
+                {
+                    var packages = await _choco.ListAsync<PackageResult>();
+                    return (packages)
+                        .Select(package => GetMappedPackage(_choco, package, _mapper, true))
+                        .ToArray();
+                }
+                else
+                {
+                    var nugetService = _choco.Container().GetInstance<INugetService>();
+                    var packages = await Task.Run(() => nugetService.list_run(chocoConfig));
+                    return (packages)
+                        .Select(package => GetMappedPackage(_choco, package, _mapper, true))
+                        .ToArray();
+                }
             }
         }
 
@@ -82,15 +99,25 @@ namespace ChocolateyGui.Services
                         });
                 var chocoConfig = _choco.GetConfiguration();
 
-                var nugetService = _choco.Container().GetInstance<INugetService>();
-                var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
-                var results = packages
-                    .Where(p => !p.Value.Inconclusive)
-                    .Select(p => Tuple.Create(p.Value.Package.Id, p.Value.Package.Version.ToNormalizedString()))
-                    .ToArray();
-                var parsed = results.Select(result => Tuple.Create(result.Item1, new SemanticVersion(result.Item2)));
+                // If there are no Sources configured, for example, if they are all disabled, then figuring out
+                // which packages are outdated can't be completed.
+                if (chocoConfig.Sources != null)
+                {
+                    var nugetService = _choco.Container().GetInstance<INugetService>();
+                    var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
+                    var results = packages
+                        .Where(p => !p.Value.Inconclusive)
+                        .Select(p => Tuple.Create(p.Value.Package.Id, p.Value.Package.Version.ToNormalizedString()))
+                        .ToArray();
+                    var parsed = results.Select(result =>
+                        Tuple.Create(result.Item1, new SemanticVersion(result.Item2)));
 
-                return parsed.ToList();
+                    return parsed.ToList();
+                }
+                else
+                {
+                    return new List<Tuple<string, SemanticVersion>>();
+                }
             }
         }
 

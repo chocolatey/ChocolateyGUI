@@ -68,7 +68,7 @@ namespace ChocolateyGui.Services
                 if (chocoConfig.Sources != null)
                 {
                     var packages = await _choco.ListAsync<PackageResult>();
-                    return (packages)
+                    return packages
                         .Select(package => GetMappedPackage(_choco, package, _mapper, true))
                         .ToArray();
                 }
@@ -76,7 +76,7 @@ namespace ChocolateyGui.Services
                 {
                     var nugetService = _choco.Container().GetInstance<INugetService>();
                     var packages = await Task.Run(() => nugetService.list_run(chocoConfig));
-                    return (packages)
+                    return packages
                         .Select(package => GetMappedPackage(_choco, package, _mapper, true))
                         .ToArray();
                 }

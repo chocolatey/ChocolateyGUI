@@ -390,8 +390,15 @@ namespace ChocolateyGui.Services
         {
             using (await Lock.ReadLockAsync())
             {
-                var sources = _configSettingsService.source_list(_choco.GetConfiguration());
-                var mappedSources = sources.Select(_mapper.Map<ChocolateySource>).ToArray();
+                // We only want to provide the sources returned by calling choco.exe, which will exclude those
+                // as required, based on configuration.  However, in order to be able to set all properties of the source
+                // we need to read all information from the config file, i.e. the username and password
+                var config = await GetConfigFile();
+                var allSources = config.Sources.Select(_mapper.Map<ChocolateySource>).ToArray();
+
+                var filteredSourceIds = _configSettingsService.source_list(_choco.GetConfiguration()).Select(s => s.Id).ToArray();
+
+                var mappedSources = allSources.Where(s => filteredSourceIds.Contains(s.Id)).ToArray();
                 return mappedSources;
             }
         }

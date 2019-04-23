@@ -184,29 +184,30 @@ namespace ChocolateyGui.ViewModels
 
             try
             {
-                var fileStream = _persistenceService.SaveFile("*.config", Resources.LocalSourceViewModel_ConfigFiles);
-
-                if (fileStream == null)
+                using (var fileStream = _persistenceService.SaveFile("*.config", Resources.LocalSourceViewModel_ConfigFiles))
                 {
-                    return;
-                }
-
-                var settings = new XmlWriterSettings { Indent = true };
-
-                using (var xw = XmlWriter.Create(fileStream, settings))
-                {
-                    xw.WriteStartDocument();
-                    xw.WriteStartElement("packages");
-
-                    foreach (var package in Packages)
+                    if (fileStream == null)
                     {
-                        xw.WriteStartElement("package");
-                        xw.WriteAttributeString("id", package.Id);
-                        xw.WriteAttributeString("version", package.Version.ToString());
-                        xw.WriteEndElement();
+                        return;
                     }
 
-                    xw.WriteEndElement();
+                    var settings = new XmlWriterSettings {Indent = true};
+
+                    using (var xw = XmlWriter.Create(fileStream, settings))
+                    {
+                        xw.WriteStartDocument();
+                        xw.WriteStartElement("packages");
+
+                        foreach (var package in Packages)
+                        {
+                            xw.WriteStartElement("package");
+                            xw.WriteAttributeString("id", package.Id);
+                            xw.WriteAttributeString("version", package.Version.ToString());
+                            xw.WriteEndElement();
+                        }
+
+                        xw.WriteEndElement();
+                    }
                 }
             }
             catch (Exception ex)

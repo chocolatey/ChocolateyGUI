@@ -191,7 +191,7 @@ namespace ChocolateyGui.ViewModels
                         return;
                     }
 
-                    var settings = new XmlWriterSettings {Indent = true};
+                    var settings = new XmlWriterSettings { Indent = true };
 
                     using (var xw = XmlWriter.Create(fileStream, settings))
                     {

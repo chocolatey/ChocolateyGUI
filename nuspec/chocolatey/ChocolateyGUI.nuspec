@@ -33,11 +33,13 @@ All release notes for Chocolatey GUI can be found on the GitHub site - https://g
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>
       <dependency id="Chocolatey" version="0.10.3" />
+      <dependency id="chocolatey-core.extension" version="1.3.3" />
       <dependency id="dotnet4.5.2" version="4.5.2.20140902" />
     </dependencies>
   </metadata>
   <files>
     <file src="chocolateyInstall.ps1" target="tools"/>
+    <file src="chocolateyUninstall.ps1" target="tools"/>
     <file src="..\..\BuildArtifacts\ChocolateyGUI.msi" target="tools"/>
     <file src="..\..\LICENSE" target="tools\LICENSE"/>
     <file src="VERIFICATION.txt" target="tools"/>

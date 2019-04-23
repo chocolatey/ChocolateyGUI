@@ -14,3 +14,9 @@ $packageArgs = @{
 Install-ChocolateyInstallPackage @packageArgs
 
 Remove-Item -Force $packageArgs.file
+
+$installDirectory = Get-AppInstallLocation $packageArgs.softwareName
+
+if ($installDirectory) {
+  Install-BinFile -Name "chocolateygui" -Path "$installDirectory\ChocolateyGui.exe" -UseStart
+}

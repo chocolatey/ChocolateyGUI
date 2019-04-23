@@ -15,7 +15,7 @@
              mc:Ignorable="d"
              d:DesignHeight="786" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:PackageViewModel}">
-    
+
     <FrameworkElement.CommandBindings>
         <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="HandleMarkdownLink" />
     </FrameworkElement.CommandBindings>
@@ -156,10 +156,12 @@
                    Target="{Binding ElementName=Published}" />
             <TextBlock x:Name="Published" Text="{Binding Published, StringFormat=g}" Style="{StaticResource PackageResourceValue}" />
             <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_PackageSize}"
-                   Target="{Binding ElementName=PackageSize}" />
+                   Target="{Binding ElementName=PackageSize}"
+                   Visibility="{Binding IsPackageSizeAvailable, Converter={StaticResource BoolToVis}}"/>
             <TextBlock x:Name="PackageSize"
                        Text="{Binding PackageSize, Converter={StaticResource LongSizeToFileSizeString}}"
-                       Style="{StaticResource PackageResourceValue}" />
+                       Style="{StaticResource PackageResourceValue}"
+                       Visibility="{Binding IsPackageSizeAvailable, Converter={StaticResource BoolToVis}}"/>
 
             <StackPanel Margin="5,5,0,40">
                 <TextBlock

@@ -346,6 +346,11 @@ namespace ChocolateyGui.ViewModels.Items
             get { return DownloadCount != -1; }
         }
 
+        public bool IsPackageSizeAvailable
+        {
+            get { return PackageSize != -1; }
+        }
+
         public async Task Install()
         {
             try

@@ -78,7 +78,9 @@ namespace ChocolateyGui.Startup
                 config.CreateMap<IPackageViewModel, IPackageViewModel>()
                     .ForMember(vm => vm.IsInstalled, options => options.Ignore());
 
+                config.CreateMap<DataServicePackage, Package>();
                 config.CreateMap<IPackage, Package>();
+
                 config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
                 config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();
                 config.CreateMap<ConfigFileSourceSetting, Models.ChocolateySource>();

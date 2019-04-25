@@ -4,6 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Reflection;
 using Caliburn.Micro;
 using ChocolateyGui.Models.Messages;
 
@@ -16,6 +17,16 @@ namespace ChocolateyGui.ViewModels
         public AboutViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
+        }
+
+        public string ChocolateyGuiVersion
+        {
+            get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+        }
+
+        public string ChocolateyGuiInformationalVersion
+        {
+            get { return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion; }
         }
 
         public void Back()

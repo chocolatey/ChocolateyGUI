@@ -497,6 +497,8 @@ namespace ChocolateyGui.Services
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
                 mappedPackage.IsSideBySide = packageInfo.IsSideBySide;
 
+                mappedPackage.IsPrerelease = !string.IsNullOrWhiteSpace(mappedPackage.Version.SpecialVersion);
+
                 // Add a sanity check here for pre-release packages
                 // By default, pre-release packages are marked as IsLatestVersion = false, however, IsLatestVersion is
                 // what is used to show/hide the Out of Date message in the UI.  In these cases, if it is a pre-release

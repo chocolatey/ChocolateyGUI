@@ -172,19 +172,55 @@
         <Grid ClipToBounds="True">
             <Grid Height="20" Width="200">
                 <Grid.RenderTransform>
-                    <TranslateTransform X="55" Y="-55" />
+                    <TranslateTransform X="55" Y="55" />
                 </Grid.RenderTransform>
                 <Grid.LayoutTransform>
                     <TransformGroup>
-                        <RotateTransform Angle="45" />
+                        <RotateTransform Angle="-45" />
                     </TransformGroup>
                 </Grid.LayoutTransform>
-                <Rectangle Fill="{TemplateBinding Background}" />
+                <Rectangle Opacity=".8" Fill="{TemplateBinding Background}" />
                 <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
                            Foreground="{TemplateBinding Foreground}" />
             </Grid>
         </Grid>
     </ControlTemplate>
+
+    <Style x:Key="TileOverlayStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource {x:Type ContentControl}}">
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Template" Value="{StaticResource TileOverlayTemplate}" />
+    </Style>
+
+    <Style x:Key="TileOutOfDateOverlayStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource TileOverlayStyle}">
+        <Setter Property="Background" Value="#A90000" />
+    </Style>
+
+    <Style x:Key="TileIsInstalledOverlayStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource TileOverlayStyle}">
+        <Setter Property="Background" Value="#007F00" />
+    </Style>
+
+    <Style x:Key="TileTitleTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="4 1" />
+    </Style>
+
+    <Style x:Key="TileVersionTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="TileLatestVersionTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TileVersionTextStyle}">
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
 
     <Style x:Key="ListViewModeRadioButtonStyle" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />

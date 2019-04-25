@@ -34,20 +34,25 @@
                   Background="Transparent"
                   ContextMenu="{StaticResource PackagesContextMenu}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <controls:InternetImage Grid.Row="0"
+                <TextBlock Grid.Row="0"
+                           Style="{DynamicResource TileTitleTextStyle}"
+                           Text="{Binding Title, Mode=OneWay}" />
+
+                <controls:InternetImage Grid.Row="1"
                                         AutomationProperties.Name="Package Icon"
-                                        IconUrl="{Binding IconUrl, IsAsync=True}"
+                                        IconUrl="{Binding IconUrl, IsAsync=True, Mode=OneWay}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Width="100"
                                         Height="100"/>
 
-                <StackPanel x:Name="IconStackPanel" Orientation="Vertical" Grid.Row="0" Grid.RowSpan="3"
+                <StackPanel x:Name="IconStackPanel" Orientation="Vertical" Grid.Row="1" Grid.RowSpan="3"
                             Opacity="0.8"
                             Margin="2 2 0 0"
                             HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -58,40 +63,23 @@
                     <iconPacks:PackIconEntypo Width="24" Height="24"
                                               ToolTip="{x:Static lang:Resources.LocalSourceView_ToolTip_InstalledSideBySide}"
                                               Kind="Bookmarks" Margin="0 2"
-                                              Visibility="{Binding IsSideBySide, Converter={StaticResource BoolToVis}}" />
+                                              Visibility="{Binding IsSideBySide, Mode=OneWay, Converter={StaticResource BoolToVis}}" />
                 </StackPanel>
 
-                <ContentControl x:Name="OutOfDateOverlay" ClipToBounds="True" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed"
-                                IsTabStop="False"
-                                Focusable="False"
-                                Content="{x:Static lang:Resources.LocalSourceView_Outdated}"
-                                Background="#A90000"
-                                Foreground="White"
-                                Template="{DynamicResource TileOverlayTemplate}" />
-
-                <TextBlock Grid.Row="1"
+                <TextBlock Grid.Row="2"
                            Margin="4 0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           TextTrimming="CharacterEllipsis"
-                           FontSize="14"
-                           FontWeight="Bold"
-                           Text="{Binding Title, Mode=OneWay}" />
-                <TextBlock Grid.Row="2"
-                           Margin="4 1 4 4"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           TextTrimming="CharacterEllipsis"
-                           FontSize="14"
-                           Text="{Binding Version, Mode=OneWay}" />
-                <TextBlock Grid.Row="2"
-                           Margin="4 1 4 4"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Center"
-                           TextTrimming="CharacterEllipsis"
-                           FontSize="14"
-                           FontWeight="Bold"
+                           Style="{DynamicResource TileLatestVersionTextStyle}"
                            Text="{Binding LatestVersion, Mode=OneWay}" />
+
+                <TextBlock Grid.Row="3"
+                           Margin="4 0 4 1"
+                           Style="{DynamicResource TileVersionTextStyle}"
+                           Text="{Binding Version, Mode=OneWay}" />
+
+                <ContentControl x:Name="OutOfDateOverlay" Grid.Row="0" Grid.RowSpan="4"
+                                Visibility="Collapsed"
+                                Content="{x:Static lang:Resources.LocalSourceView_Outdated}"
+                                Style="{DynamicResource TileOutOfDateOverlayStyle}" />
             </Grid>
 
             <DataTemplate.Triggers>

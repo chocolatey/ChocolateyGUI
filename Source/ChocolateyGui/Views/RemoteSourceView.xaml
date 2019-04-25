@@ -102,56 +102,43 @@
                       Background="Transparent"
                       ContextMenu="{StaticResource PackagesContextMenu}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <controls:InternetImage Grid.Row="0"
+                    <TextBlock Grid.Row="0"
+                               Style="{DynamicResource TileTitleTextStyle}"
+                               Text="{Binding Title, Mode=OneWay}" />
+
+                    <controls:InternetImage Grid.Row="1"
                                             AutomationProperties.Name="Package Icon"
-                                            IconUrl="{Binding IconUrl, IsAsync=True}"
+                                            IconUrl="{Binding IconUrl, IsAsync=True, Mode=OneWay}"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             Width="100"
                                             Height="100"/>
 
-                    <iconPacks:PackIconEntypo Grid.Row="0" Grid.RowSpan="3"
+                    <iconPacks:PackIconEntypo Grid.Row="1" Grid.RowSpan="2"
                                               Opacity="0.8"
                                               Width="24" Height="24"
-                                              Kind="Pin" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2 4"
+                                              Kind="Pin" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2 2 0 0"
                                               Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BoolToVis}}" />
 
-                    <ContentControl x:Name="IsInstalledOverlay" ClipToBounds="True" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed"
-                                    IsTabStop="False"
-                                    Focusable="False"
-                                    Content="{x:Static lang:Resources.RemoteSourceView_OverlayInstalled}"
-                                    Background="#007F00"
-                                    Foreground="White"
-                                    Template="{DynamicResource TileOverlayTemplate}" />
-
-                    <ContentControl x:Name="OutOfDateOverlay" ClipToBounds="True" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed"
-                                    IsTabStop="False"
-                                    Focusable="False"
-                                    Content="{x:Static lang:Resources.RemoteSourceView_OverlayOutdated}"
-                                    Background="#A90000"
-                                    Foreground="White"
-                                    Template="{DynamicResource TileOverlayTemplate}" />
-
-                    <TextBlock Grid.Row="1"
-                               Margin="4 0"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               TextTrimming="CharacterEllipsis"
-                               FontSize="14"
-                               FontWeight="Bold"
-                               Text="{Binding Title}" />
                     <TextBlock Grid.Row="2"
-                               Margin="4 1 4 4"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               TextTrimming="CharacterEllipsis"
-                               FontSize="14"
-                               Text="{Binding Version}" />
+                               Margin="4 0 4 1"
+                               Style="{DynamicResource TileVersionTextStyle}"
+                               Text="{Binding Version, Mode=OneWay}" />
+
+                    <ContentControl x:Name="IsInstalledOverlay" Grid.Row="0" Grid.RowSpan="3"
+                                    Visibility="Collapsed"
+                                    Content="{x:Static lang:Resources.RemoteSourceView_OverlayInstalled}"
+                                    Style="{DynamicResource TileIsInstalledOverlayStyle}" />
+
+                    <ContentControl x:Name="OutOfDateOverlay" Grid.Row="0" Grid.RowSpan="3"
+                                    Visibility="Collapsed"
+                                    Content="{x:Static lang:Resources.RemoteSourceView_OverlayOutdated}"
+                                    Style="{DynamicResource TileOutOfDateOverlayStyle}" />
                 </Grid>
 
                 <DataTemplate.Triggers>

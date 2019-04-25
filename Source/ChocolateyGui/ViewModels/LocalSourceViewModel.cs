@@ -44,6 +44,7 @@ namespace ChocolateyGui.ViewModels
         private ObservableCollection<IPackageViewModel> _packageViewModels;
         private string _searchQuery;
         private bool _showOnlyPackagesWithUpdate;
+        private bool _isShowOnlyPackagesWithUpdateEnabled;
         private string _sortColumn;
         private bool _sortDescending;
         private bool _isLoading;
@@ -91,6 +92,12 @@ namespace ChocolateyGui.ViewModels
         {
             get { return _showOnlyPackagesWithUpdate; }
             set { this.SetPropertyValue(ref _showOnlyPackagesWithUpdate, value); }
+        }
+
+        public bool IsShowOnlyPackagesWithUpdateEnabled
+        {
+            get { return _isShowOnlyPackagesWithUpdateEnabled; }
+            set { this.SetPropertyValue(ref _isShowOnlyPackagesWithUpdateEnabled, value); }
         }
 
         public bool MatchWord
@@ -378,6 +385,9 @@ namespace ChocolateyGui.ViewModels
             }
 
             IsLoading = true;
+
+            IsShowOnlyPackagesWithUpdateEnabled = false;
+
             try
             {
                 _packages.Clear();
@@ -414,6 +424,8 @@ namespace ChocolateyGui.ViewModels
             finally
             {
                 IsLoading = false;
+
+                IsShowOnlyPackagesWithUpdateEnabled = true;
             }
         }
     }

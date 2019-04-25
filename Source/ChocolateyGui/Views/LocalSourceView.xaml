@@ -150,7 +150,8 @@
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                 <CheckBox Name="UpdatesCheckBox" Margin="5"
                           Content="{x:Static lang:Resources.LocalSourceView_CheckboxPkgsWithUpdates}"
-                          IsChecked="{Binding ShowOnlyPackagesWithUpdate}" />
+                          IsChecked="{Binding ShowOnlyPackagesWithUpdate}"
+                          IsEnabled="{Binding IsShowOnlyPackagesWithUpdateEnabled}"/>
             </WrapPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,6">
                 <Button Command="{commands:DataContextCommandAdapter RefreshPackages, CanRefreshPackages}"

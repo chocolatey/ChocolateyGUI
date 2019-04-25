@@ -243,6 +243,7 @@
     <Compile Include="Models\Messages\AboutGoBackMessage.cs" />
     <Compile Include="Models\Messages\ShowAboutMessage.cs" />
     <Compile Include="Utilities\BindingProxy.cs" />
+    <Compile Include="Utilities\BubbleScrollEventBehavior.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityInverted.cs" />
     <Compile Include="Utilities\Converters\NullToValue.cs" />
     <Compile Include="Utilities\PackageAuthorsComparer.cs" />

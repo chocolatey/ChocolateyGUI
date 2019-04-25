@@ -297,15 +297,19 @@
     </Style>
 
     <Style x:Key="SectionHeaderStyle" BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="28" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="18" />
-        <Setter Property="Padding" Value="10 5 10 5"></Setter>
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="28" />
+        <Setter Property="Padding" Value="2 4" />
+        <Setter Property="Margin" Value="0 0 0 8" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" UseLayoutRounding="True">
-                        <TextBlock Margin="0 10 0 5" Text="{Binding}" />
-                        <Separator Margin="0 0 5 0"/>
+                        <TextBlock Margin="0 0 0 4" Text="{Binding}" />
+                        <Separator Margin="0 0 4 0"/>
                     </StackPanel>
                 </DataTemplate>
             </Setter.Value>

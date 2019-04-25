@@ -496,6 +496,16 @@ namespace ChocolateyGui.Services
                 mappedPackage.IsPinned = packageInfo.IsPinned;
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
                 mappedPackage.IsSideBySide = packageInfo.IsSideBySide;
+
+                // Add a sanity check here for pre-release packages
+                // By default, pre-release packages are marked as IsLatestVersion = false, however, IsLatestVersion is
+                // what is used to show/hide the Out of Date message in the UI.  In these cases, if it is a pre-release
+                // mark IsLatestVersion as true, and then the outcome of the call to choco outdated will correct whether
+                // it is actually Out of Date or not
+                if (mappedPackage.IsPrerelease && mappedPackage.IsAbsoluteLatestVersion && !mappedPackage.IsLatestVersion)
+                {
+                    mappedPackage.IsLatestVersion = true;
+                }
             }
 
             return mappedPackage;

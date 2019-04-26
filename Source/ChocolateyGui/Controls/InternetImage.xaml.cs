@@ -89,7 +89,7 @@ namespace ChocolateyGui.Controls
 
         private async Task<IBitmap> LoadImage(string url, float desiredWidth, DateTime absoluteExpiration)
         {
-            var imageStream = await DownloadUrl(url, desiredWidth, absoluteExpiration);
+            var imageStream = await DownloadUrl(url, desiredWidth, absoluteExpiration).ConfigureAwait(false);
 
             // Don't specify width and height to keep the aspect ratio of the image.
             return await BitmapLoader.Current.Load(imageStream, null, null);
@@ -131,11 +131,11 @@ namespace ChocolateyGui.Controls
                     MagickReadSettings readSettings = null;
                     if (string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
                     {
-                        readSettings = new MagickReadSettings() { Format = MagickFormat.Svg };
+                        readSettings = new MagickReadSettings { Format = MagickFormat.Svg };
                     }
                     else if (string.Equals(extension, "svgz", StringComparison.OrdinalIgnoreCase))
                     {
-                        readSettings = new MagickReadSettings() { Format = MagickFormat.Svgz };
+                        readSettings = new MagickReadSettings { Format = MagickFormat.Svgz };
                     }
 
                     using (var image = new MagickImage(memoryStream, readSettings))

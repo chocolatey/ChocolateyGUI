@@ -128,14 +128,21 @@ namespace ChocolateyGui.Controls
                     await response.Content.CopyToAsync(memoryStream);
                     memoryStream.Position = 0;
 
-                    using (var image = new MagickImage(memoryStream))
+                    MagickReadSettings readSettings = null;
+                    if (string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (!string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
-                        {
-                            // Resize the image to the desired width. When zero is specified for the height
-                            // the height will be calculated with the aspect ratio.
-                            image.Resize((int)desiredWidth, 0);
-                        }
+                        readSettings = new MagickReadSettings() { Format = MagickFormat.Svg };
+                    }
+                    else if (string.Equals(extension, "svgz", StringComparison.OrdinalIgnoreCase))
+                    {
+                        readSettings = new MagickReadSettings() { Format = MagickFormat.Svgz };
+                    }
+
+                    using (var image = new MagickImage(memoryStream, readSettings))
+                    {
+                        // Resize the image to the desired width. When zero is specified for the height
+                        // the height will be calculated with the aspect ratio.
+                        image.Resize((int)desiredWidth, 0);
 
                         image.Write(imageStream, MagickFormat.Png);
                         imageStream.Flush();

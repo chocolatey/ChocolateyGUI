@@ -13,7 +13,8 @@
                    d:DataContext="{d:DesignInstance Type=local:ShellViewModel}"
                    SaveWindowPosition="True"
                    TitleForeground="Transparent"
-                   ShowDialogsOverTitleBar="False">
+                   ShowDialogsOverTitleBar="False"
+                   OverlayOpacity="0.3">
   <Window.CommandBindings>
         <CommandBinding
             Command="NavigationCommands.GoToPage"

@@ -20,6 +20,7 @@ namespace ChocolateyGui.Utilities
         protected override void OnAttached()
         {
             base.OnAttached();
+
             AssociatedObject.PreviewMouseWheel -= AssociatedObject_PreviewMouseWheel;
             AssociatedObject.PreviewMouseWheel += AssociatedObject_PreviewMouseWheel;
         }
@@ -27,17 +28,22 @@ namespace ChocolateyGui.Utilities
         protected override void OnDetaching()
         {
             AssociatedObject.PreviewMouseWheel -= AssociatedObject_PreviewMouseWheel;
+
             base.OnDetaching();
         }
 
         private void AssociatedObject_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (!Keyboard.IsKeyDown(Key.LeftShift))
+            var uiElement = sender as UIElement;
+            if (uiElement == null || Keyboard.IsKeyDown(Key.LeftShift))
             {
-                e.Handled = true;
-                var e2 = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) { RoutedEvent = UIElement.MouseWheelEvent };
-                AssociatedObject.RaiseEvent(e2);
+                return;
             }
+
+            e.Handled = true;
+
+            var e2 = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) { RoutedEvent = UIElement.MouseWheelEvent };
+            uiElement.RaiseEvent(e2);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace ChocolateyGui.Utilities
             base.OnDetaching();
         }
 
-        private void AssociatedObject_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private static void AssociatedObject_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             var uiElement = sender as UIElement;
             if (uiElement == null || Keyboard.IsKeyDown(Key.LeftShift))

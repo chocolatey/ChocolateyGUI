@@ -22,7 +22,6 @@ using MahApps.Metro.IconPacks;
 using Microsoft.VisualStudio.Threading;
 using Serilog;
 using Splat;
-using FileMode = System.IO.FileMode;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Controls
@@ -68,7 +67,7 @@ namespace ChocolateyGui.Controls
             var drawingGroup = new DrawingGroup();
             drawingGroup.Children.Add(geometryDrawing);
             drawingGroup.Transform = new ScaleTransform(3.5, 3.5);
-            var drawingImage = new DrawingImage { Drawing = drawingGroup };
+            var drawingImage = new DrawingImage(drawingGroup);
             drawingImage.Freeze();
             return drawingImage;
         }
@@ -88,13 +87,15 @@ namespace ChocolateyGui.Controls
             imageStream.Position = 0;
         }
 
-        private async Task<IBitmap> LoadImage(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
+        private async Task<IBitmap> LoadImage(string url, float desiredWidth, DateTime absoluteExpiration)
         {
-            var imageStream = await DownloadUrl(url, desiredWidth, desiredHeight, absoluteExpiration);
-            return await BitmapLoader.Current.Load(imageStream, desiredWidth, desiredHeight);
+            var imageStream = await DownloadUrl(url, desiredWidth, absoluteExpiration).ConfigureAwait(false);
+
+            // Don't specify width and height to keep the aspect ratio of the image.
+            return await BitmapLoader.Current.Load(imageStream, null, null);
         }
 
-        private async Task<Stream> DownloadUrl(string url, float desiredWidth, float desiredHeight, DateTime absoluteExpiration)
+        private async Task<Stream> DownloadUrl(string url, float desiredWidth, DateTime absoluteExpiration)
         {
             var id = $"imagecache/{url.GetHashCode()}";
             var imageStream = new MemoryStream();
@@ -121,30 +122,32 @@ namespace ChocolateyGui.Controls
                 response.EnsureSuccessStatusCode();
 
                 var extension = GetExtension(url);
-                var tempFile = Path.GetTempFileName();
-                var fileInfo = new FileInfo(tempFile);
-                fileInfo.MoveTo(tempFile.Replace(".tmp", $".{extension}"));
-                using (var fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite))
-                {
-                    await response.Content.CopyToAsync(fileStream);
-                }
 
-                using (var image = new MagickImage(fileInfo))
+                using (var memoryStream = new MemoryStream())
                 {
-                    var size = new MagickGeometry((int)desiredWidth, (int)desiredHeight)
+                    await response.Content.CopyToAsync(memoryStream);
+                    memoryStream.Position = 0;
+
+                    MagickReadSettings readSettings = null;
+                    if (string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
                     {
-                        FillArea = true
-                    };
-                    if (!string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
+                        readSettings = new MagickReadSettings { Format = MagickFormat.Svg };
+                    }
+                    else if (string.Equals(extension, "svgz", StringComparison.OrdinalIgnoreCase))
                     {
-                        image.Resize(size);
+                        readSettings = new MagickReadSettings { Format = MagickFormat.Svgz };
                     }
 
-                    image.Write(imageStream, MagickFormat.Png);
-                    imageStream.Flush();
-                }
+                    using (var image = new MagickImage(memoryStream, readSettings))
+                    {
+                        // Resize the image to the desired width. When zero is specified for the height
+                        // the height will be calculated with the aspect ratio.
+                        image.Resize((int)desiredWidth, 0);
 
-                fileInfo.Delete();
+                        image.Write(imageStream, MagickFormat.Png);
+                        imageStream.Flush();
+                    }
+                }
             }
 
             using (await Lock.WriteLockAsync())
@@ -181,7 +184,7 @@ namespace ChocolateyGui.Controls
             ImageSource source;
             try
             {
-                source = (await LoadImage(url, size.Width, size.Height, expiration)).ToNative();
+                source = (await LoadImage(url, size.Width, expiration)).ToNative();
             }
             catch (HttpRequestException)
             {

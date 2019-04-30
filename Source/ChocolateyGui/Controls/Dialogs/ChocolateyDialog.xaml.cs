@@ -63,6 +63,8 @@ namespace ChocolateyGui.Controls.Dialogs
             {
                 ProgressBarForeground = Brushes.White;
             }
+
+            NegativeButtonText = Properties.Resources.ChocolateyDialog_Cancel;
         }
 
         public bool IsCancelable

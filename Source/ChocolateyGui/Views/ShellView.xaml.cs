@@ -96,6 +96,8 @@ namespace ChocolateyGui.Views
                 if (settings == null)
                 {
                     settings = MetroDialogOptions;
+                    settings.NegativeButtonText = Properties.Resources.ChocolateyDialog_Cancel;
+                    settings.AffirmativeButtonText = Properties.Resources.ChocolateyDialog_OK;
                 }
 
                 dialog.NegativeButtonText = settings.NegativeButtonText;

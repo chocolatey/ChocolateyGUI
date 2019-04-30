@@ -13,6 +13,7 @@ using ChocolateyGui.Base;
 using ChocolateyGui.Controls;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Models;
+using ChocolateyGui.Properties;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.Views;
 using MahApps.Metro.Controls.Dialogs;
@@ -80,7 +81,12 @@ namespace ChocolateyGui.Services
             {
                 if (ShellView != null)
                 {
-                    return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message));
+                    var dialogSettings = new MetroDialogSettings
+                    {
+                        AffirmativeButtonText = Resources.ChocolateyDialog_OK
+                    };
+
+                    return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message, MessageDialogStyle.Affirmative, dialogSettings));
                 }
 
                 return MessageBox.Show(message, title) == MessageBoxResult.OK

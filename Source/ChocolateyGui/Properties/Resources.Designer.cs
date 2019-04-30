@@ -124,11 +124,29 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ChocolateyDialog_Cancel {
+            get {
+                return ResourceManager.GetString("ChocolateyDialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Console Output.
         /// </summary>
         public static string ChocolateyDialog_ConsoleOutput {
             get {
                 return ResourceManager.GetString("ChocolateyDialog_ConsoleOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string ChocolateyDialog_OK {
+            get {
+                return ResourceManager.GetString("ChocolateyDialog_OK", resourceCulture);
             }
         }
         

@@ -11,7 +11,7 @@ namespace ChocolateyGui.Utilities
     /// <summary>
     /// BindingProxy class with a DependencyProperty as the backing store for Data.
     /// This enables animation, styling, binding, etc...
-    /// And prevents erros like:
+    /// And prevents errors like:
     /// System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ShowConsoleOutput; DataItem=null; target element is 'ChocolateyGUISetting' (HashCode=61659320); target property is 'Enabled' (type 'Boolean')
     /// </summary>
     public class BindingProxy : Freezable

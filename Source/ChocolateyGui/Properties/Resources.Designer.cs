@@ -1561,13 +1561,31 @@ namespace ChocolateyGui.Properties {
                 return ResourceManager.GetString("SettingsView_ButtonSave", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Chocolatey.
         /// </summary>
         public static string SettingsView_Chocolatey {
             get {
                 return ResourceManager.GetString("SettingsView_Chocolatey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Certificate and Password.
+        /// </summary>
+        public static string SettingsView_ButtonSetCertificateAndPassword {
+            get {
+                return ResourceManager.GetString("SettingsView_ButtonSetCertificateAndPassword", resourceCulture);
+            }
+        }        
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Username and Password.
+        /// </summary>
+        public static string SettingsView_ButtonSetUsernameAndPassword {
+            get {
+                return ResourceManager.GetString("SettingsView_ButtonSetUsernameAndPassword", resourceCulture);
             }
         }
         
@@ -1586,6 +1604,15 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription {
             get {
                 return ResourceManager.GetString("SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * The only modification that can be made to chocolatey.licensed source is to enable/disable it..
+        /// </summary>
+        public static string SettingsView_ChocolateyLicensedSourceWarning {
+            get {
+                return ResourceManager.GetString("SettingsView_ChocolateyLicensedSourceWarning", resourceCulture);
             }
         }
         
@@ -1951,6 +1978,15 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to chocolatey.licensed is a reserved source id and cannot be used for a new source.
+        /// </summary>
+        public static string SettingsViewModel_InvalidSourceId {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_InvalidSourceId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Removing source....
         /// </summary>
         public static string SettingsViewModel_RemovingSource {
@@ -1974,6 +2010,60 @@ namespace ChocolateyGui.Properties {
         public static string SettingsViewModel_SavingSourceLoading {
             get {
                 return ResourceManager.GetString("SettingsViewModel_SavingSourceLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOTE: To remove the Certificate and Passowrd, simply empty both input fields and click Save.
+        /// </summary>
+        public static string SettingsViewModel_SetSourceCertificateAndPasswordMessage {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SetSourceCertificateAndPasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate Password....
+        /// </summary>
+        public static string SettingsViewModel_SetSourceCertificateAndPasswordPasswordWatermark {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SetSourceCertificateAndPasswordPasswordWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Source Certificate and Password.
+        /// </summary>
+        public static string SettingsViewModel_SetSourceCertificateAndPasswordTitle {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SetSourceCertificateAndPasswordTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate....
+        /// </summary>
+        public static string SettingsViewModel_SetSourceCertificateAndPasswordUsernameWatermark {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SetSourceCertificateAndPasswordUsernameWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOTE: To remove the Username and Passowrd, simply empty both input fields and click Save.
+        /// </summary>
+        public static string SettingsViewModel_SetSourceUsernameAndPasswordMessage {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SetSourceUsernameAndPasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Source Username and Password.
+        /// </summary>
+        public static string SettingsViewModel_SetSourceUsernameAndPasswordTitle {
+            get {
+                return ResourceManager.GetString("SettingsViewModel_SetSourceUsernameAndPasswordTitle", resourceCulture);
             }
         }
         

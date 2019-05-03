@@ -44,11 +44,21 @@ namespace ChocolateyGui.Models
 
         public string Password { get; set; }
 
+        public bool HasPassword
+        {
+            get { return !string.IsNullOrWhiteSpace(Password); }
+        }
+
         public int Priority { get; set; }
 
         public string Certificate { get; set; }
 
         public string CertificatePassword { get; set; }
+
+        public bool HasCertificatePassword
+        {
+            get { return !string.IsNullOrWhiteSpace(CertificatePassword); }
+        }
 
         public bool BypassProxy { get; set; }
 

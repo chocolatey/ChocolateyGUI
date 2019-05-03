@@ -808,4 +808,34 @@ Normal:
   <data name="Command_UseFeatureCommandNote" xml:space="preserve">
     <value>NOTE: Use {0} to interact with features</value>
   </data>
+  <data name="SettingsViewModel_InvalidSourceId" xml:space="preserve">
+    <value>chocolatey.licensed is a reserved source id and cannot be used for a new source</value>
+  </data>
+  <data name="SettingsViewModel_SetSourceCertificateAndPasswordMessage" xml:space="preserve">
+    <value>NOTE: To remove the Certificate and Passowrd, simply empty both input fields and click Save</value>
+  </data>
+  <data name="SettingsViewModel_SetSourceCertificateAndPasswordPasswordWatermark" xml:space="preserve">
+    <value>Certificate Password...</value>
+  </data>
+  <data name="SettingsViewModel_SetSourceCertificateAndPasswordTitle" xml:space="preserve">
+    <value>Set Source Certificate and Password</value>
+  </data>
+  <data name="SettingsViewModel_SetSourceCertificateAndPasswordUsernameWatermark" xml:space="preserve">
+    <value>Certificate...</value>
+  </data>
+  <data name="SettingsViewModel_SetSourceUsernameAndPasswordMessage" xml:space="preserve">
+    <value>NOTE: To remove the Username and Passowrd, simply empty both input fields and click Save</value>
+  </data>
+  <data name="SettingsViewModel_SetSourceUsernameAndPasswordTitle" xml:space="preserve">
+    <value>Set Source Username and Password</value>
+  </data>
+  <data name="SettingsView_ButtonSetCertificateAndPassword" xml:space="preserve">
+    <value>Set Certificate and Password</value>
+  </data>
+  <data name="SettingsView_ButtonSetUsernameAndPassword" xml:space="preserve">
+    <value>Set Username and Password</value>
+  </data>
+  <data name="SettingsView_ChocolateyLicensedSourceWarning" xml:space="preserve">
+    <value>* The only modification that can be made to chocolatey.licensed source is to enable/disable it.</value>
+  </data>
 </root>

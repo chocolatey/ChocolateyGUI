@@ -15,6 +15,7 @@ using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
 using chocolatey;
+using ChocolateyGui.CliCommands;
 using ChocolateyGui.Models;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
@@ -23,6 +24,7 @@ using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels;
 using ChocolateyGui.ViewModels.Items;
 using Serilog;
+using Serilog.Events;
 using ILogger = Serilog.ILogger;
 using Log = Serilog.Log;
 
@@ -88,7 +90,7 @@ namespace ChocolateyGui
             var directPath = Path.Combine(logPath, "ChocolateyGui.{Date}.log");
 
             var logConfig = new LoggerConfiguration()
-                .WriteTo.Async(config => config.LiterateConsole())
+                .WriteTo.Sink(new ColouredConsoleSink(), LogEventLevel.Information)
                 .WriteTo.Async(config =>
                     config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
                 .SetDefaultLevel();

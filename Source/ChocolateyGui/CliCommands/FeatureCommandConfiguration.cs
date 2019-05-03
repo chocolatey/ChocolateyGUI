@@ -1,17 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="ChocolateyGuiSetting.cs">
+// <copyright company="Chocolatey" file="FeatureCommandConfiguration.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ChocolateyGui.Models
+using System;
+
+namespace ChocolateyGui.CliCommands
 {
-    public class ChocolateyGuiSetting
+    [Serializable]
+    public sealed class FeatureCommandConfiguration
     {
-        public string Key { get; set; }
+        public string Name { get; set; }
 
-        public string Value { get; set; }
-
-        public string Description { get; set; }
-   }
+        public FeatureCommandType Command { get; set; }
+    }
 }

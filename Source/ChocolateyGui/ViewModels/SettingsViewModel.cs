@@ -5,47 +5,33 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Caliburn.Micro;
+using ChocolateyGui.CliCommands;
 using ChocolateyGui.Models;
 using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
-using Serilog;
-using ILogger = Serilog.ILogger;
+using ChocolateySource = ChocolateyGui.Models.ChocolateySource;
 
 namespace ChocolateyGui.ViewModels
 {
     public sealed class SettingsViewModel : Screen
     {
-        private static readonly ILogger Logger = Log.ForContext<SettingsViewModel>();
-
-        private static readonly HashSet<string> ConfigProperties = new HashSet<string>
-                                                                       {
-                                                                           nameof(ShowConsoleOutput),
-                                                                           nameof(DefaultToTileViewForLocalSource),
-                                                                           nameof(DefaultToTileViewForRemoteSource),
-                                                                           nameof(UseDelayedSearch),
-                                                                           nameof(ExcludeInstalledPackages),
-                                                                           nameof(ShowAggregatedSourceView)
-                                                                       };
-
-        private readonly IChocolateyService _packageService;
+        private readonly IChocolateyService _chocolateyService;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
-
         private readonly IEventAggregator _eventAggregator;
 
-        private Subject<ChocolateyFeature> _changedFeature;
-        private Subject<ChocolateySetting> _changedSetting;
-        private IDisposable _configSubscription;
+        private Subject<ChocolateyFeature> _changedChocolateyFeature;
+        private Subject<ChocolateySetting> _changedChocolateySetting;
+        private Subject<ChocolateyGuiFeature> _changedChocolateyGuiFeature;
+        private Subject<ChocolateyGuiSetting> _changedChocolateyGuiSetting;
         private AppConfiguration _config;
         private ChocolateySource _selectedSource;
         private ChocolateySource _draftSource;
@@ -53,12 +39,12 @@ namespace ChocolateyGui.ViewModels
         private bool _isNewItem;
 
         public SettingsViewModel(
-            IChocolateyService packageService,
+            IChocolateyService chocolateyService,
             IProgressService progressService,
             IConfigService configService,
             IEventAggregator eventAggregator)
         {
-            _packageService = packageService;
+            _chocolateyService = chocolateyService;
             _progressService = progressService;
             _configService = configService;
             _eventAggregator = eventAggregator;
@@ -67,96 +53,15 @@ namespace ChocolateyGui.ViewModels
             Deactivated += OnDeactivated;
         }
 
-        public ObservableCollection<ChocolateyFeature> Features { get; } = new ObservableCollection<ChocolateyFeature>();
+        public ObservableCollection<ChocolateyGuiFeature> ChocolateyGuiFeatures { get; } = new ObservableCollection<ChocolateyGuiFeature>();
 
-        public ObservableCollection<ChocolateySetting> Settings { get; } = new ObservableCollection<ChocolateySetting>();
+        public ObservableCollection<ChocolateyGuiSetting> ChocolateyGuiSettings { get; } = new ObservableCollection<ChocolateyGuiSetting>();
+
+        public ObservableCollection<ChocolateyFeature> ChocolateyFeatures { get; } = new ObservableCollection<ChocolateyFeature>();
+
+        public ObservableCollection<ChocolateySetting> ChocolateySettings { get; } = new ObservableCollection<ChocolateySetting>();
 
         public ObservableCollection<ChocolateySource> Sources { get; } = new ObservableCollection<ChocolateySource>();
-
-        public bool ShowConsoleOutput
-        {
-            get
-            {
-                return _config.ShowConsoleOutput;
-            }
-
-            set
-            {
-                _config.ShowConsoleOutput = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
-        public bool DefaultToTileViewForLocalSource
-        {
-            get
-            {
-                return _config.DefaultToTileViewForLocalSource;
-            }
-
-            set
-            {
-                _config.DefaultToTileViewForLocalSource = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
-        public bool DefaultToTileViewForRemoteSource
-        {
-            get
-            {
-                return _config.DefaultToTileViewForRemoteSource;
-            }
-
-            set
-            {
-                _config.DefaultToTileViewForRemoteSource = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
-        public bool UseDelayedSearch
-        {
-            get
-            {
-                return _config.UseDelayedSearch;
-            }
-
-            set
-            {
-                _config.UseDelayedSearch = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
-        public bool ExcludeInstalledPackages
-        {
-            get
-            {
-                return _config.ExcludeInstalledPackages;
-            }
-
-            set
-            {
-                _config.ExcludeInstalledPackages = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
-        public bool ShowAggregatedSourceView
-        {
-            get
-            {
-                return _config.ShowAggregatedSourceView;
-            }
-
-            set
-            {
-                _config.ShowAggregatedSourceView = value;
-                _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
-                NotifyOfPropertyChange();
-            }
-        }
 
         public bool CanSave => SelectedSource != null;
 
@@ -204,15 +109,26 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
-        public void FeatureToggled(ChocolateyFeature feature)
+        public void ChocolateyFeatureToggled(ChocolateyFeature feature)
         {
-            _changedFeature.OnNext(feature);
+            _changedChocolateyFeature.OnNext(feature);
         }
 
-        public async void RowEditEnding(DataGridRowEditEndingEventArgs eventArgs)
+        public void ChocolateyGuiFeatureToggled(ChocolateyGuiFeature feature)
+        {
+            _changedChocolateyGuiFeature.OnNext(feature);
+        }
+
+        public async void ChocolateySettingsRowEditEnding(DataGridRowEditEndingEventArgs eventArgs)
         {
             await Task.Delay(100);
-            _changedSetting.OnNext((ChocolateySetting)eventArgs.Row.Item);
+            _changedChocolateySetting.OnNext((ChocolateySetting)eventArgs.Row.Item);
+        }
+
+        public async void ChocolateyGuiSettingsRowEditEnding(DataGridRowEditEndingEventArgs eventArgs)
+        {
+            await Task.Delay(100);
+            _changedChocolateyGuiSetting.OnNext((ChocolateyGuiSetting)eventArgs.Row.Item);
         }
 
         public void SourceSelectionChanged(object source)
@@ -222,16 +138,39 @@ namespace ChocolateyGui.ViewModels
             return;
         }
 
-        public void UpdateConfig()
+        public async Task UpdateChocolateyGuiFeature(ChocolateyGuiFeature feature)
         {
-            _configService.UpdateSettings(_config);
+            var configuration = new ChocolateyGuiConfiguration();
+            configuration.CommandName = "feature";
+            configuration.FeatureCommand.Name = feature.Title;
+
+            if (feature.Enabled)
+            {
+                configuration.FeatureCommand.Command = FeatureCommandType.Enable;
+                await Task.Run(() => _configService.EnableFeature(configuration));
+            }
+            else
+            {
+                configuration.FeatureCommand.Command = FeatureCommandType.Disable;
+                await Task.Run(() => _configService.DisableFeature(configuration));
+            }
         }
 
-        public async Task UpdateFeature(ChocolateyFeature feature)
+        public async Task UpdateChocolateyGuiSetting(ChocolateyGuiSetting setting)
+        {
+            var configuration = new ChocolateyGuiConfiguration();
+            configuration.CommandName = "config";
+            configuration.ConfigCommand.Name = setting.Key;
+            configuration.ConfigCommand.ConfigValue = setting.Value;
+
+            await Task.Run(() => _configService.SetConfigValue(configuration));
+        }
+
+        public async Task UpdateChocolateyFeature(ChocolateyFeature feature)
         {
             try
             {
-                await _packageService.SetFeature(feature);
+                await _chocolateyService.SetFeature(feature);
             }
             catch (UnauthorizedAccessException)
             {
@@ -241,9 +180,9 @@ namespace ChocolateyGui.ViewModels
             }
         }
 
-        public async Task UpdateSetting(ChocolateySetting setting)
+        public async Task UpdateChocolateySetting(ChocolateySetting setting)
         {
-            await _packageService.SetSetting(setting);
+            await _chocolateyService.SetSetting(setting);
         }
 
         public void New()
@@ -270,14 +209,14 @@ namespace ChocolateyGui.ViewModels
             {
                 if (_isNewItem)
                 {
-                    await _packageService.AddSource(DraftSource);
+                    await _chocolateyService.AddSource(DraftSource);
                     _isNewItem = false;
                     Sources.Add(DraftSource);
                     NotifyOfPropertyChange(nameof(CanRemove));
                 }
                 else
                 {
-                    await _packageService.UpdateSource(_originalId, DraftSource);
+                    await _chocolateyService.UpdateSource(_originalId, DraftSource);
                     Sources[Sources.IndexOf(SelectedSource)] = DraftSource;
                 }
 
@@ -301,7 +240,7 @@ namespace ChocolateyGui.ViewModels
             await _progressService.StartLoading(Resources.SettingsViewModel_RemovingSource);
             try
             {
-                await _packageService.RemoveSource(_originalId);
+                await _chocolateyService.RemoveSource(_originalId);
                 Sources.Remove(SelectedSource);
                 SelectedSource = null;
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
@@ -330,57 +269,69 @@ namespace ChocolateyGui.ViewModels
 
         private async void OnActivated(object sender, ActivationEventArgs activationEventArgs)
         {
-            WireUpConfig();
+            _config = _configService.GetAppConfiguration();
 
-            var features = await _packageService.GetFeatures();
-            foreach (var feature in features)
+            var chocolateyFeatures = await _chocolateyService.GetFeatures();
+            foreach (var chocolateyFeature in chocolateyFeatures)
             {
-                Features.Add(feature);
+                ChocolateyFeatures.Add(chocolateyFeature);
             }
 
-            _changedFeature = new Subject<ChocolateyFeature>();
-            _changedFeature
-                        .Select(f => Observable.FromAsync(() => UpdateFeature(f)))
+            _changedChocolateyFeature = new Subject<ChocolateyFeature>();
+            _changedChocolateyFeature
+                        .Select(f => Observable.FromAsync(() => UpdateChocolateyFeature(f)))
                         .Concat()
                         .Subscribe();
 
-            var settings = await _packageService.GetSettings();
-            foreach (var setting in settings)
+            var chocolateySettings = await _chocolateyService.GetSettings();
+            foreach (var chocolateySetting in chocolateySettings)
             {
-                Settings.Add(setting);
+                ChocolateySettings.Add(chocolateySetting);
             }
 
-            _changedSetting = new Subject<ChocolateySetting>();
-            _changedSetting
-                        .Select(s => Observable.FromAsync(() => UpdateSetting(s)))
+            _changedChocolateySetting = new Subject<ChocolateySetting>();
+            _changedChocolateySetting
+                        .Select(s => Observable.FromAsync(() => UpdateChocolateySetting(s)))
                         .Concat()
                         .Subscribe();
 
-            var sources = await _packageService.GetSources();
+            var chocolateyGuiFeatures = _configService.GetFeatures();
+            foreach (var chocolateyGuiFeature in chocolateyGuiFeatures)
+            {
+                ChocolateyGuiFeatures.Add(chocolateyGuiFeature);
+            }
+
+            _changedChocolateyGuiFeature = new Subject<ChocolateyGuiFeature>();
+            _changedChocolateyGuiFeature
+                .Select(s => Observable.FromAsync(() => UpdateChocolateyGuiFeature(s)))
+                .Concat()
+                .Subscribe();
+
+            var chocolateyGuiSettings = _configService.GetSettings();
+            foreach (var chocolateyGuiSetting in chocolateyGuiSettings)
+            {
+                ChocolateyGuiSettings.Add(chocolateyGuiSetting);
+            }
+
+            _changedChocolateyGuiSetting = new Subject<ChocolateyGuiSetting>();
+            _changedChocolateyGuiSetting
+                .Select(s => Observable.FromAsync(() => UpdateChocolateyGuiSetting(s)))
+                .Concat()
+                .Subscribe();
+
+            var sources = await _chocolateyService.GetSources();
             foreach (var source in sources)
             {
                 Sources.Add(source);
             }
         }
 
-        private void WireUpConfig()
-        {
-            _config = _configService.GetSettings();
-            foreach (var prop in ConfigProperties)
-            {
-                NotifyOfPropertyChange(prop);
-            }
-
-            _configSubscription = Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                .Where(p => ConfigProperties.Contains(p.EventArgs.PropertyName))
-                .Subscribe(_ => UpdateConfig());
-        }
-
         private void OnDeactivated(object sender, DeactivationEventArgs deactivationEventArgs)
         {
-            _changedFeature.OnCompleted();
-            _changedSetting.OnCompleted();
-            _configSubscription.Dispose();
+            _changedChocolateyFeature.OnCompleted();
+            _changedChocolateySetting.OnCompleted();
+            _changedChocolateyGuiFeature.OnCompleted();
+            _changedChocolateyGuiSetting.OnCompleted();
         }
     }
 }

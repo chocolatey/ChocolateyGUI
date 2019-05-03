@@ -1,17 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="ChocolateyGuiSetting.cs">
+// <copyright company="Chocolatey" file="ConfigCommandType.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ChocolateyGui.Models
+namespace ChocolateyGui.CliCommands
 {
-    public class ChocolateyGuiSetting
+    public enum ConfigCommandType
     {
-        public string Key { get; set; }
-
-        public string Value { get; set; }
-
-        public string Description { get; set; }
-   }
+        Unknown,
+        List,
+        Get,
+        Set,
+        Unset,
+    }
 }

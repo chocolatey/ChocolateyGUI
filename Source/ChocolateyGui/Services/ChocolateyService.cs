@@ -4,10 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NuGet;
+using IFileSystem = chocolatey.infrastructure.filesystem.IFileSystem;
+
 namespace ChocolateyGui.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
@@ -21,7 +25,6 @@ namespace ChocolateyGui.Services
     using chocolatey.infrastructure.services;
     using Microsoft.VisualStudio.Threading;
     using Models;
-    using NuGet;
     using ChocolateySource = Models.ChocolateySource;
     using ILogger = Serilog.ILogger;
 
@@ -32,15 +35,22 @@ namespace ChocolateyGui.Services
         private readonly IMapper _mapper;
         private readonly IProgressService _progressService;
         private readonly IChocolateyConfigSettingsService _configSettingsService;
+        private readonly IXmlService _xmlService;
+        private readonly IFileSystem _fileSystem;
+        private readonly IConfigService _configService;
         private GetChocolatey _choco;
+        private string _localAppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), App.ApplicationName);
 #pragma warning disable SA1401 // Fields must be private
 #pragma warning restore SA1401 // Fields must be private
 
-        public ChocolateyService(IMapper mapper, IProgressService progressService, IChocolateyConfigSettingsService configSettingsService)
+        public ChocolateyService(IMapper mapper, IProgressService progressService, IChocolateyConfigSettingsService configSettingsService, IXmlService xmlService, IFileSystem fileSystem, IConfigService configService)
         {
             _mapper = mapper;
             _progressService = progressService;
             _configSettingsService = configSettingsService;
+            _xmlService = xmlService;
+            _fileSystem = fileSystem;
+            _configService = configService;
             _choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
         }
 
@@ -83,12 +93,27 @@ namespace ChocolateyGui.Services
             }
         }
 
-        public async Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null)
+        public async Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null)
         {
-            using (await Lock.ReadLockAsync())
+            var outdatedPackagesFile = Path.Combine(_localAppDataPath, "outdatedPackages.xml");
+
+            var outputPackagesCacheDurationInMinutesSetting = _configService.GetAppConfiguration().OutputPackagesCacheDurationInMinutes;
+            int outputPackagesCacheDurationInMinutes = 0;
+            if (!string.IsNullOrWhiteSpace(outputPackagesCacheDurationInMinutesSetting))
             {
-                _choco.Set(
-                    config =>
+                int.TryParse(outputPackagesCacheDurationInMinutesSetting, out outputPackagesCacheDurationInMinutes);
+            }
+
+            if (_fileSystem.file_exists(outdatedPackagesFile) && (DateTime.Now - _fileSystem.get_file_modified_date(outdatedPackagesFile)).TotalMinutes < outputPackagesCacheDurationInMinutes)
+            {
+                return _xmlService.deserialize<List<OutdatedPackage>>(outdatedPackagesFile);
+            }
+            else
+            {
+                using (await Lock.ReadLockAsync())
+                {
+                    _choco.Set(
+                        config =>
                         {
                             config.CommandName = "outdated";
                             config.PackageNames = packageName ?? ApplicationParameters.AllPackages;
@@ -97,26 +122,35 @@ namespace ChocolateyGui.Services
                             config.QuietOutput = true;
                             config.Prerelease = false;
                         });
-                var chocoConfig = _choco.GetConfiguration();
+                    var chocoConfig = _choco.GetConfiguration();
 
-                // If there are no Sources configured, for example, if they are all disabled, then figuring out
-                // which packages are outdated can't be completed.
-                if (chocoConfig.Sources != null)
-                {
-                    var nugetService = _choco.Container().GetInstance<INugetService>();
-                    var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
-                    var results = packages
-                        .Where(p => !p.Value.Inconclusive)
-                        .Select(p => Tuple.Create(p.Value.Package.Id, p.Value.Package.Version.ToNormalizedString()))
-                        .ToArray();
-                    var parsed = results.Select(result =>
-                        Tuple.Create(result.Item1, new SemanticVersion(result.Item2)));
+                    // If there are no Sources configured, for example, if they are all disabled, then figuring out
+                    // which packages are outdated can't be completed.
+                    if (chocoConfig.Sources != null)
+                    {
+                        var nugetService = _choco.Container().GetInstance<INugetService>();
+                        var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
+                        var results = packages
+                            .Where(p => !p.Value.Inconclusive)
+                            .Select(p => new OutdatedPackage
+                                { Id = p.Value.Package.Id, VersionString = p.Value.Package.Version.ToNormalizedString() })
+                            .ToArray();
 
-                    return parsed.ToList();
-                }
-                else
-                {
-                    return new List<Tuple<string, SemanticVersion>>();
+                        try
+                        {
+                            _xmlService.serialize(results, outdatedPackagesFile);
+                        }
+                        catch (Exception ex)
+                        {
+                            Bootstrapper.Logger.Error(ex, "Unable to serialize Outdated Packages Cache file.");
+                        }
+
+                        return results.ToList();
+                    }
+                    else
+                    {
+                        return new List<OutdatedPackage>();
+                    }
                 }
             }
         }

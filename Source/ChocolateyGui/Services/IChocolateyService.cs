@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChocolateyGui.Models;
-using NuGet;
 
 namespace ChocolateyGui.Services
 {
@@ -18,7 +17,7 @@ namespace ChocolateyGui.Services
 
         Task<IEnumerable<Package>> GetInstalledPackages();
 
-        Task<IReadOnlyList<Tuple<string, SemanticVersion>>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null);
+        Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null);
 
         Task<PackageResults> Search(string query, PackageSearchOptions options);
 

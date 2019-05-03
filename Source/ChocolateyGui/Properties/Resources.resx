@@ -489,7 +489,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_ButtonSave" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="SettingsView_ChocoGui" xml:space="preserve">
+  <data name="SettingsView_ChocolateyGui" xml:space="preserve">
     <value>Chocolatey GUI</value>
   </data>
   <data name="AboutView_Credits" xml:space="preserve">
@@ -555,7 +555,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_SourcesUsername" xml:space="preserve">
     <value>Username</value>
   </data>
-  <data name="SettingsView_SubheaderChoco" xml:space="preserve">
+  <data name="SettingsView_Chocolatey" xml:space="preserve">
     <value>Chocolatey</value>
   </data>
   <data name="SettingsView_ToggleShowConsoleOutputDescription" xml:space="preserve">
@@ -677,5 +677,135 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="ChocolateyDialog_OK" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="Command_CommandsListText" xml:space="preserve">
+    <value>This is a listing of all of the different things you can pass to {0}.</value>
+  </data>
+  <data name="Command_CommandsText" xml:space="preserve">
+    <value>Please run chocolateygui with `{0}` for specific help on each command</value>
+  </data>
+  <data name="Command_CommandsTitle" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="Command_DefaultOptionsAndSwitches" xml:space="preserve">
+    <value>Default Options and Switches</value>
+  </data>
+  <data name="Command_Examples" xml:space="preserve">
+    <value>Examples</value>
+  </data>
+  <data name="Command_ExitCodesText" xml:space="preserve">
+    <value>Exit codes that normally result from running this command.
+
+Normal:
+ - 0: operation was successful, no issues detected
+ - -1 or 1: an error has occurred</value>
+  </data>
+  <data name="Command_ExitCodesTitle" xml:space="preserve">
+    <value>Exit Codes</value>
+  </data>
+  <data name="Command_GeneralError" xml:space="preserve">
+    <value>Exception propagated to root while shutting down.</value>
+  </data>
+  <data name="Command_HelpOption" xml:space="preserve">
+    <value>Prints out the help menu.</value>
+  </data>
+  <data name="Command_LimitOutputOption" xml:space="preserve">
+    <value>LimitOutput - Limit the output to essential information</value>
+  </data>
+  <data name="Command_NotFoundError" xml:space="preserve">
+    <value>Could not find a command registered that meets '{0}'. Try chocolateygui -? for command reference/help.</value>
+  </data>
+  <data name="Command_OptionsAndSwitches" xml:space="preserve">
+    <value>Options and Switches</value>
+  </data>
+  <data name="Command_Usage" xml:space="preserve">
+    <value>Usage</value>
+  </data>
+  <data name="ConfigCommand_ConfigNotFoundError" xml:space="preserve">
+    <value>Config '{0}' not found.</value>
+  </data>
+  <data name="ConfigCommand_Description" xml:space="preserve">
+    <value>Retrieve and configure chocolateygui config settings</value>
+  </data>
+  <data name="ConfigCommand_Help" xml:space="preserve">
+    <value>Chocolatey GUI will allow you to interact with the persisted configuration information.</value>
+  </data>
+  <data name="ConfigCommand_MissingNameOptionError" xml:space="preserve">
+    <value>When specifying the subcommand '{0}', you must also specify --name by option or position.</value>
+  </data>
+  <data name="ConfigCommand_MissingValueOptionError" xml:space="preserve">
+    <value>When specifying the subcommand '{0}', you must also specify --value by option or position.</value>
+  </data>
+  <data name="ConfigCommand_NameOption" xml:space="preserve">
+    <value>Name - the name of the config setting. Required with some actions. Defaults to empty.</value>
+  </data>
+  <data name="ConfigCommand_SingleConfigError" xml:space="preserve">
+    <value>A single config command must be listed. Please see the help menu for those commands</value>
+  </data>
+  <data name="ConfigCommand_Title" xml:space="preserve">
+    <value>Config Command</value>
+  </data>
+  <data name="ConfigCommand_UnknownCommandError" xml:space="preserve">
+    <value>Unknown command {0}. Setting to list.</value>
+  </data>
+  <data name="ConfigCommand_Unset" xml:space="preserve">
+    <value>Unset {0}</value>
+  </data>
+  <data name="ConfigCommand_Updated" xml:space="preserve">
+    <value>Updated {0} = {1}</value>
+  </data>
+  <data name="ConfigCommand_ValueOption" xml:space="preserve">
+    <value>Value - the value of the config setting. Required with some actions. Defaults to empty.</value>
+  </data>
+  <data name="FeatureCommand_Description" xml:space="preserve">
+    <value>View and configure chocolateygui feature</value>
+  </data>
+  <data name="FeatureCommand_Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="FeatureCommand_DisabledWarning" xml:space="preserve">
+    <value>Disabled {0}</value>
+  </data>
+  <data name="FeatureCommand_Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="FeatureCommand_EnabledWarning" xml:space="preserve">
+    <value>Enabled {0}</value>
+  </data>
+  <data name="FeatureCommand_FeatureNotFoundError" xml:space="preserve">
+    <value>Feature '{0}' not found</value>
+  </data>
+  <data name="FeatureCommand_Help" xml:space="preserve">
+    <value>Chocolatey GUI will allow you to interact with features.</value>
+  </data>
+  <data name="FeatureCommand_MissingNameOptionError" xml:space="preserve">
+    <value>When specifying the subcommand '{0}', you must also specify --name.</value>
+  </data>
+  <data name="FeatureCommand_NameOption" xml:space="preserve">
+    <value>Name - the name of the feature. Defaults to empty.</value>
+  </data>
+  <data name="FeatureCommand_NoChangeMessage" xml:space="preserve">
+    <value>Nothing to change. Config already set.</value>
+  </data>
+  <data name="FeatureCommand_SingleFeatureError" xml:space="preserve">
+    <value>A single feature command must be listed. Please see the help menu for those commands.</value>
+  </data>
+  <data name="FeatureCommand_Title" xml:space="preserve">
+    <value>Feature Command</value>
+  </data>
+  <data name="FeatureCommand_UnknownCommandError" xml:space="preserve">
+    <value>Unknown command {0}. Setting to list.</value>
+  </data>
+  <data name="SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription" xml:space="preserve">
+    <value>Default timeout for outdated packages to be cached.  Default is 60 minutes.</value>
+  </data>
+  <data name="Command_FeaturesTitle" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="Command_SettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Command_UseFeatureCommandNote" xml:space="preserve">
+    <value>NOTE: Use {0} to interact with features</value>
   </data>
 </root>

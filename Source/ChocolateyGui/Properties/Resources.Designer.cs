@@ -256,6 +256,262 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is a listing of all of the different things you can pass to {0}..
+        /// </summary>
+        public static string Command_CommandsListText {
+            get {
+                return ResourceManager.GetString("Command_CommandsListText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please run chocolateygui with `{0}` for specific help on each command.
+        /// </summary>
+        public static string Command_CommandsText {
+            get {
+                return ResourceManager.GetString("Command_CommandsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commands.
+        /// </summary>
+        public static string Command_CommandsTitle {
+            get {
+                return ResourceManager.GetString("Command_CommandsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Options and Switches.
+        /// </summary>
+        public static string Command_DefaultOptionsAndSwitches {
+            get {
+                return ResourceManager.GetString("Command_DefaultOptionsAndSwitches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Examples.
+        /// </summary>
+        public static string Command_Examples {
+            get {
+                return ResourceManager.GetString("Command_Examples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit codes that normally result from running this command.
+        ///
+        ///Normal:
+        /// - 0: operation was successful, no issues detected
+        /// - -1 or 1: an error has occurred.
+        /// </summary>
+        public static string Command_ExitCodesText {
+            get {
+                return ResourceManager.GetString("Command_ExitCodesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit Codes.
+        /// </summary>
+        public static string Command_ExitCodesTitle {
+            get {
+                return ResourceManager.GetString("Command_ExitCodesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Features.
+        /// </summary>
+        public static string Command_FeaturesTitle {
+            get {
+                return ResourceManager.GetString("Command_FeaturesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exception propagated to root while shutting down..
+        /// </summary>
+        public static string Command_GeneralError {
+            get {
+                return ResourceManager.GetString("Command_GeneralError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prints out the help menu..
+        /// </summary>
+        public static string Command_HelpOption {
+            get {
+                return ResourceManager.GetString("Command_HelpOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LimitOutput - Limit the output to essential information.
+        /// </summary>
+        public static string Command_LimitOutputOption {
+            get {
+                return ResourceManager.GetString("Command_LimitOutputOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not find a command registered that meets &apos;{0}&apos;. Try chocolateygui -? for command reference/help..
+        /// </summary>
+        public static string Command_NotFoundError {
+            get {
+                return ResourceManager.GetString("Command_NotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options and Switches.
+        /// </summary>
+        public static string Command_OptionsAndSwitches {
+            get {
+                return ResourceManager.GetString("Command_OptionsAndSwitches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Command_SettingsTitle {
+            get {
+                return ResourceManager.GetString("Command_SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usage.
+        /// </summary>
+        public static string Command_Usage {
+            get {
+                return ResourceManager.GetString("Command_Usage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOTE: Use {0} to interact with features.
+        /// </summary>
+        public static string Command_UseFeatureCommandNote {
+            get {
+                return ResourceManager.GetString("Command_UseFeatureCommandNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Config &apos;{0}&apos; not found..
+        /// </summary>
+        public static string ConfigCommand_ConfigNotFoundError {
+            get {
+                return ResourceManager.GetString("ConfigCommand_ConfigNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieve and configure chocolateygui config settings.
+        /// </summary>
+        public static string ConfigCommand_Description {
+            get {
+                return ResourceManager.GetString("ConfigCommand_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chocolatey GUI will allow you to interact with the persisted configuration information..
+        /// </summary>
+        public static string ConfigCommand_Help {
+            get {
+                return ResourceManager.GetString("ConfigCommand_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When specifying the subcommand &apos;{0}&apos;, you must also specify --name by option or position..
+        /// </summary>
+        public static string ConfigCommand_MissingNameOptionError {
+            get {
+                return ResourceManager.GetString("ConfigCommand_MissingNameOptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When specifying the subcommand &apos;{0}&apos;, you must also specify --value by option or position..
+        /// </summary>
+        public static string ConfigCommand_MissingValueOptionError {
+            get {
+                return ResourceManager.GetString("ConfigCommand_MissingValueOptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name - the name of the config setting. Required with some actions. Defaults to empty..
+        /// </summary>
+        public static string ConfigCommand_NameOption {
+            get {
+                return ResourceManager.GetString("ConfigCommand_NameOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A single config command must be listed. Please see the help menu for those commands.
+        /// </summary>
+        public static string ConfigCommand_SingleConfigError {
+            get {
+                return ResourceManager.GetString("ConfigCommand_SingleConfigError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Config Command.
+        /// </summary>
+        public static string ConfigCommand_Title {
+            get {
+                return ResourceManager.GetString("ConfigCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown command {0}. Setting to list..
+        /// </summary>
+        public static string ConfigCommand_UnknownCommandError {
+            get {
+                return ResourceManager.GetString("ConfigCommand_UnknownCommandError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unset {0}.
+        /// </summary>
+        public static string ConfigCommand_Unset {
+            get {
+                return ResourceManager.GetString("ConfigCommand_Unset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated {0} = {1}.
+        /// </summary>
+        public static string ConfigCommand_Updated {
+            get {
+                return ResourceManager.GetString("ConfigCommand_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value - the value of the config setting. Required with some actions. Defaults to empty..
+        /// </summary>
+        public static string ConfigCommand_ValueOption {
+            get {
+                return ResourceManager.GetString("ConfigCommand_ValueOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to By: .
         /// </summary>
         public static string Controls_PackageListByAuthor {
@@ -342,6 +598,123 @@ namespace ChocolateyGui.Properties {
         public static string Controls_PackagesContextMenuUpdate {
             get {
                 return ResourceManager.GetString("Controls_PackagesContextMenuUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View and configure chocolateygui feature.
+        /// </summary>
+        public static string FeatureCommand_Description {
+            get {
+                return ResourceManager.GetString("FeatureCommand_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string FeatureCommand_Disabled {
+            get {
+                return ResourceManager.GetString("FeatureCommand_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled {0}.
+        /// </summary>
+        public static string FeatureCommand_DisabledWarning {
+            get {
+                return ResourceManager.GetString("FeatureCommand_DisabledWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string FeatureCommand_Enabled {
+            get {
+                return ResourceManager.GetString("FeatureCommand_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled {0}.
+        /// </summary>
+        public static string FeatureCommand_EnabledWarning {
+            get {
+                return ResourceManager.GetString("FeatureCommand_EnabledWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; not found.
+        /// </summary>
+        public static string FeatureCommand_FeatureNotFoundError {
+            get {
+                return ResourceManager.GetString("FeatureCommand_FeatureNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chocolatey GUI will allow you to interact with features..
+        /// </summary>
+        public static string FeatureCommand_Help {
+            get {
+                return ResourceManager.GetString("FeatureCommand_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When specifying the subcommand &apos;{0}&apos;, you must also specify --name..
+        /// </summary>
+        public static string FeatureCommand_MissingNameOptionError {
+            get {
+                return ResourceManager.GetString("FeatureCommand_MissingNameOptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name - the name of the feature. Defaults to empty..
+        /// </summary>
+        public static string FeatureCommand_NameOption {
+            get {
+                return ResourceManager.GetString("FeatureCommand_NameOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing to change. Config already set..
+        /// </summary>
+        public static string FeatureCommand_NoChangeMessage {
+            get {
+                return ResourceManager.GetString("FeatureCommand_NoChangeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A single feature command must be listed. Please see the help menu for those commands..
+        /// </summary>
+        public static string FeatureCommand_SingleFeatureError {
+            get {
+                return ResourceManager.GetString("FeatureCommand_SingleFeatureError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Command.
+        /// </summary>
+        public static string FeatureCommand_Title {
+            get {
+                return ResourceManager.GetString("FeatureCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown command {0}. Setting to list..
+        /// </summary>
+        public static string FeatureCommand_UnknownCommandError {
+            get {
+                return ResourceManager.GetString("FeatureCommand_UnknownCommandError", resourceCulture);
             }
         }
         
@@ -1190,11 +1563,29 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chocolatey.
+        /// </summary>
+        public static string SettingsView_Chocolatey {
+            get {
+                return ResourceManager.GetString("SettingsView_Chocolatey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chocolatey GUI.
         /// </summary>
-        public static string SettingsView_ChocoGui {
+        public static string SettingsView_ChocolateyGui {
             get {
-                return ResourceManager.GetString("SettingsView_ChocoGui", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ChocolateyGui", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default timeout for outdated packages to be cached.  Default is 60 minutes..
+        /// </summary>
+        public static string SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription", resourceCulture);
             }
         }
         
@@ -1420,15 +1811,6 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_SourcesUsername {
             get {
                 return ResourceManager.GetString("SettingsView_SourcesUsername", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chocolatey.
-        /// </summary>
-        public static string SettingsView_SubheaderChoco {
-            get {
-                return ResourceManager.GetString("SettingsView_SubheaderChoco", resourceCulture);
             }
         }
         

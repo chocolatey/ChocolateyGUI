@@ -151,9 +151,6 @@
     <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.3.2.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
-    <Reference Include="Serilog.Sinks.Literate, Version=3.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.Literate.3.0.0\lib\net45\Serilog.Sinks.Literate.dll</HintPath>
-    </Reference>
     <Reference Include="Serilog.Sinks.PeriodicBatching, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.PeriodicBatching.2.1.1\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
     </Reference>
@@ -230,18 +227,34 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Attributes\ConfigAttribute.cs" />
+    <Compile Include="Attributes\FeatureAttribute.cs" />
+    <Compile Include="Attributes\LocalizedCommandForAttribute.cs" />
     <Compile Include="Attributes\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Base\ConnectionClosedException.cs" />
     <Compile Include="ChocolateyExtensions.cs" />
+    <Compile Include="CliCommands\BaseCommand.cs" />
+    <Compile Include="CliCommands\ChocolateyGuiConfiguration.cs" />
+    <Compile Include="CliCommands\ColouredConsoleSink.cs" />
+    <Compile Include="CliCommands\ConfigCommand.cs" />
+    <Compile Include="CliCommands\ConfigCommandConfiguration.cs" />
+    <Compile Include="CliCommands\ConfigCommandType.cs" />
+    <Compile Include="CliCommands\FeatureCommand.cs" />
+    <Compile Include="CliCommands\FeatureCommandConfiguration.cs" />
+    <Compile Include="CliCommands\FeatureCommandType.cs" />
+    <Compile Include="CliCommands\GenericRunner.cs" />
+    <Compile Include="CliCommands\ICommand.cs" />
     <Compile Include="Controls\MarkdownEx.cs" />
     <Compile Include="Enums\ListViewMode.cs" />
     <Compile Include="Models\ChocolateyAggregatedSources.cs" />
-    <Compile Include="Models\ChocolateyGUISetting.cs" />
+    <Compile Include="Models\ChocolateyGuiFeature.cs" />
+    <Compile Include="Models\ChocolateyGuiSetting.cs" />
     <Compile Include="Models\EnumToBoolConverter.cs" />
     <Compile Include="Models\LogLevel.cs" />
     <Compile Include="Models\LogMessage.cs" />
     <Compile Include="Models\Messages\AboutGoBackMessage.cs" />
     <Compile Include="Models\Messages\ShowAboutMessage.cs" />
+    <Compile Include="Models\OutdatedPackage.cs" />
     <Compile Include="Utilities\BindingProxy.cs" />
     <Compile Include="Utilities\BubbleScrollEventBehavior.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityInverted.cs" />

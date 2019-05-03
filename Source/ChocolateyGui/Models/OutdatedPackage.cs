@@ -1,17 +1,24 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="ChocolateyGuiSetting.cs">
+// <copyright company="Chocolatey" file="OutdatedPackage.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Xml.Serialization;
+using NuGet;
+
 namespace ChocolateyGui.Models
 {
-    public class ChocolateyGuiSetting
+    public class OutdatedPackage
     {
-        public string Key { get; set; }
+        public string Id { get; set; }
 
-        public string Value { get; set; }
+        public string VersionString { get; set;  }
 
-        public string Description { get; set; }
-   }
+        [XmlIgnore]
+        public SemanticVersion Version
+        {
+            get { return new SemanticVersion(VersionString); }
+        }
+    }
 }

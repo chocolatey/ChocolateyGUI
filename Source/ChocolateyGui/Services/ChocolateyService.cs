@@ -462,31 +462,48 @@ namespace ChocolateyGui.Services
 
                 if (source.Disabled)
                 {
-                    _choco.Set(
-                        config =>
-                            {
-                                config.CommandName = "source";
-                                config.SourceCommand.Command = SourceCommandType.disable;
-                                config.SourceCommand.Name = source.Id;
-                            });
-                    await _choco.RunAsync();
+                    await DisableSource(source.Id);
                 }
                 else
                 {
-                    _choco.Set(
-                       config =>
-                       {
-                           config.CommandName = "source";
-                           config.SourceCommand.Command = SourceCommandType.enable;
-                           config.SourceCommand.Name = source.Id;
-                       });
-                    await _choco.RunAsync();
+                    await EnableSource(source.Id);
                 }
             }
         }
 
+        public async Task DisableSource(string id)
+        {
+            _choco.Set(
+                config =>
+                {
+                    config.CommandName = "source";
+                    config.SourceCommand.Command = SourceCommandType.disable;
+                    config.SourceCommand.Name = id;
+                });
+
+            await _choco.RunAsync();
+        }
+
+        public async Task EnableSource(string id)
+        {
+            _choco.Set(
+                config =>
+                {
+                    config.CommandName = "source";
+                    config.SourceCommand.Command = SourceCommandType.enable;
+                    config.SourceCommand.Name = id;
+                });
+
+            await _choco.RunAsync();
+        }
+
         public async Task UpdateSource(string id, ChocolateySource source)
         {
+            // NOTE:  The strategy of first removing, and then re-adding the source
+            // is due to the fact that there is no "edit source" command that can
+            // be used.  This has the side effect of "having" to decrypt the password
+            // for an authenticated source, otherwise, when re-adding the source,
+            // the encrypted password, is re-encrypted, making it no longer work.
             if (id != source.Id)
             {
                 await RemoveSource(id);

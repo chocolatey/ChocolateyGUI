@@ -12,6 +12,7 @@
              xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
              mc:Ignorable="d"
              Background="{StaticResource BackgroundColorBrush}"
+             metro:DialogParticipation.Register="{Binding}"
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="786" d:DesignWidth="1366">
     <UserControl.Resources>
@@ -164,9 +165,13 @@
                             <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesId}" Width="*" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesPath}" Width="3*" Binding="{Binding Value}"/>
                             <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesUsername}" Width="*" Binding="{Binding UserName}" />
-                            <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesPassword}" Width="*" Binding="{Binding Password}" />
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesPassword}" Width="Auto" Binding="{Binding HasPassword, Mode=OneWay}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}" />
                             <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesCertificate}" Width="*" Binding="{Binding Certificate}" />
-                            <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_SourcesCertificatePass}" Width="*" Binding="{Binding CertificatePassword}" />
+                            <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesCertificatePass}" Width="Auto" Binding="{Binding HasCertificatePassword, Mode=OneWay}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}" />
                             <metro:DataGridNumericUpDownColumn Header="{x:Static lang:Resources.SettingsView_SourcesPriority}" Binding="{Binding Priority}"/>
                             <DataGridCheckBoxColumn Header="{x:Static lang:Resources.SettingsView_SourcesDisabled}" Width="Auto" Binding="{Binding Disabled}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
@@ -212,16 +217,16 @@
                                     <Setter Property="VerticalAlignment" Value="Center"/>
                                 </Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                                    <Setter Property="Margin" Value="5"/>
-                                    <Setter Property="IsReadOnly" Value="{Binding DraftSource, Converter={StaticResource BooleanInverter}}"/>
+                                    <Setter Property="Margin" Value="5, 5, 20, 5"/>
+                                    <Setter Property="IsReadOnly" Value="{Binding IsSourceEditable, Converter={StaticResource BooleanInverter}}"/>
                                 </Style>
                                 <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
                                     <Setter Property="Margin" Value="10 0 0 0 "/>
-                                    <Setter Property="IsEnabled" Value="{Binding DraftSource, Converter={StaticResource NullToFalse}}"/>
+                                    <Setter Property="IsEnabled" Value="{Binding IsSourceEditable}"/>
                                 </Style>
                                 <Style TargetType="{x:Type metro:NumericUpDown}" BasedOn="{StaticResource {x:Type metro:NumericUpDown}}">
                                     <Setter Property="Margin" Value="5 "/>
-                                    <Setter Property="IsReadOnly" Value="{Binding DraftSource, Converter={StaticResource BooleanInverter}}"/>
+                                    <Setter Property="IsReadOnly" Value="{Binding IsSourceEditable, Converter={StaticResource BooleanInverter}}"/>
                                 </Style>
                             </Grid.Resources>
 
@@ -232,43 +237,100 @@
                             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DraftSource.Value}"/>
 
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="{x:Static lang:Resources.SettingsView_SourcesUsername}"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding DraftSource.UserName}"/>
+                            <Grid Grid.Row="3" Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="35"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="0"
+                                           Text="{Binding DraftSource.UserName}"
+                                           HorizontalAlignment="Left"
+                                           FontWeight="Normal"
+                                           Margin="5,0,0,0"/>
+                                <Button x:Name="SetUserAndPassword"
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Content="{x:Static lang:Resources.SettingsView_ButtonSetUsernameAndPassword}"
+                                        Margin="5,5,20,5"
+                                        Padding="5 5"
+                                        IsEnabled="{Binding IsSourceEditable}">
+                                </Button>
+                            </Grid>
 
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="{x:Static lang:Resources.SettingsView_SourcesPassword}"/>
-                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DraftSource.Password}"/>
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="{x:Static lang:Resources.SettingsView_SourcesCertificate}"/>
+                            <Grid Grid.Row="4" Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="35"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="0"
+                                           Text="{Binding DraftSource.Certificate}"
+                                           HorizontalAlignment="Left"
+                                           FontWeight="Normal"
+                                           Margin="5,0,0,0"/>
+                                <Button x:Name="SetCertificateAndPassword"
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Content="{x:Static lang:Resources.SettingsView_ButtonSetCertificateAndPassword}"
+                                        Margin="5,5,20,5"
+                                        Padding="5 5"
+                                        IsEnabled="{Binding IsSourceEditable}">
+                                </Button>
+                            </Grid>
 
-                            <TextBlock Grid.Row="5" Grid.Column="0" Text="{x:Static lang:Resources.SettingsView_SourcesPriority}"/>
-                            <metro:NumericUpDown Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center" Value="{Binding DraftSource.Priority}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesPriority}"/>
+                            <metro:NumericUpDown Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" VerticalContentAlignment="Center" Value="{Binding DraftSource.Priority}"/>
 
-                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesCertificate}"/>
-                            <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Text="{Binding DraftSource.Certificate}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesIsDisabled}"/>
+                            <CheckBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding DraftSource.Disabled}" IsEnabled="{Binding DraftSource, Converter={StaticResource NullToFalse}}"/>
 
-                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesCertificatePass}"/>
-                            <TextBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Text="{Binding DraftSource.CertificatePassword}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="4" Text="{x:Static lang:Resources.SettingsView_SourcesIsBypassProxy}"/>
+                            <CheckBox Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" IsChecked="{Binding DraftSource.BypassProxy}"/>
 
-                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesIsDisabled}"/>
-                            <CheckBox Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding DraftSource.Disabled}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesIsSelfService}"/>
+                            <CheckBox Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding DraftSource.AllowSelfService}"/>
 
-                            <TextBlock Grid.Row="3" Grid.Column="4" Text="{x:Static lang:Resources.SettingsView_SourcesIsBypassProxy}"/>
-                            <CheckBox Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" IsChecked="{Binding DraftSource.BypassProxy}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="4" Text="{x:Static lang:Resources.SettingsView_SourcesIsAdminOnly}"/>
+                            <CheckBox Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" IsChecked="{Binding DraftSource.VisibleToAdminsOnly}"/>
 
-                            <TextBlock Grid.Row="4" Grid.Column="2" Text="{x:Static lang:Resources.SettingsView_SourcesIsSelfService}"/>
-                            <CheckBox Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding DraftSource.AllowSelfService}"/>
+                            <TextBlock Grid.Row="5"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2"
+                                       HorizontalAlignment="Left"
+                                       Margin="15,0,0,0"
+                                       Text="{x:Static lang:Resources.SettingsView_ChocolateyLicensedSourceWarning}"
+                                       Visibility="{Binding IsChocolateyLicensedSource, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                       Foreground="Red" />
 
-                            <TextBlock Grid.Row="4" Grid.Column="4" Text="{x:Static lang:Resources.SettingsView_SourcesIsAdminOnly}"/>
-                            <CheckBox Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" IsChecked="{Binding DraftSource.VisibleToAdminsOnly}"/>
                             <StackPanel Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal" Margin="15 0 0 0">
                                 <Button x:Name="Save"
-                                        Padding="5 5" Margin="5 0" Width="80"
-                                        HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonSave}"/>
+                                        Padding="5 5"
+                                        Margin="5 0"
+                                        Width="80"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonSave}"/>
 
                                 <Button x:Name="Remove"
-                                        Padding="5 5" Width="80" Margin="5 0 "
-                                        HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonRemove}"/>
+                                        Padding="5 5"
+                                        Width="80"
+                                        Margin="5 0 "
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonRemove}"/>
 
                                 <Button x:Name="Cancel"
-                                        Padding="5 5" Width="80" Margin="5 0 "
-                                        HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonCancel}"/>
+                                        Padding="5 5"
+                                        Width="80"
+                                        Margin="5 0 "
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center" Content="{x:Static lang:Resources.SettingsView_ButtonCancel}"/>
                             </StackPanel>
                         </Grid>
                     </DockPanel>

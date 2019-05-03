@@ -24,6 +24,7 @@ using ChocolateyGui.ViewModels;
 using ChocolateyGui.ViewModels.Items;
 using ChocolateyGui.Views;
 using LiteDB;
+using MahApps.Metro.Controls.Dialogs;
 using NuGet;
 using ChocolateySource = chocolatey.infrastructure.app.configuration.ChocolateySource;
 using PackageViewModel = ChocolateyGui.ViewModels.Items.PackageViewModel;
@@ -85,16 +86,21 @@ namespace ChocolateyGui.Startup
                     .ForMember(vm => vm.IsInstalled, options => options.Ignore());
 
                 config.CreateMap<DataServicePackage, Package>()
-                    .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.Authors.Split(',')));
+                    .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.Authors.Split(',')))
+                    .ForMember(dest => dest.Owners, opt => opt.MapFrom(src => src.Owners.Split(',')));
                 config.CreateMap<IPackage, Package>();
 
                 config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
                 config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();
-                config.CreateMap<ConfigFileSourceSetting, Models.ChocolateySource>();
+                config.CreateMap<ConfigFileSourceSetting, Models.ChocolateySource>()
+                    .ForMember(dest => dest.Password, opt => opt.MapFrom(src => NugetEncryptionUtility.DecryptString(src.Password)))
+                    .ForMember(dest => dest.CertificatePassword, opt => opt.MapFrom(src => NugetEncryptionUtility.DecryptString(src.CertificatePassword)));
+
                 config.CreateMap<ChocolateySource, Models.ChocolateySource>()
                     .ForMember(dest => dest.VisibleToAdminsOnly, opt => opt.MapFrom(src => src.VisibleToAdminOnly));
             });
 
+            builder.RegisterInstance(DialogCoordinator.Instance).As<IDialogCoordinator>();
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
 
             var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");

@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using ChocolateyGui.CliCommands;
@@ -17,16 +18,20 @@ using ChocolateyGui.Models.Messages;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
+using MahApps.Metro.Controls.Dialogs;
 using ChocolateySource = ChocolateyGui.Models.ChocolateySource;
 
 namespace ChocolateyGui.ViewModels
 {
     public sealed class SettingsViewModel : Screen
     {
+        private const string ChocolateyLicensedSourceId = "chocolatey.licensed";
         private readonly IChocolateyService _chocolateyService;
+
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         private Subject<ChocolateyFeature> _changedChocolateyFeature;
         private Subject<ChocolateySetting> _changedChocolateySetting;
@@ -42,12 +47,14 @@ namespace ChocolateyGui.ViewModels
             IChocolateyService chocolateyService,
             IProgressService progressService,
             IConfigService configService,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            IDialogCoordinator dialogCoordinator)
         {
             _chocolateyService = chocolateyService;
             _progressService = progressService;
             _configService = configService;
             _eventAggregator = eventAggregator;
+            _dialogCoordinator = dialogCoordinator;
             DisplayName = Resources.SettingsViewModel_DisplayName;
             Activated += OnActivated;
             Deactivated += OnDeactivated;
@@ -65,7 +72,7 @@ namespace ChocolateyGui.ViewModels
 
         public bool CanSave => SelectedSource != null;
 
-        public bool CanRemove => SelectedSource != null && !_isNewItem;
+        public bool CanRemove => SelectedSource != null && !_isNewItem && SelectedSource.Id != ChocolateyLicensedSourceId;
 
         public bool CanCancel => SelectedSource != null;
 
@@ -93,6 +100,8 @@ namespace ChocolateyGui.ViewModels
                 NotifyOfPropertyChange(nameof(CanSave));
                 NotifyOfPropertyChange(nameof(CanRemove));
                 NotifyOfPropertyChange(nameof(CanCancel));
+                NotifyOfPropertyChange(nameof(IsSourceEditable));
+                NotifyOfPropertyChange(nameof(IsChocolateyLicensedSource));
             }
         }
 
@@ -107,6 +116,16 @@ namespace ChocolateyGui.ViewModels
             {
                 this.SetPropertyValue(ref _draftSource, value);
             }
+        }
+
+        public bool IsSourceEditable
+        {
+            get { return DraftSource != null && DraftSource.Id != ChocolateyLicensedSourceId; }
+        }
+
+        public bool IsChocolateyLicensedSource
+        {
+            get { return DraftSource != null && DraftSource.Id == ChocolateyLicensedSourceId; }
         }
 
         public void ChocolateyFeatureToggled(ChocolateyFeature feature)
@@ -209,6 +228,13 @@ namespace ChocolateyGui.ViewModels
             {
                 if (_isNewItem)
                 {
+                    if (DraftSource.Id == ChocolateyLicensedSourceId)
+                    {
+                        await _progressService.StopLoading();
+                        await _progressService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_InvalidSourceId);
+                        return;
+                    }
+
                     await _chocolateyService.AddSource(DraftSource);
                     _isNewItem = false;
                     Sources.Add(DraftSource);
@@ -216,7 +242,22 @@ namespace ChocolateyGui.ViewModels
                 }
                 else
                 {
-                    await _chocolateyService.UpdateSource(_originalId, DraftSource);
+                    if (DraftSource.Id == ChocolateyLicensedSourceId)
+                    {
+                        if (DraftSource.Disabled)
+                        {
+                            await _chocolateyService.DisableSource(DraftSource.Id);
+                        }
+                        else
+                        {
+                            await _chocolateyService.EnableSource(DraftSource.Id);
+                        }
+                    }
+                    else
+                    {
+                        await _chocolateyService.UpdateSource(_originalId, DraftSource);
+                    }
+
                     Sources[Sources.IndexOf(SelectedSource)] = DraftSource;
                 }
 
@@ -231,6 +272,7 @@ namespace ChocolateyGui.ViewModels
             }
             finally
             {
+                SelectedSource = null;
                 await _progressService.StopLoading();
             }
         }
@@ -265,6 +307,64 @@ namespace ChocolateyGui.ViewModels
         public void Back()
         {
             _eventAggregator.PublishOnUIThread(new SettingsGoBackMessage());
+        }
+
+        public async void SetUserAndPassword()
+        {
+            var loginDialogSettings = new LoginDialogSettings
+            {
+                AffirmativeButtonText = Resources.SettingsView_ButtonSave,
+                NegativeButtonText = Resources.SettingsView_ButtonCancel,
+                NegativeButtonVisibility = Visibility.Visible,
+                InitialUsername = DraftSource.UserName,
+                InitialPassword = DraftSource.Password
+            };
+
+            // Only allow the previewing of a password when creating a new source
+            // not when modifying an existing source
+            if (_isNewItem)
+            {
+                loginDialogSettings.EnablePasswordPreview = true;
+            }
+
+            var result = await _dialogCoordinator.ShowLoginAsync(this, Resources.SettingsViewModel_SetSourceUsernameAndPasswordTitle, Resources.SettingsViewModel_SetSourceUsernameAndPasswordMessage, loginDialogSettings);
+
+            if (result != null)
+            {
+                DraftSource.UserName = result.Username;
+                DraftSource.Password = result.Password;
+                NotifyOfPropertyChange(nameof(DraftSource));
+            }
+        }
+
+        public async void SetCertificateAndPassword()
+        {
+            var loginDialogSettings = new LoginDialogSettings
+            {
+                AffirmativeButtonText = Resources.SettingsView_ButtonSave,
+                NegativeButtonText = Resources.SettingsView_ButtonCancel,
+                NegativeButtonVisibility = Visibility.Visible,
+                InitialUsername = DraftSource.Certificate,
+                InitialPassword = DraftSource.CertificatePassword,
+                UsernameWatermark = Resources.SettingsViewModel_SetSourceCertificateAndPasswordUsernameWatermark,
+                PasswordWatermark = Resources.SettingsViewModel_SetSourceCertificateAndPasswordPasswordWatermark
+            };
+
+            // Only allow the previewing of a password when creating a new source
+            // not when modifying an existing source
+            if (_isNewItem)
+            {
+                loginDialogSettings.EnablePasswordPreview = true;
+            }
+
+            var result = await _dialogCoordinator.ShowLoginAsync(this, Resources.SettingsViewModel_SetSourceCertificateAndPasswordTitle, Resources.SettingsViewModel_SetSourceCertificateAndPasswordMessage, loginDialogSettings);
+
+            if (result != null)
+            {
+                DraftSource.Certificate = result.Username;
+                DraftSource.CertificatePassword = result.Password;
+                NotifyOfPropertyChange(nameof(DraftSource));
+            }
         }
 
         private async void OnActivated(object sender, ActivationEventArgs activationEventArgs)

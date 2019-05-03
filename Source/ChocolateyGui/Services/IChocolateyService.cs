@@ -51,6 +51,10 @@ namespace ChocolateyGui.Services
 
         Task UpdateSource(string id, ChocolateySource source);
 
+        Task EnableSource(string id);
+
+        Task DisableSource(string id);
+
         Task<bool> RemoveSource(string id);
     }
 }

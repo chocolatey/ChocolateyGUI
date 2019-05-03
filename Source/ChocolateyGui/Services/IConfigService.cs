@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using ChocolateyGui.CliCommands;
 using ChocolateyGui.Models;
 
 namespace ChocolateyGui.Services
@@ -13,5 +15,23 @@ namespace ChocolateyGui.Services
         AppConfiguration GetSettings();
 
         void UpdateSettings(AppConfiguration settings);
+
+        IEnumerable<ChocolateyGuiFeature> GetFeatures();
+
+        void ListFeatures(ChocolateyGuiConfiguration configuration);
+
+        IEnumerable<ChocolateyGuiSetting> GetSettings();
+
+        void ListSettings(ChocolateyGuiConfiguration configuration);
+
+        void EnableFeature(ChocolateyGuiConfiguration configuration);
+
+        void DisableFeature(ChocolateyGuiConfiguration configuration);
+
+        void GetConfigValue(ChocolateyGuiConfiguration configuration);
+
+        void SetConfigValue(ChocolateyGuiConfiguration configuration);
+
+        void UnsetConfigValue(ChocolateyGuiConfiguration configuration);
     }
 }

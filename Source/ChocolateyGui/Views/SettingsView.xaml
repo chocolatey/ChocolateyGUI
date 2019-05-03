@@ -25,22 +25,6 @@
         <converters:NullToValue x:Key="NullToFalse" TrueValue="False" FalseValue="True" />
         <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
 
-        <DataTemplate x:Key="ChocolateyGUISettingTemplate" DataType="models:ChocolateyGUISetting">
-            <Grid Margin="0 10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Title}" TextWrapping="Wrap" />
-                <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsChecked="{Binding Enabled}" />
-                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
-            </Grid>
-        </DataTemplate>
-
         <DataTemplate x:Key="ChocolateyFeatureTemplate" DataType="models:ChocolateyFeature">
             <Grid Margin="0 10">
                 <Grid.ColumnDefinitions>
@@ -52,7 +36,23 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Name}" TextWrapping="Wrap" />
-                <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsChecked="{Binding Enabled}" cal:Message.Attach="[Event IsCheckedChanged] = [Action FeatureToggled($dataContext)]"/>
+                <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsChecked="{Binding Enabled}" cal:Message.Attach="[Event IsCheckedChanged] = [Action ChocolateyFeatureToggled($dataContext)]"/>
+                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ChocolateyGuiFeatureTemplate" DataType="models:ChocolateyGuiFeature">
+            <Grid Margin="0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Title}" TextWrapping="Wrap" />
+                <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsChecked="{Binding Enabled}" cal:Message.Attach="[Event IsCheckedChanged] = [Action ChocolateyGuiFeatureToggled($dataContext)]"/>
                 <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
@@ -64,64 +64,83 @@
             <TextBlock Text="{x:Static lang:Resources.SettingsView_Settings}" Style="{StaticResource TitleTextStyle}"/>
         </StackPanel>
         <TabControl Background="Transparent" metro:TabControlHelper.Underlined="TabPanel">
-            <TabItem Header="{x:Static lang:Resources.SettingsView_Options}">
-                <Grid>
+            <TabItem Header="{x:Static lang:Resources.SettingsView_ChocolateyGui}">
+                <Grid Background="White" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Background="White" Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Margin="5 5 5 3" Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Static lang:Resources.SettingsView_ChocoGui}"/>
-                        <ScrollViewer Margin="5 0" Grid.Row="1" Width="300" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto">
-                            <ItemsControl ItemTemplate="{StaticResource ChocolateyGUISettingTemplate}">
-                                <ItemsControl.Items>
-                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleShowConsoleOutputTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleShowConsoleOutputDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowConsoleOutput}" />
-                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewLocalTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewLocalDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForLocalSource}" />
-                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewRemoteTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleDefaultTileViewRemoteDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.DefaultToTileViewForRemoteSource}" />
-                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleExcludeInstalledPackages}" Description="{x:Static lang:Resources.SettingsView_ToggleExcludeInstalledPackagesDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.ExcludeInstalledPackages}"/>
-                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_UseDelayedSearchTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleUseDelayedSearchDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.UseDelayedSearch}" />
-                                    <models:ChocolateyGUISetting Title="{x:Static lang:Resources.SettingsView_ToggleShowAggregatedSourceViewTitle}" Description="{x:Static lang:Resources.SettingsView_ToggleShowAggregatedSourceViewDescription}" Enabled="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAggregatedSourceView}" />
-                                </ItemsControl.Items>
-                            </ItemsControl>
+                    <DockPanel Margin="10 0 5 0" Grid.Column="0">
+                        <TextBlock DockPanel.Dock="Top" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static lang:Resources.SettingsView_Features}"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding ChocolateyGuiFeatures}"  ItemTemplate="{StaticResource ChocolateyGuiFeatureTemplate}"/>
                         </ScrollViewer>
-                    </Grid>
-                    <Grid Grid.Column="1" Background="White" Margin="5">
+                    </DockPanel>
+                    <Grid Grid.Column="1" Margin="5 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.ColumnSpan="2" Margin="10 5 10 3" Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Static lang:Resources.SettingsView_SubheaderChoco}"/>
-                        <DockPanel Margin="10 0 5 0" Grid.Column="0" Grid.Row="1">
-                            <TextBlock DockPanel.Dock="Top" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static lang:Resources.SettingsView_Features}"/>
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <ItemsControl ItemsSource="{Binding Features}" ItemTemplate="{StaticResource ChocolateyFeatureTemplate}" />
-                            </ScrollViewer>
-                        </DockPanel>
-                        <Grid Grid.Column="1" Grid.Row="1" Margin="5 0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static lang:Resources.SettingsView_Settings}"/>
-                            <DataGrid Grid.Row="1" BorderBrush="#DDD" BorderThickness="1 1 1 0"
-                                      CanUserAddRows="False" CanUserDeleteRows="False"
-                                      ItemsSource="{Binding Settings}" AutoGenerateColumns="False"
-                                      cal:Message.Attach="[Event RowEditEnding] = [Action RowEditEnding($eventArgs)]">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyName}" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
-                                    <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyValue}" Width="2*" Binding="{Binding Value}"/>
-                                    <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyDescription}" Width="2*" IsReadOnly="True" Binding="{Binding Description}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                                   Text="{x:Static lang:Resources.SettingsView_Settings}"
+                                   Margin="0,0,0,5"/>
+                        <DataGrid Grid.Row="1"
+                                  BorderBrush="#DDD"
+                                  BorderThickness="1 1 1 0"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  ItemsSource="{Binding ChocolateyGuiSettings}"
+                                  AutoGenerateColumns="False"
+                                  cal:Message.Attach="[Event RowEditEnding] = [Action ChocolateyGuiSettingsRowEditEnding($eventArgs)]">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyName}" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
+                                <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyValue}" Width="2*" Binding="{Binding Value}"/>
+                                <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyDescription}" Width="2*" IsReadOnly="True" Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{x:Static lang:Resources.SettingsView_Chocolatey}">
+                <Grid Background="White" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <DockPanel Margin="10 0 5 0" Grid.Column="0">
+                        <TextBlock DockPanel.Dock="Top" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static lang:Resources.SettingsView_Features}"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding ChocolateyFeatures}" ItemTemplate="{StaticResource ChocolateyFeatureTemplate}" />
+                        </ScrollViewer>
+                    </DockPanel>
+                    <Grid Grid.Column="1" Margin="5 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                                   Text="{x:Static lang:Resources.SettingsView_Settings}"
+                                   Margin="0,0,0,5"/>
+                        <DataGrid Grid.Row="1"
+                                  BorderBrush="#DDD"
+                                  BorderThickness="1 1 1 0"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  ItemsSource="{Binding ChocolateySettings}"
+                                  AutoGenerateColumns="False"
+                                  cal:Message.Attach="[Event RowEditEnding] = [Action ChocolateySettingsRowEditEnding($eventArgs)]">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyName}" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
+                                <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyValue}" Width="2*" Binding="{Binding Value}"/>
+                                <DataGridTextColumn Header="{x:Static lang:Resources.SettingsView_PropertyDescription}" Width="2*" IsReadOnly="True" Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Grid>
                 </Grid>
             </TabItem>

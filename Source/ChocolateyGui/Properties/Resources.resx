@@ -812,7 +812,7 @@ Normal:
     <value>chocolatey.licensed is a reserved source id and cannot be used for a new source</value>
   </data>
   <data name="SettingsViewModel_SetSourceCertificateAndPasswordMessage" xml:space="preserve">
-    <value>NOTE: To remove the Certificate and Passowrd, simply empty both input fields and click Save</value>
+    <value>NOTE: To remove the Certificate and Password, simply empty both input fields and click Save</value>
   </data>
   <data name="SettingsViewModel_SetSourceCertificateAndPasswordPasswordWatermark" xml:space="preserve">
     <value>Certificate Password...</value>
@@ -824,7 +824,7 @@ Normal:
     <value>Certificate...</value>
   </data>
   <data name="SettingsViewModel_SetSourceUsernameAndPasswordMessage" xml:space="preserve">
-    <value>NOTE: To remove the Username and Passowrd, simply empty both input fields and click Save</value>
+    <value>NOTE: To remove the Username and Password, simply empty both input fields and click Save</value>
   </data>
   <data name="SettingsViewModel_SetSourceUsernameAndPasswordTitle" xml:space="preserve">
     <value>Set Source Username and Password</value>

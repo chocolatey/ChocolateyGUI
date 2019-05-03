@@ -32,6 +32,7 @@ namespace ChocolateyGui.ViewModels
         private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly IFileStorageService _fileStorageService;
 
         private Subject<ChocolateyFeature> _changedChocolateyFeature;
         private Subject<ChocolateySetting> _changedChocolateySetting;
@@ -48,13 +49,15 @@ namespace ChocolateyGui.ViewModels
             IProgressService progressService,
             IConfigService configService,
             IEventAggregator eventAggregator,
-            IDialogCoordinator dialogCoordinator)
+            IDialogCoordinator dialogCoordinator,
+            IFileStorageService fileStorageService)
         {
             _chocolateyService = chocolateyService;
             _progressService = progressService;
             _configService = configService;
             _eventAggregator = eventAggregator;
             _dialogCoordinator = dialogCoordinator;
+            _fileStorageService = fileStorageService;
             DisplayName = Resources.SettingsViewModel_DisplayName;
             Activated += OnActivated;
             Deactivated += OnDeactivated;
@@ -202,6 +205,25 @@ namespace ChocolateyGui.ViewModels
         public async Task UpdateChocolateySetting(ChocolateySetting setting)
         {
             await _chocolateyService.SetSetting(setting);
+        }
+
+        public async Task PurgeIconCache()
+        {
+            var result = await _dialogCoordinator.ShowMessageAsync(
+                this,
+                Resources.Dialog_AreYouSureTitle,
+                Resources.Dialog_AreYouSureMessage,
+                MessageDialogStyle.AffirmativeAndNegative,
+                new MetroDialogSettings
+                {
+                    AffirmativeButtonText = Resources.Dialog_Yes,
+                    NegativeButtonText = Resources.Dialog_No
+                });
+
+            if (result == MessageDialogResult.Affirmative)
+            {
+                _fileStorageService.DeleteAllFiles();
+            }
         }
 
         public void New()

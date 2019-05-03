@@ -78,6 +78,7 @@ namespace ChocolateyGui.Startup
             // Register Services
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
+            builder.RegisterType<LiteDBFileStorageService>().As<IFileStorageService>().SingleInstance();
 
             // Register Mapper
             var mapperConfiguration = new MapperConfiguration(config =>

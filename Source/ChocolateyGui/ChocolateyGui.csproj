@@ -257,6 +257,8 @@
     <Compile Include="Models\Messages\ShowAboutMessage.cs" />
     <Compile Include="Models\OutdatedPackage.cs" />
     <Compile Include="Providers\NugetEncryptionUtility.cs" />
+    <Compile Include="Services\IFileStorageService.cs" />
+    <Compile Include="Services\LiteDBFileStorageService.cs" />
     <Compile Include="Utilities\BindingProxy.cs" />
     <Compile Include="Utilities\BubbleScrollEventBehavior.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityInverted.cs" />

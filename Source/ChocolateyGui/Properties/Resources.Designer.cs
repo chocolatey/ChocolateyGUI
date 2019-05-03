@@ -602,6 +602,42 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This action will delete all cached icons that appear on the Tile Views of Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?.
+        /// </summary>
+        public static string Dialog_AreYouSureMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        public static string Dialog_AreYouSureTitle {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string Dialog_No {
+            get {
+                return ResourceManager.GetString("Dialog_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Dialog_Yes {
+            get {
+                return ResourceManager.GetString("Dialog_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View and configure chocolateygui feature.
         /// </summary>
         public static string FeatureCommand_Description {
@@ -1561,15 +1597,6 @@ namespace ChocolateyGui.Properties {
                 return ResourceManager.GetString("SettingsView_ButtonSave", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Chocolatey.
-        /// </summary>
-        public static string SettingsView_Chocolatey {
-            get {
-                return ResourceManager.GetString("SettingsView_Chocolatey", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to Set Certificate and Password.
@@ -1578,7 +1605,7 @@ namespace ChocolateyGui.Properties {
             get {
                 return ResourceManager.GetString("SettingsView_ButtonSetCertificateAndPassword", resourceCulture);
             }
-        }        
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Set Username and Password.
@@ -1586,6 +1613,15 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_ButtonSetUsernameAndPassword {
             get {
                 return ResourceManager.GetString("SettingsView_ButtonSetUsernameAndPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chocolatey.
+        /// </summary>
+        public static string SettingsView_Chocolatey {
+            get {
+                return ResourceManager.GetString("SettingsView_Chocolatey", resourceCulture);
             }
         }
         
@@ -1599,20 +1635,20 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default timeout for outdated packages to be cached.  Default is 60 minutes..
-        /// </summary>
-        public static string SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription {
-            get {
-                return ResourceManager.GetString("SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to * The only modification that can be made to chocolatey.licensed source is to enable/disable it..
         /// </summary>
         public static string SettingsView_ChocolateyLicensedSourceWarning {
             get {
                 return ResourceManager.GetString("SettingsView_ChocolateyLicensedSourceWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default timeout for outdated packages to be cached.  Default is 60 minutes..
+        /// </summary>
+        public static string SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription", resourceCulture);
             }
         }
         
@@ -1676,6 +1712,15 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_PropertyValue {
             get {
                 return ResourceManager.GetString("SettingsView_PropertyValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purge Icons.
+        /// </summary>
+        public static string SettingsView_PurgeIconCache {
+            get {
+                return ResourceManager.GetString("SettingsView_PurgeIconCache", resourceCulture);
             }
         }
         

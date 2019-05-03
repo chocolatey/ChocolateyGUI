@@ -63,13 +63,9 @@ namespace ChocolateyGui.Services
                 var featureAttributes = property.GetCustomAttributes(typeof(FeatureAttribute), true);
                 if (property.Name != "Id" && featureAttributes.Length > 0)
                 {
-                    var attributes = property.GetCustomAttributes(typeof(LocalizedDescriptionAttribute), true);
-                    var attribute = attributes.Length > 0 ? (LocalizedDescriptionAttribute) attributes[0] : null;
-                    var descriptionText = attribute?.Description;
-
                     var propertyValue = (bool)property.GetValue(_appConfiguration);
 
-                    features.Add(new ChocolateyGuiFeature{ Description = descriptionText, Enabled = propertyValue, Title = propertyName });
+                    features.Add(new ChocolateyGuiFeature { Description = GetDescriptionFromProperty(property), Enabled = propertyValue, Title = propertyName });
                 }
             }
 
@@ -103,13 +99,9 @@ namespace ChocolateyGui.Services
                 var configAttributes = property.GetCustomAttributes(typeof(ConfigAttribute), true);
                 if (property.Name != "Id" && configAttributes.Length > 0)
                 {
-                    var attributes = property.GetCustomAttributes(typeof(LocalizedDescriptionAttribute), true);
-                    var attribute = attributes.Length > 0 ? (LocalizedDescriptionAttribute) attributes[0] : null;
-                    var descriptionText = attribute?.Description;
-
                     var propertyValue = (string)property.GetValue(_appConfiguration);
 
-                    settings.Add(new ChocolateyGuiSetting{ Description = descriptionText, Value = propertyValue, Key = propertyName });
+                    settings.Add(new ChocolateyGuiSetting { Description = GetDescriptionFromProperty(property), Value = propertyValue, Key = propertyName });
                 }
             }
 
@@ -212,6 +204,13 @@ namespace ChocolateyGui.Services
         {
             var propertyValue = (T)property.GetValue(configuration);
             return propertyValue;
+        }
+
+        private string GetDescriptionFromProperty(PropertyInfo property)
+        {
+            var attributes = property.GetCustomAttributes(typeof(LocalizedDescriptionAttribute), true);
+            var attribute = attributes.Length > 0 ? (LocalizedDescriptionAttribute)attributes[0] : null;
+            return attribute?.Description;
         }
     }
 }

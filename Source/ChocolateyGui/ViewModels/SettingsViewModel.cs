@@ -146,12 +146,12 @@ namespace ChocolateyGui.ViewModels
 
             if (feature.Enabled)
             {
-                configuration.FeatureCommand.Command = FeatureCommandType.enable;
+                configuration.FeatureCommand.Command = FeatureCommandType.Enable;
                 await Task.Run(() => _configService.EnableFeature(configuration));
             }
             else
             {
-                configuration.FeatureCommand.Command = FeatureCommandType.disable;
+                configuration.FeatureCommand.Command = FeatureCommandType.Disable;
                 await Task.Run(() => _configService.DisableFeature(configuration));
             }
         }

@@ -1,20 +1,22 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ConfigCommand.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using chocolatey;
 using chocolatey.infrastructure.commandline;
 using ChocolateyGui.Attributes;
-using ChocolateyGui.Models;
 using ChocolateyGui.Properties;
 using ChocolateyGui.Services;
-using LiteDB;
 
 namespace ChocolateyGui.CliCommands
 {
     [LocalizedCommandFor("config", "ConfigCommand_Description")]
-    public class ConfigCommand : ICommand
+    public class ConfigCommand : BaseCommand, ICommand
     {
         private readonly IConfigService _configService;
 
@@ -23,7 +25,7 @@ namespace ChocolateyGui.CliCommands
             _configService = configService;
         }
 
-        public void configure_argument_parser(OptionSet optionSet, ChocolateyGuiConfiguration configuration)
+        public void ConfigureArgumentParser(OptionSet optionSet, ChocolateyGuiConfiguration configuration)
         {
             optionSet
                 .Add(
@@ -37,26 +39,26 @@ namespace ChocolateyGui.CliCommands
                 ;
         }
 
-        public void handle_additional_argument_parsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
+        public void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
         {
             configuration.Input = string.Join(" ", unparsedArguments);
 
-            var command = ConfigCommandType.unknown;
-            var unparsedCommand = unparsedArguments.DefaultIfEmpty(string.Empty).FirstOrDefault().to_string().Replace("-",string.Empty);
+            var command = ConfigCommandType.Unknown;
+            var unparsedCommand = unparsedArguments.DefaultIfEmpty(string.Empty).FirstOrDefault().to_string().Replace("-", string.Empty);
             Enum.TryParse(unparsedCommand, true, out command);
-            if (command == ConfigCommandType.unknown)
+            if (command == ConfigCommandType.Unknown)
             {
                 if (!string.IsNullOrWhiteSpace(unparsedCommand))
                 {
                     Bootstrapper.Logger.Warning(Resources.ConfigCommand_UnknownCommandError.format_with(unparsedCommand));
                 }
 
-                command = ConfigCommandType.list;
+                command = ConfigCommandType.List;
             }
 
             configuration.ConfigCommand.Command = command;
 
-            if ((configuration.ConfigCommand.Command == ConfigCommandType.list || !string.IsNullOrWhiteSpace(configuration.ConfigCommand.Name)) && unparsedArguments.Count > 1)
+            if ((configuration.ConfigCommand.Command == ConfigCommandType.List || !string.IsNullOrWhiteSpace(configuration.ConfigCommand.Name)) && unparsedArguments.Count > 1)
             {
                 Bootstrapper.Logger.Error(Resources.ConfigCommand_SingleConfigError);
                 Bootstrapper.Container.Dispose();
@@ -74,9 +76,9 @@ namespace ChocolateyGui.CliCommands
             }
         }
 
-        public void handle_validation(ChocolateyGuiConfiguration configuration)
+        public void HandleValidation(ChocolateyGuiConfiguration configuration)
         {
-            if (configuration.ConfigCommand.Command != ConfigCommandType.list &&
+            if (configuration.ConfigCommand.Command != ConfigCommandType.List &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.Name))
             {
                 Bootstrapper.Logger.Error(Resources.ConfigCommand_MissingNameOptionError.format_with(configuration.ConfigCommand.Command.to_string()));
@@ -84,7 +86,7 @@ namespace ChocolateyGui.CliCommands
                 Environment.Exit(-1);
             }
 
-            if (configuration.ConfigCommand.Command == ConfigCommandType.set &&
+            if (configuration.ConfigCommand.Command == ConfigCommandType.Set &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.ConfigValue))
             {
                 Bootstrapper.Logger.Error(Resources.ConfigCommand_MissingValueOptionError.format_with(configuration.ConfigCommand.Command.to_string()));
@@ -93,7 +95,7 @@ namespace ChocolateyGui.CliCommands
             }
         }
 
-        public void help_message(ChocolateyGuiConfiguration configuration)
+        public void HelpMessage(ChocolateyGuiConfiguration configuration)
         {
             Bootstrapper.Logger.Warning(Resources.ConfigCommand_Title);
             Bootstrapper.Logger.Information(string.Empty);
@@ -115,40 +117,23 @@ namespace ChocolateyGui.CliCommands
     chocolateygui config unset outdatedPackagesCacheDurationInMinutes
     chocolateygui config unset --name outdatedPackagesCacheDurationInMinutes
 ");
-
-            Bootstrapper.Logger.Warning(Resources.Command_ExitCodesTitle);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Information(Resources.Command_ExitCodesText);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Warning(Resources.Command_OptionsAndSwitches);
+            PrintExitCodeInformation();
         }
 
-        public void run(ChocolateyGuiConfiguration config)
+        public void Run(ChocolateyGuiConfiguration config)
         {
-            // let's grab the current configuration database
-            var localAppDataPath = Path.Combine(
-                Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData,
-                    Environment.SpecialFolderOption.DoNotVerify),
-                App.ApplicationName);
-
-            if (!Directory.Exists(localAppDataPath))
-            {
-                Directory.CreateDirectory(localAppDataPath);
-            }
-
             switch (config.ConfigCommand.Command)
             {
-                case ConfigCommandType.list:
+                case ConfigCommandType.List:
                     _configService.ListSettings(config);
                     break;
-                case ConfigCommandType.get:
+                case ConfigCommandType.Get:
                     _configService.GetConfigValue(config);
                     break;
-                case ConfigCommandType.set:
+                case ConfigCommandType.Set:
                     _configService.SetConfigValue(config);
                     break;
-                case ConfigCommandType.unset:
+                case ConfigCommandType.Unset:
                     _configService.UnsetConfigValue(config);
                     break;
             }

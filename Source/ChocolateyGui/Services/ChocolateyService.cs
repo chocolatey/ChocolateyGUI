@@ -142,6 +142,7 @@ namespace ChocolateyGui.Services
                         }
                         catch (Exception ex)
                         {
+                            Bootstrapper.Logger.Error(ex, "Unable to serialize Outdated Packages Cache file.");
                         }
 
                         return results.ToList();

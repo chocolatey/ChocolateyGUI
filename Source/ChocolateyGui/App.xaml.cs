@@ -29,14 +29,14 @@ namespace ChocolateyGui
         private static readonly OptionSet _optionSet = new OptionSet();
         private static readonly App _application = new App();
 
-        public static OptionSet OptionSet
-        {
-            get { return _optionSet; }
-        }
-
         public App()
         {
             InitializeComponent();
+        }
+
+        public static OptionSet OptionSet
+        {
+            get { return _optionSet; }
         }
 
         internal static SplashScreen SplashScreen { get; set; }
@@ -66,23 +66,22 @@ namespace ChocolateyGui
                 SetUpGlobalOptions(args, configuration, Bootstrapper.Container);
 
                 var runner = new GenericRunner();
-                runner.run(configuration, Bootstrapper.Container, command =>
+                runner.Run(configuration, Bootstrapper.Container, command =>
                 {
                     ParseArgumentsAndUpdateConfiguration(
                         commandArgs,
                         configuration,
-                        (optionSet) => command.configure_argument_parser(optionSet, configuration),
+                        (optionSet) => command.ConfigureArgumentParser(optionSet, configuration),
                         (unparsedArgs) =>
                         {
-                            command.handle_additional_argument_parsing(unparsedArgs, configuration);
+                            command.HandleAdditionalArgumentParsing(unparsedArgs, configuration);
                         },
                         () =>
                         {
                             Bootstrapper.Logger.Debug("Performing validation checks...");
-                            command.handle_validation(configuration);
+                            command.HandleValidation(configuration);
                         },
-                        () => command.help_message(configuration)
-                    );
+                        () => command.HelpMessage(configuration));
                 });
             }
             else
@@ -128,7 +127,8 @@ namespace ChocolateyGui
                 (option_set) =>
                 {
                     option_set
-                        .Add("r|limitoutput|limit-output",
+                        .Add(
+                            "r|limitoutput|limit-output",
                             ChocolateyGui.Properties.Resources.Command_LimitOutputOption,
                             option => configuration.RegularOutput = option == null);
                 },
@@ -163,8 +163,7 @@ namespace ChocolateyGui
                     Bootstrapper.Logger.Information(ChocolateyGui.Properties.Resources.Command_CommandsText.format_with("chocolateygui command -help"));
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Warning(ChocolateyGui.Properties.Resources.Command_DefaultOptionsAndSwitches);
-                }
-            );
+                });
         }
 
         // Usage of this PInvoke came from this blog post:
@@ -172,7 +171,8 @@ namespace ChocolateyGui
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         private static extern bool FreeConsole();
 
-        private static void ParseArgumentsAndUpdateConfiguration(ICollection<string> args,
+        private static void ParseArgumentsAndUpdateConfiguration(
+            ICollection<string> args,
             ChocolateyGuiConfiguration configuration,
             Action<OptionSet> setOptions,
             Action<IList<string>> afterParse,
@@ -185,7 +185,8 @@ namespace ChocolateyGui
             if (_optionSet.Count == 0)
             {
                 _optionSet
-                    .Add("?|help|h",
+                    .Add(
+                        "?|help|h",
                         ChocolateyGui.Properties.Resources.Command_HelpOption,
                         option => configuration.HelpRequested = option != null);
             }

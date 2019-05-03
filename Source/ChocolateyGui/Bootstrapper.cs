@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
 using AutoMapper;
-using AutoMapper.Mappers;
 using Caliburn.Micro;
 using chocolatey;
 using ChocolateyGui.CliCommands;
@@ -26,7 +25,6 @@ using ChocolateyGui.ViewModels;
 using ChocolateyGui.ViewModels.Items;
 using Serilog;
 using Serilog.Events;
-using Serilog.Sinks.SystemConsole.Themes;
 using ILogger = Serilog.ILogger;
 using Log = Serilog.Log;
 

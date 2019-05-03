@@ -1,4 +1,10 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="GenericRunner.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
@@ -11,7 +17,24 @@ namespace ChocolateyGui.CliCommands
 {
     public sealed class GenericRunner
     {
-        private ICommand find_command(ChocolateyGuiConfiguration configuration, IContainer container, Action<ICommand> parseArgs)
+        public void Run(ChocolateyGuiConfiguration configuration, IContainer container, Action<ICommand> parseArgs)
+        {
+            var command = FindCommand(configuration, container, parseArgs);
+
+            if (configuration.HelpRequested || configuration.UnsuccessfulParsing)
+            {
+                Bootstrapper.Container.Dispose();
+                Environment.Exit(configuration.UnsuccessfulParsing ? 1 : 0);
+            }
+
+            if (command != null)
+            {
+                Bootstrapper.Logger.Debug("_ {0}:{1} - Normal Run Mode _".format_with(ApplicationParameters.Name, command.GetType().Name));
+                command.Run(configuration);
+            }
+        }
+
+        private ICommand FindCommand(ChocolateyGuiConfiguration configuration, IContainer container, Action<ICommand> parseArgs)
         {
             var commands = container.Resolve<IEnumerable<ICommand>>();
             var command = commands.Where((c) =>
@@ -38,23 +61,6 @@ namespace ChocolateyGui.CliCommands
             }
 
             return command;
-        }
-
-        public void run(ChocolateyGuiConfiguration configuration, IContainer container, Action<ICommand> parseArgs)
-        {
-            var command = find_command(configuration, container, parseArgs);
-
-            if (configuration.HelpRequested || configuration.UnsuccessfulParsing)
-            {
-                Bootstrapper.Container.Dispose();
-                Environment.Exit(configuration.UnsuccessfulParsing ? 1 : 0);
-            }
-
-            if (command != null)
-            {
-                Bootstrapper.Logger.Debug("_ {0}:{1} - Normal Run Mode _".format_with(ApplicationParameters.Name, command.GetType().Name));
-                command.run(configuration);
-            }
         }
     }
 }

@@ -1,4 +1,10 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="ChocolateyGuiConfiguration.cs">
+//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 
 namespace ChocolateyGui.CliCommands
 {
@@ -25,22 +31,5 @@ namespace ChocolateyGui.CliCommands
         public FeatureCommandConfiguration FeatureCommand { get;  set; }
 
         public ConfigCommandConfiguration ConfigCommand { get; set; }
-    }
-
-    public sealed class FeatureCommandConfiguration
-    {
-        public string Name { get; set; }
-
-        public FeatureCommandType Command { get; set; }
-    }
-
-    [Serializable]
-    public sealed class ConfigCommandConfiguration
-    {
-        public string Name { get; set; }
-
-        public string ConfigValue { get; set; }
-
-        public ConfigCommandType Command { get; set; }
     }
 }

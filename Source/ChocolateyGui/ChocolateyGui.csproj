@@ -233,11 +233,14 @@
     <Compile Include="Attributes\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Base\ConnectionClosedException.cs" />
     <Compile Include="ChocolateyExtensions.cs" />
+    <Compile Include="CliCommands\BaseCommand.cs" />
     <Compile Include="CliCommands\ChocolateyGuiConfiguration.cs" />
-    <Compile Include="CliCommands\ColourConsoleSink.cs" />
+    <Compile Include="CliCommands\ColouredConsoleSink.cs" />
     <Compile Include="CliCommands\ConfigCommand.cs" />
+    <Compile Include="CliCommands\ConfigCommandConfiguration.cs" />
     <Compile Include="CliCommands\ConfigCommandType.cs" />
     <Compile Include="CliCommands\FeatureCommand.cs" />
+    <Compile Include="CliCommands\FeatureCommandConfiguration.cs" />
     <Compile Include="CliCommands\FeatureCommandType.cs" />
     <Compile Include="CliCommands\GenericRunner.cs" />
     <Compile Include="CliCommands\ICommand.cs" />

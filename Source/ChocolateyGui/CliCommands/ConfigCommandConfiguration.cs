@@ -1,17 +1,20 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="ConfigCommandType.cs">
+// <copyright company="Chocolatey" file="ConfigCommandConfiguration.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+
 namespace ChocolateyGui.CliCommands
 {
-    public enum ConfigCommandType
+    [Serializable]
+    public sealed class ConfigCommandConfiguration
     {
-        Unknown,
-        List,
-        Get,
-        Set,
-        Unset,
+        public string Name { get; set; }
+
+        public string ConfigValue { get; set; }
+
+        public ConfigCommandType Command { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace ChocolateyGui.Services
 {
     public interface IConfigService
     {
-        AppConfiguration GetSettings();
+        AppConfiguration GetAppConfiguration();
 
         void UpdateSettings(AppConfiguration settings);
 

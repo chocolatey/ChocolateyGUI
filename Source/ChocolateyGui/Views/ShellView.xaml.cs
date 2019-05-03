@@ -86,7 +86,7 @@ namespace ChocolateyGui.Views
             return Dispatcher.Invoke(async () =>
             {
                 // create the dialog control
-                var dialog = new ChocolateyDialog(this, _configService.GetSettings().ShowConsoleOutput)
+                var dialog = new ChocolateyDialog(this, _configService.GetAppConfiguration().ShowConsoleOutput)
                 {
                     Title = title,
                     IsCancelable = isCancelable,

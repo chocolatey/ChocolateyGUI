@@ -262,7 +262,7 @@ namespace ChocolateyGui.ViewModels
                             await _chocolateyService.GetOutdatedPackages(package.IsPrerelease, package.Id);
                         foreach (var update in outOfDatePackages)
                         {
-                            await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Item1, update.Item2));
+                            await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version));
                         }
 
                         PackageSource.Refresh();
@@ -291,7 +291,7 @@ namespace ChocolateyGui.ViewModels
                     return;
                 }
 
-                ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
+                ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
@@ -407,7 +407,7 @@ namespace ChocolateyGui.ViewModels
                 var updates = await _chocolateyService.GetOutdatedPackages();
                 foreach (var update in updates)
                 {
-                    await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Item1, update.Item2));
+                    await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version));
                 }
 
                 PackageSource.Refresh();

@@ -245,7 +245,7 @@ namespace ChocolateyGui.ViewModels
                         {
                             p.IsInstalled = true;
                         }
-                        if (outdated.Any(package => string.Equals(package.Item1, p.Id, StringComparison.OrdinalIgnoreCase)))
+                        if (outdated.Any(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)))
                         {
                             p.IsLatestVersion = false;
                         }
@@ -253,7 +253,7 @@ namespace ChocolateyGui.ViewModels
                         Packages.Add(Mapper.Map<IPackageViewModel>(p));
                     });
 
-                    if (_configService.GetSettings().ExcludeInstalledPackages)
+                    if (_configService.GetAppConfiguration().ExcludeInstalledPackages)
                     {
                         Packages.RemoveAll(x => x.IsInstalled);
                     }
@@ -290,7 +290,7 @@ namespace ChocolateyGui.ViewModels
         {
             try
             {
-                ListViewMode = _configService.GetSettings().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
+                ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
@@ -316,7 +316,7 @@ namespace ChocolateyGui.ViewModels
                     "IncludeAllVersions", "IncludePrerelease", "MatchWord", "SortSelection"
                 };
 
-                if (_configService.GetSettings().UseDelayedSearch)
+                if (_configService.GetAppConfiguration().UseDelayedSearch)
                 {
                     SubscribeToLoadPackagesOnSearchQueryChange();
                 }

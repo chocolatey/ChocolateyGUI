@@ -4,12 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel;
 using ChocolateyGui.Properties;
 
 namespace ChocolateyGui.Attributes
 {
-    public class LocalizedDescriptionAttribute : DescriptionAttribute
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public sealed class LocalizedDescriptionAttribute : DescriptionAttribute
     {
         public LocalizedDescriptionAttribute(string key)
             : base(Localize(key))

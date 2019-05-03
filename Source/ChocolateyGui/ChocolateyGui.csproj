@@ -230,6 +230,9 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Attributes\ConfigAttribute.cs" />
+    <Compile Include="Attributes\FeatureAttribute.cs" />
+    <Compile Include="Attributes\LocalizedCommandForAttribute.cs" />
     <Compile Include="Attributes\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Base\ConnectionClosedException.cs" />
     <Compile Include="ChocolateyExtensions.cs" />

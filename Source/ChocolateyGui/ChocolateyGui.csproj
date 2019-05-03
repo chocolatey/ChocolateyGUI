@@ -236,6 +236,7 @@
     <Compile Include="Attributes\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Base\ConnectionClosedException.cs" />
     <Compile Include="ChocolateyExtensions.cs" />
+    <Compile Include="CliCommands\ColourConsoleSink.cs" />
     <Compile Include="Controls\MarkdownEx.cs" />
     <Compile Include="Enums\ListViewMode.cs" />
     <Compile Include="Models\ChocolateyAggregatedSources.cs" />

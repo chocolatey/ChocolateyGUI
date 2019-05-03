@@ -72,6 +72,13 @@
                     Background="{StaticResource AccentColorBrush4}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,20,10">
                     <Button Padding="10" Margin="5 0"
+                            Command="{commands:DataContextCommandAdapter PurgeOutdatedPackagesCache}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconEntypo Kind="BackInTime" Margin="0 0 5 0 " VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Static lang:Resources.SettingsView_PurgeOutdatedPackagesCache}" FontSize="16"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter PurgeIconCache}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconEntypo Kind="BackInTime" Margin="0 0 5 0 " VerticalAlignment="Center" />

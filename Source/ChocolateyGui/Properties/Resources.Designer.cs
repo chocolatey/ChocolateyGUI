@@ -604,9 +604,18 @@ namespace ChocolateyGui.Properties {
         /// <summary>
         ///   Looks up a localized string similar to This action will delete all cached icons that appear on the Tile Views of Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?.
         /// </summary>
-        public static string Dialog_AreYouSureMessage {
+        public static string Dialog_AreYouSureIconsMessage {
             get {
-                return ResourceManager.GetString("Dialog_AreYouSureMessage", resourceCulture);
+                return ResourceManager.GetString("Dialog_AreYouSureIconsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action will delete the file containing the list of outdated packages for this computer.  Are you sure you want to proceed (this action cannot be undone)?.
+        /// </summary>
+        public static string Dialog_AreYouSureOutdatedPackagesMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureOutdatedPackagesMessage", resourceCulture);
             }
         }
         
@@ -1721,6 +1730,15 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_PurgeIconCache {
             get {
                 return ResourceManager.GetString("SettingsView_PurgeIconCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purge Outdated Packages.
+        /// </summary>
+        public static string SettingsView_PurgeOutdatedPackagesCache {
+            get {
+                return ResourceManager.GetString("SettingsView_PurgeOutdatedPackagesCache", resourceCulture);
             }
         }
         

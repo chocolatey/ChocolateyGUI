@@ -838,8 +838,11 @@ Normal:
   <data name="SettingsView_ChocolateyLicensedSourceWarning" xml:space="preserve">
     <value>* The only modification that can be made to chocolatey.licensed source is to enable/disable it.</value>
   </data>
-  <data name="Dialog_AreYouSureMessage" xml:space="preserve">
+  <data name="Dialog_AreYouSureIconsMessage" xml:space="preserve">
     <value>This action will delete all cached icons that appear on the Tile Views of Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?</value>
+  </data>
+  <data name="Dialog_AreYouSureOutdatedPackagesMessage" xml:space="preserve">
+    <value>This action will delete the file containing the list of outdated packages for this computer.  Are you sure you want to proceed (this action cannot be undone)?</value>
   </data>
   <data name="Dialog_AreYouSureTitle" xml:space="preserve">
     <value>Are you sure?</value>
@@ -852,5 +855,8 @@ Normal:
   </data>
   <data name="SettingsView_PurgeIconCache" xml:space="preserve">
     <value>Purge Icons</value>
+  </data>
+  <data name="SettingsView_PurgeOutdatedPackagesCache" xml:space="preserve">
+    <value>Purge Outdated Packages</value>
   </data>
 </root>

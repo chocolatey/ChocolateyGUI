@@ -6,11 +6,13 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using chocolatey.infrastructure.filesystem;
 using Caliburn.Micro;
 using ChocolateyGui.CliCommands;
 using ChocolateyGui.Models;
@@ -33,6 +35,7 @@ namespace ChocolateyGui.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly IFileStorageService _fileStorageService;
+        private readonly IFileSystem _fileSystem;
 
         private Subject<ChocolateyFeature> _changedChocolateyFeature;
         private Subject<ChocolateySetting> _changedChocolateySetting;
@@ -43,6 +46,7 @@ namespace ChocolateyGui.ViewModels
         private ChocolateySource _draftSource;
         private string _originalId;
         private bool _isNewItem;
+        private string _localAppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), App.ApplicationName);
 
         public SettingsViewModel(
             IChocolateyService chocolateyService,
@@ -50,7 +54,8 @@ namespace ChocolateyGui.ViewModels
             IConfigService configService,
             IEventAggregator eventAggregator,
             IDialogCoordinator dialogCoordinator,
-            IFileStorageService fileStorageService)
+            IFileStorageService fileStorageService,
+            IFileSystem fileSystem)
         {
             _chocolateyService = chocolateyService;
             _progressService = progressService;
@@ -58,6 +63,7 @@ namespace ChocolateyGui.ViewModels
             _eventAggregator = eventAggregator;
             _dialogCoordinator = dialogCoordinator;
             _fileStorageService = fileStorageService;
+            _fileSystem = fileSystem;
             DisplayName = Resources.SettingsViewModel_DisplayName;
             Activated += OnActivated;
             Deactivated += OnDeactivated;
@@ -212,7 +218,7 @@ namespace ChocolateyGui.ViewModels
             var result = await _dialogCoordinator.ShowMessageAsync(
                 this,
                 Resources.Dialog_AreYouSureTitle,
-                Resources.Dialog_AreYouSureMessage,
+                Resources.Dialog_AreYouSureIconsMessage,
                 MessageDialogStyle.AffirmativeAndNegative,
                 new MetroDialogSettings
                 {
@@ -223,6 +229,36 @@ namespace ChocolateyGui.ViewModels
             if (result == MessageDialogResult.Affirmative)
             {
                 _fileStorageService.DeleteAllFiles();
+            }
+        }
+
+        public async Task PurgeOutdatedPackagesCache()
+        {
+            var result = await _dialogCoordinator.ShowMessageAsync(
+                this,
+                Resources.Dialog_AreYouSureTitle,
+                Resources.Dialog_AreYouSureOutdatedPackagesMessage,
+                MessageDialogStyle.AffirmativeAndNegative,
+                new MetroDialogSettings
+                {
+                    AffirmativeButtonText = Resources.Dialog_Yes,
+                    NegativeButtonText = Resources.Dialog_No
+                });
+
+            if (result == MessageDialogResult.Affirmative)
+            {
+                var outdatedPackagesFile = Path.Combine(_localAppDataPath, "outdatedPackages.xml");
+                var outdatedPackagesBackupFile = Path.Combine(_localAppDataPath, "outdatedPackages.xml.backup");
+
+                if (_fileSystem.file_exists(outdatedPackagesFile))
+                {
+                    _fileSystem.delete_file(outdatedPackagesFile);
+                }
+
+                if (_fileSystem.file_exists(outdatedPackagesBackupFile))
+                {
+                    _fileSystem.delete_file(outdatedPackagesBackupFile);
+                }
             }
         }
 

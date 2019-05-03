@@ -35,8 +35,7 @@ namespace ChocolateyGui.CliCommands
                 .Add(
                     "value=",
                     Resources.ConfigCommand_ValueOption,
-                    option => configuration.ConfigCommand.ConfigValue = option.remove_surrounding_quotes())
-                ;
+                    option => configuration.ConfigCommand.ConfigValue = option.remove_surrounding_quotes());
         }
 
         public void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)

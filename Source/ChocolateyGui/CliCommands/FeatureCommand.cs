@@ -46,7 +46,7 @@ namespace ChocolateyGui.CliCommands
             }
 
             var command = FeatureCommandType.Unknown;
-            string unparsedCommand = unparsedArguments.DefaultIfEmpty(string.Empty).FirstOrDefault();
+            var unparsedCommand = unparsedArguments.DefaultIfEmpty(string.Empty).FirstOrDefault();
             Enum.TryParse(unparsedCommand, true, out command);
             if (command == FeatureCommandType.Unknown)
             {
@@ -79,7 +79,7 @@ namespace ChocolateyGui.CliCommands
             Bootstrapper.Logger.Information(string.Empty);
             Bootstrapper.Logger.Warning(Resources.Command_Usage);
             Bootstrapper.Logger.Information(@"
-    chocolateygui feature [list]|disable|enable <options/switches>]
+    chocolateygui feature [list]|disable|enable [<options/switches>]
 ");
             Bootstrapper.Logger.Warning(Resources.Command_Examples);
             Bootstrapper.Logger.Information(@"

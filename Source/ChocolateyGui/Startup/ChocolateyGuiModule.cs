@@ -37,7 +37,7 @@ namespace ChocolateyGui.Startup
         protected override void Load(ContainerBuilder builder)
         {
             var viewModelAssembly = typeof(ShellViewModel).Assembly;
-            var viewAssemlby = typeof(ShellView).Assembly;
+            var viewAssembly = typeof(ShellView).Assembly;
 
             // Register Providers
             builder.RegisterType<VersionNumberProvider>().As<IVersionNumberProvider>().SingleInstance();
@@ -64,7 +64,7 @@ namespace ChocolateyGui.Startup
                 .As<IXmlService>().SingleInstance();
 
             // Register Views
-            builder.RegisterAssemblyTypes(viewAssemlby)
+            builder.RegisterAssemblyTypes(viewAssembly)
                 .Where(type => type.Name.EndsWith("View", StringComparison.Ordinal))
                 .AsSelf()
                 .InstancePerDependency();

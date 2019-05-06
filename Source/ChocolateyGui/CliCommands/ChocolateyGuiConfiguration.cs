@@ -16,6 +16,7 @@ namespace ChocolateyGui.CliCommands
             RegularOutput = true;
             FeatureCommand = new FeatureCommandConfiguration();
             ConfigCommand = new ConfigCommandConfiguration();
+            PurgeCommand = new PurgeCommandConfiguration();
         }
 
         public string CommandName { get; set; }
@@ -31,5 +32,7 @@ namespace ChocolateyGui.CliCommands
         public FeatureCommandConfiguration FeatureCommand { get;  set; }
 
         public ConfigCommandConfiguration ConfigCommand { get; set; }
+
+        public PurgeCommandConfiguration PurgeCommand { get; set; }
     }
 }

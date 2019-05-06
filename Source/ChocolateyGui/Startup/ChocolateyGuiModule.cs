@@ -79,6 +79,8 @@ namespace ChocolateyGui.Startup
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
             builder.RegisterType<LiteDBFileStorageService>().As<IFileStorageService>().SingleInstance();
+            builder.RegisterType<ConfigService>().As<IConfigService>();
+            builder.RegisterType<ChocolateyGuiCacheService>().As<IChocolateyGuiCacheService>().SingleInstance();
 
             // Register Mapper
             var mapperConfiguration = new MapperConfiguration(config =>
@@ -107,18 +109,10 @@ namespace ChocolateyGui.Startup
             var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
             builder.Register(c => database).SingleInstance();
 
-            var configService = new ConfigService(database);
-
             // Commands
-            var commands = new List<ICommand>
-            {
-                new FeatureCommand(configService),
-                new ConfigCommand(configService)
-            }.AsReadOnly();
-
-            builder.Register(c => configService).As<IConfigService>();
-
-            builder.RegisterInstance(commands).As<IEnumerable<ICommand>>().SingleInstance();
+            builder.RegisterType<FeatureCommand>().As<ICommand>().SingleInstance();
+            builder.RegisterType<ConfigCommand>().As<ICommand>().SingleInstance();
+            builder.RegisterType<PurgeCommand>().As<ICommand>().SingleInstance();
         }
     }
 }

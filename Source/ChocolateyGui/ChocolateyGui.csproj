@@ -245,6 +245,9 @@
     <Compile Include="CliCommands\FeatureCommandType.cs" />
     <Compile Include="CliCommands\GenericRunner.cs" />
     <Compile Include="CliCommands\ICommand.cs" />
+    <Compile Include="CliCommands\PurgeCommand.cs" />
+    <Compile Include="CliCommands\PurgeCommandConfiguration.cs" />
+    <Compile Include="CliCommands\PurgeCommandType.cs" />
     <Compile Include="Controls\MarkdownEx.cs" />
     <Compile Include="Enums\ListViewMode.cs" />
     <Compile Include="Models\ChocolateyAggregatedSources.cs" />
@@ -257,6 +260,8 @@
     <Compile Include="Models\Messages\ShowAboutMessage.cs" />
     <Compile Include="Models\OutdatedPackage.cs" />
     <Compile Include="Providers\NugetEncryptionUtility.cs" />
+    <Compile Include="Services\ChocolateyGuiCacheService.cs" />
+    <Compile Include="Services\IChocolateyGuiCacheService.cs" />
     <Compile Include="Services\IFileStorageService.cs" />
     <Compile Include="Services\LiteDBFileStorageService.cs" />
     <Compile Include="Utilities\BindingProxy.cs" />

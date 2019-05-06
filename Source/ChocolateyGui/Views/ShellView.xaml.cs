@@ -7,10 +7,10 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using chocolatey.infrastructure.filesystem;
 using Caliburn.Micro;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Providers;
@@ -25,17 +25,17 @@ namespace ChocolateyGui.Views
     public partial class ShellView
     {
         private readonly IChocolateyConfigurationProvider _chocolateyConfigurationProvider;
-
         private readonly IConfigService _configService;
-
         private readonly IProgressService _progressService;
+        private readonly IFileSystem _fileSystem;
 
         private bool _closeInitiated = false;
 
         public ShellView(
             IProgressService progressService,
             IChocolateyConfigurationProvider chocolateyConfigurationProvider,
-            IConfigService configService)
+            IConfigService configService,
+            IFileSystem fileSystem)
         {
             InitializeComponent();
 
@@ -48,12 +48,13 @@ namespace ChocolateyGui.Views
             _progressService = progressService;
             _chocolateyConfigurationProvider = chocolateyConfigurationProvider;
             _configService = configService;
+            _fileSystem = fileSystem;
 
             CheckOperatingSystemCompatibility();
 
             // Certain things like Cef (our markdown browser engine) get unhappy when GUI is started from a different cwd.
             // If we're in a different one, reset it to our app files directory.
-            if (Path.GetDirectoryName(Environment.CurrentDirectory) != Bootstrapper.ApplicationFilesPath)
+            if (_fileSystem.get_directory_name(Environment.CurrentDirectory) != Bootstrapper.ApplicationFilesPath)
             {
                 Environment.CurrentDirectory = Bootstrapper.ApplicationFilesPath;
             }

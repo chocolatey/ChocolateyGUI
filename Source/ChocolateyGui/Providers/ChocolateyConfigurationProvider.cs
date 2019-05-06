@@ -5,15 +5,19 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Linq;
+using chocolatey.infrastructure.filesystem;
 
 namespace ChocolateyGui.Providers
 {
     public class ChocolateyConfigurationProvider : IChocolateyConfigurationProvider
     {
-        public ChocolateyConfigurationProvider()
+        private readonly IFileSystem _fileSystem;
+
+        public ChocolateyConfigurationProvider(IFileSystem fileSystem)
         {
+            _fileSystem = fileSystem;
+
             GetChocolateyInstallLocation();
             DetermineIfChocolateyExecutableIsBeingUsed();
         }
@@ -45,9 +49,9 @@ namespace ChocolateyGui.Providers
 
         private void DetermineIfChocolateyExecutableIsBeingUsed()
         {
-            var exePath = Path.Combine(ChocolateyInstall, "choco.exe");
+            var exePath = _fileSystem.combine_paths(ChocolateyInstall, "choco.exe");
 
-            if (File.Exists(exePath))
+            if (_fileSystem.file_exists(exePath))
             {
                 IsChocolateyExecutableBeingUsed = true;
             }

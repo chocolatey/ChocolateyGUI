@@ -172,7 +172,7 @@ namespace ChocolateyGui.Controls
         {
             if (string.IsNullOrWhiteSpace(url))
             {
-                PART_Image.Source = url != null ? EmptyIcon.Value : null;
+                PART_Image.Source = EmptyIcon.Value;
                 PART_Loading.IsActive = false;
                 return;
             }

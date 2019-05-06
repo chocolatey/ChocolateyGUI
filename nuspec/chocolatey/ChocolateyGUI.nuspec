@@ -14,17 +14,28 @@
     <bugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</bugTrackerUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-Chocolatey GUI is a nice GUI on top of the Chocolatey command line tool.
+Chocolatey GUI is a delicious GUI on top of the Chocolatey command line tool.
 
 ## Features
 
 * View all **installed** and **available** packages
-* **Update** installed but outdated packages
+* **Upgrade** installed, but outdated packages
 * **Install** and **uninstall** packages
 * See detailed **package information**
 
-## Notes
-This package will only work correctly on Windows 7 SP1 through Windows 10 (1708) or Windows Server 2008 R2 SP1 through Windows Server 2016, and requires .NET Framework 4.5.2 at minimum.
+## Package Parameters
+
+- `/ShowConsoleOutput` - Enables/disables whether or not Chocolatey GUI shows output from the commands being executed when a job is running
+- `/DefaultToTileViewForLocalSource` - Enables/disables whether or not Chocolatey GUI defauls to tile instead of list view for the local source view
+- `/DefaultToTileViewForRemoteSource` - Enables/disables whether or not Chocolatey GUI defauls to tile instead of list view for all remote source views
+- `/UseDelayedSearch` - Enables/disables whether or not Chocolatey GUI uses a live search, which returns results after a short delay without clicking the search button
+- `/ExcludeInstalledPackages` - Enables/disables whether or not Chocolatey GUI shows packages that are already installed when viewing sources
+- `/ShowAggregatedSourceView` - Enables/disables whether or not Chocolatey GUI shows an additional source combining all sources into one location
+- `/OutputPackagesCacheDurationInMinutes` - The length of time, in minutes, which Chocolatey GUI will wait before invalidating the cached result of outdated packages for the machine
+
+As an example, the following installation command could be used to enable `ShowConsoleOutput` to ensure `UseDelayedSearch` is disabled, and set the output cache to 120 minutes:
+
+`choco install chocolateygui --params="'/ShowConsoleOutput=$true /UseDelayedSearch=$false /OutputPackagesCacheDurationInMinutes=120'"
   </description>
     <summary>A GUI for Chocolatey</summary>
   <releaseNotes>
@@ -32,7 +43,7 @@ All release notes for Chocolatey GUI can be found on the GitHub site - https://g
   </releaseNotes>
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>
-      <dependency id="Chocolatey" version="0.10.3" />
+      <dependency id="Chocolatey" version="0.10.8" />
       <dependency id="chocolatey-core.extension" version="1.3.3" />
       <dependency id="dotnet4.5.2" version="4.5.2.20140902" />
     </dependencies>

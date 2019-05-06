@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
@@ -34,7 +33,7 @@ namespace ChocolateyGui.ViewModels
         private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IDialogCoordinator _dialogCoordinator;
-        private readonly IFileStorageService _fileStorageService;
+        private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IFileSystem _fileSystem;
 
         private Subject<ChocolateyFeature> _changedChocolateyFeature;
@@ -46,7 +45,6 @@ namespace ChocolateyGui.ViewModels
         private ChocolateySource _draftSource;
         private string _originalId;
         private bool _isNewItem;
-        private string _localAppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), App.ApplicationName);
 
         public SettingsViewModel(
             IChocolateyService chocolateyService,
@@ -54,7 +52,7 @@ namespace ChocolateyGui.ViewModels
             IConfigService configService,
             IEventAggregator eventAggregator,
             IDialogCoordinator dialogCoordinator,
-            IFileStorageService fileStorageService,
+            IChocolateyGuiCacheService chocolateyGuiCacheService,
             IFileSystem fileSystem)
         {
             _chocolateyService = chocolateyService;
@@ -62,7 +60,7 @@ namespace ChocolateyGui.ViewModels
             _configService = configService;
             _eventAggregator = eventAggregator;
             _dialogCoordinator = dialogCoordinator;
-            _fileStorageService = fileStorageService;
+            _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _fileSystem = fileSystem;
             DisplayName = Resources.SettingsViewModel_DisplayName;
             Activated += OnActivated;
@@ -228,7 +226,7 @@ namespace ChocolateyGui.ViewModels
 
             if (result == MessageDialogResult.Affirmative)
             {
-                _fileStorageService.DeleteAllFiles();
+                _chocolateyGuiCacheService.PurgeIcons();
             }
         }
 
@@ -247,18 +245,7 @@ namespace ChocolateyGui.ViewModels
 
             if (result == MessageDialogResult.Affirmative)
             {
-                var outdatedPackagesFile = Path.Combine(_localAppDataPath, "outdatedPackages.xml");
-                var outdatedPackagesBackupFile = Path.Combine(_localAppDataPath, "outdatedPackages.xml.backup");
-
-                if (_fileSystem.file_exists(outdatedPackagesFile))
-                {
-                    _fileSystem.delete_file(outdatedPackagesFile);
-                }
-
-                if (_fileSystem.file_exists(outdatedPackagesBackupFile))
-                {
-                    _fileSystem.delete_file(outdatedPackagesBackupFile);
-                }
+                _chocolateyGuiCacheService.PurgeOutdatedPackages();
             }
         }
 

@@ -746,7 +746,7 @@ Normal:
     <value>Config Command</value>
   </data>
   <data name="ConfigCommand_UnknownCommandError" xml:space="preserve">
-    <value>Unknown command {0}. Setting to list.</value>
+    <value>Unknown command '{0}'. Setting to list.</value>
   </data>
   <data name="ConfigCommand_Unset" xml:space="preserve">
     <value>Unset {0}</value>
@@ -794,7 +794,7 @@ Normal:
     <value>Feature Command</value>
   </data>
   <data name="FeatureCommand_UnknownCommandError" xml:space="preserve">
-    <value>Unknown command {0}. Setting to list.</value>
+    <value>Unknown command '{0}'. Setting to list.</value>
   </data>
   <data name="SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription" xml:space="preserve">
     <value>Default timeout for outdated packages to be cached.  Default is 60 minutes.</value>
@@ -858,5 +858,17 @@ Normal:
   </data>
   <data name="SettingsView_PurgeOutdatedPackagesCache" xml:space="preserve">
     <value>Purge Outdated Packages</value>
+  </data>
+  <data name="PurgeCommand_Description" xml:space="preserve">
+    <value>Purge the Chocolatey GUI caches</value>
+  </data>
+  <data name="PurgeCommand_Help" xml:space="preserve">
+    <value>Chocolatey GUI will allow you to interact with purging caches used in application.</value>
+  </data>
+  <data name="PurgeCommand_Title" xml:space="preserve">
+    <value>Purge Command</value>
+  </data>
+  <data name="PurgeCommand_UnknownCommandError" xml:space="preserve">
+    <value>Unknown command '{0}'. Valid values are {1} and {2}.</value>
   </data>
 </root>

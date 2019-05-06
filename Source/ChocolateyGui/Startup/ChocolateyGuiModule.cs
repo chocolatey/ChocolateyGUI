@@ -5,7 +5,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using Autofac;
@@ -37,14 +36,12 @@ namespace ChocolateyGui.Startup
         protected override void Load(ContainerBuilder builder)
         {
             var viewModelAssembly = typeof(ShellViewModel).Assembly;
-            var viewAssemlby = typeof(ShellView).Assembly;
+            var viewAssembly = typeof(ShellView).Assembly;
 
             // Register Providers
             builder.RegisterType<VersionNumberProvider>().As<IVersionNumberProvider>().SingleInstance();
             builder.RegisterType<Elevation>().SingleInstance();
-
-            var configurationProvider = new ChocolateyConfigurationProvider();
-            builder.RegisterInstance(configurationProvider).As<IChocolateyConfigurationProvider>().SingleInstance();
+            builder.RegisterType<ChocolateyConfigurationProvider>().As<IChocolateyConfigurationProvider>().SingleInstance();
             builder.RegisterType<ChocolateyService>().As<IChocolateyService>().SingleInstance();
             builder.RegisterType<DotNetFileSystem>().As<chocolatey.infrastructure.filesystem.IFileSystem>().SingleInstance();
 
@@ -64,7 +61,7 @@ namespace ChocolateyGui.Startup
                 .As<IXmlService>().SingleInstance();
 
             // Register Views
-            builder.RegisterAssemblyTypes(viewAssemlby)
+            builder.RegisterAssemblyTypes(viewAssembly)
                 .Where(type => type.Name.EndsWith("View", StringComparison.Ordinal))
                 .AsSelf()
                 .InstancePerDependency();
@@ -79,6 +76,8 @@ namespace ChocolateyGui.Startup
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
             builder.RegisterType<LiteDBFileStorageService>().As<IFileStorageService>().SingleInstance();
+            builder.RegisterType<ConfigService>().As<IConfigService>();
+            builder.RegisterType<ChocolateyGuiCacheService>().As<IChocolateyGuiCacheService>().SingleInstance();
 
             // Register Mapper
             var mapperConfiguration = new MapperConfiguration(config =>
@@ -107,18 +106,10 @@ namespace ChocolateyGui.Startup
             var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
             builder.Register(c => database).SingleInstance();
 
-            var configService = new ConfigService(database);
-
             // Commands
-            var commands = new List<ICommand>
-            {
-                new FeatureCommand(configService),
-                new ConfigCommand(configService)
-            }.AsReadOnly();
-
-            builder.Register(c => configService).As<IConfigService>();
-
-            builder.RegisterInstance(commands).As<IEnumerable<ICommand>>().SingleInstance();
+            builder.RegisterType<FeatureCommand>().As<ICommand>().SingleInstance();
+            builder.RegisterType<ConfigCommand>().As<ICommand>().SingleInstance();
+            builder.RegisterType<PurgeCommand>().As<ICommand>().SingleInstance();
         }
     }
 }

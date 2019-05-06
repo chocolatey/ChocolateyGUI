@@ -476,7 +476,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown command {0}. Setting to list..
+        ///   Looks up a localized string similar to Unknown command &apos;{0}&apos;. Setting to list..
         /// </summary>
         public static string ConfigCommand_UnknownCommandError {
             get {
@@ -755,7 +755,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown command {0}. Setting to list..
+        ///   Looks up a localized string similar to Unknown command &apos;{0}&apos;. Setting to list..
         /// </summary>
         public static string FeatureCommand_UnknownCommandError {
             get {
@@ -1351,6 +1351,42 @@ namespace ChocolateyGui.Properties {
         public static string PackageViewModel_UpdatingPackage {
             get {
                 return ResourceManager.GetString("PackageViewModel_UpdatingPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purge the Chocolatey GUI caches.
+        /// </summary>
+        public static string PurgeCommand_Description {
+            get {
+                return ResourceManager.GetString("PurgeCommand_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chocolatey GUI will allow you to interact with purging caches used in application..
+        /// </summary>
+        public static string PurgeCommand_Help {
+            get {
+                return ResourceManager.GetString("PurgeCommand_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purge Command.
+        /// </summary>
+        public static string PurgeCommand_Title {
+            get {
+                return ResourceManager.GetString("PurgeCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown command &apos;{0}&apos;. Valid values are {1} and {2}..
+        /// </summary>
+        public static string PurgeCommand_UnknownCommandError {
+            get {
+                return ResourceManager.GetString("PurgeCommand_UnknownCommandError", resourceCulture);
             }
         }
         
@@ -2077,7 +2113,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NOTE: To remove the Certificate and Passowrd, simply empty both input fields and click Save.
+        ///   Looks up a localized string similar to NOTE: To remove the Certificate and Password, simply empty both input fields and click Save.
         /// </summary>
         public static string SettingsViewModel_SetSourceCertificateAndPasswordMessage {
             get {
@@ -2113,7 +2149,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NOTE: To remove the Username and Passowrd, simply empty both input fields and click Save.
+        ///   Looks up a localized string similar to NOTE: To remove the Username and Password, simply empty both input fields and click Save.
         /// </summary>
         public static string SettingsViewModel_SetSourceUsernameAndPasswordMessage {
             get {

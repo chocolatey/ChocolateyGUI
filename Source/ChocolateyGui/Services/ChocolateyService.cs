@@ -11,7 +11,6 @@ namespace ChocolateyGui.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
@@ -39,7 +38,7 @@ namespace ChocolateyGui.Services
         private readonly IFileSystem _fileSystem;
         private readonly IConfigService _configService;
         private GetChocolatey _choco;
-        private string _localAppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), App.ApplicationName);
+        private string _localAppDataPath = string.Empty;
 #pragma warning disable SA1401 // Fields must be private
 #pragma warning restore SA1401 // Fields must be private
 
@@ -52,6 +51,8 @@ namespace ChocolateyGui.Services
             _fileSystem = fileSystem;
             _configService = configService;
             _choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
+
+            _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), App.ApplicationName);
         }
 
         public Task<bool> IsElevated()
@@ -92,7 +93,7 @@ namespace ChocolateyGui.Services
 
         public async Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null)
         {
-            var outdatedPackagesFile = Path.Combine(_localAppDataPath, "outdatedPackages.xml");
+            var outdatedPackagesFile = _fileSystem.combine_paths(_localAppDataPath, "outdatedPackages.xml");
 
             var outputPackagesCacheDurationInMinutesSetting = _configService.GetAppConfiguration().OutputPackagesCacheDurationInMinutes;
             int outputPackagesCacheDurationInMinutes = 0;

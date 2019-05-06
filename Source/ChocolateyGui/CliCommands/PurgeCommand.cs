@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="FeatureCommand.cs">
+// <copyright company="Chocolatey" file="PurgeCommand.cs">
 //   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,23 +15,19 @@ using ChocolateyGui.Services;
 
 namespace ChocolateyGui.CliCommands
 {
-    [LocalizedCommandFor("feature", "FeatureCommand_Description")]
-    public class FeatureCommand : BaseCommand, ICommand
+    [LocalizedCommandFor("purge", "PurgeCommand_Description")]
+    public class PurgeCommand : BaseCommand, ICommand
     {
-        private readonly IConfigService _configService;
+        private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
 
-        public FeatureCommand(IConfigService configService)
+        public PurgeCommand(IChocolateyGuiCacheService chocolateyGuiCacheService)
         {
-            _configService = configService;
+            _chocolateyGuiCacheService = chocolateyGuiCacheService;
         }
 
         public void ConfigureArgumentParser(OptionSet optionSet, ChocolateyGuiConfiguration configuration)
         {
-            optionSet
-                .Add(
-                    "n=|name=",
-                    Resources.FeatureCommand_NameOption,
-                    option => configuration.FeatureCommand.Name = option.remove_surrounding_quotes());
+            // There are no additional options for this command currently
         }
 
         public void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
@@ -40,32 +36,21 @@ namespace ChocolateyGui.CliCommands
 
             if (unparsedArguments.Count > 1)
             {
-                Bootstrapper.Logger.Error(Resources.FeatureCommand_SingleFeatureError);
                 Bootstrapper.Container.Dispose();
                 Environment.Exit(-1);
             }
 
-            var command = FeatureCommandType.Unknown;
+            var command = PurgeCommandType.Unknown;
             var unparsedCommand = unparsedArguments.DefaultIfEmpty(string.Empty).FirstOrDefault();
             Enum.TryParse(unparsedCommand, true, out command);
-            if (command == FeatureCommandType.Unknown)
-            {
-                if (!string.IsNullOrWhiteSpace(unparsedCommand))
-                {
-                    Bootstrapper.Logger.Warning(Resources.FeatureCommand_UnknownCommandError.format_with(unparsedCommand));
-                }
-
-                command = FeatureCommandType.List;
-            }
-
-            configuration.FeatureCommand.Command = command;
+            configuration.PurgeCommand.Command = command;
         }
 
         public void HandleValidation(ChocolateyGuiConfiguration configuration)
         {
-            if (configuration.FeatureCommand.Command != FeatureCommandType.List && string.IsNullOrWhiteSpace(configuration.FeatureCommand.Name))
+            if (configuration.PurgeCommand.Command == PurgeCommandType.Unknown)
             {
-                Bootstrapper.Logger.Error(Resources.FeatureCommand_MissingNameOptionError.format_with(configuration.FeatureCommand.Command.to_string()));
+                Bootstrapper.Logger.Error(Resources.PurgeCommand_UnknownCommandError.format_with(configuration.Input, "icons", "outdated"));
                 Bootstrapper.Container.Dispose();
                 Environment.Exit(-1);
             }
@@ -73,20 +58,18 @@ namespace ChocolateyGui.CliCommands
 
         public void HelpMessage(ChocolateyGuiConfiguration configuration)
         {
-            Bootstrapper.Logger.Warning(Resources.FeatureCommand_Title);
+            Bootstrapper.Logger.Warning(Resources.PurgeCommand_Title);
             Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Information(Resources.FeatureCommand_Help);
+            Bootstrapper.Logger.Information(Resources.PurgeCommand_Help);
             Bootstrapper.Logger.Information(string.Empty);
             Bootstrapper.Logger.Warning(Resources.Command_Usage);
             Bootstrapper.Logger.Information(@"
-    chocolateygui feature [list]|disable|enable [<options/switches>]
+    chocolateygui pruge icons|outdated [<options/switches>]
 ");
             Bootstrapper.Logger.Warning(Resources.Command_Examples);
             Bootstrapper.Logger.Information(@"
-    chocolateygui feature
-    chocolateygui feature list
-    chocolateygui feature disable -n=ShowConsoleOutput
-    chocolateygui feature enable -n=ShowConsoleOutput
+    chocolateygui purge icons
+    chocolateygui purge outdated
 ");
 
             PrintExitCodeInformation();
@@ -94,16 +77,13 @@ namespace ChocolateyGui.CliCommands
 
         public void Run(ChocolateyGuiConfiguration config)
         {
-            switch (config.FeatureCommand.Command)
+            switch (config.PurgeCommand.Command)
             {
-                case FeatureCommandType.List:
-                    _configService.ListFeatures(config);
+                case PurgeCommandType.Icons:
+                    _chocolateyGuiCacheService.PurgeIcons();
                     break;
-                case FeatureCommandType.Disable:
-                    _configService.DisableFeature(config);
-                    break;
-                case FeatureCommandType.Enable:
-                    _configService.EnableFeature(config);
+                case PurgeCommandType.Outdated:
+                    _chocolateyGuiCacheService.PurgeOutdatedPackages();
                     break;
             }
         }

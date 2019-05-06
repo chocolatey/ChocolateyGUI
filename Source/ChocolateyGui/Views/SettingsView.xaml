@@ -15,7 +15,7 @@
              mc:Ignorable="d"
              Background="{StaticResource BackgroundColorBrush}"
              metro:DialogParticipation.Register="{Binding}"
-             d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewseModel, IsDesignTimeCreatable=False}"
+             d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="786" d:DesignWidth="1366">
     <UserControl.Resources>
         <Style TargetType="{x:Type metro:ToggleSwitch}" BasedOn="{StaticResource ToggleSwitch.Win10.Override}">

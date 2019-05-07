@@ -871,4 +871,28 @@ Normal:
   <data name="PurgeCommand_UnknownCommandError" xml:space="preserve">
     <value>Unknown command '{0}'. Valid values are {1} and {2}.</value>
   </data>
+  <data name="LocalSourceView_Grid_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="LocalSourceView_Grid_Prerelease" xml:space="preserve">
+    <value>Prerelease</value>
+  </data>
+  <data name="SettingsView_ToggleShowAdditionalPackageInformation" xml:space="preserve">
+    <value>Show additional package information on Local and Remote views</value>
+  </data>
+  <data name="RemoteSourceView_Prerelease" xml:space="preserve">
+    <value>Prerelease</value>
+  </data>
+  <data name="PackagesView_Installed" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="PackagesView_Outdated" xml:space="preserve">
+    <value>Outdated</value>
+  </data>
+  <data name="PackagesView_Pinned" xml:space="preserve">
+    <value>Pinned</value>
+  </data>
+  <data name="PackagesView_Prerelease" xml:space="preserve">
+    <value>Prerelease</value>
+  </data>
 </root>

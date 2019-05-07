@@ -854,6 +854,15 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string LocalSourceView_Grid_Id {
+            get {
+                return ResourceManager.GetString("LocalSourceView_Grid_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latest Version.
         /// </summary>
         public static string LocalSourceView_Grid_LatestVersion {
@@ -868,6 +877,15 @@ namespace ChocolateyGui.Properties {
         public static string LocalSourceView_Grid_Name {
             get {
                 return ResourceManager.GetString("LocalSourceView_Grid_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prerelease.
+        /// </summary>
+        public static string LocalSourceView_Grid_Prerelease {
+            get {
+                return ResourceManager.GetString("LocalSourceView_Grid_Prerelease", resourceCulture);
             }
         }
         
@@ -958,6 +976,42 @@ namespace ChocolateyGui.Properties {
         public static string LocalSourceViewModel_UpdateAvailableForChocolatey {
             get {
                 return ResourceManager.GetString("LocalSourceViewModel_UpdateAvailableForChocolatey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installed.
+        /// </summary>
+        public static string PackagesView_Installed {
+            get {
+                return ResourceManager.GetString("PackagesView_Installed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outdated.
+        /// </summary>
+        public static string PackagesView_Outdated {
+            get {
+                return ResourceManager.GetString("PackagesView_Outdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pinned.
+        /// </summary>
+        public static string PackagesView_Pinned {
+            get {
+                return ResourceManager.GetString("PackagesView_Pinned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prerelease.
+        /// </summary>
+        public static string PackagesView_Prerelease {
+            get {
+                return ResourceManager.GetString("PackagesView_Prerelease", resourceCulture);
             }
         }
         
@@ -1517,6 +1571,15 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prerelease.
+        /// </summary>
+        public static string RemoteSourceView_Prerelease {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_Prerelease", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search:.
         /// </summary>
         public static string RemoteSourceView_SearchBoxText {
@@ -1991,6 +2054,15 @@ namespace ChocolateyGui.Properties {
         public static string SettingsView_ToggleExcludeInstalledPackagesDescription {
             get {
                 return ResourceManager.GetString("SettingsView_ToggleExcludeInstalledPackagesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show additional package information on Local and Remote views.
+        /// </summary>
+        public static string SettingsView_ToggleShowAdditionalPackageInformation {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleShowAdditionalPackageInformation", resourceCulture);
             }
         }
         

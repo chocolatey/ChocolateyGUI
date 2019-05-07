@@ -26,7 +26,6 @@
         </Style>
 
         <converters:NullToValue x:Key="NullToFalse" TrueValue="False" FalseValue="True" />
-        <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
 
         <DataTemplate x:Key="ChocolateyFeatureTemplate" DataType="models:ChocolateyFeature">
             <Grid Margin="0 10">

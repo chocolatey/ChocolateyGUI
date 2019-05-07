@@ -15,8 +15,8 @@ namespace ChocolateyGui.Utilities.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var isPrerelease = (bool) values[0];
-            var showAdditionalPackageInformation = (bool) values[1];
+            var isPrerelease = (bool)values[0];
+            var showAdditionalPackageInformation = (bool)values[1];
 
             return isPrerelease && showAdditionalPackageInformation ? Visibility.Visible : Visibility.Collapsed;
         }

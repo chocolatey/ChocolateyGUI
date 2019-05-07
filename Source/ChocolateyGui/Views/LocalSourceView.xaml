@@ -26,6 +26,7 @@
         <converters:StringListToString x:Key="ListToString" />
 
         <models:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+        <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
 
         <utilities:PackageAuthorsComparer x:Key="PackageAuthorsComparer" />
 
@@ -209,10 +210,31 @@
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
+                                        <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Id}"
+                                                            Width="1*"
+                                                            Binding="{Binding LowerCaseId}"
+                                                            Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BoolToVis}}"/>
                                         <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Authors}"
                                                             utilities:DataGridCustomSortBehavior.CustomComparer="{StaticResource PackageAuthorsComparer}"
                                                             Binding="{Binding Authors, Converter={StaticResource ListToString}}" Width="1*" />
                                         <DataGridTextColumn Header="{x:Static lang:Resources.LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
+                                        <DataGridTemplateColumn Width="0.5*"
+                                                                Header="{x:Static lang:Resources.LocalSourceView_Grid_Prerelease}"
+                                                                Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BoolToVis}}">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type items:IPackageViewModel}">
+                                                    <TextBlock Text="{x:Static lang:Resources.LocalSourceView_Grid_Prerelease}"
+                                                               Grid.Column="1"
+                                                               Background="#A90000"
+                                                               Foreground="White"
+                                                               Padding="3"
+                                                               VerticalAlignment="Center"
+                                                               HorizontalAlignment="Center"
+                                                               TextAlignment="Center"
+                                                               Visibility="{Binding IsPrerelease, Converter={StaticResource BoolToVis}}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
                                         <DataGridTemplateColumn Width="0.7*"
                                                                 Header="{x:Static lang:Resources.LocalSourceView_Grid_LatestVersion}">
                                             <DataGridTemplateColumn.CellTemplate>

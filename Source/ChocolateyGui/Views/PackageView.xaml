@@ -27,6 +27,7 @@
         <converters:NullToValue x:Key="NullToGridLength" TrueValue="Auto" FalseValue="3*" />
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString" />
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString" />
+        <converters:MultiBooleanAndToVisibility x:Key="MultiBooleanAndToVisibility" />
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
 
         <Style x:Key="PrimaryUacActionStyle" BasedOn="{StaticResource PrimaryUacIconStyle}" TargetType="Image">
@@ -204,6 +205,50 @@
                 </TextBlock>
             </StackPanel>
 
+            <TextBlock Text="{x:Static lang:Resources.PackagesView_Outdated}"
+                       Grid.Column="1"
+                       Background="#A90000"
+                       Foreground="White"
+                       Padding="3"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center">
+                <TextBlock.Visibility>
+                    <MultiBinding Converter="{StaticResource MultiBooleanAndToVisibility}">
+                        <Binding Path="IsInstalled" />
+                        <Binding Path="IsLatestVersion" Converter="{StaticResource BooleanInverter}" />
+                    </MultiBinding>
+                </TextBlock.Visibility>
+            </TextBlock>
+            <TextBlock Text="{x:Static lang:Resources.PackagesView_Prerelease}"
+                       Grid.Column="1"
+                       Background="#A90000"
+                       Foreground="White"
+                       Padding="3"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       Visibility="{Binding IsPrerelease, Converter={StaticResource BoolToVis}}"/>
+            <TextBlock Text="{x:Static lang:Resources.PackagesView_Installed}"
+                       Grid.Column="1"
+                       Background="#007F00"
+                       Foreground="White"
+                       Padding="3"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center">
+                <TextBlock.Visibility>
+                    <MultiBinding Converter="{StaticResource MultiBooleanAndToVisibility}">
+                        <Binding Path="IsInstalled" />
+                        <Binding Path="IsLatestVersion" />
+                    </MultiBinding>
+                </TextBlock.Visibility>
+            </TextBlock>
+            <TextBlock Text="{x:Static lang:Resources.PackagesView_Pinned}"
+                       Grid.Column="1"
+                       Background="#007F00"
+                       Foreground="White"
+                       Padding="3"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       Visibility="{Binding IsPinned, Converter={StaticResource BoolToVis}}"/>
         </StackPanel>
 
         <ScrollViewer Margin="25,5,0,0">

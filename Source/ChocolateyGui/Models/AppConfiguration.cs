@@ -39,5 +39,9 @@ namespace ChocolateyGui.Models
         [LocalizedDescription("SettingsView_ToggleShowAggregatedSourceViewDescription")]
         [Feature]
         public bool ShowAggregatedSourceView { get; set; }
+
+        [LocalizedDescription("SettingsView_ToggleShowAdditionalPackageInformation")]
+        [Feature]
+        public bool ShowAdditionalPackageInformation { get; set; }
     }
 }

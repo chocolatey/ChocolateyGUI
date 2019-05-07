@@ -177,6 +177,11 @@ namespace ChocolateyGui.ViewModels.Items
             set { SetPropertyValue(ref _id, value); }
         }
 
+        public string LowerCaseId
+        {
+            get { return Id.ToLowerInvariant(); }
+        }
+
         public bool IsAbsoluteLatestVersion
         {
             get { return _isAbsoluteLatestVersion; }

@@ -47,6 +47,7 @@ namespace ChocolateyGui.ViewModels
         private string _searchQuery;
         private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
         private ListViewMode _listViewMode;
+        private bool _showAdditionalPackageInformation;
 
         private IDisposable _searchQuerySubscription;
 
@@ -80,6 +81,12 @@ namespace ChocolateyGui.ViewModels
         {
             get { return _listViewMode; }
             set { this.SetPropertyValue(ref _listViewMode, value); }
+        }
+
+        public bool ShowAdditionalPackageInformation
+        {
+            get { return _showAdditionalPackageInformation; }
+            set { this.SetPropertyValue(ref _showAdditionalPackageInformation, value); }
         }
 
         public ChocolateySource Source { get; }
@@ -291,6 +298,7 @@ namespace ChocolateyGui.ViewModels
             try
             {
                 ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
+                ShowAdditionalPackageInformation = _configService.GetAppConfiguration().ShowAdditionalPackageInformation;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
@@ -305,6 +313,7 @@ namespace ChocolateyGui.ViewModels
                         }
 
                         ListViewMode = appConfig.DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard;
+                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation;
                     });
 
 #pragma warning disable 4014

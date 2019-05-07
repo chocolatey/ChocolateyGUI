@@ -267,7 +267,9 @@
     <Compile Include="Utilities\BindingProxy.cs" />
     <Compile Include="Utilities\BubbleScrollEventBehavior.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityInverted.cs" />
+    <Compile Include="Utilities\Converters\MultiBooleanAndToVisibility.cs" />
     <Compile Include="Utilities\Converters\NullToValue.cs" />
+    <Compile Include="Utilities\Converters\PackageTitleConverter.cs" />
     <Compile Include="Utilities\PackageAuthorsComparer.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
     <Compile Include="Controls\InternetImage.xaml.cs">

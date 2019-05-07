@@ -50,6 +50,7 @@ namespace ChocolateyGui.ViewModels
         private bool _isLoading;
         private bool _firstLoadIncomplete = true;
         private ListViewMode _listViewMode;
+        private bool _showAdditionalPackageInformation;
 
         public LocalSourceViewModel(
             IChocolateyService chocolateyService,
@@ -86,6 +87,12 @@ namespace ChocolateyGui.ViewModels
         {
             get { return _listViewMode; }
             set { this.SetPropertyValue(ref _listViewMode, value); }
+        }
+
+        public bool ShowAdditionalPackageInformation
+        {
+            get { return _showAdditionalPackageInformation; }
+            set { this.SetPropertyValue(ref _showAdditionalPackageInformation, value); }
         }
 
         public bool ShowOnlyPackagesWithUpdate
@@ -292,14 +299,18 @@ namespace ChocolateyGui.ViewModels
                 }
 
                 ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
+                ShowAdditionalPackageInformation = _configService.GetAppConfiguration().ShowAdditionalPackageInformation;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
                     .Subscribe(eventPattern =>
                     {
-                        ListViewMode = ((AppConfiguration)eventPattern.Sender).DefaultToTileViewForLocalSource
+                        var appConfig = (AppConfiguration)eventPattern.Sender;
+
+                        ListViewMode = appConfig.DefaultToTileViewForLocalSource
                                 ? ListViewMode.Tile
                                 : ListViewMode.Standard;
+                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation;
                     });
 
                 await LoadPackages();

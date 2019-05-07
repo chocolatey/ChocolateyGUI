@@ -2049,7 +2049,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do not show packages that are already installed when viewing sources.
+        ///   Looks up a localized string similar to Do not show packages that are already installed when viewing sources..
         /// </summary>
         public static string SettingsView_ToggleExcludeInstalledPackagesDescription {
             get {
@@ -2058,7 +2058,7 @@ namespace ChocolateyGui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show additional package information on Local and Remote views.
+        ///   Looks up a localized string similar to Show additional package information on Local and Remote views..
         /// </summary>
         public static string SettingsView_ToggleShowAdditionalPackageInformation {
             get {

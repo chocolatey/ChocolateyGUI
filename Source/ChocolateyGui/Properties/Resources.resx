@@ -661,7 +661,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Exclude installed packages</value>
   </data>
   <data name="SettingsView_ToggleExcludeInstalledPackagesDescription" xml:space="preserve">
-    <value>Do not show packages that are already installed when viewing sources</value>
+    <value>Do not show packages that are already installed when viewing sources.</value>
   </data>
   <data name="SettingsView_ToggleShowAggregatedSourceViewDescription" xml:space="preserve">
     <value>Show additional source combining all sources in one place.</value>
@@ -878,7 +878,7 @@ Normal:
     <value>Prerelease</value>
   </data>
   <data name="SettingsView_ToggleShowAdditionalPackageInformation" xml:space="preserve">
-    <value>Show additional package information on Local and Remote views</value>
+    <value>Show additional package information on Local and Remote views.</value>
   </data>
   <data name="RemoteSourceView_Prerelease" xml:space="preserve">
     <value>Prerelease</value>

@@ -10,10 +10,11 @@ using System.Linq;
 using Autofac;
 using chocolatey;
 using chocolatey.infrastructure.app;
-using ChocolateyGui.Attributes;
-using ChocolateyGui.Properties;
+using ChocolateyGui.Common.Attributes;
+using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Properties;
 
-namespace ChocolateyGui.CliCommands
+namespace ChocolateyGuiCli.Commands
 {
     public sealed class GenericRunner
     {

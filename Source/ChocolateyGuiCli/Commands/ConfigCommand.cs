@@ -9,11 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using chocolatey;
 using chocolatey.infrastructure.commandline;
-using ChocolateyGui.Attributes;
-using ChocolateyGui.Properties;
-using ChocolateyGui.Services;
+using ChocolateyGui.Common.Attributes;
+using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Services;
 
-namespace ChocolateyGui.CliCommands
+namespace ChocolateyGuiCli.Commands
 {
     [LocalizedCommandFor("config", "ConfigCommand_Description")]
     public class ConfigCommand : BaseCommand, ICommand

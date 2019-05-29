@@ -4,9 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using ChocolateyGui.Properties;
+using ChocolateyGui.Common.Properties;
 
-namespace ChocolateyGui.CliCommands
+namespace ChocolateyGuiCli.Commands
 {
     public abstract class BaseCommand
     {

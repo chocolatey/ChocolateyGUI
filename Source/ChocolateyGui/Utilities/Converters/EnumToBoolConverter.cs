@@ -8,7 +8,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace ChocolateyGui.Models
+namespace ChocolateyGui.Utilities.Converters
 {
     public class EnumToBoolConverter : IValueConverter
     {

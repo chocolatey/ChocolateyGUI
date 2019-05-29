@@ -7,9 +7,9 @@
 using System;
 using System.Linq;
 using Caliburn.Micro;
-using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Providers;
-using ChocolateyGui.Services;
+using ChocolateyGui.Common.Models.Messages;
+using ChocolateyGui.Common.Providers;
+using ChocolateyGui.Common.Services;
 using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels.Items;
 

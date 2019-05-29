@@ -13,14 +13,13 @@ using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using chocolatey.infrastructure.filesystem;
-using ChocolateyGui.CliCommands;
-using ChocolateyGui.Models;
-using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Properties;
-using ChocolateyGui.Services;
+using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Models.Messages;
+using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Services;
 using ChocolateyGui.Utilities.Extensions;
 using MahApps.Metro.Controls.Dialogs;
-using ChocolateySource = ChocolateyGui.Models.ChocolateySource;
+using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;
 
 namespace ChocolateyGui.ViewModels
 {

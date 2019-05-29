@@ -2,15 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:custom="http://metro.mahapps.com/winfx/xaml/shared"
                     xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
                     xmlns:commands="clr-namespace:ChocolateyGui.Commands"
                     xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
                     xmlns:app="clr-namespace:ChocolateyGui"
-                    xmlns:lang="clr-namespace:ChocolateyGui.Properties" 
-                    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
+                    xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -296,12 +296,12 @@
         <Setter Property="FontSize" Value="22" />
     </Style>
 
-    <Style x:Key="SectionHeaderStyle" BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="28" />
+    <Style x:Key="SectionHeaderStyle" BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type controls:MetroHeader}">
+        <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="28" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="28" />
+        <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="28" />
         <Setter Property="Padding" Value="2 4" />
         <Setter Property="Margin" Value="0 0 0 8" />
         <Setter Property="HeaderTemplate">
@@ -519,11 +519,11 @@
 
     <ContextMenu x:Key="PackagesContextMenu"
                  DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
-                 d:DataContext="{d:DesignInstance Type=items:PackageViewModel}">
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuInstall}" Icon="{StaticResource PrimaryUacIcon}"
+                 d:DataContext="{d:DesignInstance Type=viewModels:PackageViewModel}">
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuInstall}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
                   Command="{commands:DataContextCommandAdapter Install}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuPin}" Icon="{StaticResource TertiaryUacIcon}"
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuPin}" Icon="{StaticResource TertiaryUacIcon}"
                   Command="{commands:DataContextCommandAdapter Pin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -532,7 +532,7 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUnpin}" Icon="{StaticResource TertiaryUacIcon}"
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUnpin}" Icon="{StaticResource TertiaryUacIcon}"
                   Command="{commands:DataContextCommandAdapter Unpin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -541,16 +541,16 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUninstall}" Icon="{StaticResource PrimaryUacIcon}"
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUninstall}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Uninstall}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuReinstall}" Icon="{StaticResource PrimaryUacIcon}"
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuReinstall}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Reinstall}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuUpdate}" Icon="{StaticResource PrimaryUacIcon}"
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUpdate}" Icon="{StaticResource PrimaryUacIcon}"
                   Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Update}" />
-        <MenuItem Header="{x:Static lang:Resources.Controls_PackagesContextMenuDetails}" Command="{commands:DataContextCommandAdapter ViewDetails}" />
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuDetails}" Command="{commands:DataContextCommandAdapter ViewDetails}" />
     </ContextMenu>
 
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}">

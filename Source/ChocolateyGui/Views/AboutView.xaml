@@ -6,8 +6,8 @@
              xmlns:controls="clr-namespace:ChocolateyGui.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
-             xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
+             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              mc:Ignorable="d"
              Background="{StaticResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance Type=viewModels:AboutViewModel, IsDesignTimeCreatable=False}"
@@ -25,7 +25,7 @@
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-            <TextBlock Text="{x:Static lang:Resources.AboutView_About}" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Text="{x:Static properties:Resources.AboutView_About}" Style="{StaticResource TitleTextStyle}"/>
             <TextBlock Text=" - " Style="{StaticResource TitleTextStyle}"/>
             <TextBlock Text="{Binding ChocolateyGuiVersion}" Style="{StaticResource TitleTextStyle}"/>
             <TextBlock AutomationProperties.Name="{Binding ChocolateyGuiInformationalVersion}"
@@ -35,7 +35,7 @@
             </TextBlock>
         </StackPanel>
         <TabControl Background="Transparent" metro:TabControlHelper.Underlined="TabPanel">
-            <TabItem Header="{x:Static lang:Resources.AboutView_History}">
+            <TabItem Header="{x:Static properties:Resources.AboutView_History}">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -52,7 +52,7 @@
                             controls:MarkdownEx.Url="pack://application:,,,/../../Resources/ABOUT.md" />
                 </Grid>
             </TabItem>
-            <TabItem Header="{x:Static lang:Resources.AboutView_Credits}">
+            <TabItem Header="{x:Static properties:Resources.AboutView_Credits}">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -69,7 +69,7 @@
                             controls:MarkdownEx.Url="pack://application:,,,/../../Resources/CREDITS.md" />
                 </Grid>
             </TabItem>
-            <TabItem Header="{x:Static lang:Resources.AboutView_ReleaseNotes}">
+            <TabItem Header="{x:Static properties:Resources.AboutView_ReleaseNotes}">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

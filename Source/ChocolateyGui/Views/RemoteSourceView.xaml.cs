@@ -10,8 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Caliburn.Micro;
-using ChocolateyGui.Models.Messages;
-using ChocolateyGui.ViewModels.Items;
+using ChocolateyGui.Common.Models.Messages;
+using ChocolateyGui.Common.ViewModels.Items;
 
 namespace ChocolateyGui.Views
 {

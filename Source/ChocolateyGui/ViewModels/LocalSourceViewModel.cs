@@ -16,14 +16,15 @@ using System.Windows.Data;
 using System.Xml;
 using AutoMapper;
 using Caliburn.Micro;
-using ChocolateyGui.Base;
+using ChocolateyGui.Common.Base;
+using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Models.Messages;
+using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.ViewModels;
+using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Enums;
-using ChocolateyGui.Models;
-using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Properties;
-using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
-using ChocolateyGui.ViewModels.Items;
 using Serilog;
 
 namespace ChocolateyGui.ViewModels

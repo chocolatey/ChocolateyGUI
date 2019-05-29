@@ -6,6 +6,7 @@
 
 using Autofac;
 using Caliburn.Micro;
+using ChocolateyGui.Common;
 using ChocolateyGui.Utilities.Extensions;
 
 namespace ChocolateyGui

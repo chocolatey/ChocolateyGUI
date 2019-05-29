@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using ChocolateyGui.Common.ViewModels;
+
 namespace ChocolateyGui.ViewModels
 {
     public sealed class SourceSeparatorViewModel : ISourceViewModelBase

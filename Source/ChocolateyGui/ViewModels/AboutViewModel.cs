@@ -6,7 +6,7 @@
 
 using System.Reflection;
 using Caliburn.Micro;
-using ChocolateyGui.Models.Messages;
+using ChocolateyGui.Common.Models.Messages;
 
 namespace ChocolateyGui.ViewModels
 {

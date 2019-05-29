@@ -6,7 +6,8 @@
 
 using System.Windows;
 using System.Windows.Media;
-using ChocolateyGui.Models;
+using ChocolateyGui.Common.Controls;
+using ChocolateyGui.Common.Models;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -64,7 +65,7 @@ namespace ChocolateyGui.Controls.Dialogs
                 ProgressBarForeground = Brushes.White;
             }
 
-            NegativeButtonText = Properties.Resources.ChocolateyDialog_Cancel;
+            NegativeButtonText = Common.Properties.Resources.ChocolateyDialog_Cancel;
         }
 
         public bool IsCancelable

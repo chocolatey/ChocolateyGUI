@@ -14,6 +14,7 @@ using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels.Items;
+using ChocolateyGui.Services;
 using NuGet;
 using Action = System.Action;
 using MemoryCache = System.Runtime.Caching.MemoryCache;

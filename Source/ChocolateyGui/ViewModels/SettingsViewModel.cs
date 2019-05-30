@@ -17,6 +17,7 @@ using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;

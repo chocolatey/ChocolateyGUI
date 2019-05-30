@@ -24,6 +24,7 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Enums;
+using ChocolateyGui.Services;
 using ChocolateyGui.Utilities.Extensions;
 using Serilog;
 

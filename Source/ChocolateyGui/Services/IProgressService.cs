@@ -13,7 +13,7 @@ using ChocolateyGui.Common.Controls;
 using ChocolateyGui.Common.Models;
 using MahApps.Metro.Controls.Dialogs;
 
-namespace ChocolateyGui.Common.Services
+namespace ChocolateyGui.Services
 {
     public interface IProgressService : INotifyPropertyChanged, IProgress<double>
     {

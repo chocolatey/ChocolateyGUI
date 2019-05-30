@@ -4,25 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Windows;
-
 namespace ChocolateyGui.Common.Models
 {
-    public class ChocolateyGuiFeature : DependencyObject
+    public class ChocolateyGuiFeature
     {
-        public static readonly DependencyProperty EnabledProperty = DependencyProperty.Register(
-            "Enabled",
-            typeof(bool),
-            typeof(ChocolateyGuiFeature),
-            new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits));
-
         public string Title { get; set; }
 
-        public bool Enabled
-        {
-            get { return (bool)GetValue(EnabledProperty); }
-            set { SetValue(EnabledProperty, value); }
-        }
+        public bool Enabled { get; set; }
 
         public string Description { get; set; }
     }

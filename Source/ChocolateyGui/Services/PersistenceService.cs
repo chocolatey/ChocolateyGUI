@@ -5,9 +5,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.IO;
+using ChocolateyGui.Common.Services;
 using Microsoft.Win32;
 
-namespace ChocolateyGui.Common.Services
+namespace ChocolateyGui.Services
 {
     public class PersistenceService : IPersistenceService
     {

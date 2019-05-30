@@ -214,6 +214,10 @@
     <Compile Include="Enums\ListViewMode.cs" />
     <Compile Include="Providers\IPlatformProvider.cs" />
     <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
+    <Compile Include="SerilogLogger.cs" />
+    <Compile Include="Services\ChocolateyService.cs" />
+    <Compile Include="Services\IProgressService.cs" />
+    <Compile Include="Services\PersistenceService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\BindingProxy.cs" />
     <Compile Include="Utilities\BubbleScrollEventBehavior.cs" />

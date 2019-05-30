@@ -24,7 +24,6 @@ namespace ChocolateyGuiCli.Startup
             // Register Providers
             builder.RegisterType<VersionNumberProvider>().As<IVersionNumberProvider>().SingleInstance();
             builder.RegisterType<ChocolateyConfigurationProvider>().As<IChocolateyConfigurationProvider>().SingleInstance();
-            builder.RegisterType<ChocolateyService>().As<IChocolateyService>().SingleInstance();
             builder.RegisterType<DotNetFileSystem>().As<chocolatey.infrastructure.filesystem.IFileSystem>().SingleInstance();
 
             var choco = Lets.GetChocolatey();
@@ -33,7 +32,6 @@ namespace ChocolateyGuiCli.Startup
             builder.RegisterInstance(choco.Container().GetInstance<IXmlService>())
                 .As<IXmlService>().SingleInstance();
 
-            builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
             builder.RegisterType<LiteDBFileStorageService>().As<IFileStorageService>().SingleInstance();
             builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
             builder.RegisterType<ChocolateyGuiCacheService>().As<IChocolateyGuiCacheService>().SingleInstance();

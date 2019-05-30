@@ -17,13 +17,15 @@ using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
+using ChocolateyGui.Common;
 using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Services;
 using Microsoft.VisualStudio.Threading;
 using NuGet;
 using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;
 using IFileSystem = chocolatey.infrastructure.filesystem.IFileSystem;
 
-namespace ChocolateyGui.Common.Services
+namespace ChocolateyGui.Services
 {
     using ChocolateySource = ChocolateySource;
     using ILogger = Serilog.ILogger;

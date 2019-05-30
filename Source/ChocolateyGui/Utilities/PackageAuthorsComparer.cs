@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using ChocolateyGui.ViewModels.Items;
+using ChocolateyGui.Common.ViewModels.Items;
 
 namespace ChocolateyGui.Utilities
 {

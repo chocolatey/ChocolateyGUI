@@ -5,9 +5,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Caliburn.Micro;
-using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Properties;
-using ChocolateyGui.ViewModels.Items;
+using ChocolateyGui.Common.Models.Messages;
+using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.ViewModels.Items;
 
 namespace ChocolateyGui.ViewModels
 {

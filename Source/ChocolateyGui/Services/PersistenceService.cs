@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.IO;
+using ChocolateyGui.Common.Services;
 using Microsoft.Win32;
 
 namespace ChocolateyGui.Services

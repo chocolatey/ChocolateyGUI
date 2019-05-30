@@ -4,30 +4,32 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using chocolatey;
+using chocolatey.infrastructure.app.configuration;
+using chocolatey.infrastructure.app.domain;
+using chocolatey.infrastructure.app.nuget;
+using chocolatey.infrastructure.app.services;
+using chocolatey.infrastructure.results;
+using chocolatey.infrastructure.services;
+using ChocolateyGui.Common;
+using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Services;
+using Microsoft.VisualStudio.Threading;
 using NuGet;
+using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;
 using IFileSystem = chocolatey.infrastructure.filesystem.IFileSystem;
 
 namespace ChocolateyGui.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using AutoMapper;
-    using chocolatey;
-    using chocolatey.infrastructure.app;
-    using chocolatey.infrastructure.app.configuration;
-    using chocolatey.infrastructure.app.domain;
-    using chocolatey.infrastructure.app.nuget;
-    using chocolatey.infrastructure.app.services;
-    using chocolatey.infrastructure.results;
-    using chocolatey.infrastructure.services;
-    using Microsoft.VisualStudio.Threading;
-    using Models;
-    using ChocolateySource = Models.ChocolateySource;
+    using ChocolateySource = ChocolateySource;
     using ILogger = Serilog.ILogger;
 
-    internal class ChocolateyService : IChocolateyService
+    public class ChocolateyService : IChocolateyService
     {
         private static readonly ILogger Logger = Serilog.Log.ForContext<ChocolateyService>();
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
@@ -52,7 +54,7 @@ namespace ChocolateyGui.Services
             _configService = configService;
             _choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
 
-            _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), App.ApplicationName);
+            _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), ApplicationParameters.Name);
         }
 
         public Task<bool> IsElevated()
@@ -113,7 +115,7 @@ namespace ChocolateyGui.Services
                     config =>
                     {
                         config.CommandName = "outdated";
-                        config.PackageNames = packageName ?? ApplicationParameters.AllPackages;
+                        config.PackageNames = packageName ?? chocolatey.infrastructure.app.ApplicationParameters.AllPackages;
                         config.UpgradeCommand.NotifyOnlyAvailableUpgrades = true;
                         config.RegularOutput = false;
                         config.QuietOutput = true;
@@ -139,7 +141,7 @@ namespace ChocolateyGui.Services
                     }
                     catch (Exception ex)
                     {
-                        Bootstrapper.Logger.Error(ex, "Unable to serialize Outdated Packages Cache file.");
+                        Logger.Error(ex, "Unable to serialize Outdated Packages Cache file.");
                     }
 
                     return results.ToList();
@@ -373,7 +375,7 @@ namespace ChocolateyGui.Services
                     config =>
                     {
                         config.CommandName = "feature";
-                        config.FeatureCommand.Command = feature.Enabled ? FeatureCommandType.enable : FeatureCommandType.disable;
+                        config.FeatureCommand.Command = feature.Enabled ? chocolatey.infrastructure.app.domain.FeatureCommandType.enable : chocolatey.infrastructure.app.domain.FeatureCommandType.disable;
                         config.FeatureCommand.Name = feature.Name;
                     });
 
@@ -395,7 +397,7 @@ namespace ChocolateyGui.Services
                     config =>
                         {
                             config.CommandName = "config";
-                            config.ConfigCommand.Command = ConfigCommandType.set;
+                            config.ConfigCommand.Command = chocolatey.infrastructure.app.domain.ConfigCommandType.set;
                             config.ConfigCommand.Name = setting.Key;
                             config.ConfigCommand.ConfigValue = setting.Value;
                         });
@@ -593,7 +595,7 @@ namespace ChocolateyGui.Services
             var xmlService = _choco.Container().GetInstance<IXmlService>();
             var config =
                 await Task.Run(
-                    () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
+                    () => xmlService.deserialize<ConfigFileSettings>(chocolatey.infrastructure.app.ApplicationParameters.GlobalConfigFileLocation));
             return config;
         }
     }

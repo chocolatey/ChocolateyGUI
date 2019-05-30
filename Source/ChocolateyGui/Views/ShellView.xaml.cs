@@ -12,8 +12,9 @@ using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;
 using chocolatey.infrastructure.filesystem;
+using ChocolateyGui.Common.Providers;
+using ChocolateyGui.Common.Services;
 using ChocolateyGui.Controls.Dialogs;
-using ChocolateyGui.Providers;
 using ChocolateyGui.Services;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -97,8 +98,8 @@ namespace ChocolateyGui.Views
                 if (settings == null)
                 {
                     settings = MetroDialogOptions;
-                    settings.NegativeButtonText = Properties.Resources.ChocolateyDialog_Cancel;
-                    settings.AffirmativeButtonText = Properties.Resources.ChocolateyDialog_OK;
+                    settings.NegativeButtonText = Common.Properties.Resources.ChocolateyDialog_Cancel;
+                    settings.AffirmativeButtonText = Common.Properties.Resources.ChocolateyDialog_OK;
                 }
 
                 dialog.NegativeButtonText = settings.NegativeButtonText;

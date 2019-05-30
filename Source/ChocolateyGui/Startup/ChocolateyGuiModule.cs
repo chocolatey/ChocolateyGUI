@@ -15,12 +15,12 @@ using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.filesystem;
 using chocolatey.infrastructure.services;
-using ChocolateyGui.CliCommands;
-using ChocolateyGui.Models;
-using ChocolateyGui.Providers;
+using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Providers;
+using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Services;
 using ChocolateyGui.ViewModels;
-using ChocolateyGui.ViewModels.Items;
 using ChocolateyGui.Views;
 using LiteDB;
 using MahApps.Metro.Controls.Dialogs;
@@ -92,11 +92,11 @@ namespace ChocolateyGui.Startup
 
                 config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
                 config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();
-                config.CreateMap<ConfigFileSourceSetting, Models.ChocolateySource>()
+                config.CreateMap<ConfigFileSourceSetting, Common.Models.ChocolateySource>()
                     .ForMember(dest => dest.Password, opt => opt.MapFrom(src => NugetEncryptionUtility.DecryptString(src.Password)))
                     .ForMember(dest => dest.CertificatePassword, opt => opt.MapFrom(src => NugetEncryptionUtility.DecryptString(src.CertificatePassword)));
 
-                config.CreateMap<ChocolateySource, Models.ChocolateySource>()
+                config.CreateMap<ChocolateySource, Common.Models.ChocolateySource>()
                     .ForMember(dest => dest.VisibleToAdminsOnly, opt => opt.MapFrom(src => src.VisibleToAdminOnly));
             });
 
@@ -105,11 +105,6 @@ namespace ChocolateyGui.Startup
 
             var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
             builder.Register(c => database).SingleInstance();
-
-            // Commands
-            builder.RegisterType<FeatureCommand>().As<ICommand>().SingleInstance();
-            builder.RegisterType<ConfigCommand>().As<ICommand>().SingleInstance();
-            builder.RegisterType<PurgeCommand>().As<ICommand>().SingleInstance();
         }
     }
 }

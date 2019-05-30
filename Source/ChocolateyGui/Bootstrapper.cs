@@ -15,16 +15,16 @@ using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
 using chocolatey;
-using ChocolateyGui.CliCommands;
-using ChocolateyGui.Models;
-using ChocolateyGui.Properties;
-using ChocolateyGui.Services;
+using ChocolateyGui.Common;
+using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Startup;
+using ChocolateyGui.Common.Utilities;
+using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Startup;
-using ChocolateyGui.Utilities;
 using ChocolateyGui.ViewModels;
-using ChocolateyGui.ViewModels.Items;
 using Serilog;
-using Serilog.Events;
 using ILogger = Serilog.ILogger;
 using Log = Serilog.Log;
 
@@ -32,8 +32,6 @@ namespace ChocolateyGui
 {
     public class Bootstrapper : BootstrapperBase
     {
-        internal const string ApplicationName = "Chocolatey GUI";
-
         public Bootstrapper()
         {
             Initialize();
@@ -47,9 +45,9 @@ namespace ChocolateyGui
 
         internal static string ApplicationFilesPath { get; } = Path.GetDirectoryName((Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).Location);
 
-        internal static string AppDataPath { get; private set; }
+        internal static string AppDataPath { get; } = LogSetup.GetAppDataPath(ApplicationParameters.Name);
 
-        internal static string LocalAppDataPath { get; private set; }
+        internal static string LocalAppDataPath { get; } = LogSetup.GetLocalAppDataPath(ApplicationParameters.Name);
 
         internal static bool IsExiting { get; private set; }
 
@@ -63,34 +61,15 @@ namespace ChocolateyGui
 
         protected override void Configure()
         {
-            LocalAppDataPath = Path.Combine(
-                Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData,
-                    Environment.SpecialFolderOption.DoNotVerify),
-                ApplicationName);
+            var logPath = LogSetup.GetLogsFolderPath("Logs");
 
-            if (!Directory.Exists(LocalAppDataPath))
-            {
-                Directory.CreateDirectory(LocalAppDataPath);
-            }
-
-            AppDataPath = Path.Combine(
-                Environment.GetFolderPath(
-                    Environment.SpecialFolder.CommonApplicationData,
-                    Environment.SpecialFolderOption.DoNotVerify),
-                ApplicationName);
+            LogSetup.Execute();
 
             Container = AutoFacConfiguration.RegisterAutoFac();
-            var logPath = Path.Combine(AppDataPath, "Logs");
-            if (!Directory.Exists(logPath))
-            {
-                Directory.CreateDirectory(logPath);
-            }
 
             var directPath = Path.Combine(logPath, "ChocolateyGui.{Date}.log");
 
             var logConfig = new LoggerConfiguration()
-                .WriteTo.Sink(new ColouredConsoleSink(), LogEventLevel.Information)
                 .WriteTo.Async(config =>
                     config.RollingFile(directPath, retainedFileCountLimit: 10, fileSizeLimitBytes: 150 * 1000 * 1000))
                 .SetDefaultLevel();

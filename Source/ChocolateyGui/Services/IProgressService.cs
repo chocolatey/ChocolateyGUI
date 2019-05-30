@@ -9,8 +9,8 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using ChocolateyGui.Controls;
-using ChocolateyGui.Models;
+using ChocolateyGui.Common.Controls;
+using ChocolateyGui.Common.Models;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace ChocolateyGui.Services

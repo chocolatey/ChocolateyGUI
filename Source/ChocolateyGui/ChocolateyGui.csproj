@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <ProjectGuid>{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChocolateyGui</RootNamespace>
     <AssemblyName>ChocolateyGui</AssemblyName>
@@ -129,12 +129,6 @@
       <HintPath>..\packages\Microsoft.VisualStudio.Validation.15.3.32\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Mindscape.Raygun4Net, Version=5.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mindscape.Raygun4Net.5.5.1\lib\net40\Mindscape.Raygun4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Mindscape.Raygun4Net4, Version=5.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mindscape.Raygun4Net.5.5.1\lib\net40\Mindscape.Raygun4Net4.dll</HintPath>
-    </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.5.0\lib\net45\Serilog.dll</HintPath>
     </Reference>
@@ -160,18 +154,6 @@
     <Reference Include="Splat, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Splat.2.0.0\lib\Net45\Splat.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_e_sqlite3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17faffbb2a73a73f, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.bundle_e_sqlite3.1.1.8\lib\net45\SQLitePCLRaw.batteries_e_sqlite3.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.bundle_e_sqlite3.1.1.8\lib\net45\SQLitePCLRaw.batteries_v2.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.core.1.1.8\lib\net45\SQLitePCLRaw.core.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.provider.e_sqlite3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9c301db686d0bd12, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.net45.1.1.8\lib\net45\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -228,69 +210,27 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Attributes\ConfigAttribute.cs" />
-    <Compile Include="Attributes\FeatureAttribute.cs" />
-    <Compile Include="Attributes\LocalizedCommandForAttribute.cs" />
-    <Compile Include="Attributes\LocalizedDescriptionAttribute.cs" />
-    <Compile Include="Base\ConnectionClosedException.cs" />
-    <Compile Include="ChocolateyExtensions.cs" />
-    <Compile Include="CliCommands\BaseCommand.cs" />
-    <Compile Include="CliCommands\ChocolateyGuiConfiguration.cs" />
-    <Compile Include="CliCommands\ColouredConsoleSink.cs" />
-    <Compile Include="CliCommands\ConfigCommand.cs" />
-    <Compile Include="CliCommands\ConfigCommandConfiguration.cs" />
-    <Compile Include="CliCommands\ConfigCommandType.cs" />
-    <Compile Include="CliCommands\FeatureCommand.cs" />
-    <Compile Include="CliCommands\FeatureCommandConfiguration.cs" />
-    <Compile Include="CliCommands\FeatureCommandType.cs" />
-    <Compile Include="CliCommands\GenericRunner.cs" />
-    <Compile Include="CliCommands\ICommand.cs" />
-    <Compile Include="CliCommands\PurgeCommand.cs" />
-    <Compile Include="CliCommands\PurgeCommandConfiguration.cs" />
-    <Compile Include="CliCommands\PurgeCommandType.cs" />
     <Compile Include="Controls\MarkdownEx.cs" />
     <Compile Include="Enums\ListViewMode.cs" />
-    <Compile Include="Models\ChocolateyAggregatedSources.cs" />
-    <Compile Include="Models\ChocolateyGuiFeature.cs" />
-    <Compile Include="Models\ChocolateyGuiSetting.cs" />
-    <Compile Include="Models\EnumToBoolConverter.cs" />
-    <Compile Include="Models\LogLevel.cs" />
-    <Compile Include="Models\LogMessage.cs" />
-    <Compile Include="Models\Messages\AboutGoBackMessage.cs" />
-    <Compile Include="Models\Messages\ShowAboutMessage.cs" />
-    <Compile Include="Models\OutdatedPackage.cs" />
-    <Compile Include="Providers\NugetEncryptionUtility.cs" />
-    <Compile Include="Services\ChocolateyGuiCacheService.cs" />
-    <Compile Include="Services\IChocolateyGuiCacheService.cs" />
-    <Compile Include="Services\IFileStorageService.cs" />
-    <Compile Include="Services\LiteDBFileStorageService.cs" />
+    <Compile Include="Providers\IPlatformProvider.cs" />
+    <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
+    <Compile Include="SerilogLogger.cs" />
+    <Compile Include="Services\ChocolateyService.cs" />
+    <Compile Include="Services\IProgressService.cs" />
+    <Compile Include="Services\PersistenceService.cs" />
+    <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Utilities\BindingProxy.cs" />
     <Compile Include="Utilities\BubbleScrollEventBehavior.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityInverted.cs" />
+    <Compile Include="Utilities\Converters\EnumToBoolConverter.cs" />
     <Compile Include="Utilities\Converters\MultiBooleanAndToVisibility.cs" />
     <Compile Include="Utilities\Converters\NullToValue.cs" />
     <Compile Include="Utilities\Converters\PackageTitleConverter.cs" />
     <Compile Include="Utilities\PackageAuthorsComparer.cs" />
-    <Compile Include="Services\ChocolateyService.cs" />
     <Compile Include="Controls\InternetImage.xaml.cs">
       <DependentUpon>InternetImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DesignMode.cs" />
-    <Compile Include="Hacks.cs" />
-    <Compile Include="Models\AppConfiguration.cs" />
-    <Compile Include="Models\ChocolateyFeature.cs" />
-    <Compile Include="Models\ChocolateySetting.cs" />
-    <Compile Include="Models\ChocolateySource.cs" />
-    <Compile Include="Models\Messages\SourcesUpdatedMessage.cs" />
-    <Compile Include="Models\Package.cs" />
-    <Compile Include="Models\PackageOperationResult.cs" />
-    <Compile Include="Models\PackageResults.cs" />
-    <Compile Include="Models\PackageSearchOptions.cs" />
-    <Compile Include="Models\SemanticVersionTypeConverter.cs" />
-    <Compile Include="SerilogLogger.cs" />
-    <Compile Include="Services\ConfigService.cs" />
-    <Compile Include="Services\IConfigService.cs" />
-    <Compile Include="Services\IChocolateyService.cs" />
     <Compile Include="Startup\ChocolateyGuiModule.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />
@@ -303,30 +243,9 @@
     </Compile>
     <Compile Include="Controls\Dialogs\ChocolateyDialogController.cs" />
     <Compile Include="Controls\FauxPowerShellConsole.cs" />
-    <Compile Include="Controls\ObservableRingBufferCollection.cs" />
     <Compile Include="Enums\PackagesChangedEventType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Startup\AutoFacConfiguration.cs" />
-    <Compile Include="Models\Messages\PackageChangedMessage.cs" />
-    <Compile Include="Models\Messages\PackageHasUpdateMessage.cs" />
-    <Compile Include="Models\Messages\ResetScrollPositionMessage.cs" />
-    <Compile Include="Models\Messages\SettingsGoBackMessage.cs" />
-    <Compile Include="Models\Messages\ShowSettingsMessage.cs" />
-    <Compile Include="Models\Messages\ShowSourcesMessage.cs" />
-    <Compile Include="Models\Messages\ShowPackageDetailsMessage.cs" />
-    <Compile Include="Models\PackageSearchResults.cs" />
-    <Compile Include="Models\PowerShellOutputLine.cs" />
-    <Compile Include="Providers\ChocolateyConfigurationProvider.cs" />
     <Compile Include="Elevation.cs" />
-    <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
-    <Compile Include="Providers\IPlatformProvider.cs" />
-    <Compile Include="Providers\IVersionNumberProvider.cs" />
-    <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
-    <Compile Include="Providers\VersionNumberProvider.cs" />
-    <Compile Include="Services\IPersistenceService.cs" />
-    <Compile Include="Services\IProgressService.cs" />
-    <Compile Include="Services\PersistenceService.cs" />
-    <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Startup\Internationalization.cs" />
     <Compile Include="Utilities\Converters\BooleanToTickString.cs" />
     <Compile Include="Utilities\Converters\BooleanInverter.cs" />
@@ -334,13 +253,10 @@
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\DataContext.cs" />
     <Compile Include="Utilities\DataGridCustomSortBehavior.cs" />
-    <Compile Include="Utilities\DefaultsExtensions.cs" />
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
     <Compile Include="Utilities\IDataGridColumnComparer.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
-    <Compile Include="ViewModels\AboutViewModel.cs" />
-    <Compile Include="ViewModels\ISourceViewModelBase.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
@@ -423,18 +339,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Base\ObservableBase.cs" />
-    <Compile Include="ViewModels\Items\IPackageViewModel.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
+    <Compile Include="ViewModels\Items\SourceViewModel.cs" />
+    <Compile Include="ViewModels\LocalSourceViewModel.cs" />
+    <Compile Include="ViewModels\PackageViewModel.cs" />
+    <Compile Include="ViewModels\RemoteSourceViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SourceSeparatorViewModel.cs" />
     <Compile Include="ViewModels\SourcesListBoxItemStyleSelector.cs" />
     <Compile Include="ViewModels\SourcesViewModel.cs" />
-    <Compile Include="ViewModels\PackageViewModel.cs" />
-    <Compile Include="ViewModels\RemoteSourceViewModel.cs" />
-    <Compile Include="ViewModels\LocalSourceViewModel.cs" />
-    <Compile Include="ViewModels\Items\SourceViewModel.cs" />
-    <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -461,11 +376,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -512,9 +422,7 @@
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="chocolatey%402.png" />
     <Resource Include="chocolatey%403.png" />
@@ -525,26 +433,13 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.*.resx" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="chocolatey%404.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChocolateyGui.Common\ChocolateyGui.Common.csproj">
+      <Project>{a3a40034-4e31-4d05-832a-351c416dccbb}</Project>
+      <Name>ChocolateyGui.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets'))" />
-    <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets'))" />
-    <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets'))" />
-  </Target>
-  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets')" />
-  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets')" />
-  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.8\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets')" />
 </Project>

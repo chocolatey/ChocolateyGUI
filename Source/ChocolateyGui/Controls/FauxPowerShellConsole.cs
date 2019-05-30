@@ -15,7 +15,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
-using ChocolateyGui.Models;
+using ChocolateyGui.Common.Controls;
+using ChocolateyGui.Common.Models;
 
 namespace ChocolateyGui.Controls
 {

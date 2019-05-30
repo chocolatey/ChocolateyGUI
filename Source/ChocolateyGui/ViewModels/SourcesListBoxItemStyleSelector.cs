@@ -6,6 +6,7 @@
 
 using System.Windows;
 using System.Windows.Controls;
+using ChocolateyGui.Common.ViewModels;
 
 namespace ChocolateyGui.ViewModels
 {

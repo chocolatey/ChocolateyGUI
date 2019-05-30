@@ -11,10 +11,11 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using ChocolateyGui.Models;
-using ChocolateyGui.Models.Messages;
-using ChocolateyGui.Properties;
-using ChocolateyGui.Services;
+using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Models.Messages;
+using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.ViewModels;
 
 namespace ChocolateyGui.ViewModels
 {

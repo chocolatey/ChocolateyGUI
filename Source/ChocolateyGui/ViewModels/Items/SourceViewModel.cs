@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using ChocolateyGui.Base;
+using ChocolateyGui.Common.Base;
 
 namespace ChocolateyGui.ViewModels.Items
 {

@@ -6,14 +6,13 @@
              xmlns:commands="clr-namespace:ChocolateyGui.Commands"
              xmlns:controls="clr-namespace:ChocolateyGui.Controls"
              xmlns:enums="clr-namespace:ChocolateyGui.Enums"
-             xmlns:models="clr-namespace:ChocolateyGui.Models"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
-             xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
              xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
+             xmlns:items="clr-namespace:ChocolateyGui.Common.ViewModels.Items;assembly=ChocolateyGui.Common"
+             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}">
@@ -23,7 +22,7 @@
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <converters:PackageTitleConverter x:Key="PackageTitleConverter"/>
             <converters:MultiBooleanAndToVisibility x:Key="MultiBooleanAndToVisibility" />
-            <models:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+            <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
 
             <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
 
@@ -71,7 +70,7 @@
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
-                            <TextBlock Text="{x:Static lang:Resources.RemoteSourceView_Prerelease}"
+                            <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_Prerelease}"
                                        Background="#A90000"
                                        Foreground="White"
                                        Margin="5,0,0,0"
@@ -89,7 +88,7 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" IsHitTestVisible="False">
-                            <TextBlock FontSize="14" Text="{x:Static lang:Resources.RemoteSourceView_Authors}" />
+                            <TextBlock FontSize="14" Text="{x:Static properties:Resources.RemoteSourceView_Authors}" />
                             <TextBlock FontSize="14" Margin="5 0 0 0" Text="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
                                        TextTrimming="CharacterEllipsis"
                                        AutomationProperties.Name="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
@@ -112,7 +111,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Orientation="Horizontal" IsHitTestVisible="False">
-                            <TextBlock x:Name="TagsLabel" FontSize="14" Text="{x:Static lang:Resources.Controls_PackageListTags}" />
+                            <TextBlock x:Name="TagsLabel" FontSize="14" Text="{x:Static properties:Resources.Controls_PackageListTags}" />
                             <TextBlock x:Name="Tags" FontSize="14" Margin="5 0 0 0" Text="{Binding Tags, Mode=OneWay}"
                                        TextTrimming="CharacterEllipsis"
                                        AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}"
@@ -158,12 +157,12 @@
 
                     <ContentControl x:Name="IsInstalledOverlay" Grid.Row="0" Grid.RowSpan="3"
                                     Visibility="Collapsed"
-                                    Content="{x:Static lang:Resources.RemoteSourceView_OverlayInstalled}"
+                                    Content="{x:Static properties:Resources.RemoteSourceView_OverlayInstalled}"
                                     Style="{DynamicResource TileIsInstalledOverlayStyle}" />
 
                     <ContentControl x:Name="OutOfDateOverlay" Grid.Row="0" Grid.RowSpan="3"
                                     Visibility="Collapsed"
-                                    Content="{x:Static lang:Resources.RemoteSourceView_OverlayOutdated}"
+                                    Content="{x:Static properties:Resources.RemoteSourceView_OverlayOutdated}"
                                     Style="{DynamicResource TileOutOfDateOverlayStyle}" />
                 </Grid>
 
@@ -232,7 +231,7 @@
             <WrapPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5" Style="{StaticResource LeftSourceListItem}">
                 <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
                     <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
-                           Target="{Binding ElementName=SearchTextBox}" Content="{x:Static lang:Resources.RemoteSourceView_SearchBoxText}"/>
+                           Target="{Binding ElementName=SearchTextBox}" Content="{x:Static properties:Resources.RemoteSourceView_SearchBoxText}"/>
                     <TextBox x:Name="SearchTextBox" Width="200"
                              FontSize="14" VerticalAlignment="Center"
                              mah:TextBoxHelper.ButtonCommand="{commands:DataContextCommandAdapter LoadPackages, CanLoadRemotePackages}"
@@ -245,13 +244,13 @@
                     </TextBox>
                 </StackPanel>
                 <CheckBox Name="AllVersionsCheckBox" Margin="5"
-                          Content="{x:Static lang:Resources.RemoteSourceView_CheckboxAllVersions}"
+                          Content="{x:Static properties:Resources.RemoteSourceView_CheckboxAllVersions}"
                           IsChecked="{Binding IncludeAllVersions}" />
                 <CheckBox Name="PrereleaseCheckBox" Margin="5"
-                          Content="{x:Static lang:Resources.RemoteSourceView_CheckboxIncludePrerelease}"
+                          Content="{x:Static properties:Resources.RemoteSourceView_CheckboxIncludePrerelease}"
                           IsChecked="{Binding IncludePrerelease}" />
                 <CheckBox Name="MatchCheckBox" Margin="5"
-                          Content="{x:Static lang:Resources.RemoteSourceView_CheckboxMatchExactly}"
+                          Content="{x:Static properties:Resources.RemoteSourceView_CheckboxMatchExactly}"
                           IsChecked="{Binding MatchWord}" />
                 <ComboBox Name="SortBox" Margin="5 1" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
             </WrapPanel>
@@ -260,20 +259,20 @@
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
                         Style="{DynamicResource IconFlatButtonStyle}"
-                        ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonRefreshPkgs}"
+                        ToolTip="{x:Static properties:Resources.RemoteSourceView_ButtonRefreshPkgs}"
                         Margin="0,0,2,0">
                     <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
                 </Button>
                 <RadioButton Margin="6,0,1,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"
                              IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Standard}}"
-                             ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonListView}">
+                             ToolTip="{x:Static properties:Resources.RemoteSourceView_ButtonListView}">
                     <iconPacks:PackIconModern Kind="TextAlignJustify" />
                 </RadioButton>
                 <RadioButton Margin="1,0,0,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"
                              IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Tile}}"
-                             ToolTip="{x:Static lang:Resources.RemoteSourceView_ButtonTileView}">
+                             ToolTip="{x:Static properties:Resources.RemoteSourceView_ButtonTileView}">
                     <iconPacks:PackIconModern Kind="TilesFour" />
                 </RadioButton>
             </StackPanel>
@@ -287,10 +286,10 @@
                 <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
                 <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Name="FirstPage" Content="{x:Static lang:Resources.RemoteSourceView_ButtonGotoFirstPage}" AutomationProperties.Name="Go to First Page" ToolTip="First"
+            <Button Grid.Column="0" Name="FirstPage" Content="{x:Static properties:Resources.RemoteSourceView_ButtonGotoFirstPage}" AutomationProperties.Name="Go to First Page" ToolTip="First"
                     Command="{commands:DataContextCommandAdapter Executed=GoToFirst, CanExecute=CanGoToFirst}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
-            <Button Grid.Column="1" Name="BackPage" Content="{x:Static lang:Resources.RemoteSourceView_ButtonGoBackAPage}" AutomationProperties.Name="Go Back a Page" ToolTip="Back"
+            <Button Grid.Column="1" Name="BackPage" Content="{x:Static properties:Resources.RemoteSourceView_ButtonGoBackAPage}" AutomationProperties.Name="Go Back a Page" ToolTip="Back"
                     Command="{commands:DataContextCommandAdapter Executed=GoToPrevious, CanExecute=CanGoToPrevious}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
             <TextBlock Grid.Column="2" Name="CurrentPage" AutomationProperties.Name="Current Page"
@@ -303,10 +302,10 @@
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>
-            <Button Grid.Column="3" Name="ForwardPage" Content="{x:Static lang:Resources.RemoteSourceView_ButtonGoForwardAPage}" AutomationProperties.Name="Go Forward a Page" ToolTip="Forward"
+            <Button Grid.Column="3" Name="ForwardPage" Content="{x:Static properties:Resources.RemoteSourceView_ButtonGoForwardAPage}" AutomationProperties.Name="Go Forward a Page" ToolTip="Forward"
                     Command="{commands:DataContextCommandAdapter Executed=GoToNext, CanExecute=CanGoToNext}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
-            <Button Grid.Column="4" Name="LastPage" Content="{x:Static lang:Resources.RemoteSourceView_ButtonGotoLastPage}" AutomationProperties.Name="Go to Last Page" ToolTip="Last"
+            <Button Grid.Column="4" Name="LastPage" Content="{x:Static properties:Resources.RemoteSourceView_ButtonGotoLastPage}" AutomationProperties.Name="Go to Last Page" ToolTip="Last"
                     Command="{commands:DataContextCommandAdapter Executed=GoToLast, CanExecute=CanGoToLast}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
         </Grid>

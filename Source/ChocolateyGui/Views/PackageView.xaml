@@ -3,17 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:items="clr-namespace:ChocolateyGui.ViewModels.Items"
              xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
              xmlns:commands="clr-namespace:ChocolateyGui.Commands"
              xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:controls="clr-namespace:ChocolateyGui.Controls"
-             xmlns:lang="clr-namespace:ChocolateyGui.Properties"
              xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
+             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              mc:Ignorable="d"
              d:DesignHeight="786" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:PackageViewModel}">
@@ -45,7 +44,7 @@
     </UserControl.Resources>
 
     <DockPanel x:Name="PackageViewGrid" LastChildFill="True" DataContext="{Binding Package}"
-               d:DataContext="{d:DesignInstance items:PackageViewModel}"
+               d:DataContext="{d:DesignInstance viewModels:PackageViewModel}"
                Background="White"
                Visibility="{Binding DataContext, RelativeSource={RelativeSource Self}, FallbackValue=Expanded, Converter={StaticResource NullToVisibility}}">
         <StackPanel DockPanel.Dock="Top" Margin="20,0,0,0">
@@ -61,13 +60,13 @@
                 <TextBlock Style="{StaticResource SubtitleTextStyle}"
                            AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}"
                            IsHitTestVisible="false">
-                    <Run Text="{x:Static lang:Resources.PackageView_Authors}" />
+                    <Run Text="{x:Static properties:Resources.PackageView_Authors}" />
                     <Run Text="{Binding Authors, Converter={StaticResource StringListToString}}" />
                 </TextBlock>
                 <TextBlock Style="{StaticResource SubtitleTextStyle}"
                            AutomationProperties.Name="{Binding Owners, Converter={StaticResource StringListToString}}"
                            IsHitTestVisible="false">
-                    <Run Text="{x:Static lang:Resources.PackageView_Maintainers}" />
+                    <Run Text="{x:Static properties:Resources.PackageView_Maintainers}" />
                     <Run Text="{Binding Owners, Converter={StaticResource StringListToString}}" />
                 </TextBlock>
             </StackPanel>
@@ -84,7 +83,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Style="{StaticResource PrimaryUacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Install" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static lang:Resources.PackageView_ButtonInstall}" FontSize="16"/>
+                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonInstall}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -96,7 +95,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Style="{StaticResource TertiaryUacActionStyle}" />
                                 <iconPacks:PackIconModern Kind="Pin" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static lang:Resources.PackageView_ButtonPin}" FontSize="16"/>
+                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonPin}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
@@ -105,7 +104,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Style="{StaticResource TertiaryUacActionStyle}" />
                                 <iconPacks:PackIconModern Kind="PinRemove" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static lang:Resources.PackageView_ButtonUnpin}" FontSize="16"/>
+                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUnpin}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
@@ -113,7 +112,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Style="{StaticResource PrimaryUacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Cw" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static lang:Resources.PackageView_ButtonReinstall}" FontSize="16"/>
+                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonReinstall}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
@@ -121,7 +120,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Style="{StaticResource PrimaryUacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Uninstall" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static lang:Resources.PackageView_ButtonUninstall}" FontSize="16"/>
+                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUninstall}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
@@ -130,7 +129,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Style="{StaticResource PrimaryUacActionStyle}" />
                                 <iconPacks:PackIconEntypo Kind="Cycle" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static lang:Resources.PackageView_ButtonUpdate}" FontSize="16"/>
+                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUpdate}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -145,32 +144,32 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Margin="10" />
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_PackageID}"
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_PackageID}"
                    Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}"
                    Target="{Binding ElementName=Id}" />
             <TextBlock x:Name="Id" Text="{Binding Id}"
                        Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}"
                        Style="{StaticResource PackageResourceValue}" />
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_Version}"
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_Version}"
                    Target="{Binding ElementName=Version}" />
             <TextBlock x:Name="Version" Text="{Binding Version}"
                        Style="{StaticResource PackageResourceValue}" />
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_Downloads}"
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_Downloads}"
                    Target="{Binding ElementName=VersionDownloadCount}"
                    Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
             <TextBlock x:Name="VersionDownloadCount" Text="{Binding VersionDownloadCount, StringFormat=N0}"
                        Style="{StaticResource PackageResourceValue}"
                        Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_TotalDownloads}"
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_TotalDownloads}"
                    Target="{Binding ElementName=DownloadCount}"
                    Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
             <TextBlock x:Name="DownloadCount" Text="{Binding DownloadCount, StringFormat=N0}"
                        Style="{StaticResource PackageResourceValue}"
                        Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_LastUpdate}"
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_LastUpdate}"
                    Target="{Binding ElementName=Published}" />
             <TextBlock x:Name="Published" Text="{Binding Published, StringFormat=g}" Style="{StaticResource PackageResourceValue}" />
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static lang:Resources.PackageView_PackageSize}"
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_PackageSize}"
                    Target="{Binding ElementName=PackageSize}"
                    Visibility="{Binding IsPackageSizeAvailable, Converter={StaticResource BoolToVis}}"/>
             <TextBlock x:Name="PackageSize"
@@ -182,30 +181,30 @@
                 <TextBlock
                     Visibility="{Binding ProjectUrl, Converter={StaticResource UriToVisibilty}}">
                     <Hyperlink NavigateUri="{Binding ProjectUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
-                        <Run Text="{x:Static lang:Resources.PackageView_ProjectSite}" />
+                        <Run Text="{x:Static properties:Resources.PackageView_ProjectSite}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock
                     Visibility="{Binding LicenseUrl, Converter={StaticResource UriToVisibilty}}">
                     <Hyperlink NavigateUri="{Binding LicenseUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
-                        <Run Text="{x:Static lang:Resources.PackageView_License}" />
+                        <Run Text="{x:Static properties:Resources.PackageView_License}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock
                     Visibility="{Binding GalleryDetailsUrl, Converter={StaticResource UriToVisibilty}}">
                     <Hyperlink NavigateUri="{Binding GalleryDetailsUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
-                        <Run Text="{x:Static lang:Resources.PackageView_Gallery}" />
+                        <Run Text="{x:Static properties:Resources.PackageView_Gallery}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock
                     Visibility="{Binding ReportAbuseUrl, Converter={StaticResource UriToVisibilty}}">
                     <Hyperlink NavigateUri="{Binding ReportAbuseUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
-                        <Run Text="{x:Static lang:Resources.PackageView_ReportAbuse}" />
+                        <Run Text="{x:Static properties:Resources.PackageView_ReportAbuse}" />
                     </Hyperlink>
                 </TextBlock>
             </StackPanel>
 
-            <TextBlock Text="{x:Static lang:Resources.PackagesView_Outdated}"
+            <TextBlock Text="{x:Static properties:Resources.PackagesView_Outdated}"
                        Grid.Column="1"
                        Background="#A90000"
                        Foreground="White"
@@ -219,7 +218,7 @@
                     </MultiBinding>
                 </TextBlock.Visibility>
             </TextBlock>
-            <TextBlock Text="{x:Static lang:Resources.PackagesView_Prerelease}"
+            <TextBlock Text="{x:Static properties:Resources.PackagesView_Prerelease}"
                        Grid.Column="1"
                        Background="#A90000"
                        Foreground="White"
@@ -227,7 +226,7 @@
                        VerticalAlignment="Center"
                        TextAlignment="Center"
                        Visibility="{Binding IsPrerelease, Converter={StaticResource BoolToVis}}"/>
-            <TextBlock Text="{x:Static lang:Resources.PackagesView_Installed}"
+            <TextBlock Text="{x:Static properties:Resources.PackagesView_Installed}"
                        Grid.Column="1"
                        Background="#007F00"
                        Foreground="White"
@@ -241,7 +240,7 @@
                     </MultiBinding>
                 </TextBlock.Visibility>
             </TextBlock>
-            <TextBlock Text="{x:Static lang:Resources.PackagesView_Pinned}"
+            <TextBlock Text="{x:Static properties:Resources.PackagesView_Pinned}"
                        Grid.Column="1"
                        Background="#007F00"
                        Foreground="White"
@@ -254,7 +253,7 @@
         <ScrollViewer Margin="25,5,0,0">
             <StackPanel>
                 <mah:MetroHeader Style="{StaticResource SectionHeaderStyle}"
-                                 Header="{x:Static lang:Resources.PackageView_Description}">
+                                 Header="{x:Static properties:Resources.PackageView_Description}">
                     <i:Interaction.Behaviors>
                         <utilities:BubbleScrollEventBehavior />
                     </i:Interaction.Behaviors>
@@ -265,14 +264,14 @@
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Style="{StaticResource SectionHeaderStyle}"
-                                 Header="{x:Static lang:Resources.PackageView_Dependencies}"
+                                 Header="{x:Static properties:Resources.PackageView_Dependencies}"
                                  Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                     <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"
                                AutomationProperties.Name="Package Dependencies" />
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Style="{StaticResource SectionHeaderStyle}"
-                                 Header="{x:Static lang:Resources.PackageView_ReleaseNotes}"
+                                 Header="{x:Static properties:Resources.PackageView_ReleaseNotes}"
                                  Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}">
                     <i:Interaction.Behaviors>
                         <utilities:BubbleScrollEventBehavior />

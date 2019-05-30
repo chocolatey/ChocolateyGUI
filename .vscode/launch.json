@@ -7,7 +7,7 @@
       "request": "launch",
       "program": "${workspaceRoot}/tools/Cake/Cake.exe",
       "args": [
-        "${workspaceRoot}/setup.cake",
+        "${workspaceRoot}/recipe.cake",
         "--debug",
         "--verbosity=diagnostic"
       ],

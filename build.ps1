@@ -41,7 +41,7 @@ https://cakebuild.net
 
 [CmdletBinding()]
 Param(
-    [string]$Script = "setup.cake",
+    [string]$Script = "recipe.cake",
     [string]$Target,
     [string]$Configuration,
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
@@ -233,7 +233,7 @@ $cakeArguments += $ScriptArgs
 # Start Cake
 Write-Host "Running build script..."
 
-& "$CAKE_EXE" ./setup.cake --bootstrap
+& "$CAKE_EXE" ./recipe.cake --bootstrap
 if ($LASTEXITCODE -eq 0)
 {
     & "$CAKE_EXE" $cakeArguments

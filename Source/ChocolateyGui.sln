@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C6760D8F
 		..\nuspec\chocolatey\ChocolateyGUI.nuspec = ..\nuspec\chocolatey\ChocolateyGUI.nuspec
 		..\nuspec\chocolatey\chocolateyInstall.ps1 = ..\nuspec\chocolatey\chocolateyInstall.ps1
 		..\GitHubReleaseManager.yaml = ..\GitHubReleaseManager.yaml
-		..\setup.cake = ..\setup.cake
+		..\recipe.cake = ..\recipe.cake
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocolateyGuiCli", "ChocolateyGuiCli\ChocolateyGuiCli.csproj", "{C69DCF4D-F412-4344-83CD-26A46D515DF2}"

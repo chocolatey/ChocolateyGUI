@@ -124,7 +124,7 @@ namespace ChocolateyGui.Common.Services
             Logger.Information(string.Empty);
             ListFeatures(configuration);
             Logger.Information(string.Empty);
-            Logger.Information(Resources.Command_UseFeatureCommandNote.format_with("chocolateygui feature"));
+            Logger.Information(Resources.Command_UseFeatureCommandNote.format_with("chocolateyguicli feature"));
         }
 
         public void EnableFeature(ChocolateyGuiConfiguration configuration)

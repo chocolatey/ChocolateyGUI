@@ -265,7 +265,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please run chocolateygui with `{0}` for specific help on each command.
+        ///   Looks up a localized string similar to Please run chocolateyguicli with `{0}` for specific help on each command.
         /// </summary>
         public static string Command_CommandsText {
             get {
@@ -359,7 +359,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not find a command registered that meets &apos;{0}&apos;. Try chocolateygui -? for command reference/help..
+        ///   Looks up a localized string similar to Could not find a command registered that meets &apos;{0}&apos;. Try chocolateyguicli -? for command reference/help..
         /// </summary>
         public static string Command_NotFoundError {
             get {
@@ -413,7 +413,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Retrieve and configure chocolateygui config settings.
+        ///   Looks up a localized string similar to Retrieve and configure Chocolatey GUI config settings.
         /// </summary>
         public static string ConfigCommand_Description {
             get {
@@ -647,7 +647,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View and configure chocolateygui feature.
+        ///   Looks up a localized string similar to View and configure Chocolatey GUI features.
         /// </summary>
         public static string FeatureCommand_Description {
             get {

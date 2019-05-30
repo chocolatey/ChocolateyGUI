@@ -65,12 +65,12 @@ namespace ChocolateyGuiCli.Commands
             Bootstrapper.Logger.Information(string.Empty);
             Bootstrapper.Logger.Warning(Resources.Command_Usage);
             Bootstrapper.Logger.Information(@"
-    chocolateygui pruge icons|outdated [<options/switches>]
+    chocolateyguicli pruge icons|outdated [<options/switches>]
 ");
             Bootstrapper.Logger.Warning(Resources.Command_Examples);
             Bootstrapper.Logger.Information(@"
-    chocolateygui purge icons
-    chocolateygui purge outdated
+    chocolateyguicli purge icons
+    chocolateyguicli purge outdated
 ");
 
             PrintExitCodeInformation();

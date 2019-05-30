@@ -45,9 +45,9 @@ namespace ChocolateyGui
 
         internal static string ApplicationFilesPath { get; } = Path.GetDirectoryName((Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).Location);
 
-        internal static string AppDataPath { get; private set; }
+        internal static string AppDataPath { get; } = LogSetup.GetAppDataPath(ApplicationParameters.Name);
 
-        internal static string LocalAppDataPath { get; private set; }
+        internal static string LocalAppDataPath { get; } = LogSetup.GetLocalAppDataPath(ApplicationParameters.Name);
 
         internal static bool IsExiting { get; private set; }
 
@@ -61,8 +61,6 @@ namespace ChocolateyGui
 
         protected override void Configure()
         {
-            LocalAppDataPath = LogSetup.GetLocalAppDataPath(ApplicationParameters.Name);
-            AppDataPath = LogSetup.GetAppDataPath(ApplicationParameters.Name);
             var logPath = LogSetup.GetLogsFolderPath("Logs");
 
             LogSetup.Execute();

@@ -103,19 +103,19 @@ namespace ChocolateyGuiCli.Commands
             Bootstrapper.Logger.Information(string.Empty);
             Bootstrapper.Logger.Warning(Resources.Command_Usage);
             Bootstrapper.Logger.Information(@"
-    chocolateygui config [list]|get|set|unset [<options/switches>]
+    chocolateyguicli config [list]|get|set|unset [<options/switches>]
 ");
 
             Bootstrapper.Logger.Warning(Resources.Command_Examples);
             Bootstrapper.Logger.Information(@"
-    chocolateygui config
-    chocolateygui config list
-    chocolateygui config get outdatedPackagesCacheDurationInMinutes
-    chocolateygui config get --name outdatedPackagesCacheDurationInMinutes
-    chocolateygui config set outdatedPackagesCacheDurationInMinutes 60
-    chocolateygui config set --name outdatedPackagesCacheDurationInMinutes --value 60
-    chocolateygui config unset outdatedPackagesCacheDurationInMinutes
-    chocolateygui config unset --name outdatedPackagesCacheDurationInMinutes
+    chocolateyguicli config
+    chocolateyguicli config list
+    chocolateyguicli config get outdatedPackagesCacheDurationInMinutes
+    chocolateyguicli config get --name outdatedPackagesCacheDurationInMinutes
+    chocolateyguicli config set outdatedPackagesCacheDurationInMinutes 60
+    chocolateyguicli config set --name outdatedPackagesCacheDurationInMinutes --value 60
+    chocolateyguicli config unset outdatedPackagesCacheDurationInMinutes
+    chocolateyguicli config unset --name outdatedPackagesCacheDurationInMinutes
 ");
             PrintExitCodeInformation();
         }

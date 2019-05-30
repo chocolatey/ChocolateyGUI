@@ -80,14 +80,14 @@ namespace ChocolateyGuiCli.Commands
             Bootstrapper.Logger.Information(string.Empty);
             Bootstrapper.Logger.Warning(Resources.Command_Usage);
             Bootstrapper.Logger.Information(@"
-    chocolateygui feature [list]|disable|enable [<options/switches>]
+    chocolateyguicli feature [list]|disable|enable [<options/switches>]
 ");
             Bootstrapper.Logger.Warning(Resources.Command_Examples);
             Bootstrapper.Logger.Information(@"
-    chocolateygui feature
-    chocolateygui feature list
-    chocolateygui feature disable -n=ShowConsoleOutput
-    chocolateygui feature enable -n=ShowConsoleOutput
+    chocolateyguicli feature
+    chocolateyguicli feature list
+    chocolateyguicli feature disable -n=ShowConsoleOutput
+    chocolateyguicli feature enable -n=ShowConsoleOutput
 ");
 
             PrintExitCodeInformation();

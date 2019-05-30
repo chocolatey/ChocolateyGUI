@@ -682,7 +682,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>This is a listing of all of the different things you can pass to {0}.</value>
   </data>
   <data name="Command_CommandsText" xml:space="preserve">
-    <value>Please run chocolateygui with `{0}` for specific help on each command</value>
+    <value>Please run chocolateyguicli with `{0}` for specific help on each command</value>
   </data>
   <data name="Command_CommandsTitle" xml:space="preserve">
     <value>Commands</value>
@@ -713,7 +713,7 @@ Normal:
     <value>LimitOutput - Limit the output to essential information</value>
   </data>
   <data name="Command_NotFoundError" xml:space="preserve">
-    <value>Could not find a command registered that meets '{0}'. Try chocolateygui -? for command reference/help.</value>
+    <value>Could not find a command registered that meets '{0}'. Try chocolateyguicli -? for command reference/help.</value>
   </data>
   <data name="Command_OptionsAndSwitches" xml:space="preserve">
     <value>Options and Switches</value>
@@ -725,7 +725,7 @@ Normal:
     <value>Config '{0}' not found.</value>
   </data>
   <data name="ConfigCommand_Description" xml:space="preserve">
-    <value>Retrieve and configure chocolateygui config settings</value>
+    <value>Retrieve and configure Chocolatey GUI config settings</value>
   </data>
   <data name="ConfigCommand_Help" xml:space="preserve">
     <value>Chocolatey GUI will allow you to interact with the persisted configuration information.</value>
@@ -758,7 +758,7 @@ Normal:
     <value>Value - the value of the config setting. Required with some actions. Defaults to empty.</value>
   </data>
   <data name="FeatureCommand_Description" xml:space="preserve">
-    <value>View and configure chocolateygui feature</value>
+    <value>View and configure Chocolatey GUI features</value>
   </data>
   <data name="FeatureCommand_Disabled" xml:space="preserve">
     <value>Disabled</value>

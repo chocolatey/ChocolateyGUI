@@ -60,7 +60,7 @@ namespace ChocolateyGuiCli
 #if DEBUG
                 Bootstrapper.Logger.Information("{0} v{1} (DEBUG BUILD)".format_with(ApplicationParameters.Name, configuration.Information.ChocolateyGuiProductVersion));
 #else
-                Bootstrapper.Logger.Information("{0} v{1}{2}".format_with(ApplicationParameters.Name, configuration.Information.ChocolateyGuiProductVersion));
+                Bootstrapper.Logger.Information("{0} v{1}".format_with(ApplicationParameters.Name, configuration.Information.ChocolateyGuiProductVersion));
 #endif
 
                 if (args.Length == 0)
@@ -125,12 +125,12 @@ namespace ChocolateyGuiCli
                         }
                     }
 
-                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsListText.format_with("chocolateygui"));
+                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsListText.format_with("chocolateyguicli"));
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Warning(ChocolateyGui.Common.Properties.Resources.Command_CommandsTitle);
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Information("{0}".format_with(commandsLog.ToString()));
-                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsText.format_with("chocolateygui command -help"));
+                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsText.format_with("chocolateyguicli command -help"));
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Warning(ChocolateyGui.Common.Properties.Resources.Command_DefaultOptionsAndSwitches);
                 });

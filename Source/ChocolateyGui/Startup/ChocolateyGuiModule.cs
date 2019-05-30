@@ -105,11 +105,6 @@ namespace ChocolateyGui.Startup
 
             var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
             builder.Register(c => database).SingleInstance();
-
-            // Commands
-            builder.RegisterType<FeatureCommand>().As<ICommand>().SingleInstance();
-            builder.RegisterType<ConfigCommand>().As<ICommand>().SingleInstance();
-            builder.RegisterType<PurgeCommand>().As<ICommand>().SingleInstance();
         }
     }
 }

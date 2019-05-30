@@ -19,6 +19,7 @@ $installDirectory = Get-AppInstallLocation $packageArgs.softwareName
 
 if ($installDirectory) {
   Install-BinFile -Name "chocolateygui" -Path "$installDirectory\ChocolateyGui.exe" -UseStart
+  Install-BinFile -Name "chocolateyguicli" -Path "$installDirectory\ChocolateyGuiCli.exe"
 }
 
 $pp = Get-PackageParameters
@@ -31,7 +32,6 @@ if($pp.ContainsKey("ShowConsoleOutput")) {
   } else {
     Write-Output "Disabling ShowConsoleOutput..."
     Start-ChocolateyProcessAsAdmin -Statements "feature disable --name=ShowConsoleOutput" -ExeToRun "chocolateygui"
-
   }
 }
 

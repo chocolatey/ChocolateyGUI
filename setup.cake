@@ -35,7 +35,9 @@ BuildParameters.SetParameters(context: Context,
 
 ToolSettings.SetToolSettings(context: Context,
                              dupFinderExcludePattern: new string[] {
-                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Converters/BooleanToVisibilityInverted.cs"
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Converters/BooleanToVisibilityInverted.cs",
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Startup/ChocolateyGuiModule.cs",
+                                BuildParameters.RootDirectoryPath + "/Source/ChocoalteyGuiCli/Startup/ChocolateyGuiCliModule.cs"
                             });
 
 //var SIGN_TOOL = EnvironmentVariable("SIGN_TOOL") ?? @"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\signtool.exe";
@@ -61,17 +63,34 @@ Task("SignExecutable")
       //C:\codelocal\chocolateygui\BuildArtifacts\temp\_PublishedApplications\ChocolateyGui\ChocolateyGui.exe
 
         var filesToSign = new List<string>() {
-            BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGui/ChocolateyGui.exe"
+            BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGui/ChocolateyGui.exe",
+            BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGui/ChocolateyGui.Common.dll",
+            BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGuiCli/ChocolateyGuiCli.exe",
+            BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGuiCli/ChocolateyGui.Common.dll",
+            BuildParameters.Paths.Directories.PublishedLibraries + "/ChocolateyGui.Common/ChocolateyGui.Common.dll"
         };
 
         var platformTarget = ToolSettings.BuildPlatformTarget == PlatformTarget.MSIL ? "AnyCPU" : ToolSettings.BuildPlatformTarget.ToString();
         foreach(var project in ParseSolution(BuildParameters.SolutionFilePath).GetProjects())
         {
+            var parsedProject = ParseProject(project.Path, BuildParameters.Configuration, platformTarget);
+            if (parsedProject.RootNameSpace == "ChocolateyGui")
+            {
+                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.exe");
+                continue;
+            }
 
-        var parsedProject = ParseProject(project.Path, BuildParameters.Configuration, platformTarget);
-        if (parsedProject.RootNameSpace != "ChocolateyGui") continue;
+            if (parsedProject.RootNameSpace == "ChocolateyGuiCli")
+            {
+                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGuiCli.exe");
+                continue;
+            }
 
-        filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.exe");
+            if (parsedProject.RootNameSpace == "ChocolateyGui.Common")
+            {
+                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.Common.dll");
+                continue;
+            }
         }
 
         var password = System.IO.File.ReadAllText(CERT_PASSWORD);

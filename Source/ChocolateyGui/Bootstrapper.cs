@@ -15,6 +15,7 @@ using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
 using chocolatey;
+using ChocolateyGui.Common;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
@@ -31,8 +32,6 @@ namespace ChocolateyGui
 {
     public class Bootstrapper : BootstrapperBase
     {
-        internal const string ApplicationName = "Chocolatey GUI";
-
         public Bootstrapper()
         {
             Initialize();
@@ -62,8 +61,8 @@ namespace ChocolateyGui
 
         protected override void Configure()
         {
-            LocalAppDataPath = LogSetup.GetLocalAppDataPath(ApplicationName);
-            AppDataPath = LogSetup.GetAppDataPath(ApplicationName);
+            LocalAppDataPath = LogSetup.GetLocalAppDataPath(ApplicationParameters.Name);
+            AppDataPath = LogSetup.GetAppDataPath(ApplicationParameters.Name);
             var logPath = LogSetup.GetLogsFolderPath("Logs");
 
             LogSetup.Execute();

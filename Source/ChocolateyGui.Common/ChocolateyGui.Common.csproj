@@ -92,6 +92,7 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="ApplicationParameters.cs" />
     <Compile Include="Attributes\ConfigAttribute.cs" />
     <Compile Include="Attributes\FeatureAttribute.cs" />
     <Compile Include="Attributes\LocalizedCommandForAttribute.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Models\ConfigCommandType.cs" />
     <Compile Include="Models\FeatureCommandConfiguration.cs" />
     <Compile Include="Models\FeatureCommandType.cs" />
+    <Compile Include="Models\InformationCommandConfiguration.cs" />
     <Compile Include="Models\LogLevel.cs" />
     <Compile Include="Models\LogMessage.cs" />
     <Compile Include="Models\Messages\AboutGoBackMessage.cs" />

@@ -24,10 +24,10 @@ namespace ChocolateyGuiCli
 
         internal static string LocalAppDataPath { get; private set; }
 
-        internal static void Configure(string applicationName)
+        internal static void Configure()
         {
-            LocalAppDataPath = LogSetup.GetLocalAppDataPath(applicationName);
-            AppDataPath = LogSetup.GetAppDataPath(applicationName);
+            LocalAppDataPath = LogSetup.GetLocalAppDataPath(ApplicationParameters.Name);
+            AppDataPath = LogSetup.GetAppDataPath(ApplicationParameters.Name);
             var logPath = LogSetup.GetLogsFolderPath("Logs");
 
             LogSetup.Execute();

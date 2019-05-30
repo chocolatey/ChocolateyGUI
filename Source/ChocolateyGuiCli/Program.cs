@@ -11,10 +11,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Autofac;
 using chocolatey;
+using chocolatey.infrastructure.adapters;
 using chocolatey.infrastructure.commandline;
+using chocolatey.infrastructure.information;
+using ChocolateyGui.Common;
 using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Models;
 using ChocolateyGuiCli.Commands;
+using Console = System.Console;
 
 namespace ChocolateyGuiCli
 {
@@ -29,7 +33,7 @@ namespace ChocolateyGuiCli
 
         public static void Main(string[] args)
         {
-            Bootstrapper.Configure("Chocolatey GUI");
+            Bootstrapper.Configure();
 
             var commandName = string.Empty;
             IList<string> commandArgs = new List<string>();
@@ -49,6 +53,21 @@ namespace ChocolateyGuiCli
 
             var configuration = new ChocolateyGuiConfiguration();
             SetUpGlobalOptions(args, configuration, Bootstrapper.Container);
+            SetEnvironmentOptions(configuration);
+
+            if (configuration.RegularOutput)
+            {
+#if DEBUG
+                Bootstrapper.Logger.Information("{0} v{1} (DEBUG BUILD)".format_with(ApplicationParameters.Name, configuration.Information.ChocolateyGuiProductVersion));
+#else
+                Bootstrapper.Logger.Information("{0} v{1}{2}".format_with(ApplicationParameters.Name, configuration.Information.ChocolateyGuiProductVersion));
+#endif
+
+                if (args.Length == 0)
+                {
+                    Bootstrapper.Logger.Information("Please run 'chocolateyguicli -?' or 'chocolateyguicli <command> -?' for help menu.");
+                }
+            }
 
             var runner = new GenericRunner();
             runner.Run(configuration, Bootstrapper.Container, command =>
@@ -115,6 +134,13 @@ namespace ChocolateyGuiCli
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Warning(ChocolateyGui.Common.Properties.Resources.Command_DefaultOptionsAndSwitches);
                 });
+        }
+
+        private static void SetEnvironmentOptions(ChocolateyGuiConfiguration config)
+        {
+            config.Information.ChocolateyGuiVersion = VersionInformation.get_current_assembly_version(Assembly.GetCallingAssembly());
+            config.Information.ChocolateyGuiProductVersion = VersionInformation.get_current_informational_version(Assembly.GetCallingAssembly());
+            config.Information.FullName = Assembly.GetExecutingAssembly().FullName;
         }
 
         private static void ParseArgumentsAndUpdateConfiguration(

@@ -14,6 +14,7 @@ namespace ChocolateyGui.Common.Models
         public ChocolateyGuiConfiguration()
         {
             RegularOutput = true;
+            Information = new InformationCommandConfiguration();
             FeatureCommand = new FeatureCommandConfiguration();
             ConfigCommand = new ConfigCommandConfiguration();
             PurgeCommand = new PurgeCommandConfiguration();
@@ -28,6 +29,8 @@ namespace ChocolateyGui.Common.Models
         public bool RegularOutput { get; set; }
 
         public string Input { get; set; }
+
+        public InformationCommandConfiguration Information { get; set; }
 
         public FeatureCommandConfiguration FeatureCommand { get;  set; }
 

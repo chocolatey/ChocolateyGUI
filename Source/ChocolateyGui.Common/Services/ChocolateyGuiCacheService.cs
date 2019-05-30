@@ -21,7 +21,7 @@ namespace ChocolateyGui.Common.Services
             _fileStorageService = fileStorageService;
             _fileSystem = fileSystem;
 
-            _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), "Chocolatey GUI");
+            _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), ApplicationParameters.Name);
         }
 
         public void PurgeIcons()

@@ -37,6 +37,8 @@ namespace ChocolateyGui.ViewModels.Items
         private readonly IMapper _mapper;
         private readonly IProgressService _progressService;
 
+        private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
+
         private string[] _authors;
 
         private string _copyright;
@@ -108,13 +110,15 @@ namespace ChocolateyGui.ViewModels.Items
             IChocolateyService chocolateyService,
             IEventAggregator eventAggregator,
             IMapper mapper,
-            IProgressService progressService)
+            IProgressService progressService,
+            IChocolateyGuiCacheService chocolateyGuiCacheService)
         {
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
             _mapper = mapper;
             _progressService = progressService;
             eventAggregator?.Subscribe(this);
+            _chocolateyGuiCacheService = chocolateyGuiCacheService;
         }
 
         public DateTime Created
@@ -389,6 +393,8 @@ namespace ChocolateyGui.ViewModels.Items
                     }
 
                     IsInstalled = true;
+
+                    _chocolateyGuiCacheService.PurgeOutdatedPackages();
                     _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
                 }
             }
@@ -409,6 +415,7 @@ namespace ChocolateyGui.ViewModels.Items
                 using (await StartProgressDialog(Resources.PackageViewModel_ReinstallingPackage, Resources.PackageViewModel_ReinstallingPackage, Id))
                 {
                     await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true).ConfigureAwait(false);
+                    _chocolateyGuiCacheService.PurgeOutdatedPackages();
                 }
             }
             catch (Exception ex)
@@ -495,6 +502,7 @@ namespace ChocolateyGui.ViewModels.Items
                         return;
                     }
 
+                    _chocolateyGuiCacheService.PurgeOutdatedPackages();
                     _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Updated));
                 }
             }

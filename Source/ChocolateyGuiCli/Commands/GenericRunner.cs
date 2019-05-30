@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using chocolatey;
-using chocolatey.infrastructure.app;
+using ChocolateyGui.Common;
 using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;

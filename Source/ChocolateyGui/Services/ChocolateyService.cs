@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using chocolatey;
-using chocolatey.infrastructure.app;
 using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
@@ -22,7 +21,6 @@ using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Services;
 using Microsoft.VisualStudio.Threading;
 using NuGet;
-using ApplicationParameters = chocolatey.infrastructure.app.ApplicationParameters;
 using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;
 using IFileSystem = chocolatey.infrastructure.filesystem.IFileSystem;
 
@@ -117,7 +115,7 @@ namespace ChocolateyGui.Services
                     config =>
                     {
                         config.CommandName = "outdated";
-                        config.PackageNames = packageName ?? ApplicationParameters.AllPackages;
+                        config.PackageNames = packageName ?? chocolatey.infrastructure.app.ApplicationParameters.AllPackages;
                         config.UpgradeCommand.NotifyOnlyAvailableUpgrades = true;
                         config.RegularOutput = false;
                         config.QuietOutput = true;
@@ -597,7 +595,7 @@ namespace ChocolateyGui.Services
             var xmlService = _choco.Container().GetInstance<IXmlService>();
             var config =
                 await Task.Run(
-                    () => xmlService.deserialize<ConfigFileSettings>(ApplicationParameters.GlobalConfigFileLocation));
+                    () => xmlService.deserialize<ConfigFileSettings>(chocolatey.infrastructure.app.ApplicationParameters.GlobalConfigFileLocation));
             return config;
         }
     }

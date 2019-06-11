@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
@@ -58,6 +60,16 @@ namespace ChocolateyGui.ViewModels
         }
 
         public delegate RemoteSourceViewModel CreateRemove(ChocolateySource source);
+
+        public ImageSource ChocolateyLogo
+        {
+            get
+            {
+                var image = new BitmapImage(new Uri("pack://application:,,,/ChocolateyGui;component/chocolatey_logo.png", UriKind.RelativeOrAbsolute));
+                image.Freeze();
+                return image;
+            }
+        }
 
         public async Task LoadSources()
         {

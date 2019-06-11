@@ -147,7 +147,6 @@
     <Compile Include="Providers\ChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IVersionNumberProvider.cs" />
-    <Compile Include="Providers\NugetEncryptionUtility.cs" />
     <Compile Include="Providers\VersionNumberProvider.cs" />
     <Compile Include="Services\ChocolateyGuiCacheService.cs" />
     <Compile Include="Services\ConfigService.cs" />

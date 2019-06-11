@@ -61,7 +61,7 @@
         <Setter Property="FontSize" Value="14" />
     </Style>
 
-    <Style x:Key="SouceItemTextBlockStyle" TargetType="{x:Type TextBlock}"
+    <Style x:Key="SourceItemTextBlockStyle" TargetType="{x:Type TextBlock}"
            BasedOn="{StaticResource SourceBaseTextBlockStyle}">
         <Setter Property="FontSize" Value="16" />
     </Style>

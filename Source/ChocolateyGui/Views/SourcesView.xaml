@@ -26,7 +26,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock x:Name="Tb"
-                                           Style="{StaticResource SouceItemTextBlockStyle}"
+                                           Style="{StaticResource SourceItemTextBlockStyle}"
                                            Text="{Binding DisplayName}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>

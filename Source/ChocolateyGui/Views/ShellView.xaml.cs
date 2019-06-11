@@ -69,7 +69,7 @@ namespace ChocolateyGui.Views
                 !_chocolateyConfigurationProvider.IsChocolateyExecutableBeingUsed)
             {
                 MessageBox.Show(
-                    "Usage of the PowerShell Version of Chocolatey (i.e. <= 0.9.8.33) has been detected.  ChocolateyGUI does not support using this version of Chocolatey on Windows 10.  Please update Chocolatey to the new C# Version (i.e. > 0.9.9.0) and restart ChocolateyGUI.  This application will now close.",
+                    "Usage of the PowerShell Version of Chocolatey (i.e. <= 0.9.8.33) has been detected.  Chocolatey GUI does not support using this version of Chocolatey on Windows 10.  Please update Chocolatey to the new C# Version (i.e. > 0.9.9.0) and restart Chocolatey GUI.  This application will now close.",
                     "Incompatible Operating System Version",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error,

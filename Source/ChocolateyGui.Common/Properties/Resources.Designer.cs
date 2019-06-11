@@ -2121,7 +2121,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ChocolateyGUI - Settings.
+        ///   Looks up a localized string similar to Chocolatey GUI - Settings.
         /// </summary>
         public static string SettingsViewModel_DisplayName {
             get {

@@ -449,7 +449,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>This PC</value>
   </data>
   <data name="SettingsViewModel_DisplayName" xml:space="preserve">
-    <value>ChocolateyGUI - Settings</value>
+    <value>Chocolatey GUI - Settings</value>
   </data>
   <data name="SettingsViewModel_FeatureFailedToUpdate" xml:space="preserve">
     <value>Failed to update features. Error:

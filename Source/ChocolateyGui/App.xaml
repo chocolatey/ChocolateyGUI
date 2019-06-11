@@ -14,7 +14,6 @@
                 <ResourceDictionary Source="Resources/Theme.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
 
-                <ResourceDictionary Source="Resources/Logo.xaml" />
                 <ResourceDictionary Source="Resources/Controls.xaml" />
                 <ResourceDictionary Source="Resources/ControlStyles/Markdown.xaml" />
                 <ResourceDictionary>

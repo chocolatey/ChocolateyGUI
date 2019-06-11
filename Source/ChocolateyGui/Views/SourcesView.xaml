@@ -35,36 +35,7 @@
             </StackPanel>
             <ContentControl x:Name="ActiveItem" />
         </DockPanel>
-        <Image Height="150" Margin="15,-55,0,0" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="ChocolateyLogo" Source="{StaticResource ChocolateyLogo}" RenderTransformOrigin="-0.2,0.8" >
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-5"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-            <Image.Triggers>
-                <EventTrigger RoutedEvent="UIElement.MouseEnter">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ChocolateyLogo">
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="UIElement.MouseLeave">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ChocolateyLogo">
-                                <EasingDoubleKeyFrame KeyTime="0" Value="-1"/>
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-5"/>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Image.Triggers>
+        <Image Height="130" Margin="15,-55,0,0" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding ChocolateyLogo}" >
         </Image>
     </Grid>
 

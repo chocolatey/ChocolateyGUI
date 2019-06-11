@@ -297,7 +297,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Logo.xaml" />
     <Page Include="Resources\Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -381,6 +380,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="chocolatey_logo.png" />
     <Resource Include="..\..\ABOUT.md">
       <Link>Resources\ABOUT.md</Link>
     </Resource>

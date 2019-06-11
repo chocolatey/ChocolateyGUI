@@ -5,21 +5,22 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using chocolatey.infrastructure.app.attributes;
 using ChocolateyGui.Common.Properties;
 
 namespace ChocolateyGui.Common.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class LocalizedCommandForAttribute : Attribute
+    public class LocalizedCommandForAttribute : CommandForAttribute
     {
-        public LocalizedCommandForAttribute(string commandName, string resourceKey)
+        public LocalizedCommandForAttribute(string commandName, string key)
+        : base(commandName, Localize(key))
         {
-            CommandName = commandName;
-            Description = Resources.ResourceManager.GetString(resourceKey);
         }
 
-        public string CommandName { get; private set; }
-
-        public string Description { get; private set; }
+        private static string Localize(string key)
+        {
+            return Resources.ResourceManager.GetString(key);
+        }
     }
 }

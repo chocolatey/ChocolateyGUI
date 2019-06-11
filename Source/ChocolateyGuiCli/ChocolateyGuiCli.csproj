@@ -41,8 +41,8 @@
     <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="chocolatey, Version=0.10.11.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\chocolatey.lib.0.10.11\lib\chocolatey.dll</HintPath>
+    <Reference Include="chocolatey, Version=0.10.15.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\chocolatey.lib.0.10.15\lib\chocolatey.dll</HintPath>
     </Reference>
     <Reference Include="LiteDB, Version=3.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.3.1.4\lib\net35\LiteDB.dll</HintPath>

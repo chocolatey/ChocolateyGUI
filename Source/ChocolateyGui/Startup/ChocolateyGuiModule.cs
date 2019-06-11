@@ -12,6 +12,7 @@ using AutoMapper;
 using Caliburn.Micro;
 using chocolatey;
 using chocolatey.infrastructure.app.configuration;
+using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.filesystem;
 using chocolatey.infrastructure.services;

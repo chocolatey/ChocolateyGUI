@@ -21,6 +21,10 @@
   <xsl:template match="wix:Component[key('dll-search', @Id)]" />
   <xsl:template match="wix:ComponentRef[key('dll-search', @Id)]" />
 
+  <xsl:key name="dll-search" match="wix:Component[contains(wix:File/@Source, 'ChocolateyGui.Common.Windows.dll')]" use="@Id" />
+  <xsl:template match="wix:Component[key('dll-search', @Id)]" />
+  <xsl:template match="wix:ComponentRef[key('dll-search', @Id)]" />
+
   <xsl:key name="vshost-search" match="wix:Component[contains(wix:File/@Source, 'vshost')]" use="@Id" />
   <xsl:template match="wix:Component[key('vshost-search', @Id)]" />
   <xsl:template match="wix:ComponentRef[key('vshost-search', @Id)]" />

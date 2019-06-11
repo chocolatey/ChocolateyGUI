@@ -12,8 +12,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Chocolatey GUI Common Assembly")]
-[assembly: AssemblyDescription("Shareable code for Chocolatey GUI")]
+[assembly: AssemblyTitle("Chocolatey GUI Common Windows Assembly")]
+[assembly: AssemblyDescription("Shareable Windows specific code for Chocolatey GUI")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else

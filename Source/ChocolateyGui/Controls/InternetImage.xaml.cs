@@ -14,7 +14,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
-using ChocolateyGui.Utilities;
+using ChocolateyGui.Common.Windows;
 using ChocolateyGui.Utilities.Extensions;
 using ImageMagick;
 using LiteDB;

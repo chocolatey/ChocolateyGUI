@@ -6,7 +6,7 @@
 
 using System;
 using System.Windows;
-using ChocolateyGui.Utilities;
+using ChocolateyGui.Common.Windows;
 
 namespace ChocolateyGui
 {

@@ -6,11 +6,11 @@
                     xmlns:custom="http://metro.mahapps.com/winfx/xaml/shared"
                     xmlns:converters="clr-namespace:ChocolateyGui.Utilities.Converters"
                     xmlns:commands="clr-namespace:ChocolateyGui.Commands"
-                    xmlns:utilities="clr-namespace:ChocolateyGui.Utilities"
                     xmlns:app="clr-namespace:ChocolateyGui"
                     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
                     xmlns:viewModels="clr-namespace:ChocolateyGui.ViewModels"
+                    xmlns:windows="clr-namespace:ChocolateyGui.Common.Windows;assembly=ChocolateyGui.Common.Windows"
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -28,7 +28,7 @@
     <converters:BooleanInverter x:Key="BooleanInverter" />
 
     <Style x:Key="UacIconStyle" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{x:Static utilities:NativeMethods.UacIcon}"/>
+        <Setter Property="Source" Value="{x:Static windows:NativeMethods.UacIcon}"/>
         <Setter Property="Visibility" Value="{Binding Path=IsElevated, Source={x:Static app:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
     </Style>
 
@@ -37,7 +37,7 @@
           Width="16" Height="16"/>
 
     <Style x:Key="PrimaryUacIconStyle" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{x:Static utilities:NativeMethods.UacIcon}"/>
+        <Setter Property="Source" Value="{x:Static windows:NativeMethods.UacIcon}"/>
         <Setter Property="Visibility" Value="{Binding Path=CanDoCentralActions, Source={x:Static app:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
     </Style>
 
@@ -46,7 +46,7 @@
           Width="16" Height="16"/>
 
     <Style x:Key="TertiaryUacIconStyle" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{x:Static utilities:NativeMethods.UacIcon}"/>
+        <Setter Property="Source" Value="{x:Static windows:NativeMethods.UacIcon}"/>
         <Setter Property="Visibility" Value="{Binding Path=CanDoTertiaryActions, Source={x:Static app:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
     </Style>
 

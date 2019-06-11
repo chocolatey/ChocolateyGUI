@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocolateyGuiCli", "Chocola
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocolateyGui.Common", "ChocolateyGui.Common\ChocolateyGui.Common.csproj", "{A3A40034-4E31-4D05-832A-351C416DCCBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocolateyGui.Common.Windows", "ChocolateyGui.Common.Windows\ChocolateyGui.Common.Windows.csproj", "{4C2E05FE-3F4D-40BE-873C-5D07C8729741}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,18 @@ Global
 		{A3A40034-4E31-4D05-832A-351C416DCCBB}.WIX|Any CPU.Build.0 = Release|Any CPU
 		{A3A40034-4E31-4D05-832A-351C416DCCBB}.WIX|x86.ActiveCfg = Release|Any CPU
 		{A3A40034-4E31-4D05-832A-351C416DCCBB}.WIX|x86.Build.0 = Release|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.Release|x86.Build.0 = Release|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.WIX|Any CPU.ActiveCfg = Release|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.WIX|Any CPU.Build.0 = Release|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.WIX|x86.ActiveCfg = Release|Any CPU
+		{4C2E05FE-3F4D-40BE-873C-5D07C8729741}.WIX|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

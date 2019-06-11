@@ -65,9 +65,11 @@ Task("SignExecutable")
         var filesToSign = new List<string>() {
             BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGui/ChocolateyGui.exe",
             BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGui/ChocolateyGui.Common.dll",
+            BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGui/ChocolateyGui.Common.Windows.dll",
             BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGuiCli/ChocolateyGuiCli.exe",
             BuildParameters.Paths.Directories.PublishedApplications + "/ChocolateyGuiCli/ChocolateyGui.Common.dll",
-            BuildParameters.Paths.Directories.PublishedLibraries + "/ChocolateyGui.Common/ChocolateyGui.Common.dll"
+            BuildParameters.Paths.Directories.PublishedLibraries + "/ChocolateyGui.Common/ChocolateyGui.Common.dll",
+            BuildParameters.Paths.Directories.PublishedLibraries + "/ChocolateyGui.Common.Windows/ChocolateyGui.Common.Windows.dll"
         };
 
         var platformTarget = ToolSettings.BuildPlatformTarget == PlatformTarget.MSIL ? "AnyCPU" : ToolSettings.BuildPlatformTarget.ToString();
@@ -89,6 +91,12 @@ Task("SignExecutable")
             if (parsedProject.RootNameSpace == "ChocolateyGui.Common")
             {
                 filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.Common.dll");
+                continue;
+            }
+
+            if (parsedProject.RootNameSpace == "ChocolateyGui.Common.Windows")
+            {
+                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.Common.Windows.dll");
                 continue;
             }
         }

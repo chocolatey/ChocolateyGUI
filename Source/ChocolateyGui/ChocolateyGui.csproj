@@ -261,7 +261,6 @@
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
     <Compile Include="Utilities\Converters\PackageDependenciesToString.cs" />
-    <Compile Include="Utilities\NativeMethods.cs" />
     <Page Include="Controls\Dialogs\ChocolateyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -436,6 +435,10 @@
     <Resource Include="chocolatey%404.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChocolateyGui.Common.Windows\ChocolateyGui.Common.Windows.csproj">
+      <Project>{4c2e05fe-3f4d-40be-873c-5d07c8729741}</Project>
+      <Name>ChocolateyGui.Common.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChocolateyGui.Common\ChocolateyGui.Common.csproj">
       <Project>{a3a40034-4e31-4d05-832a-351c416dccbb}</Project>
       <Name>ChocolateyGui.Common</Name>

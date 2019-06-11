@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using System.Windows.Data;
+using ChocolateyGui.Common.Windows;
 
 namespace ChocolateyGui.Utilities.Converters
 {

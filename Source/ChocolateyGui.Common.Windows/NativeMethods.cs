@@ -11,13 +11,13 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace ChocolateyGui.Utilities
+namespace ChocolateyGui.Common.Windows
 {
     [SuppressMessage(
         "Microsoft.Performance",
         "CA1812:AvoidUninstantiatedInternalClasses",
         Justification = "PIvoke magic is happening here...")]
-    internal class NativeMethods
+    public class NativeMethods
     {
         private static readonly Lazy<BitmapSource> UacIconLazy = new Lazy<BitmapSource>(GetUacIcon);
 
@@ -159,7 +159,7 @@ namespace ChocolateyGui.Utilities
         }
 
         [DllImport("Shlwapi.dll", CharSet = CharSet.Auto)]
-        internal static extern long StrFormatByteSize(
+        public static extern long StrFormatByteSize(
             long fileSize,
             [MarshalAs(UnmanagedType.LPWStr)] StringBuilder buffer,
             int bufferSize);

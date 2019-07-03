@@ -108,6 +108,8 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\PurgeCommand.cs" />
     <Compile Include="Controls\ObservableRingBufferCollection.cs" />
+    <Compile Include="Enums\ListViewMode.cs" />
+    <Compile Include="Enums\PackagesChangedEventType.cs" />
     <Compile Include="Hacks.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\ChocolateyAggregatedSources.cs" />

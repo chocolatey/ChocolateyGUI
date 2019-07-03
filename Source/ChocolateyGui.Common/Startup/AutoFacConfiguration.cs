@@ -23,7 +23,7 @@ namespace ChocolateyGui.Common.Startup
         public static IContainer RegisterAutoFac()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterAssemblyModules(System.Reflection.Assembly.GetEntryAssembly());
+            builder.RegisterAssemblyModules(System.Reflection.Assembly.GetCallingAssembly());
 
             var license = License.validate_license();
             if (license.IsValid)

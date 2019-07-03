@@ -9,6 +9,7 @@ using System;
 using System.Windows;
 using Autofac;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Windows;
 
 namespace ChocolateyGui
 {

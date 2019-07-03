@@ -35,8 +35,8 @@ BuildParameters.SetParameters(context: Context,
 
 ToolSettings.SetToolSettings(context: Context,
                              dupFinderExcludePattern: new string[] {
-                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Utilities/Converters/BooleanToVisibilityInverted.cs",
-                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui/Startup/ChocolateyGuiModule.cs",
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui.Common.Windows/Utilities/Converters/BooleanToVisibilityInverted.cs",
+                                BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui.Common.Windows/Startup/ChocolateyGuiModule.cs",
                                 BuildParameters.RootDirectoryPath + "/Source/ChocoalteyGuiCli/Startup/ChocolateyGuiCliModule.cs"
                             });
 

@@ -10,14 +10,25 @@
 
     <Grid>
         <DockPanel>
-            <StackPanel DockPanel.Dock="Left" Background="{StaticResource BackgroundColorBrush}">
                 <Grid DockPanel.Dock="Left" MinWidth="250" MaxWidth="300">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0"
+                           Height="150"
+                           Stretch="Uniform"
+                           VerticalAlignment="Top"
+                           Margin="15,15,15,10"
+                           Source="{Binding PrimaryApplicationImageSource}" >
+                    </Image>
                     <ListBox x:Name="SourcesListView"
+                             Grid.Row="1"
                              ItemsSource="{Binding Items}"
                              Background="Transparent"
                              BorderBrush="Transparent"
                              Padding="5,0,-1,0"
-                             Margin="0,100,0,0"
                              SelectedItem="{Binding ActiveItem}">
                         <ListBox.ItemContainerStyleSelector>
                             <viewModels:SourcesListBoxItemStyleSelector ListBoxItemContainerStyleKey="{StaticResource SourcesListBoxItemContainerStyle}"
@@ -31,12 +42,13 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                    <Image Grid.Row="2"
+                           Source="{Binding SecondaryApplicationImageSource}"
+                           Margin="0,15,0,15"
+                           Height="100" />
                 </Grid>
-            </StackPanel>
             <ContentControl x:Name="ActiveItem" />
         </DockPanel>
-        <Image Height="130" Margin="15,-55,0,0" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding ChocolateyLogo}" >
-        </Image>
     </Grid>
 
 </UserControl>

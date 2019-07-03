@@ -14,6 +14,7 @@
                    SaveWindowPosition="True"
                    TitleForeground="Transparent"
                    ShowDialogsOverTitleBar="False"
+                   ShowIconOnTitleBar="False"
                    OverlayOpacity="0.3">
   <Window.CommandBindings>
         <CommandBinding
@@ -35,6 +36,7 @@
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
             <Button x:Name="ShowSettings"
+                    Visibility="{Binding Path=CanShowSettings, Converter={StaticResource BooleanToVisibility}, ConverterParameter=False}"
                     IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"
                     Content="{x:Static properties:Resources.ShellView_ButtonSettings}" ClickMode="Release" cal:Message.Attach="ShowSettings()"/>
             <Button x:Name="ShowAbout"

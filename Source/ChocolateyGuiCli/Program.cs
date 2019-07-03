@@ -16,8 +16,8 @@ using chocolatey.infrastructure.commandline;
 using chocolatey.infrastructure.information;
 using ChocolateyGui.Common;
 using ChocolateyGui.Common.Attributes;
+using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Models;
-using ChocolateyGuiCli.Commands;
 using Console = System.Console;
 
 namespace ChocolateyGuiCli

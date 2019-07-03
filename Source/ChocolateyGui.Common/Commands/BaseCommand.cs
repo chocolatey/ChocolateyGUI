@@ -5,18 +5,21 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using ChocolateyGui.Common.Properties;
+using Serilog;
 
-namespace ChocolateyGuiCli.Commands
+namespace ChocolateyGui.Common.Commands
 {
     public abstract class BaseCommand
     {
+        private static readonly ILogger Logger = Log.ForContext<BaseCommand>();
+
         protected static void PrintExitCodeInformation()
         {
-            Bootstrapper.Logger.Warning(Resources.Command_ExitCodesTitle);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Information(Resources.Command_ExitCodesText);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Warning(Resources.Command_OptionsAndSwitches);
+            Logger.Warning(Resources.Command_ExitCodesTitle);
+            Logger.Information(string.Empty);
+            Logger.Information(Resources.Command_ExitCodesText);
+            Logger.Information(string.Empty);
+            Logger.Warning(Resources.Command_OptionsAndSwitches);
         }
     }
 }

@@ -30,8 +30,6 @@ namespace ChocolateyGuiCli
 
             LogSetup.Execute();
 
-            Container = AutoFacConfiguration.RegisterAutoFac();
-
             var directPath = Path.Combine(logPath, "ChocolateyGuiCli.{Date}.log");
 
             var logConfig = new LoggerConfiguration()
@@ -41,6 +39,8 @@ namespace ChocolateyGuiCli
                 .SetDefaultLevel();
 
             Logger = Log.Logger = logConfig.CreateLogger();
+
+            Container = AutoFacConfiguration.RegisterAutoFac();
         }
     }
 }

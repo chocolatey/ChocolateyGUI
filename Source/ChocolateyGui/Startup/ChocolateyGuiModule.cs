@@ -17,9 +17,11 @@ using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.filesystem;
 using chocolatey.infrastructure.services;
 using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels.Items;
+using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Services;
 using ChocolateyGui.ViewModels;
 using ChocolateyGui.Views;
@@ -104,8 +106,19 @@ namespace ChocolateyGui.Startup
             builder.RegisterInstance(DialogCoordinator.Instance).As<IDialogCoordinator>();
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
 
-            var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
-            builder.Register(c => database).SingleInstance();
+            try
+            {
+                var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
+                builder.Register(c => database).SingleInstance();
+            }
+            catch (IOException ex)
+            {
+                Bootstrapper.Logger.Error(ex, Resources.Error_DatabaseAccessGui);
+                throw;
+            }
+
+            builder.RegisterType<ImageService>().As<IImageService>().SingleInstance();
+            builder.RegisterType<SplashScreenService>().As<ISplashScreenService>().SingleInstance();
         }
     }
 }

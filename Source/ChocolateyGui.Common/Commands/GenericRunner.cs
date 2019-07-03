@@ -9,28 +9,29 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using chocolatey;
-using ChocolateyGui.Common;
 using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
+using Serilog;
 
-namespace ChocolateyGuiCli.Commands
+namespace ChocolateyGui.Common.Commands
 {
     public sealed class GenericRunner
     {
+        private static readonly ILogger Logger = Log.ForContext<GenericRunner>();
+
         public void Run(ChocolateyGuiConfiguration configuration, IContainer container, Action<ICommand> parseArgs)
         {
             var command = FindCommand(configuration, container, parseArgs);
 
             if (configuration.HelpRequested || configuration.UnsuccessfulParsing)
             {
-                Bootstrapper.Container.Dispose();
                 Environment.Exit(configuration.UnsuccessfulParsing ? 1 : 0);
             }
 
             if (command != null)
             {
-                Bootstrapper.Logger.Debug("_ {0}:{1} - Normal Run Mode _".format_with(ApplicationParameters.Name, command.GetType().Name));
+                Logger.Debug("_ {0}:{1} - Normal Run Mode _".format_with(ApplicationParameters.Name, command.GetType().Name));
                 command.Run(configuration);
             }
         }
@@ -48,8 +49,7 @@ namespace ChocolateyGuiCli.Commands
             {
                 if (!string.IsNullOrWhiteSpace(configuration.CommandName))
                 {
-                    Bootstrapper.Logger.Error(Resources.Command_NotFoundError.format_with(configuration.CommandName));
-                    Bootstrapper.Container.Dispose();
+                    Logger.Error(Resources.Command_NotFoundError.format_with(configuration.CommandName));
                     Environment.Exit(-1);
                 }
             }

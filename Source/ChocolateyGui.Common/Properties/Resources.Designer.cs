@@ -647,6 +647,24 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to access Chocolatey GUI Configuration Database.  This typically happens when Chocolatey GUI is already running.  Please close all instances of the application, and try running the command again..
+        /// </summary>
+        public static string Error_DatabaseAccessCli {
+            get {
+                return ResourceManager.GetString("Error_DatabaseAccessCli", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to access Chocolatey GUI Configuration Database.  This typically happens when Chocolatey GUI or Chocolatey GUI CLI is already running.  Please close all instances of the application, and try running it again..
+        /// </summary>
+        public static string Error_DatabaseAccessGui {
+            get {
+                return ResourceManager.GetString("Error_DatabaseAccessGui", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View and configure Chocolatey GUI features.
         /// </summary>
         public static string FeatureCommand_Description {
@@ -2004,6 +2022,26 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NOTE: This feature will only work when using a licensed version of Chocolatey.
+        ///
+        ///Controls whether or not a non-administrator user can access the Settings Screen..
+        /// </summary>
+        public static string SettingsView_ToggleAllowNonAdminAccessToSettingsDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleAllowNonAdminAccessToSettingsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Non Admin Access to Settings.
+        /// </summary>
+        public static string SettingsView_ToggleAllowNonAdminAccessToSettingsTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleAllowNonAdminAccessToSettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default to tile instead of list view. It is still possible to switch during use..
         /// </summary>
         public static string SettingsView_ToggleDefaultTileViewLocalDescription {
@@ -2060,9 +2098,9 @@ namespace ChocolateyGui.Common.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Show additional package information on Local and Remote views..
         /// </summary>
-        public static string SettingsView_ToggleShowAdditionalPackageInformation {
+        public static string SettingsView_ToggleShowAdditionalPackageInformationDescription {
             get {
-                return ResourceManager.GetString("SettingsView_ToggleShowAdditionalPackageInformation", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleShowAdditionalPackageInformationDescription", resourceCulture);
             }
         }
         
@@ -2114,9 +2152,9 @@ namespace ChocolateyGui.Common.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Use Delayed Search.
         /// </summary>
-        public static string SettingsView_UseDelayedSearchTitle {
+        public static string SettingsView_ToggleUseDelayedSearchTitle {
             get {
-                return ResourceManager.GetString("SettingsView_UseDelayedSearchTitle", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ToggleUseDelayedSearchTitle", resourceCulture);
             }
         }
         

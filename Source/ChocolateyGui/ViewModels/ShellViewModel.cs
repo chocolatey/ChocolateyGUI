@@ -7,6 +7,8 @@
 using System;
 using System.Linq;
 using Caliburn.Micro;
+using chocolatey.infrastructure.licensing;
+using ChocolateyGui.Common;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
@@ -21,24 +23,28 @@ namespace ChocolateyGui.ViewModels
         IHandle<ShowSettingsMessage>,
         IHandle<ShowAboutMessage>,
         IHandle<SettingsGoBackMessage>,
-        IHandle<AboutGoBackMessage>
+        IHandle<AboutGoBackMessage>,
+        IHandle<FeatureModifiedMessage>
     {
         private readonly IChocolateyService _chocolateyPackageService;
         private readonly IVersionNumberProvider _versionNumberProvider;
         private readonly IEventAggregator _eventAggregator;
         private readonly SourcesViewModel _sourcesViewModel;
+        private readonly IConfigService _configService;
         private object _lastActiveItem;
 
         public ShellViewModel(
             IChocolateyService chocolateyPackageService,
             IVersionNumberProvider versionNumberProvider,
             IEventAggregator eventAggregator,
-            SourcesViewModel sourcesViewModel)
+            SourcesViewModel sourcesViewModel,
+            IConfigService configService)
         {
             _chocolateyPackageService = chocolateyPackageService;
             _versionNumberProvider = versionNumberProvider;
             _eventAggregator = eventAggregator;
             _sourcesViewModel = sourcesViewModel;
+            _configService = configService;
             Sources = new BindableCollection<SourceViewModel>();
             ActiveItem = _sourcesViewModel;
         }
@@ -57,6 +63,11 @@ namespace ChocolateyGui.ViewModels
         public BindableCollection<SourceViewModel> Sources { get; set; }
 
         public SourcesViewModel SourcesSelectorViewModel => _sourcesViewModel;
+
+        public virtual bool CanShowSettings
+        {
+            get { return true; }
+        }
 
         public void Handle(ShowPackageDetailsMessage message)
         {
@@ -104,6 +115,11 @@ namespace ChocolateyGui.ViewModels
         public void Handle(AboutGoBackMessage message)
         {
             SetActiveItem(_sourcesViewModel);
+        }
+
+        public void Handle(FeatureModifiedMessage message)
+        {
+            NotifyOfPropertyChange(nameof(CanShowSettings));
         }
 
         public void ShowSettings()

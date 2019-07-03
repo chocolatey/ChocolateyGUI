@@ -180,6 +180,8 @@ namespace ChocolateyGui.ViewModels
                 configuration.FeatureCommand.Command = FeatureCommandType.Disable;
                 await Task.Run(() => _configService.DisableFeature(configuration));
             }
+
+            _eventAggregator.PublishOnUIThread(new FeatureModifiedMessage());
         }
 
         public async Task UpdateChocolateyGuiSetting(ChocolateyGuiSetting setting)

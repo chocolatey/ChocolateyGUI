@@ -13,12 +13,14 @@ using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
+using Serilog;
 
-namespace ChocolateyGuiCli.Commands
+namespace ChocolateyGui.Common.Commands
 {
     [LocalizedCommandFor("config", "ConfigCommand_Description")]
     public class ConfigCommand : BaseCommand, ICommand
     {
+        private static readonly ILogger Logger = Log.ForContext<ConfigCommand>();
         private readonly IConfigService _configService;
 
         public ConfigCommand(IConfigService configService)
@@ -26,7 +28,7 @@ namespace ChocolateyGuiCli.Commands
             _configService = configService;
         }
 
-        public void ConfigureArgumentParser(OptionSet optionSet, ChocolateyGuiConfiguration configuration)
+        public virtual void ConfigureArgumentParser(OptionSet optionSet, ChocolateyGuiConfiguration configuration)
         {
             optionSet
                 .Add(
@@ -39,7 +41,7 @@ namespace ChocolateyGuiCli.Commands
                     option => configuration.ConfigCommand.ConfigValue = option.remove_surrounding_quotes());
         }
 
-        public void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
+        public virtual void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
         {
             configuration.Input = string.Join(" ", unparsedArguments);
 
@@ -50,7 +52,7 @@ namespace ChocolateyGuiCli.Commands
             {
                 if (!string.IsNullOrWhiteSpace(unparsedCommand))
                 {
-                    Bootstrapper.Logger.Warning(Resources.ConfigCommand_UnknownCommandError.format_with(unparsedCommand));
+                    Logger.Warning(Resources.ConfigCommand_UnknownCommandError.format_with(unparsedCommand));
                 }
 
                 command = ConfigCommandType.List;
@@ -60,8 +62,7 @@ namespace ChocolateyGuiCli.Commands
 
             if ((configuration.ConfigCommand.Command == ConfigCommandType.List || !string.IsNullOrWhiteSpace(configuration.ConfigCommand.Name)) && unparsedArguments.Count > 1)
             {
-                Bootstrapper.Logger.Error(Resources.ConfigCommand_SingleConfigError);
-                Bootstrapper.Container.Dispose();
+                Logger.Error(Resources.ConfigCommand_SingleConfigError);
                 Environment.Exit(-1);
             }
 
@@ -76,38 +77,36 @@ namespace ChocolateyGuiCli.Commands
             }
         }
 
-        public void HandleValidation(ChocolateyGuiConfiguration configuration)
+        public virtual void HandleValidation(ChocolateyGuiConfiguration configuration)
         {
             if (configuration.ConfigCommand.Command != ConfigCommandType.List &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.Name))
             {
-                Bootstrapper.Logger.Error(Resources.ConfigCommand_MissingNameOptionError.format_with(configuration.ConfigCommand.Command.to_string()));
-                Bootstrapper.Container.Dispose();
+                Logger.Error(Resources.ConfigCommand_MissingNameOptionError.format_with(configuration.ConfigCommand.Command.to_string()));
                 Environment.Exit(-1);
             }
 
             if (configuration.ConfigCommand.Command == ConfigCommandType.Set &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.ConfigValue))
             {
-                Bootstrapper.Logger.Error(Resources.ConfigCommand_MissingValueOptionError.format_with(configuration.ConfigCommand.Command.to_string()));
-                Bootstrapper.Container.Dispose();
+                Logger.Error(Resources.ConfigCommand_MissingValueOptionError.format_with(configuration.ConfigCommand.Command.to_string()));
                 Environment.Exit(-1);
             }
         }
 
-        public void HelpMessage(ChocolateyGuiConfiguration configuration)
+        public virtual void HelpMessage(ChocolateyGuiConfiguration configuration)
         {
-            Bootstrapper.Logger.Warning(Resources.ConfigCommand_Title);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Information(Resources.ConfigCommand_Help);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Warning(Resources.Command_Usage);
-            Bootstrapper.Logger.Information(@"
+            Logger.Warning(Resources.ConfigCommand_Title);
+            Logger.Information(string.Empty);
+            Logger.Information(Resources.ConfigCommand_Help);
+            Logger.Information(string.Empty);
+            Logger.Warning(Resources.Command_Usage);
+            Logger.Information(@"
     chocolateyguicli config [list]|get|set|unset [<options/switches>]
 ");
 
-            Bootstrapper.Logger.Warning(Resources.Command_Examples);
-            Bootstrapper.Logger.Information(@"
+            Logger.Warning(Resources.Command_Examples);
+            Logger.Information(@"
     chocolateyguicli config
     chocolateyguicli config list
     chocolateyguicli config get outdatedPackagesCacheDurationInMinutes
@@ -120,7 +119,7 @@ namespace ChocolateyGuiCli.Commands
             PrintExitCodeInformation();
         }
 
-        public void Run(ChocolateyGuiConfiguration config)
+        public virtual void Run(ChocolateyGuiConfiguration config)
         {
             switch (config.ConfigCommand.Command)
             {

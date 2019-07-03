@@ -65,8 +65,6 @@ namespace ChocolateyGui
 
             LogSetup.Execute();
 
-            Container = AutoFacConfiguration.RegisterAutoFac();
-
             var directPath = Path.Combine(logPath, "ChocolateyGui.{Date}.log");
 
             var logConfig = new LoggerConfiguration()
@@ -75,6 +73,8 @@ namespace ChocolateyGui
                 .SetDefaultLevel();
 
             Logger = Log.Logger = logConfig.CreateLogger();
+
+            Container = AutoFacConfiguration.RegisterAutoFac();
 
             Internationalization.Initialize();
         }
@@ -99,7 +99,8 @@ namespace ChocolateyGui
                 var elevationProvider = Elevation.Instance;
                 elevationProvider.IsBackgroundRunning = backgroundFeature?.Enabled ?? false;
 
-                App.SplashScreen.Close(TimeSpan.FromMilliseconds(300));
+                var splashScreen = Container.Resolve<ISplashScreenService>();
+                splashScreen.Close(TimeSpan.FromMilliseconds(300));
 
                 DisplayRootViewFor<ShellViewModel>();
             }

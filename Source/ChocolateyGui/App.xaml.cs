@@ -6,7 +6,8 @@
 
 using System;
 using System.Windows;
-using ChocolateyGui.Common.Windows;
+using Autofac;
+using ChocolateyGui.Common.Services;
 
 namespace ChocolateyGui
 {
@@ -27,21 +28,11 @@ namespace ChocolateyGui
         [STAThread]
         public static void Main(string[] args)
         {
-            var dpi = NativeMethods.GetScaleFactor();
-            var img = "chocolatey.png";
-            if (dpi >= 2f)
-            {
-                img = "chocolatey@3.png";
-            }
-            else if (dpi > 1.00f)
-            {
-                img = "chocolatey@2.png";
-            }
-
-            SplashScreen = new SplashScreen(img);
-            SplashScreen.Show(true, true);
+            var splashScreenService = Bootstrapper.Container.Resolve<ISplashScreenService>();
+            splashScreenService.Show();
 
             _application.InitializeComponent();
+
             try
             {
                 _application.Run();

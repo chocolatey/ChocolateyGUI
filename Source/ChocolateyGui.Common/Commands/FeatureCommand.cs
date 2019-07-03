@@ -13,12 +13,14 @@ using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
+using Serilog;
 
-namespace ChocolateyGuiCli.Commands
+namespace ChocolateyGui.Common.Commands
 {
     [LocalizedCommandFor("feature", "FeatureCommand_Description")]
     public class FeatureCommand : BaseCommand, ICommand
     {
+        private static readonly ILogger Logger = Log.ForContext<FeatureCommand>();
         private readonly IConfigService _configService;
 
         public FeatureCommand(IConfigService configService)
@@ -26,7 +28,7 @@ namespace ChocolateyGuiCli.Commands
             _configService = configService;
         }
 
-        public void ConfigureArgumentParser(OptionSet optionSet, ChocolateyGuiConfiguration configuration)
+        public virtual void ConfigureArgumentParser(OptionSet optionSet, ChocolateyGuiConfiguration configuration)
         {
             optionSet
                 .Add(
@@ -35,14 +37,13 @@ namespace ChocolateyGuiCli.Commands
                     option => configuration.FeatureCommand.Name = option.remove_surrounding_quotes());
         }
 
-        public void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
+        public virtual void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
         {
             configuration.Input = string.Join(" ", unparsedArguments);
 
             if (unparsedArguments.Count > 1)
             {
-                Bootstrapper.Logger.Error(Resources.FeatureCommand_SingleFeatureError);
-                Bootstrapper.Container.Dispose();
+                Logger.Error(Resources.FeatureCommand_SingleFeatureError);
                 Environment.Exit(-1);
             }
 
@@ -53,7 +54,7 @@ namespace ChocolateyGuiCli.Commands
             {
                 if (!string.IsNullOrWhiteSpace(unparsedCommand))
                 {
-                    Bootstrapper.Logger.Warning(Resources.FeatureCommand_UnknownCommandError.format_with(unparsedCommand));
+                    Logger.Warning(Resources.FeatureCommand_UnknownCommandError.format_with(unparsedCommand));
                 }
 
                 command = FeatureCommandType.List;
@@ -62,28 +63,27 @@ namespace ChocolateyGuiCli.Commands
             configuration.FeatureCommand.Command = command;
         }
 
-        public void HandleValidation(ChocolateyGuiConfiguration configuration)
+        public virtual void HandleValidation(ChocolateyGuiConfiguration configuration)
         {
             if (configuration.FeatureCommand.Command != FeatureCommandType.List && string.IsNullOrWhiteSpace(configuration.FeatureCommand.Name))
             {
-                Bootstrapper.Logger.Error(Resources.FeatureCommand_MissingNameOptionError.format_with(configuration.FeatureCommand.Command.to_string()));
-                Bootstrapper.Container.Dispose();
+                Logger.Error(Resources.FeatureCommand_MissingNameOptionError.format_with(configuration.FeatureCommand.Command.to_string()));
                 Environment.Exit(-1);
             }
         }
 
-        public void HelpMessage(ChocolateyGuiConfiguration configuration)
+        public virtual void HelpMessage(ChocolateyGuiConfiguration configuration)
         {
-            Bootstrapper.Logger.Warning(Resources.FeatureCommand_Title);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Information(Resources.FeatureCommand_Help);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Warning(Resources.Command_Usage);
-            Bootstrapper.Logger.Information(@"
+            Logger.Warning(Resources.FeatureCommand_Title);
+            Logger.Information(string.Empty);
+            Logger.Information(Resources.FeatureCommand_Help);
+            Logger.Information(string.Empty);
+            Logger.Warning(Resources.Command_Usage);
+            Logger.Information(@"
     chocolateyguicli feature [list]|disable|enable [<options/switches>]
 ");
-            Bootstrapper.Logger.Warning(Resources.Command_Examples);
-            Bootstrapper.Logger.Information(@"
+            Logger.Warning(Resources.Command_Examples);
+            Logger.Information(@"
     chocolateyguicli feature
     chocolateyguicli feature list
     chocolateyguicli feature disable -n=ShowConsoleOutput
@@ -93,7 +93,7 @@ namespace ChocolateyGuiCli.Commands
             PrintExitCodeInformation();
         }
 
-        public void Run(ChocolateyGuiConfiguration config)
+        public virtual void Run(ChocolateyGuiConfiguration config)
         {
             switch (config.FeatureCommand.Command)
             {

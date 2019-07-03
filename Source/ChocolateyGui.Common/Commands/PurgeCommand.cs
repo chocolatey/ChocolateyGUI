@@ -13,12 +13,14 @@ using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
+using Serilog;
 
-namespace ChocolateyGuiCli.Commands
+namespace ChocolateyGui.Common.Commands
 {
     [LocalizedCommandFor("purge", "PurgeCommand_Description")]
     public class PurgeCommand : BaseCommand, ICommand
     {
+        private static readonly ILogger Logger = Log.ForContext<PurgeCommand>();
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
 
         public PurgeCommand(IChocolateyGuiCacheService chocolateyGuiCacheService)
@@ -26,18 +28,17 @@ namespace ChocolateyGuiCli.Commands
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
         }
 
-        public void ConfigureArgumentParser(OptionSet optionSet, ChocolateyGuiConfiguration configuration)
+        public virtual void ConfigureArgumentParser(OptionSet optionSet, ChocolateyGuiConfiguration configuration)
         {
             // There are no additional options for this command currently
         }
 
-        public void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
+        public virtual void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
         {
             configuration.Input = string.Join(" ", unparsedArguments);
 
             if (unparsedArguments.Count > 1)
             {
-                Bootstrapper.Container.Dispose();
                 Environment.Exit(-1);
             }
 
@@ -47,28 +48,27 @@ namespace ChocolateyGuiCli.Commands
             configuration.PurgeCommand.Command = command;
         }
 
-        public void HandleValidation(ChocolateyGuiConfiguration configuration)
+        public virtual void HandleValidation(ChocolateyGuiConfiguration configuration)
         {
             if (configuration.PurgeCommand.Command == PurgeCommandType.Unknown)
             {
-                Bootstrapper.Logger.Error(Resources.PurgeCommand_UnknownCommandError.format_with(configuration.Input, "icons", "outdated"));
-                Bootstrapper.Container.Dispose();
+                Logger.Error(Resources.PurgeCommand_UnknownCommandError.format_with(configuration.Input, "icons", "outdated"));
                 Environment.Exit(-1);
             }
         }
 
-        public void HelpMessage(ChocolateyGuiConfiguration configuration)
+        public virtual void HelpMessage(ChocolateyGuiConfiguration configuration)
         {
-            Bootstrapper.Logger.Warning(Resources.PurgeCommand_Title);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Information(Resources.PurgeCommand_Help);
-            Bootstrapper.Logger.Information(string.Empty);
-            Bootstrapper.Logger.Warning(Resources.Command_Usage);
-            Bootstrapper.Logger.Information(@"
+            Logger.Warning(Resources.PurgeCommand_Title);
+            Logger.Information(string.Empty);
+            Logger.Information(Resources.PurgeCommand_Help);
+            Logger.Information(string.Empty);
+            Logger.Warning(Resources.Command_Usage);
+            Logger.Information(@"
     chocolateyguicli pruge icons|outdated [<options/switches>]
 ");
-            Bootstrapper.Logger.Warning(Resources.Command_Examples);
-            Bootstrapper.Logger.Information(@"
+            Logger.Warning(Resources.Command_Examples);
+            Logger.Information(@"
     chocolateyguicli purge icons
     chocolateyguicli purge outdated
 ");
@@ -76,7 +76,7 @@ namespace ChocolateyGuiCli.Commands
             PrintExitCodeInformation();
         }
 
-        public void Run(ChocolateyGuiConfiguration config)
+        public virtual void Run(ChocolateyGuiConfiguration config)
         {
             switch (config.PurgeCommand.Command)
             {

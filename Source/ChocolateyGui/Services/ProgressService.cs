@@ -13,7 +13,6 @@ using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Controls;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
-using ChocolateyGui.Common.Services;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Utilities.Extensions;
 using ChocolateyGui.Views;

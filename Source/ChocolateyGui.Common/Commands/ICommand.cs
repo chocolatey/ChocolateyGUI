@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using chocolatey.infrastructure.commandline;
 using ChocolateyGui.Common.Models;
 
-namespace ChocolateyGuiCli.Commands
+namespace ChocolateyGui.Common.Commands
 {
     /// <summary>
     ///   Commands that can be configured and run

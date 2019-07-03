@@ -10,10 +10,12 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using chocolatey.infrastructure.filesystem;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Controls.Dialogs;
 using ChocolateyGui.Services;
 using MahApps.Metro.Controls.Dialogs;
@@ -29,6 +31,7 @@ namespace ChocolateyGui.Views
         private readonly IConfigService _configService;
         private readonly IProgressService _progressService;
         private readonly IFileSystem _fileSystem;
+        private readonly IImageService _imageService;
 
         private bool _closeInitiated = false;
 
@@ -36,7 +39,8 @@ namespace ChocolateyGui.Views
             IProgressService progressService,
             IChocolateyConfigurationProvider chocolateyConfigurationProvider,
             IConfigService configService,
-            IFileSystem fileSystem)
+            IFileSystem fileSystem,
+            IImageService imageService)
         {
             InitializeComponent();
 
@@ -50,6 +54,9 @@ namespace ChocolateyGui.Views
             _chocolateyConfigurationProvider = chocolateyConfigurationProvider;
             _configService = configService;
             _fileSystem = fileSystem;
+            _imageService = imageService;
+
+            this.Icon = BitmapFrame.Create(_imageService.ToolbarIconUri);
 
             CheckOperatingSystemCompatibility();
 

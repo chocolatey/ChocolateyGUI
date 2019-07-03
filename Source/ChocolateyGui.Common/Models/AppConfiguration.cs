@@ -40,8 +40,12 @@ namespace ChocolateyGui.Common.Models
         [Feature]
         public bool ShowAggregatedSourceView { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleShowAdditionalPackageInformation")]
+        [LocalizedDescription("SettingsView_ToggleShowAdditionalPackageInformationDescription")]
         [Feature]
         public bool ShowAdditionalPackageInformation { get; set; }
+
+        [LocalizedDescription("SettingsView_ToggleAllowNonAdminAccessToSettingsDescription")]
+        [Feature]
+        public bool AllowNonAdminAccessToSettings { get; set; }
     }
 }

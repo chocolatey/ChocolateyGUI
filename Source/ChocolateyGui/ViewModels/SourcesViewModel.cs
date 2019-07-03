@@ -11,13 +11,13 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels;
+using ChocolateyGui.Common.Windows.Services;
 
 namespace ChocolateyGui.ViewModels
 {
@@ -26,18 +26,21 @@ namespace ChocolateyGui.ViewModels
         private readonly IChocolateyService _packageService;
         private readonly CreateRemove _remoteSourceVmFactory;
         private readonly IConfigService _configService;
+        private readonly IImageService _imageService;
 
         private bool _firstLoad = true;
 
         public SourcesViewModel(
             IChocolateyService packageService,
             IConfigService configService,
+            IImageService imageService,
             IEventAggregator eventAggregator,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
             CreateRemove remoteSourceVmFactory)
         {
             _packageService = packageService;
             _configService = configService;
+            _imageService = imageService;
             _remoteSourceVmFactory = remoteSourceVmFactory;
 
             if (localSourceVmFactory == null)
@@ -61,14 +64,14 @@ namespace ChocolateyGui.ViewModels
 
         public delegate RemoteSourceViewModel CreateRemove(ChocolateySource source);
 
-        public ImageSource ChocolateyLogo
+        public ImageSource PrimaryApplicationImageSource
         {
-            get
-            {
-                var image = new BitmapImage(new Uri("pack://application:,,,/ChocolateyGui;component/chocolatey_logo.png", UriKind.RelativeOrAbsolute));
-                image.Freeze();
-                return image;
-            }
+            get { return _imageService.PrimaryApplicationImage; }
+        }
+
+        public ImageSource SecondaryApplicationImageSource
+        {
+            get { return _imageService.SecondaryApplicationImage; }
         }
 
         public async Task LoadSources()

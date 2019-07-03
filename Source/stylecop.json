@@ -9,8 +9,9 @@
   "settings": {
     "documentationRules": {
       "companyName": "Chocolatey",
-      "copyrightText": "Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC",
-      "xmlHeader": true
+      "copyrightText": "Copyright 2017 - Present Chocolatey Software, LLC\nCopyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC",
+      "xmlHeader": true,
+      "headerDecoration": "--------------------------------------------------------------------------------------------------------------------"
     },
     "layoutRules": {
       "newlineAtEndOfFile": "omit"

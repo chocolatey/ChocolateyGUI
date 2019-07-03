@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace ChocolateyGui.Startup
+namespace ChocolateyGui.Common.Windows.Startup
 {
     public static class Internationalization
     {

@@ -8,7 +8,6 @@
 using System;
 using System.Linq;
 using Caliburn.Micro;
-using chocolatey.infrastructure.licensing;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;

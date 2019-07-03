@@ -1,18 +1,22 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ChocolateyGuiCliModule.cs" company="Chocolatey">
-//  Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+//   Copyright 2017 - Present Chocolatey Software, LLC
+//   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.IO;
 using Autofac;
 using chocolatey;
 using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.filesystem;
 using chocolatey.infrastructure.services;
+using ChocolateyGui.Common;
+using ChocolateyGui.Common.Commands;
+using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
-using ChocolateyGuiCli.Commands;
 using LiteDB;
 
 namespace ChocolateyGuiCli.Startup
@@ -36,13 +40,24 @@ namespace ChocolateyGuiCli.Startup
             builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
             builder.RegisterType<ChocolateyGuiCacheService>().As<IChocolateyGuiCacheService>().SingleInstance();
 
-            var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
-            builder.Register(c => database).SingleInstance();
+            try
+            {
+                var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
+                builder.Register(c => database).SingleInstance();
+            }
+            catch (IOException ex)
+            {
+                Bootstrapper.Logger.Error(ex, Resources.Error_DatabaseAccessCli);
+                Environment.Exit(-1);
+            }
 
             // Commands
-            builder.RegisterType<FeatureCommand>().As<ICommand>().SingleInstance();
-            builder.RegisterType<ConfigCommand>().As<ICommand>().SingleInstance();
-            builder.RegisterType<PurgeCommand>().As<ICommand>().SingleInstance();
+            // These are using Named registrations to aid with the "finding" of these components
+            // within the Container.  As suggested in this Stack Overflow question:
+            // https://stackoverflow.com/questions/4999000/replace-registration-in-autofac
+            builder.RegisterType<FeatureCommand>().As<ICommand>().SingleInstance().Named<ICommand>(ApplicationParameters.FeatureCommandName);
+            builder.RegisterType<ConfigCommand>().As<ICommand>().SingleInstance().Named<ICommand>(ApplicationParameters.ConfigCommandName);
+            builder.RegisterType<PurgeCommand>().As<ICommand>().SingleInstance().Named<ICommand>(ApplicationParameters.PurgeCommandName);
         }
     }
 }

@@ -5,27 +5,27 @@
     <security>
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
         <!-- UAC Manifest Options
-            Specifying requestedExecutionLevel node (below) will disable file and 
+            Specifying requestedExecutionLevel node (below) will disable file and
              registry virtualization.
-           
+
             Set level to "asInvoker" when you want to run under the context
              of the user invoking.
-             
-            Set level to "requireAdministrator" to only allow administrators to 
+
+            Set level to "requireAdministrator" to only allow administrators to
              run ChocolateyGUI.
-            
-            Set level to "highestAvailable" to allow non-admins to run in 
+
+            Set level to "highestAvailable" to allow non-admins to run in
              non-administrative context, but require administrators to always run
              with administrative privileges. This is the recommended behavior.
-            
-            The following is an unsupported use case: If you want to utilize File 
-             and Registry Virtualization for backward compatibility then delete 
+
+            The following is an unsupported use case: If you want to utilize File
+             and Registry Virtualization for backward compatibility then delete
              the requestedExecutionLevel node.
-            
+
             NOTE: If you do change this file, make sure that you change the
-             modification date on ChocolateyGUI.exe that this sits next to. 
-             Windows caches manifests based on path and last modified date. So 
-             you'll need to change the modification date on ChocolateyGUI.exe 
+             modification date on ChocolateyGUI.exe that this sits next to.
+             Windows caches manifests based on path and last modified date. So
+             you'll need to change the modification date on ChocolateyGUI.exe
              for the manifest change to take effect.
              Details: https://github.com/chocolatey/choco/issues/1292#issuecomment-304068121
         -->

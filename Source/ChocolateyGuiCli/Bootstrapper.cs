@@ -1,6 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Bootstrapper.cs" company="Chocolatey">
-//  Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+//   Copyright 2017 - Present Chocolatey Software, LLC
+//   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -30,8 +31,6 @@ namespace ChocolateyGuiCli
 
             LogSetup.Execute();
 
-            Container = AutoFacConfiguration.RegisterAutoFac();
-
             var directPath = Path.Combine(logPath, "ChocolateyGuiCli.{Date}.log");
 
             var logConfig = new LoggerConfiguration()
@@ -41,6 +40,8 @@ namespace ChocolateyGuiCli
                 .SetDefaultLevel();
 
             Logger = Log.Logger = logConfig.CreateLogger();
+
+            Container = AutoFacConfiguration.RegisterAutoFac();
         }
     }
 }

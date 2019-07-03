@@ -1,11 +1,14 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="App.xaml.cs">
-//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+//   Copyright 2017 - Present Chocolatey Software, LLC
+//   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
 using System.Windows;
+using Autofac;
+using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows;
 
 namespace ChocolateyGui
@@ -27,21 +30,11 @@ namespace ChocolateyGui
         [STAThread]
         public static void Main(string[] args)
         {
-            var dpi = NativeMethods.GetScaleFactor();
-            var img = "chocolatey.png";
-            if (dpi >= 2f)
-            {
-                img = "chocolatey@3.png";
-            }
-            else if (dpi > 1.00f)
-            {
-                img = "chocolatey@2.png";
-            }
-
-            SplashScreen = new SplashScreen(img);
-            SplashScreen.Show(true, true);
+            var splashScreenService = Bootstrapper.Container.Resolve<ISplashScreenService>();
+            splashScreenService.Show();
 
             _application.InitializeComponent();
+
             try
             {
                 _application.Run();

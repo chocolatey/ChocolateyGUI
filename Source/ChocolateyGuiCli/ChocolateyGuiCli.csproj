@@ -77,12 +77,6 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Startup\ChocolateyGuiCliModule.cs" />
-    <Compile Include="Commands\BaseCommand.cs" />
-    <Compile Include="Commands\ConfigCommand.cs" />
-    <Compile Include="Commands\FeatureCommand.cs" />
-    <Compile Include="Commands\GenericRunner.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\PurgeCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

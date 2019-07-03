@@ -1,11 +1,11 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="NativeMethods.cs">
-//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+//   Copyright 2017 - Present Chocolatey Software, LLC
+//   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -13,11 +13,7 @@ using System.Windows.Media.Imaging;
 
 namespace ChocolateyGui.Common.Windows
 {
-    [SuppressMessage(
-        "Microsoft.Performance",
-        "CA1812:AvoidUninstantiatedInternalClasses",
-        Justification = "PIvoke magic is happening here...")]
-    public class NativeMethods
+    public static class NativeMethods
     {
         private static readonly Lazy<BitmapSource> UacIconLazy = new Lazy<BitmapSource>(GetUacIcon);
 

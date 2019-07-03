@@ -1,6 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="Program.cs">
-//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+//   Copyright 2017 - Present Chocolatey Software, LLC
+//   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,8 +17,8 @@ using chocolatey.infrastructure.commandline;
 using chocolatey.infrastructure.information;
 using ChocolateyGui.Common;
 using ChocolateyGui.Common.Attributes;
+using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Models;
-using ChocolateyGuiCli.Commands;
 using Console = System.Console;
 
 namespace ChocolateyGuiCli

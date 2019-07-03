@@ -1,6 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="AppConfiguration.cs">
-//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+//   Copyright 2017 - Present Chocolatey Software, LLC
+//   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -40,8 +41,12 @@ namespace ChocolateyGui.Common.Models
         [Feature]
         public bool ShowAggregatedSourceView { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleShowAdditionalPackageInformation")]
+        [LocalizedDescription("SettingsView_ToggleShowAdditionalPackageInformationDescription")]
         [Feature]
         public bool ShowAdditionalPackageInformation { get; set; }
+
+        [LocalizedDescription("SettingsView_ToggleAllowNonAdminAccessToSettingsDescription")]
+        [Feature]
+        public bool AllowNonAdminAccessToSettings { get; set; }
     }
 }

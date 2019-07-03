@@ -101,7 +101,15 @@
     <Compile Include="Base\ObservableBase.cs" />
     <Compile Include="ChocolateyExtensions.cs" />
     <Compile Include="ColouredConsoleSink.cs" />
+    <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\ConfigCommand.cs" />
+    <Compile Include="Commands\FeatureCommand.cs" />
+    <Compile Include="Commands\GenericRunner.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\PurgeCommand.cs" />
     <Compile Include="Controls\ObservableRingBufferCollection.cs" />
+    <Compile Include="Enums\ListViewMode.cs" />
+    <Compile Include="Enums\PackagesChangedEventType.cs" />
     <Compile Include="Hacks.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\ChocolateyAggregatedSources.cs" />
@@ -119,6 +127,7 @@
     <Compile Include="Models\LogLevel.cs" />
     <Compile Include="Models\LogMessage.cs" />
     <Compile Include="Models\Messages\AboutGoBackMessage.cs" />
+    <Compile Include="Models\Messages\FeatureModifiedMessage.cs" />
     <Compile Include="Models\Messages\PackageChangedMessage.cs" />
     <Compile Include="Models\Messages\PackageHasUpdateMessage.cs" />
     <Compile Include="Models\Messages\ResetScrollPositionMessage.cs" />
@@ -155,6 +164,7 @@
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Services\IFileStorageService.cs" />
     <Compile Include="Services\IPersistenceService.cs" />
+    <Compile Include="Services\ISplashScreenService.cs" />
     <Compile Include="Services\LiteDBFileStorageService.cs" />
     <Compile Include="Startup\AutoFacConfiguration.cs" />
     <Compile Include="Utilities\DefaultsExtensions.cs" />

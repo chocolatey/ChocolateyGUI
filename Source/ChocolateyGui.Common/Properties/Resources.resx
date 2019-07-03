@@ -896,9 +896,7 @@ Normal:
     <value>Prerelease</value>
   </data>
   <data name="SettingsView_ToggleAllowNonAdminAccessToSettingsDescription" xml:space="preserve">
-    <value>NOTE: This feature will only work when using a licensed version of Chocolatey.
-
-Controls whether or not a non-administrator user can access the Settings Screen.</value>
+    <value>Controls whether or not a non-administrator user can access the Settings Screen.  NOTE: This feature will only work when using the licensed extension for Chocolatey and Chocolatey GUI.</value>
   </data>
   <data name="SettingsView_ToggleAllowNonAdminAccessToSettingsTitle" xml:space="preserve">
     <value>Allow Non Admin Access to Settings</value>

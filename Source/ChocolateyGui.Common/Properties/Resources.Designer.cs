@@ -2022,9 +2022,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NOTE: This feature will only work when using a licensed version of Chocolatey.
-        ///
-        ///Controls whether or not a non-administrator user can access the Settings Screen..
+        ///   Looks up a localized string similar to Controls whether or not a non-administrator user can access the Settings Screen.  NOTE: This feature will only work when using the licensed extension for Chocolatey and Chocolatey GUI..
         /// </summary>
         public static string SettingsView_ToggleAllowNonAdminAccessToSettingsDescription {
             get {

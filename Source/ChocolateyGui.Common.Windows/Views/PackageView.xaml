@@ -19,7 +19,8 @@
 
     <FrameworkElement.CommandBindings>
         <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="HandleMarkdownLink" />
-    </FrameworkElement.CommandBindings>
+    </FrameworkElement.CommandBindings>
+
     <UserControl.Resources>
         <converters:NullToVisibility x:Key="UriToVisibilty" />
         <converters:NullToVisibility x:Key="NullToVisibility" />

@@ -6,7 +6,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -14,11 +13,7 @@ using System.Windows.Media.Imaging;
 
 namespace ChocolateyGui.Common.Windows
 {
-    [SuppressMessage(
-        "Microsoft.Performance",
-        "CA1812:AvoidUninstantiatedInternalClasses",
-        Justification = "PIvoke magic is happening here...")]
-    public class NativeMethods
+    public static class NativeMethods
     {
         private static readonly Lazy<BitmapSource> UacIconLazy = new Lazy<BitmapSource>(GetUacIcon);
 

@@ -476,7 +476,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown command &apos;{0}&apos;. Setting to list..
+        ///   Looks up a localized string similar to Unknown command &apos;{0}&apos;. Setting to &apos;{1}&apos;..
         /// </summary>
         public static string ConfigCommand_UnknownCommandError {
             get {
@@ -773,7 +773,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown command &apos;{0}&apos;. Setting to list..
+        ///   Looks up a localized string similar to Unknown command &apos;{0}&apos;. Setting to &apos;{1}&apos;..
         /// </summary>
         public static string FeatureCommand_UnknownCommandError {
             get {

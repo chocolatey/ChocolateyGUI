@@ -265,7 +265,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please run chocolateyguicli with `{0}` for specific help on each command.
+        ///   Looks up a localized string similar to Please run {0} with `{0} -?` or &apos;{0} &lt;command&gt; -?&apos; for specific help on each command.
         /// </summary>
         public static string Command_CommandsText {
             get {

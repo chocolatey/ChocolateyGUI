@@ -132,10 +132,15 @@
   <data name="ChocolateyRemotePackageService_ExceptionFormat" xml:space="preserve">
     <value>
 Exception: {0}</value>
+    <comment>{0} = The Exception message that is associated with the error that is currently being thrown.</comment>
   </data>
   <data name="ChocolateyRemotePackageService_InstallFailedMessage" xml:space="preserve">
     <value>Failed to install package "{0}", version "{1}".
 Error: {2}{3}</value>
+    <comment>{0} = The name of the package that failed to install
+{1} = The version of the package that failed to install
+{2} = A collection of messages returned from Chocolatey
+{3} = The message of the exception that is being thrown</comment>
   </data>
   <data name="ChocolateyRemotePackageService_InstallFailedTitle" xml:space="preserve">
     <value>Failed to install package.</value>
@@ -143,6 +148,10 @@ Error: {2}{3}</value>
   <data name="ChocolateyRemotePackageService_PinFailedMessage" xml:space="preserve">
     <value>Failed to pin package "{0}", version "{1}".
 Error: {2}{3}</value>
+    <comment>{0} = The name of the package that failed to pin
+{1} = The version of the package that failed to pin
+{2} = A collection of messages returned from Chocolatey
+{3} = The message of the exception that is being thrown</comment>
   </data>
   <data name="ChocolateyRemotePackageService_PinFailedTitle" xml:space="preserve">
     <value>Failed to pin package.</value>
@@ -150,6 +159,10 @@ Error: {2}{3}</value>
   <data name="ChocolateyRemotePackageService_UninstallFailedMessage" xml:space="preserve">
     <value>Failed to uninstall package "{0}", version "{1}".
 Error: {2}{3}</value>
+    <comment>{0} = The name of the package that failed to uninstall
+{1} = The version of the package that failed to uninstall
+{2} = A collection of messages returned from Chocolatey
+{3} = The message of the exception that is being thrown</comment>
   </data>
   <data name="ChocolateyRemotePackageService_UninstallFailedTitle" xml:space="preserve">
     <value>Failed to uninstall package.</value>
@@ -157,6 +170,10 @@ Error: {2}{3}</value>
   <data name="ChocolateyRemotePackageService_UnpinFailedMessage" xml:space="preserve">
     <value>Failed to unpin package "{0}", version "{1}".
 Error {2}{3}</value>
+    <comment>{0} = The name of the package that failed to unpin
+{1} = The version of the package that failed to unpin
+{2} = A collection of messages returned from Chocolatey
+{3} = The message of the exception that is being thrown</comment>
   </data>
   <data name="ChocolateyRemotePackageService_UnpinFailedTitle" xml:space="preserve">
     <value>Failed to unpin package.</value>
@@ -164,6 +181,9 @@ Error {2}{3}</value>
   <data name="ChocolateyRemotePackageService_UpdateFailedMessage" xml:space="preserve">
     <value>Failed to update package "{0}".
 Error: {1}{2}</value>
+    <comment>{0} = The name of the package that failed to update
+{1} = A collection of messages returned from Chocolatey
+{2} = The message of the exception that is being thrown</comment>
   </data>
   <data name="ChocolateyRemotePackageService_UpdateFailedTitle" xml:space="preserve">
     <value>Failed to update package.</value>
@@ -411,6 +431,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="RemoteSourceViewModel_UnableToConnectToFeed" xml:space="preserve">
     <value>Unable to connect to feed with Source: {0}.  Please check that this feed is accessible, and try again.</value>
+    <comment>{0} = The URL of the source that isn't accessible</comment>
   </data>
   <data name="RemoteSourceView_Authors" xml:space="preserve">
     <value>Authors:</value>
@@ -572,6 +593,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="VersionNumberProvider_VersionFormat" xml:space="preserve">
     <value>Version: {0}</value>
+    <comment>{0} = The Informational Version Number of the Assembly that is currently being executed</comment>
   </data>
   <data name="SettingsView_SourcesBypassProxy" xml:space="preserve">
     <value>Bypass Proxy</value>
@@ -680,9 +702,11 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="Command_CommandsListText" xml:space="preserve">
     <value>This is a listing of all of the different things you can pass to {0}.</value>
+    <comment>{0} = Is equal to 'chocolateyguicli'</comment>
   </data>
   <data name="Command_CommandsText" xml:space="preserve">
-    <value>Please run chocolateyguicli with `{0}` for specific help on each command</value>
+    <value>Please run {0} with `{0} -?` or '{0} &lt;command&gt; -?' for specific help on each command</value>
+    <comment>{0} = Is equal to 'chocolateyguicli'</comment>
   </data>
   <data name="Command_CommandsTitle" xml:space="preserve">
     <value>Commands</value>
@@ -714,6 +738,7 @@ Normal:
   </data>
   <data name="Command_NotFoundError" xml:space="preserve">
     <value>Could not find a command registered that meets '{0}'. Try chocolateyguicli -? for command reference/help.</value>
+    <comment>{0} = Is the name of the command that couldn't be found.  Shown if the end user is trying to run a feature that doesn't exist.</comment>
   </data>
   <data name="Command_OptionsAndSwitches" xml:space="preserve">
     <value>Options and Switches</value>
@@ -723,6 +748,7 @@ Normal:
   </data>
   <data name="ConfigCommand_ConfigNotFoundError" xml:space="preserve">
     <value>Config '{0}' not found.</value>
+    <comment>{0} = Is the name of the configuration parameter that can't be found.  Shown if the end user is trying to set a configuration parameter that doesn't exist.</comment>
   </data>
   <data name="ConfigCommand_Description" xml:space="preserve">
     <value>Retrieve and configure Chocolatey GUI config settings</value>
@@ -732,9 +758,11 @@ Normal:
   </data>
   <data name="ConfigCommand_MissingNameOptionError" xml:space="preserve">
     <value>When specifying the subcommand '{0}', you must also specify --name by option or position.</value>
+    <comment>{0} = The subcommand name that isn't being executed correctly.  For example chocolateyguicli config get, where "get" is what would be shown.</comment>
   </data>
   <data name="ConfigCommand_MissingValueOptionError" xml:space="preserve">
     <value>When specifying the subcommand '{0}', you must also specify --value by option or position.</value>
+    <comment>{0} = The subcommand name that isn't being executed correctly.  For example chocolateyguicli config get, where "get" is what would be shown.</comment>
   </data>
   <data name="ConfigCommand_NameOption" xml:space="preserve">
     <value>Name - the name of the config setting. Required with some actions. Defaults to empty.</value>
@@ -747,12 +775,16 @@ Normal:
   </data>
   <data name="ConfigCommand_UnknownCommandError" xml:space="preserve">
     <value>Unknown command '{0}'. Setting to list.</value>
+    <comment>{0} = The unknown subcommand that the user tried to pass in.  For example, if the user tried to run the command "chocolateyguicli config blah", here "blah" would be unrecognised, but rather than erroring the command, instead, the command "chocolateyguicli config list" will be executed.  i.e. the subcommand has been set to "list"</comment>
   </data>
   <data name="ConfigCommand_Unset" xml:space="preserve">
     <value>Unset {0}</value>
+    <comment>{0} = The name of the configuration parameter which has been unset</comment>
   </data>
   <data name="ConfigCommand_Updated" xml:space="preserve">
     <value>Updated {0} = {1}</value>
+    <comment>{0} = The name of the configuration property that has just been changed
+{1} = The value that has just been set for the configuration property</comment>
   </data>
   <data name="ConfigCommand_ValueOption" xml:space="preserve">
     <value>Value - the value of the config setting. Required with some actions. Defaults to empty.</value>
@@ -765,21 +797,25 @@ Normal:
   </data>
   <data name="FeatureCommand_DisabledWarning" xml:space="preserve">
     <value>Disabled {0}</value>
+    <comment>{0} = The name of the feature that has just been disabled.</comment>
   </data>
   <data name="FeatureCommand_Enabled" xml:space="preserve">
     <value>Enabled</value>
   </data>
   <data name="FeatureCommand_EnabledWarning" xml:space="preserve">
     <value>Enabled {0}</value>
+    <comment>{0} = The name of the feature that has just been enabled.</comment>
   </data>
   <data name="FeatureCommand_FeatureNotFoundError" xml:space="preserve">
     <value>Feature '{0}' not found</value>
+    <comment>{0} = The name of the feature that couldn't be found.  i.e. the user has attempted to get or set a feature with a name that doesn't exist.</comment>
   </data>
   <data name="FeatureCommand_Help" xml:space="preserve">
     <value>Chocolatey GUI will allow you to interact with features.</value>
   </data>
   <data name="FeatureCommand_MissingNameOptionError" xml:space="preserve">
     <value>When specifying the subcommand '{0}', you must also specify --name.</value>
+    <comment>{0} = The subcommand name that isn't being executed correctly.  For example chocolateyguicli config get, where "get" is what would be shown.</comment>
   </data>
   <data name="FeatureCommand_NameOption" xml:space="preserve">
     <value>Name - the name of the feature. Defaults to empty.</value>
@@ -795,6 +831,7 @@ Normal:
   </data>
   <data name="FeatureCommand_UnknownCommandError" xml:space="preserve">
     <value>Unknown command '{0}'. Setting to list.</value>
+    <comment>{0} = The unknown subcommand that the user tried to pass in.  For example, if the user tried to run the command "chocolateyguicli config blah", here "blah" would be unrecognised, but rather than erroring the command, instead, the command "chocolateyguicli config list" will be executed.  i.e. the subcommand has been set to "list"</comment>
   </data>
   <data name="SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription" xml:space="preserve">
     <value>Default timeout for outdated packages to be cached.  Default is 60 minutes.</value>
@@ -807,6 +844,7 @@ Normal:
   </data>
   <data name="Command_UseFeatureCommandNote" xml:space="preserve">
     <value>NOTE: Use {0} to interact with features</value>
+    <comment>{0} = Is equal to "chocolateyguicli feature"</comment>
   </data>
   <data name="SettingsViewModel_InvalidSourceId" xml:space="preserve">
     <value>chocolatey.licensed is a reserved source id and cannot be used for a new source</value>
@@ -870,6 +908,9 @@ Normal:
   </data>
   <data name="PurgeCommand_UnknownCommandError" xml:space="preserve">
     <value>Unknown command '{0}'. Valid values are {1} and {2}.</value>
+    <comment>{0} = The name of the unknown command that was passed by the user
+{1} = Is equal to "icons"
+{2} = Is equal to "outdated"</comment>
   </data>
   <data name="LocalSourceView_Grid_Id" xml:space="preserve">
     <value>Id</value>

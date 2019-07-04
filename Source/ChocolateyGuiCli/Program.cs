@@ -66,7 +66,7 @@ namespace ChocolateyGuiCli
 
                 if (args.Length == 0)
                 {
-                    Bootstrapper.Logger.Information("Please run 'chocolateyguicli -?' or 'chocolateyguicli <command> -?' for help menu.");
+                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsText.format_with("chocolateyguicli"));
                 }
             }
 
@@ -131,7 +131,7 @@ namespace ChocolateyGuiCli
                     Bootstrapper.Logger.Warning(ChocolateyGui.Common.Properties.Resources.Command_CommandsTitle);
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Information("{0}".format_with(commandsLog.ToString()));
-                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsText.format_with("chocolateyguicli command -help"));
+                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsText.format_with("chocolateyguicli"));
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Warning(ChocolateyGui.Common.Properties.Resources.Command_DefaultOptionsAndSwitches);
                 });

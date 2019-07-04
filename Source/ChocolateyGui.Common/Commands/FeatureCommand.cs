@@ -55,7 +55,7 @@ namespace ChocolateyGui.Common.Commands
             {
                 if (!string.IsNullOrWhiteSpace(unparsedCommand))
                 {
-                    Logger.Warning(Resources.FeatureCommand_UnknownCommandError.format_with(unparsedCommand));
+                    Logger.Warning(Resources.FeatureCommand_UnknownCommandError.format_with(unparsedCommand, "list"));
                 }
 
                 command = FeatureCommandType.List;

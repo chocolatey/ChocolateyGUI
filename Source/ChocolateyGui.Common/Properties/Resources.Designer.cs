@@ -265,7 +265,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please run {0} with `{0} -?` or &apos;{0} &lt;command&gt; -?&apos; for specific help on each command.
+        ///   Looks up a localized string similar to Please run {0} with &apos;{0} -?&apos; or &apos;{0} &lt;command&gt; -?&apos; for specific help on each command.
         /// </summary>
         public static string Command_CommandsText {
             get {
@@ -332,7 +332,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exception propagated to root while shutting down..
+        ///   Looks up a localized string similar to An unhandled exception has occurred..
         /// </summary>
         public static string Command_GeneralError {
             get {

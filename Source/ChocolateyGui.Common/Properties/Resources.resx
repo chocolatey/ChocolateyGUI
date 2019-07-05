@@ -734,7 +734,7 @@ Normal:
     <value>Prints out the help menu.</value>
   </data>
   <data name="Command_LimitOutputOption" xml:space="preserve">
-    <value>LimitOutput - Limit the output to essential information</value>
+    <value>Limit the output to essential information</value>
   </data>
   <data name="Command_NotFoundError" xml:space="preserve">
     <value>Could not find a command registered that meets '{0}'. Try chocolateyguicli -? for command reference/help.</value>

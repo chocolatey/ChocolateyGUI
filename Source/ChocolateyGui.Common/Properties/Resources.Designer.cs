@@ -350,7 +350,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LimitOutput - Limit the output to essential information.
+        ///   Looks up a localized string similar to Limit the output to essential information.
         /// </summary>
         public static string Command_LimitOutputOption {
             get {

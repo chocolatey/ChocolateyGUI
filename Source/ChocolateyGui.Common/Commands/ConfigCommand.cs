@@ -83,14 +83,14 @@ namespace ChocolateyGui.Common.Commands
             if (configuration.ConfigCommand.Command != ConfigCommandType.List &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.Name))
             {
-                Logger.Error(Resources.ConfigCommand_MissingNameOptionError.format_with(configuration.ConfigCommand.Command.to_string()));
+                Logger.Error(Resources.ConfigCommand_MissingNameOptionError.format_with(configuration.ConfigCommand.Command.to_string(), "--name"));
                 Environment.Exit(-1);
             }
 
             if (configuration.ConfigCommand.Command == ConfigCommandType.Set &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.ConfigValue))
             {
-                Logger.Error(Resources.ConfigCommand_MissingValueOptionError.format_with(configuration.ConfigCommand.Command.to_string()));
+                Logger.Error(Resources.ConfigCommand_MissingValueOptionError.format_with(configuration.ConfigCommand.Command.to_string(), "--value"));
                 Environment.Exit(-1);
             }
         }

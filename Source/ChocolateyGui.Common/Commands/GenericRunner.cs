@@ -50,7 +50,7 @@ namespace ChocolateyGui.Common.Commands
             {
                 if (!string.IsNullOrWhiteSpace(configuration.CommandName))
                 {
-                    Logger.Error(Resources.Command_NotFoundError.format_with(configuration.CommandName));
+                    Logger.Error(Resources.Command_NotFoundError.format_with(configuration.CommandName, "chocolateyguicli"));
                     Environment.Exit(-1);
                 }
             }

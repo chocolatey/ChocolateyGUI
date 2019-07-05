@@ -68,7 +68,7 @@ namespace ChocolateyGui.Common.Commands
         {
             if (configuration.FeatureCommand.Command != FeatureCommandType.List && string.IsNullOrWhiteSpace(configuration.FeatureCommand.Name))
             {
-                Logger.Error(Resources.FeatureCommand_MissingNameOptionError.format_with(configuration.FeatureCommand.Command.to_string()));
+                Logger.Error(Resources.FeatureCommand_MissingNameOptionError.format_with(configuration.FeatureCommand.Command.to_string(), "--name"));
                 Environment.Exit(-1);
             }
         }

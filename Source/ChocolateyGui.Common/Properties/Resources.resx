@@ -222,7 +222,8 @@ Error: {1}{2}</value>
     <value>Chocolatey</value>
   </data>
   <data name="LocalSourceViewModel_ConfigFiles" xml:space="preserve">
-    <value>Config Files (.config)|*.config</value>
+    <value>Config Files {0}</value>
+    <comment>{0} = Is equal to (.config)|*.config</comment>
   </data>
   <data name="LocalSourceViewModel_Packages" xml:space="preserve">
     <value>Packages</value>
@@ -737,8 +738,9 @@ Normal:
     <value>Limit the output to essential information</value>
   </data>
   <data name="Command_NotFoundError" xml:space="preserve">
-    <value>Could not find a command registered that meets '{0}'. Try chocolateyguicli -? for command reference/help.</value>
-    <comment>{0} = Is the name of the command that couldn't be found.  Shown if the end user is trying to run a feature that doesn't exist.</comment>
+    <value>Could not find a command registered that meets '{0}'. Try {1} -? for command reference/help.</value>
+    <comment>{0} = Is the name of the command that couldn't be found.  Shown if the end user is trying to run a feature that doesn't exist.
+{1} = Is equal to chocolateyguicli</comment>
   </data>
   <data name="Command_OptionsAndSwitches" xml:space="preserve">
     <value>Options and Switches</value>
@@ -754,18 +756,20 @@ Normal:
     <value>Retrieve and configure Chocolatey GUI config settings</value>
   </data>
   <data name="ConfigCommand_Help" xml:space="preserve">
-    <value>Chocolatey GUI will allow you to interact with the persisted configuration information.</value>
+    <value>Chocolatey GUI CLI will allow you to interact with the persisted configuration information.</value>
   </data>
   <data name="ConfigCommand_MissingNameOptionError" xml:space="preserve">
-    <value>When specifying the subcommand '{0}', you must also specify --name by option or position.</value>
-    <comment>{0} = The subcommand name that isn't being executed correctly.  For example chocolateyguicli config get, where "get" is what would be shown.</comment>
+    <value>When specifying the subcommand '{0}', you must also specify {1} by option or position.</value>
+    <comment>{0} = The subcommand name that isn't being executed correctly.  For example chocolateyguicli config get, where "get" is what would be shown.
+{1} = Is equal to --name</comment>
   </data>
   <data name="ConfigCommand_MissingValueOptionError" xml:space="preserve">
-    <value>When specifying the subcommand '{0}', you must also specify --value by option or position.</value>
-    <comment>{0} = The subcommand name that isn't being executed correctly.  For example chocolateyguicli config get, where "get" is what would be shown.</comment>
+    <value>When specifying the subcommand '{0}', you must also specify {1} by option or position.</value>
+    <comment>{0} = The subcommand name that isn't being executed correctly.  For example chocolateyguicli config get, where "get" is what would be shown.
+{1} = Is equal to --value</comment>
   </data>
   <data name="ConfigCommand_NameOption" xml:space="preserve">
-    <value>Name - the name of the config setting. Required with some actions. Defaults to empty.</value>
+    <value>The name of the config setting. Required with some actions. Defaults to empty.</value>
   </data>
   <data name="ConfigCommand_SingleConfigError" xml:space="preserve">
     <value>A single config command must be listed. Please see the help menu for those commands</value>
@@ -788,7 +792,7 @@ Normal:
 {1} = The value that has just been set for the configuration property</comment>
   </data>
   <data name="ConfigCommand_ValueOption" xml:space="preserve">
-    <value>Value - the value of the config setting. Required with some actions. Defaults to empty.</value>
+    <value>The value of the config setting. Required with some actions. Defaults to empty.</value>
   </data>
   <data name="FeatureCommand_Description" xml:space="preserve">
     <value>View and configure Chocolatey GUI features</value>
@@ -815,11 +819,12 @@ Normal:
     <value>Chocolatey GUI will allow you to interact with features.</value>
   </data>
   <data name="FeatureCommand_MissingNameOptionError" xml:space="preserve">
-    <value>When specifying the subcommand '{0}', you must also specify --name.</value>
-    <comment>{0} = The subcommand name that isn't being executed correctly.  For example chocolateyguicli config get, where "get" is what would be shown.</comment>
+    <value>When specifying the subcommand '{0}', you must also specify {1}.</value>
+    <comment>{0} = The subcommand name that isn't being executed correctly.  For example chocolateyguicli config get, where "get" is what would be shown.
+{1} = Is equal to --name</comment>
   </data>
   <data name="FeatureCommand_NameOption" xml:space="preserve">
-    <value>Name - the name of the feature. Defaults to empty.</value>
+    <value>The name of the feature. Defaults to empty.</value>
   </data>
   <data name="FeatureCommand_NoChangeMessage" xml:space="preserve">
     <value>Nothing to change. Config already set.</value>

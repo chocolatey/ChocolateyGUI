@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Xml;
 using AutoMapper;
+using chocolatey;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Enums;
@@ -201,7 +202,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             try
             {
-                using (var fileStream = _persistenceService.SaveFile("*.config", Resources.LocalSourceViewModel_ConfigFiles))
+                using (var fileStream = _persistenceService.SaveFile("*.config", Resources.LocalSourceViewModel_ConfigFiles.format_with("(.config)|*.config")))
                 {
                     if (fileStream == null)
                     {

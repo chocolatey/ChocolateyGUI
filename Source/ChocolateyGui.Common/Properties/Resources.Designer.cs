@@ -359,7 +359,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not find a command registered that meets &apos;{0}&apos;. Try chocolateyguicli -? for command reference/help..
+        ///   Looks up a localized string similar to Could not find a command registered that meets &apos;{0}&apos;. Try {1} -? for command reference/help..
         /// </summary>
         public static string Command_NotFoundError {
             get {
@@ -422,7 +422,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chocolatey GUI will allow you to interact with the persisted configuration information..
+        ///   Looks up a localized string similar to Chocolatey GUI CLI will allow you to interact with the persisted configuration information..
         /// </summary>
         public static string ConfigCommand_Help {
             get {
@@ -431,7 +431,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When specifying the subcommand &apos;{0}&apos;, you must also specify --name by option or position..
+        ///   Looks up a localized string similar to When specifying the subcommand &apos;{0}&apos;, you must also specify {1} by option or position..
         /// </summary>
         public static string ConfigCommand_MissingNameOptionError {
             get {
@@ -440,7 +440,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When specifying the subcommand &apos;{0}&apos;, you must also specify --value by option or position..
+        ///   Looks up a localized string similar to When specifying the subcommand &apos;{0}&apos;, you must also specify {1} by option or position..
         /// </summary>
         public static string ConfigCommand_MissingValueOptionError {
             get {
@@ -449,7 +449,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name - the name of the config setting. Required with some actions. Defaults to empty..
+        ///   Looks up a localized string similar to The name of the config setting. Required with some actions. Defaults to empty..
         /// </summary>
         public static string ConfigCommand_NameOption {
             get {
@@ -503,7 +503,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value - the value of the config setting. Required with some actions. Defaults to empty..
+        ///   Looks up a localized string similar to The value of the config setting. Required with some actions. Defaults to empty..
         /// </summary>
         public static string ConfigCommand_ValueOption {
             get {
@@ -728,7 +728,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When specifying the subcommand &apos;{0}&apos;, you must also specify --name..
+        ///   Looks up a localized string similar to When specifying the subcommand &apos;{0}&apos;, you must also specify {1}..
         /// </summary>
         public static string FeatureCommand_MissingNameOptionError {
             get {
@@ -737,7 +737,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name - the name of the feature. Defaults to empty..
+        ///   Looks up a localized string similar to The name of the feature. Defaults to empty..
         /// </summary>
         public static string FeatureCommand_NameOption {
             get {
@@ -962,7 +962,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Config Files (.config)|*.config.
+        ///   Looks up a localized string similar to Config Files {0}.
         /// </summary>
         public static string LocalSourceViewModel_ConfigFiles {
             get {

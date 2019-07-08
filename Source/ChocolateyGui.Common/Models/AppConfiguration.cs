@@ -13,9 +13,9 @@ namespace ChocolateyGui.Common.Models
     {
         public string Id { get; set; }
 
-        [LocalizedDescription("SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription")]
+        [LocalizedDescription("SettingsView_ConfigOutdatedPackagesCacheDurationInMinutesDescription")]
         [Config]
-        public string OutputPackagesCacheDurationInMinutes { get; set; }
+        public string OutdatedPackagesCacheDurationInMinutes { get; set; }
 
         [LocalizedDescription("SettingsView_ToggleShowConsoleOutputDescription")]
         [Feature]

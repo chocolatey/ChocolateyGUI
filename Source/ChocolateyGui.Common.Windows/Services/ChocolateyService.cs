@@ -97,14 +97,14 @@ namespace ChocolateyGui.Common.Windows.Services
         {
             var outdatedPackagesFile = _fileSystem.combine_paths(_localAppDataPath, "outdatedPackages.xml");
 
-            var outputPackagesCacheDurationInMinutesSetting = _configService.GetAppConfiguration().OutputPackagesCacheDurationInMinutes;
-            int outputPackagesCacheDurationInMinutes = 0;
-            if (!string.IsNullOrWhiteSpace(outputPackagesCacheDurationInMinutesSetting))
+            var outdatedPackagesCacheDurationInMinutesSetting = _configService.GetAppConfiguration().OutdatedPackagesCacheDurationInMinutes;
+            int outdatedPackagesCacheDurationInMinutes = 0;
+            if (!string.IsNullOrWhiteSpace(outdatedPackagesCacheDurationInMinutesSetting))
             {
-                int.TryParse(outputPackagesCacheDurationInMinutesSetting, out outputPackagesCacheDurationInMinutes);
+                int.TryParse(outdatedPackagesCacheDurationInMinutesSetting, out outdatedPackagesCacheDurationInMinutes);
             }
 
-            if (_fileSystem.file_exists(outdatedPackagesFile) && (DateTime.Now - _fileSystem.get_file_modified_date(outdatedPackagesFile)).TotalMinutes < outputPackagesCacheDurationInMinutes)
+            if (_fileSystem.file_exists(outdatedPackagesFile) && (DateTime.Now - _fileSystem.get_file_modified_date(outdatedPackagesFile)).TotalMinutes < outdatedPackagesCacheDurationInMinutes)
             {
                 return _xmlService.deserialize<List<OutdatedPackage>>(outdatedPackagesFile);
             }

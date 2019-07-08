@@ -840,7 +840,7 @@ Normal:
     <comment>{0} = The unknown subcommand that the user tried to pass in.  For example, if the user tried to run the command "chocolateyguicli config blah", here "blah" would be unrecognised, but rather than erroring the command, instead, the command "chocolateyguicli config list" will be executed.  i.e. the subcommand has been set to "list"
 {1} = Is equal to 'list'</comment>
   </data>
-  <data name="SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription" xml:space="preserve">
+  <data name="SettingsView_ConfigOutdatedPackagesCacheDurationInMinutesDescription" xml:space="preserve">
     <value>Default timeout for outdated packages to be cached.  Default is 60 minutes.</value>
   </data>
   <data name="Command_FeaturesTitle" xml:space="preserve">

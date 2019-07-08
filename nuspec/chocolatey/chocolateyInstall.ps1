@@ -85,6 +85,6 @@ if($pp.ContainsKey("ShowAggregatedSourceView")) {
   }
 }
 
-if($pp.ContainsKey("OutputPackagesCacheDurationInMinutes")) {
-  Start-ChocolateyProcessAsAdmin -Statements "config set --name=OutputPackagesCacheDurationInMinutes --value=$($pp.OutputPackagesCacheDurationInMinutes)" -ExeToRun "chocolateygui"
+if($pp.ContainsKey("OutdatedPackagesCacheDurationInMinutes")) {
+  Start-ChocolateyProcessAsAdmin -Statements "config set --name=OutdatedPackagesCacheDurationInMinutes --value=$($pp.OutdatedPackagesCacheDurationInMinutes)" -ExeToRun "chocolateygui"
 }

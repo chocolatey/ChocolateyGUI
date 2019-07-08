@@ -28,7 +28,7 @@ namespace ChocolateyGui.Common.Services
         {
             _database = database;
             var settings = _database.GetCollection<AppConfiguration>(nameof(AppConfiguration));
-            _appConfiguration = settings.FindById("Default") ?? new AppConfiguration() { Id = "Default", OutputPackagesCacheDurationInMinutes = "60" };
+            _appConfiguration = settings.FindById("Default") ?? new AppConfiguration() { Id = "Default", OutdatedPackagesCacheDurationInMinutes = "60" };
         }
 
         public event EventHandler SettingsChanged;

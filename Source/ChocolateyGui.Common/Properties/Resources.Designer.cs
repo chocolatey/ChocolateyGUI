@@ -1772,9 +1772,9 @@ namespace ChocolateyGui.Common.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Default timeout for outdated packages to be cached.  Default is 60 minutes..
         /// </summary>
-        public static string SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription {
+        public static string SettingsView_ConfigOutdatedPackagesCacheDurationInMinutesDescription {
             get {
-                return ResourceManager.GetString("SettingsView_ConfigOutputPackagesCacheDurationInMinutesDescription", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ConfigOutdatedPackagesCacheDurationInMinutesDescription", resourceCulture);
             }
         }
         

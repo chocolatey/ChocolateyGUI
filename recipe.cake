@@ -31,7 +31,8 @@ BuildParameters.SetParameters(context: Context,
                             shouldPublishChocolatey: false,
                             shouldPublishNuGet: false,
                             shouldPublishGitHub: false,
-                            shouldExecuteGitLink: false);
+                            shouldExecuteGitLink: false,
+                            shouldDeployGraphDocumentation: false);
 
 ToolSettings.SetToolSettings(context: Context,
                              dupFinderExcludePattern: new string[] {

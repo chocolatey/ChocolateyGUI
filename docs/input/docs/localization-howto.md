@@ -53,7 +53,7 @@ In order to test other languages within Chocolatey GUI, prior to a release, you 
   * If so, answer yes, and enter it
   * If not, answer no, and you will be prompted for your transifex username/password
 * Once all information is provided, hit enter
-* ALl current resx files should be downloaded into the `Source\ChocolateyGui\Properties` folder
+* All current resx files should be downloaded into the `Source\ChocolateyGui\Properties` folder
 * Build the application by running the command:
   * `.\build.ps1`
 * Assuming that completes successfully, you should be able to install the generated MSI, which will contain the most recent translations available

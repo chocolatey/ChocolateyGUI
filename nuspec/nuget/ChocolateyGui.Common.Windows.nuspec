@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <metadata>
+    <id>ChocolateyGui.Common.Windows</id>
+    <version>0.0.0</version>
+    <owners>Chocolatey</owners>
+    <title>Chocolatey GUI Common Windows</title>
+    <authors>Chocolatey</authors>
+    <projectUrl>https://github.com/chocolatey/ChocolateyGUI</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/chocolatey/choco/master/docs/logo/chocolateyicon.gif</iconUrl>
+    <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Shared code for working on Windows with Chocolatey GUI</summary>
+    <description>
+There are a number of shared Windows specific functions/methods within the Chocolatey GUI codebase.  So that these can be shared between both the GUI and CLI version of Chocolatey GUI, these have been split into their own library, which can then also be consumed elsewhere, if/when required.
+    </description>
+    <releaseNotes>
+All release notes for Chocolatey GUI can be found on the GitHub site - https://github.com/chocolatey/ChocolateyGUI/releases
+    </releaseNotes>
+  </metadata>
+  <files>
+    <file src="ChocolateyGui.Common.Windows.dll" target="lib/net452" />
+  </files>
+</package>

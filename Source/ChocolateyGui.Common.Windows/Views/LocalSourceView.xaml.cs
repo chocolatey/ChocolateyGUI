@@ -5,7 +5,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections;
+using System.Runtime.Remoting.Channels;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using ChocolateyGui.Common.ViewModels.Items;
 
@@ -23,6 +26,19 @@ namespace ChocolateyGui.Common.Windows.Views
             PART_Loading.Margin = new Thickness(0, 0, 13, 0);
 
             this.Loaded += LocalSourceViewOnLoaded;
+        }
+
+        public IList SelectedItems { get; private set; }
+
+        /// <summary>
+        /// This is an event handler for on selection change made on the list of the local packages, it will have the list of selected packages items which can be used
+        /// later on to pass to the command.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">eventParameter</param>
+        private void DgPackages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.SelectedItems = ((System.Windows.Controls.Primitives.MultiSelector) e.OriginalSource).SelectedItems;
         }
 
         private void LocalSourceViewOnLoaded(object sender, RoutedEventArgs e)

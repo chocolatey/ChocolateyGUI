@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocolateyGui", "ChocolateyGui\ChocolateyGui.csproj", "{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "ChocolateyGui.Install", "ChocolateyGui.Install\ChocolateyGui.Install.wixproj", "{411C7212-286F-4F26-994A-568E943D0E60}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C6760D8F-E01B-4F26-9B0C-4E2D825509D2}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
@@ -41,16 +39,6 @@ Global
 		{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}.Release|x86.ActiveCfg = Release|x86
 		{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}.WIX|Any CPU.ActiveCfg = Release|Any CPU
 		{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}.WIX|x86.ActiveCfg = Release|Any CPU
-		{411C7212-286F-4F26-994A-568E943D0E60}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{411C7212-286F-4F26-994A-568E943D0E60}.Debug|x86.ActiveCfg = Debug|x86
-		{411C7212-286F-4F26-994A-568E943D0E60}.Debug|x86.Build.0 = Debug|x86
-		{411C7212-286F-4F26-994A-568E943D0E60}.Release|Any CPU.ActiveCfg = Release|x86
-		{411C7212-286F-4F26-994A-568E943D0E60}.Release|x86.ActiveCfg = Release|x86
-		{411C7212-286F-4F26-994A-568E943D0E60}.Release|x86.Build.0 = Release|x86
-		{411C7212-286F-4F26-994A-568E943D0E60}.WIX|Any CPU.ActiveCfg = Release|x86
-		{411C7212-286F-4F26-994A-568E943D0E60}.WIX|Any CPU.Build.0 = Release|x86
-		{411C7212-286F-4F26-994A-568E943D0E60}.WIX|x86.ActiveCfg = Release|x86
-		{411C7212-286F-4F26-994A-568E943D0E60}.WIX|x86.Build.0 = Release|x86
 		{C69DCF4D-F412-4344-83CD-26A46D515DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C69DCF4D-F412-4344-83CD-26A46D515DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C69DCF4D-F412-4344-83CD-26A46D515DF2}.Debug|x86.ActiveCfg = Debug|Any CPU

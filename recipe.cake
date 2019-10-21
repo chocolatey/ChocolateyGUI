@@ -1,6 +1,9 @@
 #module nuget:?package=Cake.Chocolatey.Module&version=0.3.0
-#load nuget:?package=Cake.Recipe&version=1.0.0
+#load nuget:?package=Cake.Recipe&version=1.1.1
 #tool choco:?package=transifex-client&version=0.12.4
+#addin nuget:?package=Cake.StrongNameSigner&version=0.1.0
+#addin nuget:?package=Cake.StrongNameTool&version=0.0.4
+#tool nuget:?package=Brutal.Dev.StrongNameSigner&version=2.4.0
 
 if(BuildSystem.IsLocalBuild)
 {
@@ -46,6 +49,8 @@ var CERT_PATH = EnvironmentVariable("CHOCOLATEY_OFFICIAL_CERT") ?? "";
 var CERT_PASSWORD = EnvironmentVariable("CHOCOLATEY_OFFICIAL_CERT_PASSWORD") ?? "";
 var CERT_TIMESTAMP_URL = EnvironmentVariable("CERT_TIMESTAMP_URL") ?? "http://timestamp.digicert.com";
 var CERT_ALGORITHM = EnvironmentVariable("CERT_ALGORITHM") ?? "Sha256";
+
+var STRONG_KEY_PATH = "";
 
 // todo: we need a hook in AFTER compiling before the copy, but it currently
 // involves a lot of work to reimplement the Build task to split CopyOutputFiles
@@ -181,6 +186,80 @@ Task("SignMSI")
         //     TimeStampDigestAlgorithm = SignToolDigestAlgorithm.Sha1
         // });
 });
+
+Task("Create-Solution-Info-File")
+    .IsDependeeOf("Clean")
+    .Does(() =>
+    {
+        var officialStrongNameKey = EnvironmentVariable("CHOCOLATEYGUI_OFFICIAL_KEY");
+        var localUnofficialStrongNameKey = BuildParameters.RootDirectoryPath.CombineWithFilePath("chocolateygui.snk").FullPath;
+
+        if (!string.IsNullOrWhiteSpace(officialStrongNameKey) && FileExists(officialStrongNameKey))
+        {
+            Information("Using Official Strong Name Key...");
+            STRONG_KEY_PATH = officialStrongNameKey;
+        }
+        else if (FileExists(localUnofficialStrongNameKey))
+        {
+            Information("Using local Unofficial Strong Name Key...");
+            STRONG_KEY_PATH = localUnofficialStrongNameKey;
+        }
+        else
+        {
+            Information("Creating new unofficial Strong Name Key...");
+
+            var newChocolateyUnofficialKey = MakeAbsolute(new FilePath(string.Format("{0}.snk", BuildParameters.Title)));
+
+            // If the file already exists, don't re-create it
+            if (!FileExists(newChocolateyUnofficialKey))
+            {
+                // The Cake.StrongNameTool Addin doesn't have an alias for creating a new key, so here I am really
+                // abusing an existing alias, and making it run the -k argument.  I plan of raising a PR to the addin
+                // to add an actual alias for doing this, for now this, this works, just not pretty.
+                var settings = new StrongNameToolSettings();
+                settings.ArgumentCustomization = arts => new ProcessArgumentBuilder().Append(string.Format("-k {0}", newChocolateyUnofficialKey.FullPath));
+                StrongNameVerify(BuildParameters.SolutionFilePath, settings);
+            }
+
+            STRONG_KEY_PATH = newChocolateyUnofficialKey.FullPath;
+        }
+
+        // create SolutionVersion.cs file...
+        var assemblyInfoSettings = new AssemblyInfoSettings {
+            Company = "Chocolatey",
+            Version = BuildParameters.Version.AssemblySemVer,
+            FileVersion = string.Format("{0}.0", BuildParameters.Version.Version),
+            InformationalVersion = BuildParameters.Version.InformationalVersion,
+            Product = "Chocolatey GUI",
+            Copyright = "Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC"
+        };
+
+        var assemblyKeyFileAttribute = new AssemblyInfoCustomAttribute
+        {
+            Name = "AssemblyKeyFile",
+            Value = STRONG_KEY_PATH.Replace("\\", "\\\\").Replace("/", "\\\\"),
+            NameSpace = "System.Reflection"
+        };
+
+        assemblyInfoSettings.CustomAttributes = new List<AssemblyInfoCustomAttribute>();
+        assemblyInfoSettings.CustomAttributes.Add(assemblyKeyFileAttribute);
+
+        CreateAssemblyInfo(BuildParameters.Paths.Files.SolutionInfoFilePath, assemblyInfoSettings);
+    });
+
+Task("Strong-Name-Signer")
+    .IsDependentOn("Create-Solution-Info-File")
+    .IsDependeeOf("Build")
+    .Does(() => {
+        var settings = new StrongNameSignerSettings();
+        settings.KeyFile = STRONG_KEY_PATH;
+        var inputDirectoryString = string.Format("{0}{1}|{0}{2}|{0}{3}|{0}{4}", BuildParameters.SourceDirectoryPath.FullPath, "\\packages\\MahApps*", "\\packages\\Splat*", "\\packages\\MarkDig.Wpf*", "\\packages\\ControlzEx*");
+        Information("InputDirectoryString: {0}", inputDirectoryString);
+        settings.InputDirectory = inputDirectoryString;
+        settings.LogLevel = StrongNameSignerVerbosity.Summary;
+
+        StrongNameSigner(settings);
+    });
 
 BuildParameters.Tasks.CreateChocolateyPackagesTask
     .IsDependentOn("SignMSI");

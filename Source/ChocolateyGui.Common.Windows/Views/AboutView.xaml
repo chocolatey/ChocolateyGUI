@@ -24,7 +24,7 @@
     </FrameworkElement.CommandBindings>
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" />
             <TextBlock Text="{x:Static properties:Resources.AboutView_About}" Style="{StaticResource TitleTextStyle}"/>
             <TextBlock Text=" - " Style="{StaticResource TitleTextStyle}"/>
             <TextBlock Text="{Binding ChocolateyGuiVersion}" Style="{StaticResource TitleTextStyle}"/>

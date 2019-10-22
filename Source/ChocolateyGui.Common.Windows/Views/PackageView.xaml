@@ -6,7 +6,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
@@ -50,7 +50,7 @@
                Visibility="{Binding DataContext, RelativeSource={RelativeSource Self}, FallbackValue=Expanded, Converter={StaticResource NullToVisibility}}">
         <StackPanel DockPanel.Dock="Top" Margin="20,0,0,0">
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <TextBlock Style="{StaticResource TitleTextStyle}"
                            AutomationProperties.Name="{Binding Title}"
                            IsHitTestVisible="false">
@@ -75,7 +75,7 @@
 
         <Grid DockPanel.Dock="Bottom">
             <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                    Background="{StaticResource AccentColorBrush4}">
+                    Background="{DynamicResource MahApps.Brushes.Accent4}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,20,10">
                     <StackPanel Orientation="Horizontal"
                                 Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">

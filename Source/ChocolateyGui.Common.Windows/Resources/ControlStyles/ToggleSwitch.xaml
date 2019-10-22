@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls">
-    <Style x:Key="ToggleSwitch.Win10.Override" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" TargetType="{x:Type Controls:ToggleSwitch}">
+    <Style x:Key="ToggleSwitch.Win10.Override" BasedOn="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="ContentPadding" Value="0 0 10 0" />
         <!--
             This template has 2 extra content controls to hold/show the on and off labels.

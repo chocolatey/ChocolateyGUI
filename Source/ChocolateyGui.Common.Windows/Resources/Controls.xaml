@@ -10,6 +10,7 @@
                     xmlns:windows="clr-namespace:ChocolateyGui.Common.Windows"
                     xmlns:items="clr-namespace:ChocolateyGui.Common.Windows.ViewModels.Items"
                     xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -76,8 +77,8 @@
         <Setter Property="Padding" Value="20,10" />
         <Setter Property="Margin" Value="0,5,0,0" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush3}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -97,33 +98,33 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="LightGray" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource HighlightBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Highlight}" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="LightGray" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsEnabled" Value="False" />
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="Selector.IsSelectionActive" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource WhiteBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.White}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -150,7 +151,7 @@
     </Style>
 
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
-        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
     </Style>
 
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
@@ -162,9 +163,9 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="2" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent4}" />
     </Style>
 
     <ControlTemplate x:Key="TileOverlayTemplate" TargetType="ContentControl">
@@ -222,10 +223,10 @@
     </Style>
 
     <Style x:Key="ListViewModeRadioButtonStyle" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
-        <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
-        <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontSize" Value="{DynamicResource FlatButtonFontSize}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.FlatButton}" />
         <Setter Property="Padding" Value="5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -249,24 +250,24 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="{DynamicResource AccentBaseColorBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource GrayBrush4}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray4}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource FlatButtonPressedBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedBackground}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="PackageResourceLabel" TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.Accent}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Margin" Value="0,0,5,2" />
@@ -295,12 +296,11 @@
         <Setter Property="FontSize" Value="22" />
     </Style>
 
-    <Style x:Key="SectionHeaderStyle" BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type controls:MetroHeader}">
+    <Style x:Key="SectionHeaderStyle" BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type controls:MetroHeader}">
         <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="28" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="28" />
         <Setter Property="Padding" Value="2 4" />
         <Setter Property="Margin" Value="0 0 0 8" />
         <Setter Property="HeaderTemplate">
@@ -321,7 +321,7 @@
     </Style>
 
     <Style x:Key="PageCountTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="14" />
     </Style>
@@ -374,57 +374,34 @@
         <Setter Property="FontSize" Value="14" />
     </Style>
 
-    <Style x:Key="EntypoIconStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="/Resources/#Entypo" />
-        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
-        <Setter Property="Margin" Value="0,-15,0,0" />
-    </Style>
-
-    <Style x:Key="EntypoIconLargeStyle" BasedOn="{StaticResource EntypoIconStyle}" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="58" />
-    </Style>
-
-    <Style x:Key="BigEntypeIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroCircleButtonStyle}">
-        <Setter Property="Width" Value="60" />
-        <Setter Property="Height" Value="60" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
-    </Style>
-
-    <Style x:Key="BigIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroCircleButtonStyle}">
-        <Setter Property="Width" Value="55" />
-        <Setter Property="Height" Value="55" />
-        <Setter Property="Margin" Value="7" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+    <Style x:Key="BigIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
+        <Setter Property="Width" Value="48" />
+        <Setter Property="Height" Value="48" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
     </Style>
 
     <Style x:Key="BackButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigIconButton}">
         <Setter Property="Content">
             <Setter.Value>
-                <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" Margin="0,0,2,0">
-                    <!--Chevron Left-->
-                    <Path Width="16" Height="18" Canvas.Left="15.9063" Canvas.Top="14.75" Stretch="Fill"
-                          Fill="{DynamicResource AccentColorBrush}"
-                          Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z " />
-                </Canvas>
+                <iconPacks:PackIconModern Kind="ChevronLeft" Width="18" Height="18" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.Accent}" />
         <Setter Property="AutomationProperties.Name" Value="Back" />
         <Setter Property="AutomationProperties.HelpText" Value="Go's back" />
         <Setter Property="AutomationProperties.AcceleratorKey" Value="B" />
         <Setter Property="ToolTip" Value="Back" />
     </Style>
 
-    <Style x:Key="IconFlatButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroFlatButton}">
+    <Style x:Key="IconFlatButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.Flat}">
         <Setter Property="Padding" Value="5" />
-        <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
-        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource GrayBrush4}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray4}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -432,11 +409,11 @@
     <Style x:Key="PaginationButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="FontSize" Value="{DynamicResource UpperCaseContentFontSize}" />
-        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
-        <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush2}" />
-        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.UpperCaseContent}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="Margin" Value="3,0" />
         <Setter Property="Padding" Value="5,6" />
         <Setter Property="BorderThickness" Value="1" />
@@ -495,15 +472,15 @@
                         <Border x:Name="Background" BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}" />
-                        <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource ControlsDisabledBrush}"
+                        <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource MahApps.Brushes.Controls.Disabled}"
                                    IsHitTestVisible="False" Opacity="0" />
                         <Border x:Name="MouseOverBorder" BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{DynamicResource AccentColorBrush4}" Opacity="0" />
+                                Background="{DynamicResource MahApps.Brushes.Accent4}" Opacity="0" />
                         <Border x:Name="PressedBorder" BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{DynamicResource AccentColorBrush3}" Opacity="0" />
+                                Background="{DynamicResource MahApps.Brushes.Accent3}" Opacity="0" />
                         <Rectangle x:Name="FocusRectangle" Margin="-1" Opacity="0" />
                         <Rectangle x:Name="FocusInnerRectangle" Opacity="0"
-                                   Stroke="{DynamicResource ButtonMouseOverBorderBrush}"
+                                   Stroke="{DynamicResource MahApps.Brushes.Button.MouseOverBorder}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Content="{TemplateBinding Content, Converter={custom:ToUpperConverter}}"
@@ -552,294 +529,20 @@
         <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuDetails}" Command="{commands:DataContextCommandAdapter ViewDetails}" />
     </ContextMenu>
 
-    <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}">
+    <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="RowBackground" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+    </Style>
+
+    <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
         <Setter Property="GridLinesVisibility" Value="None" />
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="ColumnHeaderStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="SnapsToDevicePixels" Value="True" />
-                    <Setter Property="MinWidth" Value="0" />
-                    <Setter Property="MinHeight" Value="25" />
-                    <Setter Property="Foreground" Value="{StaticResource BlackBrush}" />
-                    <Setter Property="Cursor" Value="Hand" />
-                    <Setter Property="HorizontalContentAlignment" Value="Left" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="Padding" Value="10,4,4,7" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush4}" />
-                    <Setter Property="Background" Value="{StaticResource AccentColorBrush2}" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Border x:Name="BackgroundBorder" BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="0,0,0,3" Background="{TemplateBinding Background}"
-                                            Grid.ColumnSpan="2" />
-                                    <ContentPresenter x:Name="HeaderContent"
-                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                      Content="{TemplateBinding Content}"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
-                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                    <Path x:Name="SortArrow" Grid.Column="1" Fill="White" Height="10" Margin="0,0,8,2"
-                                          RenderTransformOrigin="0.5,0.5" Stretch="Fill" Visibility="Collapsed"
-                                          VerticalAlignment="Center" Width="8" />
-                                    <Thumb x:Name="PART_LeftHeaderGripper" Background="Transparent"
-                                           HorizontalAlignment="Left" HorizontalContentAlignment="Left">
-                                        <Thumb.Style>
-                                            <Style TargetType="{x:Type Thumb}">
-                                                <Setter Property="Width" Value="8" />
-                                                <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
-                                                <Setter Property="Cursor" Value="SizeWE" />
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                                            <Border Background="Transparent"
-                                                                    Padding="{TemplateBinding Padding}">
-                                                                <Rectangle Fill="{TemplateBinding Background}"
-                                                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                           Width="1" />
-                                                            </Border>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </Thumb.Style>
-                                    </Thumb>
-                                    <Thumb x:Name="PART_RightHeaderGripper" Grid.Column="1" HorizontalAlignment="Right"
-                                           HorizontalContentAlignment="Right">
-                                        <Thumb.Style>
-                                            <Style TargetType="{x:Type Thumb}">
-                                                <Setter Property="Width" Value="8" />
-                                                <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
-                                                <Setter Property="Cursor" Value="SizeWE" />
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                                            <Border Background="Transparent"
-                                                                    Padding="{TemplateBinding Padding}">
-                                                                <Rectangle Fill="{TemplateBinding Background}"
-                                                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                           Width="1" />
-                                                            </Border>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </Thumb.Style>
-                                    </Thumb>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="SortDirection" Value="{x:Null}">
-                                        <Setter Property="Background" TargetName="BackgroundBorder"
-                                                Value="{DynamicResource WhiteBrush}" />
-                                    </Trigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsMouseOver" Value="True" />
-                                            <Condition Property="SortDirection" Value="{x:Null}" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="Background" TargetName="BackgroundBorder"
-                                                Value="{DynamicResource GrayBrush8}" />
-                                    </MultiTrigger>
-                                    <Trigger Property="SortDirection" Value="Ascending">
-                                        <Setter Property="Visibility" TargetName="SortArrow" Value="Visible" />
-                                        <Setter Property="Data" TargetName="SortArrow"
-                                                Value="F1M34,57L42,57 42,32.25 52,42.25 52,31.75 38,17.75 24,31.75 24,42.25 34,32.25 34,57z" />
-                                    </Trigger>
-                                    <Trigger Property="SortDirection" Value="Descending">
-                                        <Setter Property="Visibility" TargetName="SortArrow" Value="Visible" />
-                                        <Setter Property="Data" TargetName="SortArrow"
-                                                Value="F1M42,19.0002L34,19.0002 34,43.7502 24,33.7502 24,44.2502 38,58.2502 52,44.2502 52,33.7502 42,43.7502 42,19.0002z" />
-                                        <Setter Property="Margin" TargetName="SortArrow" Value="0,0,8,0" />
-                                    </Trigger>
-                                    <Trigger Property="DisplayIndex" Value="0">
-                                        <Setter Property="Visibility" TargetName="PART_LeftHeaderGripper"
-                                                Value="Collapsed" />
-                                    </Trigger>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground"
-                                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <TextBlock FontWeight="SemiBold" Text="{Binding Converter={custom:ToUpperConverter}}" />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="RowHeaderStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type DataGridRowHeader}">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="BorderBrush" Value="#FFCCFFCC" />
-                    <Setter Property="BorderThickness" Value="0,0,1,0" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
-                                <Grid>
-                                    <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            Background="{TemplateBinding Background}" Margin="{TemplateBinding Margin}"
-                                            Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                                        <StackPanel Orientation="Horizontal">
-                                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                              Content="{TemplateBinding Content}"
-                                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                              VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Border>
-                                    <Thumb x:Name="PART_TopHeaderGripper" Height="3" VerticalAlignment="Top">
-                                        <Thumb.Style>
-                                            <Style TargetType="{x:Type Thumb}">
-                                                <Setter Property="Width" Value="8" />
-                                                <Setter Property="Background" Value="Transparent" />
-                                                <Setter Property="Cursor" Value="SizeNS" />
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                                            <Border Background="{TemplateBinding Background}"
-                                                                    Padding="{TemplateBinding Padding}"
-                                                                    SnapsToDevicePixels="True" />
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </Thumb.Style>
-                                    </Thumb>
-                                    <Thumb x:Name="PART_BottomHeaderGripper" Height="3" VerticalAlignment="Bottom">
-                                        <Thumb.Style>
-                                            <Style TargetType="{x:Type Thumb}">
-                                                <Setter Property="Width" Value="8" />
-                                                <Setter Property="Background" Value="Transparent" />
-                                                <Setter Property="Cursor" Value="SizeNS" />
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                                            <Border Background="{TemplateBinding Background}"
-                                                                    Padding="{TemplateBinding Padding}"
-                                                                    SnapsToDevicePixels="True" />
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </Thumb.Style>
-                                    </Thumb>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource AccentColorBrush3}" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="CellStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <Setter Property="Foreground" Value="#FF000000" />
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="BorderBrush" Value="Transparent" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="SnapsToDevicePixels" Value="True" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type DataGridCell}">
-                                <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        Background="{TemplateBinding Background}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                      Content="{TemplateBinding Content}"
-                                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsSelected" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                        </MultiTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="RowStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-                    <Setter Property="MinHeight" Value="25" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="ContextMenu" Value="{StaticResource PackagesContextMenu}" />
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource AccentColorBrush3}" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Background" Value="{StaticResource AccentColorBrush2}" />
-                        </MultiTrigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsSelected" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                        </MultiTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Setter.Value>
-        </Setter>
         <Setter Property="HeadersVisibility" Value="Column" />
         <Setter Property="DropLocationIndicatorStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type Separator}">
-                    <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
+                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                     <Setter Property="Width" Value="2" />
                     <Setter Property="Template">
                         <Setter.Value>
@@ -852,88 +555,6 @@
                 </Style>
             </Setter.Value>
         </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type DataGrid}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
-                            SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="DG_ScrollViewer" Focusable="False">
-                            <ScrollViewer.Template>
-                                <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <Button Command="ApplicationCommands.SelectAll" Focusable="False"
-                                                Style="{DynamicResource {ComponentResourceKey ResourceId=MetroDataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}"
-                                                Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}}">
-                                            <Button.Visibility>
-                                                <Binding Path="HeadersVisibility"
-                                                         RelativeSource="{RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}">
-                                                    <Binding.ConverterParameter>
-                                                        <DataGridHeadersVisibility>All</DataGridHeadersVisibility>
-                                                    </Binding.ConverterParameter>
-                                                </Binding>
-                                            </Button.Visibility>
-                                        </Button>
-                                        <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter"
-                                                                        Grid.Column="1">
-                                            <DataGridColumnHeadersPresenter.Visibility>
-                                                <Binding Path="HeadersVisibility"
-                                                         RelativeSource="{RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}">
-                                                    <Binding.ConverterParameter>
-                                                        <DataGridHeadersVisibility>Column</DataGridHeadersVisibility>
-                                                    </Binding.ConverterParameter>
-                                                </Binding>
-                                            </DataGridColumnHeadersPresenter.Visibility>
-                                        </DataGridColumnHeadersPresenter>
-                                        <Grid Grid.ColumnSpan="2" Grid.Row="1">
-                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
-                                                                    CanContentScroll="{TemplateBinding CanContentScroll}"
-                                                                    CanHorizontallyScroll="False" Grid.ColumnSpan="2"
-                                                                    CanVerticallyScroll="False"
-                                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                                    Content="{TemplateBinding Content}"
-                                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}" />
-                                        </Grid>
-                                        <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="2"
-                                                   Maximum="{TemplateBinding ScrollableHeight}" Orientation="Vertical"
-                                                   Grid.Row="1"
-                                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
-                                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                   ViewportSize="{TemplateBinding ViewportHeight}" />
-                                        <Grid Grid.Column="1" Grid.Row="2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition
-                                                    Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}}" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Column="1"
-                                                       Maximum="{TemplateBinding ScrollableWidth}"
-                                                       Orientation="Horizontal"
-                                                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
-                                                       Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                       ViewportSize="{TemplateBinding ViewportWidth}" />
-                                        </Grid>
-                                    </Grid>
-                                </ControlTemplate>
-                            </ScrollViewer.Template>
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </ScrollViewer>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="RowBackground" Value="{DynamicResource LightBackgroundColorBrush}" />
         <Style.Triggers>
             <Trigger Property="IsGrouping" Value="True">
                 <Setter Property="ScrollViewer.CanContentScroll" Value="False" />

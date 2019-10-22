@@ -3,10 +3,10 @@
     <Style TargetType="Panel" x:Key="LeftSourceListItem">
         <Style.Resources>
             <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.IdealForeground}" />
             </Style>
             <Style TargetType="Label">
-                <Setter Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.IdealForeground}" />
             </Style>
         </Style.Resources>
     </Style>

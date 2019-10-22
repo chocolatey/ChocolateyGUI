@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:items="clr-namespace:ChocolateyGui.Common.ViewModels.Items;assembly=ChocolateyGui.Common"
              xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
@@ -93,7 +93,7 @@
             </DataTemplate.Triggers>
         </DataTemplate>
 
-        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource VirtualisedMetroListView}">
+        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource MahApps.Styles.ListView.Virtualized}">
             <Style.Resources>
                 <!--  this is necessary to prevent nasty can not find stuff like  -->
                 <!--  ItemsPanel Cannot find source for binding with reference 'RelativeSource FindAncestor, AncestorType='System.Windows.Controls.ItemsControl', AncestorLevel='1''. BindingExpression:Path=HorizontalContentAlignment; DataItem=null; target element is 'ListViewItem' (Name=''); target property is 'HorizontalContentAlignment' (type 'HorizontalAlignment')  -->
@@ -113,7 +113,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="{StaticResource AccentColorBrush}">
+    <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -191,7 +191,6 @@
                         <Setter.Value>
                             <DataTemplate>
                                 <DataGrid ItemsSource="{Binding Mode=OneWay}"
-                                          Background="{StaticResource ControlBackgroundBrush}"
                                           AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
                                           Style="{DynamicResource PackagesGridStyle}">
                                     <i:Interaction.Behaviors>

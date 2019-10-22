@@ -9,7 +9,7 @@
                    xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
                    mc:Ignorable="d"
                    Height="768" Width="1366"
-                   GlowBrush="{StaticResource HighlightBrush}"
+                   GlowBrush="{StaticResource MahApps.Brushes.Highlight}"
                    d:DataContext="{d:DesignInstance Type=viewModels:ShellViewModel}"
                    SaveWindowPosition="True"
                    TitleForeground="Transparent"
@@ -30,7 +30,7 @@
     </Window.Title>
 
     <metro:MetroWindow.WindowButtonCommands>
-        <metro:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+        <metro:WindowButtonCommands Template="{DynamicResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </metro:MetroWindow.WindowButtonCommands>
 
     <metro:MetroWindow.RightWindowCommands>

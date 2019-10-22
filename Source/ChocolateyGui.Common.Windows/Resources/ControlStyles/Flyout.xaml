@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="SetttingsButtonStyle"
+    <Style x:Key="SettingsButtonStyle"
            TargetType="{x:Type Button}">
         <Setter Property="Background"
                 Value="Transparent" />
@@ -31,15 +31,15 @@
                         <Trigger Property="IsPressed"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="{DynamicResource FlatButtonPressedBackgroundBrush}"
+                                    Value="{DynamicResource MahApps.Brushes.FlatButton.PressedBackground}"
                                     TargetName="Border" />
                             <Setter Property="Foreground"
-                                    Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
+                                    Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter Property="Foreground"
-                                    Value="{DynamicResource GrayBrush2}" />
+                                    Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">

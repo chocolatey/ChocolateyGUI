@@ -59,7 +59,7 @@ namespace ChocolateyGui.Common.Windows.Controls.Dialogs
 
             if (parentWindow.MetroDialogOptions.ColorScheme == MetroDialogColorScheme.Theme)
             {
-                ProgressBarForeground = FindResource("AccentColorBrush") as Brush;
+                ProgressBarForeground = FindResource("MahApps.Brushes.Accent") as Brush;
             }
             else
             {

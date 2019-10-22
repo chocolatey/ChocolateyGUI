@@ -5,29 +5,31 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Reflection;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Models.Messages;
+using ChocolateyGui.Common.Services;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
     public sealed class AboutViewModel : Screen
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly IVersionService _versionService;
 
-        public AboutViewModel(IEventAggregator eventAggregator)
+        public AboutViewModel(IEventAggregator eventAggregator, IVersionService versionService)
         {
             _eventAggregator = eventAggregator;
+            _versionService = versionService;
         }
 
         public string ChocolateyGuiVersion
         {
-            get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+            get { return _versionService.Version; }
         }
 
         public string ChocolateyGuiInformationalVersion
         {
-            get { return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion; }
+            get { return _versionService.InformationalVersion; }
         }
 
         public void Back()

@@ -118,6 +118,7 @@ namespace ChocolateyGui.Common.Windows.Startup
             }
 
             builder.RegisterType<ImageService>().As<IImageService>().SingleInstance();
+            builder.RegisterType<VersionService>().As<IVersionService>().SingleInstance();
             builder.RegisterType<SplashScreenService>().As<ISplashScreenService>().SingleInstance();
         }
     }

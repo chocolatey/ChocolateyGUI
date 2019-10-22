@@ -15,6 +15,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Image Grid.Row="0"
                            Height="150"
@@ -46,6 +47,9 @@
                            Source="{Binding SecondaryApplicationImageSource}"
                            Margin="0,15,0,15"
                            Height="100" />
+                    <TextBlock Grid.Row="3"
+                               Text="{Binding DisplayVersion}"
+                               Padding="5"/>
                 </Grid>
             <ContentControl x:Name="ActiveItem" />
         </DockPanel>

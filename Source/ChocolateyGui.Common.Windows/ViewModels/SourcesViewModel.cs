@@ -28,6 +28,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly CreateRemove _remoteSourceVmFactory;
         private readonly IConfigService _configService;
         private readonly IImageService _imageService;
+        private readonly IVersionService _versionService;
 
         private bool _firstLoad = true;
 
@@ -36,12 +37,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IConfigService configService,
             IImageService imageService,
             IEventAggregator eventAggregator,
+            IVersionService versionService,
             Func<string, LocalSourceViewModel> localSourceVmFactory,
             CreateRemove remoteSourceVmFactory)
         {
             _packageService = packageService;
             _configService = configService;
             _imageService = imageService;
+            _versionService = versionService;
             _remoteSourceVmFactory = remoteSourceVmFactory;
 
             if (localSourceVmFactory == null)
@@ -73,6 +76,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         public ImageSource SecondaryApplicationImageSource
         {
             get { return _imageService.SecondaryApplicationImage; }
+        }
+
+        public string DisplayVersion
+        {
+            get { return _versionService.DisplayVersion; }
         }
 
         public async Task LoadSources()

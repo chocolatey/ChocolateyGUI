@@ -165,7 +165,9 @@
     <Compile Include="Services\IFileStorageService.cs" />
     <Compile Include="Services\IPersistenceService.cs" />
     <Compile Include="Services\ISplashScreenService.cs" />
+    <Compile Include="Services\IVersionService.cs" />
     <Compile Include="Services\LiteDBFileStorageService.cs" />
+    <Compile Include="Services\VersionService.cs" />
     <Compile Include="Startup\AutoFacConfiguration.cs" />
     <Compile Include="Utilities\DefaultsExtensions.cs" />
     <Compile Include="Utilities\LogSetup.cs" />

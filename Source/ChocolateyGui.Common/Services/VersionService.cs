@@ -4,9 +4,7 @@
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 using System.Reflection;
-using String = System.String;
 
 namespace ChocolateyGui.Common.Services
 {
@@ -18,16 +16,13 @@ namespace ChocolateyGui.Common.Services
         }
 
         public string Version
-    {
+        {
             get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
-    }
+        }
 
         public string DisplayVersion
         {
-            get
-            {
-                return String.Format("{0} v{1}", ApplicationParameters.Name, Version);
-            }
+            get { return string.Format("{0} v{1}", ApplicationParameters.Name, Version); }
         }
     }
 }

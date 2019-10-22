@@ -242,17 +242,18 @@ Task("Create-Solution-Info-File")
         };
 
         assemblyInfoSettings.CustomAttributes = new List<AssemblyInfoCustomAttribute>();
-        //assemblyInfoSettings.CustomAttributes.Add(assemblyKeyFileAttribute);
+        assemblyInfoSettings.CustomAttributes.Add(assemblyKeyFileAttribute);
 
         CreateAssemblyInfo(BuildParameters.Paths.Files.SolutionInfoFilePath, assemblyInfoSettings);
     });
 
 Task("Strong-Name-Signer")
     .IsDependentOn("Create-Solution-Info-File")
+    .IsDependeeOf("Build")
     .Does(() => {
         var settings = new StrongNameSignerSettings();
         settings.KeyFile = STRONG_KEY_PATH;
-        var inputDirectoryString = string.Format("{0}{1}|{0}{2}|{0}{3}|{0}{4}", BuildParameters.SourceDirectoryPath.FullPath, "\\packages\\MahApps*", "\\packages\\Splat*", "\\packages\\MarkDig.Wpf*", "\\packages\\ControlzEx*");
+        var inputDirectoryString = string.Format("{0}{1}", BuildParameters.SourceDirectoryPath.FullPath, "\\packages\\Splat*");
         Information("InputDirectoryString: {0}", inputDirectoryString);
         settings.InputDirectory = inputDirectoryString;
         settings.LogLevel = StrongNameSignerVerbosity.Summary;

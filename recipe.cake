@@ -242,14 +242,13 @@ Task("Create-Solution-Info-File")
         };
 
         assemblyInfoSettings.CustomAttributes = new List<AssemblyInfoCustomAttribute>();
-        assemblyInfoSettings.CustomAttributes.Add(assemblyKeyFileAttribute);
+        //assemblyInfoSettings.CustomAttributes.Add(assemblyKeyFileAttribute);
 
         CreateAssemblyInfo(BuildParameters.Paths.Files.SolutionInfoFilePath, assemblyInfoSettings);
     });
 
 Task("Strong-Name-Signer")
     .IsDependentOn("Create-Solution-Info-File")
-    .IsDependeeOf("Build")
     .Does(() => {
         var settings = new StrongNameSignerSettings();
         settings.KeyFile = STRONG_KEY_PATH;

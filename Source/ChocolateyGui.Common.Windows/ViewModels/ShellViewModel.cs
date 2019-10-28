@@ -153,14 +153,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         private bool CanGoToSource(object obj)
         {
-            return obj is int sourceIndex
-                && sourceIndex > 0
-                && sourceIndex <= _sourcesViewModel.Items.Count;
+            var sourceIndex = obj as int?;
+            return sourceIndex.HasValue && sourceIndex > 0 && sourceIndex <= _sourcesViewModel.Items.Count;
         }
 
         private void GoToSource(object obj)
         {
-            if (obj is int sourceIndex)
+            var sourceIndex = obj as int?;
+            if (sourceIndex.HasValue)
             {
                 --sourceIndex;
 
@@ -169,7 +169,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     return;
                 }
 
-                _sourcesViewModel.ActivateItem(_sourcesViewModel.Items[sourceIndex]);
+                _sourcesViewModel.ActivateItem(_sourcesViewModel.Items[sourceIndex.Value]);
             }
         }
 

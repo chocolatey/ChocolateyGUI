@@ -48,5 +48,9 @@ namespace ChocolateyGui.Common.Models
         [LocalizedDescription("SettingsView_ToggleAllowNonAdminAccessToSettingsDescription")]
         [Feature]
         public bool AllowNonAdminAccessToSettings { get; set; }
+
+        [LocalizedDescription("SettingsView_ToggleUseKeyboardBindings")]
+        [Feature]
+        public bool UseKeyboardBindings { get; set; }
     }
 }

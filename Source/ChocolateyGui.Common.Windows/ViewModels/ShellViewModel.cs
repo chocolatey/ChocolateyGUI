@@ -153,6 +153,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         private bool CanGoToSource(object obj)
         {
+            if (!_configService.GetAppConfiguration().UseKeyboardBindings)
+            {
+                return false;
+            }
+
             var sourceIndex = obj as int?;
             return sourceIndex.HasValue && sourceIndex > 0 && sourceIndex <= _sourcesViewModel.Items.Count;
         }

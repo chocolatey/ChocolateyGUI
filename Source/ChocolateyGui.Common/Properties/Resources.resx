@@ -955,4 +955,7 @@ Normal:
   <data name="Error_DatabaseAccessGui" xml:space="preserve">
     <value>Unable to access Chocolatey GUI Configuration Database.  This typically happens when Chocolatey GUI or Chocolatey GUI CLI is already running.  Please close all instances of the application, and try running it again.</value>
   </data>
+  <data name="SettingsView_ToggleUseKeyboardBindings" xml:space="preserve">
+    <value>Allows keyboard bindings to be used to interact with different areas of the Chocolatey GUI User Interface.</value>
+  </data>
 </root>

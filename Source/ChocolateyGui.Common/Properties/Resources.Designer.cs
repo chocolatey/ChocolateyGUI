@@ -2157,6 +2157,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allows keyboard bindings to be used to interact with different areas of the Chocolatey GUI User Interface..
+        /// </summary>
+        public static string SettingsView_ToggleUseKeyboardBindings {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleUseKeyboardBindings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chocolatey GUI - Settings.
         /// </summary>
         public static string SettingsViewModel_DisplayName {

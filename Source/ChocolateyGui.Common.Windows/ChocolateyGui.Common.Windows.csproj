@@ -213,6 +213,7 @@
     <Compile Include="Commands\CommandExecutionManager.cs" />
     <Compile Include="Commands\DataContextCommandAdapter.cs" />
     <Compile Include="Commands\DataContextCommandBinding.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\RoutedCommandBinding.cs" />
     <Compile Include="Commands\RoutedCommandMonitor.cs" />
     <Compile Include="Controls\Dialogs\ChocolateyDialog.xaml.cs">

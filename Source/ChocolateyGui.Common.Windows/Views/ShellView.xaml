@@ -6,6 +6,7 @@
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:cal="http://www.caliburnproject.org"
                    xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
+                   xmlns:system="clr-namespace:System;assembly=mscorlib"
                    xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
                    mc:Ignorable="d"
                    Height="768" Width="1366"
@@ -22,6 +23,54 @@
             Executed="PerformGoToPage"
             CanExecute="CanGoToPage" />
     </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+1" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>1</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+2" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>2</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+3" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>3</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+4" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>4</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+5" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>5</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+6" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>6</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+7" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>7</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+8" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>8</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+9" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>9</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+
+    </Window.InputBindings>
     <Window.Title>
         <PriorityBinding>
             <Binding Path="ActiveItem.DisplayName"></Binding>

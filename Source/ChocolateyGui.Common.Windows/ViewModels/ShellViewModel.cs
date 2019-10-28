@@ -7,10 +7,12 @@
 
 using System;
 using System.Linq;
+using System.Windows.Input;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Windows.Commands;
 using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.ViewModels.Items;
 
@@ -46,7 +48,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _configService = configService;
             Sources = new BindableCollection<SourceViewModel>();
             ActiveItem = _sourcesViewModel;
+            GoToSourceCommand = new RelayCommand(GoToSource, CanGoToSource);
         }
+
+        public ICommand GoToSourceCommand { get; }
 
         public string AboutInformation
             => ResourceReader.GetFromResources(GetType().Assembly, "ChocolateyGui.Resources.ABOUT.md");
@@ -144,6 +149,28 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         protected override void OnInitialize()
         {
             _eventAggregator.Subscribe(this);
+        }
+
+        private bool CanGoToSource(object obj)
+        {
+            var sourceIndex = obj as int?;
+            return sourceIndex.HasValue && sourceIndex > 0 && sourceIndex <= _sourcesViewModel.Items.Count;
+        }
+
+        private void GoToSource(object obj)
+        {
+            var sourceIndex = obj as int?;
+            if (sourceIndex.HasValue)
+            {
+                --sourceIndex;
+
+                if (sourceIndex < 0 || sourceIndex > _sourcesViewModel.Items.Count)
+                {
+                    return;
+                }
+
+                _sourcesViewModel.ActivateItem(_sourcesViewModel.Items[sourceIndex.Value]);
+            }
         }
 
         private void SetActiveItem<T>(T newItem)

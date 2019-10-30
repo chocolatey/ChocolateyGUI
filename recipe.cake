@@ -194,7 +194,7 @@ Task("Create-Solution-Info-File")
         var officialStrongNameKey = EnvironmentVariable("CHOCOLATEYGUI_OFFICIAL_KEY");
         var localUnofficialStrongNameKey = BuildParameters.RootDirectoryPath.CombineWithFilePath("chocolateygui.snk").FullPath;
 
-        if (!string.IsNullOrWhiteSpace(officialStrongNameKey) && FileExists(officialStrongNameKey))
+        if (BuildParameters.Configuration == "ReleaseOfficial" && !string.IsNullOrWhiteSpace(officialStrongNameKey) && FileExists(officialStrongNameKey))
         {
             Information("Using Official Strong Name Key...");
             STRONG_KEY_PATH = officialStrongNameKey;

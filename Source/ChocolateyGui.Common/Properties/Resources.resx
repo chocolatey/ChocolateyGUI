@@ -958,4 +958,7 @@ Normal:
   <data name="SettingsView_ToggleUseKeyboardBindings" xml:space="preserve">
     <value>Allows keyboard bindings to be used to interact with different areas of the Chocolatey GUI User Interface.</value>
   </data>
+  <data name="SettingsView_TogglePackageDownloadCountDescription" xml:space="preserve">
+    <value>Allows control over whether package download count is displayed on remote source views.</value>
+  </data>
 </root>

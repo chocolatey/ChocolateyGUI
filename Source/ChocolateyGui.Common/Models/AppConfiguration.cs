@@ -52,5 +52,9 @@ namespace ChocolateyGui.Common.Models
         [LocalizedDescription("SettingsView_ToggleUseKeyboardBindings")]
         [Feature]
         public bool UseKeyboardBindings { get; set; }
+
+        [LocalizedDescription("SettingsView_TogglePackageDownloadCountDescription")]
+        [Feature]
+        public bool HidePackageDownloadCount { get; set; }
     }
 }

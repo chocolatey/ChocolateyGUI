@@ -26,7 +26,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
     public class PackageViewModel :
         ObservableBase,
         IPackageViewModel,
-        IHandle<PackageHasUpdateMessage>
+        IHandle<PackageHasUpdateMessage>,
+        IHandle<FeatureModifiedMessage>
     {
         private static readonly Serilog.ILogger Logger = Serilog.Log.ForContext<PackageViewModel>();
 
@@ -39,6 +40,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private readonly IProgressService _progressService;
 
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
+        private readonly IConfigService _configService;
 
         private string[] _authors;
 
@@ -112,7 +114,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             IEventAggregator eventAggregator,
             IMapper mapper,
             IProgressService progressService,
-            IChocolateyGuiCacheService chocolateyGuiCacheService)
+            IChocolateyGuiCacheService chocolateyGuiCacheService,
+            IConfigService configService)
         {
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
@@ -120,6 +123,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             _progressService = progressService;
             eventAggregator?.Subscribe(this);
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
+            _configService = configService;
         }
 
         public DateTime Created
@@ -355,7 +359,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public bool IsDownloadCountAvailable
         {
-            get { return DownloadCount != -1; }
+            get
+            {
+                return DownloadCount != -1 && !_configService.GetAppConfiguration().HidePackageDownloadCount;
+            }
         }
 
         public bool IsPackageSizeAvailable
@@ -610,6 +617,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 #pragma warning restore RECS0165 // Asynchronous methods should return a Task instead of void
         {
             await _eventAggregator.PublishOnUIThreadAsync(new ShowPackageDetailsMessage(this)).ConfigureAwait(false);
+        }
+
+        public void Handle(FeatureModifiedMessage message)
+        {
+            NotifyPropertyChanged(nameof(IsDownloadCountAvailable));
         }
 
         public void Handle(PackageHasUpdateMessage message)

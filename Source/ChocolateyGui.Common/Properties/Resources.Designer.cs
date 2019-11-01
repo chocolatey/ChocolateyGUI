@@ -19,7 +19,7 @@ namespace ChocolateyGui.Common.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -2090,6 +2090,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string SettingsView_ToggleExcludeInstalledPackagesDescription {
             get {
                 return ResourceManager.GetString("SettingsView_ToggleExcludeInstalledPackagesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allows control over whether package download count is displayed on remote source views..
+        /// </summary>
+        public static string SettingsView_TogglePackageDownloadCountDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePackageDownloadCountDescription", resourceCulture);
             }
         }
         

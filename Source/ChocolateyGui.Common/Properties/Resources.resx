@@ -668,18 +668,6 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="AboutView_History" xml:space="preserve">
     <value>History</value>
   </data>
-  <data name="SettingsView_ToggleDefaultTileViewLocalTitle" xml:space="preserve">
-    <value>Use Tile View for Local Source</value>
-  </data>
-  <data name="SettingsView_ToggleDefaultTileViewRemoteTitle" xml:space="preserve">
-    <value>Use Tile View for Remote Sources</value>
-  </data>
-  <data name="SettingsView_ToggleShowConsoleOutputTitle" xml:space="preserve">
-    <value>Show Console Output</value>
-  </data>
-  <data name="SettingsView_ToggleUseDelayedSearchTitle" xml:space="preserve">
-    <value>Use Delayed Search</value>
-  </data>
   <data name="SettingsView_ToggleExcludeInstalledPackages" xml:space="preserve">
     <value>Exclude installed packages</value>
   </data>
@@ -688,9 +676,6 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="SettingsView_ToggleShowAggregatedSourceViewDescription" xml:space="preserve">
     <value>Show additional source combining all sources in one place.</value>
-  </data>
-  <data name="SettingsView_ToggleShowAggregatedSourceViewTitle" xml:space="preserve">
-    <value>Aggregated Sources View</value>
   </data>
   <data name="SourcesView_AggregatedSourcesId" xml:space="preserve">
     <value>All Sources</value>
@@ -945,9 +930,6 @@ Normal:
   </data>
   <data name="SettingsView_ToggleAllowNonAdminAccessToSettingsDescription" xml:space="preserve">
     <value>Controls whether or not a non-administrator user can access the Settings Screen.  NOTE: This feature will only work when using the licensed extension for Chocolatey and Chocolatey GUI.</value>
-  </data>
-  <data name="SettingsView_ToggleAllowNonAdminAccessToSettingsTitle" xml:space="preserve">
-    <value>Allow Non Admin Access to Settings</value>
   </data>
   <data name="Error_DatabaseAccessCli" xml:space="preserve">
     <value>Unable to access Chocolatey GUI Configuration Database.  This typically happens when Chocolatey GUI is already running.  Please close all instances of the application, and try running the command again.</value>

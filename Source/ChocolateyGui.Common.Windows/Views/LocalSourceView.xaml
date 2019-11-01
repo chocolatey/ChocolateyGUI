@@ -196,6 +196,11 @@
                                     <i:Interaction.Behaviors>
                                         <utilities:DataGridCustomSortBehavior />
                                     </i:Interaction.Behaviors>
+                                    <DataGrid.RowStyle>
+                                        <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}" >
+                                            <Setter Property="ContextMenu" Value="{StaticResource PackagesContextMenu}" />
+                                        </Style>
+                                    </DataGrid.RowStyle>
                                     <DataGrid.Columns>
                                         <DataGridTemplateColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Name}" SortMemberPath="Title" Width="2*">
                                             <DataGridTemplateColumn.CellTemplate>

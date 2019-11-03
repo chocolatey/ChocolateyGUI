@@ -6,6 +6,8 @@ These are the committers to Chocolatey/Chocolatey GUI repository:
 
 * [Gary Ewan Park](https://github.com/gep13) - Committer, Chocolatey GUI, community feed moderator
 * [Richard Simpson](https://github.com/RichiCoder1) - Created and maintains the new Chocolatey GUI
+* [Jan Karger](https://github.com/punker76) - Long time contributor to the project
+* [Manfred Wallner](https://github.com/mwallner) - Chocolatey GUI Enthusiast
 
 ## Contributors
 
@@ -34,7 +36,7 @@ Chocolatey GUI uses the following awesome frameworks (in no particular order):
 * [Serilog](https://github.com/serilog/serilog)
 * [Splat](https://github.com/paulcbetts/splat)
 * [SQLLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)
- 
+
 Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
 
 * [Cake](http://cakebuild.net/)

@@ -17,8 +17,8 @@ chocolateyguicli feature [list]|disable|enable [<options/switches]
 ```powershell
 chocolateyguicli feature
 chocolateyguicli feature list
-chocolateyguicli feature disable -n=bob
-chocolateyguicli feature enable -n=bob
+chocolateyguicli feature disable --name="'bob'"
+chocolateyguicli feature enable --name="'bob'"
 ```
 
 # Options and Switches

@@ -1,7 +1,7 @@
 ---
 Order: 100
 Title: Localization - How To
-Description: Localization In Chocolatey GUI
+Description: Localization in Chocolatey GUI
 ---
 
 ## Basics

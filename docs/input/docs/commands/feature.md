@@ -1,6 +1,6 @@
 ---
 Order: 10
-Title: Feature Command (chocolateygui feature)
+Title: Feature
 Description: Usage instructions on how to enable/disable Chocolatey GUI features
 ---
 
@@ -9,16 +9,16 @@ Chocolatey GUI will allow you to interact with features.
 # Usage
 
 ```powershell
-chocolateygui feature [list]|disable|enable [<options/switches]
+chocolateyguicli feature [list]|disable|enable [<options/switches]
 ```
 
 # Examples
 
 ```powershell
-chocolateygui feature
-chocolateygui feature list
-chocolateygui feature disable -n=bob
-chocolateygui feature enable -n-bob
+chocolateyguicli feature
+chocolateyguicli feature list
+chocolateyguicli feature disable -n=bob
+chocolateyguicli feature enable -n-bob
 ```
 
 # Options and Switches

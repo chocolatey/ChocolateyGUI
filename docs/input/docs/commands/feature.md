@@ -18,7 +18,7 @@ chocolateyguicli feature [list]|disable|enable [<options/switches]
 chocolateyguicli feature
 chocolateyguicli feature list
 chocolateyguicli feature disable -n=bob
-chocolateyguicli feature enable -n-bob
+chocolateyguicli feature enable -n=bob
 ```
 
 # Options and Switches

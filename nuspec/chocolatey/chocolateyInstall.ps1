@@ -24,67 +24,50 @@ if ($installDirectory) {
 
 $pp = Get-PackageParameters
 
+function Set-FeatureState {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory=$true)]
+    [string] $FeatureName,
+
+    [Parameter(Mandatory=$true)]
+    [bool] $EnableFeature
+  )
+
+  if ($EnableFeature) {
+    Write-Output "Enabling $FeatureName..."
+    Start-ChocolateyProcessAsAdmin -Statements "feature enable --name=$FeatureName" -ExeToRun "chocolateyguicli"
+  } else {
+    Write-Output "Disabling $FeatureName..."
+    Start-ChocolateyProcessAsAdmin -Statements "feature disable --name=$FeatureName" -ExeToRun "chocolateyguicli"
+  }
+}
+
 # Features
 if($pp.ContainsKey("ShowConsoleOutput")) {
-  if($pp.ShowConsoleOutput -eq $true) {
-    Write-Output "Enabling ShowConsoleOutput..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature enable --name=ShowConsoleOutput" -ExeToRun "chocolateygui"
-  } else {
-    Write-Output "Disabling ShowConsoleOutput..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature disable --name=ShowConsoleOutput" -ExeToRun "chocolateygui"
-  }
+  Set-FeatureState "ShowConsoleOutput" ($pp.ShowConsoleOutput -eq $true)
 }
 
 if($pp.ContainsKey("DefaultToTileViewForLocalSource")) {
-  if($pp.DefaultToTileViewForLocalSource -eq $true) {
-    Write-Output "Enabling DefaultToTileViewForLocalSource..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature enable --name=DefaultToTileViewForLocalSource" -ExeToRun "chocolateygui"
-  } else {
-    Write-Output "Disabling DefaultToTileViewForLocalSource..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature disable --name=DefaultToTileViewForLocalSource" -ExeToRun "chocolateygui"
-  }
+  Set-FeatureState "DefaultToTileViewForLocalSource" ($pp.DefaultToTileViewForLocalSource -eq $true)
 }
 
 if($pp.ContainsKey("DefaultToTileViewForRemoteSource")) {
-  if($pp.DefaultToTileViewForRemoteSource -eq $true) {
-    Write-Output "Enabling DefaultToTileViewForRemoteSource..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature enable --name=DefaultToTileViewForRemoteSource" -ExeToRun "chocolateygui"
-  } else {
-    Write-Output "Disabling DefaultToTileViewForRemoteSource..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature disable --name=DefaultToTileViewForRemoteSource" -ExeToRun "chocolateygui"
-  }
+  Set-FeatureState "DefaultToTileViewForRemoteSource" ($pp.DefaultToTileViewForRemoteSource -eq $true)
 }
 
 if($pp.ContainsKey("UseDelayedSearch")) {
-  if($pp.UseDelayedSearch -eq $true) {
-    Write-Output "Enabling UseDelayedSearch..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature enable --name=UseDelayedSearch" -ExeToRun "chocolateygui"
-  } else {
-    Write-Output "Disabling UseDelayedSearch..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature disable --name=UseDelayedSearch" -ExeToRun "chocolateygui"
-  }
+  Set-FeatureState "UseDelayedSearch" ($pp.DefaultToTileViewForRemoteSource -eq $true)
 }
 
 if($pp.ContainsKey("ExcludeInstalledPackages")) {
-  if($pp.ExcludeInstalledPackages -eq $true) {
-    Write-Output "Enabling ExcludeInstalledPackages..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature enable --name=ExcludeInstalledPackages" -ExeToRun "chocolateygui"
-  } else {
-    Write-Output "Disabling ExcludeInstalledPackages..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature disable --name=ExcludeInstalledPackages" -ExeToRun "chocolateygui"
-  }
+  Set-FeatureState "ExcludeInstalledPackages" ($pp.ExcludeInstalledPackages -eq $true)
 }
 
 if($pp.ContainsKey("ShowAggregatedSourceView")) {
-  if($pp.ShowAggregatedSourceView -eq $true) {
-    Write-Output "Enabling ShowAggregatedSourceView..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature enable --name=ShowAggregatedSourceView" -ExeToRun "chocolateygui"
-  } else {
-    Write-Output "Disabling ShowAggregatedSourceView..."
-    Start-ChocolateyProcessAsAdmin -Statements "feature disable --name=ShowAggregatedSourceView" -ExeToRun "chocolateygui"
-  }
+  Set-FeatureState "ShowAggregatedSourceView" ($pp.ShowAggregatedSourceView -eq $true)
 }
 
 if($pp.ContainsKey("OutdatedPackagesCacheDurationInMinutes")) {
-  Start-ChocolateyProcessAsAdmin -Statements "config set --name=OutdatedPackagesCacheDurationInMinutes --value=$($pp.OutdatedPackagesCacheDurationInMinutes)" -ExeToRun "chocolateygui"
+  Start-ChocolateyProcessAsAdmin -Statements "config set --name=OutdatedPackagesCacheDurationInMinutes --value=$($pp.OutdatedPackagesCacheDurationInMinutes)" -ExeToRun "chocolateyguicli"
 }

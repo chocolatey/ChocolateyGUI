@@ -24,6 +24,7 @@ Chocolatey GUI uses the following awesome frameworks (in no particular order):
 * [Autofac](http://autofac.org/)
 * [AutoMapper](http://automapper.org/)
 * [Caliburn.Micro](https://github.com/Caliburn-Micro/Caliburn.Micro)
+* [ControlzEx](https://github.com/ControlzEx/ControlzEx)
 * [CefSharp](https://github.com/cefsharp/CefSharp)
 * [LiteDB](https://github.com/mbdavid/LiteDB)
 * [log4net](http://logging.apache.org/log4net/)

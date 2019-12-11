@@ -25,10 +25,14 @@ else
 BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./Source",
-                            title: "ChocolateyGUI",
+                            solutionFilePath: "./Source/ChocolateyGui.sln",
+                            solutionDirectoryPath: "./Source/ChocolateyGui",
+                            resharperSettingsFileName: "ChocolateyGui.sln.DotSettings",
+                            title: "Chocolatey GUI",
                             repositoryOwner: "chocolatey",
                             repositoryName: "ChocolateyGUI",
                             appVeyorAccountName: "chocolatey",
+                            appVeyorProjectSlug: "chocolateygui",
                             shouldDownloadFullReleaseNotes: true,
                             shouldDownloadMilestoneReleaseNotes: true,
                             shouldPublishChocolatey: false,
@@ -36,7 +40,9 @@ BuildParameters.SetParameters(context: Context,
                             shouldPublishGitHub: false,
                             shouldExecuteGitLink: false,
                             shouldDeployGraphDocumentation: false,
-                            shouldRunGitVersion: true);
+                            shouldRunGitVersion: true,
+                            webLinkRoot: "ChocolateyGUI",
+                            webBaseEditUrl: "https://github.com/chocolatey/ChocolateyGUI/tree/develop/docs/input/");
 
 ToolSettings.SetToolSettings(context: Context,
                              dupFinderExcludePattern: new string[] {

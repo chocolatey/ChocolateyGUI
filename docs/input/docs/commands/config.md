@@ -22,6 +22,15 @@ chocolateyguicli config set --name="'outdatedPackagesCacheDurationInMinutes'" --
 chocolateyguicli config unset --name="'outdatedPackagesCacheDurationInMinutes'"
 ```
 
+## Exit Codes
+
+Exit codes that normally result from running this command.
+
+Normal:
+
+- 0: operation was successful, no issues detected
+- -1 or 1: an error has occurred
+
 ## Options and Switches
 
 ```powershell
@@ -43,4 +52,4 @@ Below is a short video which shows this in action:
 
 The available items that can be configured are:
 
-* [outdatedPackagesCacheDurationInMinutes](../configuration/config/OutdatedPackagesCacheDurationInMinutes)
+- [outdatedPackagesCacheDurationInMinutes](../configuration/config/OutdatedPackagesCacheDurationInMinutes)

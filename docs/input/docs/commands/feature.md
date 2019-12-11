@@ -1,5 +1,5 @@
 ---
-Order: 10
+Order: 20
 Title: Feature
 Description: Usage instructions on how to enable/disable Chocolatey GUI features
 ---
@@ -20,6 +20,15 @@ chocolateyguicli feature list
 chocolateyguicli feature disable --name="'bob'"
 chocolateyguicli feature enable --name="'bob'"
 ```
+
+## Exit Codes
+
+Exit codes that normally result from running this command.
+
+Normal:
+
+- 0: operation was successful, no issues detected
+- -1 or 1: an error has occurred
 
 ## Options and Switches
 

@@ -31,7 +31,7 @@ Chocolatey GUI uses the following awesome frameworks (in no particular order):
 * [MahApps.Metro](http://mahapps.com/)
 * [Markdig](https://github.com/lunet-io/markdig)
 * [Markdig.Wpf](https://github.com/Kryptos-FR/markdig.wpf)
-* [Rx](http://rx.codeplex.com/)
+* [Reactive Extenstions for .NET](https://github.com/dotnet/reactive)
 * [Serilog](https://github.com/serilog/serilog)
 * [Splat](https://github.com/paulcbetts/splat)
 * [SQLLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)

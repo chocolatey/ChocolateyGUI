@@ -1,5 +1,5 @@
 ---
-Order: 10
+Order: 50
 Title: Exclude Installed Packages
 ---
 

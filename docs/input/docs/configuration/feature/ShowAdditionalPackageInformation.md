@@ -1,5 +1,5 @@
 ---
-Order: 10
+Order: 70
 Title: Show Additional Package Information
 ---
 

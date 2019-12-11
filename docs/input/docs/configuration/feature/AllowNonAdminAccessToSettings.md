@@ -1,5 +1,5 @@
 ---
-Order: 10
+Order: 80
 Title: Allow Non Admin Access to Settings
 Description: Describe how access to the Chocolatey GUI Settings screen can be restricted to non-admin users.
 ---

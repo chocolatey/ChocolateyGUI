@@ -1,5 +1,5 @@
 ---
-Order: 10
+Order: 100
 Title: Hide Package Download Count
 ---
 

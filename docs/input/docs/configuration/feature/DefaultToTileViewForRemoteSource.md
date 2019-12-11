@@ -1,5 +1,5 @@
 ---
-Order: 10
+Order: 30
 Title: Default to Tile View for Remote Source
 ---
 

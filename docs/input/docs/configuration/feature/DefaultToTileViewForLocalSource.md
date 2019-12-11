@@ -1,5 +1,5 @@
 ---
-Order: 10
+Order: 20
 Title: Default to Tile View for Local Source
 ---
 

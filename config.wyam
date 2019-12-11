@@ -1,1 +1,2 @@
 System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-GB");
+Pipelines["RenderPages"].Replace("WriteMetadata", new Headings(2));

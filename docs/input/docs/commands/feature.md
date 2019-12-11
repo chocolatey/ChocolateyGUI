@@ -6,13 +6,13 @@ Description: Usage instructions on how to enable/disable Chocolatey GUI features
 
 Chocolatey GUI will allow you to interact with features.
 
-# Usage
+## Usage
 
 ```powershell
 chocolateyguicli feature [list]|disable|enable [<options/switches]
 ```
 
-# Examples
+## Examples
 
 ```powershell
 chocolateyguicli feature
@@ -21,7 +21,7 @@ chocolateyguicli feature disable --name="'bob'"
 chocolateyguicli feature enable --name="'bob'"
 ```
 
-# Options and Switches
+## Options and Switches
 
 ```powershell
 -?, --help, -h
@@ -31,8 +31,8 @@ chocolateyguicli feature enable --name="'bob'"
      Name - the name of the feature. Required with some actions. Defaults to empty.
 ```
 
-# Resources
+## Resources
 
 Below is a short video which shows this in action:
 
-<iframe width="900" height="506" src="https://www.youtube.com/embed/_AkDNQFoCtc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="700" height="506" src="https://www.youtube.com/embed/_AkDNQFoCtc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

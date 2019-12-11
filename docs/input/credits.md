@@ -40,7 +40,6 @@ Chocolatey GUI is built, with the following fantastic frameworks and services (i
 
 * [Cake](http://cakebuild.net/)
 * [NuGet.exe](https://www.nuget.org/)
-* [TeamCity CodeBetter](http://teamcity.codebetter.com/)
 * [AppVeyor](http://www.appveyor.com/)
 * [MyGet](http://www.myget.org/)
 

@@ -31,7 +31,6 @@ Chocolatey GUI uses the following awesome frameworks (in no particular order):
 * [MahApps.Metro](http://mahapps.com/)
 * [Markdig](https://github.com/lunet-io/markdig)
 * [Markdig.Wpf](https://github.com/Kryptos-FR/markdig.wpf)
-* [Raygun](https://raygun.io/)
 * [Rx](http://rx.codeplex.com/)
 * [Serilog](https://github.com/serilog/serilog)
 * [Splat](https://github.com/paulcbetts/splat)
@@ -57,4 +56,3 @@ We would like to credit other super sweet tools/frameworks/services that aid in 
 * [ReSharper](https://www.jetbrains.com/resharper/)
 * [NuGet Framework](https://www.nuget.org/)
 * [Gitter](https://gitter.im)
-* [Raygun](https://raygun.io/)

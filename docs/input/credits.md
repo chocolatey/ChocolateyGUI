@@ -38,6 +38,7 @@ Chocolatey GUI uses the following awesome frameworks (in no particular order):
 Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
 
 * [Cake](http://cakebuild.net/)
+* [Cake.Recipe](https://github.com/cake-contrib/Cake.Recipe)
 * [NuGet.exe](https://www.nuget.org/)
 * [AppVeyor](http://www.appveyor.com/)
 * [MyGet](http://www.myget.org/)

@@ -16,10 +16,32 @@ When this setting is turned off, a non-admin user will no longer be able to acce
 
 ![Access to Settings screen removed](/ChocolateyGUI/assets/img/Screenshots/access_to_settings_removed.png "Access to Settings screen removed")
 
-**NOTE:** Regardless of this setting, an administrator user will always be able to access the Settings screen.
+:::{.alert .alert-info}
+**NOTE:**
 
-# Resources
+Regardless of this setting, an administrator user will always be able to access the Settings screen.
+:::
+
+## Resources
 
 Below is a short video which shows this feature in action:
 
-<iframe width="900" height="506" src="https://www.youtube.com/embed/VCTHWo7cgW0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="700" height="506" src="https://www.youtube.com/embed/VCTHWo7cgW0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Example
+
+This feature can be enabled by running the following command:
+
+```powershell
+chocolateyguicli feature enable --name="'AllowNonAdminAccessToSettings'"
+```
+
+This feaure can be disabled by running the following command:
+
+```powershell
+chocolateyguicli feature disable --name="'AllowNonAdminAccessToSettings'"
+```
+
+## Default Value
+
+The default value for this feature is disabled.

@@ -10,7 +10,7 @@ information is kept can be controlled via this configuration parameter.  The def
 increased as required.
 
 :::{.alert .alert-info}
-NOTE:
+**NOTE:**
 
 Any time a package operation is completed, i.e. install/uninstall/upgrade, the outdated package information cache will
 be invalidated.
@@ -23,3 +23,7 @@ To set this configuration parameter you can run the following:
 ```powershell
 chocolateyguicli config set --name="'outdatedPackagesCacheDurationInMinutes'" --value="'120'"
 ```
+
+## Default Value
+
+The default value for this configuration is 60 minutes.

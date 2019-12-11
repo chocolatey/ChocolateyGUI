@@ -3,4 +3,24 @@ Order: 10
 Title: Show Aggregated Source
 ---
 
-Put something here...
+## Resources
+
+Below is a short video which shows this feature in action:
+
+## Example
+
+This feature can be enabled by running the following command:
+
+```powershell
+chocolateyguicli feature enable --name="'ShowAggregatedSourceView'"
+```
+
+This feaure can be disabled by running the following command:
+
+```powershell
+chocolateyguicli feature disable --name="'ShowAggregatedSourceView'"
+```
+
+## Default Value
+
+The default value for this feature is disabled.

@@ -1,6 +1,7 @@
 ---
 Order: 10
 Title: Show Console Output
+Description: Shows output from the commands being executed when a job is running.
 ---
 
 ## Resources

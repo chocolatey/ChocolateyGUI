@@ -1,6 +1,7 @@
 ---
 Order: 20
 Title: Default to Tile View for Local Source
+Description: Default to tile instead of list view. It is still possible to switch during use.
 ---
 
 ## Resources

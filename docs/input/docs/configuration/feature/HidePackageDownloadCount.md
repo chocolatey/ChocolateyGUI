@@ -1,6 +1,7 @@
 ---
 Order: 100
 Title: Hide Package Download Count
+Description: Allows control over whether package download count is displayed on remote source views.
 ---
 
 ## Resources

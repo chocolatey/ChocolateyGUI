@@ -1,6 +1,7 @@
 ---
 Order: 40
 Title: Use Delayed Search
+Description: Enables live search, which returns results after a short delay without clicking the search button.
 ---
 
 ## Resources

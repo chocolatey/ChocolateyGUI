@@ -1,6 +1,7 @@
 ---
 Order: 90
 Title: Use Keyboard Bindings
+Description: Allows keyboard bindings to be used to interact with different areas of the Chocolatey GUI User Interface
 ---
 
 ## Resources

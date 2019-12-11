@@ -1,6 +1,7 @@
 ---
 Order: 50
 Title: Exclude Installed Packages
+Description: Do not show packages that are already installed when viewing sources.
 ---
 
 ## Resources

@@ -1,6 +1,7 @@
 ---
 Order: 60
 Title: Show Aggregated Source
+Description: Show additional source combining all sources in one place.
 ---
 
 ## Resources

@@ -1,6 +1,7 @@
 ---
 Order: 30
 Title: Default to Tile View for Remote Source
+Description: Default to tile instead of list view. It is still possible to switch during use.
 ---
 
 ## Resources

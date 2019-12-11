@@ -1,6 +1,7 @@
 ---
 Order: 70
 Title: Show Additional Package Information
+Description: Show additional package information on Local and Remote views.
 ---
 
 ## Resources

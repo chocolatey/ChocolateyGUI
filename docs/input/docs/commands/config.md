@@ -39,3 +39,8 @@ chocolateyguicli config unset --name="'outdatedPackagesCacheDurationInMinutes'"
 
 Below is a short video which shows this in action:
 
+## Configuration Options
+
+The available items that can be configured are:
+
+* [outdatedPackagesCacheDurationInMinutes](../configuration/config/OutdatedPackagesCacheDurationInMinutes)

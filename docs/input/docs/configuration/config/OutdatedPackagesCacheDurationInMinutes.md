@@ -3,4 +3,5 @@ Order: 10
 Title: Outdated Packages Cache Duration in Minutes
 ---
 
-Put something here...
+In an attempt to be as efficient as possible, Chocolatey GUI downloads and caches
+the icon files that are displayed for a package.

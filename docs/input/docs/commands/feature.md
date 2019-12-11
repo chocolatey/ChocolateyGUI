@@ -36,3 +36,18 @@ chocolateyguicli feature enable --name="'bob'"
 Below is a short video which shows this in action:
 
 <iframe width="700" height="506" src="https://www.youtube.com/embed/_AkDNQFoCtc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Feature Options
+
+The available feautres that can be configured are:
+
+* [Allow Non Admin Access to Settings](../configuration/feature/AllowNonAdminAccessToSettings)
+* [Default to Tile View for Local Source](../configuration/feature/DefaultToTileViewForLocalSource)
+* [Default to Tile VIew for Remote Source](../configuration/feature/DefaultToTileViewForRemoteSource)
+* [Exclude Installed Packages](../configuration/feature/ExcludeInstalledPackages)
+* [Hide Package Download Count](../configuration/feature/HidePackageDownloadCount)
+* [Show Additional Package Information](../configuration/feature/ShowAdditionalPackageInformation)
+* [Show Aggregated Source](../configuration/feature/ShowAggregatedSourceView)
+* [Show Console Output](../configuration/feature/ShowConsoleOutput)
+* [Use Delayed Search](../configuration/feature/UseDelayedSearch)
+* [Use Keyboard Bindings](../configuration/feature/UseKeyboardBindings)

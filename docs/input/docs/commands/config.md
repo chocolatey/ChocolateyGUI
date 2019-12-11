@@ -6,13 +6,13 @@ Description: Usage instructions on how to list/get/set/unset Chocolatey GUI conf
 
 Chocolatey GUI will allow you to interact with the config settings.
 
-# Usage
+## Usage
 
 ```powershell
 chocolateyguicli config [list]|get|set|unset [<options/switches]
 ```
 
-# Examples
+## Examples
 
 ```powershell
 chocolateyguicli config
@@ -22,7 +22,7 @@ chocolateyguicli config set --name="'outdatedPackagesCacheDurationInMinutes'" --
 chocolateyguicli config unset --name="'outdatedPackagesCacheDurationInMinutes'"
 ```
 
-# Options and Switches
+## Options and Switches
 
 ```powershell
 -?, --help, -h
@@ -35,7 +35,7 @@ chocolateyguicli config unset --name="'outdatedPackagesCacheDurationInMinutes'"
      Value - the value of the config setting.  Required with some actions.
 ```
 
-# Resources
+## Resources
 
 Below is a short video which shows this in action:
 

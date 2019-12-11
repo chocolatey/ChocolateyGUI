@@ -34,7 +34,6 @@ Chocolatey GUI uses the following awesome frameworks (in no particular order):
 * [Reactive Extenstions for .NET](https://github.com/dotnet/reactive)
 * [Serilog](https://github.com/serilog/serilog)
 * [Splat](https://github.com/paulcbetts/splat)
-* [SQLLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)
 
 Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
 

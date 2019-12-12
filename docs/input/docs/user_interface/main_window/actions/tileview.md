@@ -1,7 +1,7 @@
 ---
-Order: 40
+Order: 50
 Title: Switching Display of Package
-Description: Change
+Description: Information about changing how packages are displayed
 ---
 
 Put something here...

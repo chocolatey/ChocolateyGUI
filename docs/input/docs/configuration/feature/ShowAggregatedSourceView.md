@@ -44,3 +44,10 @@ chocolateyguicli feature disable --name="'ShowAggregatedSourceView'"
 ## Default Value
 
 The default value for this feature is disabled.
+
+## Availability
+
+The ability to control this feature from the Chocolatey GUI Settings screen has existed since Chocolatey GUI v0.17.0.
+
+The ability to control this feature from the command line using `chocolateyguicli` has existed since Chocolatey GUI
+v0.17.0.

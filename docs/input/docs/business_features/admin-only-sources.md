@@ -1,5 +1,5 @@
 ---
-Order: 40
+Order: 20
 Title: Admin Only Sources
 Description: Restrict access to sources based on Admin Only property
 ---

@@ -1,5 +1,5 @@
 ---
-Order: 60
+Order: 70
 Title: Localization
 Description: Localization in Chocolatey GUI
 ---

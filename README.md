@@ -84,7 +84,7 @@ If you would like to contribute code or help squash a bug or two, that's awesome
 
 ### Localization
 
-If you are interested in helping with the effort in translating the various portions of the Chocolatey GUI UI into different languages, you can find out more about using the [transifex](https://www.transifex.com/) service in this [how to article](https://chocolatey.github.io/ChocolateyGUI/docs/localization-howto).
+If you are interested in helping with the effort in translating the various portions of the Chocolatey GUI UI into different languages, you can find out more about using the [transifex](https://www.transifex.com/) service in this [how to article](https://chocolatey.github.io/ChocolateyGUI/docs/localization).
 
 ## Committers
 

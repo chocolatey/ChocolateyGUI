@@ -228,7 +228,7 @@
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <TextBlock Text="{x:Static properties:Resources.LocalSourceView_Grid_Prerelease}"
                                                                Grid.Column="1"
-                                                               Background="#A90000"
+                                                               Background="DarkOrange"
                                                                Foreground="White"
                                                                Padding="3"
                                                                VerticalAlignment="Center"

@@ -71,7 +71,7 @@
                                 </TextBlock.Text>
                             </TextBlock>
                             <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_Prerelease}"
-                                       Background="#A90000"
+                                       Background="DarkOrange"
                                        Foreground="White"
                                        Margin="5,0,0,0"
                                        Padding="3"

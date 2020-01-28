@@ -34,8 +34,8 @@
   <PropertyGroup>
   	<_GuiProjectFolder>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\ChocolateyGui'))</_GuiProjectFolder>
   	<_GuiCliProjectFolder>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\ChocolateyGuiCli'))</_GuiCliProjectFolder>
-  	<_GuiTargetDir>$(_GuiProjectFolder)\bin\$(Configuration)</_GuiTargetDir>
-  	<_GuiCliTargetDir>$(_GuiCliProjectFolder)\bin\$(Configuration)</_GuiCliTargetDir>
+  	<_GuiTargetDir>$(_GuiProjectFolder)\..\..\BuildArtifacts\temp\_PublishedApplications\ChocolateyGui</_GuiTargetDir>
+    <_GuiCliTargetDir>$(_GuiCliProjectFolder)\..\..\BuildArtifacts\temp\_PublishedApplications\ChocolateyGuiCli</_GuiCliTargetDir>
   	<DefineConstants>$(DefineConstants);GuiProjectFolder=$(_GuiProjectFolder);GuiTargetDir=$(_GuiTargetDir);GuiCliProjectFolder=$(_GuiCliProjectFolder);GuiCliTargetDir=$(_GuiCliTargetDir)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>

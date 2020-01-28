@@ -271,4 +271,7 @@ Task("Strong-Name-Signer")
 BuildParameters.Tasks.CreateChocolateyPackagesTask
     .IsDependentOn("SignMSI");
 
+BuildParameters.Tasks.CreateNuGetPackagesTask
+    .IsDependentOn("SignExecutable");
+
 Build.Run();

@@ -13,10 +13,7 @@
              d:DataContext="{d:DesignInstance Type=viewModels:AboutViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="786" d:DesignWidth="1366">
     <UserControl.Resources>
-        <Style TargetType="{x:Type metro:ToggleSwitch}" BasedOn="{StaticResource ToggleSwitch.Win10.Override}">
-            <Setter Property="Margin" Value="0 5"/>
-            <Setter Property="metro:ControlsHelper.HeaderMargin" Value="0 0 0 10"/>
-        </Style>
+        <Style TargetType="{x:Type metro:ToggleSwitch}" BasedOn="{StaticResource Chocolatey.Styles.ToggleSwitch}" />
     </UserControl.Resources>
 
     <FrameworkElement.CommandBindings>

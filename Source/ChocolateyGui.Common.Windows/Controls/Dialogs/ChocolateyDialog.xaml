@@ -25,16 +25,18 @@
                                                 Height="200"
                                                 IsReadOnly="True" />
             </Expander>
+
             <StackPanel Grid.Row="1"
-                        Orientation="Horizontal"
+                        MinHeight="85"
                         HorizontalAlignment="Right"
+                        Orientation="Horizontal"
                         Visibility="{Binding IsCancelable, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged}">
                 <Button x:Name="PART_NegativeButton"
-                        Height="35"
-                        MinWidth="80"
-                        Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"
-                        Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Margin="5 0 0 0"
+                        Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                        Cursor="Arrow"
+                        FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"
                         Visibility="Hidden" />
             </StackPanel>
         </Grid>

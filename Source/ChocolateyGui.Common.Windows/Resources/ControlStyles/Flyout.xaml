@@ -31,10 +31,10 @@
                         <Trigger Property="IsPressed"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="{DynamicResource MahApps.Brushes.FlatButton.PressedBackground}"
+                                    Value="{DynamicResource MahApps.Brushes.Button.Flat.Background.Pressed}"
                                     TargetName="Border" />
                             <Setter Property="Foreground"
-                                    Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
+                                    Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">

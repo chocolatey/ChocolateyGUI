@@ -15,7 +15,8 @@
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
-             d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}">
+             d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}"
+             Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -269,6 +270,9 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
+            <Grid.Resources>
+                <ResourceDictionary Source="pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Dark.Theme.xaml" />
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -291,12 +295,15 @@
                     </TextBox>
                 </StackPanel>
                 <CheckBox Name="AllVersionsCheckBox" Margin="5"
+                          Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.RemoteSourceView_CheckboxAllVersions}"
                           IsChecked="{Binding IncludeAllVersions}" />
                 <CheckBox Name="PrereleaseCheckBox" Margin="5"
+                          Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.RemoteSourceView_CheckboxIncludePrerelease}"
                           IsChecked="{Binding IncludePrerelease}" />
                 <CheckBox Name="MatchCheckBox" Margin="5"
+                          Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.RemoteSourceView_CheckboxMatchExactly}"
                           IsChecked="{Binding MatchWord}" />
                 <ComboBox Name="SortBox" Margin="5 1" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>

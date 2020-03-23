@@ -11,23 +11,23 @@
     <system:String x:Key="Theme.DisplayName">Theme (Dark)</system:String>
     <system:String x:Key="Theme.BaseColorScheme">Dark</system:String>
     <system:String x:Key="Theme.ColorScheme">Theme</system:String>
-    <SolidColorBrush x:Key="Theme.ShowcaseBrush" Color="#FF202F3C" options:Freeze="True" />
+    <SolidColorBrush x:Key="Theme.ShowcaseBrush" Color="#FF283B4C" options:Freeze="True" />
 
     <!--  *************COLORS START*************  -->
 
     <!--  Theme Base Colors  -->
 
     <!--  ACCENT COLORS  -->
-    <Color x:Key="MahApps.Colors.Highlight">#283B4C</Color>
-    <Color x:Key="MahApps.Colors.AccentBase">#FF202F3C</Color>
+    <Color x:Key="MahApps.Colors.Highlight">#FF354E65</Color>
+    <Color x:Key="MahApps.Colors.AccentBase">#FF283B4C</Color>
     <!--  80%  -->
-    <Color x:Key="MahApps.Colors.Accent">#CC202F3C</Color>
+    <Color x:Key="MahApps.Colors.Accent">#CC283B4C</Color>
     <!--  60%  -->
-    <Color x:Key="MahApps.Colors.Accent2">#99202F3C</Color>
+    <Color x:Key="MahApps.Colors.Accent2">#99283B4C</Color>
     <!--  40%  -->
-    <Color x:Key="MahApps.Colors.Accent3">#66202F3C</Color>
+    <Color x:Key="MahApps.Colors.Accent3">#66283B4C</Color>
     <!--  20%  -->
-    <Color x:Key="MahApps.Colors.Accent4">#33202F3C</Color>
+    <Color x:Key="MahApps.Colors.Accent4">#33283B4C</Color>
 
     <Color x:Key="BackgroundColor">#333333</Color>
     <Color x:Key="BodyColor">#F0EEE0</Color>
@@ -240,7 +240,7 @@
         DEFAULT COMMON CONTROL COLORS
         ******************************************************************
     -->
-    <Color x:Key="MahApps.Colors.SystemAccent">#FF202F3C</Color>
+    <Color x:Key="MahApps.Colors.SystemAccent">#FF283B4C</Color>
 
     <Color x:Key="MahApps.Colors.SystemAltHigh">#FF000000</Color>
     <Color x:Key="MahApps.Colors.SystemAltLow">#33000000</Color>

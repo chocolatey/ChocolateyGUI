@@ -13,6 +13,7 @@ using chocolatey;
 using chocolatey.infrastructure.registration;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows;
+using MahApps.Metro;
 
 namespace ChocolateyGui
 {
@@ -94,6 +95,19 @@ namespace ChocolateyGui
 
                 throw;
             }
+        }
+
+        /// <inheritdoc />
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            // add custom theme resource dictionaries to allow switching between them
+            ThemeManager.AddTheme(new Uri("pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Light.Theme.xaml"));
+            ThemeManager.AddTheme(new Uri("pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Dark.Theme.xaml"));
+
+            ThemeManager.IsAutomaticWindowsAppModeSettingSyncEnabled = true;
+            ThemeManager.SyncThemeWithWindowsAppModeSetting();
         }
     }
 }

@@ -33,7 +33,7 @@
         </StackPanel>
         <TabControl Background="Transparent" metro:TabControlHelper.Underlined="TabPanel">
             <TabItem Header="{x:Static properties:Resources.AboutView_History}">
-                <Grid Background="White">
+                <Grid Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
@@ -50,7 +50,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static properties:Resources.AboutView_Credits}">
-                <Grid Background="White">
+                <Grid Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
@@ -67,7 +67,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static properties:Resources.AboutView_ReleaseNotes}">
-                <Grid Background="White">
+                <Grid Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>

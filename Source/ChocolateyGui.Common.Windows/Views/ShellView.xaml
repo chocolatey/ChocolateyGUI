@@ -1,0 +1,102 @@
+﻿<metro:MetroWindow x:Class="ChocolateyGui.Common.Windows.Views.ShellView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:cal="http://www.caliburnproject.org"
+                   xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
+                   xmlns:system="clr-namespace:System;assembly=mscorlib"
+                   xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
+                   mc:Ignorable="d"
+                   Height="768" Width="1366"
+                   GlowBrush="{StaticResource MahApps.Brushes.Highlight}"
+                   d:DataContext="{d:DesignInstance Type=viewModels:ShellViewModel}"
+                   SaveWindowPosition="True"
+                   TitleForeground="Transparent"
+                   ShowDialogsOverTitleBar="False"
+                   ShowIconOnTitleBar="False"
+                   OverlayOpacity="0.3">
+  <Window.CommandBindings>
+        <CommandBinding
+            Command="NavigationCommands.GoToPage"
+            Executed="PerformGoToPage"
+            CanExecute="CanGoToPage" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+1" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>1</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+2" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>2</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+3" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>3</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+4" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>4</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+5" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>5</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+6" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>6</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+7" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>7</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+8" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>8</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Gesture="Ctrl+9" Command="{Binding GoToSourceCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Int32>9</system:Int32>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+
+    </Window.InputBindings>
+    <Window.Title>
+        <PriorityBinding>
+            <Binding Path="ActiveItem.DisplayName"></Binding>
+            <Binding Path="DisplayName"></Binding>
+        </PriorityBinding>
+    </Window.Title>
+
+    <metro:MetroWindow.WindowButtonCommands>
+        <metro:WindowButtonCommands Template="{DynamicResource MahApps.Templates.WindowButtonCommands.Win10}" />
+    </metro:MetroWindow.WindowButtonCommands>
+
+    <metro:MetroWindow.RightWindowCommands>
+        <metro:WindowCommands>
+            <Button x:Name="ShowSettings"
+                    Visibility="{Binding Path=CanShowSettings, Converter={StaticResource BooleanToVisibility}, ConverterParameter=False}"
+                    IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"
+                    Content="{x:Static properties:Resources.ShellView_ButtonSettings}" ClickMode="Release" cal:Message.Attach="ShowSettings()"/>
+            <Button x:Name="ShowAbout"
+                    IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"
+                    Content="{x:Static properties:Resources.ShellView_ButtonAbout}" ClickMode="Release" cal:Message.Attach="ShowAbout()"/>
+        </metro:WindowCommands>
+    </metro:MetroWindow.RightWindowCommands>
+
+    <Border Background="{StaticResource BackgroundColorBrush}">
+        <Grid>
+            <ContentControl x:Name="ActiveItem" />
+        </Grid>
+    </Border>
+</metro:MetroWindow>

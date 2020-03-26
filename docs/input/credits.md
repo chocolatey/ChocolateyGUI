@@ -6,6 +6,8 @@ These are the committers to Chocolatey/Chocolatey GUI repository:
 
 * [Gary Ewan Park](https://github.com/gep13) - Committer, Chocolatey GUI, community feed moderator
 * [Richard Simpson](https://github.com/RichiCoder1) - Created and maintains the new Chocolatey GUI
+* [Jan Karger](https://github.com/punker76) - Long time contributor to the project
+* [Manfred Wallner](https://github.com/mwallner) - Chocolatey GUI Enthusiast
 
 ## Contributors
 
@@ -19,32 +21,25 @@ These are the committers to Chocolatey/Chocolatey GUI repository:
 
 Chocolatey GUI uses the following awesome frameworks (in no particular order):
 
-* [AlphaFS](https://github.com/alphaleonis/AlphaFS)
-* [AsyncEx](https://github.com/StephenCleary/AsyncEx)
 * [Autofac](http://autofac.org/)
 * [AutoMapper](http://automapper.org/)
 * [Caliburn.Micro](https://github.com/Caliburn-Micro/Caliburn.Micro)
-* [Castle.Core](http://www.castleproject.org/)
-* [CefSharp](https://github.com/cefsharp/CefSharp)
+* [ControlzEx](https://github.com/ControlzEx/ControlzEx)
 * [LiteDB](https://github.com/mbdavid/LiteDB)
 * [log4net](http://logging.apache.org/log4net/)
+* [Magick.NET](https://github.com/dlemstra/Magick.NET)
 * [MahApps.Metro](http://mahapps.com/)
 * [Markdig](https://github.com/lunet-io/markdig)
-* [MsgPack](https://github.com/msgpack/msgpack)
-* [Raygun](https://raygun.io/)
-* [Json.NET](http://www.newtonsoft.com/json)
-* [Rx](http://rx.codeplex.com/)
+* [Markdig.Wpf](https://github.com/Kryptos-FR/markdig.wpf)
+* [Reactive Extenstions for .NET](https://github.com/dotnet/reactive)
 * [Serilog](https://github.com/serilog/serilog)
 * [Splat](https://github.com/paulcbetts/splat)
-* [SQLLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)
-* [SuperSocket](http://www.supersocket.net/)
-* [WebSocket4Net](http://websocket4net.codeplex.com/)
 
 Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
 
 * [Cake](http://cakebuild.net/)
+* [Cake.Recipe](https://github.com/cake-contrib/Cake.Recipe)
 * [NuGet.exe](https://www.nuget.org/)
-* [TeamCity CodeBetter](http://teamcity.codebetter.com/)
 * [AppVeyor](http://www.appveyor.com/)
 * [MyGet](http://www.myget.org/)
 
@@ -60,4 +55,3 @@ We would like to credit other super sweet tools/frameworks/services that aid in 
 * [ReSharper](https://www.jetbrains.com/resharper/)
 * [NuGet Framework](https://www.nuget.org/)
 * [Gitter](https://gitter.im)
-* [Raygun](https://raygun.io/)

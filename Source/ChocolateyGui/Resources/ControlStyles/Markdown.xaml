@@ -1,41 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf">
-    <Style TargetType="{x:Type FlowDocument}" BasedOn="{StaticResource {x:Static markdig:Styles.DocumentStyleKey}}" x:Key="{x:Static markdig:Styles.DocumentStyleKey}">
-        <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="PagePadding" Value="0" />
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}"/>
-    </Style>
-    <Style TargetType="{x:Type Paragraph}" x:Key="{x:Static markdig:Styles.Heading1StyleKey}" BasedOn="{StaticResource {x:Static markdig:Styles.Heading1StyleKey}}">
-        <Setter Property="FontSize" Value="36.4" />
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
-        <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Margin" Value="0,16,0,16"/>
-    </Style>
-    <Style TargetType="{x:Type Paragraph}" x:Key="{x:Static markdig:Styles.Heading2StyleKey}" BasedOn="{StaticResource {x:Static markdig:Styles.Heading2StyleKey}}">
-        <Setter Property="FontSize" Value="28" />        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
-        <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Margin" Value="0,16,0,2"/>
-    </Style>
-    <Style TargetType="{x:Type Paragraph}" x:Key="{x:Static markdig:Styles.Heading3StyleKey}" BasedOn="{StaticResource {x:Static markdig:Styles.Heading3StyleKey}}">        <Setter Property="FontSize" Value="22.4" />
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
-        <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Margin" Value="0,16,0,0"/>
-    </Style>
-    <Style TargetType="{x:Type Paragraph}" x:Key="{x:Static markdig:Styles.Heading4StyleKey}" BasedOn="{StaticResource {x:Static markdig:Styles.Heading4StyleKey}}">
-        <Setter Property="FontSize" Value="19.5"/>
-        <Setter Property="Margin" Value="0,16,0,16"/>
-    </Style>
-    <Style TargetType="{x:Type Paragraph}" x:Key="{x:Static markdig:Styles.Heading5StyleKey}" BasedOn="{StaticResource {x:Static markdig:Styles.Heading5StyleKey}}">        <Setter Property="FontSize" Value="15.4"/>        <Setter Property="Margin" Value="0,16,0,16"/>    </Style>    <Style TargetType="{x:Type List}">        <Setter Property="Margin" Value="0,14,0,14"/>
-        <Setter Property="Padding" Value="40,0,0,0"/>
-    </Style>
-    <Style TargetType="{x:Type Hyperlink}">
-        <Setter Property="Foreground" Value="#bc7100"/>
-        <Setter Property="TextDecorations" Value="{x:Null}"/>        <Setter Property="Cursor" Value="Hand"/>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="TextDecorations" Value="Underline"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style></ResourceDictionary>

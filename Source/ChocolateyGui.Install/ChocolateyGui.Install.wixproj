@@ -33,8 +33,10 @@
   </PropertyGroup>
   <PropertyGroup>
   	<_GuiProjectFolder>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\ChocolateyGui'))</_GuiProjectFolder>
-  	<_GuiTargetDir>$(_GuiProjectFolder)\bin\$(Platform)\$(Configuration)</_GuiTargetDir>
-  	<DefineConstants>$(DefineConstants);GuiProjectFolder=$(_GuiProjectFolder);GuiTargetDir=$(_GuiTargetDir)</DefineConstants>
+  	<_GuiCliProjectFolder>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\ChocolateyGuiCli'))</_GuiCliProjectFolder>
+  	<_GuiTargetDir>$(_GuiProjectFolder)\..\..\BuildArtifacts\temp\_PublishedApplications\ChocolateyGui</_GuiTargetDir>
+    <_GuiCliTargetDir>$(_GuiCliProjectFolder)\..\..\BuildArtifacts\temp\_PublishedApplications\ChocolateyGuiCli</_GuiCliTargetDir>
+  	<DefineConstants>$(DefineConstants);GuiProjectFolder=$(_GuiProjectFolder);GuiTargetDir=$(_GuiTargetDir);GuiCliProjectFolder=$(_GuiCliProjectFolder);GuiCliTargetDir=$(_GuiCliTargetDir)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />

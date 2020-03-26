@@ -205,9 +205,23 @@ BuildArtifacts/
 Resources.*.resx
 !Resources.resx
 
-# Documentation related
-docs
-
 # Wyam Related
 config.wyam.dll
 config.wyam.hash
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Auto-generated docs
+docs/input/tasks
+
+# Vagrant
+.vagrant/
+
+# Mac
+.DS_Store
+
+SolutionInfo.cs
+
+config.wyam.packages.xml

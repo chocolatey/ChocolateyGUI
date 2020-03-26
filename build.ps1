@@ -41,7 +41,7 @@ https://cakebuild.net
 
 [CmdletBinding()]
 Param(
-    [string]$Script = "setup.cake",
+    [string]$Script = "recipe.cake",
     [string]$Target,
     [string]$Configuration,
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
@@ -118,7 +118,8 @@ if (!(Test-Path $PACKAGES_CONFIG)) {
     Write-Verbose -Message "Downloading packages.config..."
     try {
         $wc = GetProxyEnabledWebClient
-        $wc.DownloadFile("https://cakebuild.net/download/bootstrapper/packages", $PACKAGES_CONFIG) } catch {
+        $wc.DownloadFile("https://cakebuild.net/download/bootstrapper/packages", $PACKAGES_CONFIG)
+    } catch {
         Throw "Could not download packages.config."
     }
 }
@@ -158,7 +159,8 @@ if(-Not $SkipToolPackageRestore.IsPresent) {
     if((!(Test-Path $PACKAGES_CONFIG_MD5)) -Or
       ($md5Hash -ne (Get-Content $PACKAGES_CONFIG_MD5 ))) {
         Write-Verbose -Message "Missing or changed package.config hash..."
-        Remove-Item * -Recurse -Exclude packages.config,nuget.exe
+        Get-ChildItem -Exclude packages.config,nuget.exe,Cake.Bakery |
+        Remove-Item -Recurse
     }
 
     Write-Verbose -Message "Restoring tools from NuGet..."
@@ -230,5 +232,11 @@ $cakeArguments += $ScriptArgs
 
 # Start Cake
 Write-Host "Running build script..."
-&$CAKE_EXE $cakeArguments
+
+& "$CAKE_EXE" ./recipe.cake --bootstrap
+if ($LASTEXITCODE -eq 0)
+{
+    & "$CAKE_EXE" $cakeArguments
+}
+
 exit $LASTEXITCODE

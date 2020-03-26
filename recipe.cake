@@ -1,5 +1,5 @@
 #module nuget:?package=Cake.Chocolatey.Module&version=0.3.0
-#load nuget:?package=Cake.Recipe&version=1.1.1
+#load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&version=2.0.0-unstable0028&prerelease
 #tool choco:?package=transifex-client&version=0.12.4
 #addin nuget:?package=Cake.StrongNameSigner&version=0.1.0
 #addin nuget:?package=Cake.StrongNameTool&version=0.0.4
@@ -38,8 +38,6 @@ BuildParameters.SetParameters(context: Context,
                             shouldPublishChocolatey: false,
                             shouldPublishNuGet: false,
                             shouldPublishGitHub: false,
-                            shouldExecuteGitLink: false,
-                            shouldDeployGraphDocumentation: false,
                             shouldRunGitVersion: true,
                             webLinkRoot: "ChocolateyGUI",
                             webBaseEditUrl: "https://github.com/chocolatey/ChocolateyGUI/tree/develop/docs/input/");
@@ -142,7 +140,7 @@ Task("SignExecutable")
 
 Task("BuildMSI")
     .IsDependentOn("SignExecutable")
-    .Does(() => RequireTool(MSBuildExtensionPackTool, () => {
+    .Does(() => RequireTool(ToolSettings.MSBuildExtensionPackTool, () => {
         Information("Building MSI", BuildParameters.SolutionFilePath);
 
         var msbuildSettings = new MSBuildSettings()

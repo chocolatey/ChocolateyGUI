@@ -8,8 +8,7 @@
 if(BuildSystem.IsLocalBuild)
 {
     Environment.SetVariableNames(
-        githubUserNameVariable: "CHOCOLATEYGUI_GITHUB_USERNAME",
-        githubPasswordVariable: "CHOCOLATEYGUI_GITHUB_PASSWORD",
+        githubTokenVariable: "CHOCOLATEYGUI_GITHUB_TOKEN",
         appVeyorApiTokenVariable: "CHOCOLATEYGUI_APPVEYOR_API_TOKEN",
         wyamAccessTokenVariable: "CHOCOLATEYGUI_WYAM_ACCESS_TOKEN",
         wyamDeployRemoteVariable: "CHOCOLATEYGUI_WYAM_DEPLOY_REMOTE",

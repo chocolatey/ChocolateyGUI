@@ -13,6 +13,7 @@ export:
 issue-labels-include:
 - Breaking change
 - Feature
+- C4B Feature
 - Bug
 - Improvement
 - Documentation

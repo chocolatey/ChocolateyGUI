@@ -13,6 +13,7 @@ export:
 issue-labels-include:
 - Breaking change
 - Feature
+- C4B Feature
 - Bug
 - Improvement
 - Documentation
@@ -35,6 +36,6 @@ close:
     The release is available on:
 
     - [GitHub Release](https://github.com/{owner}/{repository}/releases/tag/{milestone})
-    - [Chocolatey Package](https://chocolatey.org/packages/gitreleasemanager.portable/{milestone})
+    - [Chocolatey Package](https://chocolatey.org/packages/chocolateygui/{milestone})
 
     Your **[GitReleaseManager](https://github.com/GitTools/GitReleaseManager)** bot :package::rocket:

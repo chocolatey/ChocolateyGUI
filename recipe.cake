@@ -59,7 +59,10 @@ ToolSettings.SetToolSettings(context: Context,
                                 BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui.Common.Windows/Utilities/Converters/BooleanToVisibilityInverted.cs",
                                 BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui.Common.Windows/Startup/ChocolateyGuiModule.cs",
                                 BuildParameters.RootDirectoryPath + "/Source/ChocoalteyGuiCli/Startup/ChocolateyGuiCliModule.cs"
-                            });
+                            },
+                            buildMSBuildToolVersion: MSBuildToolVersion.VS2015
+                            //buildMSBuildToolVersion: MSBuildToolVersion.VS2019
+                            );
 
 BuildParameters.PrintParameters(Context);
 

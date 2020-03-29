@@ -677,6 +677,9 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_ToggleShowAggregatedSourceViewDescription" xml:space="preserve">
     <value>Show additional source combining all sources in one place.</value>
   </data>
+  <data name="SettingsView_TogglePreventPreloadDescription" xml:space="preserve">
+    <value>Prevents preloading results with a blank search when opening the remote source view.</value>
+  </data>
   <data name="SourcesView_AggregatedSourcesId" xml:space="preserve">
     <value>All Sources</value>
   </data>

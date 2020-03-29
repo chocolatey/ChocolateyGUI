@@ -2076,6 +2076,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prevents preloading results with a blank search when opening the remote source view..
+        /// </summary>
+        public static string SettingsView_TogglePreventPreloadDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePreventPreloadDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show additional package information on Local and Remote views..
         /// </summary>
         public static string SettingsView_ToggleShowAdditionalPackageInformationDescription {

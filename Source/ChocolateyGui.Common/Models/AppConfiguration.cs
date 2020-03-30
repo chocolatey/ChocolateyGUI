@@ -33,6 +33,10 @@ namespace ChocolateyGui.Common.Models
         [Feature]
         public bool UseDelayedSearch { get; set; }
 
+        [LocalizedDescription("SettingsView_TogglePreventPreloadDescription")]
+        [Feature]
+        public bool PreventPreload { get; set; }
+
         [LocalizedDescription("SettingsView_ToggleExcludeInstalledPackagesDescription")]
         [Feature]
         public bool ExcludeInstalledPackages { get; set; }

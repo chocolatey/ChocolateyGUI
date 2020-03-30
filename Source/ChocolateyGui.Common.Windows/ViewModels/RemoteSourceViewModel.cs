@@ -221,6 +221,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     return;
                 }
 
+                if (!_hasLoaded && _configService.GetAppConfiguration().PreventPreload)
+                {
+                    _hasLoaded = true;
+                    return;
+                }
+
                 _hasLoaded = false;
 
                 var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";

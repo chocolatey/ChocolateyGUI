@@ -310,11 +310,19 @@
                     Style="{DynamicResource PaginationButtonStyle}"/>
         </Grid>
 
-        <ListView Grid.Row="1" x:Name="Packages" ItemsSource="{Binding Packages, Mode=OneWay}"
-                  VerticalAlignment="Stretch"
-                  HorizontalContentAlignment="Stretch"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  ScrollViewer.IsDeferredScrollingEnabled="False"
-                  MouseDoubleClick="Packages_OnMouseDoubleClick" />
+        <DockPanel Grid.Row="1" LastChildFill="true">
+            <ListView x:Name="Packages" ItemsSource="{Binding Packages, Mode=OneWay}"
+                      VerticalAlignment="Stretch"
+                      HorizontalContentAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.IsDeferredScrollingEnabled="False"
+                      MouseDoubleClick="Packages_OnMouseDoubleClick" />
+            <TextBlock Visibility="{Binding ShowShouldPreventPreloadMessage, Converter={StaticResource BoolToVis}}"
+                       Text="Prevent Preload Feature is enable.  Please search for a package using the textbox above"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="50"
+                       TextWrapping="Wrap"/>
+        </DockPanel>
     </Grid>
 </UserControl>

@@ -35,7 +35,7 @@ Chocolatey GUI is a delicious GUI on top of the Chocolatey command line tool.
 
 As an example, the following installation command could be used to enable `ShowConsoleOutput` to ensure `UseDelayedSearch` is disabled, and set the output cache to 120 minutes:
 
-`choco install chocolateygui --params="'/ShowConsoleOutput=$true /UseDelayedSearch=$false /OutdatedPackagesCacheDurationInMinutes=120'"
+`choco install chocolateygui --params="'/ShowConsoleOutput=$true /UseDelayedSearch=$false /OutdatedPackagesCacheDurationInMinutes=120'"`
   </description>
     <summary>A GUI for Chocolatey</summary>
   <releaseNotes>

@@ -1634,6 +1634,24 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No matching packages found....
+        /// </summary>
+        public static string RemoteSourceView_SearchNoPackagesFound {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_SearchNoPackagesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the search string, and/or options used, and try again..
+        /// </summary>
+        public static string RemoteSourceView_SearchNoPackagesFoundHeading {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_SearchNoPackagesFoundHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to Load.
         /// </summary>
         public static string RemoteSourceViewModel_FailedToLoad {

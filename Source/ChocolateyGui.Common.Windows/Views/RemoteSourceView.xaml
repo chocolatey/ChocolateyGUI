@@ -229,9 +229,13 @@
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
-                                        <DataTrigger Binding="{Binding SearchQuery, Mode=OneWay, Converter={StaticResource NullToBool}}" Value="False">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding HasLoaded, Mode=OneWay}" Value="True" />
+                                                <Condition Binding="{Binding ShowShouldPreventPreloadMessage, Mode=OneWay}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
                                             <Setter TargetName="EmptySearchInfo" Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                         <DataTrigger Binding="{Binding MatchWord, Mode=OneWay}" Value="True">
                                             <Setter TargetName="EmptySearchInfo" Property="Visibility" Value="Visible" />
                                         </DataTrigger>

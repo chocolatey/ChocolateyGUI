@@ -946,4 +946,13 @@ Normal:
   <data name="SettingsView_TogglePackageDownloadCountDescription" xml:space="preserve">
     <value>Allows control over whether package download count is displayed on remote source views.</value>
   </data>
+  <data name="RemoteSourceView_PreventPreloadHeading" xml:space="preserve">
+    <value>The Prevent Preload feature is currently enabled.</value>
+  </data>
+  <data name="RemoteSourceView_PreventPreloadNoResults" xml:space="preserve">
+    <value>No results yet...</value>
+  </data>
+  <data name="RemoteSourceView_PreventPreloadSubHeading" xml:space="preserve">
+    <value>Please search for a package using the search box above.</value>
+  </data>
 </root>

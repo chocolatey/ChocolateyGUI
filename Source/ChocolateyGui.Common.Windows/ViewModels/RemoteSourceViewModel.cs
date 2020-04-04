@@ -41,6 +41,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly IMapper _mapper;
         private int _currentPage = 1;
         private bool _hasLoaded;
+        private bool _shouldShowPreventPreloadMessage;
         private bool _includeAllVersions;
         private bool _includePrerelease;
         private bool _matchWord;
@@ -78,6 +79,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
 
             _eventAggregator.Subscribe(this);
+        }
+
+        public bool ShowShouldPreventPreloadMessage
+        {
+            get { return _shouldShowPreventPreloadMessage; }
+            set { this.SetPropertyValue(ref _shouldShowPreventPreloadMessage, value); }
         }
 
         public ListViewMode ListViewMode
@@ -223,11 +230,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
                 if (!_hasLoaded && _configService.GetAppConfiguration().PreventPreload)
                 {
+                    ShowShouldPreventPreloadMessage = true;
                     _hasLoaded = true;
                     return;
                 }
 
                 _hasLoaded = false;
+                ShowShouldPreventPreloadMessage = false;
 
                 var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
 

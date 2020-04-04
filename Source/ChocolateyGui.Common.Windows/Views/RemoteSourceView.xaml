@@ -321,17 +321,17 @@
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"
                         Visibility="{Binding ShowShouldPreventPreloadMessage, Converter={StaticResource BoolToVis}}">
                 <iconPacks:PackIconOcticons Kind="Search" Width="72" Height="72" Foreground="{DynamicResource MahApps.Brushes.AccentBase}" HorizontalAlignment="Center" Margin="20" />
-                <TextBlock Text="No results yet..."
+                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_PreventPreloadNoResults}"
                            HorizontalAlignment="Center"
                            FontSize="28"
                            Margin="10"
                            TextWrapping="Wrap"/>
-                <TextBlock Text="Because the Prevent Preload Feature is enabled."
+                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_PreventPreloadHeading}"
                            HorizontalAlignment="Center"
                            FontSize="22"
                            Margin="5"
                            TextWrapping="Wrap"/>
-                <TextBlock Text="Please search for a package using the textbox above."
+                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_PreventPreloadSubHeading}"
                            HorizontalAlignment="Center"
                            FontSize="20"
                            Margin="5"

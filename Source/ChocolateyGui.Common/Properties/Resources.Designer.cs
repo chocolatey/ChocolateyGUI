@@ -19,7 +19,7 @@ namespace ChocolateyGui.Common.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -1594,6 +1594,33 @@ namespace ChocolateyGui.Common.Properties {
         public static string RemoteSourceView_Prerelease {
             get {
                 return ResourceManager.GetString("RemoteSourceView_Prerelease", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Prevent Preload feature is currently enabled..
+        /// </summary>
+        public static string RemoteSourceView_PreventPreloadHeading {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_PreventPreloadHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No results yet....
+        /// </summary>
+        public static string RemoteSourceView_PreventPreloadNoResults {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_PreventPreloadNoResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please search for a package using the search box above..
+        /// </summary>
+        public static string RemoteSourceView_PreventPreloadSubHeading {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_PreventPreloadSubHeading", resourceCulture);
             }
         }
         

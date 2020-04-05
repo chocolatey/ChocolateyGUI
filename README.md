@@ -47,7 +47,7 @@ You can find information about Chocolatey GUI here: [https://chocolatey.github.i
 
 ### License / Credits
 
-Apache 2.0 - see [LICENSE](https://github.com/chocolatey/chocolateygui/blob/develop/LICENSE) and [NOTICE](https://github.com/chocolatey/chocolateygui/blob/develop/NOTICE) files.
+Apache 2.0 - see [LICENSE](https://github.com/chocolatey/chocolateygui/blob/develop/LICENSE.txt) and [NOTICE](https://github.com/chocolatey/chocolateygui/blob/develop/NOTICE) files.
 
 ## Submitting Issues
 

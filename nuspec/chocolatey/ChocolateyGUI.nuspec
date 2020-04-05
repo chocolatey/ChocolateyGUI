@@ -10,7 +10,7 @@
     <projectSourceUrl>https://github.com/chocolatey/ChocolateyGUI</projectSourceUrl>
     <packageSourceUrl>https://github.com/chocolatey/ChocolateyGUI/tree/develop/nuspec/chocolatey</packageSourceUrl>
     <iconUrl>https://raw.githubusercontent.com/chocolatey/choco/master/docs/logo/chocolateyicon.gif</iconUrl>
-    <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE</licenseUrl>
+    <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE.txt</licenseUrl>
     <bugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</bugTrackerUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
@@ -52,7 +52,7 @@ All release notes for Chocolatey GUI can be found on the GitHub site - https://g
     <file src="chocolateyInstall.ps1" target="tools"/>
     <file src="chocolateyUninstall.ps1" target="tools"/>
     <file src="..\..\BuildArtifacts\ChocolateyGUI.msi" target="tools"/>
-    <file src="..\..\LICENSE" target="tools\LICENSE"/>
+    <file src="..\..\LICENSE.txt" target="tools\LICENSE.txt"/>
     <file src="VERIFICATION.txt" target="tools"/>
   </files>
 </package>

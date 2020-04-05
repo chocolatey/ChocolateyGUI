@@ -8,7 +8,7 @@
     <authors>Chocolatey</authors>
     <projectUrl>https://github.com/chocolatey/ChocolateyGUI</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/chocolatey/choco/master/docs/logo/chocolateyicon.gif</iconUrl>
-    <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE</licenseUrl>
+    <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE.txt</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Shared code for working on Windows with Chocolatey GUI</summary>
     <description>

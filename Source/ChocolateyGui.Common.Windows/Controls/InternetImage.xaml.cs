@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="InternetImage.xaml.cs" company="Chocolatey">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -32,7 +32,7 @@ namespace ChocolateyGui.Common.Windows.Controls
     public partial class InternetImage
     {
         public static readonly DependencyProperty IconUrlProperty = DependencyProperty.Register(
-            "IconUrl", typeof(string), typeof(InternetImage), new PropertyMetadata(default(string)));
+            nameof(IconUrl), typeof(string), typeof(InternetImage), new PropertyMetadata(default(string)));
 
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly Lazy<ImageSource> ErrorIcon = new Lazy<ImageSource>(() => GetPackIconEntypoImage(PackIconEntypoKind.CircleWithCross, Brushes.OrangeRed));
@@ -87,15 +87,15 @@ namespace ChocolateyGui.Common.Windows.Controls
             imageStream.Position = 0;
         }
 
-        private async Task<IBitmap> LoadImage(string url, float desiredWidth, DateTime absoluteExpiration)
+        private async Task<IBitmap> LoadImage(string url, Size desiredSize, DateTime absoluteExpiration)
         {
-            var imageStream = await DownloadUrl(url, desiredWidth, absoluteExpiration).ConfigureAwait(false);
+            var imageStream = await DownloadUrl(url, desiredSize, absoluteExpiration).ConfigureAwait(false);
 
             // Don't specify width and height to keep the aspect ratio of the image.
             return await BitmapLoader.Current.Load(imageStream, null, null);
         }
 
-        private async Task<Stream> DownloadUrl(string url, float desiredWidth, DateTime absoluteExpiration)
+        private async Task<Stream> DownloadUrl(string url, Size desiredWidth, DateTime absoluteExpiration)
         {
             var id = $"imagecache/{url.GetHashCode()}";
             var imageStream = new MemoryStream();
@@ -115,38 +115,20 @@ namespace ChocolateyGui.Common.Windows.Controls
                 }
             }
 
+            var readSettings = GetMagickReadSettings(url);
+
             // If we couldn't find the image or it expired
             using (var client = new HttpClient())
             {
                 var response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
-                var extension = GetExtension(url);
-
                 using (var memoryStream = new MemoryStream())
                 {
                     await response.Content.CopyToAsync(memoryStream);
                     memoryStream.Position = 0;
 
-                    MagickReadSettings readSettings = null;
-                    if (string.Equals(extension, "svg", StringComparison.OrdinalIgnoreCase))
-                    {
-                        readSettings = new MagickReadSettings { Format = MagickFormat.Svg };
-                    }
-                    else if (string.Equals(extension, "svgz", StringComparison.OrdinalIgnoreCase))
-                    {
-                        readSettings = new MagickReadSettings { Format = MagickFormat.Svgz };
-                    }
-
-                    using (var image = new MagickImage(memoryStream, readSettings))
-                    {
-                        // Resize the image to the desired width. When zero is specified for the height
-                        // the height will be calculated with the aspect ratio.
-                        image.Resize((int)desiredWidth, 0);
-
-                        image.Write(imageStream, MagickFormat.Png);
-                        imageStream.Flush();
-                    }
+                    await ExtractImageFromStream(desiredWidth, readSettings, memoryStream, imageStream);
                 }
             }
 
@@ -160,12 +142,41 @@ namespace ChocolateyGui.Common.Windows.Controls
             return imageStream;
         }
 
-        private System.Drawing.Size GetCurrentSize()
+        private MagickReadSettings GetMagickReadSettings(string url)
+        {
+            var extension = GetExtension(url);
+
+            if (Enum.TryParse<MagickFormat>(extension, true, out var format) == false)
+            {
+                ////throw new Exception($"Image format with extension '{extension}' from '{url}' is currently not supported.");
+
+                return new MagickReadSettings();
+            }
+
+            var readSettings = new MagickReadSettings { Format = format };
+            return readSettings;
+        }
+
+        private static async Task ExtractImageFromStream(Size desiredSize, MagickReadSettings readSettings, Stream inputStream, MemoryStream imageStream)
+        {
+            using (var images = new MagickImageCollection(inputStream, readSettings))
+            {
+                var image = ExtractImage(images, desiredSize);
+
+                image.Resize((int)desiredSize.Width, 0);
+
+                image.Write(imageStream, MagickFormat.Png);
+
+                await imageStream.FlushAsync();
+            }
+        }
+
+        private Size GetCurrentSize()
         {
             var scale = NativeMethods.GetScaleFactor();
             var x = (int)Math.Round(ActualWidth * scale);
             var y = (int)Math.Round(ActualHeight * scale);
-            return new System.Drawing.Size(x, y);
+            return new Size(x, y);
         }
 
         private async Task SetImage(string url)
@@ -184,7 +195,7 @@ namespace ChocolateyGui.Common.Windows.Controls
             ImageSource source;
             try
             {
-                source = (await LoadImage(url, size.Width, expiration)).ToNative();
+                source = (await LoadImage(url, size, expiration)).ToNative();
             }
             catch (HttpRequestException)
             {
@@ -221,6 +232,20 @@ namespace ChocolateyGui.Common.Windows.Controls
             }
 
             return imagePart.Substring(fileTypeSeperator + 1);
+        }
+
+        private static IMagickImage ExtractImage(MagickImageCollection imageCollection, Size desiredSize)
+        {
+            var imagesOrderedBySize = imageCollection
+                .OrderBy(f => f.Width)
+                .ThenBy(f => f.Height)
+                .ToList();
+
+            // if there is no matching image, get the largest image
+            return imagesOrderedBySize
+                       .FirstOrDefault(f => f.Width >= desiredSize.Width
+                                            && f.Height >= desiredSize.Height)
+                   ?? imagesOrderedBySize.Last();
         }
     }
 }

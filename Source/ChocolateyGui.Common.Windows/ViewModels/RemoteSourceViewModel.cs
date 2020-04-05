@@ -81,6 +81,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _eventAggregator.Subscribe(this);
         }
 
+        public bool HasLoaded
+        {
+            get { return _hasLoaded; }
+            set { this.SetPropertyValue(ref _hasLoaded, value); }
+        }
+
         public bool ShowShouldPreventPreloadMessage
         {
             get { return _shouldShowPreventPreloadMessage; }
@@ -209,7 +215,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public bool CanLoadRemotePackages()
         {
-            return _hasLoaded;
+            return HasLoaded;
         }
 
         public void RefreshRemotePackages()
@@ -228,14 +234,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     return;
                 }
 
-                if (!_hasLoaded && _configService.GetAppConfiguration().PreventPreload)
+                if (!HasLoaded && _configService.GetAppConfiguration().PreventPreload)
                 {
                     ShowShouldPreventPreloadMessage = true;
-                    _hasLoaded = true;
+                    HasLoaded = true;
                     return;
                 }
 
-                _hasLoaded = false;
+                HasLoaded = false;
                 ShowShouldPreventPreloadMessage = false;
 
                 var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
@@ -291,7 +297,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 finally
                 {
                     await _progressService.StopLoading();
-                    _hasLoaded = true;
+                    HasLoaded = true;
                 }
 
                 await _eventAggregator.PublishOnUIThreadAsync(new ResetScrollPositionMessage());

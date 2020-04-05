@@ -261,6 +261,7 @@
     <Compile Include="Utilities\Converters\EnumToBoolConverter.cs" />
     <Compile Include="Utilities\Converters\LongSizeToFileSizeString.cs" />
     <Compile Include="Utilities\Converters\MultiBooleanAndToVisibility.cs" />
+    <Compile Include="Utilities\Converters\NullToBool.cs" />
     <Compile Include="Utilities\Converters\NullToValue.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
     <Compile Include="Utilities\Converters\PackageDependenciesToString.cs" />

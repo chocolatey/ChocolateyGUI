@@ -11,7 +11,7 @@
                          x:Class="ChocolateyGui.Common.Windows.Controls.Dialogs.ChocolateyDialog"
                          x:Name="PART_Dialog"
                          Background="{StaticResource BackgroundColorBrush}" d:DesignWidth="1300">
-    <MahDialogs:BaseMetroDialog.Content>
+    <MahDialogs:CustomDialog.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -32,14 +32,14 @@
                 <Button x:Name="PART_NegativeButton"
                         Height="35"
                         MinWidth="80"
-                        Style="{DynamicResource AccentedDialogSquareButton}"
+                        Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"
                         Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Margin="5 0 0 0"
                         Visibility="Hidden" />
             </StackPanel>
         </Grid>
-    </MahDialogs:BaseMetroDialog.Content>
-    <MahDialogs:BaseMetroDialog.DialogBottom>
+    </MahDialogs:CustomDialog.Content>
+    <MahDialogs:CustomDialog.DialogBottom>
         <MahControls:MetroProgressBar
             HorizontalAlignment="Stretch"
             VerticalAlignment="Bottom"
@@ -53,5 +53,5 @@
             Maximum="1.0"
             Foreground="{Binding ProgressBarForeground, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
             x:Name="PART_ProgressBar" />
-    </MahDialogs:BaseMetroDialog.DialogBottom>
+    </MahDialogs:CustomDialog.DialogBottom>
 </MahDialogs:CustomDialog>

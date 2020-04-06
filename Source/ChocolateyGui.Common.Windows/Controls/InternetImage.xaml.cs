@@ -123,7 +123,7 @@ namespace ChocolateyGui.Common.Windows.Controls
             return await BitmapLoader.Current.Load(imageStream, null, null);
         }
 
-        private async Task<Stream> DownloadUrl(string url, Size desiredWidth, DateTime absoluteExpiration)
+        private async Task<Stream> DownloadUrl(string url, Size desiredSize, DateTime absoluteExpiration)
         {
             var id = $"imagecache/{url.GetHashCode()}";
             var imageStream = new MemoryStream();
@@ -156,7 +156,7 @@ namespace ChocolateyGui.Common.Windows.Controls
                     await response.Content.CopyToAsync(memoryStream);
                     memoryStream.Position = 0;
 
-                    await ExtractImageFromStream(desiredWidth, readSettings, memoryStream, imageStream);
+                    await ExtractImageFromStream(desiredSize, readSettings, memoryStream, imageStream);
                 }
             }
 

@@ -87,6 +87,34 @@ namespace ChocolateyGui.Common.Windows.Controls
             imageStream.Position = 0;
         }
 
+        private static IMagickImage ExtractImage(MagickImageCollection imageCollection, Size desiredSize)
+        {
+            var imagesOrderedBySize = imageCollection
+                .OrderBy(f => f.Width)
+                .ThenBy(f => f.Height)
+                .ToList();
+
+            // if there is no matching image, get the largest image
+            return imagesOrderedBySize
+                       .FirstOrDefault(f => f.Width >= desiredSize.Width
+                                            && f.Height >= desiredSize.Height)
+                   ?? imagesOrderedBySize.Last();
+        }
+
+        private static async Task ExtractImageFromStream(Size desiredSize, MagickReadSettings readSettings, Stream inputStream, MemoryStream imageStream)
+        {
+            using (var images = new MagickImageCollection(inputStream, readSettings))
+            {
+                var image = ExtractImage(images, desiredSize);
+
+                image.Resize((int)desiredSize.Width, 0);
+
+                image.Write(imageStream, MagickFormat.Png);
+
+                await imageStream.FlushAsync();
+            }
+        }
+
         private async Task<IBitmap> LoadImage(string url, Size desiredSize, DateTime absoluteExpiration)
         {
             var imageStream = await DownloadUrl(url, desiredSize, absoluteExpiration).ConfigureAwait(false);
@@ -142,43 +170,6 @@ namespace ChocolateyGui.Common.Windows.Controls
             return imageStream;
         }
 
-        private MagickReadSettings GetMagickReadSettings(string url)
-        {
-            var extension = GetExtension(url);
-
-            if (Enum.TryParse<MagickFormat>(extension, true, out var format) == false)
-            {
-                ////throw new Exception($"Image format with extension '{extension}' from '{url}' is currently not supported.");
-
-                return new MagickReadSettings();
-            }
-
-            var readSettings = new MagickReadSettings { Format = format };
-            return readSettings;
-        }
-
-        private static async Task ExtractImageFromStream(Size desiredSize, MagickReadSettings readSettings, Stream inputStream, MemoryStream imageStream)
-        {
-            using (var images = new MagickImageCollection(inputStream, readSettings))
-            {
-                var image = ExtractImage(images, desiredSize);
-
-                image.Resize((int)desiredSize.Width, 0);
-
-                image.Write(imageStream, MagickFormat.Png);
-
-                await imageStream.FlushAsync();
-            }
-        }
-
-        private Size GetCurrentSize()
-        {
-            var scale = NativeMethods.GetScaleFactor();
-            var x = (int)Math.Round(ActualWidth * scale);
-            var y = (int)Math.Round(ActualHeight * scale);
-            return new Size(x, y);
-        }
-
         private async Task SetImage(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
@@ -216,6 +207,30 @@ namespace ChocolateyGui.Common.Windows.Controls
             PART_Loading.IsActive = false;
         }
 
+        private MagickReadSettings GetMagickReadSettings(string url)
+        {
+            var extension = GetExtension(url);
+
+            MagickFormat format;
+            if (Enum.TryParse<MagickFormat>(extension, true, out format) == false)
+            {
+                ////throw new Exception($"Image format with extension '{extension}' from '{url}' is currently not supported.");
+
+                return new MagickReadSettings();
+            }
+
+            var readSettings = new MagickReadSettings { Format = format };
+            return readSettings;
+        }
+
+        private Size GetCurrentSize()
+        {
+            var scale = NativeMethods.GetScaleFactor();
+            var x = (int)Math.Round(ActualWidth * scale);
+            var y = (int)Math.Round(ActualHeight * scale);
+            return new Size(x, y);
+        }
+
         private string GetExtension(string url)
         {
             Uri uri;
@@ -232,20 +247,6 @@ namespace ChocolateyGui.Common.Windows.Controls
             }
 
             return imagePart.Substring(fileTypeSeperator + 1);
-        }
-
-        private static IMagickImage ExtractImage(MagickImageCollection imageCollection, Size desiredSize)
-        {
-            var imagesOrderedBySize = imageCollection
-                .OrderBy(f => f.Width)
-                .ThenBy(f => f.Height)
-                .ToList();
-
-            // if there is no matching image, get the largest image
-            return imagesOrderedBySize
-                       .FirstOrDefault(f => f.Width >= desiredSize.Width
-                                            && f.Height >= desiredSize.Height)
-                   ?? imagesOrderedBySize.Last();
         }
     }
 }

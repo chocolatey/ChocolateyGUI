@@ -154,17 +154,6 @@
                         </Setter.Value>
                     </Setter>
                 </Trigger>
-                <DataTrigger Binding="{Binding ListViewMode, Mode=OneWay}" Value="{x:Static enums:ListViewMode.Tile}">
-                    <Setter Property="ItemTemplate" Value="{StaticResource PackageTileTemplate}" />
-                    <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewItemTileStyle}" />
-                    <Setter Property="ItemsPanel">
-                        <Setter.Value>
-                            <ItemsPanelTemplate>
-                                <WrapPanel IsItemsHost="True" VirtualizingPanel.IsVirtualizing="{TemplateBinding VirtualizingPanel.IsVirtualizing}" />
-                            </ItemsPanelTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
@@ -242,11 +231,11 @@
                 <Style TargetType="{x:Type ContentControl}">
                     <Setter Property="Focusable" Value="False" />
                     <Setter Property="IsTabStop" Value="False" />
-                    <Setter Property="Content" Value="{Binding PackageSource, Mode=OneWay}" />
+                    <Setter Property="Content" Value="{Binding Mode=OneWay}" />
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <DataGrid ItemsSource="{Binding Mode=OneWay}"
+                                <DataGrid ItemsSource="{Binding PackageSource, Mode=OneWay}"
                                           AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
                                           Style="{DynamicResource PackagesGridStyle}">
                                     <i:Interaction.Behaviors>
@@ -328,7 +317,7 @@
                             <Setter Property="ContentTemplate">
                                 <Setter.Value>
                                     <DataTemplate>
-                                        <ListView ItemsSource="{Binding Mode=OneWay}"
+                                        <ListView ItemsSource="{Binding PackageSource, Mode=OneWay}"
                                                   VerticalAlignment="Stretch"
                                                   HorizontalContentAlignment="Stretch"
                                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"

@@ -87,6 +87,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _eventAggregator.Subscribe(this);
         }
 
+        public bool HasLoaded
+        {
+            get { return _hasLoaded; }
+            set { this.SetPropertyValue(ref _hasLoaded, value); }
+        }
+
         public ListViewMode ListViewMode
         {
             get { return _listViewMode; }
@@ -246,7 +252,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public bool CanRefreshPackages()
         {
-            return _hasLoaded && !IsLoading;
+            return HasLoaded && !IsLoading;
         }
 
         public async void RefreshPackages()
@@ -297,7 +303,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                if (_hasLoaded)
+                if (HasLoaded)
                 {
                     return;
                 }
@@ -344,7 +350,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         }
                     });
 
-                _hasLoaded = true;
+                HasLoaded = true;
 
                 var chocoPackage = _packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
                 if (chocoPackage != null && chocoPackage.CanUpdate)

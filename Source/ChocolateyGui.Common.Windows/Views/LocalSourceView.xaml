@@ -23,6 +23,7 @@
         <converters:BooleanToVisibilityInverted x:Key="BoolToVisInverted" />
         <converters:BooleanToVisibilityHidden x:Key="BoolToHidden" />
         <converters:StringListToString x:Key="ListToString" />
+        <converters:NullToBool x:Key="NullToBool" />
 
         <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
         <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
@@ -110,6 +111,61 @@
                     </ItemsPanelTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="HasItems" Value="False">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListView}">
+                                <Border x:Name="Border"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="{TemplateBinding mahapps:ControlsHelper.CornerRadius}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                    <Grid Margin="{TemplateBinding Padding}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                        <StackPanel x:Name="EmptySearchInfo" Visibility="Collapsed" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <iconPacks:PackIconOcticons Kind="Search" Width="72" Height="72" Foreground="{DynamicResource MahApps.Brushes.AccentBase}" HorizontalAlignment="Center" Margin="20" />
+                                            <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFound}"
+                                                           HorizontalAlignment="Center"
+                                                           FontSize="28"
+                                                           Margin="10"
+                                                           TextWrapping="Wrap"/>
+                                            <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFoundHeading}"
+                                                           HorizontalAlignment="Center"
+                                                           FontSize="20"
+                                                           Margin="5"
+                                                           TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding HasLoaded, Mode=OneWay}" Value="True">
+                                        <Setter TargetName="EmptySearchInfo" Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding MatchWord, Mode=OneWay}" Value="True">
+                                        <Setter TargetName="EmptySearchInfo" Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <DataTrigger Binding="{Binding ListViewMode, Mode=OneWay}" Value="{x:Static enums:ListViewMode.Tile}">
+                    <Setter Property="ItemTemplate" Value="{StaticResource PackageTileTemplate}" />
+                    <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewItemTileStyle}" />
+                    <Setter Property="ItemsPanel">
+                        <Setter.Value>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" VirtualizingPanel.IsVirtualizing="{TemplateBinding VirtualizingPanel.IsVirtualizing}" />
+                            </ItemsPanelTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 

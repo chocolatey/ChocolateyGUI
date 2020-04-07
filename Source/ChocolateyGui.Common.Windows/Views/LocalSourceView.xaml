@@ -23,10 +23,8 @@
         <converters:BooleanToVisibilityInverted x:Key="BoolToVisInverted" />
         <converters:BooleanToVisibilityHidden x:Key="BoolToHidden" />
         <converters:StringListToString x:Key="ListToString" />
-
         <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
         <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-
         <utilities:PackageAuthorsComparer x:Key="PackageAuthorsComparer" />
 
         <DataTemplate x:Key="PackageTileTemplate" DataType="{x:Type items:IPackageViewModel}">
@@ -93,6 +91,50 @@
             </DataTemplate.Triggers>
         </DataTemplate>
 
+        <ControlTemplate x:Key="EmptySearchResultControlTemplate">
+            <Border x:Name="Border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mahapps:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <Grid Margin="{TemplateBinding Padding}"
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <StackPanel x:Name="EmptySearchInfo" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <iconPacks:PackIconOcticons Kind="Search" Width="72" Height="72" Foreground="{DynamicResource MahApps.Brushes.AccentBase}" HorizontalAlignment="Center" Margin="20" />
+                        <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFound}"
+                                   HorizontalAlignment="Center"
+                                   FontSize="28"
+                                   Margin="10"
+                                   TextWrapping="Wrap"/>
+                        <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFoundHeading}"
+                                   HorizontalAlignment="Center"
+                                   FontSize="20"
+                                   Margin="5"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style TargetType="DataGrid" BasedOn="{StaticResource PackagesGridStyle}">
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding PackageSource.IsEmpty, FallbackValue=True}" Value="True" />
+                        <Condition Binding="{Binding HasLoaded}" Value="True" />
+                        <Condition Binding="{Binding IsLoading}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Template" Value="{StaticResource EmptySearchResultControlTemplate}" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+
         <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource MahApps.Styles.ListView.Virtualized}">
             <Style.Resources>
                 <!--  this is necessary to prevent nasty can not find stuff like  -->
@@ -110,6 +152,16 @@
                     </ItemsPanelTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding PackageSource.IsEmpty, FallbackValue=True}" Value="True" />
+                        <Condition Binding="{Binding HasLoaded}" Value="True" />
+                        <Condition Binding="{Binding IsLoading}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Template" Value="{StaticResource EmptySearchResultControlTemplate}" />
+                </MultiDataTrigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
@@ -128,9 +180,11 @@
                 <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
                     <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
                            Target="{Binding ElementName=SearchTextBox}" Content="{x:Static properties:Resources.LocalSourceView_SearchBoxText}"/>
-                    <TextBox x:Name="SearchTextBox" Width="200" FontSize="14"
+                    <TextBox x:Name="SearchTextBox"
+                             Width="200"
+                             FontSize="14"
                              VerticalAlignment="Center"
-                             Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding SearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
                 <CheckBox Name="MatchCheckBox" Margin="5"
                           Content="{x:Static properties:Resources.LocalSourceView_CheckboxMatchExact}"
@@ -186,13 +240,14 @@
                 <Style TargetType="{x:Type ContentControl}">
                     <Setter Property="Focusable" Value="False" />
                     <Setter Property="IsTabStop" Value="False" />
-                    <Setter Property="Content" Value="{Binding PackageSource, Mode=OneWay}" />
+                    <Setter Property="Content" Value="{Binding Mode=OneWay}" />
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <DataGrid ItemsSource="{Binding Mode=OneWay}"
-                                          AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
-                                          Style="{DynamicResource PackagesGridStyle}">
+                                <DataGrid ItemsSource="{Binding PackageSource, Mode=OneWay}"
+                                          AutoGenerateColumns="False"
+                                          IsReadOnly="True"
+                                          SelectionMode="Single">
                                     <i:Interaction.Behaviors>
                                         <utilities:DataGridCustomSortBehavior />
                                     </i:Interaction.Behaviors>
@@ -272,7 +327,7 @@
                             <Setter Property="ContentTemplate">
                                 <Setter.Value>
                                     <DataTemplate>
-                                        <ListView ItemsSource="{Binding Mode=OneWay}"
+                                        <ListView ItemsSource="{Binding PackageSource, Mode=OneWay}"
                                                   VerticalAlignment="Stretch"
                                                   HorizontalContentAlignment="Stretch"
                                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"

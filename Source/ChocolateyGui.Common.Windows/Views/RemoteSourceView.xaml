@@ -23,8 +23,6 @@
             <converters:PackageTitleConverter x:Key="PackageTitleConverter"/>
             <converters:MultiBooleanAndToVisibility x:Key="MultiBooleanAndToVisibility" />
             <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
-            <converters:NullToBool x:Key="NullToBool" />
-
             <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
 
             <DataTemplate x:Key="PackageListTemplate" DataType="{x:Type items:IPackageViewModel}">

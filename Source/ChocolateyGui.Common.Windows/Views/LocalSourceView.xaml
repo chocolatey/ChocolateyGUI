@@ -23,11 +23,8 @@
         <converters:BooleanToVisibilityInverted x:Key="BoolToVisInverted" />
         <converters:BooleanToVisibilityHidden x:Key="BoolToHidden" />
         <converters:StringListToString x:Key="ListToString" />
-        <converters:NullToBool x:Key="NullToBool" />
-
         <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
         <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-
         <utilities:PackageAuthorsComparer x:Key="PackageAuthorsComparer" />
 
         <DataTemplate x:Key="PackageTileTemplate" DataType="{x:Type items:IPackageViewModel}">

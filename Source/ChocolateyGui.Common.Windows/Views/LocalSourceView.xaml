@@ -180,9 +180,11 @@
                 <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
                     <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
                            Target="{Binding ElementName=SearchTextBox}" Content="{x:Static properties:Resources.LocalSourceView_SearchBoxText}"/>
-                    <TextBox x:Name="SearchTextBox" Width="200" FontSize="14"
+                    <TextBox x:Name="SearchTextBox"
+                             Width="200"
+                             FontSize="14"
                              VerticalAlignment="Center"
-                             Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding SearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
                 <CheckBox Name="MatchCheckBox" Margin="5"
                           Content="{x:Static properties:Resources.LocalSourceView_CheckboxMatchExact}"

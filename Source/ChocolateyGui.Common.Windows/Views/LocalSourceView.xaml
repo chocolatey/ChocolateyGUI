@@ -100,7 +100,7 @@
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <Grid Margin="{TemplateBinding Padding}"
                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                    <StackPanel x:Name="EmptySearchInfo" Visibility="Collapsed" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel x:Name="EmptySearchInfo" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <iconPacks:PackIconOcticons Kind="Search" Width="72" Height="72" Foreground="{DynamicResource MahApps.Brushes.AccentBase}" HorizontalAlignment="Center" Margin="20" />
                         <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFound}"
                                    HorizontalAlignment="Center"
@@ -116,12 +116,6 @@
                 </Grid>
             </Border>
             <ControlTemplate.Triggers>
-                <DataTrigger Binding="{Binding HasLoaded, Mode=OneWay}" Value="True">
-                    <Setter TargetName="EmptySearchInfo" Property="Visibility" Value="Visible" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding MatchWord, Mode=OneWay}" Value="True">
-                    <Setter TargetName="EmptySearchInfo" Property="Visibility" Value="Visible" />
-                </DataTrigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
                 </Trigger>
@@ -130,9 +124,14 @@
 
         <Style TargetType="DataGrid" BasedOn="{StaticResource PackagesGridStyle}">
             <Style.Triggers>
-                <Trigger Property="HasItems" Value="False">
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding PackageSource.IsEmpty, FallbackValue=True}" Value="True" />
+                        <Condition Binding="{Binding HasLoaded}" Value="True" />
+                        <Condition Binding="{Binding IsLoading}" Value="False" />
+                    </MultiDataTrigger.Conditions>
                     <Setter Property="Template" Value="{StaticResource EmptySearchResultControlTemplate}" />
-                </Trigger>
+                </MultiDataTrigger>
             </Style.Triggers>
         </Style>
 
@@ -154,9 +153,14 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="HasItems" Value="False">
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding PackageSource.IsEmpty, FallbackValue=True}" Value="True" />
+                        <Condition Binding="{Binding HasLoaded}" Value="True" />
+                        <Condition Binding="{Binding IsLoading}" Value="False" />
+                    </MultiDataTrigger.Conditions>
                     <Setter Property="Template" Value="{StaticResource EmptySearchResultControlTemplate}" />
-                </Trigger>
+                </MultiDataTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>

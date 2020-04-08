@@ -557,7 +557,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pin.
+        ///   Looks up a localized string similar to Pin (Ignore Updates).
         /// </summary>
         public static string Controls_PackagesContextMenuPin {
             get {
@@ -1052,7 +1052,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pin.
+        ///   Looks up a localized string similar to Pin (Ignore Updates).
         /// </summary>
         public static string PackageView_ButtonPin {
             get {

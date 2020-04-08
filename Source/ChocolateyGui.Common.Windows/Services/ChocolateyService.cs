@@ -59,7 +59,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
         public Task<bool> IsElevated()
         {
-            return Task.FromResult(Hacks.IsElevated);
+            return Task.FromResult(Elevation.Instance.IsElevated);
         }
 
         public async Task<IEnumerable<Package>> GetInstalledPackages()

@@ -27,34 +27,175 @@
     <converters:StringListToString x:Key="StringListToString" />
     <converters:BooleanInverter x:Key="BooleanInverter" />
 
-    <Style x:Key="UacIconStyle" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{x:Static windows:NativeMethods.UacIcon}"/>
-        <Setter Property="Visibility" Value="{Binding Path=IsElevated, Source={x:Static windows:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
-    </Style>
+    <!-- todo remove this after next MahApps update -->
+    <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+        <Grid SnapsToDevicePixels="True">
+            <Rectangle x:Name="Bg"
+                       Fill="{TemplateBinding Background}"
+                       Stroke="{TemplateBinding BorderBrush}"
+                       StrokeThickness="1" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"
+                                      MinWidth="24"
+                                      SharedSizeGroup="MenuItemIconColumnGroup" />
+                    <ColumnDefinition Width="4" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="6" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
+                    <ColumnDefinition Width="17" />
+                </Grid.ColumnDefinitions>
+                <ContentPresenter x:Name="Icon"
+                                  Margin="1"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  ContentSource="Icon"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <Path x:Name="GlyphPanel"
+                      Margin="5 0 0 0"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="{DynamicResource Checkmark}"
+                      Fill="{DynamicResource MahApps.Brushes.CheckmarkFill}"
+                      FlowDirection="LeftToRight"
+                      Visibility="Collapsed" />
+                <ContentPresenter Grid.Column="2"
+                                  Margin="{TemplateBinding Padding}"
+                                  ContentSource="Header"
+                                  RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <TextBlock Grid.Column="4"
+                           Margin="{TemplateBinding Padding}"
+                           Text="{TemplateBinding InputGestureText}"
+                           Visibility="Collapsed" />
+                <Path Grid.Column="5"
+                      Margin="4 0 0 0"
+                      VerticalAlignment="Center"
+                      Data="{DynamicResource RightArrow}"
+                      Fill="{DynamicResource MahApps.Brushes.RightArrowFill}" />
+            </Grid>
+            <Popup x:Name="PART_Popup"
+                   AllowsTransparency="True"
+                   Focusable="False"
+                   HorizontalOffset="-2"
+                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Right"
+                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                   VerticalOffset="-3">
+                <Grid>
+                    <Rectangle x:Name="LayoutRoot" Fill="{TemplateBinding Background}" />
+                    <ContentControl x:Name="SubMenuBorder"
+                                    IsTabStop="False"
+                                    Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                        <ScrollViewer x:Name="SubMenuScrollViewer"
+                                      CanContentScroll="True"
+                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                            <ItemsPresenter x:Name="ItemsPresenter"
+                                            Margin="0"
+                                            Grid.IsSharedSizeScope="True"
+                                            KeyboardNavigation.DirectionalNavigation="Cycle"
+                                            KeyboardNavigation.TabNavigation="Cycle"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </ContentControl>
+                </Grid>
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+            </Trigger>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="GlyphPanel" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+                <Setter TargetName="LayoutRoot" Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="4"
+                                          Direction="315"
+                                          Opacity="0.3"
+                                          ShadowDepth="2"
+                                          Color="{DynamicResource MahApps.Colors.MenuShadow}" />
+                    </Setter.Value>
+                </Setter>
+                <Setter TargetName="LayoutRoot" Property="Margin" Value="0 0 6 6" />
+                <Setter TargetName="SubMenuBorder" Property="Margin" Value="0 0 6 6" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionFill}" />
+                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionStroke}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Foreground.Disabled}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.GlyphPanel.Disabled}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
-    <Image x:Key="UacIcon" x:Shared="False"
-          Style="{StaticResource UacIconStyle}"
-          Width="16" Height="16"/>
-
-    <Style x:Key="PrimaryUacIconStyle" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{x:Static windows:NativeMethods.UacIcon}"/>
-        <Setter Property="Visibility" Value="{Binding Path=CanDoCentralActions, Source={x:Static windows:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
-    </Style>
-
-    <Image x:Key="PrimaryUacIcon" x:Shared="False"
-          Style="{StaticResource PrimaryUacIconStyle}"
-          Width="16" Height="16"/>
-
-    <Style x:Key="TertiaryUacIconStyle" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{x:Static windows:NativeMethods.UacIcon}"/>
-        <Setter Property="Visibility" Value="{Binding Path=CanDoTertiaryActions, Source={x:Static windows:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
-    </Style>
-
-    <Image x:Key="TertiaryUacIcon" x:Shared="False"
-          Style="{StaticResource TertiaryUacIconStyle}"
-          Width="16" Height="16"/>
-
-    <system:Double x:Key="ToggleSwitchFontSize">15</system:Double>
+    <!-- todo remove this after next MahApps update -->
+    <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+        <Grid SnapsToDevicePixels="True">
+            <Rectangle x:Name="Bg"
+                       Fill="{TemplateBinding Background}"
+                       Stroke="{TemplateBinding BorderBrush}"
+                       StrokeThickness="1" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"
+                                      MinWidth="24"
+                                      SharedSizeGroup="MenuItemIconColumnGroup" />
+                    <ColumnDefinition Width="4" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="6" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
+                    <ColumnDefinition Width="17" />
+                </Grid.ColumnDefinitions>
+                <ContentPresenter x:Name="Icon"
+                                  Margin="1"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  ContentSource="Icon"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <Path x:Name="GlyphPanel"
+                      Margin="5 0 0 0"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="{DynamicResource Checkmark}"
+                      Fill="{DynamicResource MahApps.Brushes.CheckmarkFill}"
+                      FlowDirection="LeftToRight"
+                      Visibility="Collapsed" />
+                <ContentPresenter Grid.Column="2"
+                                  Margin="{TemplateBinding Padding}"
+                                  ContentSource="Header"
+                                  RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <TextBlock Grid.Column="4"
+                           Margin="{TemplateBinding Padding}"
+                           Text="{TemplateBinding InputGestureText}" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="GlyphPanel" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionFill}" />
+                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionStroke}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Foreground.Disabled}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.GlyphPanel.Disabled}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
     <Style x:Key="SourceBaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular" />
@@ -496,10 +637,8 @@
     <ContextMenu x:Key="PackagesContextMenu"
                  DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
                  d:DataContext="{d:DesignInstance Type=items:PackageViewModel}">
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuInstall}" Icon="{StaticResource PrimaryUacIcon}"
-                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
-                  Command="{commands:DataContextCommandAdapter Install}" />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuPin}" Icon="{StaticResource TertiaryUacIcon}"
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuPin}"
+                  Icon="{iconPacks:Modern Kind=Pin}"
                   Command="{commands:DataContextCommandAdapter Pin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -508,7 +647,8 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUnpin}" Icon="{StaticResource TertiaryUacIcon}"
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUnpin}"
+                  Icon="{iconPacks:Modern Kind=PinRemove}"
                   Command="{commands:DataContextCommandAdapter Unpin}">
             <MenuItem.Visibility>
                 <MultiBinding Converter="{StaticResource BooleanToVisibility}">
@@ -517,16 +657,26 @@
                 </MultiBinding>
             </MenuItem.Visibility>
         </MenuItem>
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUninstall}" Icon="{StaticResource PrimaryUacIcon}"
-                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
-                  Command="{commands:DataContextCommandAdapter Uninstall}" />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuReinstall}" Icon="{StaticResource PrimaryUacIcon}"
-                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
-                  Command="{commands:DataContextCommandAdapter Reinstall}" />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUpdate}" Icon="{StaticResource PrimaryUacIcon}"
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuDetails}"
+                  Icon="{iconPacks:BoxIcons Kind=RegularInfoCircle}"
+                  Command="{commands:DataContextCommandAdapter ViewDetails}" />
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUpdate}"
+                  Icon="{iconPacks:Entypo Kind=Cycle}"
                   Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Update}" />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuDetails}" Command="{commands:DataContextCommandAdapter ViewDetails}" />
+        <Separator />
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuInstall}"
+                  Icon="{iconPacks:Entypo Kind=Install}"
+                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
+                  Command="{commands:DataContextCommandAdapter Install}" />
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuReinstall}"
+                  Icon="{iconPacks:Entypo Kind=Cw}"
+                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
+                  Command="{commands:DataContextCommandAdapter Reinstall}" />
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUninstall}"
+                  Icon="{iconPacks:Entypo Kind=Uninstall}"
+                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
+                  Command="{commands:DataContextCommandAdapter Uninstall}" />
     </ContextMenu>
 
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">

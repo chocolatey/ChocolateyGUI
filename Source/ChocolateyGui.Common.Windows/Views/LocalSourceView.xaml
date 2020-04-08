@@ -247,7 +247,9 @@
                                 <DataGrid ItemsSource="{Binding PackageSource, Mode=OneWay}"
                                           AutoGenerateColumns="False"
                                           IsReadOnly="True"
-                                          SelectionMode="Single">
+                                          SelectionMode="Single"
+                                          IsTextSearchEnabled="True"
+                                          TextSearch.TextPath="Title">
                                     <i:Interaction.Behaviors>
                                         <utilities:DataGridCustomSortBehavior />
                                     </i:Interaction.Behaviors>

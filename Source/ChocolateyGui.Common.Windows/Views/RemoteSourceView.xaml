@@ -360,6 +360,8 @@
         <Grid Grid.Row="1">
             <ListView x:Name="Packages" ItemsSource="{Binding Packages, Mode=OneWay}"
                       VerticalAlignment="Stretch"
+                      IsTextSearchEnabled="True"
+                      TextSearch.TextPath="Title"
                       HorizontalContentAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.IsDeferredScrollingEnabled="False"

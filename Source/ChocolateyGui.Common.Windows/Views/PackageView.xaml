@@ -78,7 +78,7 @@
                                 Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}">
                         <Button Padding="10" Margin="5 0"
                                 Command="{commands:DataContextCommandAdapter Pin}"
-                                Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
+                                Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibility}}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconModern Kind="Pin" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonPin}" FontSize="16"/>
@@ -86,21 +86,23 @@
                         </Button>
                         <Button Padding="10" Margin="5 0"
                                 Command="{commands:DataContextCommandAdapter Unpin}"
-                                Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibility}}">
+                                Visibility="{Binding CanUnpin, Converter={StaticResource BooleanToVisibility}}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconModern Kind="PinRemove" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUnpin}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
-                            Command="{commands:DataContextCommandAdapter Reinstall}">
+                            Command="{commands:DataContextCommandAdapter Reinstall}"
+                            Visibility="{Binding CanReinstall, Converter={StaticResource BooleanToVisibility}}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Cw" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonReinstall}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
-                            Command="{commands:DataContextCommandAdapter Uninstall}">
+                            Command="{commands:DataContextCommandAdapter Uninstall}"
+                            Visibility="{Binding CanUninstall, Converter={StaticResource BooleanToVisibility}}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Uninstall" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUninstall}" FontSize="16"/>

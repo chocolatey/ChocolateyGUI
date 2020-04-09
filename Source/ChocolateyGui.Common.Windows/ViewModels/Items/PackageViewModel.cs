@@ -41,6 +41,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IConfigService _configService;
+        private readonly IAllowedCommandsService _allowedCommandsService;
 
         private string[] _authors;
 
@@ -65,6 +66,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private bool _isInstalled;
 
         private bool _isPinned;
+
         private bool _isSideBySide;
 
         private bool _isLatestVersion;
@@ -115,7 +117,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             IMapper mapper,
             IProgressService progressService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
-            IConfigService configService)
+            IConfigService configService,
+            IAllowedCommandsService allowedCommandsService)
         {
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
@@ -124,6 +127,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             eventAggregator?.Subscribe(this);
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
+            _allowedCommandsService = allowedCommandsService;
         }
 
         public DateTime Created
@@ -144,7 +148,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             set { SetPropertyValue(ref _authors, value); }
         }
 
-        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && LatestVersion != null && LatestVersion > Version;
+        public bool CanInstall => _allowedCommandsService.IsInstallCommandAllowed && !IsInstalled;
+
+        public bool CanReinstall => _allowedCommandsService.IsInstallCommandAllowed && IsInstalled;
+
+        public bool CanUninstall => _allowedCommandsService.IsUninstallCommandAllowed && IsInstalled;
+
+        public bool CanUpdate => _allowedCommandsService.IsUpgradeCommandAllowed && IsInstalled && !IsPinned && !IsSideBySide && LatestVersion != null && LatestVersion > Version;
+
+        public bool CanPin => _allowedCommandsService.IsPinCommandAllowed && !IsPinned && IsInstalled;
+
+        public bool CanUnpin => _allowedCommandsService.IsPinCommandAllowed && IsPinned && IsInstalled;
 
         public string Copyright
         {

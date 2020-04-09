@@ -167,8 +167,10 @@
     <Compile Include="Providers\IChocolateyConfigurationProvider.cs" />
     <Compile Include="Providers\IVersionNumberProvider.cs" />
     <Compile Include="Providers\VersionNumberProvider.cs" />
+    <Compile Include="Services\AllowedCommandsService.cs" />
     <Compile Include="Services\ChocolateyGuiCacheService.cs" />
     <Compile Include="Services\ConfigService.cs" />
+    <Compile Include="Services\IAllowedCommandsService.cs" />
     <Compile Include="Services\IChocolateyGuiCacheService.cs" />
     <Compile Include="Services\IChocolateyService.cs" />
     <Compile Include="Services\IConfigService.cs" />

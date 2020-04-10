@@ -81,6 +81,7 @@ namespace ChocolateyGui.Common.Windows.Startup
             builder.RegisterType<LiteDBFileStorageService>().As<IFileStorageService>().SingleInstance();
             builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
             builder.RegisterType<ChocolateyGuiCacheService>().As<IChocolateyGuiCacheService>().SingleInstance();
+            builder.RegisterType<AllowedCommandsService>().As<IAllowedCommandsService>().SingleInstance();
 
             // Register Mapper
             var mapperConfiguration = new MapperConfiguration(config =>

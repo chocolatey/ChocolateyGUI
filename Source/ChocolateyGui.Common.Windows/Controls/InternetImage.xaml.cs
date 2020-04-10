@@ -21,7 +21,9 @@ using LiteDB;
 using MahApps.Metro.IconPacks;
 using Microsoft.VisualStudio.Threading;
 using Serilog;
+using SkiaSharp;
 using Splat;
+using Svg.Skia;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Common.Windows.Controls
@@ -101,17 +103,60 @@ namespace ChocolateyGui.Common.Windows.Controls
                    ?? imagesOrderedBySize.Last();
         }
 
-        private static async Task ExtractImageFromStream(Size desiredSize, MagickReadSettings readSettings, Stream inputStream, MemoryStream imageStream)
+        private static async Task ExtractImageFromStream(string url, Size desiredSize, MagickReadSettings readSettings, Stream inputStream, MemoryStream imageStream)
         {
-            using (var images = new MagickImageCollection(inputStream, readSettings))
+            if (readSettings.Format == MagickFormat.Svg || readSettings.Format == MagickFormat.Svgz)
             {
-                var image = ExtractImage(images, desiredSize);
+                using (var svg = new SKSvg())
+                {
+                    try
+                    {
+                        svg.Load(inputStream);
+                    }
+                    catch (Exception exception)
+                    {
+                        Logger.Warning(exception, $"Something is wrong with: \"{url}\".");
+                    }
 
-                image.Resize((int)desiredSize.Width, 0);
+                    var skPicture = svg.Picture;
+                    var imageInfo = new SKImageInfo((int)desiredSize.Width, (int)desiredSize.Height);
+                    using (var surface = SKSurface.Create(imageInfo))
+                    {
+                        using (var canvas = surface.Canvas)
+                        {
+                            // calculate the scaling need to fit to desired size
+                            var scaleX = desiredSize.Width / skPicture.CullRect.Width;
+                            var scaleY = desiredSize.Height / skPicture.CullRect.Height;
+                            var matrix = SKMatrix.MakeScale((float)scaleX, (float)scaleY);
 
-                image.Write(imageStream, MagickFormat.Png);
+                            // draw the svg
+                            canvas.Clear(SKColors.Transparent);
+                            canvas.DrawPicture(skPicture, ref matrix);
+                            canvas.Flush();
 
-                await imageStream.FlushAsync();
+                            using (var data = surface.Snapshot())
+                            {
+                                using (var pngImage = data.Encode(SKEncodedImageFormat.Png, 100))
+                                {
+                                    pngImage.SaveTo(imageStream);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                using (var images = new MagickImageCollection(inputStream, readSettings))
+                {
+                    var image = ExtractImage(images, desiredSize);
+
+                    image.Resize((int)desiredSize.Width, 0);
+
+                    image.Write(imageStream, MagickFormat.Png);
+
+                    await imageStream.FlushAsync();
+                }
             }
         }
 
@@ -156,7 +201,7 @@ namespace ChocolateyGui.Common.Windows.Controls
                     await response.Content.CopyToAsync(memoryStream);
                     memoryStream.Position = 0;
 
-                    await ExtractImageFromStream(desiredSize, readSettings, memoryStream, imageStream);
+                    await ExtractImageFromStream(url, desiredSize, readSettings, memoryStream, imageStream);
                 }
             }
 
@@ -192,14 +237,14 @@ namespace ChocolateyGui.Common.Windows.Controls
             {
                 source = ErrorIcon.Value;
             }
-            catch (ArgumentException)
+            catch (ArgumentException exception)
             {
-                Logger.Warning("Got an invalid img url: \"{IconUrl}\".", url);
+                Logger.Warning(exception, $"Got an invalid img url: \"{url}\".");
                 source = ErrorIcon.Value;
             }
             catch (Exception exception)
             {
-                Logger.Warning(exception, "Something went wrong with: \"{IconUrl}\".", url);
+                Logger.Warning(exception, $"Something went wrong with: \"{url}\".");
                 source = ErrorIcon.Value;
             }
 

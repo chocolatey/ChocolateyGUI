@@ -201,7 +201,7 @@ namespace ChocolateyGui.Common.Windows.Controls
                     await response.Content.CopyToAsync(memoryStream);
                     memoryStream.Position = 0;
 
-                    await ExtractImageFromStream(url, desiredSize, readSettings, memoryStream, imageStream);
+                    await ExtractImageFromStream(url, desiredSize, readSettings, memoryStream, imageStream).ConfigureAwait(false);
                 }
             }
 

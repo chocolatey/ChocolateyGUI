@@ -90,7 +90,7 @@ namespace ChocolateyGui.Common.Windows.Controls
         private static bool IsSvg(string url)
         {
             var extension = Path.GetExtension(url)?.ToLower();
-            return extension is ".svg" || extension is ".svgz";
+            return extension == ".svg" || extension == ".svgz";
         }
 
         private static void ExtractImageFromStream(string url, Size desiredSize, Stream inputStream, Stream imageStream)

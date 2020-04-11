@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,12 +15,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
-using ImageMagick;
 using LiteDB;
 using MahApps.Metro.IconPacks;
 using Microsoft.VisualStudio.Threading;
 using Serilog;
+using SkiaSharp;
 using Splat;
+using Svg.Skia;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Common.Windows.Controls
@@ -87,32 +87,101 @@ namespace ChocolateyGui.Common.Windows.Controls
             imageStream.Position = 0;
         }
 
-        private static IMagickImage ExtractImage(MagickImageCollection imageCollection, Size desiredSize)
+        private static bool IsSvg(string url)
         {
-            var imagesOrderedBySize = imageCollection
-                .OrderBy(f => f.Width)
-                .ThenBy(f => f.Height)
-                .ToList();
-
-            // if there is no matching image, get the largest image
-            return imagesOrderedBySize
-                       .FirstOrDefault(f => f.Width >= desiredSize.Width
-                                            && f.Height >= desiredSize.Height)
-                   ?? imagesOrderedBySize.Last();
+            var extension = Path.GetExtension(url)?.ToLower();
+            return extension == ".svg" || extension == ".svgz";
         }
 
-        private static async Task ExtractImageFromStream(Size desiredSize, MagickReadSettings readSettings, Stream inputStream, MemoryStream imageStream)
+        private static void ExtractImageFromStream(string url, Size desiredSize, Stream inputStream, Stream imageStream)
         {
-            using (var images = new MagickImageCollection(inputStream, readSettings))
+            if (IsSvg(url))
             {
-                var image = ExtractImage(images, desiredSize);
+                using (var svg = new SKSvg())
+                {
+                    try
+                    {
+                        svg.Load(inputStream);
+                    }
+                    catch (Exception exception)
+                    {
+                        Logger.Warning(exception, $"Something is wrong with: \"{url}\".");
+                    }
 
-                image.Resize((int)desiredSize.Width, 0);
+                    var skPicture = svg.Picture;
+                    var imageInfo = new SKImageInfo((int)desiredSize.Width, (int)desiredSize.Height);
+                    using (var surface = SKSurface.Create(imageInfo))
+                    {
+                        using (var canvas = surface.Canvas)
+                        {
+                            // calculate the scaling need to fit to desired size
+                            var scaleX = desiredSize.Width / skPicture.CullRect.Width;
+                            var scaleY = desiredSize.Height / skPicture.CullRect.Height;
+                            var matrix = SKMatrix.MakeScale((float)scaleX, (float)scaleY);
 
-                image.Write(imageStream, MagickFormat.Png);
+                            // draw the svg
+                            canvas.Clear(SKColors.Transparent);
+                            canvas.DrawPicture(skPicture, ref matrix);
+                            canvas.Flush();
 
-                await imageStream.FlushAsync();
+                            using (var data = surface.Snapshot())
+                            {
+                                using (var pngImage = data.Encode(SKEncodedImageFormat.Png, 100))
+                                {
+                                    pngImage.SaveTo(imageStream);
+                                }
+                            }
+                        }
+                    }
+                }
             }
+            else
+            {
+                var bitmap = SKBitmap.Decode(inputStream);
+                if (bitmap != null)
+                {
+                    var resizeInfo = GetResizeSkImageInfo(desiredSize, bitmap);
+                    using (var resizedBitmap = bitmap.Resize(resizeInfo, SKFilterQuality.High))
+                    {
+                        bitmap.Dispose();
+
+                        using (var image = SKImage.FromBitmap(resizedBitmap))
+                        {
+                            using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+                            {
+                                data.SaveTo(imageStream);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static SKImageInfo GetResizeSkImageInfo(Size desiredSize, SKBitmap bitmap)
+        {
+            var resizeInfo = new SKImageInfo((int)desiredSize.Width, (int)desiredSize.Height);
+
+            // Test whether there is more room in width or height
+            if (Math.Abs(bitmap.Width - desiredSize.Width) > Math.Abs(bitmap.Height - desiredSize.Height))
+            {
+                // More room in width, so leave image width set to canvas width
+                // and increase/decrease height by same ratio
+                var widthRatio = (double)desiredSize.Width / (double)bitmap.Width;
+                var newHeight = (int)Math.Floor(bitmap.Height * widthRatio);
+
+                resizeInfo.Height = newHeight;
+            }
+            else
+            {
+                // More room in height, so leave image height set to canvas height
+                // and increase/decrease width by same ratio
+                var heightRatio = (double)desiredSize.Height / (double)bitmap.Height;
+                var newWidth = (int)Math.Floor(bitmap.Width * heightRatio);
+
+                resizeInfo.Width = newWidth;
+            }
+
+            return resizeInfo;
         }
 
         private async Task<IBitmap> LoadImage(string url, Size desiredSize, DateTime absoluteExpiration)
@@ -143,8 +212,6 @@ namespace ChocolateyGui.Common.Windows.Controls
                 }
             }
 
-            var readSettings = GetMagickReadSettings(url);
-
             // If we couldn't find the image or it expired
             using (var client = new HttpClient())
             {
@@ -156,7 +223,7 @@ namespace ChocolateyGui.Common.Windows.Controls
                     await response.Content.CopyToAsync(memoryStream);
                     memoryStream.Position = 0;
 
-                    await ExtractImageFromStream(desiredSize, readSettings, memoryStream, imageStream);
+                    ExtractImageFromStream(url, desiredSize, memoryStream, imageStream);
                 }
             }
 
@@ -192,35 +259,19 @@ namespace ChocolateyGui.Common.Windows.Controls
             {
                 source = ErrorIcon.Value;
             }
-            catch (ArgumentException)
+            catch (ArgumentException exception)
             {
-                Logger.Warning("Got an invalid img url: \"{IconUrl}\".", url);
+                Logger.Warning(exception, $"Got an invalid img url: \"{url}\".");
                 source = ErrorIcon.Value;
             }
             catch (Exception exception)
             {
-                Logger.Warning(exception, "Something went wrong with: \"{IconUrl}\".", url);
+                Logger.Warning(exception, $"Something went wrong with: \"{url}\".");
                 source = ErrorIcon.Value;
             }
 
             PART_Image.Source = source;
             PART_Loading.IsActive = false;
-        }
-
-        private MagickReadSettings GetMagickReadSettings(string url)
-        {
-            var extension = GetExtension(url);
-
-            MagickFormat format;
-            if (Enum.TryParse<MagickFormat>(extension, true, out format) == false)
-            {
-                ////throw new Exception($"Image format with extension '{extension}' from '{url}' is currently not supported.");
-
-                return new MagickReadSettings();
-            }
-
-            var readSettings = new MagickReadSettings { Format = format };
-            return readSettings;
         }
 
         private Size GetCurrentSize()
@@ -229,24 +280,6 @@ namespace ChocolateyGui.Common.Windows.Controls
             var x = (int)Math.Round(ActualWidth * scale);
             var y = (int)Math.Round(ActualHeight * scale);
             return new Size(x, y);
-        }
-
-        private string GetExtension(string url)
-        {
-            Uri uri;
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
-            {
-                throw new ArgumentException(nameof(url));
-            }
-
-            var imagePart = uri.Segments.Last();
-            var fileTypeSeperator = imagePart.LastIndexOf(".", StringComparison.InvariantCulture);
-            if (fileTypeSeperator <= 0)
-            {
-                return string.Empty;
-            }
-
-            return imagePart.Substring(fileTypeSeperator + 1);
         }
     }
 }

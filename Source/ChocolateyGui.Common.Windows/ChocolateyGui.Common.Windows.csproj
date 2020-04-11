@@ -73,8 +73,8 @@
     <Reference Include="HarfBuzzSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\HarfBuzzSharp.2.6.1.1\lib\net45\HarfBuzzSharp.dll</HintPath>
     </Reference>
-    <Reference Include="LiteDB, Version=3.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiteDB.3.1.4\lib\net35\LiteDB.dll</HintPath>
+    <Reference Include="LiteDB, Version=5.0.5.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.5.0.5\lib\net45\LiteDB.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -216,6 +216,7 @@
     <Reference Include="System.Reactive.Windows.Threading, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

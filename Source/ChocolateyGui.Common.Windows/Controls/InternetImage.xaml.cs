@@ -79,11 +79,11 @@ namespace ChocolateyGui.Common.Windows.Controls
             return image;
         }
 
-        private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, LiteStorage fileStorage, string id)
+        private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, ILiteStorage<string> fileStorage, string id, string url)
         {
             imageStream.Position = 0;
-            var fileInfo = fileStorage.Upload(id, null, imageStream);
-            fileInfo.Metadata.Add(new KeyValuePair<string, BsonValue>("Expires", absoluteExpiration));
+            fileStorage.Upload(id, url, imageStream);
+            fileStorage.SetMetadata(id, new BsonDocument { new KeyValuePair<string, BsonValue>("Expires", absoluteExpiration) });
             imageStream.Position = 0;
         }
 
@@ -194,7 +194,7 @@ namespace ChocolateyGui.Common.Windows.Controls
 
         private async Task<Stream> DownloadUrl(string url, Size desiredSize, DateTime absoluteExpiration)
         {
-            var id = $"imagecache/{url.GetHashCode()}";
+            var id = $"imagecache/{url}";
             var imageStream = new MemoryStream();
             var fileStorage = Data.FileStorage;
 
@@ -203,11 +203,14 @@ namespace ChocolateyGui.Common.Windows.Controls
                 if (fileStorage.Exists(id))
                 {
                     var info = fileStorage.FindById(id);
-                    var expires = info.Metadata["Expires"].AsDateTime;
-                    if (expires > DateTime.UtcNow)
+                    if (info.Metadata.ContainsKey("Expires"))
                     {
-                        info.CopyTo(imageStream);
-                        return imageStream;
+                        var expires = info.Metadata["Expires"].AsDateTime;
+                        if (expires > DateTime.UtcNow)
+                        {
+                            info.CopyTo(imageStream);
+                            return imageStream;
+                        }
                     }
                 }
             }
@@ -231,7 +234,7 @@ namespace ChocolateyGui.Common.Windows.Controls
             {
                 // we don't need to delete the file, cause a upload does
                 // Upload: Send file or stream to database. Can be used with file or Stream. If file already exists, file content is overwritten.
-                UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id);
+                UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id, url);
             }
 
             return imageStream;

@@ -42,21 +42,21 @@ Chocolatey GUI uses the following awesome frameworks (in no particular order):
 
 Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
 
+* [AppVeyor](http://www.appveyor.com/)
 * [Cake](http://cakebuild.net/)
 * [Cake.Recipe](https://github.com/cake-contrib/Cake.Recipe)
-* [NuGet.exe](https://www.nuget.org/)
-* [AppVeyor](http://www.appveyor.com/)
 * [MyGet](http://www.myget.org/)
+* [NuGet.exe](https://www.nuget.org/)
 
 Chocolatey GUI is tested and analyzed with the following rockstar frameworks (in no particular order):
 
-* [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx)
-* [StyleCop.Analyzers](https://github.com/DotNetAnalyzers/StyleCopAnalyzers)
-* [InspectCode](https://confluence.jetbrains.com/display/NETCOM/Introducing+InspectCode)
 * [DupFinder](https://confluence.jetbrains.com/display/NETCOM/Introducing+dupFinder)
+* [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx)
+* [InspectCode](https://confluence.jetbrains.com/display/NETCOM/Introducing+InspectCode)
+* [StyleCop.Analyzers](https://github.com/DotNetAnalyzers/StyleCopAnalyzers)
 
 We would like to credit other super sweet tools/frameworks/services that aid in the development of Chocolatey GUI:
 
-* [ReSharper](https://www.jetbrains.com/resharper/)
-* [NuGet Framework](https://www.nuget.org/)
 * [Gitter](https://gitter.im)
+* [NuGet Framework](https://www.nuget.org/)
+* [ReSharper](https://www.jetbrains.com/resharper/)

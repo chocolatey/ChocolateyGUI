@@ -19,7 +19,7 @@ These are the committers to Chocolatey/Chocolatey GUI repository:
 
 ## Frameworks
 
-Chocolatey GUI uses the following awesome frameworks (in no particular order):
+Chocolatey GUI uses the following awesome frameworks:
 
 * [Autofac](http://autofac.org/)
 * [AutoMapper](http://automapper.org/)
@@ -40,7 +40,7 @@ Chocolatey GUI uses the following awesome frameworks (in no particular order):
 * [Svg.Skia](https://github.com/wieslawsoltes/Svg.Skia)
 * [XamlBehaviorsWpf](https://github.com/Microsoft/XamlBehaviorsWpf)
 
-Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
+Chocolatey GUI is built, with the following fantastic frameworks and services:
 
 * [AppVeyor](http://www.appveyor.com/)
 * [Cake](http://cakebuild.net/)
@@ -48,7 +48,7 @@ Chocolatey GUI is built, with the following fantastic frameworks and services (i
 * [MyGet](http://www.myget.org/)
 * [NuGet.exe](https://www.nuget.org/)
 
-Chocolatey GUI is tested and analyzed with the following rockstar frameworks (in no particular order):
+Chocolatey GUI is tested and analyzed with the following rockstar frameworks:
 
 * [DupFinder](https://confluence.jetbrains.com/display/NETCOM/Introducing+dupFinder)
 * [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx)

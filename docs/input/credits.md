@@ -38,7 +38,7 @@ Chocolatey GUI uses the following awesome frameworks (in no particular order):
 * [Svg.Skia](https://github.com/wieslawsoltes/Svg.Skia)
 * [SkiaSharp](https://github.com/mono/SkiaSharp)
 * [Fizzler](https://github.com/atifaziz/Fizzler)
-* [corefx](https://github.com/dotnet/d)
+* [corefx](https://github.com/dotnet/runtime)
 
 Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
 

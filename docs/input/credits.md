@@ -19,39 +19,44 @@ These are the committers to Chocolatey/Chocolatey GUI repository:
 
 ## Frameworks
 
-Chocolatey GUI uses the following awesome frameworks (in no particular order):
+Chocolatey GUI uses the following awesome frameworks:
 
 * [Autofac](http://autofac.org/)
 * [AutoMapper](http://automapper.org/)
 * [Caliburn.Micro](https://github.com/Caliburn-Micro/Caliburn.Micro)
 * [ControlzEx](https://github.com/ControlzEx/ControlzEx)
-* [LiteDB](https://github.com/mbdavid/LiteDB)
+* [corefx](https://github.com/dotnet/runtime)
+* [Fizzler](https://github.com/atifaziz/Fizzler)
+* [IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks)
+* [LiteDB](https://www.litedb.org/)
 * [log4net](http://logging.apache.org/log4net/)
-* [Magick.NET](https://github.com/dlemstra/Magick.NET)
 * [MahApps.Metro](http://mahapps.com/)
 * [Markdig](https://github.com/lunet-io/markdig)
 * [Markdig.Wpf](https://github.com/Kryptos-FR/markdig.wpf)
 * [Reactive Extenstions for .NET](https://github.com/dotnet/reactive)
 * [Serilog](https://github.com/serilog/serilog)
-* [Splat](https://github.com/paulcbetts/splat)
+* [Splat](https://github.com/reactiveui/splat)
+* [SkiaSharp](https://github.com/mono/SkiaSharp)
+* [Svg.Skia](https://github.com/wieslawsoltes/Svg.Skia)
+* [XamlBehaviorsWpf](https://github.com/Microsoft/XamlBehaviorsWpf)
 
-Chocolatey GUI is built, with the following fantastic frameworks and services (in no particular order):
+Chocolatey GUI is built, with the following fantastic frameworks and services:
 
+* [AppVeyor](http://www.appveyor.com/)
 * [Cake](http://cakebuild.net/)
 * [Cake.Recipe](https://github.com/cake-contrib/Cake.Recipe)
-* [NuGet.exe](https://www.nuget.org/)
-* [AppVeyor](http://www.appveyor.com/)
 * [MyGet](http://www.myget.org/)
+* [NuGet.exe](https://www.nuget.org/)
 
-Chocolatey GUI is tested and analyzed with the following rockstar frameworks (in no particular order):
+Chocolatey GUI is tested and analyzed with the following rockstar frameworks:
 
-* [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx)
-* [StyleCop.Analyzers](https://github.com/DotNetAnalyzers/StyleCopAnalyzers)
-* [InspectCode](https://confluence.jetbrains.com/display/NETCOM/Introducing+InspectCode)
 * [DupFinder](https://confluence.jetbrains.com/display/NETCOM/Introducing+dupFinder)
+* [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx)
+* [InspectCode](https://confluence.jetbrains.com/display/NETCOM/Introducing+InspectCode)
+* [StyleCop.Analyzers](https://github.com/DotNetAnalyzers/StyleCopAnalyzers)
 
 We would like to credit other super sweet tools/frameworks/services that aid in the development of Chocolatey GUI:
 
-* [ReSharper](https://www.jetbrains.com/resharper/)
-* [NuGet Framework](https://www.nuget.org/)
 * [Gitter](https://gitter.im)
+* [NuGet Framework](https://www.nuget.org/)
+* [ReSharper](https://www.jetbrains.com/resharper/)

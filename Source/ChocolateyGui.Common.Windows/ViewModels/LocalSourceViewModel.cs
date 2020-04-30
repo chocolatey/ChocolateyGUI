@@ -250,6 +250,16 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             return _exportAll;
         }
 
+        public bool CanCheckForUpdate()
+        {
+            return HasLoaded && !IsLoading;
+        }
+
+        public async void CheckForUpdate()
+        {
+            await CheckOutdated();
+        }
+
         public bool CanRefreshPackages()
         {
             return HasLoaded && !IsLoading;
@@ -405,26 +415,41 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 return;
             }
 
+            IsShowOnlyPackagesWithUpdateEnabled = !_configService.GetAppConfiguration().PreventAutomatedOutdatedPackagesCheck;
+
+            _packages.Clear();
+            Packages.Clear();
+
+            var packages = (await _chocolateyService.GetInstalledPackages())
+                .Select(Mapper.Map<IPackageViewModel>).ToList();
+
+            foreach (var packageViewModel in packages)
+            {
+                _packages.Add(packageViewModel);
+                Packages.Add(packageViewModel);
+            }
+
+            FirstLoadIncomplete = false;
+
+            if (!_configService.GetAppConfiguration().PreventAutomatedOutdatedPackagesCheck)
+            {
+                await CheckOutdated();
+            }
+        }
+
+        private async Task CheckOutdated()
+        {
+            if (IsLoading)
+            {
+                return;
+            }
+
             IsLoading = true;
 
             IsShowOnlyPackagesWithUpdateEnabled = false;
 
             try
             {
-                _packages.Clear();
-                Packages.Clear();
-
-                var packages = (await _chocolateyService.GetInstalledPackages())
-                    .Select(Mapper.Map<IPackageViewModel>).ToList();
-
-                foreach (var packageViewModel in packages)
-                {
-                    _packages.Add(packageViewModel);
-                    Packages.Add(packageViewModel);
-                }
-
-                FirstLoadIncomplete = false;
-
                 var updates = await _chocolateyService.GetOutdatedPackages();
                 foreach (var update in updates)
                 {

@@ -44,6 +44,10 @@ function Set-UserSettings {
         Set-FeatureState "PreventPreload" ($pp.PreventPreload -eq $true)
     }
     
+    if($pp.ContainsKey("PreventAutomatedOutdatedPackagesCheck")) {
+        Set-FeatureState "PreventAutomatedOutdatedPackagesCheck" ($pp.PreventAutomatedOutdatedPackagesCheck -eq $true)
+    }
+    
     if($pp.ContainsKey("ExcludeInstalledPackages")) {
         Set-FeatureState "ExcludeInstalledPackages" ($pp.ExcludeInstalledPackages -eq $true)
     }

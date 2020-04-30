@@ -237,6 +237,9 @@ Error: {1}{2}</value>
   <data name="LocalSourceView_ButtonRefreshPkgs" xml:space="preserve">
     <value>Refresh Packages</value>
   </data>
+  <data name="LocalSourceView_ButtonCheckUpdatePkgs" xml:space="preserve">
+    <value>Check for outdated packages</value>
+  </data>
   <data name="LocalSourceView_ButtonUpdateAll" xml:space="preserve">
     <value>Update All</value>
   </data>
@@ -679,6 +682,9 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="SettingsView_TogglePreventPreloadDescription" xml:space="preserve">
     <value>Prevents preloading results with a blank search when opening the remote source view.</value>
+  </data>
+  <data name="SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription" xml:space="preserve">
+    <value>Prevents automated check for outdated packages on startup.</value>
   </data>
   <data name="SourcesView_AggregatedSourcesId" xml:space="preserve">
     <value>All Sources</value>

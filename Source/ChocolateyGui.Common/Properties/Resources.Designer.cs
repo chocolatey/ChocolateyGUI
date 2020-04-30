@@ -800,6 +800,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check for outdated packages.
+        /// </summary>
+        public static string LocalSourceView_ButtonCheckUpdatePkgs {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ButtonCheckUpdatePkgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
         public static string LocalSourceView_ButtonExport {
@@ -2117,6 +2126,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string SettingsView_TogglePackageDownloadCountDescription {
             get {
                 return ResourceManager.GetString("SettingsView_TogglePackageDownloadCountDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevents automated check for outdated packages on startup..
+        /// </summary>
+        public static string SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription", resourceCulture);
             }
         }
         

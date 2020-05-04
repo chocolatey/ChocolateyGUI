@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Xml;
 using AutoMapper;
 using Caliburn.Micro;
@@ -258,7 +259,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             return HasLoaded && !IsLoading;
         }
 
-        public async void CheckForOutdatedPackages()
+        public async Task CheckForOutdatedPackages()
         {
             _chocolateyGuiCacheService.PurgeOutdatedPackages();
             await CheckOutdated(true);
@@ -446,10 +447,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             try
             {
                 var updates = await _chocolateyService.GetOutdatedPackages(false, null, forceCheckForOutdated);
-                foreach (var update in updates)
-                {
-                    await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version));
-                }
+
+                // Use a list of task for correct async loop
+                var listOfTasks = updates.Select(update => _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version))).ToList();
+                await Task.WhenAll(listOfTasks);
 
                 PackageSource.Refresh();
             }
@@ -467,6 +468,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 IsLoading = false;
 
                 IsShowOnlyPackagesWithUpdateEnabled = true;
+
+                // Force invalidating the command stuff.
+                // This helps us to prevent disabled buttons after executing this routine.
+                // But IMO it has something to do with Caliburn.
+                CommandManager.InvalidateRequerySuggested();
             }
         }
     }

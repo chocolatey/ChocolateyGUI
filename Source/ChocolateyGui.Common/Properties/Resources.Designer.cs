@@ -800,11 +800,11 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check for outdated packages.
+        ///   Looks up a localized string similar to Check for outdated packages (forced).
         /// </summary>
-        public static string LocalSourceView_ButtonCheckUpdatePkgs {
+        public static string LocalSourceView_ButtonCheckForOutdatedPkgs {
             get {
-                return ResourceManager.GetString("LocalSourceView_ButtonCheckUpdatePkgs", resourceCulture);
+                return ResourceManager.GetString("LocalSourceView_ButtonCheckForOutdatedPkgs", resourceCulture);
             }
         }
         
@@ -1477,6 +1477,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string RemoteSourceView_Authors {
             get {
                 return ResourceManager.GetString("RemoteSourceView_Authors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for outdated packages (forced).
+        /// </summary>
+        public static string RemoteSourceView_ButtonCheckForOutdatedPkgs {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_ButtonCheckForOutdatedPkgs", resourceCulture);
             }
         }
         

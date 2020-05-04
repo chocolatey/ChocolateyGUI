@@ -237,8 +237,11 @@ Error: {1}{2}</value>
   <data name="LocalSourceView_ButtonRefreshPkgs" xml:space="preserve">
     <value>Refresh Packages</value>
   </data>
-  <data name="LocalSourceView_ButtonCheckUpdatePkgs" xml:space="preserve">
-    <value>Check for outdated packages</value>
+  <data name="LocalSourceView_ButtonCheckForOutdatedPkgs" xml:space="preserve">
+    <value>Check for outdated packages (forced)</value>
+  </data>
+  <data name="RemoteSourceView_ButtonCheckForOutdatedPkgs" xml:space="preserve">
+    <value>Check for outdated packages (forced)</value>
   </data>
   <data name="LocalSourceView_ButtonUpdateAll" xml:space="preserve">
     <value>Update All</value>

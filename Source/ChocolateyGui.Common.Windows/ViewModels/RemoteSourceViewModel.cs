@@ -36,6 +36,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyService _chocolateyPackageService;
         private readonly IProgressService _progressService;
+        private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
@@ -58,6 +59,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         public RemoteSourceViewModel(
             IChocolateyService chocolateyPackageService,
             IProgressService progressService,
+            IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
             IEventAggregator eventAggregator,
             ChocolateySource source,
@@ -66,6 +68,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             Source = source;
             _chocolateyPackageService = chocolateyPackageService;
             _progressService = progressService;
+            _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
             _eventAggregator = eventAggregator;
             _mapper = mapper;
@@ -221,11 +224,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         public void RefreshRemotePackages()
         {
 #pragma warning disable 4014
-            LoadPackages();
+            LoadPackages(false);
 #pragma warning restore 4014
         }
 
-        public async Task LoadPackages()
+        public async Task LoadPackages(bool forceCheckForOutdatedPackages)
         {
             try
             {
@@ -265,7 +268,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                                     MatchWord,
                                     Source.Value));
                     var installed = await _chocolateyPackageService.GetInstalledPackages();
-                    var outdated = await _chocolateyPackageService.GetOutdatedPackages();
+                    var outdated = await _chocolateyPackageService.GetOutdatedPackages(false, null, forceCheckForOutdatedPackages);
 
                     PageCount = (int)Math.Ceiling((double)result.TotalCount / (double)PageSize);
                     Packages.Clear();
@@ -312,6 +315,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
         }
 
+        public bool CanCheckForOutdatedPackages()
+        {
+            return HasLoaded;
+        }
+
+        public async void CheckForOutdatedPackages()
+        {
+            _chocolateyGuiCacheService.PurgeOutdatedPackages();
+            await LoadPackages(true);
+        }
+
         protected override void OnViewAttached(object view, object context)
         {
             _eventAggregator.Subscribe(view);
@@ -341,7 +355,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     });
 
 #pragma warning disable 4014
-                LoadPackages();
+                LoadPackages(false);
 #pragma warning restore 4014
 
                 var immediateProperties = new[]
@@ -358,7 +372,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
                     .ObserveOnDispatcher()
 #pragma warning disable 4014
-                    .Subscribe(e => LoadPackages());
+                    .Subscribe(e => LoadPackages(false));
 #pragma warning restore 4014
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
@@ -367,7 +381,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
 #pragma warning disable 4014
-                    .Subscribe(e => LoadPackages());
+                    .Subscribe(e => LoadPackages(false));
 #pragma warning restore 4014
             }
             catch (InvalidOperationException ex)
@@ -394,7 +408,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 .DistinctUntilChanged()
                 .ObserveOnDispatcher()
 #pragma warning disable 4014
-                .Subscribe(e => LoadPackages());
+                .Subscribe(e => LoadPackages(false));
 #pragma warning restore 4014
         }
     }

@@ -93,8 +93,15 @@ namespace ChocolateyGui.Common.Windows.Services
             }
         }
 
-        public async Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null)
+        public async Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null, bool forceCheckForOutdatedPackages = false)
         {
+            var preventAutomatedOutdatedPackagesCheck = _configService.GetAppConfiguration().PreventAutomatedOutdatedPackagesCheck;
+
+            if (preventAutomatedOutdatedPackagesCheck && !forceCheckForOutdatedPackages)
+            {
+                return new List<OutdatedPackage>();
+            }
+
             var outdatedPackagesFile = _fileSystem.combine_paths(_localAppDataPath, "outdatedPackages.xml");
 
             var outdatedPackagesCacheDurationInMinutesSetting = _configService.GetAppConfiguration().OutdatedPackagesCacheDurationInMinutes;
@@ -132,7 +139,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     var results = packages
                         .Where(p => !p.Value.Inconclusive)
                         .Select(p => new OutdatedPackage
-                            { Id = p.Value.Package.Id, VersionString = p.Value.Package.Version.ToNormalizedString() })
+                        { Id = p.Value.Package.Id, VersionString = p.Value.Package.Version.ToNormalizedString() })
                         .ToArray();
 
                     try

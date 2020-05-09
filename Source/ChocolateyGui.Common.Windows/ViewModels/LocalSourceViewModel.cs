@@ -467,7 +467,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             {
                 IsLoading = false;
 
-                IsShowOnlyPackagesWithUpdateEnabled = true;
+                // Only enable the "Show only outdated packages" when it makes sense.
+                // It does not make sense to enable the checkbox when we haven't checked for
+                // outdated packages. We should only enable the checkbox here when: (or)
+                // 1. the "Prevent Automated Outdated Packages Check" is disabled
+                // 2. forced a check for outdated packages.
+                IsShowOnlyPackagesWithUpdateEnabled = !_configService.GetAppConfiguration().PreventAutomatedOutdatedPackagesCheck || forceCheckForOutdated;
 
                 // Force invalidating the command stuff.
                 // This helps us to prevent disabled buttons after executing this routine.

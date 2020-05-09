@@ -2139,7 +2139,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prevents automated check for outdated packages on startup..
+        ///   Looks up a localized string similar to Prevents automated check for outdated packages on local and remote source views..
         /// </summary>
         public static string SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription {
             get {

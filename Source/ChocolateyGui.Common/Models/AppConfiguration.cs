@@ -37,6 +37,10 @@ namespace ChocolateyGui.Common.Models
         [Feature]
         public bool PreventPreload { get; set; }
 
+        [LocalizedDescription("SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription")]
+        [Feature]
+        public bool PreventAutomatedOutdatedPackagesCheck { get; set; }
+
         [LocalizedDescription("SettingsView_ToggleExcludeInstalledPackagesDescription")]
         [Feature]
         public bool ExcludeInstalledPackages { get; set; }

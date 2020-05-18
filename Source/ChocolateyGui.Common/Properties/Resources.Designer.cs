@@ -800,6 +800,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check for outdated packages (forced).
+        /// </summary>
+        public static string LocalSourceView_ButtonCheckForOutdatedPkgs {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ButtonCheckForOutdatedPkgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
         public static string LocalSourceView_ButtonExport {
@@ -1472,6 +1481,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check for outdated packages (forced).
+        /// </summary>
+        public static string RemoteSourceView_ButtonCheckForOutdatedPkgs {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_ButtonCheckForOutdatedPkgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go Back a Page.
         /// </summary>
         public static string RemoteSourceView_ButtonGoBackAPage {
@@ -2117,6 +2135,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string SettingsView_TogglePackageDownloadCountDescription {
             get {
                 return ResourceManager.GetString("SettingsView_TogglePackageDownloadCountDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevents automated check for outdated packages on local and remote source views..
+        /// </summary>
+        public static string SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription", resourceCulture);
             }
         }
         

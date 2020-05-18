@@ -30,6 +30,7 @@ Chocolatey GUI is a delicious GUI on top of the Chocolatey command line tool.
 - `/DefaultToTileViewForRemoteSource` - Enables/disables whether or not Chocolatey GUI defauls to tile instead of list view for all remote source views
 - `/UseDelayedSearch` - Enables/disables whether or not Chocolatey GUI uses a live search, which returns results after a short delay without clicking the search button
 - `/PreventPreload` - Prevents preloading results with a blank search when opening the remote source view.
+- `/PreventAutomatedOutdatedPackagesCheck - Prevents automated check for outdated packages on startup.
 - `/ExcludeInstalledPackages` - Enables/disables whether or not Chocolatey GUI shows packages that are already installed when viewing sources
 - `/ShowAggregatedSourceView` - Enables/disables whether or not Chocolatey GUI shows an additional source combining all sources into one location
 - `/ShowAdditionalPackageInformation` - Show additional package information on Local and Remote views.

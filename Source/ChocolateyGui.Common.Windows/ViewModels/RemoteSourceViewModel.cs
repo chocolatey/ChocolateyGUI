@@ -216,6 +216,18 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
         }
 
+        public bool CanSearchForPackages()
+        {
+            return HasLoaded;
+        }
+
+        public void SearchForPackages()
+        {
+#pragma warning disable 4014
+            LoadPackages(false);
+#pragma warning restore 4014
+        }
+
         public bool CanLoadRemotePackages()
         {
             return HasLoaded;

@@ -281,11 +281,11 @@
                              Width="200"
                              FontSize="14"
                              VerticalAlignment="Center"
-                             mah:TextBoxHelper.ButtonCommand="{commands:DataContextCommandAdapter LoadPackages, CanLoadRemotePackages}"
+                             mah:TextBoxHelper.ButtonCommand="{commands:DataContextCommandAdapter SearchForPackages, CanSearchForPackages}"
                              Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
                              Style="{DynamicResource MahApps.Styles.TextBox.Search}">
                         <TextBox.InputBindings>
-                            <KeyBinding Command="{commands:DataContextCommandAdapter LoadPackages, CanLoadRemotePackages}"
+                            <KeyBinding Command="{commands:DataContextCommandAdapter SearchForPackages, CanSearchForPackages}"
                                         Key="Return" />
                         </TextBox.InputBindings>
                     </TextBox>

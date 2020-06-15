@@ -68,11 +68,15 @@ namespace ChocolateyGui.Common.Windows
 
         public static bool IsExiting { get; private set; }
 
-        internal static string ApplicationFilesPath { get; } = Path.GetDirectoryName((Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).Location);
+        public static string ApplicationFilesPath { get; } = Path.GetDirectoryName((Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).Location);
 
-        internal static string AppDataPath { get; } = LogSetup.GetAppDataPath(Name);
+        public static string AppDataPath { get; } = LogSetup.GetAppDataPath(Name);
 
-        internal static string LocalAppDataPath { get; } = LogSetup.GetLocalAppDataPath(Name);
+        public static string LocalAppDataPath { get; } = LogSetup.GetLocalAppDataPath(Name);
+
+        public static string UserConfigurationDatabaseName { get; } = "UserDatabase";
+
+        public static string GlobalConfigurationDatabaseName { get; } = "GlobalDatabase";
 
         public Task OnExitAsync()
         {
@@ -129,8 +133,8 @@ namespace ChocolateyGui.Common.Windows
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to start application.\n{ex.Message}\n\nMore details available in application logs.");
-                Logger.Fatal(ex, "Failed to start application.");
+                MessageBox.Show(string.Format(Resources.Fatal_Startup_Error_Formatted, ex.Message));
+                Logger.Fatal(ex, Resources.Fatal_Startup_Error);
                 await OnExitAsync();
             }
         }
@@ -157,7 +161,7 @@ namespace ChocolateyGui.Common.Windows
                 }
             }
 
-            throw new Exception($"Could not locate any instances of contract {key ?? service.Name}.");
+            throw new Exception(string.Format(Resources.Application_ContainerError, key ?? service.Name));
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
@@ -172,14 +176,14 @@ namespace ChocolateyGui.Common.Windows
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            Logger.Information("Exiting.");
+            Logger.Information(Resources.Application_Exiting);
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             if (e.IsTerminating)
             {
-                Logger.Fatal("Unhandled Exception", e.ExceptionObject as Exception);
+                Logger.Fatal(Resources.Application_UnhandledException, e.ExceptionObject as Exception);
                 if (IsExiting)
                 {
                     return;
@@ -195,7 +199,7 @@ namespace ChocolateyGui.Common.Windows
             }
             else
             {
-                Logger.Error("Unhandled Exception", e.ExceptionObject as Exception);
+                Logger.Error(Resources.Application_UnhandledException, e.ExceptionObject as Exception);
             }
         }
     }

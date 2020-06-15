@@ -12,21 +12,21 @@ namespace ChocolateyGui.Common.Services
 {
     public interface IConfigService
     {
-        AppConfiguration GetAppConfiguration();
+        AppConfiguration GetEffectiveConfiguration();
 
-        void UpdateSettings(AppConfiguration settings);
+        AppConfiguration GetGlobalConfiguration();
 
-        IEnumerable<ChocolateyGuiFeature> GetFeatures();
+        void UpdateSettings(AppConfiguration settings, bool global);
+
+        IEnumerable<ChocolateyGuiFeature> GetFeatures(bool global);
 
         void ListFeatures(ChocolateyGuiConfiguration configuration);
 
-        IEnumerable<ChocolateyGuiSetting> GetSettings();
+        IEnumerable<ChocolateyGuiSetting> GetSettings(bool global);
 
         void ListSettings(ChocolateyGuiConfiguration configuration);
 
-        void EnableFeature(ChocolateyGuiConfiguration configuration);
-
-        void DisableFeature(ChocolateyGuiConfiguration configuration);
+        void ToggleFeature(ChocolateyGuiConfiguration configuration, bool requiredValue);
 
         void GetConfigValue(ChocolateyGuiConfiguration configuration);
 

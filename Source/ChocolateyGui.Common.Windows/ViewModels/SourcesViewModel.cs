@@ -90,7 +90,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             var sources = await _packageService.GetSources();
             var vms = new List<ISourceViewModelBase>();
 
-            if (_configService.GetAppConfiguration().ShowAggregatedSourceView)
+            if (_configService.GetEffectiveConfiguration().ShowAggregatedSourceView ?? false)
             {
                 vms.Add(_remoteSourceVmFactory(new ChocolateyAggregatedSources()));
                 vms.Add(new SourceSeparatorViewModel());

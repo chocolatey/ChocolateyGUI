@@ -37,7 +37,7 @@ namespace ChocolateyGui.Common.Windows.Controls
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly Lazy<ImageSource> ErrorIcon = new Lazy<ImageSource>(() => GetPackIconEntypoImage(PackIconEntypoKind.CircleWithCross, Brushes.OrangeRed));
         private static readonly Lazy<ImageSource> EmptyIcon = new Lazy<ImageSource>(GetEmptyImage);
-        private static readonly LiteDatabase Data = IoC.Get<LiteDatabase>();
+        private static readonly LiteDatabase Data = IoC.Get<LiteDatabase>(Bootstrapper.UserConfigurationDatabaseName);
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
 
         public InternetImage()

@@ -347,7 +347,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
+                ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard;
                 ShowAdditionalPackageInformation = _configService.GetAppConfiguration().ShowAdditionalPackageInformation;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")

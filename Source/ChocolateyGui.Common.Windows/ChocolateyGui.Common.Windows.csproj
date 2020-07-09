@@ -248,9 +248,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SolutionInfo.cs">
-      <Link>Properties\SolutionInfo.cs</Link>
-    </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />
     <Compile Include="Commands\DataContextCommandAdapter.cs" />

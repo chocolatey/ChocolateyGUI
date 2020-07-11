@@ -106,25 +106,25 @@ Task("SignExecutable")
             var parsedProject = ParseProject(project.Path, BuildParameters.Configuration, platformTarget);
             if (parsedProject.RootNameSpace == "ChocolateyGui")
             {
-                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.exe");
+                filesToSign.Add(parsedProject.OutputPaths.First().FullPath + "/ChocolateyGui.exe");
                 continue;
             }
 
             if (parsedProject.RootNameSpace == "ChocolateyGuiCli")
             {
-                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGuiCli.exe");
+                filesToSign.Add(parsedProject.OutputPaths.First().FullPath + "/ChocolateyGuiCli.exe");
                 continue;
             }
 
             if (parsedProject.RootNameSpace == "ChocolateyGui.Common")
             {
-                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.Common.dll");
+                filesToSign.Add(parsedProject.OutputPaths.First().FullPath + "/ChocolateyGui.Common.dll");
                 continue;
             }
 
             if (parsedProject.RootNameSpace == "ChocolateyGui.Common.Windows")
             {
-                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.Common.Windows.dll");
+                filesToSign.Add(parsedProject.OutputPaths.First().FullPath + "/ChocolateyGui.Common.Windows.dll");
                 continue;
             }
         }

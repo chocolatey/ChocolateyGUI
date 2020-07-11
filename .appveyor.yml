@@ -4,7 +4,7 @@
 
 build_script:
   - ps: .\build.ps1 --bootstrap
-  - ps: .\build.ps1 -Target ContinuousIntegration
+  - ps: .\build.ps1 -Target CI
 
 #---------------------------------#
 # Tests

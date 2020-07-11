@@ -211,7 +211,7 @@ Task("SignMSI")
 
 Task("Create-Solution-Info-File")
     .IsDependeeOf("Clean")
-    .Does(() =>
+    .Does<BuildVersion>((context, buildVersion) =>
     {
         var officialStrongNameKey = EnvironmentVariable("CHOCOLATEYGUI_OFFICIAL_KEY");
         var localUnofficialStrongNameKey = BuildParameters.RootDirectoryPath.CombineWithFilePath("chocolateygui.snk").FullPath;
@@ -249,9 +249,9 @@ Task("Create-Solution-Info-File")
         // create SolutionVersion.cs file...
         var assemblyInfoSettings = new AssemblyInfoSettings {
             Company = "Chocolatey",
-            Version = BuildParameters.Version.AssemblySemVer,
-            FileVersion = string.Format("{0}.0", BuildParameters.Version.Version),
-            InformationalVersion = BuildParameters.Version.InformationalVersion,
+            Version = buildVersion.AssemblySemVer,
+            FileVersion = string.Format("{0}.0", buildVersion.Version),
+            InformationalVersion = buildVersion.InformationalVersion,
             Product = "Chocolatey GUI",
             Copyright = "Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC"
         };

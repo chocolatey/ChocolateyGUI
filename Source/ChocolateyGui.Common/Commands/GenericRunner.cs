@@ -32,7 +32,7 @@ namespace ChocolateyGui.Common.Commands
 
             if (command != null)
             {
-                Logger.Debug("_ {0}:{1} - Normal Run Mode _".format_with(ApplicationParameters.Name, command.GetType().Name));
+                Logger.Debug("_ {0}:{1} - Normal Run Mode _".format_with("Chocolatey GUI", command.GetType().Name));
                 command.Run(configuration);
             }
         }

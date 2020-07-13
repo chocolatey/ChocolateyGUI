@@ -8,24 +8,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Autofac;
 using chocolatey;
-using chocolatey.infrastructure.adapters;
 using chocolatey.infrastructure.commandline;
 using chocolatey.infrastructure.information;
-using ChocolateyGui.Common;
+using chocolatey.infrastructure.registration;
 using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Models;
+using Assembly = chocolatey.infrastructure.adapters.Assembly;
 using Console = System.Console;
+using GenericRunner = ChocolateyGui.Common.Commands.GenericRunner;
 
 namespace ChocolateyGuiCli
 {
     public class Program
     {
         private static readonly OptionSet _optionSet = new OptionSet();
+        private static ResolveEventHandler _handler = null;
 
         public static OptionSet OptionSet
         {
@@ -34,6 +37,8 @@ namespace ChocolateyGuiCli
 
         public static void Main(string[] args)
         {
+            AddAssemblyResolver();
+
             Bootstrapper.Configure();
 
             var commandName = string.Empty;
@@ -59,9 +64,9 @@ namespace ChocolateyGuiCli
             if (configuration.RegularOutput)
             {
 #if DEBUG
-                Bootstrapper.Logger.Information("{0} v{1} (DEBUG BUILD)".format_with(ApplicationParameters.Name, configuration.Information.ChocolateyGuiProductVersion));
+                Bootstrapper.Logger.Information("{0} v{1} (DEBUG BUILD)".format_with("Chocolatey GUI", configuration.Information.ChocolateyGuiProductVersion));
 #else
-                Bootstrapper.Logger.Information("{0} v{1}".format_with(ApplicationParameters.Name, configuration.Information.ChocolateyGuiProductVersion));
+                Bootstrapper.Logger.Information("{0} v{1}".format_with("Chocolatey GUI", configuration.Information.ChocolateyGuiProductVersion));
 #endif
 
                 if (args.Length == 0)
@@ -89,6 +94,51 @@ namespace ChocolateyGuiCli
                     () => command.HelpMessage(configuration));
             });
         }
+
+        #region DupFinder Exclusion
+        private static void AddAssemblyResolver()
+        {
+            _handler = (sender, args) =>
+            {
+                var requestedAssembly = new AssemblyName(args.Name);
+
+#if FORCE_CHOCOLATEY_OFFICIAL_KEY
+                var chocolateyGuiPublicKey = Bootstrapper.OfficialChocolateyPublicKey;
+#else
+                var chocolateyGuiPublicKey = Bootstrapper.UnofficialChocolateyPublicKey;
+#endif
+
+                try
+                {
+                    if (requestedAssembly.get_public_key_token().is_equal_to(chocolateyGuiPublicKey)
+                        && requestedAssembly.Name.is_equal_to(Bootstrapper.ChocolateyGuiCommonAssemblySimpleName))
+                    {
+                        return AssemblyResolution.resolve_or_load_assembly(
+                            Bootstrapper.ChocolateyGuiCommonAssemblySimpleName,
+                            requestedAssembly.get_public_key_token(),
+                            Bootstrapper.ChocolateyGuiCommonAssemblyLocation).UnderlyingType;
+                    }
+
+                    if (requestedAssembly.get_public_key_token().is_equal_to(chocolateyGuiPublicKey)
+                        && requestedAssembly.Name.is_equal_to(Bootstrapper.ChocolateyGuiCommonWindowsAssemblySimpleName))
+                    {
+                        return AssemblyResolution.resolve_or_load_assembly(
+                            Bootstrapper.ChocolateyGuiCommonWindowsAssemblySimpleName,
+                            requestedAssembly.get_public_key_token(),
+                            Bootstrapper.ChocolateyGuiCommonWindowsAssemblyLocation).UnderlyingType;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Bootstrapper.Logger.Warning("Unable to load Chocolatey GUI assembly. {0}".format_with(ex.Message));
+                }
+
+                return null;
+            };
+
+            AppDomain.CurrentDomain.AssemblyResolve += _handler;
+        }
+        #endregion
 
         private static void SetUpGlobalOptions(IList<string> args, ChocolateyGuiConfiguration configuration, IContainer container)
         {

@@ -23,6 +23,7 @@ namespace ChocolateyGui
     {
         private static readonly App _application = new App();
 
+        #region DupFinder Exclusion
         public App()
         {
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
@@ -67,6 +68,7 @@ namespace ChocolateyGui
 
             InitializeComponent();
         }
+        #endregion
 
         internal static SplashScreen SplashScreen { get; set; }
 

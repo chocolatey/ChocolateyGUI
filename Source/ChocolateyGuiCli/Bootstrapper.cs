@@ -18,8 +18,6 @@ namespace ChocolateyGuiCli
 {
     public static class Bootstrapper
     {
-        private static readonly IFileSystem _fileSystem = new DotNetFileSystem();
-
         public static readonly string ChocolateyGuiInstallLocation = _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
         public static readonly string ChocolateyInstallEnvironmentVariableName = "ChocolateyInstall";
         public static readonly string ChocolateyInstallLocation = System.Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName) ?? _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
@@ -37,6 +35,8 @@ namespace ChocolateyGuiCli
         public static readonly string Name = "Chocolatey GUI";
 
         public static readonly string LicensedChocolateyGuiAssemblySimpleName = "chocolateygui.licensed";
+
+        private static readonly IFileSystem _fileSystem = new DotNetFileSystem();
 
         internal static ILogger Logger { get; private set; }
 

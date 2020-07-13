@@ -95,6 +95,7 @@ namespace ChocolateyGuiCli
             });
         }
 
+        #region DupFinder Exclusion
         private static void AddAssemblyResolver()
         {
             _handler = (sender, args) =>
@@ -137,6 +138,7 @@ namespace ChocolateyGuiCli
 
             AppDomain.CurrentDomain.AssemblyResolve += _handler;
         }
+        #endregion
 
         private static void SetUpGlobalOptions(IList<string> args, ChocolateyGuiConfiguration configuration, IContainer container)
         {

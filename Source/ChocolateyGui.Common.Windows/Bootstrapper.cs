@@ -33,6 +33,9 @@ namespace ChocolateyGui.Common.Windows
 {
     public class Bootstrapper : BootstrapperBase
     {
+        private static readonly IFileSystem _fileSystem = new DotNetFileSystem();
+
+#pragma warning disable SA1202
         public static readonly string ChocolateyGuiInstallLocation = _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
         public static readonly string ChocolateyInstallEnvironmentVariableName = "ChocolateyInstall";
         public static readonly string ChocolateyInstallLocation = System.Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName) ?? _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
@@ -50,8 +53,7 @@ namespace ChocolateyGui.Common.Windows
         public static readonly string Name = "Chocolatey GUI";
 
         public static readonly string LicensedChocolateyGuiAssemblySimpleName = "chocolateygui.licensed";
-
-        private static readonly IFileSystem _fileSystem = new DotNetFileSystem();
+#pragma warning restore SA1202
 
         public Bootstrapper()
         {

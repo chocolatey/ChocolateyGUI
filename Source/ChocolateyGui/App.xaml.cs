@@ -6,8 +6,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Reflection;
 using System.Windows;
 using Autofac;
+using chocolatey;
+using chocolatey.infrastructure.registration;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows;
 
@@ -22,6 +25,46 @@ namespace ChocolateyGui
 
         public App()
         {
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                var requestedAssembly = new AssemblyName(args.Name);
+
+#if FORCE_CHOCOLATEY_OFFICIAL_KEY
+                var chocolateyGuiPublicKey = Bootstrapper.OfficialChocolateyPublicKey;
+#else
+                var chocolateyGuiPublicKey = Bootstrapper.UnofficialChocolateyPublicKey;
+#endif
+
+                try
+                {
+                    if (requestedAssembly.get_public_key_token().is_equal_to(chocolateyGuiPublicKey)
+                        && requestedAssembly.Name.is_equal_to(Bootstrapper.ChocolateyGuiCommonAssemblySimpleName))
+                    {
+                        return AssemblyResolution.resolve_or_load_assembly(
+                            Bootstrapper.ChocolateyGuiCommonAssemblySimpleName,
+                            requestedAssembly.get_public_key_token(),
+                            Bootstrapper.ChocolateyGuiCommonAssemblyLocation).UnderlyingType;
+                    }
+
+                    if (requestedAssembly.get_public_key_token().is_equal_to(chocolateyGuiPublicKey)
+                        && requestedAssembly.Name.is_equal_to(Bootstrapper.ChocolateyGuiCommonWindowsAssemblySimpleName))
+                    {
+                        return AssemblyResolution.resolve_or_load_assembly(
+                            Bootstrapper.ChocolateyGuiCommonWindowsAssemblySimpleName,
+                            requestedAssembly.get_public_key_token(),
+                            Bootstrapper.ChocolateyGuiCommonWindowsAssemblyLocation).UnderlyingType;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var errorMessage = string.Format("Unable to load Chocolatey GUI assembly. {0}", ex.Message);
+                    MessageBox.Show(errorMessage);
+                    throw new ApplicationException(errorMessage);
+                }
+
+                return null;
+            };
+
             InitializeComponent();
         }
 

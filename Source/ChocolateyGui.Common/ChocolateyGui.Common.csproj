@@ -102,7 +102,6 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="ApplicationParameters.cs" />
     <Compile Include="Attributes\ConfigAttribute.cs" />
     <Compile Include="Attributes\FeatureAttribute.cs" />
     <Compile Include="Attributes\LocalizedCommandForAttribute.cs" />

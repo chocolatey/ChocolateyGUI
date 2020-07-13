@@ -59,9 +59,9 @@ namespace ChocolateyGuiCli
             if (configuration.RegularOutput)
             {
 #if DEBUG
-                Bootstrapper.Logger.Information("{0} v{1} (DEBUG BUILD)".format_with(ApplicationParameters.Name, configuration.Information.ChocolateyGuiProductVersion));
+                Bootstrapper.Logger.Information("{0} v{1} (DEBUG BUILD)".format_with("Chocolatey GUI", configuration.Information.ChocolateyGuiProductVersion));
 #else
-                Bootstrapper.Logger.Information("{0} v{1}".format_with(ApplicationParameters.Name, configuration.Information.ChocolateyGuiProductVersion));
+                Bootstrapper.Logger.Information("{0} v{1}".format_with("Chocolatey GUI", configuration.Information.ChocolateyGuiProductVersion));
 #endif
 
                 if (args.Length == 0)

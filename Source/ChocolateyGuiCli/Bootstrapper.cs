@@ -7,6 +7,7 @@
 
 using System.IO;
 using Autofac;
+using chocolatey.infrastructure.filesystem;
 using ChocolateyGui.Common;
 using ChocolateyGui.Common.Startup;
 using ChocolateyGui.Common.Utilities;
@@ -17,13 +18,33 @@ namespace ChocolateyGuiCli
 {
     public static class Bootstrapper
     {
+        private static readonly IFileSystem _fileSystem = new DotNetFileSystem();
+
+        public static readonly string ChocolateyGuiInstallLocation = _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
+        public static readonly string ChocolateyInstallEnvironmentVariableName = "ChocolateyInstall";
+        public static readonly string ChocolateyInstallLocation = System.Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName) ?? _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
+        public static readonly string LicensedGuiAssemblyLocation = _fileSystem.combine_paths(ChocolateyInstallLocation, "extensions", "chocolateygui", "chocolateygui.licensed.dll");
+
+        public static readonly string ChocolateyGuiCommonAssemblyLocation = _fileSystem.combine_paths(ChocolateyGuiInstallLocation, "ChocolateyGui.Common.dll");
+        public static readonly string ChocolateyGuiCommonWindowsAssemblyLocation = _fileSystem.combine_paths(ChocolateyGuiInstallLocation, "ChocolateyGui.Common.Windows.dll");
+
+        public static readonly string ChocolateyGuiCommonAssemblySimpleName = "ChocolateyGui.Common";
+        public static readonly string ChocolateyGuiCommonWindowsAssemblySimpleName = "ChocolateyGui.Common.Windows";
+
+        public static readonly string UnofficialChocolateyPublicKey = "ffc115b9f4eb5c26";
+        public static readonly string OfficialChocolateyPublicKey = "dfd1909b30b79d8b";
+
+        public static readonly string Name = "Chocolatey GUI";
+
+        public static readonly string LicensedChocolateyGuiAssemblySimpleName = "chocolateygui.licensed";
+
         internal static ILogger Logger { get; private set; }
 
         internal static IContainer Container { get; private set; }
 
-        internal static string AppDataPath { get; } = LogSetup.GetAppDataPath(ApplicationParameters.Name);
+        internal static string AppDataPath { get; } = LogSetup.GetAppDataPath(Name);
 
-        internal static string LocalAppDataPath { get; } = LogSetup.GetLocalAppDataPath(ApplicationParameters.Name);
+        internal static string LocalAppDataPath { get; } = LogSetup.GetLocalAppDataPath(Name);
 
         internal static void Configure()
         {
@@ -41,7 +62,7 @@ namespace ChocolateyGuiCli
 
             Logger = Log.Logger = logConfig.CreateLogger();
 
-            Container = AutoFacConfiguration.RegisterAutoFac();
+            Container = AutoFacConfiguration.RegisterAutoFac(LicensedChocolateyGuiAssemblySimpleName, LicensedGuiAssemblyLocation);
         }
     }
 }

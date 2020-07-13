@@ -22,7 +22,7 @@ namespace ChocolateyGui.Common.Services
 
         public string DisplayVersion
         {
-            get { return string.Format("{0} v{1}", ApplicationParameters.Name, Version); }
+            get { return string.Format("{0} v{1}", "Chocolatey GUI", Version); }
         }
     }
 }

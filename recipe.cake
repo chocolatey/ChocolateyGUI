@@ -1,5 +1,5 @@
 #module nuget:?package=Cake.Chocolatey.Module&version=0.3.0
-#load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&version=2.0.0-unstable0028&prerelease
+#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=2.0.0-alpha0254&prerelease
 #tool choco:?package=transifex-client&version=0.12.4
 #addin nuget:?package=Cake.StrongNameSigner&version=0.1.0
 #addin nuget:?package=Cake.StrongNameTool&version=0.0.4
@@ -88,25 +88,25 @@ Task("SignExecutable")
             var parsedProject = ParseProject(project.Path, BuildParameters.Configuration, platformTarget);
             if (parsedProject.RootNameSpace == "ChocolateyGui")
             {
-                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.exe");
+                filesToSign.Add(parsedProject.OutputPaths.First().FullPath + "/ChocolateyGui.exe");
                 continue;
             }
 
             if (parsedProject.RootNameSpace == "ChocolateyGuiCli")
             {
-                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGuiCli.exe");
+                filesToSign.Add(parsedProject.OutputPaths.First().FullPath + "/ChocolateyGuiCli.exe");
                 continue;
             }
 
             if (parsedProject.RootNameSpace == "ChocolateyGui.Common")
             {
-                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.Common.dll");
+                filesToSign.Add(parsedProject.OutputPaths.First().FullPath + "/ChocolateyGui.Common.dll");
                 continue;
             }
 
             if (parsedProject.RootNameSpace == "ChocolateyGui.Common.Windows")
             {
-                filesToSign.Add(parsedProject.OutputPath.FullPath + "/ChocolateyGui.Common.Windows.dll");
+                filesToSign.Add(parsedProject.OutputPaths.First().FullPath + "/ChocolateyGui.Common.Windows.dll");
                 continue;
             }
         }
@@ -193,7 +193,7 @@ Task("SignMSI")
 
 Task("Create-Solution-Info-File")
     .IsDependeeOf("Clean")
-    .Does(() =>
+    .Does<BuildVersion>((context, buildVersion) =>
     {
         var officialStrongNameKey = EnvironmentVariable("CHOCOLATEYGUI_OFFICIAL_KEY");
         var localUnofficialStrongNameKey = BuildParameters.RootDirectoryPath.CombineWithFilePath("chocolateygui.snk").FullPath;
@@ -231,9 +231,9 @@ Task("Create-Solution-Info-File")
         // create SolutionVersion.cs file...
         var assemblyInfoSettings = new AssemblyInfoSettings {
             Company = "Chocolatey",
-            Version = BuildParameters.Version.AssemblySemVer,
-            FileVersion = string.Format("{0}.0", BuildParameters.Version.Version),
-            InformationalVersion = BuildParameters.Version.InformationalVersion,
+            Version = buildVersion.AssemblySemVer,
+            FileVersion = string.Format("{0}.0", buildVersion.Version),
+            InformationalVersion = buildVersion.InformationalVersion,
             Product = "Chocolatey GUI",
             Copyright = "Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC"
         };

@@ -54,7 +54,7 @@ namespace ChocolateyGui.Common.Windows.Services
             _configService = configService;
             _choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
 
-            _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), ApplicationParameters.Name);
+            _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), "Chocolatey GUI");
         }
 
         public Task<bool> IsElevated()

@@ -12,7 +12,6 @@ using chocolatey;
 using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.filesystem;
 using chocolatey.infrastructure.services;
-using ChocolateyGui.Common;
 using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Providers;
@@ -23,6 +22,10 @@ namespace ChocolateyGuiCli.Startup
 {
     internal class ChocolateyGuiCliModule : Module
     {
+        private static readonly string FeatureCommandName = "Feature";
+        private static readonly string ConfigCommandName = "Config";
+        private static readonly string PurgeCommandName = "Purge";
+
         protected override void Load(ContainerBuilder builder)
         {
             // Register Providers
@@ -55,9 +58,9 @@ namespace ChocolateyGuiCli.Startup
             // These are using Named registrations to aid with the "finding" of these components
             // within the Container.  As suggested in this Stack Overflow question:
             // https://stackoverflow.com/questions/4999000/replace-registration-in-autofac
-            builder.RegisterType<FeatureCommand>().As<ICommand>().SingleInstance().Named<ICommand>(ApplicationParameters.FeatureCommandName);
-            builder.RegisterType<ConfigCommand>().As<ICommand>().SingleInstance().Named<ICommand>(ApplicationParameters.ConfigCommandName);
-            builder.RegisterType<PurgeCommand>().As<ICommand>().SingleInstance().Named<ICommand>(ApplicationParameters.PurgeCommandName);
+            builder.RegisterType<FeatureCommand>().As<ICommand>().SingleInstance().Named<ICommand>(FeatureCommandName);
+            builder.RegisterType<ConfigCommand>().As<ICommand>().SingleInstance().Named<ICommand>(ConfigCommandName);
+            builder.RegisterType<PurgeCommand>().As<ICommand>().SingleInstance().Named<ICommand>(PurgeCommandName);
         }
     }
 }

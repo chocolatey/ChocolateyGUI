@@ -38,7 +38,7 @@ Or, you can find us in IRC at #chocolatey.
 
 ### Documentation
 
-You can find information about Chocolatey GUI here: [https://chocolatey.github.io/ChocolateyGUI/](https://chocolatey.github.io/ChocolateyGUI/)
+You can find information about Chocolatey GUI here: [https://docs.chocolatey.org/en-us/chocolatey-gui/](https://docs.chocolatey.org/en-us/chocolatey-gui/)
 
 ### Requirements
 

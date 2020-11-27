@@ -83,7 +83,7 @@ If you would like to contribute code or help squash a bug or two, that's awesome
     * Install the Microsoft Build Tools for 2015.  This can be done using the following command `choco install microsoft-build-tools --version 14.0.25420.1`
     * Uncomment the line in the recipe.cake file that contains `buildMSBuildToolVersion: MSBuildToolVersion.VS2019` and comment the line above it
 * `choco install wixtoolset -y`
-* Install WiX toolset integration for your Visual Studio Integration from [here](https://wixtoolset.org/releases/) 
+* Install WiX toolset integration for your Visual Studio Integration from [here](https://wixtoolset.org/releases/)
 * **OPTIONAL:** If you have Visual Studio 2017 installed, you may need to set `FXCOPDIR` environment variable. You can typically find that at `"C:\Program Files (x86)\Microsoft Visual Studio\2017\<sku>\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"`. Run something like `[Environment]::SetEnvironmentVariable("FXCOPDIR","C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Team Tools\Static Analysis Tools\FxCop", 'User')` (for build machines, use `Machine` instead of `User`).
 * From and Administrative PowerShell Window, navigate to the folder where you have cloned the Chocolatey GUI repository and run `build.ps1`, this will run Cake and it will go through the build script.
 
@@ -106,4 +106,4 @@ Committers, you should be very familiar with [COMMITTERS](https://github.com/cho
 
 ## Credits
 
-Chocolatey GUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/docs/input/credits.md) (just input/credits.md in the zip folder)
+Chocolatey GUI is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/chocolateygui/blob/develop/CREDITS.md) (just CREDITS.md in the zip folder)

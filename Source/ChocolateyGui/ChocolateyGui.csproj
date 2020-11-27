@@ -344,8 +344,8 @@
     <Resource Include="..\..\CHANGELOG.md">
       <Link>Resources\CHANGELOG.md</Link>
     </Resource>
-    <Resource Include="..\..\docs\input\credits.md">
-      <Link>Resources\credits.md</Link>
+    <Resource Include="..\..\CREDITS.md">
+      <Link>Resources\CREDITS.md</Link>
     </Resource>
     <None Include="..\ChocolateyGuiRules.ruleset">
       <Link>ChocolateyGuiRules.ruleset</Link>

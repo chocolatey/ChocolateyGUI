@@ -31,6 +31,8 @@ namespace ChocolateyGui.Common.Models
 
         public string Input { get; set; }
 
+        public bool Global { get; set; }
+
         public InformationCommandConfiguration Information { get; set; }
 
         public FeatureCommandConfiguration FeatureCommand { get;  set; }

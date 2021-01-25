@@ -375,7 +375,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             get
             {
-                return DownloadCount != -1 && !_configService.GetAppConfiguration().HidePackageDownloadCount;
+                return DownloadCount != -1 && !(_configService.GetEffectiveConfiguration().HidePackageDownloadCount ?? false);
             }
         }
 

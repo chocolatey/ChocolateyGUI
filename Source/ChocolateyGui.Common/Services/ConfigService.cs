@@ -20,27 +20,131 @@ namespace ChocolateyGui.Common.Services
 {
     public class ConfigService : IConfigService
     {
-        private static readonly ILogger Logger = Serilog.Log.ForContext<ConfigService>();
-        private readonly LiteDatabase _database;
-        private AppConfiguration _appConfiguration;
-
-        public ConfigService(LiteDatabase database)
+        public ConfigService(LiteDatabase globalDatabase, LiteDatabase userDatabase)
         {
-            _database = database;
-            var settings = _database.GetCollection<AppConfiguration>(nameof(AppConfiguration));
-            _appConfiguration = settings.FindById("Default") ?? new AppConfiguration() { Id = "Default", OutdatedPackagesCacheDurationInMinutes = "60", UseKeyboardBindings = true };
+            GlobalCollection = globalDatabase.GetCollection<AppConfiguration>(nameof(AppConfiguration));
+            UserCollection = userDatabase.GetCollection<AppConfiguration>(nameof(AppConfiguration));
+
+            var defaultSettings = new AppConfiguration()
+            {
+                Id = "Default",
+                OutdatedPackagesCacheDurationInMinutes = "60",
+                UseKeyboardBindings = true,
+                AllowNonAdminAccessToSettings = true
+            };
+
+            GlobalAppConfiguration = GlobalCollection.FindById("Default") ?? defaultSettings;
+            UserAppConfiguration = UserCollection.FindById("Default") ?? GlobalAppConfiguration;
         }
 
         public event EventHandler SettingsChanged;
 
-        public AppConfiguration GetAppConfiguration()
+        public static ILogger Logger
         {
-            return _appConfiguration;
+            get
+            {
+                return Serilog.Log.ForContext<ConfigService>();
+            }
         }
 
-        public void UpdateSettings(AppConfiguration settings)
+        public AppConfiguration EffectiveAppConfiguration { get; set; }
+
+        public AppConfiguration UserAppConfiguration { get; set; }
+
+        public AppConfiguration GlobalAppConfiguration { get; set; }
+
+        public ILiteCollection<AppConfiguration> GlobalCollection { get; set; }
+
+        public ILiteCollection<AppConfiguration> UserCollection { get; set; }
+
+        public virtual void SetEffectiveConfiguration()
         {
-            var settingsCollection = _database.GetCollection<AppConfiguration>(nameof(AppConfiguration));
+            EffectiveAppConfiguration = new AppConfiguration();
+
+            var properties = typeof(AppConfiguration).GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.Name == "Id")
+                {
+                    continue;
+                }
+
+                var featureAttributes = property.GetCustomAttributes(typeof(FeatureAttribute), true);
+
+                object globalPropertyValue;
+                object userPropertyValue;
+
+                if (featureAttributes.Length > 0)
+                {
+                    globalPropertyValue = GetPropertyValue<bool?>(GlobalAppConfiguration, property);
+                    userPropertyValue = GetPropertyValue<bool?>(UserAppConfiguration, property);
+                }
+                else
+                {
+                    globalPropertyValue = (string)property.GetValue(GlobalAppConfiguration);
+                    userPropertyValue = (string)property.GetValue(UserAppConfiguration);
+                }
+
+                // Neither the user or global values have been set, so do nothing
+                if (userPropertyValue == null && globalPropertyValue == null)
+                {
+                    continue;
+                }
+
+                // If the user hasn't explicitly set a value, take the global value
+                if (userPropertyValue == null)
+                {
+                    property.SetValue(EffectiveAppConfiguration, globalPropertyValue);
+                    continue;
+                }
+
+                // If we get here, we know userPropertyValue is not null, so if globalPropertyValue
+                // hasn't been set, take the userPropertyValue
+                if (globalPropertyValue == null)
+                {
+                    property.SetValue(EffectiveAppConfiguration, userPropertyValue);
+                    continue;
+                }
+
+                // At this point, both aren't null, so if they are the same, use global
+                if (globalPropertyValue.Equals(userPropertyValue))
+                {
+                    property.SetValue(EffectiveAppConfiguration, globalPropertyValue);
+                    continue;
+                }
+
+                // If they aren't the same, use user, since user can override
+                property.SetValue(EffectiveAppConfiguration, userPropertyValue);
+            }
+
+            Logger.Debug("GlobalAppConfiguration Settings");
+            Logger.Debug(GlobalAppConfiguration.ToString());
+            Logger.Debug("EffectiveAppConfiguration Settings");
+            Logger.Debug(EffectiveAppConfiguration.ToString());
+            Logger.Debug("UserAppConfiguration settings");
+            Logger.Debug(UserAppConfiguration.ToString());
+        }
+
+        public AppConfiguration GetEffectiveConfiguration()
+        {
+            if (EffectiveAppConfiguration == null)
+            {
+                Logger.Information("Calling SettingEffectiveConfiguration from OSS");
+                SetEffectiveConfiguration();
+            }
+
+            return EffectiveAppConfiguration;
+        }
+
+        public AppConfiguration GetGlobalConfiguration()
+        {
+            return GlobalAppConfiguration;
+        }
+
+        public void UpdateSettings(AppConfiguration settings, bool global)
+        {
+            var settingsCollection = global ? GlobalCollection : UserCollection;
+
             if (settingsCollection.Exists(Query.EQ("_id", "Default")))
             {
                 settingsCollection.Update("Default", settings);
@@ -53,7 +157,7 @@ namespace ChocolateyGui.Common.Services
             SettingsChanged?.Invoke(settings, EventArgs.Empty);
         }
 
-        public IEnumerable<ChocolateyGuiFeature> GetFeatures()
+        public IEnumerable<ChocolateyGuiFeature> GetFeatures(bool global)
         {
             var features = new List<ChocolateyGuiFeature>();
 
@@ -65,9 +169,9 @@ namespace ChocolateyGui.Common.Services
                 var featureAttributes = property.GetCustomAttributes(typeof(FeatureAttribute), true);
                 if (property.Name != "Id" && featureAttributes.Length > 0)
                 {
-                    var propertyValue = (bool)property.GetValue(_appConfiguration);
+                    var propertyValue = (bool?)property.GetValue(global ? GlobalAppConfiguration : EffectiveAppConfiguration);
 
-                    features.Add(new ChocolateyGuiFeature { Description = GetDescriptionFromProperty(property), Enabled = propertyValue, Title = propertyName });
+                    features.Add(new ChocolateyGuiFeature { Description = GetDescriptionFromProperty(property), Enabled = propertyValue ?? false, Title = propertyName });
                 }
             }
 
@@ -76,7 +180,7 @@ namespace ChocolateyGui.Common.Services
 
         public void ListFeatures(ChocolateyGuiConfiguration configuration)
         {
-            foreach (var feature in GetFeatures())
+            foreach (var feature in GetFeatures(configuration.Global))
             {
                 if (configuration.RegularOutput)
                 {
@@ -89,7 +193,7 @@ namespace ChocolateyGui.Common.Services
             }
         }
 
-        public IEnumerable<ChocolateyGuiSetting> GetSettings()
+        public IEnumerable<ChocolateyGuiSetting> GetSettings(bool global)
         {
             var settings = new List<ChocolateyGuiSetting>();
 
@@ -101,7 +205,7 @@ namespace ChocolateyGui.Common.Services
                 var configAttributes = property.GetCustomAttributes(typeof(ConfigAttribute), true);
                 if (property.Name != "Id" && configAttributes.Length > 0)
                 {
-                    var propertyValue = (string)property.GetValue(_appConfiguration);
+                    var propertyValue = (string)property.GetValue(global ? GlobalAppConfiguration : EffectiveAppConfiguration);
 
                     settings.Add(new ChocolateyGuiSetting { Description = GetDescriptionFromProperty(property), Value = propertyValue, Key = propertyName });
                 }
@@ -112,49 +216,43 @@ namespace ChocolateyGui.Common.Services
 
         public void ListSettings(ChocolateyGuiConfiguration configuration)
         {
-            Logger.Warning(Resources.Command_SettingsTitle);
-            Logger.Information(string.Empty);
-
-            foreach (var setting in GetSettings())
+            foreach (var setting in GetSettings(configuration.Global))
             {
-                Logger.Information("{0} = {1} | {2}".format_with(setting.Key, setting.Value, setting.Description));
-            }
-
-            Logger.Information(string.Empty);
-            Logger.Warning(Resources.Command_FeaturesTitle);
-            Logger.Information(string.Empty);
-            ListFeatures(configuration);
-            Logger.Information(string.Empty);
-            Logger.Information(Resources.Command_UseFeatureCommandNote.format_with("chocolateyguicli feature"));
-        }
-
-        public void EnableFeature(ChocolateyGuiConfiguration configuration)
-        {
-            var featureProperty = GetProperty(configuration.FeatureCommand.Name, true);
-            var featureValue = GetPropertyValue<bool>(_appConfiguration, featureProperty);
-
-            if (!featureValue)
-            {
-                featureProperty.SetValue(_appConfiguration, true);
-                UpdateSettings(_appConfiguration);
-                Logger.Warning(Resources.FeatureCommand_EnabledWarning.format_with(configuration.FeatureCommand.Name));
-            }
-            else
-            {
-                Logger.Warning(Resources.FeatureCommand_NoChangeMessage);
+                if (configuration.RegularOutput)
+                {
+                    Logger.Information("{0} = {1} - {2}".format_with(setting.Key, setting.Value, setting.Description));
+                }
+                else
+                {
+                    Logger.Information("{0}|{1}|{2}".format_with(setting.Key, setting.Value, setting.Description));
+                }
             }
         }
 
-        public void DisableFeature(ChocolateyGuiConfiguration configuration)
+        public void ToggleFeature(ChocolateyGuiConfiguration configuration, bool requiredValue)
         {
-            var featureProperty = GetProperty(configuration.FeatureCommand.Name, true);
-            var featureValue = GetPropertyValue<bool>(_appConfiguration, featureProperty);
-
-            if (featureValue)
+            if (configuration.Global && !Hacks.IsElevated)
             {
-                featureProperty.SetValue(_appConfiguration, false);
-                UpdateSettings(_appConfiguration);
-                Logger.Warning(Resources.FeatureCommand_DisabledWarning.format_with(configuration.FeatureCommand.Name));
+                // This is not allowed!
+                Logger.Error(Resources.FeatureCommand_ElevatedPermissionsError);
+                return;
+            }
+
+            var chosenAppConfiguration = GetChosenAppConfiguration(configuration.Global);
+            var featureProperty = GetProperty(configuration.FeatureCommand.Name, true);
+            var featureValue = GetPropertyValue<bool?>(chosenAppConfiguration, featureProperty);
+
+            if (featureValue == null || (featureValue.HasValue && requiredValue != featureValue))
+            {
+                featureProperty.SetValue(chosenAppConfiguration, requiredValue);
+                UpdateSettings(chosenAppConfiguration, configuration.Global);
+
+                // since the update happened successfully, update the effective configuration
+                featureProperty.SetValue(EffectiveAppConfiguration, requiredValue);
+
+                Logger.Warning(requiredValue
+                    ? Resources.FeatureCommand_EnabledWarning.format_with(configuration.FeatureCommand.Name)
+                    : Resources.FeatureCommand_DisabledWarning.format_with(configuration.FeatureCommand.Name));
             }
             else
             {
@@ -164,28 +262,51 @@ namespace ChocolateyGui.Common.Services
 
         public void GetConfigValue(ChocolateyGuiConfiguration configuration)
         {
+            var chosenAppConfiguration = GetChosenAppConfiguration(configuration.Global);
             var configProperty = GetProperty(configuration.ConfigCommand.Name, false);
-            var configValue = (string)configProperty.GetValue(_appConfiguration);
+            var configValue = (string)configProperty.GetValue(chosenAppConfiguration);
 
             Logger.Information("{0}".format_with(configValue ?? string.Empty));
         }
 
         public void SetConfigValue(ChocolateyGuiConfiguration configuration)
         {
-            var configProperty = GetProperty(configuration.ConfigCommand.Name, false);
-            configProperty.SetValue(_appConfiguration, configuration.ConfigCommand.ConfigValue);
-            UpdateSettings(_appConfiguration);
+            if (configuration.Global && !Hacks.IsElevated)
+            {
+                // This is not allowed!
+                Logger.Error(Resources.ConfigCommand_ElevatedPermissionsError);
+                return;
+            }
 
-            Logger.Information(Resources.ConfigCommand_Updated.format_with(configuration.ConfigCommand.Name, configuration.ConfigCommand.ConfigValue));
+            var chosenAppConfiguration = GetChosenAppConfiguration(configuration.Global);
+            var configProperty = GetProperty(configuration.ConfigCommand.Name, false);
+            configProperty.SetValue(chosenAppConfiguration, configuration.ConfigCommand.ConfigValue);
+            UpdateSettings(chosenAppConfiguration, configuration.Global);
+
+            // since the update happened successfully, update the effective configuration
+            configProperty.SetValue(EffectiveAppConfiguration, configuration.ConfigCommand.ConfigValue);
+
+            Logger.Warning(Resources.ConfigCommand_Updated.format_with(configuration.ConfigCommand.Name, configuration.ConfigCommand.ConfigValue));
         }
 
         public void UnsetConfigValue(ChocolateyGuiConfiguration configuration)
         {
-            var configProperty = GetProperty(configuration.ConfigCommand.Name, false);
-            configProperty.SetValue(_appConfiguration, string.Empty);
-            UpdateSettings(_appConfiguration);
+            if (configuration.Global && !Hacks.IsElevated)
+            {
+                // This is not allowed!
+                Logger.Error(Resources.ConfigCommand_Unset_ElevatedPermissionsError);
+                return;
+            }
 
-            Logger.Information(Resources.ConfigCommand_Unset.format_with(configuration.ConfigCommand.Name));
+            var chosenAppConfiguration = GetChosenAppConfiguration(configuration.Global);
+            var configProperty = GetProperty(configuration.ConfigCommand.Name, false);
+            configProperty.SetValue(chosenAppConfiguration, string.Empty);
+            UpdateSettings(chosenAppConfiguration, configuration.Global);
+
+            // since the update happened successfully, update the effective configuration
+            configProperty.SetValue(EffectiveAppConfiguration, string.Empty);
+
+            Logger.Warning(Resources.ConfigCommand_Unset.format_with(configuration.ConfigCommand.Name));
         }
 
         private static PropertyInfo GetProperty(string propertyName, bool isFeature)
@@ -212,6 +333,11 @@ namespace ChocolateyGui.Common.Services
             var attributes = property.GetCustomAttributes(typeof(LocalizedDescriptionAttribute), true);
             var attribute = attributes.Length > 0 ? (LocalizedDescriptionAttribute)attributes[0] : null;
             return attribute?.Description;
+        }
+
+        private AppConfiguration GetChosenAppConfiguration(bool global)
+        {
+            return global ? GlobalAppConfiguration : UserAppConfiguration;
         }
     }
 }

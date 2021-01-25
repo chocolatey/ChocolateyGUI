@@ -323,8 +323,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     return;
                 }
 
-                ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
-                ShowAdditionalPackageInformation = _configService.GetAppConfiguration().ShowAdditionalPackageInformation;
+                ListViewMode = _configService.GetEffectiveConfiguration().DefaultToTileViewForLocalSource ?? false ? ListViewMode.Tile : ListViewMode.Standard;
+                ShowAdditionalPackageInformation = _configService.GetEffectiveConfiguration().ShowAdditionalPackageInformation ?? false;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
@@ -332,10 +332,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     {
                         var appConfig = (AppConfiguration)eventPattern.Sender;
 
-                        ListViewMode = appConfig.DefaultToTileViewForLocalSource
+                        ListViewMode = appConfig.DefaultToTileViewForLocalSource ?? false
                                 ? ListViewMode.Tile
                                 : ListViewMode.Standard;
-                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation;
+                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation ?? false;
                     });
 
                 await LoadPackages();
@@ -472,7 +472,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 // outdated packages. We should only enable the checkbox here when: (or)
                 // 1. the "Prevent Automated Outdated Packages Check" is disabled
                 // 2. forced a check for outdated packages.
-                IsShowOnlyPackagesWithUpdateEnabled = !_configService.GetAppConfiguration().PreventAutomatedOutdatedPackagesCheck || forceCheckForOutdated;
+                IsShowOnlyPackagesWithUpdateEnabled = !_configService.GetEffectiveConfiguration().PreventAutomatedOutdatedPackagesCheck ?? false || forceCheckForOutdated;
 
                 // Force invalidating the command stuff.
                 // This helps us to prevent disabled buttons after executing this routine.

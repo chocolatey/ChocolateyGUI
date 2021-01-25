@@ -174,12 +174,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             if (feature.Enabled)
             {
                 configuration.FeatureCommand.Command = FeatureCommandType.Enable;
-                await Task.Run(() => _configService.EnableFeature(configuration));
+                await Task.Run(() => _configService.ToggleFeature(configuration, true));
             }
             else
             {
                 configuration.FeatureCommand.Command = FeatureCommandType.Disable;
-                await Task.Run(() => _configService.DisableFeature(configuration));
+                await Task.Run(() => _configService.ToggleFeature(configuration, false));
             }
 
             _eventAggregator.PublishOnUIThread(new FeatureModifiedMessage());
@@ -417,7 +417,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         private async void OnActivated(object sender, ActivationEventArgs activationEventArgs)
         {
-            _config = _configService.GetAppConfiguration();
+            _config = _configService.GetEffectiveConfiguration();
 
             var chocolateyFeatures = await _chocolateyService.GetFeatures();
             foreach (var chocolateyFeature in chocolateyFeatures)
@@ -443,7 +443,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         .Concat()
                         .Subscribe();
 
-            var chocolateyGuiFeatures = _configService.GetFeatures();
+            var chocolateyGuiFeatures = _configService.GetFeatures(global: false);
             foreach (var chocolateyGuiFeature in chocolateyGuiFeatures)
             {
                 ChocolateyGuiFeatures.Add(chocolateyGuiFeature);
@@ -455,7 +455,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 .Concat()
                 .Subscribe();
 
-            var chocolateyGuiSettings = _configService.GetSettings();
+            var chocolateyGuiSettings = _configService.GetSettings(global: false);
             foreach (var chocolateyGuiSetting in chocolateyGuiSettings)
             {
                 ChocolateyGuiSettings.Add(chocolateyGuiSetting);

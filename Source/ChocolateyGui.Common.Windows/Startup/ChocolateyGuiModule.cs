@@ -79,7 +79,6 @@ namespace ChocolateyGui.Common.Windows.Startup
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
             builder.RegisterType<LiteDBFileStorageService>().As<IFileStorageService>().SingleInstance();
-            builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
             builder.RegisterType<ChocolateyGuiCacheService>().As<IChocolateyGuiCacheService>().SingleInstance();
             builder.RegisterType<AllowedCommandsService>().As<IAllowedCommandsService>().SingleInstance();
 
@@ -109,8 +108,24 @@ namespace ChocolateyGui.Common.Windows.Startup
 
             try
             {
-                var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
-                builder.Register(c => database).SingleInstance();
+                var userDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
+
+                LiteDatabase globalDatabase = null;
+
+                globalDatabase = Hacks.IsElevated
+                    ? new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true")
+                    : new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true;readonly=true");
+
+                var configService = new ConfigService(globalDatabase, userDatabase);
+                configService.SetEffectiveConfiguration();
+
+                builder.RegisterInstance(configService).As<IConfigService>().SingleInstance();
+                builder.RegisterInstance(new LiteDBFileStorageService(userDatabase)).As<IFileStorageService>().SingleInstance();
+
+                // This needs to be registered separately, as it is used directly within the InternetImage class
+                // It needs to be the user database that is registered, not the global one
+                builder.RegisterInstance(userDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.UserConfigurationDatabaseName);
+                builder.RegisterInstance(globalDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.GlobalConfigurationDatabaseName);
             }
             catch (IOException ex)
             {

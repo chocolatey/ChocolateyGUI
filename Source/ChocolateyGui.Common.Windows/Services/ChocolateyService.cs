@@ -18,6 +18,7 @@ using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.results;
 using chocolatey.infrastructure.services;
 using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using Microsoft.VisualStudio.Threading;
 using NuGet;
@@ -95,7 +96,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
         public async Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null, bool forceCheckForOutdatedPackages = false)
         {
-            var preventAutomatedOutdatedPackagesCheck = _configService.GetAppConfiguration().PreventAutomatedOutdatedPackagesCheck;
+            var preventAutomatedOutdatedPackagesCheck = _configService.GetEffectiveConfiguration().PreventAutomatedOutdatedPackagesCheck ?? false;
 
             if (preventAutomatedOutdatedPackagesCheck && !forceCheckForOutdatedPackages)
             {
@@ -104,7 +105,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
             var outdatedPackagesFile = _fileSystem.combine_paths(_localAppDataPath, "outdatedPackages.xml");
 
-            var outdatedPackagesCacheDurationInMinutesSetting = _configService.GetAppConfiguration().OutdatedPackagesCacheDurationInMinutes;
+            var outdatedPackagesCacheDurationInMinutesSetting = _configService.GetEffectiveConfiguration().OutdatedPackagesCacheDurationInMinutes;
             int outdatedPackagesCacheDurationInMinutes = 0;
             if (!string.IsNullOrWhiteSpace(outdatedPackagesCacheDurationInMinutesSetting))
             {
@@ -148,7 +149,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex, "Unable to serialize Outdated Packages Cache file.");
+                        Logger.Error(ex, Resources.Application_OutdatedPackagesError);
                     }
 
                     return results.ToList();

@@ -249,7 +249,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     return;
                 }
 
-                if (!HasLoaded && _configService.GetAppConfiguration().PreventPreload)
+                if (!HasLoaded && (_configService.GetEffectiveConfiguration().PreventPreload ?? false))
                 {
                     ShowShouldPreventPreloadMessage = true;
                     HasLoaded = true;
@@ -299,7 +299,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         Packages.Add(Mapper.Map<IPackageViewModel>(p));
                     });
 
-                    if (_configService.GetAppConfiguration().ExcludeInstalledPackages)
+                    if (_configService.GetEffectiveConfiguration().ExcludeInstalledPackages ?? false)
                     {
                         Packages.RemoveAll(x => x.IsInstalled);
                     }
@@ -347,8 +347,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard;
-                ShowAdditionalPackageInformation = _configService.GetAppConfiguration().ShowAdditionalPackageInformation;
+                ListViewMode = _configService.GetEffectiveConfiguration().DefaultToTileViewForRemoteSource ?? false ? ListViewMode.Tile : ListViewMode.Standard;
+                ShowAdditionalPackageInformation = _configService.GetEffectiveConfiguration().ShowAdditionalPackageInformation ?? false;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
@@ -357,13 +357,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         var appConfig = (AppConfiguration)eventPattern.Sender;
 
                         _searchQuerySubscription?.Dispose();
-                        if (appConfig.UseDelayedSearch)
+                        if (appConfig.UseDelayedSearch ?? false)
                         {
                             SubscribeToLoadPackagesOnSearchQueryChange();
                         }
 
-                        ListViewMode = appConfig.DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard;
-                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation;
+                        ListViewMode = appConfig.DefaultToTileViewForRemoteSource ?? false ? ListViewMode.Tile : ListViewMode.Standard;
+                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation ?? false;
                     });
 
 #pragma warning disable 4014
@@ -375,7 +375,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     "IncludeAllVersions", "IncludePrerelease", "MatchWord", "SortSelection"
                 };
 
-                if (_configService.GetAppConfiguration().UseDelayedSearch)
+                if (_configService.GetEffectiveConfiguration().UseDelayedSearch ?? false)
                 {
                     SubscribeToLoadPackagesOnSearchQueryChange();
                 }

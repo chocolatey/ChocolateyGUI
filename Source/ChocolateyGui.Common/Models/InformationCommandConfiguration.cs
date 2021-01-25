@@ -16,6 +16,8 @@ namespace ChocolateyGui.Common.Models
 
         public string ChocolateyGuiProductVersion { get; set; }
 
+        public string DisplayVersion { get; set; }
+
         public string FullName { get; set; }
     }
 }

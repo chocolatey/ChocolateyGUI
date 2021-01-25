@@ -153,7 +153,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         private bool CanGoToSource(object obj)
         {
-            if (!_configService.GetAppConfiguration().UseKeyboardBindings)
+            if (!_configService.GetEffectiveConfiguration().UseKeyboardBindings ?? true)
             {
                 return false;
             }

@@ -97,6 +97,42 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not locate any instances of contract {0}.
+        /// </summary>
+        public static string Application_ContainerError {
+            get {
+                return ResourceManager.GetString("Application_ContainerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exiting.
+        /// </summary>
+        public static string Application_Exiting {
+            get {
+                return ResourceManager.GetString("Application_Exiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to serialize Outdated Packages Cache file..
+        /// </summary>
+        public static string Application_OutdatedPackagesError {
+            get {
+                return ResourceManager.GetString("Application_OutdatedPackagesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unhandled Exception.
+        /// </summary>
+        public static string Application_UnhandledException {
+            get {
+                return ResourceManager.GetString("Application_UnhandledException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unhandled Exception.
         /// </summary>
         public static string Bootstrapper_UnhandledException {
@@ -422,6 +458,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elevated permissions are required to set a config at the global level..
+        /// </summary>
+        public static string ConfigCommand_ElevatedPermissionsError {
+            get {
+                return ResourceManager.GetString("ConfigCommand_ElevatedPermissionsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chocolatey GUI CLI will allow you to interact with the persisted configuration information..
         /// </summary>
         public static string ConfigCommand_Help {
@@ -490,6 +535,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string ConfigCommand_Unset {
             get {
                 return ResourceManager.GetString("ConfigCommand_Unset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elevated permissions are required to unset a config at the global level..
+        /// </summary>
+        public static string ConfigCommand_Unset_ElevatedPermissionsError {
+            get {
+                return ResourceManager.GetString("ConfigCommand_Unset_ElevatedPermissionsError", resourceCulture);
             }
         }
         
@@ -665,6 +719,24 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to start application..
+        /// </summary>
+        public static string Fatal_Startup_Error {
+            get {
+                return ResourceManager.GetString("Fatal_Startup_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to start application.\n{0}\n\nMore details available in application logs..
+        /// </summary>
+        public static string Fatal_Startup_Error_Formatted {
+            get {
+                return ResourceManager.GetString("Fatal_Startup_Error_Formatted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View and configure Chocolatey GUI features.
         /// </summary>
         public static string FeatureCommand_Description {
@@ -688,6 +760,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string FeatureCommand_DisabledWarning {
             get {
                 return ResourceManager.GetString("FeatureCommand_DisabledWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elevated permissions are required to set a feature at the global level..
+        /// </summary>
+        public static string FeatureCommand_ElevatedPermissionsError {
+            get {
+                return ResourceManager.GetString("FeatureCommand_ElevatedPermissionsError", resourceCulture);
             }
         }
         
@@ -796,6 +877,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string General_UnauthorisedException_Title {
             get {
                 return ResourceManager.GetString("General_UnauthorisedException_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Should the command be applied to the global (machine) level?  Defaults to false..
+        /// </summary>
+        public static string GlobalOption {
+            get {
+                return ResourceManager.GetString("GlobalOption", resourceCulture);
             }
         }
         
@@ -2085,7 +2175,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Controls whether or not a non-administrator user can access the Settings Screen.  NOTE: This feature will only work when using the licensed extension for Chocolatey and Chocolatey GUI..
+        ///   Looks up a localized string similar to Controls whether or not a non-administrator user can access the Settings Screen.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
         /// </summary>
         public static string SettingsView_ToggleAllowNonAdminAccessToSettingsDescription {
             get {

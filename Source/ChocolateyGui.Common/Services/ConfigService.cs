@@ -216,20 +216,17 @@ namespace ChocolateyGui.Common.Services
 
         public void ListSettings(ChocolateyGuiConfiguration configuration)
         {
-            Logger.Warning(Resources.Command_SettingsTitle);
-            Logger.Information(string.Empty);
-
             foreach (var setting in GetSettings(configuration.Global))
             {
-                Logger.Information("{0} = {1} | {2}".format_with(setting.Key, setting.Value, setting.Description));
+                if (configuration.RegularOutput)
+                {
+                    Logger.Information("{0} = {1} - {2}".format_with(setting.Key, setting.Value, setting.Description));
+                }
+                else
+                {
+                    Logger.Information("{0}|{1}|{2}".format_with(setting.Key, setting.Value, setting.Description));
+                }
             }
-
-            Logger.Information(string.Empty);
-            Logger.Warning(Resources.Command_FeaturesTitle);
-            Logger.Information(string.Empty);
-            ListFeatures(configuration);
-            Logger.Information(string.Empty);
-            Logger.Information(Resources.Command_UseFeatureCommandNote.format_with("chocolateyguicli feature"));
         }
 
         public void ToggleFeature(ChocolateyGuiConfiguration configuration, bool requiredValue)

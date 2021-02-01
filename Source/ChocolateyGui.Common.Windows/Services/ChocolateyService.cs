@@ -223,6 +223,7 @@ namespace ChocolateyGui.Common.Windows.Services
                         config.ListCommand.Page = options.CurrentPage;
                         config.ListCommand.PageSize = options.PageSize;
                         config.Prerelease = options.IncludePrerelease;
+                        config.ListCommand.LocalOnly = false;
                         if (string.IsNullOrWhiteSpace(query) || !string.IsNullOrWhiteSpace(options.SortColumn))
                         {
                             config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn)

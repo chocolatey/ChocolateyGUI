@@ -10,7 +10,7 @@
                          mc:Ignorable="d"
                          x:Class="ChocolateyGui.Common.Windows.Controls.Dialogs.ChocolateyDialog"
                          x:Name="PART_Dialog"
-                         Background="{StaticResource BackgroundColorBrush}" d:DesignWidth="1300">
+                         Background="{DynamicResource BackgroundColorBrush}" d:DesignWidth="1300">
     <MahDialogs:CustomDialog.Content>
         <Grid>
             <Grid.RowDefinitions>

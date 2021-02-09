@@ -29,7 +29,7 @@
             <DataTemplate x:Key="PackageListTemplate" DataType="{x:Type items:IPackageViewModel}">
                 <DataTemplate.Resources>
                     <Style x:Key="ColoredDetailsText" TargetType="TextBlock">
-                        <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.AccentBase}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentBase}"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
                                 <Setter Property="Foreground" Value="White"/>

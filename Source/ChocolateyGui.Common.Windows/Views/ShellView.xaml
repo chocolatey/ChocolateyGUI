@@ -94,7 +94,7 @@
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 
-    <Border Background="{StaticResource BackgroundColorBrush}">
+    <Border Background="{DynamicResource BackgroundColorBrush}">
         <Grid>
             <ContentControl x:Name="ActiveItem" />
         </Grid>

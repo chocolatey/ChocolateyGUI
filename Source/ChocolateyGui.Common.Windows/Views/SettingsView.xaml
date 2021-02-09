@@ -12,7 +12,7 @@
              xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              mc:Ignorable="d"
-             Background="{StaticResource BackgroundColorBrush}"
+             Background="{DynamicResource BackgroundColorBrush}"
              metro:DialogParticipation.Register="{Binding}"
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="786" d:DesignWidth="1366">

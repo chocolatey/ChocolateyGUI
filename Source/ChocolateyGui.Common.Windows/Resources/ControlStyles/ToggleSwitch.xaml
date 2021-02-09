@@ -2,9 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
+
     <system:Double x:Key="ToggleSwitchThemeMinWidth">0</system:Double>
-    <Style x:Key="Chocolatey.Styles.ToggleSwitch" BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="{x:Type mah:ToggleSwitch}">
-        <Setter Property="Margin" Value="0 5"/>
-        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 0 10"/>
+
+    <Style x:Key="Chocolatey.Styles.ToggleSwitch"
+           BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
+           TargetType="{x:Type mah:ToggleSwitch}">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 0 10" />
     </Style>
+
 </ResourceDictionary>

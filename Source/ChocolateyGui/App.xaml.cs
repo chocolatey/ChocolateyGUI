@@ -13,7 +13,8 @@ using chocolatey;
 using chocolatey.infrastructure.registration;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows;
-using MahApps.Metro;
+using ControlzEx.Theming;
+using MahApps.Metro.Theming;
 
 namespace ChocolateyGui
 {
@@ -102,12 +103,16 @@ namespace ChocolateyGui
         {
             base.OnStartup(e);
 
-            // add custom theme resource dictionaries to allow switching between them
-            ThemeManager.AddTheme(new Uri("pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Light.Theme.xaml"));
-            ThemeManager.AddTheme(new Uri("pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Dark.Theme.xaml"));
+            // Add custom theme resource dictionaries
+            ThemeManager.Current.AddLibraryTheme(new LibraryTheme(
+                new Uri("pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Light.Theme.xaml"),
+                MahAppsLibraryThemeProvider.DefaultInstance));
+            ThemeManager.Current.AddLibraryTheme(new LibraryTheme(
+                new Uri("pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Dark.Theme.xaml"),
+                MahAppsLibraryThemeProvider.DefaultInstance));
 
-            ThemeManager.IsAutomaticWindowsAppModeSettingSyncEnabled = true;
-            ThemeManager.SyncThemeWithWindowsAppModeSetting();
+            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+            ThemeManager.Current.SyncTheme();
         }
     }
 }

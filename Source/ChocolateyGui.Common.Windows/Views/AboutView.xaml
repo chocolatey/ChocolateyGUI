@@ -9,7 +9,7 @@
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
              mc:Ignorable="d"
-             Background="{StaticResource BackgroundColorBrush}"
+             Background="{DynamicResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance Type=viewModels:AboutViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="786" d:DesignWidth="1366">
     <UserControl.Resources>

@@ -6,26 +6,26 @@
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="PagePadding" Value="0" />
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}"/>
     </Style>
 
     <Style TargetType="{x:Type Paragraph}" x:Key="{x:Static markdig:Styles.Heading1StyleKey}" BasedOn="{StaticResource {x:Static markdig:Styles.Heading1StyleKey}}">
         <Setter Property="FontSize" Value="36.4" />
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Margin" Value="0,16,0,16"/>
     </Style>
 
     <Style TargetType="{x:Type Paragraph}" x:Key="{x:Static markdig:Styles.Heading2StyleKey}" BasedOn="{StaticResource {x:Static markdig:Styles.Heading2StyleKey}}">
         <Setter Property="FontSize" Value="28" />
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Margin" Value="0,16,0,2"/>
     </Style>
 
     <Style TargetType="{x:Type Paragraph}" x:Key="{x:Static markdig:Styles.Heading3StyleKey}" BasedOn="{StaticResource {x:Static markdig:Styles.Heading3StyleKey}}">
         <Setter Property="FontSize" Value="22.4" />
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Margin" Value="0,16,0,0"/>
     </Style>

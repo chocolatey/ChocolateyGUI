@@ -122,7 +122,14 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{x:Static properties:Resources.SettingsView_PropertyName}" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
                                 <DataGridTextColumn Header="{x:Static properties:Resources.SettingsView_PropertyValue}" Width="2*" Binding="{Binding Value}"/>
-                                <DataGridTextColumn Header="{x:Static properties:Resources.SettingsView_PropertyDescription}" Width="2*" IsReadOnly="True" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="{x:Static properties:Resources.SettingsView_PropertyDescription}" Width="2*" IsReadOnly="True" Binding="{Binding Description}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Margin" Value="2" />
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -162,7 +169,14 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{x:Static properties:Resources.SettingsView_PropertyName}" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
                                 <DataGridTextColumn Header="{x:Static properties:Resources.SettingsView_PropertyValue}" Width="2*" Binding="{Binding Value}"/>
-                                <DataGridTextColumn Header="{x:Static properties:Resources.SettingsView_PropertyDescription}" Width="2*" IsReadOnly="True" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="{x:Static properties:Resources.SettingsView_PropertyDescription}" Width="2*" IsReadOnly="True" Binding="{Binding Description}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Margin" Value="2" />
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

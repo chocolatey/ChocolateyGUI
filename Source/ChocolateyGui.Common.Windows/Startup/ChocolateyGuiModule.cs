@@ -119,6 +119,9 @@ namespace ChocolateyGui.Common.Windows.Startup
                 var configService = new ConfigService(globalDatabase, userDatabase);
                 configService.SetEffectiveConfiguration();
 
+                var iconService = new PackageIconService(userDatabase);
+
+                builder.RegisterInstance(iconService).As<IPackageIconService>().SingleInstance();
                 builder.RegisterInstance(configService).As<IConfigService>().SingleInstance();
                 builder.RegisterInstance(new LiteDBFileStorageService(userDatabase)).As<IFileStorageService>().SingleInstance();
 

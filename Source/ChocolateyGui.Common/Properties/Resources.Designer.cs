@@ -1923,6 +1923,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The name of the source which should be shown by default when opening application. NOTE: This configuration setting will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_ConfigDefaultSourceName {
+            get {
+                return ResourceManager.GetString("SettingsView_ConfigDefaultSourceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default timeout for outdated packages to be cached.  Default is 60 minutes..
         /// </summary>
         public static string SettingsView_ConfigOutdatedPackagesCacheDurationInMinutesDescription {

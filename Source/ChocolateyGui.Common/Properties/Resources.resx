@@ -1003,4 +1003,7 @@ Normal:
   <data name="SettingsView_TogglePreventAllPackageIconDownloads" xml:space="preserve">
     <value>Prevents the download of the icon for all package. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
   </data>
+  <data name="SettingsView_ConfigDefaultSourceName" xml:space="preserve">
+    <value>The name of the source which should be shown by default when opening application. NOTE: This configuration setting will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
+  </data>
 </root>

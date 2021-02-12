@@ -6,22 +6,16 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
+using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
-using LiteDB;
 using MahApps.Metro.IconPacks;
-using Microsoft.VisualStudio.Threading;
 using Serilog;
-using SkiaSharp;
-using Splat;
-using Svg.Skia;
 using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Common.Windows.Controls
@@ -34,11 +28,10 @@ namespace ChocolateyGui.Common.Windows.Controls
         public static readonly DependencyProperty IconUrlProperty = DependencyProperty.Register(
             nameof(IconUrl), typeof(string), typeof(InternetImage), new PropertyMetadata(default(string)));
 
-        private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly Lazy<ImageSource> ErrorIcon = new Lazy<ImageSource>(() => GetPackIconEntypoImage(PackIconEntypoKind.CircleWithCross, Brushes.OrangeRed));
         private static readonly Lazy<ImageSource> EmptyIcon = new Lazy<ImageSource>(GetEmptyImage);
-        private static readonly LiteDatabase Data = IoC.Get<LiteDatabase>(Bootstrapper.UserConfigurationDatabaseName);
-        private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
+        private static readonly ILogger Logger = Log.ForContext<InternetImage>();
+        private static readonly IPackageIconService PackageIconService = IoC.Get<IPackageIconService>();
 
         public InternetImage()
         {
@@ -79,169 +72,6 @@ namespace ChocolateyGui.Common.Windows.Controls
             return image;
         }
 
-        private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, ILiteStorage<string> fileStorage, string id, string url)
-        {
-            imageStream.Position = 0;
-            fileStorage.Upload(id, url, imageStream);
-            fileStorage.SetMetadata(id, new BsonDocument { new KeyValuePair<string, BsonValue>("Expires", absoluteExpiration) });
-            imageStream.Position = 0;
-        }
-
-        private static bool IsSvg(string url)
-        {
-            var extension = Path.GetExtension(url)?.ToLower();
-            return extension == ".svg" || extension == ".svgz";
-        }
-
-        private static void ExtractImageFromStream(string url, Size desiredSize, Stream inputStream, Stream imageStream)
-        {
-            if (IsSvg(url))
-            {
-                using (var svg = new SKSvg())
-                {
-                    try
-                    {
-                        svg.Load(inputStream);
-                    }
-                    catch (Exception exception)
-                    {
-                        Logger.Warning(exception, $"Something is wrong with: \"{url}\".");
-                        return;
-                    }
-
-                    var skPicture = svg.Picture;
-                    var imageInfo = new SKImageInfo((int)desiredSize.Width, (int)desiredSize.Height);
-
-                    using (var surface = SKSurface.Create(imageInfo))
-                    {
-                        using (var canvas = surface.Canvas)
-                        {
-                            // calculate the scaling need to fit to desired size
-                            var scaleX = desiredSize.Width / skPicture.CullRect.Width;
-                            var scaleY = desiredSize.Height / skPicture.CullRect.Height;
-                            var matrix = SKMatrix.MakeScale((float)scaleX, (float)scaleY);
-
-                            // draw the svg
-                            canvas.Clear(SKColors.Transparent);
-                            canvas.DrawPicture(skPicture, ref matrix);
-                            canvas.Flush();
-
-                            using (var data = surface.Snapshot())
-                            {
-                                using (var pngImage = data.Encode(SKEncodedImageFormat.Png, 100))
-                                {
-                                    pngImage.SaveTo(imageStream);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                var bitmap = SKBitmap.Decode(inputStream);
-                if (bitmap != null)
-                {
-                    var resizeInfo = GetResizeSkImageInfo(desiredSize, bitmap);
-                    using (var resizedBitmap = bitmap.Resize(resizeInfo, SKFilterQuality.High))
-                    {
-                        bitmap.Dispose();
-
-                        using (var image = SKImage.FromBitmap(resizedBitmap))
-                        {
-                            using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
-                            {
-                                data.SaveTo(imageStream);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private static SKImageInfo GetResizeSkImageInfo(Size desiredSize, SKBitmap bitmap)
-        {
-            var resizeInfo = new SKImageInfo((int)desiredSize.Width, (int)desiredSize.Height);
-
-            // Test whether there is more room in width or height
-            if (Math.Abs(bitmap.Width - desiredSize.Width) > Math.Abs(bitmap.Height - desiredSize.Height))
-            {
-                // More room in width, so leave image width set to canvas width
-                // and increase/decrease height by same ratio
-                var widthRatio = (double)desiredSize.Width / (double)bitmap.Width;
-                var newHeight = (int)Math.Floor(bitmap.Height * widthRatio);
-
-                resizeInfo.Height = newHeight;
-            }
-            else
-            {
-                // More room in height, so leave image height set to canvas height
-                // and increase/decrease width by same ratio
-                var heightRatio = (double)desiredSize.Height / (double)bitmap.Height;
-                var newWidth = (int)Math.Floor(bitmap.Width * heightRatio);
-
-                resizeInfo.Width = newWidth;
-            }
-
-            return resizeInfo;
-        }
-
-        private async Task<IBitmap> LoadImage(string url, Size desiredSize, DateTime absoluteExpiration)
-        {
-            var imageStream = await DownloadUrl(url, desiredSize, absoluteExpiration).ConfigureAwait(false);
-
-            // Don't specify width and height to keep the aspect ratio of the image.
-            return await BitmapLoader.Current.Load(imageStream, null, null);
-        }
-
-        private async Task<Stream> DownloadUrl(string url, Size desiredSize, DateTime absoluteExpiration)
-        {
-            var id = $"imagecache/{url}";
-            var imageStream = new MemoryStream();
-            var fileStorage = Data.FileStorage;
-
-            using (await Lock.UpgradeableReadLockAsync())
-            {
-                if (fileStorage.Exists(id))
-                {
-                    var info = fileStorage.FindById(id);
-                    if (info.Metadata.ContainsKey("Expires"))
-                    {
-                        var expires = info.Metadata["Expires"].AsDateTime;
-                        if (expires > DateTime.UtcNow)
-                        {
-                            info.CopyTo(imageStream);
-                            return imageStream;
-                        }
-                    }
-                }
-            }
-
-            // If we couldn't find the image or it expired
-            using (var client = new HttpClient())
-            {
-                var response = await client.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-
-                using (var memoryStream = new MemoryStream())
-                {
-                    await response.Content.CopyToAsync(memoryStream);
-                    memoryStream.Position = 0;
-
-                    ExtractImageFromStream(url, desiredSize, memoryStream, imageStream);
-                }
-            }
-
-            using (await Lock.WriteLockAsync())
-            {
-                // we don't need to delete the file, cause a upload does
-                // Upload: Send file or stream to database. Can be used with file or Stream. If file already exists, file content is overwritten.
-                UploadFileAndSetMetadata(absoluteExpiration, imageStream, fileStorage, id, url);
-            }
-
-            return imageStream;
-        }
-
         private async Task SetImage(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
@@ -258,7 +88,7 @@ namespace ChocolateyGui.Common.Windows.Controls
             ImageSource source;
             try
             {
-                source = (await LoadImage(url, size, expiration)).ToNative();
+                source = await PackageIconService.GetImage(url, size, expiration);
             }
             catch (HttpRequestException)
             {

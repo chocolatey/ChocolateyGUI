@@ -275,6 +275,8 @@
     <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
     <Compile Include="SerilogLogger.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
+    <Compile Include="Services\PackageIconService.cs" />
+    <Compile Include="Services\IPackageIconService.cs" />
     <Compile Include="Services\IImageService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\IProgressService.cs" />

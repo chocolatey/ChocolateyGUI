@@ -71,7 +71,7 @@
       <HintPath>..\packages\Fizzler.1.2.0\lib\netstandard1.0\Fizzler.dll</HintPath>
     </Reference>
     <Reference Include="HarfBuzzSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\HarfBuzzSharp.2.6.1.1\lib\net45\HarfBuzzSharp.dll</HintPath>
+      <HintPath>..\packages\HarfBuzzSharp.2.6.1.4\lib\net45\HarfBuzzSharp.dll</HintPath>
     </Reference>
     <Reference Include="LiteDB, Version=5.0.5.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.5.0.5\lib\net45\LiteDB.dll</HintPath>
@@ -175,19 +175,19 @@
       <HintPath>..\packages\Serilog.Sinks.RollingFile.3.3.0\lib\net45\Serilog.Sinks.RollingFile.dll</HintPath>
     </Reference>
     <Reference Include="SkiaSharp, Version=1.68.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\SkiaSharp.1.68.1.1\lib\net45\SkiaSharp.dll</HintPath>
+      <HintPath>..\packages\SkiaSharp.1.68.3\lib\net45\SkiaSharp.dll</HintPath>
     </Reference>
     <Reference Include="SkiaSharp.HarfBuzz, Version=1.68.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\SkiaSharp.HarfBuzz.1.68.1.1\lib\net45\SkiaSharp.HarfBuzz.dll</HintPath>
+      <HintPath>..\packages\SkiaSharp.HarfBuzz.1.68.3\lib\net45\SkiaSharp.HarfBuzz.dll</HintPath>
     </Reference>
     <Reference Include="Splat, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Splat.2.0.0\lib\Net45\Splat.dll</HintPath>
     </Reference>
     <Reference Include="Svg.Custom, Version=0.0.0.0, Culture=neutral, PublicKeyToken=dafe96fe6c845a74, processorArchitecture=MSIL">
-      <HintPath>..\packages\Svg.Custom.0.1.7\lib\net452\Svg.Custom.dll</HintPath>
+      <HintPath>..\packages\Svg.Custom.0.3.0\lib\net452\Svg.Custom.dll</HintPath>
     </Reference>
-    <Reference Include="Svg.Skia, Version=0.1.7.0, Culture=neutral, PublicKeyToken=dafe96fe6c845a74, processorArchitecture=MSIL">
-      <HintPath>..\packages\Svg.Skia.0.1.7\lib\net452\Svg.Skia.dll</HintPath>
+    <Reference Include="Svg.Skia, Version=0.3.0.0, Culture=neutral, PublicKeyToken=dafe96fe6c845a74, processorArchitecture=MSIL">
+      <HintPath>..\packages\Svg.Skia.0.3.0\lib\net452\Svg.Skia.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -429,13 +429,13 @@
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\HarfBuzzSharp.2.6.1.1\build\net45\HarfBuzzSharp.targets" Condition="Exists('..\packages\HarfBuzzSharp.2.6.1.1\build\net45\HarfBuzzSharp.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\HarfBuzzSharp.2.6.1.1\build\net45\HarfBuzzSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\HarfBuzzSharp.2.6.1.1\build\net45\HarfBuzzSharp.targets'))" />
-    <Error Condition="!Exists('..\packages\SkiaSharp.1.68.1.1\build\net45\SkiaSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.1.68.1.1\build\net45\SkiaSharp.targets'))" />
+    <Error Condition="!Exists('..\packages\SkiaSharp.1.68.3\build\net45\SkiaSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.1.68.3\build\net45\SkiaSharp.targets'))" />
+    <Error Condition="!Exists('..\packages\HarfBuzzSharp.2.6.1.4\build\net45\HarfBuzzSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\HarfBuzzSharp.2.6.1.4\build\net45\HarfBuzzSharp.targets'))" />
   </Target>
-  <Import Project="..\packages\SkiaSharp.1.68.1.1\build\net45\SkiaSharp.targets" Condition="Exists('..\packages\SkiaSharp.1.68.1.1\build\net45\SkiaSharp.targets')" />
+  <Import Project="..\packages\SkiaSharp.1.68.3\build\net45\SkiaSharp.targets" Condition="Exists('..\packages\SkiaSharp.1.68.3\build\net45\SkiaSharp.targets')" />
+  <Import Project="..\packages\HarfBuzzSharp.2.6.1.4\build\net45\HarfBuzzSharp.targets" Condition="Exists('..\packages\HarfBuzzSharp.2.6.1.4\build\net45\HarfBuzzSharp.targets')" />
 </Project>

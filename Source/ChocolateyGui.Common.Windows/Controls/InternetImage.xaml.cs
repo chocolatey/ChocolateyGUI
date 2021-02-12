@@ -106,10 +106,12 @@ namespace ChocolateyGui.Common.Windows.Controls
                     catch (Exception exception)
                     {
                         Logger.Warning(exception, $"Something is wrong with: \"{url}\".");
+                        return;
                     }
 
                     var skPicture = svg.Picture;
                     var imageInfo = new SKImageInfo((int)desiredSize.Width, (int)desiredSize.Height);
+
                     using (var surface = SKSurface.Create(imageInfo))
                     {
                         using (var canvas = surface.Canvas)

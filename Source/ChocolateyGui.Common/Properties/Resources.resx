@@ -1000,4 +1000,7 @@ Normal:
   <data name="Application_OutdatedPackagesError" xml:space="preserve">
     <value>Unable to serialize Outdated Packages Cache file.</value>
   </data>
+  <data name="SettingsView_TogglePreventAllPackageIconDownloads" xml:space="preserve">
+    <value>Prevents the download of the icon for all package. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
+  </data>
 </root>

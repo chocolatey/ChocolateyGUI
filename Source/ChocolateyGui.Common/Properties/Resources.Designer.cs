@@ -2229,6 +2229,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prevents the download of the icon for all package. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_TogglePreventAllPackageIconDownloads {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePreventAllPackageIconDownloads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prevents automated check for outdated packages on local and remote source views..
         /// </summary>
         public static string SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription {

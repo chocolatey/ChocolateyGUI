@@ -66,6 +66,10 @@ namespace ChocolateyGui.Common.Models
         [Feature]
         public bool? HidePackageDownloadCount { get; set; }
 
+        [LocalizedDescription("SettingsView_TogglePreventAllPackageIconDownloads")]
+        [Feature]
+        public bool? PreventAllPackageIconDownloads { get; set; }
+
         public override string ToString()
         {
             return @"

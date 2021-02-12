@@ -56,8 +56,7 @@ namespace ChocolateyGuiCli.Startup
                 builder.RegisterInstance(configService).As<IConfigService>().SingleInstance();
                 builder.RegisterInstance(new LiteDBFileStorageService(userDatabase)).As<IFileStorageService>().SingleInstance();
 
-                // This needs to be registered separately, as it is used directly within the InternetImage class
-                // It needs to be the user database that is registered, not the global one
+                // Since there are two instances of LiteDB, they are added as named instances, so that they can be retrieved when required
                 builder.RegisterInstance(userDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.UserConfigurationDatabaseName);
                 builder.RegisterInstance(globalDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.GlobalConfigurationDatabaseName);
             }

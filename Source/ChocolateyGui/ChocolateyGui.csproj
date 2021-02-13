@@ -356,6 +356,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <Resource Include="chocolatey%405.png" />
     <Content Include="ChocolateyGui.exe.manifest">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -22,15 +22,14 @@ using ChocolateyGui.Common.Windows.Services;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
-    public sealed class SourcesViewModel : Conductor<ISourceViewModelBase>.Collection.OneActive, IHandleWithTask<SourcesUpdatedMessage>
+    public class SourcesViewModel : Conductor<ISourceViewModelBase>.Collection.OneActive, IHandleWithTask<SourcesUpdatedMessage>
     {
         private readonly IChocolateyService _packageService;
         private readonly CreateRemove _remoteSourceVmFactory;
         private readonly IConfigService _configService;
         private readonly IImageService _imageService;
         private readonly IVersionService _versionService;
-
-        private bool _firstLoad = true;
+        private readonly Func<string, LocalSourceViewModel> _localSourceVmFactory;
 
         public SourcesViewModel(
             IChocolateyService packageService,
@@ -46,6 +45,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _imageService = imageService;
             _versionService = versionService;
             _remoteSourceVmFactory = remoteSourceVmFactory;
+            _localSourceVmFactory = localSourceVmFactory;
 
             if (localSourceVmFactory == null)
             {
@@ -56,12 +56,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             {
                 throw new ArgumentNullException(nameof(remoteSourceVmFactory));
             }
-
-            Items.Add(localSourceVmFactory(Resources.Resources_ThisPC));
-
-#pragma warning disable 4014
-            LoadSources();
-#pragma warning restore 4014
 
             eventAggregator.Subscribe(this);
         }
@@ -83,7 +77,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             get { return _versionService.DisplayVersion; }
         }
 
-        public async Task LoadSources()
+        public virtual async Task LoadSources()
         {
             var oldItems = Items.Skip(1).Cast<ISourceViewModelBase>().ToList();
 
@@ -104,10 +98,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             await Execute.OnUIThreadAsync(
                 () =>
                     {
-                        ActivateItem(Items[0]);
-
                         Items.RemoveRange(oldItems);
                         Items.AddRange(vms);
+
+                        ActivateItem(Items[0]);
                     });
         }
 
@@ -122,11 +116,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 .Where(p => p.EventArgs.PropertyName == nameof(ActiveItem))
                 .Subscribe(p => DisplayName = $"Source - {ActiveItem?.DisplayName}");
 
-            if (_firstLoad)
-            {
-                ActivateItem(Items[0]);
-                _firstLoad = false;
-            }
+            Items.Add(_localSourceVmFactory(Resources.Resources_ThisPC));
+
+            _ = LoadSources();
         }
 
         private class SourcesComparer : IEqualityComparer<RemoteSourceViewModel>

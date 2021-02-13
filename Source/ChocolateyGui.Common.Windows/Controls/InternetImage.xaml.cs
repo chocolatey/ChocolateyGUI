@@ -10,11 +10,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
-using MahApps.Metro.IconPacks;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
@@ -28,8 +26,6 @@ namespace ChocolateyGui.Common.Windows.Controls
         public static readonly DependencyProperty IconUrlProperty = DependencyProperty.Register(
             nameof(IconUrl), typeof(string), typeof(InternetImage), new PropertyMetadata(default(string)));
 
-        private static readonly Lazy<ImageSource> ErrorIcon = new Lazy<ImageSource>(() => GetPackIconEntypoImage(PackIconEntypoKind.CircleWithCross, Brushes.OrangeRed));
-        private static readonly Lazy<ImageSource> EmptyIcon = new Lazy<ImageSource>(GetEmptyImage);
         private static readonly ILogger Logger = Log.ForContext<InternetImage>();
         private static readonly IPackageIconService PackageIconService = IoC.Get<IPackageIconService>();
 
@@ -49,34 +45,11 @@ namespace ChocolateyGui.Common.Windows.Controls
             set { SetValue(IconUrlProperty, value); }
         }
 
-        private static ImageSource GetPackIconEntypoImage(PackIconEntypoKind packIconKind, Brush brush)
-        {
-            var packIcon = new PackIconEntypo { Kind = packIconKind };
-
-            var pen = new Pen();
-            pen.Freeze();
-            var geometry = Geometry.Parse(packIcon.Data);
-            var geometryDrawing = new GeometryDrawing(brush, pen, geometry);
-            var drawingGroup = new DrawingGroup();
-            drawingGroup.Children.Add(geometryDrawing);
-            drawingGroup.Transform = new ScaleTransform(3.5, 3.5);
-            var drawingImage = new DrawingImage(drawingGroup);
-            drawingImage.Freeze();
-            return drawingImage;
-        }
-
-        private static ImageSource GetEmptyImage()
-        {
-            var image = new BitmapImage(new Uri("pack://application:,,,/ChocolateyGui;component/chocolatey@4.png", UriKind.RelativeOrAbsolute));
-            image.Freeze();
-            return image;
-        }
-
         private async Task SetImage(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
             {
-                PART_Image.Source = EmptyIcon.Value;
+                PART_Image.Source = PackageIconService.GetEmptyIconImage();
                 PART_Loading.IsActive = false;
                 return;
             }
@@ -92,17 +65,17 @@ namespace ChocolateyGui.Common.Windows.Controls
             }
             catch (HttpRequestException)
             {
-                source = ErrorIcon.Value;
+                source = PackageIconService.GetErrorIconImage();
             }
             catch (ArgumentException exception)
             {
                 Logger.Warning(exception, $"Got an invalid img url: \"{url}\".");
-                source = ErrorIcon.Value;
+                source = PackageIconService.GetErrorIconImage();
             }
             catch (Exception exception)
             {
                 Logger.Warning(exception, $"Something went wrong with: \"{url}\".");
-                source = ErrorIcon.Value;
+                source = PackageIconService.GetErrorIconImage();
             }
 
             PART_Image.Source = source;

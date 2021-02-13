@@ -15,5 +15,9 @@ namespace ChocolateyGui.Common.Windows.Services
     public interface IPackageIconService
     {
         Task<ImageSource> GetImage(string url, Size desiredSize, DateTime absoluteExpiration);
+
+        ImageSource GetEmptyIconImage();
+
+        ImageSource GetErrorIconImage();
     }
 }

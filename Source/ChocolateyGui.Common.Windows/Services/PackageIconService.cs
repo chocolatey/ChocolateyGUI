@@ -12,7 +12,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using LiteDB;
+using MahApps.Metro.IconPacks;
 using Microsoft.VisualStudio.Threading;
 using SkiaSharp;
 using Splat;
@@ -32,9 +34,32 @@ namespace ChocolateyGui.Common.Windows.Services
             _userDatabase = userDatabase;
         }
 
-        public async Task<ImageSource> GetImage(string url, Size desiredSize, DateTime absoluteExpiration)
+        public virtual async Task<ImageSource> GetImage(string url, Size desiredSize, DateTime absoluteExpiration)
         {
             return (await LoadImage(url, desiredSize, absoluteExpiration)).ToNative();
+        }
+
+        public virtual ImageSource GetEmptyIconImage()
+        {
+            var image = new BitmapImage(new Uri("pack://application:,,,/ChocolateyGui;component/chocolatey@4.png", UriKind.RelativeOrAbsolute));
+            image.Freeze();
+            return image;
+        }
+
+        public virtual ImageSource GetErrorIconImage()
+        {
+            var packIcon = new PackIconEntypo { Kind = PackIconEntypoKind.CircleWithCross };
+
+            var pen = new Pen();
+            pen.Freeze();
+            var geometry = Geometry.Parse(packIcon.Data);
+            var geometryDrawing = new GeometryDrawing(Brushes.OrangeRed, pen, geometry);
+            var drawingGroup = new DrawingGroup();
+            drawingGroup.Children.Add(geometryDrawing);
+            drawingGroup.Transform = new ScaleTransform(3.5, 3.5);
+            var drawingImage = new DrawingImage(drawingGroup);
+            drawingImage.Freeze();
+            return drawingImage;
         }
 
         private static void UploadFileAndSetMetadata(DateTime absoluteExpiration, MemoryStream imageStream, ILiteStorage<string> fileStorage, string id, string url)

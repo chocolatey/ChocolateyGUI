@@ -1006,4 +1006,7 @@ Normal:
   <data name="SettingsView_ConfigDefaultSourceName" xml:space="preserve">
     <value>The name of the source which should be shown by default when opening application. NOTE: This configuration setting will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
   </data>
+  <data name="SettingsView_ToggleHideAllRemoteChocolateySources" xml:space="preserve">
+    <value>Controls whether or not remote sources (for example the Chocolatey Community Repository) are displayed in Chocolatey GUI.  Enabling this feature makes Chocolatey GUI a read-only application, that will only show the currently installed packages.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
+  </data>
 </root>

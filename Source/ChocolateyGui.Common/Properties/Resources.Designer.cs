@@ -2229,6 +2229,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Controls whether or not remote sources (for example the Chocolatey Community Repository) are displayed in Chocolatey GUI.  Enabling this feature makes Chocolatey GUI a read-only application, that will only show the currently installed packages.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_ToggleHideAllRemoteChocolateySources {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleHideAllRemoteChocolateySources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allows control over whether package download count is displayed on remote source views..
         /// </summary>
         public static string SettingsView_TogglePackageDownloadCountDescription {

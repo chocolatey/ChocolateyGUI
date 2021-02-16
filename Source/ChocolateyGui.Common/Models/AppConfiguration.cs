@@ -74,6 +74,10 @@ namespace ChocolateyGui.Common.Models
         [Feature]
         public bool? PreventAllPackageIconDownloads { get; set; }
 
+        [LocalizedDescription("SettingsView_ToggleHideAllRemoteChocolateySources")]
+        [Feature]
+        public bool? HideAllRemoteChocolateySources { get; set; }
+
         public override string ToString()
         {
             return @"
@@ -92,6 +96,7 @@ AllowNonAdminAccessToSettings: {11}
 UseKeyboardBindings: {12}
 HidePackageDownloadCount: {13}
 PreventAllPackageIconDownloads: {14}
+HideAllRemoteChocolateySources: {15}
 ".format_with(
                 OutdatedPackagesCacheDurationInMinutes,
                 DefaultSourceName,
@@ -107,7 +112,8 @@ PreventAllPackageIconDownloads: {14}
                 AllowNonAdminAccessToSettings,
                 UseKeyboardBindings,
                 HidePackageDownloadCount,
-                PreventAllPackageIconDownloads);
+                PreventAllPackageIconDownloads,
+                HideAllRemoteChocolateySources);
         }
     }
 }

@@ -91,6 +91,7 @@ ShowAdditionalPackageInformation: {10}
 AllowNonAdminAccessToSettings: {11}
 UseKeyboardBindings: {12}
 HidePackageDownloadCount: {13}
+PreventAllPackageIconDownloads: {14}
 ".format_with(
                 OutdatedPackagesCacheDurationInMinutes,
                 DefaultSourceName,
@@ -105,7 +106,8 @@ HidePackageDownloadCount: {13}
                 ShowAdditionalPackageInformation,
                 AllowNonAdminAccessToSettings,
                 UseKeyboardBindings,
-                HidePackageDownloadCount);
+                HidePackageDownloadCount,
+                PreventAllPackageIconDownloads);
         }
     }
 }

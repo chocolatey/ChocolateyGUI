@@ -78,20 +78,22 @@ namespace ChocolateyGui.Common.Models
         {
             return @"
 OutdatedPackagesCacheDurationInMinutes: {0}
-ShowConsoleOutput: {1}
-DefaultToTileViewForLocalSource: {2}
-DefaultToTileViewForRemoteSource: {3}
-UseDelayedSearch: {4}
-PreventPreload: {5}
-PreventAutomatedOutdatedPackagesCheck: {6}
-ExcludeInstalledPackages: {7}
-ShowAggregatedSourceView: {8}
-ShowAdditionalPackageInformation: {9}
-AllowNonAdminAccessToSettings: {10}
-UseKeyboardBindings: {11}
-HidePackageDownloadCount: {12}
+DefaultSourceName: {1}
+ShowConsoleOutput: {2}
+DefaultToTileViewForLocalSource: {3}
+DefaultToTileViewForRemoteSource: {4}
+UseDelayedSearch: {5}
+PreventPreload: {6}
+PreventAutomatedOutdatedPackagesCheck: {7}
+ExcludeInstalledPackages: {8}
+ShowAggregatedSourceView: {9}
+ShowAdditionalPackageInformation: {10}
+AllowNonAdminAccessToSettings: {11}
+UseKeyboardBindings: {12}
+HidePackageDownloadCount: {13}
 ".format_with(
                 OutdatedPackagesCacheDurationInMinutes,
+                DefaultSourceName,
                 ShowConsoleOutput,
                 DefaultToTileViewForLocalSource,
                 DefaultToTileViewForRemoteSource,

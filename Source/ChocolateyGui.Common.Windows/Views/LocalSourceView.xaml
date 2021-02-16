@@ -166,16 +166,16 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
+    <Grid Background="{DynamicResource MahApps.Brushes.Accent4}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Grid.Resources>
-                <ResourceDictionary Source="pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Dark.Theme.xaml" />
-            </Grid.Resources>
+            <!-- <Grid.Resources> -->
+            <!--     <ResourceDictionary Source="pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Dark.Theme.xaml" /> -->
+            <!-- </Grid.Resources> -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />

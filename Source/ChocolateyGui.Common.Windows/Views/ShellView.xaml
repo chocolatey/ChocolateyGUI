@@ -8,6 +8,9 @@
                    xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
                    xmlns:system="clr-namespace:System;assembly=mscorlib"
                    xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
+                   xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
+                   xmlns:controlzex="urn:controlzex"
+                   xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                    mc:Ignorable="d"
                    Height="768" Width="1366"
                    GlowBrush="{StaticResource MahApps.Brushes.Highlight}"
@@ -78,12 +81,15 @@
         </PriorityBinding>
     </Window.Title>
 
-    <metro:MetroWindow.WindowButtonCommands>
-        <metro:WindowButtonCommands Template="{DynamicResource MahApps.Templates.WindowButtonCommands.Win10}" />
-    </metro:MetroWindow.WindowButtonCommands>
-
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
+            <metro:ToggleSwitch Margin="4 0"
+                                Foreground="{DynamicResource MahApps.Brushes.IdealForeground}"
+                                OnContent="{iconPacks:FontAwesome SunSolid}"
+                                OffContent="{iconPacks:FontAwesome MoonSolid}"
+                                IsOn="{Binding Source={x:Static theming:BundledTheme.DefaultInstance}, Path=IsLightTheme}"
+                                OnCommand="{Binding Source={x:Static theming:BundledTheme.DefaultInstance}, Path=ToggleTheme}"
+                                OffCommand="{Binding Source={x:Static theming:BundledTheme.DefaultInstance}, Path=ToggleTheme}" />
             <Button x:Name="ShowSettings"
                     Visibility="{Binding Path=CanShowSettings, Converter={StaticResource BooleanToVisibility}, ConverterParameter=False}"
                     IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -230,6 +230,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IPlatformProvider.cs" />
     <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
+    <Compile Include="Theming\BundledTheme.cs" />
+    <Compile Include="Theming\ThemeAssist.cs" />
     <Compile Include="SerilogLogger.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
     <Compile Include="Services\PackageIconService.cs" />
@@ -343,14 +345,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\ControlStyles\Typography.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Dark.Theme.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Light.Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

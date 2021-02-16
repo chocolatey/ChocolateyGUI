@@ -1,13 +1,16 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:windows="clr-namespace:ChocolateyGui.Common.Windows"
+                    xmlns:controlzex="urn:controlzex">
     <Style TargetType="Panel" x:Key="LeftSourceListItem">
-        <Style.Resources>
-            <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
-            </Style>
-            <Style TargetType="Label">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
-            </Style>
-        </Style.Resources>
+        <!-- <Style.Resources> -->
+        <!--     <Style TargetType="TextBlock"> -->
+        <!--         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" /> -->
+        <!--     </Style> -->
+        <!--     <Style TargetType="Label"> -->
+        <!--         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" /> -->
+        <!--     </Style> -->
+        <!-- </Style.Resources> -->
+        <!-- <Setter Property="windows:ThemeAssist.BaseColorScheme" Value="{x:Static controlzex:ThemeManager.BaseColorDark}" /> -->
     </Style>
 </ResourceDictionary>

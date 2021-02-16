@@ -1,0 +1,104 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BundledTheme.cs" company="Chocolatey">
+//   Copyright 2017 - Present Chocolatey Software, LLC
+//   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using ChocolateyGui.Common.Base;
+using ChocolateyGui.Common.Windows.Commands;
+using ControlzEx.Theming;
+
+namespace ChocolateyGui.Common.Windows.Theming
+{
+    public class BundledTheme : ObservableBase
+    {
+        public static readonly BundledTheme DefaultInstance = new BundledTheme();
+
+        private bool _isLightTheme;
+        private Theme _light;
+        private Theme _dark;
+
+        public BundledTheme()
+        {
+            ToggleTheme =
+                new RelayCommand(
+                    o => { ThemeManager.Current.ChangeTheme(Application.Current, IsLightTheme ? Light : Dark); },
+                    o => Light != null && Dark != null);
+        }
+
+        public Theme Light
+        {
+            get => _light;
+            private set => SetPropertyValue(ref _light, value);
+        }
+
+        public Theme Dark
+        {
+            get => _dark;
+            private set => SetPropertyValue(ref _dark, value);
+        }
+
+        public bool IsLightTheme
+        {
+            get => _isLightTheme;
+            set => SetPropertyValue(ref _isLightTheme, value);
+        }
+
+        public ICommand ToggleTheme { get; }
+
+        public void Generate(string scheme)
+        {
+            Light = ThemeManager.Current.AddTheme(GenerateTheme(scheme, false));
+            Dark = ThemeManager.Current.AddTheme(GenerateTheme(scheme, true));
+
+            if (Light != null)
+            {
+                ThemeManager.Current.ChangeTheme(Application.Current, Light);
+            }
+
+            IsLightTheme = true;
+        }
+
+        public void SyncTheme()
+        {
+            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+            ThemeManager.Current.SyncTheme();
+
+            var theme = ThemeManager.Current.DetectTheme();
+            if (theme != null)
+            {
+                IsLightTheme = theme.BaseColorScheme == ThemeManager.BaseColorLight;
+            }
+        }
+
+        private static Theme GenerateTheme(string scheme, bool isDark)
+        {
+            var baseColor = isDark ? ThemeManager.BaseColorDark : ThemeManager.BaseColorLight;
+            var accentColor = isDark ? ThemeAssist.ColorFromString("#FF4F6170") : ThemeAssist.ColorFromString("#FF202F3C");
+
+            var theme = new Theme(
+                name: $"{baseColor}.{scheme}",
+                displayName: $"{scheme} theme ({baseColor})",
+                baseColorScheme: baseColor,
+                colorScheme: scheme,
+                primaryAccentColor: accentColor,
+                showcaseBrush: new SolidColorBrush(accentColor),
+                isRuntimeGenerated: true,
+                isHighContrast: false);
+
+            var backgroundColor = isDark ? ThemeAssist.ColorFromString("#333333") : ThemeAssist.ColorFromString("#F0EEE0");
+            theme.Resources["BackgroundColor"] = backgroundColor;
+            theme.Resources["BackgroundColorBrush"] = backgroundColor.ToBrush();
+
+            var bodyColor = isDark ? ThemeAssist.ColorFromString("#F0EEE0") : ThemeAssist.ColorFromString("#333333");
+            theme.Resources["BodyColor"] = bodyColor;
+            theme.Resources["BodyColorBrush"] = bodyColor.ToBrush();
+
+            return theme;
+        }
+    }
+}

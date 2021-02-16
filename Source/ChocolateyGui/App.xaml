@@ -12,9 +12,6 @@
                 <ResourceDictionary Source="pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/ControlStyles/Markdown.xaml" />
 
-                <!-- Accent and AppTheme setting -->
-                <ResourceDictionary Source="pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Light.Theme.xaml" />
-
                 <ResourceDictionary>
                     <windows:Bootstrapper x:Key="Bootstrapper" />
                 </ResourceDictionary>

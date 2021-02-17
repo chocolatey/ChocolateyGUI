@@ -13,7 +13,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ControlStyles/Typography.xaml" />
-        <ResourceDictionary Source="ControlStyles/Flyout.xaml" />
         <ResourceDictionary Source="ControlStyles/SourceList.xaml" />
         <ResourceDictionary Source="ControlStyles/ToggleSwitch.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -193,6 +192,21 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+
+    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="TabItem">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock x:Name="Text" Text="{Binding Mode=OneWay}" />
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TabItem}, Path=IsSelected}" Value="true">
+                            <Setter TargetName="Text" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.SystemControlHighlightBaseHigh}" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource MahApps.Styles.TabControl.Animated}" />
 
@@ -646,6 +660,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="RowBackground" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource MahApps.Brushes.Gray10}" />
     </Style>
 
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">

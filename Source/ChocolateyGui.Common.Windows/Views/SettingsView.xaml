@@ -16,6 +16,7 @@
              metro:DialogParticipation.Register="{Binding}"
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="786" d:DesignWidth="1366">
+
     <UserControl.Resources>
         <Style TargetType="{x:Type metro:ToggleSwitch}" BasedOn="{StaticResource Chocolatey.Styles.ToggleSwitch}">
             <Setter Property="OnContent" Value="{x:Static properties:Resources.SettingsView_On}"/>
@@ -24,37 +25,52 @@
 
         <converters:NullToValue x:Key="NullToFalse" TrueValue="False" FalseValue="True" />
 
-        <DataTemplate x:Key="ChocolateyFeatureTemplate" DataType="models:ChocolateyFeature">
-            <Grid Margin="0 10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Name}" TextWrapping="Wrap" />
-                <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event IsCheckedChanged] = [Action ChocolateyFeatureToggled($dataContext)]"/>
-                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
+        <DataTemplate x:Key="ChocolateyGuiFeatureTemplate" DataType="models:ChocolateyGuiFeature">
+            <Grid x:Name="RootGrid" Background="Transparent">
+                <Grid Margin="5 0 5 20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Title}" TextWrapping="Wrap" />
+                    <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event IsCheckedChanged] = [Action ChocolateyGuiFeatureToggled($dataContext)]"/>
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
+                </Grid>
             </Grid>
+            <DataTemplate.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                </Trigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
 
-        <DataTemplate x:Key="ChocolateyGuiFeatureTemplate" DataType="models:ChocolateyGuiFeature">
-            <Grid Margin="0 10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Title}" TextWrapping="Wrap" />
-                <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event IsCheckedChanged] = [Action ChocolateyGuiFeatureToggled($dataContext)]"/>
-                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
+        <DataTemplate x:Key="ChocolateyFeatureTemplate" DataType="models:ChocolateyFeature">
+            <Grid x:Name="RootGrid" Background="Transparent">
+                <Grid Margin="5 0 5 20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Name}" TextWrapping="Wrap" />
+                    <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event IsCheckedChanged] = [Action ChocolateyFeatureToggled($dataContext)]"/>
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
+                </Grid>
             </Grid>
+            <DataTemplate.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                </Trigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
+
     </UserControl.Resources>
 
     <DockPanel LastChildFill="True">
@@ -85,9 +101,9 @@
             </Border>
         </Grid>
 
-        <TabControl DockPanel.Dock="Left" Background="Transparent" metro:TabControlHelper.Underlined="TabPanel">
+        <TabControl Background="Transparent" metro:TabControlHelper.Underlined="TabPanel">
             <TabItem Header="{x:Static properties:Resources.SettingsView_ChocolateyGui}">
-                <Grid Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Margin="5">
+                <Grid Margin="5" UseLayoutRounding="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
@@ -95,23 +111,21 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <DockPanel Margin="0 0 5 0" Grid.Column="0">
-                        <TextBlock DockPanel.Dock="Top" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Features}"/>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding ChocolateyGuiFeatures}"  ItemTemplate="{StaticResource ChocolateyGuiFeatureTemplate}"/>
+                        <TextBlock DockPanel.Dock="Top" Margin="0 0 0 5" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Features}"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource MahApps.Brushes.Control.Background}">
+                            <ItemsControl AlternationCount="2" ItemsSource="{Binding ChocolateyGuiFeatures}" ItemTemplate="{StaticResource ChocolateyGuiFeatureTemplate}" />
                         </ScrollViewer>
                     </DockPanel>
+
                     <Grid Grid.Column="1" Margin="5 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
-                                   Text="{x:Static properties:Resources.SettingsView_Settings}"
-                                   Margin="0,0,0,5"/>
+                        <TextBlock Margin="0 0 0 5" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Settings}" />
                         <DataGrid Grid.Row="1"
-                                  BorderBrush="#DDD"
-                                  BorderThickness="1 1 1 0"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   ItemsSource="{Binding ChocolateyGuiSettings}"
@@ -133,32 +147,28 @@
                     </Grid>
                 </Grid>
             </TabItem>
+
             <TabItem Header="{x:Static properties:Resources.SettingsView_Chocolatey}">
-                <Grid Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <Grid Margin="5" UseLayoutRounding="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
+
                     <DockPanel Margin="0 0 5 0" Grid.Column="0">
-                        <TextBlock DockPanel.Dock="Top" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Features}"/>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding ChocolateyFeatures}" ItemTemplate="{StaticResource ChocolateyFeatureTemplate}" />
+                        <TextBlock DockPanel.Dock="Top" Margin="0 0 0 5" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Features}"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource MahApps.Brushes.Control.Background}">
+                            <ItemsControl AlternationCount="2" ItemsSource="{Binding ChocolateyFeatures}" ItemTemplate="{StaticResource ChocolateyFeatureTemplate}" />
                         </ScrollViewer>
                     </DockPanel>
+
                     <Grid Grid.Column="1" Margin="5 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
-                                   Text="{x:Static properties:Resources.SettingsView_Settings}"
-                                   Margin="0,0,0,5"/>
+                        <TextBlock Margin="0 0 0 5" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Settings}" />
                         <DataGrid Grid.Row="1"
-                                  BorderBrush="#DDD"
-                                  BorderThickness="1 1 1 0"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   ItemsSource="{Binding ChocolateySettings}"
@@ -180,8 +190,9 @@
                     </Grid>
                 </Grid>
             </TabItem>
+
             <TabItem Header="{x:Static properties:Resources.SettingsView_Sources}">
-                <Grid Margin="5">
+                <Grid Margin="5" UseLayoutRounding="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="2*"/>
@@ -189,10 +200,13 @@
                     </Grid.RowDefinitions>
 
                     <!-- Sources -->
-                    <TextBlock Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Sources}"/>
+                    <TextBlock Grid.Row="0" Margin="0 0 0 5" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Sources}"/>
                     <DataGrid  x:Name="SourcesGrid"
-                               Grid.Row="1" Grid.Column="0"
-                               CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
+                               Grid.Row="1"
+                               Grid.Column="0"
+                               CanUserAddRows="False"
+                               CanUserDeleteRows="False"
+                               IsReadOnly="True"
                                cal:Message.Attach="[Event SelectionChanged] = [Action SourceSelectionChanged(SourcesGrid.SelectedItem)]"
                                SelectionMode="Single"
                                ItemsSource="{Binding Sources}" AutoGenerateColumns="False">
@@ -222,6 +236,7 @@
                                                     ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}" />
                         </DataGrid.Columns>
                     </DataGrid>
+
                     <DockPanel Grid.Row="2" Grid.Column="0" Margin="5">
                         <Grid DockPanel.Dock="Top">
                             <TextBlock Text="{x:Static properties:Resources.SettingsView_SourcesSource}" Margin="15 5 0 0" Style="{StaticResource SubtitleTextBlockStyle}"/>

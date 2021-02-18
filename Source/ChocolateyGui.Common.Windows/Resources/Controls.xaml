@@ -397,16 +397,19 @@
     </Style>
 
     <Style x:Key="PackageResourceLabel" TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="FontSize" Value="{StaticResource BaseFontSize}"/>
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="Margin" Value="0,0,5,2" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="0" />
     </Style>
 
     <Style x:Key="PackageResourceValue" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#FF000000" />
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="Margin" Value="5,0,0,7" />
+        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="0 0 0 5" />
     </Style>
 
     <Style x:Key="TitleTextStyle" TargetType="{x:Type TextBlock}">

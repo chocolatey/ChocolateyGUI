@@ -12,13 +12,11 @@
              Background="{DynamicResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance Type=viewModels:AboutViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="786" d:DesignWidth="1366">
-    <UserControl.Resources>
-        <Style TargetType="{x:Type metro:ToggleSwitch}" BasedOn="{StaticResource Chocolatey.Styles.ToggleSwitch}" />
-    </UserControl.Resources>
 
     <FrameworkElement.CommandBindings>
         <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="HandleMarkdownLink" />
     </FrameworkElement.CommandBindings>
+
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" />

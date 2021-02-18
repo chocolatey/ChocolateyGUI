@@ -456,8 +456,8 @@
         <Setter Property="FontSize" Value="14" />
     </Style>
 
-    <Style TargetType="{x:Type Hyperlink}">
-        <Setter Property="Foreground" Value="#FF34a1fe" />
+    <Style TargetType="{x:Type Hyperlink}" BasedOn="{StaticResource MahApps.Styles.Hyperlink}">
+        <Setter Property="Foreground" Value="#5c9fd8" />
     </Style>
 
     <Style TargetType="{x:Type FlowDocument}" x:Key="DocumentStyle">
@@ -509,7 +509,7 @@
         <Setter Property="Height" Value="48" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
     </Style>
 
     <Style x:Key="BackButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigIconButton}">
@@ -518,7 +518,7 @@
                 <iconPacks:PackIconModern Kind="ChevronLeft" Width="18" Height="18" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
         <Setter Property="AutomationProperties.Name" Value="Back" />
         <Setter Property="AutomationProperties.HelpText" Value="Go's back" />
         <Setter Property="AutomationProperties.AcceleratorKey" Value="B" />

@@ -9,6 +9,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
 
+                <ResourceDictionary Source="pack://application:,,,/Markdig.Wpf;component/Themes/generic.xaml" />
+
                 <ResourceDictionary Source="pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/ControlStyles/Markdown.xaml" />
 

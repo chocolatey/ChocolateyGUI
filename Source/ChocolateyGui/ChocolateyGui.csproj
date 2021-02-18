@@ -154,11 +154,11 @@
     <Reference Include="MahApps.Metro.IconPacks.Octicons, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Octicons.4.8.0\lib\net45\MahApps.Metro.IconPacks.Octicons.dll</HintPath>
     </Reference>
-    <Reference Include="Markdig.Signed, Version=0.17.1.0, Culture=neutral, PublicKeyToken=870da25a133885f8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Markdig.Signed.0.17.1\lib\net40\Markdig.Signed.dll</HintPath>
+    <Reference Include="Markdig.Signed, Version=0.18.0.0, Culture=neutral, PublicKeyToken=870da25a133885f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.Signed.0.18.0\lib\net40\Markdig.Signed.dll</HintPath>
     </Reference>
-    <Reference Include="Markdig.Wpf">
-      <HintPath>..\packages\Markdig.Wpf.Signed.0.3.0\lib\net452\Markdig.Wpf.dll</HintPath>
+    <Reference Include="Markdig.Wpf, Version=0.3.1.0, Culture=neutral, PublicKeyToken=7b8a8f2a8a0119a0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.Wpf.Signed.0.3.1\lib\net452\Markdig.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Threading, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Threading.15.4.4\lib\net45\Microsoft.VisualStudio.Threading.dll</HintPath>
@@ -360,7 +360,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <SourceRoot Include="$(MSBuildThisFileDirectory)/../"/>
+    <SourceRoot Include="$(MSBuildThisFileDirectory)/../" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

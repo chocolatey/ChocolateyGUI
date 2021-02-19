@@ -8,6 +8,7 @@
                     xmlns:items="clr-namespace:ChocolateyGui.Common.Windows.ViewModels.Items"
                     xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -244,36 +245,33 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox}">
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}">
         <Setter Property="MinHeight" Value="0" />
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillChecked" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillCheckedDisabled" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillCheckedPressed" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillIndeterminate" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillUnchecked" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.CheckBackgroundFillUncheckedPressed" Value="{DynamicResource MahApps.Brushes.Control.Background}" /> -->
     </Style>
 
     <Style x:Key="Chocolatey.Styles.CheckBox.SourceHeader" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}">
         <Setter Property="MinHeight" Value="0" />
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundChecked" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeWhite}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeWhite}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeWhite}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeGray}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundIndeterminate" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeWhite}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeWhite}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeWhite}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeGray}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundUnchecked" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeWhite}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeWhite}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeWhite}" /> -->
-        <!-- <Setter Property="controls:CheckBoxHelper.ForegroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundChromeGray}" /> -->
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUnchecked" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedPressed" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+    </Style>
+
+    <Style x:Key="Chocolatey.Styles.CheckBox.Settings" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeIndeterminate" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeUnchecked" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUnchecked" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedPressed" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+    </Style>
+
+    <Style x:Key="Chocolatey.Styles.CheckBox.DataGrid" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox.DataGrid.Win10}">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
     </Style>
 
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
@@ -344,8 +342,60 @@
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <mah:ClipBorder x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="DisabledVisualElement"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Margin="{TemplateBinding BorderThickness}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderThickness), Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.2" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ListViewModeRadioButtonStyle" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
@@ -376,14 +426,14 @@
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray4}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background.Pressed}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray9}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -427,7 +477,6 @@
     </Style>
 
     <Style x:Key="PageCountTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="14" />
     </Style>
@@ -503,11 +552,14 @@
 
     <Style x:Key="IconFlatButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.Flat}">
         <Setter Property="Padding" Value="5" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray4}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray9}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -517,8 +569,8 @@
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="Margin" Value="3,0" />
         <Setter Property="Padding" Value="5,6" />
@@ -575,20 +627,26 @@
                                 <VisualState x:Name="Unfocused" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border x:Name="Background" BorderBrush="{TemplateBinding BorderBrush}"
+                        <Border x:Name="Background"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}" />
-                        <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                        <Rectangle x:Name="DisabledVisualElement"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray8}"
                                    IsHitTestVisible="False" Opacity="0" />
-                        <Border x:Name="MouseOverBorder" BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{DynamicResource MahApps.Brushes.Accent4}" Opacity="0" />
-                        <Border x:Name="PressedBorder" BorderThickness="{TemplateBinding BorderThickness}"
+                        <Border x:Name="MouseOverBorder"
+                                BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{DynamicResource MahApps.Brushes.Accent3}" Opacity="0" />
+                        <Border x:Name="PressedBorder"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{DynamicResource MahApps.Brushes.Accent2}" Opacity="0" />
                         <Rectangle x:Name="FocusRectangle" Margin="-1" Opacity="0" />
-                        <Rectangle x:Name="FocusInnerRectangle" Opacity="0"
+                        <Rectangle x:Name="FocusInnerRectangle"
+                                   Opacity="0"
                                    Stroke="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
-                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                        <ContentPresenter x:Name="contentPresenter"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Content="{TemplateBinding Content, Converter={custom:ToUpperConverter}}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
@@ -637,6 +695,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="RowBackground" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="AlternatingRowBackground" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedCheckBoxColumnEditingStyle" Value="{StaticResource Chocolatey.Styles.CheckBox.DataGrid}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedCheckBoxColumnStyle" Value="{StaticResource Chocolatey.Styles.CheckBox.DataGrid}" />
     </Style>
 
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">

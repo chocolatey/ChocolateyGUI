@@ -173,9 +173,6 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <!-- <Grid.Resources> -->
-            <!--     <ResourceDictionary Source="pack://application:,,,/ChocolateyGui.Common.Windows;component/Resources/Dark.Theme.xaml" /> -->
-            <!-- </Grid.Resources> -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -190,12 +187,14 @@
                              VerticalAlignment="Center"
                              Text="{Binding SearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
-                <CheckBox Name="MatchCheckBox" Margin="5"
+                <CheckBox Name="MatchCheckBox"
+                          Margin="5"
                           Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.LocalSourceView_CheckboxMatchExact}"
                           IsChecked="{Binding MatchWord}" />
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                <CheckBox Name="UpdatesCheckBox" Margin="5"
+                <CheckBox Name="UpdatesCheckBox"
+                          Margin="5"
                           Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.LocalSourceView_CheckboxPkgsWithUpdates}"
                           IsChecked="{Binding ShowOnlyPackagesWithUpdate}"

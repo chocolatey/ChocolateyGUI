@@ -169,7 +169,6 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="36.4" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="Normal" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Gray1}" />
-        <!-- <Setter Property="Margin" Value="0 16" /> -->
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
         <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />

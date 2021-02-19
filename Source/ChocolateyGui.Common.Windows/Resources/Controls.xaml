@@ -13,7 +13,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ControlStyles/Typography.xaml" />
-        <ResourceDictionary Source="ControlStyles/SourceList.xaml" />
         <ResourceDictionary Source="ControlStyles/ToggleSwitch.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -211,12 +210,6 @@
     <Style x:Key="SourceItemTextBlockStyle" TargetType="{x:Type TextBlock}"
            BasedOn="{StaticResource SourceBaseTextBlockStyle}">
         <Setter Property="FontSize" Value="16" />
-    </Style>
-
-    <Style x:Key="VersionNumberTextBlockStyle" TargetType="{x:Type TextBlock}"
-           BasedOn="{StaticResource SourceBaseTextBlockStyle}">
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="Foreground" Value="Black" />
     </Style>
 
     <Style x:Key="SourcesListBoxItemContainerStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
@@ -471,11 +464,6 @@
         <Setter Property="FontSize" Value="22" />
     </Style>
 
-    <Style x:Key="DescriptionTextStyle" TargetType="{x:Type Run}">
-        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
-        <Setter Property="FontSize" Value="16" />
-    </Style>
-
     <Style x:Key="PageCountTextStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="14" />
@@ -483,50 +471,6 @@
 
     <Style TargetType="{x:Type Hyperlink}" BasedOn="{StaticResource MahApps.Styles.Hyperlink}">
         <Setter Property="Foreground" Value="#5c9fd8" />
-    </Style>
-
-    <Style TargetType="{x:Type FlowDocument}" x:Key="DocumentStyle">
-        <Setter Property="FontFamily"
-                Value="Calibri" />
-        <Setter Property="TextAlignment"
-                Value="Left" />
-        <Setter Property="Foreground" Value="#FF000000" />
-    </Style>
-
-    <Style x:Key="PageHeader"
-           TargetType="{x:Type Paragraph}">
-        <Setter Property="FontSize"
-                Value="42" />
-        <Setter Property="Foreground"
-                Value="#ff000000" />
-        <Setter Property="FontWeight"
-                Value="Light" />
-    </Style>
-
-    <Style x:Key="SubHeader"
-           TargetType="{x:Type Paragraph}">
-        <Setter Property="FontSize"
-                Value="20" />
-        <Setter Property="Foreground"
-                Value="#ff000000" />
-        <Setter Property="FontWeight"
-                Value="Light" />
-    </Style>
-
-    <Style x:Key="SubHeaderSecondary"
-           TargetType="{x:Type Paragraph}">
-        <Setter Property="FontSize"
-                Value="20" />
-        <Setter Property="Foreground"
-                Value="#99000000" />
-        <Setter Property="FontWeight"
-                Value="Light" />
-    </Style>
-
-    <Style x:Key="PageTextBlockStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#FF000000" />
-        <Setter Property="Margin" Value="5,0,5,5" />
-        <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style x:Key="BigIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.Circle}">

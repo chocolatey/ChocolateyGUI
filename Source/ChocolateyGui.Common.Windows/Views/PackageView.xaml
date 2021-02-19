@@ -234,7 +234,7 @@
 
         <ScrollViewer Margin="25 5 0 0" Background="{DynamicResource MahApps.Brushes.Control.Background}">
             <StackPanel Margin="5 0 5 5">
-                <mah:MetroHeader Style="{StaticResource SectionHeaderStyle}"
+                <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
                                  Header="{x:Static properties:Resources.PackageView_Description}">
                     <i:Interaction.Behaviors>
                         <utilities:BubbleScrollEventBehavior />
@@ -245,14 +245,14 @@
                                             Markdown="{Binding Description}" />
                 </mah:MetroHeader>
 
-                <mah:MetroHeader Style="{StaticResource SectionHeaderStyle}"
+                <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
                                  Header="{x:Static properties:Resources.PackageView_Dependencies}"
                                  Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                     <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"
                                AutomationProperties.Name="Package Dependencies" />
                 </mah:MetroHeader>
 
-                <mah:MetroHeader Style="{StaticResource SectionHeaderStyle}"
+                <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
                                  Header="{x:Static properties:Resources.PackageView_ReleaseNotes}"
                                  Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}">
                     <i:Interaction.Behaviors>

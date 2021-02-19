@@ -429,25 +429,6 @@
         <Setter Property="FontSize" Value="22" />
     </Style>
 
-    <Style x:Key="SectionHeaderStyle" BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type controls:MetroHeader}">
-        <Setter Property="controls:HeaderedControlHelper.HeaderFontSize" Value="28" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
-        <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Padding" Value="2 4" />
-        <Setter Property="Margin" Value="0 0 0 8" />
-        <Setter Property="HeaderTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical" UseLayoutRounding="True">
-                        <TextBlock Margin="0 0 0 4" Text="{Binding}" />
-                        <Separator Margin="0 0 4 0"/>
-                    </StackPanel>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="DescriptionTextStyle" TargetType="{x:Type Run}">
         <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
         <Setter Property="FontSize" Value="16" />

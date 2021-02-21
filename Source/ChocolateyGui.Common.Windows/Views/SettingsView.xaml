@@ -11,8 +11,9 @@
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
+             xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
              mc:Ignorable="d"
-             Background="{DynamicResource BackgroundColorBrush}"
+             Background="{DynamicResource {x:Static theming:ChocolateyBrushes.BackgroundKey}}"
              metro:DialogParticipation.Register="{Binding}"
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="786" d:DesignWidth="1366">

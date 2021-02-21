@@ -100,7 +100,7 @@
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 
-    <Border Background="{DynamicResource BackgroundColorBrush}">
+    <Border Background="{DynamicResource {x:Static theming:ChocolateyBrushes.BackgroundKey}}">
         <Grid>
             <ContentControl x:Name="ActiveItem" />
         </Grid>

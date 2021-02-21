@@ -14,6 +14,7 @@
              xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
+             xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:LocalSourceViewModel}"
@@ -298,12 +299,11 @@
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <TextBlock Text="{x:Static properties:Resources.LocalSourceView_Grid_Prerelease}"
-                                                               Grid.Column="1"
-                                                               Background="DarkOrange"
-                                                               Foreground="White"
+                                                               Background="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseKey}}"
+                                                               Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseForegroundKey}}"
                                                                Padding="3"
-                                                               VerticalAlignment="Center"
-                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Stretch"
+                                                               HorizontalAlignment="Stretch"
                                                                TextAlignment="Center"
                                                                Visibility="{Binding IsPrerelease, Converter={StaticResource BoolToVis}}"/>
                                                 </DataTemplate>
@@ -313,21 +313,28 @@
                                                                 Header="{x:Static properties:Resources.LocalSourceView_Grid_LatestVersion}">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
-                                                    <Grid>
+                                                    <Grid Background="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}"
+                                                          TextElement.Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}"
+                                                          Visibility="{Binding IsLatestVersion, Converter={StaticResource BoolToVisInverted}}"
+                                                          HorizontalAlignment="Stretch"
+                                                          VerticalAlignment="Stretch">
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="0.5*" />
-                                                            <ColumnDefinition Width="0.5*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding LatestVersion, IsAsync=True}" VerticalAlignment="Center" Grid.Column="0"/>
-                                                        <TextBlock Text="{x:Static properties:Resources.LocalSourceView_Outdated}"
-                                                                   Grid.Column="1"
-                                                                   Background="#A90000"
-                                                                   Foreground="White"
-                                                                   Padding="3"
-                                                                   VerticalAlignment="Center"
-                                                                   HorizontalAlignment="Center"
-                                                                   TextAlignment="Center"
-                                                                   Visibility="{Binding IsLatestVersion, Converter={StaticResource BoolToVisInverted}}"/>
+                                                        <TextBlock Grid.Column="0"
+                                                                   Text="{Binding LatestVersion, IsAsync=True}"
+                                                                   Padding="3 3 2 3"
+                                                                   VerticalAlignment="Stretch"
+                                                                   HorizontalAlignment="Left"
+                                                                   TextAlignment="Center" />
+                                                        <TextBlock Grid.Column="1"
+                                                                   Text="{x:Static properties:Resources.LocalSourceView_Outdated}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   Padding="2 3 3 3"
+                                                                   VerticalAlignment="Stretch"
+                                                                   HorizontalAlignment="Right"
+                                                                   TextAlignment="Center" />
                                                     </Grid>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>

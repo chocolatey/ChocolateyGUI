@@ -8,8 +8,9 @@
              xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
+             xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
              mc:Ignorable="d"
-             Background="{DynamicResource BackgroundColorBrush}"
+             Background="{DynamicResource {x:Static theming:ChocolateyBrushes.BackgroundKey}}"
              d:DataContext="{d:DesignInstance Type=viewModels:AboutViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="786" d:DesignWidth="1366">
 

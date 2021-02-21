@@ -13,6 +13,7 @@
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
+             xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
              mc:Ignorable="d"
              d:DesignHeight="786" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:PackageViewModel}">
@@ -187,8 +188,8 @@
             </StackPanel>
 
             <TextBlock Text="{x:Static properties:Resources.PackagesView_Outdated}"
-                       Background="#A90000"
-                       Foreground="White"
+                       Background="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}"
+                       Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}"
                        Padding="3"
                        VerticalAlignment="Center"
                        TextAlignment="Center">
@@ -200,15 +201,15 @@
                 </TextBlock.Visibility>
             </TextBlock>
             <TextBlock Text="{x:Static properties:Resources.PackagesView_Prerelease}"
-                       Background="DarkOrange"
-                       Foreground="White"
+                       Background="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseKey}}"
+                       Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseForegroundKey}}"
                        Padding="3"
                        VerticalAlignment="Center"
                        TextAlignment="Center"
                        Visibility="{Binding IsPrerelease, Converter={StaticResource BoolToVis}}"/>
             <TextBlock Text="{x:Static properties:Resources.PackagesView_Installed}"
-                       Background="#007F00"
-                       Foreground="White"
+                       Background="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledKey}}"
+                       Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledForegroundKey}}"
                        Padding="3"
                        VerticalAlignment="Center"
                        TextAlignment="Center">
@@ -220,8 +221,8 @@
                 </TextBlock.Visibility>
             </TextBlock>
             <TextBlock Text="{x:Static properties:Resources.PackagesView_Pinned}"
-                       Background="#007F00"
-                       Foreground="White"
+                       Background="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledKey}}"
+                       Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledForegroundKey}}"
                        Padding="3"
                        VerticalAlignment="Center"
                        TextAlignment="Center"

@@ -7,10 +7,11 @@
                          xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
                          xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
                          xmlns:dialogs="clr-namespace:ChocolateyGui.Common.Windows.Controls.Dialogs"
+                         xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
                          mc:Ignorable="d"
                          x:Class="ChocolateyGui.Common.Windows.Controls.Dialogs.ChocolateyDialog"
                          x:Name="PART_Dialog"
-                         Background="{DynamicResource BackgroundColorBrush}" d:DesignWidth="1300">
+                         Background="{DynamicResource {x:Static theming:ChocolateyBrushes.BackgroundKey}}" d:DesignWidth="1300">
     <MahDialogs:CustomDialog.Content>
         <Grid>
             <Grid.RowDefinitions>

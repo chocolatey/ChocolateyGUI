@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                    xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf">
+                    xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
+                    xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming">
 
     <!-- Document styles -->
     <Style TargetType="{x:Type FlowDocument}"
@@ -10,7 +11,7 @@
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
         <Setter Property="PagePadding" Value="4" />
-        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
     </Style>
     <Style TargetType="{x:Type List}">
         <Setter Property="Margin" Value="0 14" />
@@ -20,7 +21,7 @@
            x:Key="{x:Static markdig:Styles.ParagraphStyleKey}">
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
-        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
     </Style>
     <Style TargetType="{x:Type Paragraph}"
            x:Key="{x:Static markdig:Styles.CodeBlockStyleKey}"
@@ -171,7 +172,7 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Gray1}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
-        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Padding" Value="2 4" />
         <Setter Property="Margin" Value="0 0 0 8" />

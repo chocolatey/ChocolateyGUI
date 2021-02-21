@@ -13,6 +13,7 @@
              xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
+             xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}"
@@ -71,8 +72,8 @@
                                 </TextBlock.Text>
                             </TextBlock>
                             <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_Prerelease}"
-                                       Background="DarkOrange"
-                                       Foreground="White"
+                                       Background="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseKey}}"
+                                       Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseForegroundKey}}"
                                        Margin="5,0,0,0"
                                        Padding="3"
                                        VerticalAlignment="Center"

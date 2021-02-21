@@ -91,12 +91,33 @@ namespace ChocolateyGui.Common.Windows.Theming
                 isHighContrast: false);
 
             var backgroundColor = isDark ? ThemeAssist.ColorFromString("#333333") : ThemeAssist.ColorFromString("#F0EEE0");
-            theme.Resources["BackgroundColor"] = backgroundColor;
-            theme.Resources["BackgroundColorBrush"] = backgroundColor.ToBrush();
+            theme.Resources[ChocolateyColors.BackgroundKey] = backgroundColor;
+            theme.Resources[ChocolateyBrushes.BackgroundKey] = backgroundColor.ToBrush();
 
             var bodyColor = isDark ? ThemeAssist.ColorFromString("#F0EEE0") : ThemeAssist.ColorFromString("#333333");
-            theme.Resources["BodyColor"] = bodyColor;
-            theme.Resources["BodyColorBrush"] = bodyColor.ToBrush();
+            theme.Resources[ChocolateyColors.BodyKey] = bodyColor;
+            theme.Resources[ChocolateyBrushes.BodyKey] = bodyColor.ToBrush();
+
+            var outOfDateColor = ThemeAssist.ColorFromString("#b71c1c");
+            theme.Resources[ChocolateyColors.OutOfDateKey] = outOfDateColor;
+            theme.Resources[ChocolateyBrushes.OutOfDateKey] = outOfDateColor.ToBrush();
+
+            theme.Resources[ChocolateyColors.OutOfDateForegroundKey] = Colors.White;
+            theme.Resources[ChocolateyBrushes.OutOfDateForegroundKey] = Colors.White.ToBrush();
+
+            var isInstalledColor = ThemeAssist.ColorFromString("#1b5e20");
+            theme.Resources[ChocolateyColors.IsInstalledKey] = isInstalledColor;
+            theme.Resources[ChocolateyBrushes.IsInstalledKey] = isInstalledColor.ToBrush();
+
+            theme.Resources[ChocolateyColors.IsInstalledForegroundKey] = Colors.White;
+            theme.Resources[ChocolateyBrushes.IsInstalledForegroundKey] = Colors.White.ToBrush();
+
+            var preReleaseColor = ThemeAssist.ColorFromString("#ff8f00");
+            theme.Resources[ChocolateyColors.PreReleaseKey] = preReleaseColor;
+            theme.Resources[ChocolateyBrushes.PreReleaseKey] = preReleaseColor.ToBrush();
+
+            theme.Resources[ChocolateyColors.PreReleaseForegroundKey] = Colors.Black;
+            theme.Resources[ChocolateyBrushes.PreReleaseForegroundKey] = Colors.Black.ToBrush();
 
             return theme;
         }

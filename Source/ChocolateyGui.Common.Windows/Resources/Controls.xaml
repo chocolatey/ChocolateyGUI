@@ -9,6 +9,7 @@
                     xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -308,11 +309,13 @@
     </Style>
 
     <Style x:Key="TileOutOfDateOverlayStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource TileOverlayStyle}">
-        <Setter Property="Background" Value="#A90000" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}" />
     </Style>
 
     <Style x:Key="TileIsInstalledOverlayStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource TileOverlayStyle}">
-        <Setter Property="Background" Value="#007F00" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledKey}}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledForegroundKey}}" />
     </Style>
 
     <Style x:Key="TileTitleTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -440,7 +443,7 @@
     </Style>
 
     <Style x:Key="PackageResourceValue" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Padding" Value="5" />
@@ -448,19 +451,19 @@
     </Style>
 
     <Style x:Key="TitleTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
         <Setter Property="FontSize" Value="48" />
         <Setter Property="Margin" Value="3,0,0,5" />
     </Style>
 
     <Style x:Key="SubtitleTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
         <Setter Property="FontSize" Value="22" />
         <Setter Property="Margin" Value="3,0,0,10" />
     </Style>
 
     <Style x:Key="SubtitleRunTextStyle" TargetType="{x:Type Run}">
-        <Setter Property="Foreground" Value="{DynamicResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
         <Setter Property="FontSize" Value="22" />
     </Style>
 

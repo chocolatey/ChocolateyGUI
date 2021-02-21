@@ -231,6 +231,8 @@
     <Compile Include="Providers\IPlatformProvider.cs" />
     <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
     <Compile Include="Theming\BundledTheme.cs" />
+    <Compile Include="Theming\ChocolateyBrushes.cs" />
+    <Compile Include="Theming\ChocolateyColors.cs" />
     <Compile Include="Theming\ThemeAssist.cs" />
     <Compile Include="SerilogLogger.cs" />
     <Compile Include="Services\ChocolateyService.cs" />

@@ -38,7 +38,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Title}" TextWrapping="Wrap" />
-                    <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event IsCheckedChanged] = [Action ChocolateyGuiFeatureToggled($dataContext)]"/>
+                    <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event Toggled] = [Action ChocolateyGuiFeatureToggled($dataContext)]"/>
                     <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
                 </Grid>
             </Grid>
@@ -61,7 +61,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Name}" TextWrapping="Wrap" />
-                    <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event IsCheckedChanged] = [Action ChocolateyFeatureToggled($dataContext)]"/>
+                    <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event Toggled] = [Action ChocolateyFeatureToggled($dataContext)]"/>
                     <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
                 </Grid>
             </Grid>

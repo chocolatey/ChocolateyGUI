@@ -9,6 +9,8 @@ using System.Windows;
 using System.Windows.Media;
 using ChocolateyGui.Common.Controls;
 using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Windows.Theming;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -19,34 +21,36 @@ namespace ChocolateyGui.Common.Windows.Controls.Dialogs
     /// </summary>
     public partial class ChocolateyDialog : CustomDialog
     {
-        public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register(
-            "IsCancelable",
-            typeof(bool),
-            typeof(ChocolateyDialog),
-            new PropertyMetadata(default(bool)));
+        public static readonly DependencyProperty IsCancelableProperty
+            = DependencyProperty.Register(
+                nameof(IsCancelable),
+                typeof(bool),
+                typeof(ChocolateyDialog),
+                new PropertyMetadata(default(bool)));
 
-        public static readonly DependencyProperty NegativeButtonTextProperty =
-            DependencyProperty.Register(
-                "NegativeButtonText",
+        public static readonly DependencyProperty NegativeButtonTextProperty
+            = DependencyProperty.Register(
+                nameof(NegativeButtonText),
                 typeof(string),
                 typeof(ChocolateyDialog),
                 new PropertyMetadata("Cancel"));
 
-        public static readonly DependencyProperty OutputBufferCollectionProperty = DependencyProperty.Register(
-            "OutputBufferCollectionCollection",
-            typeof(ObservableRingBufferCollection<PowerShellOutputLine>),
-            typeof(ChocolateyDialog),
-            new PropertyMetadata(
-                default(ObservableRingBufferCollection<PowerShellOutputLine>),
-                (s, e) =>
-                {
-                    ((ChocolateyDialog)s).PART_Console.BufferCollection =
-                        (ObservableRingBufferCollection<PowerShellOutputLine>)e.NewValue;
-                }));
+        public static readonly DependencyProperty OutputBufferCollectionProperty
+            = DependencyProperty.Register(
+                nameof(OutputBufferCollection),
+                typeof(ObservableRingBufferCollection<PowerShellOutputLine>),
+                typeof(ChocolateyDialog),
+                new PropertyMetadata(
+                    default(ObservableRingBufferCollection<PowerShellOutputLine>),
+                    (s, e) =>
+                    {
+                        ((ChocolateyDialog)s).PART_Console.BufferCollection =
+                            (ObservableRingBufferCollection<PowerShellOutputLine>)e.NewValue;
+                    }));
 
-        public static readonly DependencyProperty ProgressBarForegroundProperty =
-            DependencyProperty.Register(
-                "ProgressBarForeground",
+        public static readonly DependencyProperty ProgressBarForegroundProperty
+            = DependencyProperty.Register(
+                nameof(ProgressBarForeground),
                 typeof(Brush),
                 typeof(ChocolateyDialog),
                 new PropertyMetadata(Brushes.White));
@@ -59,14 +63,14 @@ namespace ChocolateyGui.Common.Windows.Controls.Dialogs
 
             if (parentWindow.MetroDialogOptions.ColorScheme == MetroDialogColorScheme.Theme)
             {
-                ProgressBarForeground = FindResource("MahApps.Brushes.Accent") as Brush;
+                ProgressBarForeground = FindResource(ChocolateyBrushes.BodyKey) as Brush;
             }
             else
             {
                 ProgressBarForeground = Brushes.White;
             }
 
-            NegativeButtonText = Common.Properties.Resources.ChocolateyDialog_Cancel;
+            NegativeButtonText = Properties.Resources.ChocolateyDialog_Cancel;
         }
 
         public bool IsCancelable
@@ -95,10 +99,59 @@ namespace ChocolateyGui.Common.Windows.Controls.Dialogs
             set { SetValue(ProgressBarForegroundProperty, value); }
         }
 
+        protected override void OnLoaded()
+        {
+            ThemeManager.Current.ThemeChanged -= ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged += ThemeManagerIsThemeChanged;
+            base.OnLoaded();
+        }
+
         protected override void OnClose()
         {
             base.OnClose();
             OutputBufferCollection.Clear();
+            ThemeManager.Current.ThemeChanged -= ThemeManagerIsThemeChanged;
+        }
+
+        private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
+        {
+            this.Invoke(OnThemeChange);
+        }
+
+        private void OnThemeChange()
+        {
+            var theme = DetectTheme();
+
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)
+                || theme == null)
+            {
+                return;
+            }
+
+            if (DialogSettings != null)
+            {
+                if (DialogSettings.ColorScheme == MetroDialogColorScheme.Theme)
+                {
+                    ProgressBarForeground = FindResource(ChocolateyBrushes.BodyKey) as Brush;
+                }
+                else
+                {
+                    ProgressBarForeground = theme.BaseColorScheme == ThemeManager.BaseColorLight ? Brushes.White : Brushes.Black;
+                }
+            }
+        }
+
+        private Theme DetectTheme()
+        {
+            if (Application.Current != null)
+            {
+                var theme = Application.Current.MainWindow is null
+                    ? ThemeManager.Current.DetectTheme(Application.Current)
+                    : ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
+                return theme;
+            }
+
+            return null;
         }
     }
 }

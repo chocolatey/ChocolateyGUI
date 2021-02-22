@@ -30,6 +30,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly IImageService _imageService;
         private readonly IVersionService _versionService;
         private readonly Func<string, LocalSourceViewModel> _localSourceVmFactory;
+        private bool _firstLoad = true;
 
         public SourcesViewModel(
             IChocolateyService packageService,
@@ -116,9 +117,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 .Where(p => p.EventArgs.PropertyName == nameof(ActiveItem))
                 .Subscribe(p => DisplayName = $"Source - {ActiveItem?.DisplayName}");
 
-            Items.Add(_localSourceVmFactory(Resources.Resources_ThisPC));
+            if (_firstLoad)
+            {
+                Items.Add(_localSourceVmFactory(Resources.Resources_ThisPC));
 
-            _ = LoadSources();
+                _ = LoadSources();
+                _firstLoad = false;
+            }
         }
 
         private class SourcesComparer : IEqualityComparer<RemoteSourceViewModel>

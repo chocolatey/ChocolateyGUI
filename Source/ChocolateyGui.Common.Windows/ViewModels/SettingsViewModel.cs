@@ -183,6 +183,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
 
             _eventAggregator.PublishOnUIThread(new FeatureModifiedMessage());
+
+            if (feature.Title == "ShowAggregatedSourceView")
+            {
+                await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
+            }
         }
 
         public async Task UpdateChocolateyGuiSetting(ChocolateyGuiSetting setting)

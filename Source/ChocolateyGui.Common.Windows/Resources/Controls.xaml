@@ -13,6 +13,8 @@
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ControlStyles/ScrollBar.xaml" />
+        <ResourceDictionary Source="ControlStyles/ScrollViewer.xaml" />
         <ResourceDictionary Source="ControlStyles/Typography.xaml" />
         <ResourceDictionary Source="ControlStyles/ToggleSwitch.xaml" />
     </ResourceDictionary.MergedDictionaries>

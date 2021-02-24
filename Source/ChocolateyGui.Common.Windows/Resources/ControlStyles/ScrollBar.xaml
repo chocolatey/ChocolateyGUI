@@ -44,12 +44,12 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
             </Trigger>
-            <DataTrigger Binding="{Binding Source={x:Static theming:BundledTheme.DefaultInstance}, Path=IsLightTheme}" Value="True">
+            <DataTrigger Binding="{Binding Source={x:Static theming:ThemeAssist.BundledTheme}, Path=IsLightTheme}" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Source={x:Static theming:BundledTheme.DefaultInstance}, Path=IsLightTheme}" Value="True" />
+                    <Condition Binding="{Binding Source={x:Static theming:ThemeAssist.BundledTheme}, Path=IsLightTheme}" Value="True" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />

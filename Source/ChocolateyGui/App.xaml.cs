@@ -102,8 +102,8 @@ namespace ChocolateyGui
         {
             base.OnStartup(e);
 
-            BundledTheme.DefaultInstance.Generate("ChocolateyGui");
-            BundledTheme.DefaultInstance.SyncTheme();
+            ThemeAssist.BundledTheme.Generate("ChocolateyGui");
+            ThemeAssist.BundledTheme.SyncTheme();
         }
     }
 }

@@ -230,7 +230,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IPlatformProvider.cs" />
     <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
-    <Compile Include="Theming\BundledTheme.cs" />
+    <Compile Include="Services\BundledThemeService.cs" />
+    <Compile Include="Services\IBundledThemeService.cs" />
     <Compile Include="Theming\ChocolateyBrushes.cs" />
     <Compile Include="Theming\ChocolateyColors.cs" />
     <Compile Include="Theming\ThemeAssist.cs" />

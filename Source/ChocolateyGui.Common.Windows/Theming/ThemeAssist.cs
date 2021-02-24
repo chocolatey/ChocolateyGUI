@@ -7,6 +7,8 @@
 
 using System.Windows;
 using System.Windows.Media;
+using Autofac;
+using ChocolateyGui.Common.Windows.Services;
 using ControlzEx.Theming;
 
 namespace ChocolateyGui.Common.Windows.Theming
@@ -24,6 +26,11 @@ namespace ChocolateyGui.Common.Windows.Theming
                 new FrameworkPropertyMetadata(
                     ThemeManager.BaseColorLight,
                     OnBaseColorSchemePropertyChanged));
+
+        /// <summary>
+        /// Gets the bundled theme instance for this application.
+        /// </summary>
+        public static IBundledThemeService BundledTheme { get; } = Bootstrapper.Container.Resolve<IBundledThemeService>();
 
         [AttachedPropertyBrowsableForType(typeof(FrameworkElement))]
         public static string GetBaseColorScheme(DependencyObject obj)

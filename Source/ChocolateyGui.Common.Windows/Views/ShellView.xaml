@@ -9,7 +9,6 @@
                    xmlns:system="clr-namespace:System;assembly=mscorlib"
                    xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
                    xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
-                   xmlns:controlzex="urn:controlzex"
                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                    mc:Ignorable="d"
                    Height="768" Width="1366"
@@ -87,9 +86,9 @@
                                 Foreground="{DynamicResource MahApps.Brushes.IdealForeground}"
                                 OnContent="{iconPacks:FontAwesome SunSolid}"
                                 OffContent="{iconPacks:FontAwesome MoonSolid}"
-                                IsOn="{Binding Source={x:Static theming:BundledTheme.DefaultInstance}, Path=IsLightTheme}"
-                                OnCommand="{Binding Source={x:Static theming:BundledTheme.DefaultInstance}, Path=ToggleTheme}"
-                                OffCommand="{Binding Source={x:Static theming:BundledTheme.DefaultInstance}, Path=ToggleTheme}" />
+                                IsOn="{Binding Source={x:Static theming:ThemeAssist.BundledTheme}, Path=IsLightTheme}"
+                                OnCommand="{Binding Source={x:Static theming:ThemeAssist.BundledTheme}, Path=ToggleTheme}"
+                                OffCommand="{Binding Source={x:Static theming:ThemeAssist.BundledTheme}, Path=ToggleTheme}" />
             <Button x:Name="ShowSettings"
                     Visibility="{Binding Path=CanShowSettings, Converter={StaticResource BooleanToVisibility}, ConverterParameter=False}"
                     IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BundledTheme.cs" company="Chocolatey">
+// <copyright file="BundledThemeService.cs" company="Chocolatey">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
@@ -10,19 +10,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Windows.Commands;
+using ChocolateyGui.Common.Windows.Theming;
 using ControlzEx.Theming;
 
-namespace ChocolateyGui.Common.Windows.Theming
+namespace ChocolateyGui.Common.Windows.Services
 {
-    public class BundledTheme : ObservableBase
+    public class BundledThemeService : ObservableBase, IBundledThemeService
     {
-        public static readonly BundledTheme DefaultInstance = new BundledTheme();
-
         private bool _isLightTheme;
         private Theme _light;
         private Theme _dark;
 
-        public BundledTheme()
+        public BundledThemeService()
         {
             ToggleTheme =
                 new RelayCommand(
@@ -30,26 +29,44 @@ namespace ChocolateyGui.Common.Windows.Theming
                     o => Light != null && Dark != null);
         }
 
+        /// <inheritdoc />
+        public ICommand ToggleTheme { get; }
+
+        /// <inheritdoc />
         public Theme Light
         {
             get => _light;
             private set => SetPropertyValue(ref _light, value);
         }
 
+        /// <inheritdoc />
         public Theme Dark
         {
             get => _dark;
             private set => SetPropertyValue(ref _dark, value);
         }
 
+        /// <inheritdoc />
         public bool IsLightTheme
         {
             get => _isLightTheme;
             set => SetPropertyValue(ref _isLightTheme, value);
         }
 
-        public ICommand ToggleTheme { get; }
+        /// <inheritdoc />
+        public void SyncTheme()
+        {
+            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+            ThemeManager.Current.SyncTheme();
 
+            var theme = ThemeManager.Current.DetectTheme();
+            if (theme != null)
+            {
+                IsLightTheme = theme.BaseColorScheme == ThemeManager.BaseColorLight;
+            }
+        }
+
+        /// <inheritdoc />
         public void Generate(string scheme)
         {
             Light = ThemeManager.Current.AddTheme(GenerateTheme(scheme, false));
@@ -61,18 +78,6 @@ namespace ChocolateyGui.Common.Windows.Theming
             }
 
             IsLightTheme = true;
-        }
-
-        public void SyncTheme()
-        {
-            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
-            ThemeManager.Current.SyncTheme();
-
-            var theme = ThemeManager.Current.DetectTheme();
-            if (theme != null)
-            {
-                IsLightTheme = theme.BaseColorScheme == ThemeManager.BaseColorLight;
-            }
         }
 
         private static Theme GenerateTheme(string scheme, bool isDark)

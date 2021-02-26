@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Windows.Input;
+using ChocolateyGui.Common.Enums;
 using ControlzEx.Theming;
 
 namespace ChocolateyGui.Common.Windows.Services
@@ -28,6 +29,11 @@ namespace ChocolateyGui.Common.Windows.Services
         Theme Dark { get; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the current selected theme.
+        /// </summary>
+        ThemeMode ThemeMode { get; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the current selected theme is the light theme.
         /// </summary>
         bool IsLightTheme { get; set; }
@@ -35,7 +41,8 @@ namespace ChocolateyGui.Common.Windows.Services
         /// <summary>
         /// Syncs the application with the "app mode" setting from windows which should be detected at runtime and the current <see cref="T:ControlzEx.Theming.Theme" /> be changed accordingly.
         /// </summary>
-        void SyncTheme();
+        /// <param name="mode">The sync mode for this application.</param>
+        void SyncTheme(ThemeMode mode);
 
         /// <summary>
         /// Generates the themes for this application.

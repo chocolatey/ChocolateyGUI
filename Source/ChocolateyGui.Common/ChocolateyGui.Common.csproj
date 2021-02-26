@@ -124,6 +124,7 @@
     <Compile Include="Controls\ObservableRingBufferCollection.cs" />
     <Compile Include="Enums\ListViewMode.cs" />
     <Compile Include="Enums\PackagesChangedEventType.cs" />
+    <Compile Include="Enums\ThemeMode.cs" />
     <Compile Include="Hacks.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\ChocolateyAggregatedSources.cs" />
@@ -217,7 +218,7 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <SourceRoot Include="$(MSBuildThisFileDirectory)/../"/>
+    <SourceRoot Include="$(MSBuildThisFileDirectory)/../" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

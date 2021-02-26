@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using ChocolateyGui.Common.Base;
+using ChocolateyGui.Common.Enums;
 using ChocolateyGui.Common.Windows.Commands;
 using ChocolateyGui.Common.Windows.Theming;
 using ControlzEx.Theming;
@@ -17,6 +18,7 @@ namespace ChocolateyGui.Common.Windows.Services
 {
     public class BundledThemeService : ObservableBase, IBundledThemeService
     {
+        private ThemeMode _themeMode;
         private bool _isLightTheme;
         private Theme _light;
         private Theme _dark;
@@ -47,23 +49,42 @@ namespace ChocolateyGui.Common.Windows.Services
         }
 
         /// <inheritdoc />
-        public bool IsLightTheme
+        public ThemeMode ThemeMode
         {
-            get => _isLightTheme;
-            set => SetPropertyValue(ref _isLightTheme, value);
+            get => _themeMode;
+            private set => SetPropertyValue(ref _themeMode, value);
         }
 
         /// <inheritdoc />
-        public void SyncTheme()
+        public bool IsLightTheme
         {
-            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
-            ThemeManager.Current.SyncTheme();
-
-            var theme = ThemeManager.Current.DetectTheme();
-            if (theme != null)
+            get => _isLightTheme;
+            set
             {
-                IsLightTheme = theme.BaseColorScheme == ThemeManager.BaseColorLight;
+                if (SetPropertyValue(ref _isLightTheme, value))
+                {
+                    ThemeMode = value ? ThemeMode.Light : ThemeMode.Dark;
+                }
             }
+        }
+
+        /// <inheritdoc />
+        public void SyncTheme(ThemeMode mode)
+        {
+            if (mode == ThemeMode.WindowsDefault)
+            {
+                ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+                ThemeManager.Current.SyncTheme();
+
+                var theme = ThemeManager.Current.DetectTheme();
+                IsLightTheme = theme is null || theme.BaseColorScheme == ThemeManager.BaseColorLight;
+            }
+            else
+            {
+                IsLightTheme = mode == ThemeMode.Light;
+            }
+
+            ThemeMode = mode;
         }
 
         /// <inheritdoc />

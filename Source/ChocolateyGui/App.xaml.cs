@@ -11,6 +11,7 @@ using System.Windows;
 using Autofac;
 using chocolatey;
 using chocolatey.infrastructure.registration;
+using ChocolateyGui.Common.Enums;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows;
 using ChocolateyGui.Common.Windows.Theming;
@@ -103,7 +104,7 @@ namespace ChocolateyGui
             base.OnStartup(e);
 
             ThemeAssist.BundledTheme.Generate("ChocolateyGui");
-            ThemeAssist.BundledTheme.SyncTheme();
+            ThemeAssist.BundledTheme.SyncTheme(ThemeMode.WindowsDefault); // todo Use the saved mode
         }
     }
 }

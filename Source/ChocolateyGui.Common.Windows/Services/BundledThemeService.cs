@@ -82,6 +82,7 @@ namespace ChocolateyGui.Common.Windows.Services
             else
             {
                 IsLightTheme = mode == ThemeMode.Light;
+                ThemeManager.Current.ChangeTheme(Application.Current, IsLightTheme ? Light : Dark);
             }
 
             ThemeMode = mode;

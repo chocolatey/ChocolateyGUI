@@ -19,6 +19,7 @@ using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows.Services;
+using ChocolateyGui.Common.Windows.Theming;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;
@@ -187,6 +188,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             if (feature.Title == "ShowAggregatedSourceView")
             {
                 await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
+            }
+
+            if (feature.Title == "DefaultToDarkMode")
+            {
+                ThemeAssist.BundledTheme.IsLightTheme = !feature.Enabled;
+                ThemeAssist.BundledTheme.ToggleTheme.Execute(null);
             }
         }
 

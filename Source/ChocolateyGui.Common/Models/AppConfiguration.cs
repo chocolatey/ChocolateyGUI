@@ -78,6 +78,10 @@ namespace ChocolateyGui.Common.Models
         [Feature]
         public bool? HideAllRemoteChocolateySources { get; set; }
 
+        [LocalizedDescription("SettingsView_ToggleDefaultToDarkMode")]
+        [Feature]
+        public bool? DefaultToDarkMode { get; set; }
+
         public override string ToString()
         {
             return @"
@@ -97,6 +101,7 @@ UseKeyboardBindings: {12}
 HidePackageDownloadCount: {13}
 PreventAllPackageIconDownloads: {14}
 HideAllRemoteChocolateySources: {15}
+DefaultToDarkMode: {16}
 ".format_with(
                 OutdatedPackagesCacheDurationInMinutes,
                 DefaultSourceName,
@@ -113,7 +118,8 @@ HideAllRemoteChocolateySources: {15}
                 UseKeyboardBindings,
                 HidePackageDownloadCount,
                 PreventAllPackageIconDownloads,
-                HideAllRemoteChocolateySources);
+                HideAllRemoteChocolateySources,
+                DefaultToDarkMode);
         }
     }
 }

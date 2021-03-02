@@ -104,7 +104,25 @@ namespace ChocolateyGui
             base.OnStartup(e);
 
             ThemeAssist.BundledTheme.Generate("ChocolateyGui");
-            ThemeAssist.BundledTheme.SyncTheme(ThemeMode.WindowsDefault); // todo Use the saved mode
+
+            var configService = Bootstrapper.Container.Resolve<IConfigService>();
+            var defaultToDarkMode = configService.GetEffectiveConfiguration().DefaultToDarkMode;
+
+            ThemeMode themeMode;
+            if (defaultToDarkMode == null)
+            {
+                themeMode = ThemeMode.WindowsDefault;
+            }
+            else if (defaultToDarkMode.Value)
+            {
+                themeMode = ThemeMode.Dark;
+            }
+            else
+            {
+                themeMode = ThemeMode.Light;
+            }
+
+            ThemeAssist.BundledTheme.SyncTheme(themeMode);
         }
     }
 }

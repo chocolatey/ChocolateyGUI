@@ -10,7 +10,6 @@
              xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:enums="clr-namespace:ChocolateyGui.Common.Enums;assembly=ChocolateyGui.Common"
-             xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
              xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
@@ -21,11 +20,6 @@
              Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
 
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
-        <converters:BooleanToVisibilityInverted x:Key="BoolToVisInverted" />
-        <converters:BooleanToVisibilityHidden x:Key="BoolToHidden" />
-        <converters:StringListToString x:Key="ListToString" />
-        <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
         <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
         <utilities:PackageAuthorsComparer x:Key="PackageAuthorsComparer" />
 
@@ -59,11 +53,11 @@
                     <iconPacks:PackIconEntypo Width="24" Height="24"
                                               ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_Pinned}"
                                               Kind="Pin" Margin="0 2"
-                                              Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BoolToVis}}" />
+                                              Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                     <iconPacks:PackIconEntypo Width="24" Height="24"
                                               ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_InstalledSideBySide}"
                                               Kind="Bookmarks" Margin="0 2"
-                                              Visibility="{Binding IsSideBySide, Mode=OneWay, Converter={StaticResource BoolToVis}}" />
+                                              Visibility="{Binding IsSideBySide, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                 </StackPanel>
 
                 <TextBlock Grid.Row="2"
@@ -278,8 +272,8 @@
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_Pinned}" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BoolToHidden}}" />
-                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_InstalledSideBySide}" Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BoolToHidden}}" />
+                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_Pinned}" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityHidden}}" />
+                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_InstalledSideBySide}" Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BooleanToVisibilityHidden}}" />
                                                         <TextBlock Text="{Binding Title}"/>
                                                     </StackPanel>
                                                 </DataTemplate>
@@ -288,14 +282,14 @@
                                         <DataGridTextColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Id}"
                                                             Width="1*"
                                                             Binding="{Binding LowerCaseId}"
-                                                            Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BoolToVis}}"/>
+                                                            Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BooleanToVisibility}}"/>
                                         <DataGridTextColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Authors}"
                                                             utilities:DataGridCustomSortBehavior.CustomComparer="{StaticResource PackageAuthorsComparer}"
-                                                            Binding="{Binding Authors, Converter={StaticResource ListToString}}" Width="1*" />
+                                                            Binding="{Binding Authors, Converter={StaticResource StringListToString}}" Width="1*" />
                                         <DataGridTextColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
                                         <DataGridTemplateColumn Width="0.5*"
                                                                 Header="{x:Static properties:Resources.LocalSourceView_Grid_Prerelease}"
-                                                                Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BoolToVis}}">
+                                                                Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BooleanToVisibility}}">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <TextBlock Text="{x:Static properties:Resources.LocalSourceView_Grid_Prerelease}"
@@ -305,7 +299,7 @@
                                                                VerticalAlignment="Stretch"
                                                                HorizontalAlignment="Stretch"
                                                                TextAlignment="Center"
-                                                               Visibility="{Binding IsPrerelease, Converter={StaticResource BoolToVis}}"/>
+                                                               Visibility="{Binding IsPrerelease, Converter={StaticResource BooleanToVisibility}}"/>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
@@ -315,7 +309,7 @@
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <Grid Background="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}"
                                                           TextElement.Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}"
-                                                          Visibility="{Binding IsLatestVersion, Converter={StaticResource BoolToVisInverted}}"
+                                                          Visibility="{Binding IsLatestVersion, Converter={StaticResource BooleanToVisibilityInverted}}"
                                                           HorizontalAlignment="Stretch"
                                                           VerticalAlignment="Stretch">
                                                         <Grid.ColumnDefinitions>

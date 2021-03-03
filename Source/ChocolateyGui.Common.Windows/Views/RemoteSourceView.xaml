@@ -9,8 +9,6 @@
              xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:enums="clr-namespace:ChocolateyGui.Common.Enums;assembly=ChocolateyGui.Common"
-             xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
-             xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
              xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
@@ -21,10 +19,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <converters:MultiBooleanAndToVisibility x:Key="MultiBooleanAndToVisibility" />
-            <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
-            <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-
             <DataTemplate x:Key="PackageListTemplate" DataType="{x:Type items:IPackageViewModel}">
                 <Grid Height="115" Margin="5"
                       Background="Transparent"

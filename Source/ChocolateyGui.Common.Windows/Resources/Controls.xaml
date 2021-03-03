@@ -21,7 +21,10 @@
 
     <converters:BooleanToVisibility x:Key="BooleanToVisibility" />
     <converters:BooleanToVisibilityInverted x:Key="BooleanToVisibilityInverted" />
+    <converters:BooleanToVisibilityHidden x:Key="BooleanToVisibilityHidden" />
     <converters:StringListToString x:Key="StringListToString" />
+    <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+    <converters:MultiBooleanAndToVisibility x:Key="MultiBooleanAndToVisibility" />
     <converters:BooleanInverter x:Key="BooleanInverter" />
 
     <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="TabItem">

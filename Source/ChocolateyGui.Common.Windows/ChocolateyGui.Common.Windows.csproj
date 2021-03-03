@@ -260,7 +260,6 @@
     <Compile Include="Utilities\Converters\NullToValue.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
     <Compile Include="Utilities\Converters\PackageDependenciesToString.cs" />
-    <Compile Include="Utilities\Converters\PackageTitleConverter.cs" />
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\DataContext.cs" />
     <Compile Include="Utilities\DataGridCustomSortBehavior.cs" />

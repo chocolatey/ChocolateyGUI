@@ -17,8 +17,13 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value is string valueAsString)
+            {
+                return string.Join(", ", valueAsString.Split(new[] { " ", ",", ";", "|" }, StringSplitOptions.RemoveEmptyEntries).Select(item => item.Trim()));
+            }
+
             return value is IEnumerable<string> items
-                ? string.Join(", ", items.Select(item => item.Trim()).ToList())
+                ? string.Join(", ", items.Select(item => item.Trim()))
                 : string.Empty;
         }
 

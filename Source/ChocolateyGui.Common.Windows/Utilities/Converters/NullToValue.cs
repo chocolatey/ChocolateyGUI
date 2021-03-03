@@ -19,7 +19,7 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || (value is string && string.IsNullOrWhiteSpace((string)value)))
+            if (value is null || (value is string valueAsString && string.IsNullOrWhiteSpace(valueAsString)))
             {
                 return TrueValue;
             }

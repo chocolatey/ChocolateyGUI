@@ -19,36 +19,38 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (string.IsNullOrWhiteSpace(value as string))
+            var dependenciesString = value as string;
+            if (string.IsNullOrWhiteSpace(dependenciesString))
             {
                 return string.Empty;
             }
 
-            var dependenciesString = (string)value;
             var dependencyStrings = dependenciesString.Split('|');
-            var items = dependencyStrings.Select(dependency =>
-            {
-                var result = string.Empty;
-
-                var match = PackageNameVersionRegex.Match(dependency);
-                var id = match.Groups["Id"];
-
-                if (id == null || string.IsNullOrWhiteSpace(id.Value))
+            var items = dependencyStrings
+                .Select(dependency =>
                 {
+                    var result = string.Empty;
+
+                    var match = PackageNameVersionRegex.Match(dependency);
+                    var id = match.Groups["Id"];
+
+                    if (id == null || string.IsNullOrWhiteSpace(id.Value))
+                    {
+                        return result;
+                    }
+
+                    result += id.Value;
+
+                    var version = match.Groups["Version"];
+
+                    if (version != null && !string.IsNullOrWhiteSpace(version.Value))
+                    {
+                        result += " (" + version + ")";
+                    }
+
                     return result;
-                }
-
-                result += id.Value;
-
-                var version = match.Groups["Version"];
-
-                if (version != null && !string.IsNullOrWhiteSpace(version.Value))
-                {
-                    result += " (" + version + ")";
-                }
-
-                return result;
-            }).Where(dependecy => !string.IsNullOrEmpty(dependecy));
+                })
+                .Where(dependecy => !string.IsNullOrEmpty(dependecy));
 
             return string.Join(", ", items);
         }

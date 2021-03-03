@@ -17,13 +17,9 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var items = value as IEnumerable<string>;
-            if (items == null)
-            {
-                return string.Empty;
-            }
-
-            return string.Join(", ", items.Select(item => item.Trim()).ToList());
+            return value is IEnumerable<string> items
+                ? string.Join(", ", items.Select(item => item.Trim()).ToList())
+                : string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

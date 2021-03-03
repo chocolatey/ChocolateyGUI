@@ -21,7 +21,6 @@
 
     <converters:BooleanToVisibility x:Key="BooleanToVisibility" />
     <converters:BooleanToVisibilityInverted x:Key="BooleanToVisibilityInverted" />
-    <converters:BooleanToTickString x:Key="BooleanToTickString" />
     <converters:StringListToString x:Key="StringListToString" />
     <converters:BooleanInverter x:Key="BooleanInverter" />
 

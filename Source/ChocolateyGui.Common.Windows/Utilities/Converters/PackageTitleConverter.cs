@@ -7,6 +7,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 using NuGet;
 
@@ -16,14 +17,14 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var packageTitle = (string)values[0];
-            var packageVersion = (SemanticVersion)values[1];
-            var packageId = (string)values[2];
-            var showAdditionalPackageInformation = (bool)values[3];
+            var packageTitle = values.ElementAtOrDefault(0);
+            var packageVersion = values.ElementAtOrDefault(1) as SemanticVersion;
+            var packageId = values.ElementAtOrDefault(2);
+            var showAdditionalPackageInformation = (values.ElementAtOrDefault(3) as bool?).GetValueOrDefault();
 
             return showAdditionalPackageInformation
-                ? string.Format("{0} {1} ({2})", packageTitle, packageVersion, packageId)
-                : string.Format("{0} {1}", packageTitle, packageVersion);
+                ? $"{packageTitle} {packageVersion} ({packageId})"
+                : $"{packageTitle} {packageVersion}";
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

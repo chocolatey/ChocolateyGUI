@@ -17,13 +17,14 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var items = value as IEnumerable<string>;
-            if (items == null)
+            if (value is string valueAsString)
             {
-                return string.Empty;
+                return string.Join(", ", valueAsString.Split(new[] { " ", ",", ";", "|" }, StringSplitOptions.RemoveEmptyEntries).Select(item => item.Trim()));
             }
 
-            return string.Join(", ", items.Select(item => item.Trim()).ToList());
+            return value is IEnumerable<string> items
+                ? string.Join(", ", items.Select(item => item.Trim()))
+                : string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

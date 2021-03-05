@@ -103,6 +103,7 @@ namespace ChocolateyGui.Common.Windows.Startup
                     .ForMember(dest => dest.VisibleToAdminsOnly, opt => opt.MapFrom(src => src.VisibleToAdminOnly));
             });
 
+            builder.RegisterType<BundledThemeService>().As<IBundledThemeService>().SingleInstance();
             builder.RegisterInstance(DialogCoordinator.Instance).As<IDialogCoordinator>();
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
 

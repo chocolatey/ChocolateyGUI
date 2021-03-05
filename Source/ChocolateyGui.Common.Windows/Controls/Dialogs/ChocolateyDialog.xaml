@@ -1,57 +1,70 @@
-﻿<MahDialogs:CustomDialog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<mahDialogs:CustomDialog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                         xmlns:MahControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                         xmlns:MahDialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                         xmlns:mahDialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                          xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
                          xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
                          xmlns:dialogs="clr-namespace:ChocolateyGui.Common.Windows.Controls.Dialogs"
+                         xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
                          mc:Ignorable="d"
                          x:Class="ChocolateyGui.Common.Windows.Controls.Dialogs.ChocolateyDialog"
                          x:Name="PART_Dialog"
-                         Background="{StaticResource BackgroundColorBrush}" d:DesignWidth="1300">
-    <MahDialogs:CustomDialog.Content>
+                         Background="{DynamicResource {x:Static theming:ChocolateyBrushes.BackgroundKey}}" d:DesignWidth="1300">
+    <mahDialogs:CustomDialog.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Expander Grid.Row="0" Margin="0 10 0 0" Header="{x:Static properties:Resources.ChocolateyDialog_ConsoleOutput}" IsExpanded="{Binding Path=ShowOutputConsole, ElementName=PART_Dialog}">
+
+            <Expander Grid.Row="0"
+                      Margin="0 10 0 0"
+                      Padding="0"
+                      Header="{x:Static properties:Resources.ChocolateyDialog_ConsoleOutput}"
+                      IsExpanded="{Binding Path=ShowOutputConsole, ElementName=PART_Dialog}">
                 <controls:FauxPowerShellConsole x:Name="PART_Console"
-                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                                BorderBrush="#FFEBEBEB" Background="#FF012456"
-                                                Foreground="#FFEEEDF0" FontFamily="Lucida Console" FontSize="12"
+                                                BorderThickness="0"
+                                                Padding="5"
+                                                VerticalAlignment="Stretch"
+                                                HorizontalAlignment="Stretch"
+                                                BorderBrush="#FFEBEBEB"
+                                                Background="#FF012456"
+                                                Foreground="#FFEEEDF0"
+                                                FontFamily="Lucida Console"
+                                                FontSize="12"
                                                 Height="200"
                                                 IsReadOnly="True" />
             </Expander>
+
             <StackPanel Grid.Row="1"
-                        Orientation="Horizontal"
+                        MinHeight="85"
                         HorizontalAlignment="Right"
+                        Orientation="Horizontal"
                         Visibility="{Binding IsCancelable, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged}">
                 <Button x:Name="PART_NegativeButton"
-                        Height="35"
-                        MinWidth="80"
-                        Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"
-                        Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Margin="5 0 0 0"
+                        Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                        Cursor="Arrow"
+                        FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"
                         Visibility="Hidden" />
             </StackPanel>
+
+            <mah:MetroProgressBar Grid.Row="2"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Bottom"
+                                  Height="6"
+                                  Margin="0 5"
+                                  EllipseDiameter="5"
+                                  Panel.ZIndex="5"
+                                  IsIndeterminate="True"
+                                  Minimum="0.0"
+                                  Maximum="1.0"
+                                  Foreground="{Binding ProgressBarForeground, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                                  x:Name="PART_ProgressBar" />
         </Grid>
-    </MahDialogs:CustomDialog.Content>
-    <MahDialogs:CustomDialog.DialogBottom>
-        <MahControls:MetroProgressBar
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Bottom"
-            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-            Height="6"
-            Margin="0 5 0 5"
-            EllipseDiameter="5"
-            Panel.ZIndex="5"
-            IsIndeterminate="True"
-            Minimum="0.0"
-            Maximum="1.0"
-            Foreground="{Binding ProgressBarForeground, RelativeSource={RelativeSource AncestorType=dialogs:ChocolateyDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-            x:Name="PART_ProgressBar" />
-    </MahDialogs:CustomDialog.DialogBottom>
-</MahDialogs:CustomDialog>
+    </mahDialogs:CustomDialog.Content>
+</mahDialogs:CustomDialog>

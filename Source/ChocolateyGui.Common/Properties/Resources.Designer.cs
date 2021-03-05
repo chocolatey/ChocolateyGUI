@@ -2211,6 +2211,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default to dark mode. It is still possible to switch during use..
+        /// </summary>
+        public static string SettingsView_ToggleDefaultToDarkMode {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleDefaultToDarkMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exclude installed packages.
         /// </summary>
         public static string SettingsView_ToggleExcludeInstalledPackages {

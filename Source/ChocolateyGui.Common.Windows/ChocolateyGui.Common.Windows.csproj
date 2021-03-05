@@ -65,7 +65,7 @@
       <HintPath>..\packages\chocolatey.lib.0.10.15\lib\chocolatey.dll</HintPath>
     </Reference>
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
-      <HintPath>..\packages\ControlzEx.4.1.1\lib\net45\ControlzEx.dll</HintPath>
+      <HintPath>..\packages\ControlzEx.4.4.0\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
     <Reference Include="Fizzler, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4ebff4844e382110, processorArchitecture=MSIL">
       <HintPath>..\packages\Fizzler.1.2.0\lib\netstandard1.0\Fizzler.dll</HintPath>
@@ -80,76 +80,31 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.2.0.0-alpha0531\lib\net45\MahApps.Metro.dll</HintPath>
+      <HintPath>..\packages\MahApps.Metro.2.4.4\lib\net452\MahApps.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks.BoxIcons, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.BoxIcons.4.8.0\lib\net45\MahApps.Metro.IconPacks.BoxIcons.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.BoxIcons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.BoxIcons.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Entypo.4.8.0\lib\net45\MahApps.Metro.IconPacks.Core.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.Core.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks.Entypo, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Entypo.4.8.0\lib\net45\MahApps.Metro.IconPacks.Entypo.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Entypo, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.Entypo.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks.FontAwesome, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.FontAwesome.4.8.0\lib\net45\MahApps.Metro.IconPacks.FontAwesome.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.EvaIcons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.EvaIcons.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks.Modern, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.4.8.0\lib\net45\MahApps.Metro.IconPacks.Modern.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.FeatherIcons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.FeatherIcons.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks.Octicons, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Octicons.4.8.0\lib\net45\MahApps.Metro.IconPacks.Octicons.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.FontAwesome, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.FontAwesome.dll</HintPath>
+    <Reference Include="Markdig.Signed, Version=0.23.0.0, Culture=neutral, PublicKeyToken=870da25a133885f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.Signed.0.23.0\lib\net452\Markdig.Signed.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Ionicons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.Ionicons.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.JamIcons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.JamIcons.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Material, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.Material.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.MaterialDesign, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.MaterialDesign.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.MaterialLight, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.MaterialLight.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Modern, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.Modern.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Octicons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.Octicons.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.PicolIcons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.PicolIcons.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.RPGAwesome, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.RPGAwesome.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.SimpleIcons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.SimpleIcons.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Typicons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.Typicons.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Unicons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.Unicons.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.WeatherIcons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.WeatherIcons.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Zondicons, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0255\lib\net45\MahApps.Metro.IconPacks.Zondicons.dll</HintPath>
-    </Reference>
-    <Reference Include="Markdig.Signed, Version=0.17.1.0, Culture=neutral, PublicKeyToken=870da25a133885f8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Markdig.Signed.0.17.1\lib\net40\Markdig.Signed.dll</HintPath>
-    </Reference>
-    <Reference Include="Markdig.Wpf">
-      <HintPath>..\packages\Markdig.Wpf.Signed.0.3.0\lib\net452\Markdig.Wpf.dll</HintPath>
+    <Reference Include="Markdig.Wpf, Version=0.5.0.1, Culture=neutral, PublicKeyToken=7b8a8f2a8a0119a0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.Wpf.Signed.0.5.0.1\lib\net452\Markdig.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Threading, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Threading.15.4.4\lib\net45\Microsoft.VisualStudio.Threading.dll</HintPath>
@@ -157,8 +112,8 @@
     <Reference Include="Microsoft.VisualStudio.Validation, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Validation.15.3.15\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.0.30\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -228,6 +183,8 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -273,6 +230,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IPlatformProvider.cs" />
     <Compile Include="Providers\PlatformProvider\Windows7PlatformProvider.cs" />
+    <Compile Include="Services\BundledThemeService.cs" />
+    <Compile Include="Services\IBundledThemeService.cs" />
+    <Compile Include="Theming\ChocolateyBrushes.cs" />
+    <Compile Include="Theming\ChocolateyColors.cs" />
+    <Compile Include="Theming\ThemeAssist.cs" />
     <Compile Include="SerilogLogger.cs" />
     <Compile Include="Services\ChocolateyService.cs" />
     <Compile Include="Services\PackageIconService.cs" />
@@ -288,7 +250,6 @@
     <Compile Include="Utilities\BindingProxy.cs" />
     <Compile Include="Utilities\BubbleScrollEventBehavior.cs" />
     <Compile Include="Utilities\Converters\BooleanInverter.cs" />
-    <Compile Include="Utilities\Converters\BooleanToTickString.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibility.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityHidden.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityInverted.cs" />
@@ -299,7 +260,6 @@
     <Compile Include="Utilities\Converters\NullToValue.cs" />
     <Compile Include="Utilities\Converters\NullToVisibility.cs" />
     <Compile Include="Utilities\Converters\PackageDependenciesToString.cs" />
-    <Compile Include="Utilities\Converters\PackageTitleConverter.cs" />
     <Compile Include="Utilities\Converters\StringListToString.cs" />
     <Compile Include="Utilities\DataContext.cs" />
     <Compile Include="Utilities\DataGridCustomSortBehavior.cs" />
@@ -369,19 +329,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\ControlStyles\Dialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\ControlStyles\Flyout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Resources\ControlStyles\Markdown.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\ControlStyles\SourceList.xaml">
+    <Page Include="Resources\ControlStyles\ScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -389,11 +341,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\ControlStyles\Typography.xaml">
+    <Page Include="Resources\ControlStyles\ScrollBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Light.Theme.xaml">
+    <Page Include="Resources\ControlStyles\Typography.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -431,7 +383,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SourceRoot Include="$(MSBuildThisFileDirectory)/../"/>
+    <SourceRoot Include="$(MSBuildThisFileDirectory)/../" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

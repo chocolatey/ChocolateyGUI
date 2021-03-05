@@ -30,12 +30,9 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var enumVal = value as Enum;
-            var paramVal = parameter as Enum;
-
-            if (enumVal != null && paramVal != null)
+            if (value is Enum valueEnum && parameter is Enum paramEnum)
             {
-                var equal = System.Convert.ToInt64(paramVal) == 0 ? System.Convert.ToInt64(enumVal) == 0 : enumVal.HasFlag(paramVal);
+                var equal = System.Convert.ToInt64(paramEnum) == 0 ? System.Convert.ToInt64(valueEnum) == 0 : valueEnum.HasFlag(paramEnum);
                 return equal;
             }
 

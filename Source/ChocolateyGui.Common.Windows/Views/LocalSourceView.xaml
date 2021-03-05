@@ -10,20 +10,16 @@
              xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:enums="clr-namespace:ChocolateyGui.Common.Enums;assembly=ChocolateyGui.Common"
-             xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
              xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
+             xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
-             d:DataContext="{d:DesignInstance viewModels:LocalSourceViewModel}">
+             d:DataContext="{d:DesignInstance viewModels:LocalSourceViewModel}"
+             Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
 
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
-        <converters:BooleanToVisibilityInverted x:Key="BoolToVisInverted" />
-        <converters:BooleanToVisibilityHidden x:Key="BoolToHidden" />
-        <converters:StringListToString x:Key="ListToString" />
-        <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
         <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
         <utilities:PackageAuthorsComparer x:Key="PackageAuthorsComparer" />
 
@@ -57,11 +53,11 @@
                     <iconPacks:PackIconEntypo Width="24" Height="24"
                                               ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_Pinned}"
                                               Kind="Pin" Margin="0 2"
-                                              Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BoolToVis}}" />
+                                              Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                     <iconPacks:PackIconEntypo Width="24" Height="24"
                                               ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_InstalledSideBySide}"
                                               Kind="Bookmarks" Margin="0 2"
-                                              Visibility="{Binding IsSideBySide, Mode=OneWay, Converter={StaticResource BoolToVis}}" />
+                                              Visibility="{Binding IsSideBySide, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                 </StackPanel>
 
                 <TextBlock Grid.Row="2"
@@ -135,7 +131,7 @@
             </Style.Triggers>
         </Style>
 
-        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource MahApps.Styles.ListView.Virtualized}">
+        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource MahApps.Styles.ListView}">
             <Style.Resources>
                 <!--  this is necessary to prevent nasty can not find stuff like  -->
                 <!--  ItemsPanel Cannot find source for binding with reference 'RelativeSource FindAncestor, AncestorType='System.Windows.Controls.ItemsControl', AncestorLevel='1''. BindingExpression:Path=HorizontalContentAlignment; DataItem=null; target element is 'ListViewItem' (Name=''); target property is 'HorizontalContentAlignment' (type 'HorizontalAlignment')  -->
@@ -165,7 +161,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
+    <Grid Background="{DynamicResource MahApps.Brushes.Accent4}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -176,7 +172,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <WrapPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5" Style="{StaticResource LeftSourceListItem}">
+            <WrapPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5">
                 <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
                     <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
                            Target="{Binding ElementName=SearchTextBox}" Content="{x:Static properties:Resources.LocalSourceView_SearchBoxText}"/>
@@ -186,11 +182,15 @@
                              VerticalAlignment="Center"
                              Text="{Binding SearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
-                <CheckBox Name="MatchCheckBox" Margin="5"
+                <CheckBox Name="MatchCheckBox"
+                          Margin="5"
+                          Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.LocalSourceView_CheckboxMatchExact}"
                           IsChecked="{Binding MatchWord}" />
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                <CheckBox Name="UpdatesCheckBox" Margin="5"
+                <CheckBox Name="UpdatesCheckBox"
+                          Margin="5"
+                          Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.LocalSourceView_CheckboxPkgsWithUpdates}"
                           IsChecked="{Binding ShowOnlyPackagesWithUpdate}"
                           IsEnabled="{Binding IsShowOnlyPackagesWithUpdateEnabled}"/>
@@ -272,8 +272,8 @@
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_Pinned}" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BoolToHidden}}" />
-                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_InstalledSideBySide}" Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BoolToHidden}}" />
+                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_Pinned}" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityHidden}}" />
+                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_InstalledSideBySide}" Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BooleanToVisibilityHidden}}" />
                                                         <TextBlock Text="{Binding Title}"/>
                                                     </StackPanel>
                                                 </DataTemplate>
@@ -282,25 +282,24 @@
                                         <DataGridTextColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Id}"
                                                             Width="1*"
                                                             Binding="{Binding LowerCaseId}"
-                                                            Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BoolToVis}}"/>
+                                                            Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BooleanToVisibility}}"/>
                                         <DataGridTextColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Authors}"
                                                             utilities:DataGridCustomSortBehavior.CustomComparer="{StaticResource PackageAuthorsComparer}"
-                                                            Binding="{Binding Authors, Converter={StaticResource ListToString}}" Width="1*" />
+                                                            Binding="{Binding Authors, Converter={StaticResource StringListToString}}" Width="1*" />
                                         <DataGridTextColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
                                         <DataGridTemplateColumn Width="0.5*"
                                                                 Header="{x:Static properties:Resources.LocalSourceView_Grid_Prerelease}"
-                                                                Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BoolToVis}}">
+                                                                Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BooleanToVisibility}}">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <TextBlock Text="{x:Static properties:Resources.LocalSourceView_Grid_Prerelease}"
-                                                               Grid.Column="1"
-                                                               Background="DarkOrange"
-                                                               Foreground="White"
+                                                               Background="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseKey}}"
+                                                               Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseForegroundKey}}"
                                                                Padding="3"
-                                                               VerticalAlignment="Center"
-                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Stretch"
+                                                               HorizontalAlignment="Stretch"
                                                                TextAlignment="Center"
-                                                               Visibility="{Binding IsPrerelease, Converter={StaticResource BoolToVis}}"/>
+                                                               Visibility="{Binding IsPrerelease, Converter={StaticResource BooleanToVisibility}}"/>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
@@ -308,21 +307,28 @@
                                                                 Header="{x:Static properties:Resources.LocalSourceView_Grid_LatestVersion}">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
-                                                    <Grid>
+                                                    <Grid Background="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}"
+                                                          TextElement.Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}"
+                                                          Visibility="{Binding IsLatestVersion, Converter={StaticResource BooleanToVisibilityInverted}}"
+                                                          HorizontalAlignment="Stretch"
+                                                          VerticalAlignment="Stretch">
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="0.5*" />
-                                                            <ColumnDefinition Width="0.5*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding LatestVersion, IsAsync=True}" VerticalAlignment="Center" Grid.Column="0"/>
-                                                        <TextBlock Text="{x:Static properties:Resources.LocalSourceView_Outdated}"
-                                                                   Grid.Column="1"
-                                                                   Background="#A90000"
-                                                                   Foreground="White"
-                                                                   Padding="3"
-                                                                   VerticalAlignment="Center"
-                                                                   HorizontalAlignment="Center"
-                                                                   TextAlignment="Center"
-                                                                   Visibility="{Binding IsLatestVersion, Converter={StaticResource BoolToVisInverted}}"/>
+                                                        <TextBlock Grid.Column="0"
+                                                                   Text="{Binding LatestVersion, IsAsync=True}"
+                                                                   Padding="3 3 2 3"
+                                                                   VerticalAlignment="Stretch"
+                                                                   HorizontalAlignment="Left"
+                                                                   TextAlignment="Center" />
+                                                        <TextBlock Grid.Column="1"
+                                                                   Text="{x:Static properties:Resources.LocalSourceView_Outdated}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   Padding="2 3 3 3"
+                                                                   VerticalAlignment="Stretch"
+                                                                   HorizontalAlignment="Right"
+                                                                   TextAlignment="Center" />
                                                     </Grid>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>

@@ -110,11 +110,13 @@ namespace ChocolateyGui.Common.Windows.Startup
             {
                 var userDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
 
+                var globalDatabasePath = Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db");
+                Directory.CreateDirectory(Path.GetDirectoryName(globalDatabasePath));
                 LiteDatabase globalDatabase = null;
 
                 globalDatabase = Hacks.IsElevated
-                    ? new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true")
-                    : new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true;readonly=true");
+                    ? new LiteDatabase($"filename={globalDatabasePath};upgrade=true")
+                    : new LiteDatabase($"filename={globalDatabasePath};upgrade=true;readonly=true");
 
                 var configService = new ConfigService(globalDatabase, userDatabase);
                 configService.SetEffectiveConfiguration();

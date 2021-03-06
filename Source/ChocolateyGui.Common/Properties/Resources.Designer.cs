@@ -115,6 +115,73 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install the most recent package version.
+        /// </summary>
+        public static string Application_OperationInstall {
+            get {
+                return ResourceManager.GetString("Application_OperationInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This operation is not available due to the global setting of:
+        ///
+        ///backgroundServiceAllowedCommands configuration option
+        ///
+        ///Please contact your System Administrator to enable this operation..
+        /// </summary>
+        public static string Application_OperationNotAllowed {
+            get {
+                return ResourceManager.GetString("Application_OperationNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin package to currently installed package version.
+        /// </summary>
+        public static string Application_OperationPin {
+            get {
+                return ResourceManager.GetString("Application_OperationPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reinstall the most recent package version.
+        /// </summary>
+        public static string Application_OperationReinstall {
+            get {
+                return ResourceManager.GetString("Application_OperationReinstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstall the currently installed package version.
+        /// </summary>
+        public static string Application_OperationUninstall {
+            get {
+                return ResourceManager.GetString("Application_OperationUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpin from the currently installed package version.
+        /// </summary>
+        public static string Application_OperationUnpin {
+            get {
+                return ResourceManager.GetString("Application_OperationUnpin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update the currently installed package version.
+        /// </summary>
+        public static string Application_OperationUpgrade {
+            get {
+                return ResourceManager.GetString("Application_OperationUpgrade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to serialize Outdated Packages Cache file..
         /// </summary>
         public static string Application_OutdatedPackagesError {
@@ -940,6 +1007,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string LocalSourceView_ButtonUpdateAll {
             get {
                 return ResourceManager.GetString("LocalSourceView_ButtonUpdateAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No packages need to be updated.
+        /// </summary>
+        public static string LocalSourceView_ButtonUpdateAllDisabled {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ButtonUpdateAllDisabled", resourceCulture);
             }
         }
         

@@ -208,6 +208,7 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Utilities\ToolTipBehavior.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />
     <Compile Include="Commands\DataContextCommandAdapter.cs" />

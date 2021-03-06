@@ -42,6 +42,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
+        private readonly IAllowedCommandsService _allowedCommandsService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
         private bool _exportAll = true;
@@ -64,6 +65,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IPersistenceService persistenceService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
+            IAllowedCommandsService allowedCommandsService,
             IEventAggregator eventAggregator,
             string displayName,
             IMapper mapper)
@@ -73,6 +75,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _persistenceService = persistenceService;
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
+            _allowedCommandsService = allowedCommandsService;
 
             DisplayName = displayName;
 
@@ -165,9 +168,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             set { this.SetPropertyValue(ref _firstLoadIncomplete, value); }
         }
 
+        public bool IsUpgradeAllowed
+        {
+            get { return _allowedCommandsService.IsUpgradeCommandAllowed; }
+        }
+
         public bool CanUpdateAll()
         {
-            return Packages.Any(p => p.CanUpdate);
+            return Packages.Any(p => p.CanUpdate) && _allowedCommandsService.IsUpgradeCommandAllowed;
         }
 
         public async void UpdateAll()

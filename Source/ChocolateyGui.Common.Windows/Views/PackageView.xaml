@@ -64,6 +64,11 @@
                                 Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Install}">
+                            <i:Interaction.Behaviors>
+                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationInstall}"
+                                                           IsFeatureEnabled="{Binding IsInstallAllowed, Mode=OneWay}"
+                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                            </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Install" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonInstall}" FontSize="16"/>
@@ -74,7 +79,13 @@
                                 Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}">
                         <Button Padding="10" Margin="5 0"
                                 Command="{commands:DataContextCommandAdapter Pin}"
+                                IsEnabled="{Binding IsPinAllowed}"
                                 Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibility}}">
+                            <i:Interaction.Behaviors>
+                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationPin}"
+                                                           IsFeatureEnabled="{Binding IsPinAllowed, Mode=OneWay}"
+                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                            </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconModern Kind="Pin" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonPin}" FontSize="16"/>
@@ -82,7 +93,13 @@
                         </Button>
                         <Button Padding="10" Margin="5 0"
                                 Command="{commands:DataContextCommandAdapter Unpin}"
+                                IsEnabled="{Binding IsUnpinAllowed}"
                                 Visibility="{Binding CanUnpin, Converter={StaticResource BooleanToVisibility}}">
+                            <i:Interaction.Behaviors>
+                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUnpin}"
+                                                           IsFeatureEnabled="{Binding IsUnpinAllowed, Mode=OneWay}"
+                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                            </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconModern Kind="PinRemove" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUnpin}" FontSize="16"/>
@@ -90,7 +107,13 @@
                         </Button>
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Reinstall}"
+                            IsEnabled="{Binding IsReinstallAllowed}"
                             Visibility="{Binding CanReinstall, Converter={StaticResource BooleanToVisibility}}">
+                            <i:Interaction.Behaviors>
+                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationReinstall}"
+                                                           IsFeatureEnabled="{Binding IsReinstallAllowed, Mode=OneWay}"
+                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                            </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Cw" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonReinstall}" FontSize="16"/>
@@ -98,7 +121,13 @@
                         </Button>
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Uninstall}"
+                            IsEnabled="{Binding IsUninstallAllowed}"
                             Visibility="{Binding CanUninstall, Converter={StaticResource BooleanToVisibility}}">
+                            <i:Interaction.Behaviors>
+                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUninstall}"
+                                                           IsFeatureEnabled="{Binding IsUninstallAllowed, Mode=OneWay}"
+                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                            </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Uninstall" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUninstall}" FontSize="16"/>
@@ -106,7 +135,13 @@
                         </Button>
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Update}"
+                            IsEnabled="{Binding IsUpgradeAllowed}"
                             Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}">
+                            <i:Interaction.Behaviors>
+                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUpgrade}"
+                                                           IsFeatureEnabled="{Binding IsUpgradeAllowed, Mode=OneWay}"
+                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                            </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Cycle" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUpdate}" FontSize="16"/>

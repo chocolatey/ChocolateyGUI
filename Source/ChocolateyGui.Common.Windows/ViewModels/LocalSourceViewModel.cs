@@ -331,7 +331,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     return;
                 }
 
-                ListViewMode = _configService.GetEffectiveConfiguration().DefaultToTileViewForLocalSource ?? false ? ListViewMode.Tile : ListViewMode.Standard;
+                ListViewMode = _configService.GetEffectiveConfiguration().DefaultToTileViewForLocalSource ?? true ? ListViewMode.Tile : ListViewMode.Standard;
                 ShowAdditionalPackageInformation = _configService.GetEffectiveConfiguration().ShowAdditionalPackageInformation ?? false;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")

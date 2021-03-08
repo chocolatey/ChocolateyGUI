@@ -25,16 +25,18 @@ namespace ChocolateyGui.Common.Services
             GlobalCollection = globalDatabase.GetCollection<AppConfiguration>(nameof(AppConfiguration));
             UserCollection = userDatabase.GetCollection<AppConfiguration>(nameof(AppConfiguration));
 
-            var defaultSettings = new AppConfiguration()
+            var defaultGlobalSettings = new AppConfiguration()
             {
-                Id = "Default",
+                Id = "v0.18.0",
                 OutdatedPackagesCacheDurationInMinutes = "60",
                 UseKeyboardBindings = true,
                 AllowNonAdminAccessToSettings = true
+                DefaultToTileViewForLocalSource = true,
+                DefaultToTileViewForRemoteSource = true
             };
 
-            GlobalAppConfiguration = GlobalCollection.FindById("Default") ?? defaultSettings;
-            UserAppConfiguration = UserCollection.FindById("Default") ?? GlobalAppConfiguration;
+            GlobalAppConfiguration = GlobalCollection.FindById("v0.18.0") ?? defaultGlobalSettings;
+            UserAppConfiguration = UserCollection.FindById("v0.18.0") ?? GlobalAppConfiguration;
         }
 
         public event EventHandler SettingsChanged;

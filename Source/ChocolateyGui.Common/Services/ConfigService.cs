@@ -30,7 +30,6 @@ namespace ChocolateyGui.Common.Services
                 Id = "v0.18.0",
                 OutdatedPackagesCacheDurationInMinutes = "60",
                 UseKeyboardBindings = true,
-                AllowNonAdminAccessToSettings = true
                 DefaultToTileViewForLocalSource = true,
                 DefaultToTileViewForRemoteSource = true
             };

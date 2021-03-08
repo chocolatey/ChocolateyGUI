@@ -25,5 +25,7 @@ if ($installDirectory) {
   Install-BinFile -Name "chocolateyguicli" -Path "$installDirectory\ChocolateyGuiCli.exe"
 }
 
+Update-SessionEnvironment
+
 # Process package parameters
 Set-UserSettings

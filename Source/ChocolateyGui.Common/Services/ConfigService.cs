@@ -34,8 +34,13 @@ namespace ChocolateyGui.Common.Services
                 DefaultToTileViewForRemoteSource = true
             };
 
+            var defaultUserSettings = new AppConfiguration()
+            {
+                Id = "v0.18.0"
+            };
+
             GlobalAppConfiguration = GlobalCollection.FindById("v0.18.0") ?? defaultGlobalSettings;
-            UserAppConfiguration = UserCollection.FindById("v0.18.0") ?? GlobalAppConfiguration;
+            UserAppConfiguration = UserCollection.FindById("v0.18.0") ?? defaultUserSettings;
         }
 
         public event EventHandler SettingsChanged;
@@ -146,9 +151,9 @@ namespace ChocolateyGui.Common.Services
         {
             var settingsCollection = global ? GlobalCollection : UserCollection;
 
-            if (settingsCollection.Exists(Query.EQ("_id", "Default")))
+            if (settingsCollection.Exists(Query.EQ("_id", "v0.18.0")))
             {
-                settingsCollection.Update("Default", settings);
+                settingsCollection.Update("v0.18.0", settings);
             }
             else
             {

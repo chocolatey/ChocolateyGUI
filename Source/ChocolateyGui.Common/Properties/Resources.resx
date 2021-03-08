@@ -1012,4 +1012,32 @@ Normal:
   <data name="SettingsView_ToggleDefaultToDarkMode" xml:space="preserve">
     <value>Default to dark mode. It is still possible to switch during use.</value>
   </data>
+  <data name="Application_OperationInstall" xml:space="preserve">
+    <value>Install the most recent package version</value>
+  </data>
+  <data name="Application_OperationNotAllowed" xml:space="preserve">
+    <value>This operation is not available due to the global setting of:
+
+backgroundServiceAllowedCommands configuration option
+
+Please contact your System Administrator to enable this operation.</value>
+  </data>
+  <data name="Application_OperationPin" xml:space="preserve">
+    <value>Pin package to currently installed package version</value>
+  </data>
+  <data name="Application_OperationReinstall" xml:space="preserve">
+    <value>Reinstall the most recent package version</value>
+  </data>
+  <data name="Application_OperationUninstall" xml:space="preserve">
+    <value>Uninstall the currently installed package version</value>
+  </data>
+  <data name="Application_OperationUnpin" xml:space="preserve">
+    <value>Unpin from the currently installed package version</value>
+  </data>
+  <data name="Application_OperationUpgrade" xml:space="preserve">
+    <value>Update the currently installed package version</value>
+  </data>
+  <data name="LocalSourceView_ButtonUpdateAllDisabled" xml:space="preserve">
+    <value>No packages need to be updated</value>
+  </data>
 </root>

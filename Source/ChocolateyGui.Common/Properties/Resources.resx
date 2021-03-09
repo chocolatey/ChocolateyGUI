@@ -973,6 +973,9 @@ Normal:
   <data name="GlobalOption" xml:space="preserve">
     <value>Should the command be applied to the global (machine) level?  Defaults to false.</value>
   </data>
+  <data name="SettingsView_NumberOfPackageVersionsForSelectionDescription" xml:space="preserve">
+    <value>Default number of package versions shown when performing an advanced installation.  Default is 20. 0 should be used to show all available package versions.</value>
+  </data>
   <data name="FeatureCommand_ElevatedPermissionsError" xml:space="preserve">
     <value>Elevated permissions are required to set a feature at the global level.</value>
   </data>
@@ -1039,6 +1042,180 @@ Please contact your System Administrator to enable this operation.</value>
   </data>
   <data name="LocalSourceView_ButtonUpdateAllDisabled" xml:space="preserve">
     <value>No packages need to be updated</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AdvancedOptions_Header" xml:space="preserve">
+    <value>Advanced Options</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowDowngrade_Header" xml:space="preserve">
+    <value>Allow Downgrade</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowDowngrade_ToolTip" xml:space="preserve">
+    <value>Should an attempt at downgrading be allowed?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_Header" xml:space="preserve">
+    <value>Allow Empty Checksums Secure</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_ToolTip" xml:space="preserve">
+    <value>Allow packages to have empty checksums for downloaded resources from secure locations (HTTPS). Overrides the default feature 'allowEmptyChecksumsSecure' set to 'True'. Available in Chocolatey Version 0.10.0+.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowEmptyChecksums_Header" xml:space="preserve">
+    <value>Allow Empty Checksums</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip" xml:space="preserve">
+    <value>Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Use this switch is not recommended if using sources that download resources from the internet. Overrides the default feature 'allowEmptyChecksums' set to 'False'. Available in Chocolatey Version 0.10.0+.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowMultipleVersions_Header" xml:space="preserve">
+    <value>Allow Multiple Versions</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip" xml:space="preserve">
+    <value>Should multiple versions of a package be installed?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header" xml:space="preserve">
+    <value>Apply Install Arguments to Dependencies</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_ToolTip" xml:space="preserve">
+    <value>Should install arguments be applied to dependent packages?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_Header" xml:space="preserve">
+    <value>Apply Package Parameters to Dependencies</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_ToolTip" xml:space="preserve">
+    <value>Should package parameters be applied to dependent packages?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Buttons_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Buttons_Install" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ChecksumOptions_Header" xml:space="preserve">
+    <value>Checksum Options</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DependencyOptions_Header" xml:space="preserve">
+    <value>Dependency Options</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksum64bit_Header" xml:space="preserve">
+    <value>Download Checksum 64bit</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip" xml:space="preserve">
+    <value>A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one). Defaults to same as Download Checksum. Available in Chocolatey Version 0.10.0+.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksumType64bit_Header" xml:space="preserve">
+    <value>Download Checksum Type 64bit</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip" xml:space="preserve">
+    <value>A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one). Used in conjunction with Download Checksum 64bit. Available values are 'md5', 'sha1', 'sha256' or 'sha512'. Defaults to same as Download Checksum Type. Available in Chocolatey Version 0.10.0+.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksumType_Header" xml:space="preserve">
+    <value>Download Checksum Type</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksumType_ToolTip" xml:space="preserve">
+    <value>A user provided checksum type. Overrides the package checksum type (if it has one). Used in conjunction with Download Checksum. Available values are 'md5', 'sha1', 'sha256' or 'sha512'. Defaults to 'md5'. Available in Chocolatey Version 0.10.0+.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksum_Header" xml:space="preserve">
+    <value>Download Checksum</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksum_ToolTip" xml:space="preserve">
+    <value>A user provided checksum for downloaded resources for the package. Overrides the package checksum (if it has one). Defaults to empty. Available in Chocolatey Version 0.10.0+.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_Header" xml:space="preserve">
+    <value>Execution Timeout In Seconds</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_ToolTip" xml:space="preserve">
+    <value>The time to allow a command to finish before timing out. Overrides the default execution timeout in the configuration of 2700 seconds. '0' for infinite starting in Chocolatey Version 0.10.4.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ForceDependencies_Header" xml:space="preserve">
+    <value>Force Dependencies</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ForceDependencies_ToolTip" xml:space="preserve">
+    <value>Force dependencies to be reinstalled when force installing package(s). Must be used in conjunction with --force.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Forcex86_Header" xml:space="preserve">
+    <value>Force x86</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Forcex86_ToolTip" xml:space="preserve">
+    <value>Force x86 (32bit) installation on 64 bit systems</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IgnoreChecksums_Header" xml:space="preserve">
+    <value>Ignore Checksums</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IgnoreChecksums_ToolTip" xml:space="preserve">
+    <value>Ignore checksums provided by the package. Overrides the default feature 'checksumFiles' set to 'True'. Available in Chocolatey Version 0.9.9.9+.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IgnoreDependencies_Header" xml:space="preserve">
+    <value>Ignore Dependencies</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IgnoreDependencies_ToolTip" xml:space="preserve">
+    <value>Ignore dependencies when installing package(s).</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_InstallArguments_Header" xml:space="preserve">
+    <value>Install Arguments</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_InstallArguments_ToolTip" xml:space="preserve">
+    <value>Install Arguments to pass to the native installer in the package</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_LogFile_Header" xml:space="preserve">
+    <value>Log File</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_LogFile_ToolTip" xml:space="preserve">
+    <value>File to output to in addition to regular loggers. Available in Chocolatey Version 0.10.8+.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_NotSilent_Header" xml:space="preserve">
+    <value>Not Silent</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_NotSilent_ToolTip" xml:space="preserve">
+    <value>Do not install this silently.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_OverrideArguments_Header" xml:space="preserve">
+    <value>Override Arguments</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_OverrideArguments_ToolTip" xml:space="preserve">
+    <value>Should install arguments be used exclusively without appending to current package passed arguments?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_PackageParameters_Header" xml:space="preserve">
+    <value>Package Parameters</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_PackageParameters_ToolTip" xml:space="preserve">
+    <value>Parameters to pass to the package</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_PreRelease_Header" xml:space="preserve">
+    <value>PreRelease</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_PreRelease_ToolTip" xml:space="preserve">
+    <value>Include Prereleases?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_RequireChecksums_Header" xml:space="preserve">
+    <value>Require Checksums</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_RequireChecksums_ToolTip" xml:space="preserve">
+    <value>Requires packages to have checksums for downloaded resources (both non-secure and secure). Overrides the default feature 'allowEmptyChecksums' set to 'False' and 'allowEmptyChecksumsSecure' set to 'True'. Available in Chocolatey Version 0.10.0+.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_SkipPowerShell_Header" xml:space="preserve">
+    <value>Skip PowerShell</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_SkipPowerShell_ToolTip" xml:space="preserve">
+    <value>Do not run chocolateyInstall.ps1.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Title_Install" xml:space="preserve">
+    <value>Install Options</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Version_Header" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Version_ToolTip" xml:space="preserve">
+    <value>A specific version to install</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IncludePreRelease_Content" xml:space="preserve">
+    <value>Include PreRelease?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IncludePreRelease_ToolTip" xml:space="preserve">
+    <value>Include prerelease package in the version list</value>
   </data>
   <data name="Dialog_AreYourSureRemoveSourceMessage" xml:space="preserve">
     <value>This action will remove the '{0}' source from both Chocolatey and Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?</value>

@@ -1,60 +1,50 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:custom="http://metro.mahapps.com/winfx/xaml/shared"
-                    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
                     xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
-                    xmlns:windows="clr-namespace:ChocolateyGui.Common.Windows"
                     xmlns:items="clr-namespace:ChocolateyGui.Common.Windows.ViewModels.Items"
                     xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
+                    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ControlStyles/ScrollBar.xaml" />
+        <ResourceDictionary Source="ControlStyles/ScrollViewer.xaml" />
         <ResourceDictionary Source="ControlStyles/Typography.xaml" />
-        <ResourceDictionary Source="ControlStyles/Flyout.xaml" />
-        <ResourceDictionary Source="ControlStyles/Dialog.xaml" />
-        <ResourceDictionary Source="ControlStyles/SourceList.xaml" />
         <ResourceDictionary Source="ControlStyles/ToggleSwitch.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <converters:BooleanToVisibility x:Key="BooleanToVisibility" />
     <converters:BooleanToVisibilityInverted x:Key="BooleanToVisibilityInverted" />
-    <converters:BooleanToTickString x:Key="BooleanToTickString" />
+    <converters:BooleanToVisibilityHidden x:Key="BooleanToVisibilityHidden" />
     <converters:StringListToString x:Key="StringListToString" />
+    <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+    <converters:MultiBooleanAndToVisibility x:Key="MultiBooleanAndToVisibility" />
     <converters:BooleanInverter x:Key="BooleanInverter" />
 
-    <Style x:Key="UacIconStyle" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{x:Static windows:NativeMethods.UacIcon}"/>
-        <Setter Property="Visibility" Value="{Binding Path=IsElevated, Source={x:Static windows:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
+    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="TabItem">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock x:Name="Text" Text="{Binding Mode=OneWay}" />
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TabItem}, Path=IsSelected}" Value="true">
+                            <Setter TargetName="Text" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.SystemControlHighlightBaseHigh}" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
-    <Image x:Key="UacIcon" x:Shared="False"
-          Style="{StaticResource UacIconStyle}"
-          Width="16" Height="16"/>
-
-    <Style x:Key="PrimaryUacIconStyle" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{x:Static windows:NativeMethods.UacIcon}"/>
-        <Setter Property="Visibility" Value="{Binding Path=CanDoCentralActions, Source={x:Static windows:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
-    </Style>
-
-    <Image x:Key="PrimaryUacIcon" x:Shared="False"
-          Style="{StaticResource PrimaryUacIconStyle}"
-          Width="16" Height="16"/>
-
-    <Style x:Key="TertiaryUacIconStyle" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{x:Static windows:NativeMethods.UacIcon}"/>
-        <Setter Property="Visibility" Value="{Binding Path=CanDoTertiaryActions, Source={x:Static windows:Elevation.Instance}, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"/>
-    </Style>
-
-    <Image x:Key="TertiaryUacIcon" x:Shared="False"
-          Style="{StaticResource TertiaryUacIconStyle}"
-          Width="16" Height="16"/>
-
-    <system:Double x:Key="ToggleSwitchFontSize">15</system:Double>
+    <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource MahApps.Styles.TabControl.Animated}" />
 
     <Style x:Key="SourceBaseTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="./Resources/#SourceSansPro-Regular" />
@@ -66,70 +56,12 @@
         <Setter Property="FontSize" Value="16" />
     </Style>
 
-    <Style x:Key="VersionNumberTextBlockStyle" TargetType="{x:Type TextBlock}"
-           BasedOn="{StaticResource SourceBaseTextBlockStyle}">
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="Foreground" Value="Black" />
-    </Style>
-
     <Style x:Key="SourcesListBoxItemContainerStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
         <Setter Property="BorderThickness" Value="2,0,0,0" />
         <Setter Property="Padding" Value="20,10" />
         <Setter Property="Margin" Value="0,5,0,0" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid Margin="{TemplateBinding BorderThickness}">
-                            <ContentPresenter Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Grid>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="LightGray" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="LightGray" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsSelected" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.White}" />
-                        </MultiTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style x:Key="SourcesSeparatorContainerStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource SourcesListBoxItemContainerStyle}">
@@ -150,8 +82,33 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}">
+        <Setter Property="MinHeight" Value="0" />
+    </Style>
+
+    <Style x:Key="Chocolatey.Styles.CheckBox.SourceHeader" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUnchecked" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedPressed" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+    </Style>
+
+    <Style x:Key="Chocolatey.Styles.CheckBox.Settings" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeIndeterminate" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeUnchecked" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUnchecked" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedPressed" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+    </Style>
+
+    <Style x:Key="Chocolatey.Styles.CheckBox.DataGrid" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox.DataGrid.Win10}">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
     </Style>
 
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
@@ -195,11 +152,13 @@
     </Style>
 
     <Style x:Key="TileOutOfDateOverlayStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource TileOverlayStyle}">
-        <Setter Property="Background" Value="#A90000" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}" />
     </Style>
 
     <Style x:Key="TileIsInstalledOverlayStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource TileOverlayStyle}">
-        <Setter Property="Background" Value="#007F00" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledKey}}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledForegroundKey}}" />
     </Style>
 
     <Style x:Key="TileTitleTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -222,11 +181,63 @@
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <mah:ClipBorder x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="DisabledVisualElement"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Margin="{TemplateBinding BorderThickness}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderThickness), Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.2" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ListViewModeRadioButtonStyle" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.FlatButton}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
         <Setter Property="Padding" Value="5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -254,124 +265,58 @@
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray4}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedBackground}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background.Pressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray9}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="PackageResourceLabel" TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="FontSize" Value="{StaticResource BaseFontSize}"/>
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="Margin" Value="0,0,5,2" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="0" />
     </Style>
 
     <Style x:Key="PackageResourceValue" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#FF000000" />
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="Margin" Value="5,0,0,7" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="0 0 0 5" />
     </Style>
 
     <Style x:Key="TitleTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
         <Setter Property="FontSize" Value="48" />
         <Setter Property="Margin" Value="3,0,0,5" />
     </Style>
 
     <Style x:Key="SubtitleTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
         <Setter Property="FontSize" Value="22" />
         <Setter Property="Margin" Value="3,0,0,10" />
     </Style>
 
     <Style x:Key="SubtitleRunTextStyle" TargetType="{x:Type Run}">
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static theming:ChocolateyBrushes.BodyKey}}" />
         <Setter Property="FontSize" Value="22" />
     </Style>
 
-    <Style x:Key="SectionHeaderStyle" BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type controls:MetroHeader}">
-        <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="28" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
-        <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Padding" Value="2 4" />
-        <Setter Property="Margin" Value="0 0 0 8" />
-        <Setter Property="HeaderTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical" UseLayoutRounding="True">
-                        <TextBlock Margin="0 0 0 4" Text="{Binding}" />
-                        <Separator Margin="0 0 4 0"/>
-                    </StackPanel>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="DescriptionTextStyle" TargetType="{x:Type Run}">
-        <Setter Property="Foreground" Value="{StaticResource BodyColorBrush}" />
-        <Setter Property="FontSize" Value="16" />
-    </Style>
-
     <Style x:Key="PageCountTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="14" />
     </Style>
 
-    <Style TargetType="{x:Type Hyperlink}">
-        <Setter Property="Foreground" Value="#FF34a1fe" />
-    </Style>
-
-    <Style TargetType="{x:Type FlowDocument}" x:Key="DocumentStyle">
-        <Setter Property="FontFamily"
-                Value="Calibri" />
-        <Setter Property="TextAlignment"
-                Value="Left" />
-        <Setter Property="Foreground" Value="#FF000000" />
-    </Style>
-
-    <Style x:Key="PageHeader"
-           TargetType="{x:Type Paragraph}">
-        <Setter Property="FontSize"
-                Value="42" />
-        <Setter Property="Foreground"
-                Value="#ff000000" />
-        <Setter Property="FontWeight"
-                Value="Light" />
-    </Style>
-
-    <Style x:Key="SubHeader"
-           TargetType="{x:Type Paragraph}">
-        <Setter Property="FontSize"
-                Value="20" />
-        <Setter Property="Foreground"
-                Value="#ff000000" />
-        <Setter Property="FontWeight"
-                Value="Light" />
-    </Style>
-
-    <Style x:Key="SubHeaderSecondary"
-           TargetType="{x:Type Paragraph}">
-        <Setter Property="FontSize"
-                Value="20" />
-        <Setter Property="Foreground"
-                Value="#99000000" />
-        <Setter Property="FontWeight"
-                Value="Light" />
-    </Style>
-
-    <Style x:Key="PageTextBlockStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#FF000000" />
-        <Setter Property="Margin" Value="5,0,5,5" />
-        <Setter Property="FontSize" Value="14" />
+    <Style TargetType="{x:Type Hyperlink}" BasedOn="{StaticResource MahApps.Styles.Hyperlink}">
+        <Setter Property="Foreground" Value="#5c9fd8" />
     </Style>
 
     <Style x:Key="BigIconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
@@ -379,7 +324,7 @@
         <Setter Property="Height" Value="48" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
     </Style>
 
     <Style x:Key="BackButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BigIconButton}">
@@ -388,7 +333,7 @@
                 <iconPacks:PackIconModern Kind="ChevronLeft" Width="18" Height="18" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
         <Setter Property="AutomationProperties.Name" Value="Back" />
         <Setter Property="AutomationProperties.HelpText" Value="Go's back" />
         <Setter Property="AutomationProperties.AcceleratorKey" Value="B" />
@@ -397,11 +342,14 @@
 
     <Style x:Key="IconFlatButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.Flat}">
         <Setter Property="Padding" Value="5" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray4}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray9}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -409,10 +357,10 @@
     <Style x:Key="PaginationButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.UpperCaseContent}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default}" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="Margin" Value="3,0" />
         <Setter Property="Padding" Value="5,6" />
@@ -469,20 +417,26 @@
                                 <VisualState x:Name="Unfocused" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border x:Name="Background" BorderBrush="{TemplateBinding BorderBrush}"
+                        <Border x:Name="Background"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}" />
-                        <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                        <Rectangle x:Name="DisabledVisualElement"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray8}"
                                    IsHitTestVisible="False" Opacity="0" />
-                        <Border x:Name="MouseOverBorder" BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{DynamicResource MahApps.Brushes.Accent4}" Opacity="0" />
-                        <Border x:Name="PressedBorder" BorderThickness="{TemplateBinding BorderThickness}"
+                        <Border x:Name="MouseOverBorder"
+                                BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{DynamicResource MahApps.Brushes.Accent3}" Opacity="0" />
+                        <Border x:Name="PressedBorder"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{DynamicResource MahApps.Brushes.Accent2}" Opacity="0" />
                         <Rectangle x:Name="FocusRectangle" Margin="-1" Opacity="0" />
-                        <Rectangle x:Name="FocusInnerRectangle" Opacity="0"
-                                   Stroke="{DynamicResource MahApps.Brushes.Button.MouseOverBorder}"
+                        <Rectangle x:Name="FocusInnerRectangle"
+                                   Opacity="0"
+                                   Stroke="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
-                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                        <ContentPresenter x:Name="contentPresenter"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Content="{TemplateBinding Content, Converter={custom:ToUpperConverter}}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
@@ -496,43 +450,85 @@
     <ContextMenu x:Key="PackagesContextMenu"
                  DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
                  d:DataContext="{d:DesignInstance Type=items:PackageViewModel}">
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuInstall}" Icon="{StaticResource PrimaryUacIcon}"
-                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}"
-                  Command="{commands:DataContextCommandAdapter Install}" />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuPin}" Icon="{StaticResource TertiaryUacIcon}"
-                  Command="{commands:DataContextCommandAdapter Pin}">
-            <MenuItem.Visibility>
-                <MultiBinding Converter="{StaticResource BooleanToVisibility}">
-                    <Binding Path="IsInstalled" Mode="OneWay"/>
-                    <Binding Path="IsPinned" Converter="{StaticResource BooleanInverter}" Mode="OneWay"/>
-                </MultiBinding>
-            </MenuItem.Visibility>
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuPin}"
+                  Icon="{iconPacks:Modern Kind=Pin}"
+                  Command="{commands:DataContextCommandAdapter Pin}"
+                  IsEnabled="{Binding IsPinAllowed}"
+                  Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibility}}">
+            <b:Interaction.Behaviors>
+                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationPin}"
+                                           IsFeatureEnabled="{Binding IsPinAllowed, Mode=OneWay}"
+                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+            </b:Interaction.Behaviors>
         </MenuItem>
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUnpin}" Icon="{StaticResource TertiaryUacIcon}"
-                  Command="{commands:DataContextCommandAdapter Unpin}">
-            <MenuItem.Visibility>
-                <MultiBinding Converter="{StaticResource BooleanToVisibility}">
-                    <Binding Path="IsInstalled" Mode="OneWay"/>
-                    <Binding Path="IsPinned" Mode="OneWay"/>
-                </MultiBinding>
-            </MenuItem.Visibility>
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUnpin}"
+                  Icon="{iconPacks:Modern Kind=PinRemove}"
+                  Command="{commands:DataContextCommandAdapter Unpin}"
+                  IsEnabled="{Binding IsUnpinAllowed}"
+                  Visibility="{Binding CanUnpin, Converter={StaticResource BooleanToVisibility}}">
+            <b:Interaction.Behaviors>
+                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUnpin}"
+                                           IsFeatureEnabled="{Binding IsUnpinAllowed, Mode=OneWay}"
+                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+            </b:Interaction.Behaviors>
         </MenuItem>
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUninstall}" Icon="{StaticResource PrimaryUacIcon}"
-                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
-                  Command="{commands:DataContextCommandAdapter Uninstall}" />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuReinstall}" Icon="{StaticResource PrimaryUacIcon}"
-                  Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}}"
-                  Command="{commands:DataContextCommandAdapter Reinstall}" />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUpdate}" Icon="{StaticResource PrimaryUacIcon}"
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuDetails}"
+                  Icon="{iconPacks:BoxIcons Kind=RegularInfoCircle}"
+                  Command="{commands:DataContextCommandAdapter ViewDetails}" />
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUpdate}"
+                  Icon="{iconPacks:Entypo Kind=Cycle}"
+                  IsEnabled="{Binding IsUpgradeAllowed}"
                   Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"
-                  Command="{commands:DataContextCommandAdapter Update}" />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuDetails}" Command="{commands:DataContextCommandAdapter ViewDetails}" />
+                  Command="{commands:DataContextCommandAdapter Update}">
+            <b:Interaction.Behaviors>
+                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUpgrade}"
+                                           IsFeatureEnabled="{Binding IsUpgradeAllowed, Mode=OneWay}"
+                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+            </b:Interaction.Behaviors>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuInstall}"
+                  Icon="{iconPacks:Entypo Kind=Install}"
+                  IsEnabled="{Binding IsInstallAllowed}"
+                  Visibility="{Binding CanInstall, Converter={StaticResource BooleanToVisibility}}"
+                  Command="{commands:DataContextCommandAdapter Install}">
+            <b:Interaction.Behaviors>
+                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationInstall}"
+                                           IsFeatureEnabled="{Binding IsInstallAllowed, Mode=OneWay}"
+                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+            </b:Interaction.Behaviors>
+        </MenuItem>
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuReinstall}"
+                  Icon="{iconPacks:Entypo Kind=Cw}"
+                  IsEnabled="{Binding IsReinstallAllowed}"
+                  Visibility="{Binding CanReinstall, Converter={StaticResource BooleanToVisibility}}"
+                  Command="{commands:DataContextCommandAdapter Reinstall}">
+            <b:Interaction.Behaviors>
+                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationReinstall}"
+                                           IsFeatureEnabled="{Binding IsReinstallAllowed, Mode=OneWay}"
+                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+            </b:Interaction.Behaviors>
+        </MenuItem>
+        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUninstall}"
+                  Icon="{iconPacks:Entypo Kind=Uninstall}"
+                  IsEnabled="{Binding IsUninstallAllowed}"
+                  Visibility="{Binding CanUninstall, Converter={StaticResource BooleanToVisibility}}"
+                  Command="{commands:DataContextCommandAdapter Uninstall}">
+            <b:Interaction.Behaviors>
+                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUninstall}"
+                                           IsFeatureEnabled="{Binding IsUninstallAllowed, Mode=OneWay}"
+                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+            </b:Interaction.Behaviors>
+        </MenuItem>
     </ContextMenu>
 
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="RowBackground" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedCheckBoxColumnEditingStyle" Value="{StaticResource Chocolatey.Styles.CheckBox.DataGrid}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedCheckBoxColumnStyle" Value="{StaticResource Chocolatey.Styles.CheckBox.DataGrid}" />
     </Style>
 
     <Style x:Key="PackagesGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">

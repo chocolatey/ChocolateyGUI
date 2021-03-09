@@ -7,6 +7,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
@@ -16,8 +17,8 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var isPrerelease = (bool)values[0];
-            var showAdditionalPackageInformation = (bool)values[1];
+            var isPrerelease = (values.ElementAtOrDefault(0) as bool?).GetValueOrDefault();
+            var showAdditionalPackageInformation = (values.ElementAtOrDefault(1) as bool?).GetValueOrDefault();
 
             return isPrerelease && showAdditionalPackageInformation ? Visibility.Visible : Visibility.Collapsed;
         }

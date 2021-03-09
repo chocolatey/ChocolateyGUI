@@ -14,11 +14,11 @@ using System.Text.RegularExpressions;
 using Autofac;
 using chocolatey;
 using chocolatey.infrastructure.commandline;
-using chocolatey.infrastructure.information;
 using chocolatey.infrastructure.registration;
 using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Models;
+using ChocolateyGui.Common.Services;
 using Assembly = chocolatey.infrastructure.adapters.Assembly;
 using Console = System.Console;
 using GenericRunner = ChocolateyGui.Common.Commands.GenericRunner;
@@ -64,9 +64,9 @@ namespace ChocolateyGuiCli
             if (configuration.RegularOutput)
             {
 #if DEBUG
-                Bootstrapper.Logger.Information("{0} v{1} (DEBUG BUILD)".format_with("Chocolatey GUI", configuration.Information.ChocolateyGuiProductVersion));
+                Bootstrapper.Logger.Warning(" (DEBUG BUILD)".format_with("Chocolatey GUI", configuration.Information.DisplayVersion));
 #else
-                Bootstrapper.Logger.Information("{0} v{1}".format_with("Chocolatey GUI", configuration.Information.ChocolateyGuiProductVersion));
+                Bootstrapper.Logger.Warning("{0}".format_with(configuration.Information.DisplayVersion));
 #endif
 
                 if (args.Length == 0)
@@ -189,8 +189,10 @@ namespace ChocolateyGuiCli
 
         private static void SetEnvironmentOptions(ChocolateyGuiConfiguration config)
         {
-            config.Information.ChocolateyGuiVersion = VersionInformation.get_current_assembly_version(Assembly.GetCallingAssembly());
-            config.Information.ChocolateyGuiProductVersion = VersionInformation.get_current_informational_version(Assembly.GetCallingAssembly());
+            var versionService = Bootstrapper.Container.Resolve<IVersionService>();
+            config.Information.ChocolateyGuiVersion = versionService.Version;
+            config.Information.ChocolateyGuiProductVersion = versionService.InformationalVersion;
+            config.Information.DisplayVersion = versionService.DisplayVersion;
             config.Information.FullName = Assembly.GetExecutingAssembly().FullName;
         }
 

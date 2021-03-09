@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -204,7 +204,7 @@ Error: {1}{2}</value>
     <value>Install</value>
   </data>
   <data name="Controls_PackagesContextMenuPin" xml:space="preserve">
-    <value>Pin</value>
+    <value>Pin (Ignore Updates)</value>
   </data>
   <data name="Controls_PackagesContextMenuReinstall" xml:space="preserve">
     <value>Reinstall</value>
@@ -236,6 +236,12 @@ Error: {1}{2}</value>
   </data>
   <data name="LocalSourceView_ButtonRefreshPkgs" xml:space="preserve">
     <value>Refresh Packages</value>
+  </data>
+  <data name="LocalSourceView_ButtonCheckForOutdatedPkgs" xml:space="preserve">
+    <value>Check for outdated packages (forced)</value>
+  </data>
+  <data name="RemoteSourceView_ButtonCheckForOutdatedPkgs" xml:space="preserve">
+    <value>Check for outdated packages (forced)</value>
   </data>
   <data name="LocalSourceView_ButtonUpdateAll" xml:space="preserve">
     <value>Update All</value>
@@ -353,7 +359,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Install</value>
   </data>
   <data name="PackageView_ButtonPin" xml:space="preserve">
-    <value>Pin</value>
+    <value>Pin (Ignore Updates)</value>
   </data>
   <data name="PackageView_ButtonReinstall" xml:space="preserve">
     <value>Reinstall</value>
@@ -677,6 +683,12 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="SettingsView_ToggleShowAggregatedSourceViewDescription" xml:space="preserve">
     <value>Show additional source combining all sources in one place.</value>
   </data>
+  <data name="SettingsView_TogglePreventPreloadDescription" xml:space="preserve">
+    <value>Prevents preloading results with a blank search when opening the remote source view.</value>
+  </data>
+  <data name="SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription" xml:space="preserve">
+    <value>Prevents automated check for outdated packages on local and remote source views.</value>
+  </data>
   <data name="SourcesView_AggregatedSourcesId" xml:space="preserve">
     <value>All Sources</value>
   </data>
@@ -929,7 +941,7 @@ Normal:
     <value>Prerelease</value>
   </data>
   <data name="SettingsView_ToggleAllowNonAdminAccessToSettingsDescription" xml:space="preserve">
-    <value>Controls whether or not a non-administrator user can access the Settings Screen.  NOTE: This feature will only work when using the licensed extension for Chocolatey and Chocolatey GUI.</value>
+    <value>Controls whether or not a non-administrator user can access the Settings Screen.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
   </data>
   <data name="Error_DatabaseAccessCli" xml:space="preserve">
     <value>Unable to access Chocolatey GUI Configuration Database.  This typically happens when Chocolatey GUI is already running.  Please close all instances of the application, and try running the command again.</value>
@@ -942,5 +954,90 @@ Normal:
   </data>
   <data name="SettingsView_TogglePackageDownloadCountDescription" xml:space="preserve">
     <value>Allows control over whether package download count is displayed on remote source views.</value>
+  </data>
+  <data name="RemoteSourceView_PreventPreloadHeading" xml:space="preserve">
+    <value>The Prevent Preload feature is currently enabled.</value>
+  </data>
+  <data name="RemoteSourceView_PreventPreloadNoResults" xml:space="preserve">
+    <value>No results yet...</value>
+  </data>
+  <data name="RemoteSourceView_PreventPreloadSubHeading" xml:space="preserve">
+    <value>Please search for a package using the search box above.</value>
+  </data>
+  <data name="RemoteSourceView_SearchNoPackagesFound" xml:space="preserve">
+    <value>No matching packages found...</value>
+  </data>
+  <data name="RemoteSourceView_SearchNoPackagesFoundHeading" xml:space="preserve">
+    <value>Change the search string, and/or options used, and try again.</value>
+  </data>
+  <data name="GlobalOption" xml:space="preserve">
+    <value>Should the command be applied to the global (machine) level?  Defaults to false.</value>
+  </data>
+  <data name="FeatureCommand_ElevatedPermissionsError" xml:space="preserve">
+    <value>Elevated permissions are required to set a feature at the global level.</value>
+  </data>
+  <data name="ConfigCommand_ElevatedPermissionsError" xml:space="preserve">
+    <value>Elevated permissions are required to set a config at the global level.</value>
+  </data>
+  <data name="ConfigCommand_Unset_ElevatedPermissionsError" xml:space="preserve">
+    <value>Elevated permissions are required to unset a config at the global level.</value>
+  </data>
+  <data name="Fatal_Startup_Error" xml:space="preserve">
+    <value>Failed to start application.</value>
+  </data>
+  <data name="Fatal_Startup_Error_Formatted" xml:space="preserve">
+    <value>Failed to start application.\n{0}\n\nMore details available in application logs.</value>
+  </data>
+  <data name="Application_Exiting" xml:space="preserve">
+    <value>Exiting</value>
+  </data>
+  <data name="Application_UnhandledException" xml:space="preserve">
+    <value>Unhandled Exception</value>
+  </data>
+  <data name="Application_ContainerError" xml:space="preserve">
+    <value>Could not locate any instances of contract {0}</value>
+  </data>
+  <data name="Application_OutdatedPackagesError" xml:space="preserve">
+    <value>Unable to serialize Outdated Packages Cache file.</value>
+  </data>
+  <data name="SettingsView_TogglePreventAllPackageIconDownloads" xml:space="preserve">
+    <value>Prevents the download of the icon for all package. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
+  </data>
+  <data name="SettingsView_ConfigDefaultSourceName" xml:space="preserve">
+    <value>The name of the source which should be shown by default when opening application. NOTE: This configuration setting will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
+  </data>
+  <data name="SettingsView_ToggleHideAllRemoteChocolateySources" xml:space="preserve">
+    <value>Controls whether or not remote sources (for example the Chocolatey Community Repository) are displayed in Chocolatey GUI.  Enabling this feature makes Chocolatey GUI a read-only application, that will only show the currently installed packages.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
+  </data>
+  <data name="SettingsView_ToggleDefaultToDarkMode" xml:space="preserve">
+    <value>Default to dark mode. It is still possible to switch during use.</value>
+  </data>
+  <data name="Application_OperationInstall" xml:space="preserve">
+    <value>Install the most recent package version</value>
+  </data>
+  <data name="Application_OperationNotAllowed" xml:space="preserve">
+    <value>This operation is not available due to the global setting of:
+
+backgroundServiceAllowedCommands configuration option
+
+Please contact your System Administrator to enable this operation.</value>
+  </data>
+  <data name="Application_OperationPin" xml:space="preserve">
+    <value>Pin package to currently installed package version</value>
+  </data>
+  <data name="Application_OperationReinstall" xml:space="preserve">
+    <value>Reinstall the most recent package version</value>
+  </data>
+  <data name="Application_OperationUninstall" xml:space="preserve">
+    <value>Uninstall the currently installed package version</value>
+  </data>
+  <data name="Application_OperationUnpin" xml:space="preserve">
+    <value>Unpin from the currently installed package version</value>
+  </data>
+  <data name="Application_OperationUpgrade" xml:space="preserve">
+    <value>Update the currently installed package version</value>
+  </data>
+  <data name="LocalSourceView_ButtonUpdateAllDisabled" xml:space="preserve">
+    <value>No packages need to be updated</value>
   </data>
 </root>

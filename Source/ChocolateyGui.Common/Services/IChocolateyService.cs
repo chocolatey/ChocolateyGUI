@@ -18,7 +18,7 @@ namespace ChocolateyGui.Common.Services
 
         Task<IEnumerable<Package>> GetInstalledPackages();
 
-        Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null);
+        Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null, bool forceCheckForOutdatedPackages = false);
 
         Task<PackageResults> Search(string query, PackageSearchOptions options);
 

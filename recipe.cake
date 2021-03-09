@@ -1,9 +1,22 @@
+#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=2.0.0-alpha0276&prerelease
+
+///////////////////////////////////////////////////////////////////////////////
+// MODULES
+///////////////////////////////////////////////////////////////////////////////
 #module nuget:?package=Cake.Chocolatey.Module&version=0.3.0
-#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=2.0.0-alpha0254&prerelease
+#module nuget:?package=Cake.BuildSystems.Module&version=0.3.1
+
+///////////////////////////////////////////////////////////////////////////////
+// TOOLS
+///////////////////////////////////////////////////////////////////////////////
 #tool choco:?package=transifex-client&version=0.12.4
+#tool nuget:?package=Brutal.Dev.StrongNameSigner&version=2.4.0
+
+///////////////////////////////////////////////////////////////////////////////
+// ADDINS
+///////////////////////////////////////////////////////////////////////////////
 #addin nuget:?package=Cake.StrongNameSigner&version=0.1.0
 #addin nuget:?package=Cake.StrongNameTool&version=0.0.4
-#tool nuget:?package=Brutal.Dev.StrongNameSigner&version=2.4.0
 
 if(BuildSystem.IsLocalBuild)
 {
@@ -46,7 +59,11 @@ ToolSettings.SetToolSettings(context: Context,
                                 BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui.Common.Windows/Utilities/Converters/BooleanToVisibilityInverted.cs",
                                 BuildParameters.RootDirectoryPath + "/Source/ChocolateyGui.Common.Windows/Startup/ChocolateyGuiModule.cs",
                                 BuildParameters.RootDirectoryPath + "/Source/ChocoalteyGuiCli/Startup/ChocolateyGuiCliModule.cs"
-                            });
+                            },
+                            buildMSBuildToolVersion: MSBuildToolVersion.VS2019
+                            );
+
+BuildParameters.PrintParameters(Context);
 
 //var SIGN_TOOL = EnvironmentVariable("SIGN_TOOL") ?? @"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\signtool.exe";
 var CERT_PATH = EnvironmentVariable("CHOCOLATEY_OFFICIAL_CERT") ?? "";

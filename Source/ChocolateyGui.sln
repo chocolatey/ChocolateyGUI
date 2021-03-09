@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocolateyGui", "ChocolateyGui\ChocolateyGui.csproj", "{851FC2F6-AFB0-4153-8520-BF68E1BEA3CB}"
 EndProject
@@ -13,8 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C6760D8F
 		..\appveyor.yml = ..\appveyor.yml
 		..\nuspec\chocolatey\ChocolateyGUI.nuspec = ..\nuspec\chocolatey\ChocolateyGUI.nuspec
 		..\nuspec\chocolatey\chocolateyInstall.ps1 = ..\nuspec\chocolatey\chocolateyInstall.ps1
+		..\nuspec\chocolatey\chocolateyUninstall.ps1 = ..\nuspec\chocolatey\chocolateyUninstall.ps1
 		..\GitHubReleaseManager.yaml = ..\GitHubReleaseManager.yaml
+		..\nuspec\chocolatey\helper.ps1 = ..\nuspec\chocolatey\helper.ps1
 		..\recipe.cake = ..\recipe.cake
+		..\nuspec\chocolatey\VERIFICATION.txt = ..\nuspec\chocolatey\VERIFICATION.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocolateyGuiCli", "ChocolateyGuiCli\ChocolateyGuiCli.csproj", "{C69DCF4D-F412-4344-83CD-26A46D515DF2}"

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Xml;
 using AutoMapper;
 using Caliburn.Micro;
@@ -38,8 +39,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly IChocolateyService _chocolateyService;
         private readonly List<IPackageViewModel> _packages;
         private readonly IPersistenceService _persistenceService;
+        private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
+        private readonly IAllowedCommandsService _allowedCommandsService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
         private bool _exportAll = true;
@@ -60,7 +63,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IChocolateyService chocolateyService,
             IProgressService progressService,
             IPersistenceService persistenceService,
+            IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
+            IAllowedCommandsService allowedCommandsService,
             IEventAggregator eventAggregator,
             string displayName,
             IMapper mapper)
@@ -68,7 +73,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _chocolateyService = chocolateyService;
             _progressService = progressService;
             _persistenceService = persistenceService;
+            _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
+            _allowedCommandsService = allowedCommandsService;
 
             DisplayName = displayName;
 
@@ -85,6 +92,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _eventAggregator = eventAggregator;
             _mapper = mapper;
             _eventAggregator.Subscribe(this);
+        }
+
+        public bool HasLoaded
+        {
+            get { return _hasLoaded; }
+            set { this.SetPropertyValue(ref _hasLoaded, value); }
         }
 
         public ListViewMode ListViewMode
@@ -155,9 +168,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             set { this.SetPropertyValue(ref _firstLoadIncomplete, value); }
         }
 
+        public bool IsUpgradeAllowed
+        {
+            get { return _allowedCommandsService.IsUpgradeCommandAllowed; }
+        }
+
         public bool CanUpdateAll()
         {
-            return Packages.Any(p => p.CanUpdate);
+            return Packages.Any(p => p.CanUpdate) && _allowedCommandsService.IsUpgradeCommandAllowed;
         }
 
         public async void UpdateAll()
@@ -244,9 +262,20 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             return _exportAll;
         }
 
+        public bool CanCheckForOutdatedPackages()
+        {
+            return HasLoaded && !IsLoading;
+        }
+
+        public async Task CheckForOutdatedPackages()
+        {
+            _chocolateyGuiCacheService.PurgeOutdatedPackages();
+            await CheckOutdated(true);
+        }
+
         public bool CanRefreshPackages()
         {
-            return _hasLoaded && !IsLoading;
+            return HasLoaded && !IsLoading;
         }
 
         public async void RefreshPackages()
@@ -270,7 +299,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     else
                     {
                         var outOfDatePackages =
-                            await _chocolateyService.GetOutdatedPackages(package.IsPrerelease, package.Id);
+                            await _chocolateyService.GetOutdatedPackages(package.IsPrerelease, package.Id, false);
                         foreach (var update in outOfDatePackages)
                         {
                             await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version));
@@ -297,13 +326,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                if (_hasLoaded)
+                if (HasLoaded)
                 {
                     return;
                 }
 
-                ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
-                ShowAdditionalPackageInformation = _configService.GetAppConfiguration().ShowAdditionalPackageInformation;
+                ListViewMode = _configService.GetEffectiveConfiguration().DefaultToTileViewForLocalSource ?? true ? ListViewMode.Tile : ListViewMode.Standard;
+                ShowAdditionalPackageInformation = _configService.GetEffectiveConfiguration().ShowAdditionalPackageInformation ?? false;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
@@ -311,10 +340,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     {
                         var appConfig = (AppConfiguration)eventPattern.Sender;
 
-                        ListViewMode = appConfig.DefaultToTileViewForLocalSource
+                        ListViewMode = appConfig.DefaultToTileViewForLocalSource ?? false
                                 ? ListViewMode.Tile
                                 : ListViewMode.Standard;
-                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation;
+                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation ?? false;
                     });
 
                 await LoadPackages();
@@ -344,7 +373,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         }
                     });
 
-                _hasLoaded = true;
+                HasLoaded = true;
 
                 var chocoPackage = _packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
                 if (chocoPackage != null && chocoPackage.CanUpdate)
@@ -400,30 +429,36 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
 
             IsLoading = true;
-
             IsShowOnlyPackagesWithUpdateEnabled = false;
+
+            _packages.Clear();
+            Packages.Clear();
+
+            var packages = (await _chocolateyService.GetInstalledPackages())
+                .Select(Mapper.Map<IPackageViewModel>).ToList();
+
+            foreach (var packageViewModel in packages)
+            {
+                _packages.Add(packageViewModel);
+                Packages.Add(packageViewModel);
+            }
+
+            FirstLoadIncomplete = false;
+
+            await CheckOutdated(false);
+        }
+
+        private async Task CheckOutdated(bool forceCheckForOutdated)
+        {
+            IsLoading = true;
 
             try
             {
-                _packages.Clear();
-                Packages.Clear();
+                var updates = await _chocolateyService.GetOutdatedPackages(false, null, forceCheckForOutdated);
 
-                var packages = (await _chocolateyService.GetInstalledPackages())
-                    .Select(Mapper.Map<IPackageViewModel>).ToList();
-
-                foreach (var packageViewModel in packages)
-                {
-                    _packages.Add(packageViewModel);
-                    Packages.Add(packageViewModel);
-                }
-
-                FirstLoadIncomplete = false;
-
-                var updates = await _chocolateyService.GetOutdatedPackages();
-                foreach (var update in updates)
-                {
-                    await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version));
-                }
+                // Use a list of task for correct async loop
+                var listOfTasks = updates.Select(update => _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version))).ToList();
+                await Task.WhenAll(listOfTasks);
 
                 PackageSource.Refresh();
             }
@@ -440,7 +475,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             {
                 IsLoading = false;
 
-                IsShowOnlyPackagesWithUpdateEnabled = true;
+                // Only enable the "Show only outdated packages" when it makes sense.
+                // It does not make sense to enable the checkbox when we haven't checked for
+                // outdated packages. We should only enable the checkbox here when: (or)
+                // 1. the "Prevent Automated Outdated Packages Check" is disabled
+                // 2. forced a check for outdated packages.
+                IsShowOnlyPackagesWithUpdateEnabled = forceCheckForOutdated || !(_configService.GetEffectiveConfiguration().PreventAutomatedOutdatedPackagesCheck ?? false);
+
+                // Force invalidating the command stuff.
+                // This helps us to prevent disabled buttons after executing this routine.
+                // But IMO it has something to do with Caliburn.
+                CommandManager.InvalidateRequerySuggested();
             }
         }
     }

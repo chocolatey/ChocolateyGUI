@@ -19,7 +19,7 @@ namespace ChocolateyGui.Common.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -93,6 +93,109 @@ namespace ChocolateyGui.Common.Properties {
         public static string AboutView_ReleaseNotes {
             get {
                 return ResourceManager.GetString("AboutView_ReleaseNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not locate any instances of contract {0}.
+        /// </summary>
+        public static string Application_ContainerError {
+            get {
+                return ResourceManager.GetString("Application_ContainerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exiting.
+        /// </summary>
+        public static string Application_Exiting {
+            get {
+                return ResourceManager.GetString("Application_Exiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install the most recent package version.
+        /// </summary>
+        public static string Application_OperationInstall {
+            get {
+                return ResourceManager.GetString("Application_OperationInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This operation is not available due to the global setting of:
+        ///
+        ///backgroundServiceAllowedCommands configuration option
+        ///
+        ///Please contact your System Administrator to enable this operation..
+        /// </summary>
+        public static string Application_OperationNotAllowed {
+            get {
+                return ResourceManager.GetString("Application_OperationNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin package to currently installed package version.
+        /// </summary>
+        public static string Application_OperationPin {
+            get {
+                return ResourceManager.GetString("Application_OperationPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reinstall the most recent package version.
+        /// </summary>
+        public static string Application_OperationReinstall {
+            get {
+                return ResourceManager.GetString("Application_OperationReinstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstall the currently installed package version.
+        /// </summary>
+        public static string Application_OperationUninstall {
+            get {
+                return ResourceManager.GetString("Application_OperationUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpin from the currently installed package version.
+        /// </summary>
+        public static string Application_OperationUnpin {
+            get {
+                return ResourceManager.GetString("Application_OperationUnpin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update the currently installed package version.
+        /// </summary>
+        public static string Application_OperationUpgrade {
+            get {
+                return ResourceManager.GetString("Application_OperationUpgrade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to serialize Outdated Packages Cache file..
+        /// </summary>
+        public static string Application_OutdatedPackagesError {
+            get {
+                return ResourceManager.GetString("Application_OutdatedPackagesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unhandled Exception.
+        /// </summary>
+        public static string Application_UnhandledException {
+            get {
+                return ResourceManager.GetString("Application_UnhandledException", resourceCulture);
             }
         }
         
@@ -422,6 +525,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elevated permissions are required to set a config at the global level..
+        /// </summary>
+        public static string ConfigCommand_ElevatedPermissionsError {
+            get {
+                return ResourceManager.GetString("ConfigCommand_ElevatedPermissionsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chocolatey GUI CLI will allow you to interact with the persisted configuration information..
         /// </summary>
         public static string ConfigCommand_Help {
@@ -494,6 +606,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elevated permissions are required to unset a config at the global level..
+        /// </summary>
+        public static string ConfigCommand_Unset_ElevatedPermissionsError {
+            get {
+                return ResourceManager.GetString("ConfigCommand_Unset_ElevatedPermissionsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updated {0} = {1}.
         /// </summary>
         public static string ConfigCommand_Updated {
@@ -557,7 +678,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pin.
+        ///   Looks up a localized string similar to Pin (Ignore Updates).
         /// </summary>
         public static string Controls_PackagesContextMenuPin {
             get {
@@ -665,6 +786,24 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to start application..
+        /// </summary>
+        public static string Fatal_Startup_Error {
+            get {
+                return ResourceManager.GetString("Fatal_Startup_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to start application.\n{0}\n\nMore details available in application logs..
+        /// </summary>
+        public static string Fatal_Startup_Error_Formatted {
+            get {
+                return ResourceManager.GetString("Fatal_Startup_Error_Formatted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View and configure Chocolatey GUI features.
         /// </summary>
         public static string FeatureCommand_Description {
@@ -688,6 +827,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string FeatureCommand_DisabledWarning {
             get {
                 return ResourceManager.GetString("FeatureCommand_DisabledWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elevated permissions are required to set a feature at the global level..
+        /// </summary>
+        public static string FeatureCommand_ElevatedPermissionsError {
+            get {
+                return ResourceManager.GetString("FeatureCommand_ElevatedPermissionsError", resourceCulture);
             }
         }
         
@@ -800,6 +948,24 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Should the command be applied to the global (machine) level?  Defaults to false..
+        /// </summary>
+        public static string GlobalOption {
+            get {
+                return ResourceManager.GetString("GlobalOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for outdated packages (forced).
+        /// </summary>
+        public static string LocalSourceView_ButtonCheckForOutdatedPkgs {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ButtonCheckForOutdatedPkgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
         public static string LocalSourceView_ButtonExport {
@@ -841,6 +1007,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string LocalSourceView_ButtonUpdateAll {
             get {
                 return ResourceManager.GetString("LocalSourceView_ButtonUpdateAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No packages need to be updated.
+        /// </summary>
+        public static string LocalSourceView_ButtonUpdateAllDisabled {
+            get {
+                return ResourceManager.GetString("LocalSourceView_ButtonUpdateAllDisabled", resourceCulture);
             }
         }
         
@@ -1052,7 +1227,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pin.
+        ///   Looks up a localized string similar to Pin (Ignore Updates).
         /// </summary>
         public static string PackageView_ButtonPin {
             get {
@@ -1472,6 +1647,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check for outdated packages (forced).
+        /// </summary>
+        public static string RemoteSourceView_ButtonCheckForOutdatedPkgs {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_ButtonCheckForOutdatedPkgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go Back a Page.
         /// </summary>
         public static string RemoteSourceView_ButtonGoBackAPage {
@@ -1598,11 +1782,56 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Prevent Preload feature is currently enabled..
+        /// </summary>
+        public static string RemoteSourceView_PreventPreloadHeading {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_PreventPreloadHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No results yet....
+        /// </summary>
+        public static string RemoteSourceView_PreventPreloadNoResults {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_PreventPreloadNoResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please search for a package using the search box above..
+        /// </summary>
+        public static string RemoteSourceView_PreventPreloadSubHeading {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_PreventPreloadSubHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search:.
         /// </summary>
         public static string RemoteSourceView_SearchBoxText {
             get {
                 return ResourceManager.GetString("RemoteSourceView_SearchBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No matching packages found....
+        /// </summary>
+        public static string RemoteSourceView_SearchNoPackagesFound {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_SearchNoPackagesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the search string, and/or options used, and try again..
+        /// </summary>
+        public static string RemoteSourceView_SearchNoPackagesFoundHeading {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_SearchNoPackagesFoundHeading", resourceCulture);
             }
         }
         
@@ -1766,6 +1995,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string SettingsView_ChocolateyLicensedSourceWarning {
             get {
                 return ResourceManager.GetString("SettingsView_ChocolateyLicensedSourceWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name of the source which should be shown by default when opening application. NOTE: This configuration setting will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_ConfigDefaultSourceName {
+            get {
+                return ResourceManager.GetString("SettingsView_ConfigDefaultSourceName", resourceCulture);
             }
         }
         
@@ -2022,7 +2260,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Controls whether or not a non-administrator user can access the Settings Screen.  NOTE: This feature will only work when using the licensed extension for Chocolatey and Chocolatey GUI..
+        ///   Looks up a localized string similar to Controls whether or not a non-administrator user can access the Settings Screen.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
         /// </summary>
         public static string SettingsView_ToggleAllowNonAdminAccessToSettingsDescription {
             get {
@@ -2049,6 +2287,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default to dark mode. It is still possible to switch during use..
+        /// </summary>
+        public static string SettingsView_ToggleDefaultToDarkMode {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleDefaultToDarkMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exclude installed packages.
         /// </summary>
         public static string SettingsView_ToggleExcludeInstalledPackages {
@@ -2067,11 +2314,47 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Controls whether or not remote sources (for example the Chocolatey Community Repository) are displayed in Chocolatey GUI.  Enabling this feature makes Chocolatey GUI a read-only application, that will only show the currently installed packages.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_ToggleHideAllRemoteChocolateySources {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleHideAllRemoteChocolateySources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allows control over whether package download count is displayed on remote source views..
         /// </summary>
         public static string SettingsView_TogglePackageDownloadCountDescription {
             get {
                 return ResourceManager.GetString("SettingsView_TogglePackageDownloadCountDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevents the download of the icon for all package. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_TogglePreventAllPackageIconDownloads {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePreventAllPackageIconDownloads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevents automated check for outdated packages on local and remote source views..
+        /// </summary>
+        public static string SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevents preloading results with a blank search when opening the remote source view..
+        /// </summary>
+        public static string SettingsView_TogglePreventPreloadDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePreventPreloadDescription", resourceCulture);
             }
         }
         

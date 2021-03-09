@@ -41,6 +41,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IConfigService _configService;
+        private readonly IAllowedCommandsService _allowedCommandsService;
 
         private string[] _authors;
 
@@ -65,6 +66,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private bool _isInstalled;
 
         private bool _isPinned;
+
         private bool _isSideBySide;
 
         private bool _isLatestVersion;
@@ -115,7 +117,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             IMapper mapper,
             IProgressService progressService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
-            IConfigService configService)
+            IConfigService configService,
+            IAllowedCommandsService allowedCommandsService)
         {
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
@@ -124,6 +127,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             eventAggregator?.Subscribe(this);
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
+            _allowedCommandsService = allowedCommandsService;
         }
 
         public DateTime Created
@@ -144,7 +148,29 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             set { SetPropertyValue(ref _authors, value); }
         }
 
-        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && LatestVersion != null && LatestVersion > Version;
+        public bool CanInstall => !IsInstalled;
+
+        public bool IsInstallAllowed => _allowedCommandsService.IsInstallCommandAllowed;
+
+        public bool CanReinstall => IsInstalled;
+
+        public bool IsReinstallAllowed => _allowedCommandsService.IsInstallCommandAllowed;
+
+        public bool CanUninstall => IsInstalled;
+
+        public bool IsUninstallAllowed => _allowedCommandsService.IsUninstallCommandAllowed;
+
+        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && !IsLatestVersion;
+
+        public bool IsUpgradeAllowed => _allowedCommandsService.IsUpgradeCommandAllowed;
+
+        public bool CanPin => !IsPinned && IsInstalled;
+
+        public bool IsPinAllowed => _allowedCommandsService.IsPinCommandAllowed;
+
+        public bool CanUnpin => IsPinned && IsInstalled;
+
+        public bool IsUnpinAllowed => _allowedCommandsService.IsPinCommandAllowed;
 
         public string Copyright
         {
@@ -201,8 +227,18 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public bool IsInstalled
         {
-            get { return _isInstalled; }
-            set { SetPropertyValue(ref _isInstalled, value); }
+            get
+            {
+                return _isInstalled;
+            }
+
+            set
+            {
+                if (SetPropertyValue(ref _isInstalled, value))
+                {
+                    NotifyPropertyChanged(nameof(CanUpdate));
+                }
+            }
         }
 
         public bool IsPinned
@@ -239,8 +275,18 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public bool IsLatestVersion
         {
-            get { return _isLatestVersion; }
-            set { SetPropertyValue(ref _isLatestVersion, value); }
+            get
+            {
+                return _isLatestVersion;
+            }
+
+            set
+            {
+                if (SetPropertyValue(ref _isLatestVersion, value))
+                {
+                    NotifyPropertyChanged(nameof(CanUpdate));
+                }
+            }
         }
 
         public bool IsPrerelease
@@ -361,7 +407,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             get
             {
-                return DownloadCount != -1 && !_configService.GetAppConfiguration().HidePackageDownloadCount;
+                return DownloadCount != -1 && !(_configService.GetEffectiveConfiguration().HidePackageDownloadCount ?? false);
             }
         }
 

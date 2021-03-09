@@ -6,7 +6,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using System.Windows.Data;
@@ -21,11 +20,6 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
         /// </summary>
         /// <param name="fileSize">The numeric value to be converted.</param>
         /// <returns>the converted string</returns>
-        [SuppressMessage(
-            "Microsoft.Naming",
-            "CA1704:IdentifiersShouldBeSpelledCorrectly",
-            MessageId = "Str",
-            Justification = "Name matches underlying PInvoke")]
         public static string StrFormatByteSize(long fileSize)
         {
             var sb = new StringBuilder(16);
@@ -35,12 +29,7 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is long))
-            {
-                return string.Empty;
-            }
-
-            return StrFormatByteSize((long)value);
+            return value is long fileSize ? StrFormatByteSize(fileSize) : string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -35,7 +35,11 @@ namespace ChocolateyGui.Common.Commands
                 .Add(
                     "n=|name=",
                     Resources.FeatureCommand_NameOption,
-                    option => configuration.FeatureCommand.Name = option.remove_surrounding_quotes());
+                    option => configuration.FeatureCommand.Name = option.remove_surrounding_quotes())
+                .Add(
+                    "g|global",
+                    Resources.GlobalOption,
+                    option => configuration.Global = option != null);
         }
 
         public virtual void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)
@@ -102,10 +106,10 @@ namespace ChocolateyGui.Common.Commands
                     _configService.ListFeatures(config);
                     break;
                 case FeatureCommandType.Disable:
-                    _configService.DisableFeature(config);
+                    _configService.ToggleFeature(config, false);
                     break;
                 case FeatureCommandType.Enable:
-                    _configService.EnableFeature(config);
+                    _configService.ToggleFeature(config, true);
                     break;
             }
         }

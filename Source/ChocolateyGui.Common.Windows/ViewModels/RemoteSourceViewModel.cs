@@ -36,11 +36,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyService _chocolateyPackageService;
         private readonly IProgressService _progressService;
+        private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
         private int _currentPage = 1;
         private bool _hasLoaded;
+        private bool _shouldShowPreventPreloadMessage;
         private bool _includeAllVersions;
         private bool _includePrerelease;
         private bool _matchWord;
@@ -57,6 +59,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         public RemoteSourceViewModel(
             IChocolateyService chocolateyPackageService,
             IProgressService progressService,
+            IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
             IEventAggregator eventAggregator,
             ChocolateySource source,
@@ -65,6 +68,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             Source = source;
             _chocolateyPackageService = chocolateyPackageService;
             _progressService = progressService;
+            _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
             _eventAggregator = eventAggregator;
             _mapper = mapper;
@@ -78,6 +82,18 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
 
             _eventAggregator.Subscribe(this);
+        }
+
+        public bool HasLoaded
+        {
+            get { return _hasLoaded; }
+            set { this.SetPropertyValue(ref _hasLoaded, value); }
+        }
+
+        public bool ShowShouldPreventPreloadMessage
+        {
+            get { return _shouldShowPreventPreloadMessage; }
+            set { this.SetPropertyValue(ref _shouldShowPreventPreloadMessage, value); }
         }
 
         public ListViewMode ListViewMode
@@ -200,19 +216,31 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
         }
 
+        public bool CanSearchForPackages()
+        {
+            return HasLoaded;
+        }
+
+        public void SearchForPackages()
+        {
+#pragma warning disable 4014
+            LoadPackages(false);
+#pragma warning restore 4014
+        }
+
         public bool CanLoadRemotePackages()
         {
-            return _hasLoaded;
+            return HasLoaded;
         }
 
         public void RefreshRemotePackages()
         {
 #pragma warning disable 4014
-            LoadPackages();
+            LoadPackages(false);
 #pragma warning restore 4014
         }
 
-        public async Task LoadPackages()
+        public async Task LoadPackages(bool forceCheckForOutdatedPackages)
         {
             try
             {
@@ -221,7 +249,15 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     return;
                 }
 
-                _hasLoaded = false;
+                if (!HasLoaded && (_configService.GetEffectiveConfiguration().PreventPreload ?? false))
+                {
+                    ShowShouldPreventPreloadMessage = true;
+                    HasLoaded = true;
+                    return;
+                }
+
+                HasLoaded = false;
+                ShowShouldPreventPreloadMessage = false;
 
                 var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
 
@@ -244,7 +280,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                                     MatchWord,
                                     Source.Value));
                     var installed = await _chocolateyPackageService.GetInstalledPackages();
-                    var outdated = await _chocolateyPackageService.GetOutdatedPackages();
+                    var outdated = await _chocolateyPackageService.GetOutdatedPackages(false, null, forceCheckForOutdatedPackages);
 
                     PageCount = (int)Math.Ceiling((double)result.TotalCount / (double)PageSize);
                     Packages.Clear();
@@ -263,7 +299,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         Packages.Add(Mapper.Map<IPackageViewModel>(p));
                     });
 
-                    if (_configService.GetAppConfiguration().ExcludeInstalledPackages)
+                    if (_configService.GetEffectiveConfiguration().ExcludeInstalledPackages ?? false)
                     {
                         Packages.RemoveAll(x => x.IsInstalled);
                     }
@@ -276,7 +312,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 finally
                 {
                     await _progressService.StopLoading();
-                    _hasLoaded = true;
+                    HasLoaded = true;
                 }
 
                 await _eventAggregator.PublishOnUIThreadAsync(new ResetScrollPositionMessage());
@@ -291,6 +327,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
         }
 
+        public bool CanCheckForOutdatedPackages()
+        {
+            return HasLoaded;
+        }
+
+        public async void CheckForOutdatedPackages()
+        {
+            _chocolateyGuiCacheService.PurgeOutdatedPackages();
+            await LoadPackages(true);
+        }
+
         protected override void OnViewAttached(object view, object context)
         {
             _eventAggregator.Subscribe(view);
@@ -300,8 +347,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                ListViewMode = _configService.GetAppConfiguration().DefaultToTileViewForLocalSource ? ListViewMode.Tile : ListViewMode.Standard;
-                ShowAdditionalPackageInformation = _configService.GetAppConfiguration().ShowAdditionalPackageInformation;
+                ListViewMode = _configService.GetEffectiveConfiguration().DefaultToTileViewForRemoteSource ?? true ? ListViewMode.Tile : ListViewMode.Standard;
+                ShowAdditionalPackageInformation = _configService.GetEffectiveConfiguration().ShowAdditionalPackageInformation ?? false;
 
                 Observable.FromEventPattern<EventArgs>(_configService, "SettingsChanged")
                     .ObserveOnDispatcher()
@@ -310,17 +357,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         var appConfig = (AppConfiguration)eventPattern.Sender;
 
                         _searchQuerySubscription?.Dispose();
-                        if (appConfig.UseDelayedSearch)
+                        if (appConfig.UseDelayedSearch ?? false)
                         {
                             SubscribeToLoadPackagesOnSearchQueryChange();
                         }
 
-                        ListViewMode = appConfig.DefaultToTileViewForRemoteSource ? ListViewMode.Tile : ListViewMode.Standard;
-                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation;
+                        ListViewMode = appConfig.DefaultToTileViewForRemoteSource ?? false ? ListViewMode.Tile : ListViewMode.Standard;
+                        ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation ?? false;
                     });
 
 #pragma warning disable 4014
-                LoadPackages();
+                LoadPackages(false);
 #pragma warning restore 4014
 
                 var immediateProperties = new[]
@@ -328,7 +375,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     "IncludeAllVersions", "IncludePrerelease", "MatchWord", "SortSelection"
                 };
 
-                if (_configService.GetAppConfiguration().UseDelayedSearch)
+                if (_configService.GetEffectiveConfiguration().UseDelayedSearch ?? false)
                 {
                     SubscribeToLoadPackagesOnSearchQueryChange();
                 }
@@ -337,7 +384,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     .Where(e => immediateProperties.Contains(e.EventArgs.PropertyName))
                     .ObserveOnDispatcher()
 #pragma warning disable 4014
-                    .Subscribe(e => LoadPackages());
+                    .Subscribe(e => LoadPackages(false));
 #pragma warning restore 4014
 
                 Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
@@ -346,7 +393,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     .DistinctUntilChanged()
                     .ObserveOnDispatcher()
 #pragma warning disable 4014
-                    .Subscribe(e => LoadPackages());
+                    .Subscribe(e => LoadPackages(false));
 #pragma warning restore 4014
             }
             catch (InvalidOperationException ex)
@@ -373,7 +420,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 .DistinctUntilChanged()
                 .ObserveOnDispatcher()
 #pragma warning disable 4014
-                .Subscribe(e => LoadPackages());
+                .Subscribe(e => LoadPackages(false));
 #pragma warning restore 4014
         }
     }

@@ -39,7 +39,11 @@ namespace ChocolateyGui.Common.Commands
                 .Add(
                     "value=",
                     Resources.ConfigCommand_ValueOption,
-                    option => configuration.ConfigCommand.ConfigValue = option.remove_surrounding_quotes());
+                    option => configuration.ConfigCommand.ConfigValue = option.remove_surrounding_quotes())
+                .Add(
+                    "g|global",
+                    Resources.GlobalOption,
+                    option => configuration.Global = option != null);
         }
 
         public virtual void HandleAdditionalArgumentParsing(IList<string> unparsedArguments, ChocolateyGuiConfiguration configuration)

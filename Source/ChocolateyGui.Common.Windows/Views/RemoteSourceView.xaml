@@ -9,37 +9,18 @@
              xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:enums="clr-namespace:ChocolateyGui.Common.Enums;assembly=ChocolateyGui.Common"
-             xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
-             xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
+             xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
-             d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}">
+             d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}"
+             Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <BooleanToVisibilityConverter x:Key="BoolToVis" />
-            <converters:PackageTitleConverter x:Key="PackageTitleConverter"/>
-            <converters:MultiBooleanAndToVisibility x:Key="MultiBooleanAndToVisibility" />
-            <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
-
-            <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-
             <DataTemplate x:Key="PackageListTemplate" DataType="{x:Type items:IPackageViewModel}">
-                <DataTemplate.Resources>
-                    <Style x:Key="ColoredDetailsText" TargetType="TextBlock">
-                        <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.AccentBase}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
-                                <Setter Property="Foreground" Value="White"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataTemplate.Resources>
-
-                <Grid x:Name="PackageDetailsGrid" Height="105" Margin="5"
-                      HorizontalAlignment="Stretch"
+                <Grid Height="115" Margin="5"
                       Background="Transparent"
                       ContextMenu="{StaticResource PackagesContextMenu}">
                     <Grid.RowDefinitions>
@@ -53,73 +34,209 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0 0 0 2">
                             <TextBlock x:Name="TitleVersion"
                                        TextTrimming="CharacterEllipsis"
-                                       Style="{StaticResource ColoredDetailsText}" FontSize="26">
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource TitleTextBlockStyle}">
                                 <TextBlock.Text>
-                                    <MultiBinding Converter="{StaticResource PackageTitleConverter}">
+                                    <MultiBinding StringFormat="{}{0} {1}">
                                         <Binding Path="Title" Mode="OneWay" />
                                         <Binding Path="Version" Mode="OneWay" />
-                                        <Binding Path="LowerCaseId" Mode="OneWay" />
-                                        <Binding Source="{StaticResource BindingProxy}" Path="Data.ShowAdditionalPackageInformation" Mode="OneWay" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
-                            <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_Prerelease}"
-                                       Background="DarkOrange"
-                                       Foreground="White"
-                                       Margin="5,0,0,0"
-                                       Padding="3"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       TextAlignment="Center">
-                                <TextBlock.Visibility>
-                                    <MultiBinding Converter="{StaticResource MultiBooleanAndToVisibility}">
-                                        <Binding Path="IsPrerelease" />
-                                        <Binding Source="{StaticResource BindingProxy}" Path="Data.ShowAdditionalPackageInformation" Mode="OneWay"></Binding>
-                                    </MultiBinding>
-                                </TextBlock.Visibility>
-                            </TextBlock>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" IsHitTestVisible="False">
-                            <TextBlock FontSize="14" Text="{x:Static properties:Resources.RemoteSourceView_Authors}" />
-                            <TextBlock FontSize="14" Margin="5 0 0 0" Text="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
-                                       TextTrimming="CharacterEllipsis"
-                                       AutomationProperties.Name="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
-                                       Style="{StaticResource ColoredDetailsText}" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" IsHitTestVisible="False"
-                                    Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}">
-                            <TextBlock FontWeight="SemiBold" FontSize="20" Text="{Binding DownloadCount, Mode=OneWay, StringFormat=N0}" Style="{StaticResource ColoredDetailsText}" VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" IsHitTestVisible="False"
+                                    Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BooleanToVisibility}}">
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{Binding DownloadCount, Mode=OneWay, StringFormat=N0}" VerticalAlignment="Center" />
                             <iconPacks:PackIconFontAwesome Kind="DownloadSolid" Width="16" Height="16" Margin="5 1 0 0" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
 
                     <Grid x:Name="PART_Body" Grid.Row="1">
-                        <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{Binding Description, Mode=OneWay}"/>
+                        <TextBlock TextWrapping="Wrap"
+                                   TextTrimming="CharacterEllipsis"
+                                   Margin="5 0"
+                                   Style="{StaticResource BodyTextBlockStyle}"
+                                   Text="{Binding Summary, Mode=OneWay}"/>
                     </Grid>
 
                     <Grid x:Name="PART_Bottom" Grid.Row="2">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" IsHitTestVisible="False">
-                            <TextBlock x:Name="TagsLabel" FontSize="14" Text="{x:Static properties:Resources.Controls_PackageListTags}" />
-                            <TextBlock x:Name="Tags" FontSize="14" Margin="5 0 0 0" Text="{Binding Tags, Mode=OneWay}"
-                                       TextTrimming="CharacterEllipsis"
-                                       AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}"
-                                       Style="{StaticResource ColoredDetailsText}" />
-                        </StackPanel>
-                        <iconPacks:PackIconEntypo Grid.Column="1" Kind="Check" Width="16" Height="16" VerticalAlignment="Center" Visibility="{Binding IsInstalled, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Name="AuthorsLabel"
+                                   Grid.Column="0"
+                                   Grid.Row="0"
+                                   FontSize="14"
+                                   Opacity="0.6"
+                                   Text="{x:Static properties:Resources.RemoteSourceView_Authors}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="0"
+                                   FontSize="14"
+                                   Margin="5 0 0 0"
+                                   Text="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
+                                   TextTrimming="CharacterEllipsis"
+                                   AutomationProperties.Name="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}" />
+
+                        <TextBlock x:Name="TagsLabel"
+                                   Grid.Column="0"
+                                   Grid.Row="1"
+                                   FontSize="14"
+                                   Opacity="0.6"
+                                   Text="{x:Static properties:Resources.Controls_PackageListTags}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="1"
+                                   x:Name="Tags"
+                                   FontSize="14"
+                                   Margin="5 0 0 0"
+                                   Text="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}"
+                                   TextTrimming="CharacterEllipsis"
+                                   AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}" />
+
+                        <iconPacks:PackIconEntypo Grid.Row="0"
+                                                  Grid.RowSpan="2"
+                                                  Grid.Column="2"
+                                                  Kind="Check"
+                                                  Width="16"
+                                                  Height="16"
+                                                  VerticalAlignment="Center"
+                                                  Visibility="{Binding IsInstalled, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                     </Grid>
                 </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="PackageListDetailTemplate" DataType="{x:Type items:IPackageViewModel}">
+                <DockPanel Height="115" Margin="5"
+                           LastChildFill="True"
+                           Background="Transparent"
+                           ContextMenu="{StaticResource PackagesContextMenu}">
+                    <controls:InternetImage AutomationProperties.Name="Package Icon"
+                                            DockPanel.Dock="Left"
+                                            IconUrl="{Binding IconUrl, IsAsync=True, Mode=OneWay}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            Margin="0 5 10 5"
+                                            Width="50"
+                                            Height="50"/>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="PART_Top" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0 0 0 2">
+                                <TextBlock x:Name="TitleVersion"
+                                           TextTrimming="CharacterEllipsis"
+                                           VerticalAlignment="Center"
+                                           Style="{StaticResource TitleTextBlockStyle}">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Title" Mode="OneWay" />
+                                            <Binding Path="Version" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock x:Name="Id"
+                                           Text="{Binding LowerCaseId, Mode=OneWay, StringFormat='{}({0})'}"
+                                           VerticalAlignment="Center"
+                                           Margin="5 0 0 0"
+                                           Style="{StaticResource SubtitleTextBlockStyle}" />
+                                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_Prerelease}"
+                                           Background="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseKey}}"
+                                           Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseForegroundKey}}"
+                                           Visibility="{Binding IsPrerelease, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}"
+                                           Margin="5 0 0 0"
+                                           Padding="3"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" IsHitTestVisible="False"
+                                        Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{Binding DownloadCount, Mode=OneWay, StringFormat=N0}" VerticalAlignment="Center" />
+                                <iconPacks:PackIconFontAwesome Kind="DownloadSolid" Width="16" Height="16" Margin="5 1 0 0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid x:Name="PART_Body" Grid.Row="1">
+                            <TextBlock TextWrapping="Wrap"
+                                       TextTrimming="CharacterEllipsis"
+                                       Margin="5 0"
+                                       Style="{StaticResource BodyTextBlockStyle}"
+                                       Text="{Binding Description, Mode=OneWay}"/>
+                        </Grid>
+
+                        <Grid x:Name="PART_Bottom" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock x:Name="AuthorsLabel"
+                                       Grid.Column="0"
+                                       Grid.Row="0"
+                                       FontSize="14"
+                                       Opacity="0.6"
+                                       Text="{x:Static properties:Resources.RemoteSourceView_Authors}" />
+                            <TextBlock Grid.Column="1"
+                                       Grid.Row="0"
+                                       FontSize="14"
+                                       Margin="5 0 0 0"
+                                       Text="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}"
+                                       TextTrimming="CharacterEllipsis"
+                                       AutomationProperties.Name="{Binding Authors, Mode=OneWay, Converter={StaticResource StringListToString}}" />
+
+                            <TextBlock x:Name="TagsLabel"
+                                       Grid.Column="0"
+                                       Grid.Row="1"
+                                       FontSize="14"
+                                       Opacity="0.6"
+                                       Text="{x:Static properties:Resources.Controls_PackageListTags}" />
+                            <TextBlock Grid.Column="1"
+                                       Grid.Row="1"
+                                       x:Name="Tags"
+                                       FontSize="14"
+                                       Margin="5 0 0 0"
+                                       Text="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}"
+                                       TextTrimming="CharacterEllipsis"
+                                       AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}" />
+
+                            <iconPacks:PackIconEntypo Grid.Row="0"
+                                                      Grid.RowSpan="2"
+                                                      Grid.Column="2"
+                                                      Kind="Check"
+                                                      Width="16"
+                                                      Height="16"
+                                                      VerticalAlignment="Center"
+                                                      Visibility="{Binding IsInstalled, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
+                        </Grid>
+                    </Grid>
+                    </DockPanel>
             </DataTemplate>
 
             <DataTemplate x:Key="PackageTileTemplate" DataType="{x:Type items:IPackageViewModel}">
@@ -148,7 +265,7 @@
                                               Opacity="0.8"
                                               Width="24" Height="24"
                                               Kind="Pin" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2 2 0 0"
-                                              Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BoolToVis}}" />
+                                              Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
 
                     <TextBlock Grid.Row="2"
                                Margin="4 0 4 1"
@@ -187,20 +304,80 @@
             <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Style.Triggers>
+                    <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
-            <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource MahApps.Styles.ListView.Virtualized}">
+            <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource MahApps.Styles.ListView}">
                 <Style.Resources>
                     <!--  this is necessary to prevent nasty can not find stuff like  -->
                     <!--  ItemsPanel Cannot find source for binding with reference 'RelativeSource FindAncestor, AncestorType='System.Windows.Controls.ItemsControl', AncestorLevel='1''. BindingExpression:Path=HorizontalContentAlignment; DataItem=null; target element is 'ListViewItem' (Name=''); target property is 'HorizontalContentAlignment' (type 'HorizontalAlignment')  -->
                     <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="{x:Type ListViewItem}" />
                 </Style.Resources>
+                <Setter Property="AlternationCount" Value="2" />
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewItemStyle}" />
                 <Setter Property="ItemTemplate" Value="{StaticResource PackageListTemplate}" />
                 <Setter Property="VerticalContentAlignment" Value="Stretch" />
                 <Style.Triggers>
+                    <Trigger Property="HasItems" Value="False">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListView}">
+                                    <Border x:Name="Border"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                        <Grid Margin="{TemplateBinding Padding}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                            <StackPanel x:Name="EmptySearchInfo" Visibility="Collapsed" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <iconPacks:PackIconOcticons Kind="Search" Width="72" Height="72" Foreground="{DynamicResource MahApps.Brushes.AccentBase}" HorizontalAlignment="Center" Margin="20" />
+                                                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFound}"
+                                                           HorizontalAlignment="Center"
+                                                           FontSize="28"
+                                                           Margin="10"
+                                                           TextWrapping="Wrap"/>
+                                                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFoundHeading}"
+                                                           HorizontalAlignment="Center"
+                                                           FontSize="20"
+                                                           Margin="5"
+                                                           TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding HasLoaded, Mode=OneWay}" Value="True" />
+                                                <Condition Binding="{Binding ShowShouldPreventPreloadMessage, Mode=OneWay}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="EmptySearchInfo" Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger>
+                                        <DataTrigger Binding="{Binding MatchWord, Mode=OneWay}" Value="True">
+                                            <Setter TargetName="EmptySearchInfo" Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding ListViewMode, Mode=OneWay}" Value="{x:Static enums:ListViewMode.Standard}" />
+                            <Condition Binding="{Binding ShowAdditionalPackageInformation, Mode=OneWay}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="ItemTemplate" Value="{StaticResource PackageListDetailTemplate}" />
+                    </MultiDataTrigger>
                     <DataTrigger Binding="{Binding ListViewMode, Mode=OneWay}" Value="{x:Static enums:ListViewMode.Tile}">
+                        <Setter Property="AlternationCount" Value="0" />
                         <Setter Property="ItemTemplate" Value="{StaticResource PackageTileTemplate}" />
                         <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewItemTileStyle}" />
                         <Setter Property="ItemsPanel">
@@ -216,7 +393,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
+    <Grid Background="{DynamicResource MahApps.Brushes.Accent4}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -228,33 +405,50 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <WrapPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5" Style="{StaticResource LeftSourceListItem}">
+            <WrapPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5">
                 <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
                     <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
                            Target="{Binding ElementName=SearchTextBox}" Content="{x:Static properties:Resources.RemoteSourceView_SearchBoxText}"/>
-                    <TextBox x:Name="SearchTextBox" Width="200"
-                             FontSize="14" VerticalAlignment="Center"
-                             mah:TextBoxHelper.ButtonCommand="{commands:DataContextCommandAdapter LoadPackages, CanLoadRemotePackages}"
+                    <TextBox x:Name="SearchTextBox"
+                             Width="200"
+                             FontSize="14"
+                             VerticalAlignment="Center"
+                             mah:TextBoxHelper.ButtonCommand="{commands:DataContextCommandAdapter SearchForPackages, CanSearchForPackages}"
                              Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
                              Style="{DynamicResource MahApps.Styles.TextBox.Search}">
                         <TextBox.InputBindings>
-                            <KeyBinding Command="{commands:DataContextCommandAdapter LoadPackages, CanLoadRemotePackages}"
+                            <KeyBinding Command="{commands:DataContextCommandAdapter SearchForPackages, CanSearchForPackages}"
                                         Key="Return" />
                         </TextBox.InputBindings>
                     </TextBox>
                 </StackPanel>
-                <CheckBox Name="AllVersionsCheckBox" Margin="5"
+                <CheckBox Name="AllVersionsCheckBox"
+                          Margin="5"
+                          Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.RemoteSourceView_CheckboxAllVersions}"
                           IsChecked="{Binding IncludeAllVersions}" />
-                <CheckBox Name="PrereleaseCheckBox" Margin="5"
+                <CheckBox Name="PrereleaseCheckBox"
+                          Margin="5"
+                          Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.RemoteSourceView_CheckboxIncludePrerelease}"
                           IsChecked="{Binding IncludePrerelease}" />
-                <CheckBox Name="MatchCheckBox" Margin="5"
+                <CheckBox Name="MatchCheckBox"
+                          Margin="5"
+                          Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
                           Content="{x:Static properties:Resources.RemoteSourceView_CheckboxMatchExactly}"
                           IsChecked="{Binding MatchWord}" />
                 <ComboBox Name="SortBox" Margin="5 1" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
             </WrapPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,6">
+                <Button Command="{commands:DataContextCommandAdapter CheckForOutdatedPackages, CanCheckForOutdatedPackages}"
+                        ToolTipService.ShowOnDisabled="True"
+                        VerticalAlignment="Center"
+                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static properties:Resources.RemoteSourceView_ButtonCheckForOutdatedPkgs}" Margin="0,0,2,0">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
+                        <iconPacks:PackIconFontAwesome Kind="BoxSolid" Margin="2 0 0 0" />
+                    </StackPanel>
+                </Button>
                 <Button Command="{commands:DataContextCommandAdapter RefreshRemotePackages, CanLoadRemotePackages}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
@@ -286,14 +480,26 @@
                 <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
                 <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Name="FirstPage" Content="{x:Static properties:Resources.RemoteSourceView_ButtonGotoFirstPage}" AutomationProperties.Name="Go to First Page" ToolTip="First"
+            <Button Grid.Column="0"
+                    Name="FirstPage"
+                    Content="{x:Static properties:Resources.RemoteSourceView_ButtonGotoFirstPage}"
+                    AutomationProperties.Name="Go to First Page"
+                    ToolTip="First"
                     Command="{commands:DataContextCommandAdapter Executed=GoToFirst, CanExecute=CanGoToFirst}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
-            <Button Grid.Column="1" Name="BackPage" Content="{x:Static properties:Resources.RemoteSourceView_ButtonGoBackAPage}" AutomationProperties.Name="Go Back a Page" ToolTip="Back"
+            <Button Grid.Column="1"
+                    Name="BackPage"
+                    Content="{x:Static properties:Resources.RemoteSourceView_ButtonGoBackAPage}"
+                    AutomationProperties.Name="Go Back a Page"
+                    ToolTip="Back"
                     Command="{commands:DataContextCommandAdapter Executed=GoToPrevious, CanExecute=CanGoToPrevious}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
-            <TextBlock Grid.Column="2" Name="CurrentPage" AutomationProperties.Name="Current Page"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"
+
+            <TextBlock Grid.Column="2"
+                       Name="CurrentPage"
+                       AutomationProperties.Name="Current Page"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
                        Style="{StaticResource PageCountTextStyle}">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}{0} / {1}">
@@ -302,19 +508,53 @@
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>
-            <Button Grid.Column="3" Name="ForwardPage" Content="{x:Static properties:Resources.RemoteSourceView_ButtonGoForwardAPage}" AutomationProperties.Name="Go Forward a Page" ToolTip="Forward"
+
+            <Button Grid.Column="3"
+                    Name="ForwardPage"
+                    Content="{x:Static properties:Resources.RemoteSourceView_ButtonGoForwardAPage}"
+                    AutomationProperties.Name="Go Forward a Page"
+                    ToolTip="Forward"
                     Command="{commands:DataContextCommandAdapter Executed=GoToNext, CanExecute=CanGoToNext}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
-            <Button Grid.Column="4" Name="LastPage" Content="{x:Static properties:Resources.RemoteSourceView_ButtonGotoLastPage}" AutomationProperties.Name="Go to Last Page" ToolTip="Last"
+            <Button Grid.Column="4"
+                    Name="LastPage"
+                    Content="{x:Static properties:Resources.RemoteSourceView_ButtonGotoLastPage}"
+                    AutomationProperties.Name="Go to Last Page"
+                    ToolTip="Last"
                     Command="{commands:DataContextCommandAdapter Executed=GoToLast, CanExecute=CanGoToLast}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
         </Grid>
 
-        <ListView Grid.Row="1" x:Name="Packages" ItemsSource="{Binding Packages, Mode=OneWay}"
-                  VerticalAlignment="Stretch"
-                  HorizontalContentAlignment="Stretch"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  ScrollViewer.IsDeferredScrollingEnabled="False"
-                  MouseDoubleClick="Packages_OnMouseDoubleClick" />
+        <Grid Grid.Row="1">
+            <ListView x:Name="Packages"
+                      ItemsSource="{Binding Packages, Mode=OneWay}"
+                      VerticalAlignment="Stretch"
+                      IsTextSearchEnabled="True"
+                      TextSearch.TextPath="Title"
+                      HorizontalContentAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.IsDeferredScrollingEnabled="False"
+                      MouseDoubleClick="Packages_OnMouseDoubleClick" />
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Visibility="{Binding ShowShouldPreventPreloadMessage, Converter={StaticResource BooleanToVisibility}}">
+                <iconPacks:PackIconOcticons Kind="Search" Width="72" Height="72" Foreground="{DynamicResource MahApps.Brushes.AccentBase}" HorizontalAlignment="Center" Margin="20" />
+                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_PreventPreloadNoResults}"
+                           HorizontalAlignment="Center"
+                           FontSize="28"
+                           Margin="10"
+                           TextWrapping="Wrap"/>
+                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_PreventPreloadHeading}"
+                           HorizontalAlignment="Center"
+                           FontSize="22"
+                           Margin="5"
+                           TextWrapping="Wrap"/>
+                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_PreventPreloadSubHeading}"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Margin="5"
+                           TextWrapping="Wrap"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

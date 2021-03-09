@@ -48,6 +48,10 @@ namespace ChocolateyGuiCli
 
         internal static string LocalAppDataPath { get; } = LogSetup.GetLocalAppDataPath(Name);
 
+        internal static string UserConfigurationDatabaseName { get; } = "UserDatabase";
+
+        internal static string GlobalConfigurationDatabaseName { get; } = "GlobalDatabase";
+
         internal static void Configure()
         {
             var logPath = LogSetup.GetLogsFolderPath("Logs");

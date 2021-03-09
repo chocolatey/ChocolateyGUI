@@ -12,6 +12,7 @@ using chocolatey;
 using chocolatey.infrastructure.app.services;
 using chocolatey.infrastructure.filesystem;
 using chocolatey.infrastructure.services;
+using ChocolateyGui.Common;
 using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Providers;
@@ -39,20 +40,34 @@ namespace ChocolateyGuiCli.Startup
             builder.RegisterInstance(choco.Container().GetInstance<IXmlService>())
                 .As<IXmlService>().SingleInstance();
 
-            builder.RegisterType<LiteDBFileStorageService>().As<IFileStorageService>().SingleInstance();
-            builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
             builder.RegisterType<ChocolateyGuiCacheService>().As<IChocolateyGuiCacheService>().SingleInstance();
 
             try
             {
-                var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
-                builder.Register(c => database).SingleInstance();
+                var userDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
+
+                var globalDatabase = Hacks.IsElevated
+                    ? new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true")
+                    : new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true;readonly=true");
+
+                var configService = new ConfigService(globalDatabase, userDatabase);
+                configService.SetEffectiveConfiguration();
+
+                builder.RegisterInstance(configService).As<IConfigService>().SingleInstance();
+                builder.RegisterInstance(new LiteDBFileStorageService(userDatabase)).As<IFileStorageService>().SingleInstance();
+
+                // Since there are two instances of LiteDB, they are added as named instances, so that they can be retrieved when required
+                builder.RegisterInstance(userDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.UserConfigurationDatabaseName);
+                builder.RegisterInstance(globalDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.GlobalConfigurationDatabaseName);
             }
             catch (IOException ex)
             {
                 Bootstrapper.Logger.Error(ex, Resources.Error_DatabaseAccessCli);
                 Environment.Exit(-1);
             }
+
+            // Services
+            builder.RegisterType<VersionService>().As<IVersionService>().SingleInstance();
 
             // Commands
             // These are using Named registrations to aid with the "finding" of these components

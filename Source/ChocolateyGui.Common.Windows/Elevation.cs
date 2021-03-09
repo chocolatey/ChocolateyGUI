@@ -31,7 +31,6 @@ namespace ChocolateyGui.Common.Windows
             set
             {
                 this.SetPropertyValue(ref _isElevated, value);
-                NotifyOfPropertyChange(nameof(CanDoCentralActions));
             }
         }
 
@@ -45,18 +44,7 @@ namespace ChocolateyGui.Common.Windows
             set
             {
                 this.SetPropertyValue(ref _isBackgroundRunning, value);
-                NotifyOfPropertyChange(nameof(CanDoCentralActions));
             }
-        }
-
-        public bool CanDoCentralActions
-        {
-            get { return _isBackgroundRunning || _isElevated; }
-        }
-
-        public bool CanDoTertiaryActions
-        {
-            get { return _isElevated; }
         }
     }
 }

@@ -11,8 +11,10 @@ using System.Windows;
 using Autofac;
 using chocolatey;
 using chocolatey.infrastructure.registration;
+using ChocolateyGui.Common.Enums;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows;
+using ChocolateyGui.Common.Windows.Theming;
 
 namespace ChocolateyGui
 {
@@ -94,6 +96,33 @@ namespace ChocolateyGui
 
                 throw;
             }
+        }
+
+        /// <inheritdoc />
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            ThemeAssist.BundledTheme.Generate("ChocolateyGui");
+
+            var configService = Bootstrapper.Container.Resolve<IConfigService>();
+            var defaultToDarkMode = configService.GetEffectiveConfiguration().DefaultToDarkMode;
+
+            ThemeMode themeMode;
+            if (defaultToDarkMode == null)
+            {
+                themeMode = ThemeMode.WindowsDefault;
+            }
+            else if (defaultToDarkMode.Value)
+            {
+                themeMode = ThemeMode.Dark;
+            }
+            else
+            {
+                themeMode = ThemeMode.Light;
+            }
+
+            ThemeAssist.BundledTheme.SyncTheme(themeMode);
         }
     }
 }

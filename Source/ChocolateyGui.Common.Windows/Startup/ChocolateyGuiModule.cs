@@ -79,8 +79,8 @@ namespace ChocolateyGui.Common.Windows.Startup
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
             builder.RegisterType<LiteDBFileStorageService>().As<IFileStorageService>().SingleInstance();
-            builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
             builder.RegisterType<ChocolateyGuiCacheService>().As<IChocolateyGuiCacheService>().SingleInstance();
+            builder.RegisterType<AllowedCommandsService>().As<IAllowedCommandsService>().SingleInstance();
 
             // Register Mapper
             var mapperConfiguration = new MapperConfiguration(config =>
@@ -103,13 +103,32 @@ namespace ChocolateyGui.Common.Windows.Startup
                     .ForMember(dest => dest.VisibleToAdminsOnly, opt => opt.MapFrom(src => src.VisibleToAdminOnly));
             });
 
+            builder.RegisterType<BundledThemeService>().As<IBundledThemeService>().SingleInstance();
             builder.RegisterInstance(DialogCoordinator.Instance).As<IDialogCoordinator>();
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
 
             try
             {
-                var database = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
-                builder.Register(c => database).SingleInstance();
+                var userDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
+
+                LiteDatabase globalDatabase = null;
+
+                globalDatabase = Hacks.IsElevated
+                    ? new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true")
+                    : new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true;readonly=true");
+
+                var configService = new ConfigService(globalDatabase, userDatabase);
+                configService.SetEffectiveConfiguration();
+
+                var iconService = new PackageIconService(userDatabase);
+
+                builder.RegisterInstance(iconService).As<IPackageIconService>().SingleInstance();
+                builder.RegisterInstance(configService).As<IConfigService>().SingleInstance();
+                builder.RegisterInstance(new LiteDBFileStorageService(userDatabase)).As<IFileStorageService>().SingleInstance();
+
+                // Since there are two instances of LiteDB, they are added as named instances, so that they can be retrieved when required
+                builder.RegisterInstance(userDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.UserConfigurationDatabaseName);
+                builder.RegisterInstance(globalDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.GlobalConfigurationDatabaseName);
             }
             catch (IOException ex)
             {

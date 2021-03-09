@@ -43,6 +43,7 @@
       <ComponentGroupRef Id="ApplicationContent" />
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="CreateAppDataFolder" />
+      <ComponentRef Id="CreateAppDataConfigFolder" />
       <ComponentRef Id="CreateUserAppDataFolder" />
       <MergeRef Id="VCRedist" />
     </Feature>
@@ -70,6 +71,14 @@
               <Permission User="Everyone" GenericAll="yes" />
             </CreateFolder>
           </Component>
+          <Directory Id="CommonAppDataConfig" Name="Config">
+            <Component Id="CreateAppDataConfigFolder" Guid="FA867EA2-AEDB-4CF8-8471-BC03D651B50C">
+              <CreateFolder>
+                <Permission User="Administrators" GenericAll="yes" />
+                <Permission User="Everyone" GenericRead="yes" GenericExecute="yes" />
+              </CreateFolder>
+            </Component>
+          </Directory>
         </Directory>
       </Directory>
       <Directory Id="LocalAppDataFolder">

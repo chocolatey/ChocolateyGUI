@@ -230,6 +230,9 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\RoutedCommandBinding.cs" />
     <Compile Include="Commands\RoutedCommandMonitor.cs" />
+    <Compile Include="Controls\Dialogs\AdvancedChocolateyDialog.xaml.cs">
+      <DependentUpon>AdvancedChocolateyDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Dialogs\ChocolateyDialog.xaml.cs">
       <DependentUpon>ChocolateyDialog.xaml</DependentUpon>
     </Compile>
@@ -281,9 +284,11 @@
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
     <Compile Include="Utilities\IDataGridColumnComparer.cs" />
+    <Compile Include="Utilities\NotifyTaskCompletion.cs" />
     <Compile Include="Utilities\PackageAuthorsComparer.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\Items\AdvancedInstallViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
     <Compile Include="ViewModels\Items\SourceViewModel.cs" />
     <Compile Include="ViewModels\LocalSourceViewModel.cs" />
@@ -328,6 +333,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\Dialogs\AdvancedChocolateyDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Dialogs\ChocolateyDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

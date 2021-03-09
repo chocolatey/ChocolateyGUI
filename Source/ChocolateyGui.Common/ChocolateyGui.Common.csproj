@@ -127,6 +127,7 @@
     <Compile Include="Enums\PackagesChangedEventType.cs" />
     <Compile Include="Enums\ThemeMode.cs" />
     <Compile Include="Hacks.cs" />
+    <Compile Include="Models\AdvancedInstall.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\ChocolateyAggregatedSources.cs" />
     <Compile Include="Models\ChocolateyFeature.cs" />

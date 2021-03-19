@@ -160,7 +160,7 @@ namespace ChocolateyGui.Common.Services
                 settingsCollection.Insert(settings);
             }
 
-            SettingsChanged?.Invoke(settings, EventArgs.Empty);
+            SettingsChanged?.Invoke(GetEffectiveConfiguration(), EventArgs.Empty);
         }
 
         public IEnumerable<ChocolateyGuiFeature> GetFeatures(bool global)

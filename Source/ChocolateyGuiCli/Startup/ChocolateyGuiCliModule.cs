@@ -46,9 +46,30 @@ namespace ChocolateyGuiCli.Startup
             {
                 var userDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
 
-                var globalDatabase = Hacks.IsElevated
-                    ? new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true")
-                    : new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true;readonly=true");
+                LiteDatabase globalDatabase;
+                if (Hacks.IsElevated)
+                {
+                    globalDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true");
+                }
+                else
+                {
+                    if (!File.Exists(Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")))
+                    {
+                        // Since the global configuration database file doesn't exist, we must be running in a state where an administrator user
+                        // has never run Chocolatey GUI. In this case, use null, which will mean attempts to use the global database will be ignored.
+                        globalDatabase = null;
+                    }
+                    else
+                    {
+                        // Since this is a non-administrator user, they should only have read permissions to this database
+                        globalDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};readonly=true");
+                    }
+                }
+
+                if (globalDatabase != null)
+                {
+                    builder.RegisterInstance(globalDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.GlobalConfigurationDatabaseName);
+                }
 
                 var configService = new ConfigService(globalDatabase, userDatabase);
                 configService.SetEffectiveConfiguration();
@@ -58,7 +79,6 @@ namespace ChocolateyGuiCli.Startup
 
                 // Since there are two instances of LiteDB, they are added as named instances, so that they can be retrieved when required
                 builder.RegisterInstance(userDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.UserConfigurationDatabaseName);
-                builder.RegisterInstance(globalDatabase).As<LiteDatabase>().SingleInstance().Named<LiteDatabase>(Bootstrapper.GlobalConfigurationDatabaseName);
             }
             catch (IOException ex)
             {

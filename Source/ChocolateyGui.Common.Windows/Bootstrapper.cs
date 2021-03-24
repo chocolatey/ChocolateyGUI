@@ -25,6 +25,7 @@ using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Startup;
 using ChocolateyGui.Common.Windows.ViewModels;
+using LiteDB;
 using Serilog;
 using ILogger = Serilog.ILogger;
 using Log = Serilog.Log;
@@ -82,6 +83,7 @@ namespace ChocolateyGui.Common.Windows
         {
             IsExiting = true;
             Log.CloseAndFlush();
+            FinalizeDatabaseTransaction();
             Container.Dispose();
             return Task.FromResult(true);
         }
@@ -181,6 +183,7 @@ namespace ChocolateyGui.Common.Windows
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            FinalizeDatabaseTransaction();
             if (e.IsTerminating)
             {
                 Logger.Fatal(Resources.Application_UnhandledException, e.ExceptionObject as Exception);
@@ -200,6 +203,24 @@ namespace ChocolateyGui.Common.Windows
             else
             {
                 Logger.Error(Resources.Application_UnhandledException, e.ExceptionObject as Exception);
+            }
+        }
+
+        private static void FinalizeDatabaseTransaction()
+        {
+            if (Container != null)
+            {
+                if (Container.IsRegisteredWithName<LiteDatabase>(GlobalConfigurationDatabaseName))
+                {
+                    var globalDatabase = Container.ResolveNamed<LiteDatabase>(GlobalConfigurationDatabaseName);
+                    globalDatabase.Dispose();
+                }
+
+                if (Container.IsRegisteredWithName<LiteDatabase>(UserConfigurationDatabaseName))
+                {
+                    var userDatabase = Container.ResolveNamed<LiteDatabase>(UserConfigurationDatabaseName);
+                    userDatabase.Dispose();
+                }
             }
         }
     }

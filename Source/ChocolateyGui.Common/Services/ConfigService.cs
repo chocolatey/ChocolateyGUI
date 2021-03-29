@@ -22,9 +22,6 @@ namespace ChocolateyGui.Common.Services
     {
         public ConfigService(LiteDatabase globalDatabase, LiteDatabase userDatabase)
         {
-            GlobalCollection = globalDatabase.GetCollection<AppConfiguration>(nameof(AppConfiguration));
-            UserCollection = userDatabase.GetCollection<AppConfiguration>(nameof(AppConfiguration));
-
             var defaultGlobalSettings = new AppConfiguration()
             {
                 Id = "v0.18.0",
@@ -39,7 +36,20 @@ namespace ChocolateyGui.Common.Services
                 Id = "v0.18.0"
             };
 
-            GlobalAppConfiguration = GlobalCollection.FindById("v0.18.0") ?? defaultGlobalSettings;
+            // If the global database is null, the assumption has to be that we are running as a non-administrator
+            // user, as such, we should proceed with default settings
+            if (globalDatabase == null)
+            {
+                GlobalCollection = null;
+                GlobalAppConfiguration = defaultGlobalSettings;
+            }
+            else
+            {
+                GlobalCollection = globalDatabase.GetCollection<AppConfiguration>(nameof(AppConfiguration));
+                GlobalAppConfiguration = GlobalCollection.FindById("v0.18.0") ?? defaultGlobalSettings;
+            }
+
+            UserCollection = userDatabase.GetCollection<AppConfiguration>(nameof(AppConfiguration));
             UserAppConfiguration = UserCollection.FindById("v0.18.0") ?? defaultUserSettings;
         }
 
@@ -149,6 +159,14 @@ namespace ChocolateyGui.Common.Services
 
         public void UpdateSettings(AppConfiguration settings, bool global)
         {
+            if (global && GlobalCollection == null)
+            {
+                // This is very much an edge case, and we shouldn't ever get to here, but it does need to be handled
+                Logger.Warning("An attempt has been made to save a configuration change globally, when the global configuration database hasn't been created.");
+                Logger.Warning("No action will be taken, please check with your System Administrator.");
+                return;
+            }
+
             var settingsCollection = global ? GlobalCollection : UserCollection;
 
             if (settingsCollection.Exists(Query.EQ("_id", "v0.18.0")))
@@ -160,7 +178,7 @@ namespace ChocolateyGui.Common.Services
                 settingsCollection.Insert(settings);
             }
 
-            SettingsChanged?.Invoke(settings, EventArgs.Empty);
+            SettingsChanged?.Invoke(GetEffectiveConfiguration(), EventArgs.Empty);
         }
 
         public IEnumerable<ChocolateyGuiFeature> GetFeatures(bool global)

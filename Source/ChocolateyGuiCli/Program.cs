@@ -19,6 +19,8 @@ using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Services;
+using LiteDB;
+using Serilog;
 using Assembly = chocolatey.infrastructure.adapters.Assembly;
 using Console = System.Console;
 using GenericRunner = ChocolateyGui.Common.Commands.GenericRunner;
@@ -37,62 +39,90 @@ namespace ChocolateyGuiCli
 
         public static void Main(string[] args)
         {
-            AddAssemblyResolver();
-
-            Bootstrapper.Configure();
-
-            var commandName = string.Empty;
-            IList<string> commandArgs = new List<string>();
-
-            // shift the first arg off
-            int count = 0;
-            foreach (var arg in args)
+            try
             {
-                if (count == 0)
+                AddAssemblyResolver();
+
+                Bootstrapper.Configure();
+
+                var commandName = string.Empty;
+                IList<string> commandArgs = new List<string>();
+
+                // shift the first arg off
+                int count = 0;
+                foreach (var arg in args)
                 {
-                    count += 1;
-                    continue;
+                    if (count == 0)
+                    {
+                        count += 1;
+                        continue;
+                    }
+
+                    commandArgs.Add(arg);
                 }
 
-                commandArgs.Add(arg);
-            }
+                var configuration = new ChocolateyGuiConfiguration();
+                SetUpGlobalOptions(args, configuration, Bootstrapper.Container);
+                SetEnvironmentOptions(configuration);
 
-            var configuration = new ChocolateyGuiConfiguration();
-            SetUpGlobalOptions(args, configuration, Bootstrapper.Container);
-            SetEnvironmentOptions(configuration);
-
-            if (configuration.RegularOutput)
-            {
-#if DEBUG
-                Bootstrapper.Logger.Warning(" (DEBUG BUILD)".format_with("Chocolatey GUI", configuration.Information.DisplayVersion));
-#else
-                Bootstrapper.Logger.Warning("{0}".format_with(configuration.Information.DisplayVersion));
-#endif
-
-                if (args.Length == 0)
+                if (configuration.RegularOutput)
                 {
-                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsText.format_with("chocolateyguicli"));
+    #if DEBUG
+                    Bootstrapper.Logger.Warning(" (DEBUG BUILD)".format_with("Chocolatey GUI", configuration.Information.DisplayVersion));
+    #else
+                    Bootstrapper.Logger.Warning("{0}".format_with(configuration.Information.DisplayVersion));
+    #endif
+
+                    if (args.Length == 0)
+                    {
+                        Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsText.format_with("chocolateyguicli"));
+                    }
+                }
+
+                var runner = new GenericRunner();
+                runner.Run(configuration, Bootstrapper.Container, command =>
+                {
+                    ParseArgumentsAndUpdateConfiguration(
+                        commandArgs,
+                        configuration,
+                        (optionSet) => command.ConfigureArgumentParser(optionSet, configuration),
+                        (unparsedArgs) =>
+                        {
+                            command.HandleAdditionalArgumentParsing(unparsedArgs, configuration);
+                        },
+                        () =>
+                        {
+                            Bootstrapper.Logger.Debug("Performing validation checks...");
+                            command.HandleValidation(configuration);
+                        },
+                        () => command.HelpMessage(configuration));
+                });
+            }
+            catch (Exception ex)
+            {
+                Bootstrapper.Logger.Error(ex.Message);
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+
+                if (Bootstrapper.Container != null)
+                {
+                    if (Bootstrapper.Container.IsRegisteredWithName<LiteDatabase>(Bootstrapper.GlobalConfigurationDatabaseName))
+                    {
+                        var globalDatabase = Bootstrapper.Container.ResolveNamed<LiteDatabase>(Bootstrapper.GlobalConfigurationDatabaseName);
+                        globalDatabase.Dispose();
+                    }
+
+                    if (Bootstrapper.Container.IsRegisteredWithName<LiteDatabase>(Bootstrapper.UserConfigurationDatabaseName))
+                    {
+                        var userDatabase = Bootstrapper.Container.ResolveNamed<LiteDatabase>(Bootstrapper.UserConfigurationDatabaseName);
+                        userDatabase.Dispose();
+                    }
+
+                    Bootstrapper.Container.Dispose();
                 }
             }
-
-            var runner = new GenericRunner();
-            runner.Run(configuration, Bootstrapper.Container, command =>
-            {
-                ParseArgumentsAndUpdateConfiguration(
-                    commandArgs,
-                    configuration,
-                    (optionSet) => command.ConfigureArgumentParser(optionSet, configuration),
-                    (unparsedArgs) =>
-                    {
-                        command.HandleAdditionalArgumentParsing(unparsedArgs, configuration);
-                    },
-                    () =>
-                    {
-                        Bootstrapper.Logger.Debug("Performing validation checks...");
-                        command.HandleValidation(configuration);
-                    },
-                    () => command.HelpMessage(configuration));
-            });
         }
 
         #region DupFinder Exclusion

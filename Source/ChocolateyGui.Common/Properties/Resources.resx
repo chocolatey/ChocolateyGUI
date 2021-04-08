@@ -1044,4 +1044,7 @@ Please contact your System Administrator to enable this operation.</value>
     <value>This action will remove the '{0}' source from both Chocolatey and Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?</value>
     <comment>{0} = The id of the source which is away to be deleted, i.e. chocolatey, chocolatey.licensed, etc</comment>
   </data>
+  <data name="Dialog_AreYouSureUpdateAllMessage" xml:space="preserve">
+    <value>This action, depending on the number of currently outdated packages, may take a long time to complete. Are you sure that you want to continue?</value>
+  </data>
 </root>

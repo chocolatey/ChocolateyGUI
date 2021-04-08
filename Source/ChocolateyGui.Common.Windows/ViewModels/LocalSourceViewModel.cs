@@ -29,6 +29,7 @@ using ChocolateyGui.Common.ViewModels;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
+using MahApps.Metro.Controls.Dialogs;
 using Serilog;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
@@ -45,6 +46,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly IAllowedCommandsService _allowedCommandsService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
+        private readonly IDialogCoordinator _dialogCoordinator;
         private bool _exportAll = true;
         private bool _hasLoaded;
         private bool _matchWord;
@@ -68,7 +70,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IAllowedCommandsService allowedCommandsService,
             IEventAggregator eventAggregator,
             string displayName,
-            IMapper mapper)
+            IMapper mapper,
+            IDialogCoordinator dialogCoordinator)
         {
             _chocolateyService = chocolateyService;
             _progressService = progressService;
@@ -91,6 +94,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             _eventAggregator = eventAggregator;
             _mapper = mapper;
+            _dialogCoordinator = dialogCoordinator;
             _eventAggregator.Subscribe(this);
         }
 
@@ -182,30 +186,44 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                await _progressService.StartLoading(Resources.LocalSourceViewModel_Packages, true);
-                IsLoading = true;
-
-                _progressService.WriteMessage(Resources.LocalSourceViewModel_FetchingPackages);
-                var token = _progressService.GetCancellationToken();
-                var packages = Packages.Where(p => p.CanUpdate && !p.IsPinned).ToList();
-                double current = 0.0f;
-                foreach (var package in packages)
-                {
-                    if (token.IsCancellationRequested)
+                var result = await _dialogCoordinator.ShowMessageAsync(
+                    this,
+                    Resources.Dialog_AreYouSureTitle,
+                    Resources.Dialog_AreYouSureUpdateAllMessage,
+                    MessageDialogStyle.AffirmativeAndNegative,
+                    new MetroDialogSettings
                     {
-                        await _progressService.StopLoading();
-                        IsLoading = false;
-                        return;
+                        AffirmativeButtonText = Resources.Dialog_Yes,
+                        NegativeButtonText = Resources.Dialog_No
+                    });
+
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    await _progressService.StartLoading(Resources.LocalSourceViewModel_Packages, true);
+                    IsLoading = true;
+
+                    _progressService.WriteMessage(Resources.LocalSourceViewModel_FetchingPackages);
+                    var token = _progressService.GetCancellationToken();
+                    var packages = Packages.Where(p => p.CanUpdate && !p.IsPinned).ToList();
+                    double current = 0.0f;
+                    foreach (var package in packages)
+                    {
+                        if (token.IsCancellationRequested)
+                        {
+                            await _progressService.StopLoading();
+                            IsLoading = false;
+                            return;
+                        }
+
+                        _progressService.Report(Math.Min(current++ / packages.Count, 100));
+                        await package.Update();
                     }
 
-                    _progressService.Report(Math.Min(current++ / packages.Count, 100));
-                    await package.Update();
+                    await _progressService.StopLoading();
+                    IsLoading = false;
+                    ShowOnlyPackagesWithUpdate = false;
+                    RefreshPackages();
                 }
-
-                await _progressService.StopLoading();
-                IsLoading = false;
-                ShowOnlyPackagesWithUpdate = false;
-                RefreshPackages();
             }
             catch (Exception ex)
             {

@@ -759,6 +759,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This action, depending on the number of currently outdated packages, may take a long time to complete. Are you sure that you want to continue?.
+        /// </summary>
+        public static string Dialog_AreYouSureUpdateAllMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureUpdateAllMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string Dialog_No {

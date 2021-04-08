@@ -723,6 +723,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This action will remove the &apos;{0}&apos; source from both Chocolatey and Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?.
+        /// </summary>
+        public static string Dialog_AreYourSureRemoveSourceMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYourSureRemoveSourceMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This action will delete all cached icons that appear on the Tile Views of Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?.
         /// </summary>
         public static string Dialog_AreYouSureIconsMessage {

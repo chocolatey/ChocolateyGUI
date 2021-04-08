@@ -339,23 +339,37 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async void Remove()
         {
-            await _progressService.StartLoading(Resources.SettingsViewModel_RemovingSource);
-            try
+            var result = await _dialogCoordinator.ShowMessageAsync(
+                this,
+                Resources.Dialog_AreYouSureTitle,
+                string.Format(Resources.Dialog_AreYourSureRemoveSourceMessage, _originalId),
+                MessageDialogStyle.AffirmativeAndNegative,
+                new MetroDialogSettings
+                {
+                    AffirmativeButtonText = Resources.Dialog_Yes,
+                    NegativeButtonText = Resources.Dialog_No
+                });
+
+            if (result == MessageDialogResult.Affirmative)
             {
-                await _chocolateyService.RemoveSource(_originalId);
-                Sources.Remove(SelectedSource);
-                SelectedSource = null;
-                await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
-            }
-            catch (UnauthorizedAccessException)
-            {
-                await _progressService.ShowMessageAsync(
-                    Resources.General_UnauthorisedException_Title,
-                    Resources.General_UnauthorisedException_Description);
-            }
-            finally
-            {
-                await _progressService.StopLoading();
+                await _progressService.StartLoading(Resources.SettingsViewModel_RemovingSource);
+                try
+                {
+                    await _chocolateyService.RemoveSource(_originalId);
+                    Sources.Remove(SelectedSource);
+                    SelectedSource = null;
+                    await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    await _progressService.ShowMessageAsync(
+                        Resources.General_UnauthorisedException_Title,
+                        Resources.General_UnauthorisedException_Description);
+                }
+                finally
+                {
+                    await _progressService.StopLoading();
+                }
             }
         }
 

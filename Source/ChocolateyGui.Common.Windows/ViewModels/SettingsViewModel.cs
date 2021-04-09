@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using Caliburn.Micro;
 using chocolatey.infrastructure.filesystem;
 using ChocolateyGui.Common.Models;
@@ -47,6 +49,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private ChocolateySource _draftSource;
         private string _originalId;
         private bool _isNewItem;
+        private string _chocolateyGuiFeatureSearchQuery;
+        private string _chocolateyGuiSettingSearchQuery;
+        private string _chocolateyFeatureSearchQuery;
+        private string _chocolateySettingsSearchQuery;
 
         public SettingsViewModel(
             IChocolateyService chocolateyService,
@@ -67,6 +73,71 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             DisplayName = Resources.SettingsViewModel_DisplayName;
             Activated += OnActivated;
             Deactivated += OnDeactivated;
+
+            ChocolateyGuiFeaturesView.Filter = new Predicate<object>(o => FilterChocolateyGuiFeatures(o as ChocolateyGuiFeature));
+            ChocolateyGuiSettingsView.Filter = new Predicate<object>(o => FilterChocolateyGuiSettings(o as ChocolateyGuiSetting));
+            ChocolateyFeaturesView.Filter = new Predicate<object>(o => FilterChocolateyFeatures(o as ChocolateyFeature));
+            ChocolateySettingsView.Filter = new Predicate<object>(o => FilterChocolateySettings(o as ChocolateySetting));
+        }
+
+        public string ChocolateyGuiFeatureSearchQuery
+        {
+            get
+            {
+                return _chocolateyGuiFeatureSearchQuery;
+            }
+
+            set
+            {
+                _chocolateyGuiFeatureSearchQuery = value;
+                NotifyOfPropertyChange(nameof(ChocolateyGuiFeatureSearchQuery));
+                ChocolateyGuiFeaturesView.Refresh();
+            }
+        }
+
+        public string ChocolateyGuiSettingSearchQuery
+        {
+            get
+            {
+                return _chocolateyGuiSettingSearchQuery;
+            }
+
+            set
+            {
+                _chocolateyGuiSettingSearchQuery = value;
+                NotifyOfPropertyChange(nameof(ChocolateyGuiSettingSearchQuery));
+                ChocolateyGuiSettingsView.Refresh();
+            }
+        }
+
+        public string ChocolateyFeatureSearchQuery
+        {
+            get
+            {
+                return _chocolateyFeatureSearchQuery;
+            }
+
+            set
+            {
+                _chocolateyFeatureSearchQuery = value;
+                NotifyOfPropertyChange(nameof(ChocolateyFeatureSearchQuery));
+                ChocolateyFeaturesView.Refresh();
+            }
+        }
+
+        public string ChocolateySettingSearchQuery
+        {
+            get
+            {
+                return _chocolateySettingsSearchQuery;
+            }
+
+            set
+            {
+                _chocolateySettingsSearchQuery = value;
+                NotifyOfPropertyChange(nameof(ChocolateySettingSearchQuery));
+                ChocolateySettingsView.Refresh();
+            }
         }
 
         public ObservableCollection<ChocolateyGuiFeature> ChocolateyGuiFeatures { get; } = new ObservableCollection<ChocolateyGuiFeature>();
@@ -78,6 +149,26 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         public ObservableCollection<ChocolateySetting> ChocolateySettings { get; } = new ObservableCollection<ChocolateySetting>();
 
         public ObservableCollection<ChocolateySource> Sources { get; } = new ObservableCollection<ChocolateySource>();
+
+        public ICollectionView ChocolateyGuiFeaturesView
+        {
+            get { return CollectionViewSource.GetDefaultView(ChocolateyGuiFeatures); }
+        }
+
+        public ICollectionView ChocolateyGuiSettingsView
+        {
+            get { return CollectionViewSource.GetDefaultView(ChocolateyGuiSettings); }
+        }
+
+        public ICollectionView ChocolateyFeaturesView
+        {
+            get { return CollectionViewSource.GetDefaultView(ChocolateyFeatures); }
+        }
+
+        public ICollectionView ChocolateySettingsView
+        {
+            get { return CollectionViewSource.GetDefaultView(ChocolateySettings); }
+        }
 
         public bool CanSave => SelectedSource != null;
 
@@ -506,6 +597,30 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _changedChocolateySetting.OnCompleted();
             _changedChocolateyGuiFeature.OnCompleted();
             _changedChocolateyGuiSetting.OnCompleted();
+        }
+
+        private bool FilterChocolateyGuiFeatures(ChocolateyGuiFeature chocolateyGuiFeature)
+        {
+            return ChocolateyGuiFeatureSearchQuery == null
+                   || chocolateyGuiFeature.Title.IndexOf(ChocolateyGuiFeatureSearchQuery, StringComparison.OrdinalIgnoreCase) != -1;
+        }
+
+        private bool FilterChocolateyGuiSettings(ChocolateyGuiSetting chocolateyGuiSetting)
+        {
+            return ChocolateyGuiSettingSearchQuery == null
+                   || chocolateyGuiSetting.Key.IndexOf(ChocolateyGuiSettingSearchQuery, StringComparison.OrdinalIgnoreCase) != -1;
+        }
+
+        private bool FilterChocolateyFeatures(ChocolateyFeature chocolateyFeature)
+        {
+            return ChocolateyFeatureSearchQuery == null
+                   || chocolateyFeature.Name.IndexOf(ChocolateyFeatureSearchQuery, StringComparison.OrdinalIgnoreCase) != -1;
+        }
+
+        private bool FilterChocolateySettings(ChocolateySetting chocolateySetting)
+        {
+            return ChocolateySettingSearchQuery == null
+                   || chocolateySetting.Key.IndexOf(ChocolateySettingSearchQuery, StringComparison.OrdinalIgnoreCase) != -1;
         }
     }
 }

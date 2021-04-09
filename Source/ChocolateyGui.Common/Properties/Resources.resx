@@ -1047,4 +1047,12 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="Dialog_AreYouSureUpdateAllMessage" xml:space="preserve">
     <value>This action, depending on the number of currently outdated packages, may take a long time to complete. Are you sure that you want to continue?</value>
   </data>
+  <data name="Dialog_AreYouSureReinstallMessage" xml:space="preserve">
+    <value>This action will attempt to reinstall the '{0}' package.  Are you sure you want to proceed?</value>
+    <comment>{0} = The id of the package that is going to be reinstalled</comment>
+  </data>
+  <data name="Dialog_AreYouSureUninstallMessage" xml:space="preserve">
+    <value>This action will attempt to uninstall the '{0}' package. Are you sure you want to proceed?</value>
+    <comment>{0} = The id of the package that is going to be uninstalled</comment>
+  </data>
 </root>

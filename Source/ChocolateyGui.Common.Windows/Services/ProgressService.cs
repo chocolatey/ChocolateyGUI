@@ -96,6 +96,27 @@ namespace ChocolateyGui.Common.Windows.Services
             }
         }
 
+        public async Task<MessageDialogResult> ShowConfirmationMessageAsync(string title, string message)
+        {
+            using (await _lock.EnterAsync())
+            {
+                if (ShellView != null)
+                {
+                    var dialogSettings = new MetroDialogSettings
+                    {
+                        AffirmativeButtonText = Resources.Dialog_Yes,
+                        NegativeButtonText = Resources.Dialog_No
+                    };
+
+                    return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message, MessageDialogStyle.AffirmativeAndNegative, dialogSettings));
+                }
+
+                return MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes
+                           ? MessageDialogResult.Affirmative
+                           : MessageDialogResult.Negative;
+            }
+        }
+
         public async Task StartLoading(string title = null, bool isCancelable = false)
         {
             using (await _lock.EnterAsync())

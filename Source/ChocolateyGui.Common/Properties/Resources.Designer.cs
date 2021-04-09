@@ -750,11 +750,29 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This action will attempt to reinstall the &apos;{0}&apos; package.  Are you sure you want to proceed?.
+        /// </summary>
+        public static string Dialog_AreYouSureReinstallMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureReinstallMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure?.
         /// </summary>
         public static string Dialog_AreYouSureTitle {
             get {
                 return ResourceManager.GetString("Dialog_AreYouSureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action will attempt to uninstall the &apos;{0}&apos; package. Are you sure you want to proceed?.
+        /// </summary>
+        public static string Dialog_AreYouSureUninstallMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureUninstallMessage", resourceCulture);
             }
         }
         

@@ -16,6 +16,7 @@ using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
+using MahApps.Metro.Controls.Dialogs;
 using NuGet;
 using Action = System.Action;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
@@ -42,6 +43,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IConfigService _configService;
         private readonly IAllowedCommandsService _allowedCommandsService;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         private string[] _authors;
 
@@ -118,7 +120,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             IProgressService progressService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
-            IAllowedCommandsService allowedCommandsService)
+            IAllowedCommandsService allowedCommandsService,
+            IDialogCoordinator dialogCoordinator)
         {
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
@@ -128,6 +131,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
             _allowedCommandsService = allowedCommandsService;
+            _dialogCoordinator = dialogCoordinator;
         }
 
         public DateTime Created
@@ -466,10 +470,24 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog(Resources.PackageViewModel_ReinstallingPackage, Resources.PackageViewModel_ReinstallingPackage, Id))
+                var confirmationResult = await _dialogCoordinator.ShowMessageAsync(
+                    this,
+                    Resources.Dialog_AreYouSureTitle,
+                    string.Format(Resources.Dialog_AreYouSureReinstallMessage, Id),
+                    MessageDialogStyle.AffirmativeAndNegative,
+                    new MetroDialogSettings
+                    {
+                        AffirmativeButtonText = Resources.Dialog_Yes,
+                        NegativeButtonText = Resources.Dialog_No
+                    });
+
+                if (confirmationResult == MessageDialogResult.Affirmative)
                 {
-                    await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true).ConfigureAwait(false);
-                    _chocolateyGuiCacheService.PurgeOutdatedPackages();
+                    using (await StartProgressDialog(Resources.PackageViewModel_ReinstallingPackage, Resources.PackageViewModel_ReinstallingPackage, Id))
+                    {
+                        await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true).ConfigureAwait(false);
+                        _chocolateyGuiCacheService.PurgeOutdatedPackages();
+                    }
                 }
             }
             catch (Exception ex)
@@ -487,34 +505,48 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog(Resources.PackageViewModel_UninstallingPackage, Resources.PackageViewModel_UninstallingPackage, Id))
-                {
-                    var result = await _chocolateyService.UninstallPackage(Id, Version.ToString(), true).ConfigureAwait(false);
-
-                    if (!result.Successful)
+                var confirmationResult = await _dialogCoordinator.ShowMessageAsync(
+                    this,
+                    Resources.Dialog_AreYouSureTitle,
+                    string.Format(Resources.Dialog_AreYouSureUninstallMessage, Id),
+                    MessageDialogStyle.AffirmativeAndNegative,
+                    new MetroDialogSettings
                     {
-                        var exceptionMessage = result.Exception == null
-                            ? string.Empty
-                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                        AffirmativeButtonText = Resources.Dialog_Yes,
+                        NegativeButtonText = Resources.Dialog_No
+                    });
 
-                        var message = string.Format(
-                            Resources.ChocolateyRemotePackageService_UninstallFailedMessage,
-                            Id,
-                            Version,
-                            string.Join("\n", result.Messages),
-                            exceptionMessage);
+                if (confirmationResult == MessageDialogResult.Affirmative)
+                {
+                    using (await StartProgressDialog(Resources.PackageViewModel_UninstallingPackage, Resources.PackageViewModel_UninstallingPackage, Id))
+                    {
+                        var result = await _chocolateyService.UninstallPackage(Id, Version.ToString(), true).ConfigureAwait(false);
 
-                        await _progressService.ShowMessageAsync(
-                            Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
-                            message);
+                        if (!result.Successful)
+                        {
+                            var exceptionMessage = result.Exception == null
+                                ? string.Empty
+                                : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
 
-                        Logger.Warning(result.Exception, "Failed to uninstall {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
+                            var message = string.Format(
+                                Resources.ChocolateyRemotePackageService_UninstallFailedMessage,
+                                Id,
+                                Version,
+                                string.Join("\n", result.Messages),
+                                exceptionMessage);
 
-                        return;
+                            await _progressService.ShowMessageAsync(
+                                Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
+                                message);
+
+                            Logger.Warning(result.Exception, "Failed to uninstall {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
+
+                            return;
+                        }
+
+                        IsInstalled = false;
+                        _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Uninstalled, Version));
                     }
-
-                    IsInstalled = false;
-                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Uninstalled, Version));
                 }
             }
             catch (Exception ex)

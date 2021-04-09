@@ -199,7 +199,7 @@ namespace ChocolateyGui.Common.Services
                 }
             }
 
-            return features;
+            return features.OrderBy(f => f.Title);
         }
 
         public void ListFeatures(ChocolateyGuiConfiguration configuration)
@@ -235,7 +235,7 @@ namespace ChocolateyGui.Common.Services
                 }
             }
 
-            return settings;
+            return settings.OrderBy(s => s.Key);
         }
 
         public void ListSettings(ChocolateyGuiConfiguration configuration)

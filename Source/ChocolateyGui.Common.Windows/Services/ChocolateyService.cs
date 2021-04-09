@@ -373,7 +373,8 @@ namespace ChocolateyGui.Common.Windows.Services
         public async Task<ChocolateyFeature[]> GetFeatures()
         {
             var config = await GetConfigFile();
-            return config.Features.Select(_mapper.Map<ChocolateyFeature>).ToArray();
+            var features = config.Features.Select(_mapper.Map<ChocolateyFeature>);
+            return features.OrderBy(f => f.Name).ToArray();
         }
 
         public async Task SetFeature(ChocolateyFeature feature)
@@ -395,7 +396,8 @@ namespace ChocolateyGui.Common.Windows.Services
         public async Task<ChocolateySetting[]> GetSettings()
         {
             var config = await GetConfigFile();
-            return config.ConfigSettings.Select(_mapper.Map<ChocolateySetting>).ToArray();
+            var settings = config.ConfigSettings.Select(_mapper.Map<ChocolateySetting>);
+            return settings.OrderBy(s => s.Key).ToArray();
         }
 
         public async Task SetSetting(ChocolateySetting setting)

@@ -23,7 +23,7 @@
     </FrameworkElement.CommandBindings>
 
     <UserControl.Resources>
-        <converters:NullToVisibility x:Key="UriToVisibilty" />
+        <converters:NullToVisibility x:Key="UriToVisibility" />
         <converters:NullToVisibility x:Key="NullToVisibility" />
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString" />
         <converters:PackageDependenciesToString x:Key="PackageDependenciesToString" />
@@ -200,22 +200,22 @@
                        Visibility="{Binding IsPackageSizeAvailable, Converter={StaticResource BoolToVis}}"/>
 
             <StackPanel Margin="5 5 0 40">
-                <TextBlock Visibility="{Binding ProjectUrl, Converter={StaticResource UriToVisibilty}}">
+                <TextBlock Visibility="{Binding ProjectUrl, Converter={StaticResource UriToVisibility}}">
                     <Hyperlink NavigateUri="{Binding ProjectUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
                         <Run Text="{x:Static properties:Resources.PackageView_ProjectSite}" />
                     </Hyperlink>
                 </TextBlock>
-                <TextBlock Visibility="{Binding LicenseUrl, Converter={StaticResource UriToVisibilty}}">
+                <TextBlock Visibility="{Binding LicenseUrl, Converter={StaticResource UriToVisibility}}">
                     <Hyperlink NavigateUri="{Binding LicenseUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
                         <Run Text="{x:Static properties:Resources.PackageView_License}" />
                     </Hyperlink>
                 </TextBlock>
-                <TextBlock Visibility="{Binding GalleryDetailsUrl, Converter={StaticResource UriToVisibilty}}">
+                <TextBlock Visibility="{Binding GalleryDetailsUrl, Converter={StaticResource UriToVisibility}}">
                     <Hyperlink NavigateUri="{Binding GalleryDetailsUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
                         <Run Text="{x:Static properties:Resources.PackageView_Gallery}" />
                     </Hyperlink>
                 </TextBlock>
-                <TextBlock Visibility="{Binding ReportAbuseUrl, Converter={StaticResource UriToVisibilty}}">
+                <TextBlock Visibility="{Binding ReportAbuseUrl, Converter={StaticResource UriToVisibility}}">
                     <Hyperlink NavigateUri="{Binding ReportAbuseUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
                         <Run Text="{x:Static properties:Resources.PackageView_ReportAbuse}" />
                     </Hyperlink>

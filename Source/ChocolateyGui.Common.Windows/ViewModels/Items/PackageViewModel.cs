@@ -43,7 +43,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IConfigService _configService;
         private readonly IAllowedCommandsService _allowedCommandsService;
-        private readonly IDialogCoordinator _dialogCoordinator;
 
         private string[] _authors;
 
@@ -120,8 +119,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             IProgressService progressService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
-            IAllowedCommandsService allowedCommandsService,
-            IDialogCoordinator dialogCoordinator)
+            IAllowedCommandsService allowedCommandsService)
         {
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
@@ -131,7 +129,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
             _allowedCommandsService = allowedCommandsService;
-            _dialogCoordinator = dialogCoordinator;
         }
 
         public DateTime Created
@@ -470,16 +467,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                var confirmationResult = await _dialogCoordinator.ShowMessageAsync(
-                    this,
+                var confirmationResult = await _progressService.ShowConfirmationMessageAsync(
                     Resources.Dialog_AreYouSureTitle,
-                    string.Format(Resources.Dialog_AreYouSureReinstallMessage, Id),
-                    MessageDialogStyle.AffirmativeAndNegative,
-                    new MetroDialogSettings
-                    {
-                        AffirmativeButtonText = Resources.Dialog_Yes,
-                        NegativeButtonText = Resources.Dialog_No
-                    });
+                    string.Format(Resources.Dialog_AreYouSureReinstallMessage, Id));
 
                 if (confirmationResult == MessageDialogResult.Affirmative)
                 {
@@ -487,6 +477,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                     {
                         await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true).ConfigureAwait(false);
                         _chocolateyGuiCacheService.PurgeOutdatedPackages();
+                        await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
                     }
                 }
             }
@@ -497,24 +488,15 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                     Resources.PackageViewModel_FailedToReinstall,
                     string.Format(Resources.PackageViewModel_RanIntoReinstallError, Id, ex.Message));
             }
-
-            await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
         }
 
         public async Task Uninstall()
         {
             try
             {
-                var confirmationResult = await _dialogCoordinator.ShowMessageAsync(
-                    this,
+                var confirmationResult = await _progressService.ShowConfirmationMessageAsync(
                     Resources.Dialog_AreYouSureTitle,
-                    string.Format(Resources.Dialog_AreYouSureUninstallMessage, Id),
-                    MessageDialogStyle.AffirmativeAndNegative,
-                    new MetroDialogSettings
-                    {
-                        AffirmativeButtonText = Resources.Dialog_Yes,
-                        NegativeButtonText = Resources.Dialog_No
-                    });
+                    string.Format(Resources.Dialog_AreYouSureUninstallMessage, Id));
 
                 if (confirmationResult == MessageDialogResult.Affirmative)
                 {

@@ -74,6 +74,23 @@
             </DataTemplate.Triggers>
         </DataTemplate>
 
+        <Style x:Key="Chocolatey.Styles.TextBox.Search" BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="metro:TextBoxHelper.ClearTextButton" Value="True" />
+            <Style.Triggers>
+                <Trigger Property="metro:TextBoxHelper.HasText" Value="False">
+                    <Setter Property="metro:TextBoxHelper.ClearTextButton" Value="False" />
+                    <Setter Property="metro:TextBoxHelper.Watermark" Value="Search for..." />
+                </Trigger>
+                <Trigger Property="metro:TextBoxHelper.HasText" Value="True">
+                    <Setter Property="metro:TextBoxHelper.ClearTextButton" Value="True" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </UserControl.Resources>
 
     <DockPanel LastChildFill="True">
@@ -116,39 +133,35 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DockPanel Margin="0 0 5 0" Grid.Column="0">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                    <Grid Margin="0 0 5 0" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="0">
-                                <TextBlock DockPanel.Dock="Top"
-                                           Margin="0 0 0 5"
-                                           Style="{StaticResource TitleTextBlockStyle}"
-                                           Text="{x:Static properties:Resources.SettingsView_Features}"/>
-                                <TextBox Width="200"
-                                         FontSize="14"
-                                         Text="{Binding ChocolateyGuiFeatureSearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
-                            </StackPanel>
-                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="{DynamicResource MahApps.Brushes.Control.Background}">
-                                <ItemsControl AlternationCount="2" ItemsSource="{Binding ChocolateyGuiFeaturesView}" ItemTemplate="{StaticResource ChocolateyGuiFeatureTemplate}" />
-                            </ScrollViewer>
-                        </Grid>
-                    </DockPanel>
+                        <DockPanel Grid.Row="0" Margin="0 0 0 5">
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Features}"/>
+                            <TextBox DockPanel.Dock="Right"
+                                     Style="{StaticResource Chocolatey.Styles.TextBox.Search}"
+                                     Text="{Binding ChocolateyGuiFeatureSearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
+                        </DockPanel>
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="{DynamicResource MahApps.Brushes.Control.Background}">
+                            <ItemsControl AlternationCount="2" ItemsSource="{Binding ChocolateyGuiFeaturesView}" ItemTemplate="{StaticResource ChocolateyGuiFeatureTemplate}" />
+                        </ScrollViewer>
+                    </Grid>
 
                     <Grid Grid.Column="1" Margin="5 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Row="0">
-                            <TextBlock Margin="0 0 0 5" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Settings}" />
-                            <TextBox Width="200"
-                                     FontSize="14"
+
+                        <DockPanel Grid.Row="0" Margin="0 0 0 5">
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Settings}" />
+                            <TextBox DockPanel.Dock="Right"
+                                     Style="{StaticResource Chocolatey.Styles.TextBox.Search}"
                                      Text="{Binding ChocolateyGuiSettingSearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
+                        </DockPanel>
                         <DataGrid Grid.Row="1"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
@@ -179,35 +192,35 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DockPanel Margin="0 0 5 0" Grid.Column="0">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal" Grid.Row="0">
-                                <TextBlock DockPanel.Dock="Top" Margin="0 0 0 5" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Features}"/>
-                                <TextBox Width="200"
-                                         FontSize="14"
-                                         Text="{Binding ChocolateyFeatureSearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
-                            </StackPanel>
-                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="{DynamicResource MahApps.Brushes.Control.Background}">
-                                <ItemsControl AlternationCount="2" ItemsSource="{Binding ChocolateyFeaturesView}" ItemTemplate="{StaticResource ChocolateyFeatureTemplate}" />
-                            </ScrollViewer>
-                        </Grid>
-                    </DockPanel>
+                    <Grid Margin="0 0 5 0" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <DockPanel Grid.Row="0" Margin="0 0 0 5">
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Features}"/>
+                            <TextBox DockPanel.Dock="Right"
+                                     Style="{StaticResource Chocolatey.Styles.TextBox.Search}"
+                                     Text="{Binding ChocolateyFeatureSearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
+                        </DockPanel>
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="{DynamicResource MahApps.Brushes.Control.Background}">
+                            <ItemsControl AlternationCount="2" ItemsSource="{Binding ChocolateyFeaturesView}" ItemTemplate="{StaticResource ChocolateyFeatureTemplate}" />
+                        </ScrollViewer>
+                    </Grid>
 
                     <Grid Grid.Column="1" Margin="5 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Row="0">
-                            <TextBlock Margin="0 0 0 5" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Settings}" />
-                            <TextBox Width="200"
-                                 FontSize="14"
-                                 Text="{Binding ChocolateySettingSearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
+
+                        <DockPanel Grid.Row="0" Margin="0 0 0 5">
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Static properties:Resources.SettingsView_Settings}" />
+                            <TextBox DockPanel.Dock="Right"
+                                     Style="{StaticResource Chocolatey.Styles.TextBox.Search}"
+                                     Text="{Binding ChocolateySettingSearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
+                        </DockPanel>
                         <DataGrid Grid.Row="1"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"

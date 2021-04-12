@@ -1055,4 +1055,7 @@ Please contact your System Administrator to enable this operation.</value>
     <value>This action will attempt to uninstall the '{0}' package. Are you sure you want to proceed?</value>
     <comment>{0} = The id of the package that is going to be uninstalled</comment>
   </data>
+  <data name="SettingsView_SearchWatermark" xml:space="preserve">
+    <value>Search...</value>
+  </data>
 </root>

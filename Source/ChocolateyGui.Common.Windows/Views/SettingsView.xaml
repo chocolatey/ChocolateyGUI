@@ -83,7 +83,7 @@
             <Style.Triggers>
                 <Trigger Property="metro:TextBoxHelper.HasText" Value="False">
                     <Setter Property="metro:TextBoxHelper.ClearTextButton" Value="False" />
-                    <Setter Property="metro:TextBoxHelper.Watermark" Value="Search for..." />
+                    <Setter Property="metro:TextBoxHelper.Watermark" Value="{x:Static properties:Resources.SettingsView_SearchWatermark}" />
                 </Trigger>
                 <Trigger Property="metro:TextBoxHelper.HasText" Value="True">
                     <Setter Property="metro:TextBoxHelper.ClearTextButton" Value="True" />

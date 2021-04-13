@@ -42,7 +42,7 @@ You can find information about Chocolatey GUI here: [https://docs.chocolatey.org
 
 ### Requirements
 
-* .NET Framework 4.5.2
+* .NET Framework 4.8
 * Should work on all Windows Operating Systems from Windows 7 SP1 and above, and Windows Server 2008 R2 SP1 and above
 
 ### License / Credits

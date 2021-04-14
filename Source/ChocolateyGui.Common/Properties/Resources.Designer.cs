@@ -191,6 +191,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There as an error attempting to read the contents of the .arguments file for version {0} of package &apos;{1}&apos;.  See log file for more information..
+        /// </summary>
+        public static string Application_PackageArgumentsError {
+            get {
+                return ResourceManager.GetString("Application_PackageArgumentsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unhandled Exception.
         /// </summary>
         public static string Application_UnhandledException {
@@ -1794,6 +1803,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View Package Arguments.
+        /// </summary>
+        public static string PackageView_ButtonPackageArguments {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonPackageArguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pin (Ignore Updates).
         /// </summary>
         public static string PackageView_ButtonPin {
@@ -1961,6 +1979,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string PackageView_TotalDownloads {
             get {
                 return ResourceManager.GetString("PackageView_TotalDownloads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to locate .arguments file for version {0} of package &apos;{1}&apos;.
+        /// </summary>
+        public static string PackageView_UnableToFindArgumentsFile {
+            get {
+                return ResourceManager.GetString("PackageView_UnableToFindArgumentsFile", resourceCulture);
             }
         }
         

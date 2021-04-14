@@ -12,9 +12,11 @@ using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
 using chocolatey;
+using chocolatey.infrastructure.adapters;
 using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.app.services;
+using chocolatey.infrastructure.cryptography;
 using chocolatey.infrastructure.filesystem;
 using chocolatey.infrastructure.services;
 using ChocolateyGui.Common.Models;
@@ -48,6 +50,8 @@ namespace ChocolateyGui.Common.Windows.Startup
             builder.RegisterType<ChocolateyConfigurationProvider>().As<IChocolateyConfigurationProvider>().SingleInstance();
             builder.RegisterType<ChocolateyService>().As<IChocolateyService>().SingleInstance();
             builder.RegisterType<DotNetFileSystem>().As<chocolatey.infrastructure.filesystem.IFileSystem>().SingleInstance();
+            builder.RegisterType<PackageArgumentsService>().As<IPackageArgumentsService>().SingleInstance();
+            builder.RegisterType<DefaultEncryptionUtility>().As<IEncryptionUtility>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterAssemblyTypes(viewModelAssembly)

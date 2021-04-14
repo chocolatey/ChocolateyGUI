@@ -8,6 +8,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Base;
@@ -46,6 +47,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IConfigService _configService;
         private readonly IAllowedCommandsService _allowedCommandsService;
+        private readonly IPackageArgumentsService _packageArgumentsService;
 
         private string[] _authors;
 
@@ -123,7 +125,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             IProgressService progressService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
-            IAllowedCommandsService allowedCommandsService)
+            IAllowedCommandsService allowedCommandsService,
+            IPackageArgumentsService packageArgumentsService)
         {
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
@@ -134,6 +137,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
             _allowedCommandsService = allowedCommandsService;
+            _packageArgumentsService = packageArgumentsService;
         }
 
         public DateTime Created
@@ -420,6 +424,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         public bool IsPackageSizeAvailable
         {
             get { return PackageSize != -1; }
+        }
+
+        public void ShowArguments()
+        {
+            var decryptedArguments = _packageArgumentsService.DecryptPackageArgumentsFile(Id, Version.ToString());
+            MessageBox.Show(decryptedArguments);
         }
 
         public async Task Install()

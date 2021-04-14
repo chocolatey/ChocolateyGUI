@@ -183,7 +183,7 @@
                    Target="{Binding ElementName=Version}" />
             <TextBlock x:Name="Version" Text="{Binding Version}"
                        Style="{StaticResource PackageResourceValue}" />
-            
+
             <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_Downloads}"
                    Target="{Binding ElementName=VersionDownloadCount}"
                    Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />

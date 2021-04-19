@@ -232,6 +232,7 @@
     <Compile Include="Utilities\ChocolateyMessageBox.cs" />
     <Compile Include="Services\IPackageArgumentsService.cs" />
     <Compile Include="Services\PackageArgumentsService.cs" />
+    <Compile Include="Utilities\Extensions\LocalizeExtension.cs" />
     <Compile Include="Utilities\ToolTipBehavior.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Utilities\NotifyTaskCompletion.cs" />
     <Compile Include="Utilities\PackageAuthorsComparer.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
+    <Compile Include="Utilities\TranslationSource.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\AdvancedInstallViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
@@ -418,6 +420,9 @@
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\HarfBuzzSharp.2.6.1.4\build\net462\HarfBuzzSharp.targets" Condition="Exists('..\packages\HarfBuzzSharp.2.6.1.4\build\net462\HarfBuzzSharp.targets')" />

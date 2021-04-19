@@ -6,7 +6,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:items="clr-namespace:ChocolateyGui.Common.ViewModels.Items;assembly=ChocolateyGui.Common"
-             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
+             xmlns:lang="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Extensions"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:enums="clr-namespace:ChocolateyGui.Common.Enums;assembly=ChocolateyGui.Common"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
@@ -80,7 +80,7 @@
                                    Grid.Row="0"
                                    FontSize="14"
                                    Opacity="0.6"
-                                   Text="{x:Static properties:Resources.RemoteSourceView_Authors}" />
+                                   Text="{lang:Localize RemoteSourceView_Authors}" />
                         <TextBlock Grid.Column="1"
                                    Grid.Row="0"
                                    FontSize="14"
@@ -94,7 +94,7 @@
                                    Grid.Row="1"
                                    FontSize="14"
                                    Opacity="0.6"
-                                   Text="{x:Static properties:Resources.Controls_PackageListTags}" />
+                                   Text="{lang:Localize Controls_PackageListTags}" />
                         <TextBlock Grid.Column="1"
                                    Grid.Row="1"
                                    x:Name="Tags"
@@ -160,7 +160,7 @@
                                            VerticalAlignment="Center"
                                            Margin="5 0 0 0"
                                            Style="{StaticResource SubtitleTextBlockStyle}" />
-                                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_Prerelease}"
+                                <TextBlock Text="{lang:Localize RemoteSourceView_Prerelease}"
                                            Background="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseKey}}"
                                            Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseForegroundKey}}"
                                            Visibility="{Binding IsPrerelease, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}"
@@ -202,7 +202,7 @@
                                        Grid.Row="0"
                                        FontSize="14"
                                        Opacity="0.6"
-                                       Text="{x:Static properties:Resources.RemoteSourceView_Authors}" />
+                                       Text="{lang:Localize RemoteSourceView_Authors}" />
                             <TextBlock Grid.Column="1"
                                        Grid.Row="0"
                                        FontSize="14"
@@ -216,7 +216,7 @@
                                        Grid.Row="1"
                                        FontSize="14"
                                        Opacity="0.6"
-                                       Text="{x:Static properties:Resources.Controls_PackageListTags}" />
+                                       Text="{lang:Localize Controls_PackageListTags}" />
                             <TextBlock Grid.Column="1"
                                        Grid.Row="1"
                                        x:Name="Tags"
@@ -274,12 +274,12 @@
 
                     <ContentControl x:Name="IsInstalledOverlay" Grid.Row="0" Grid.RowSpan="3"
                                     Visibility="Collapsed"
-                                    Content="{x:Static properties:Resources.RemoteSourceView_OverlayInstalled}"
+                                    Content="{lang:Localize RemoteSourceView_OverlayInstalled}"
                                     Style="{DynamicResource TileIsInstalledOverlayStyle}" />
 
                     <ContentControl x:Name="OutOfDateOverlay" Grid.Row="0" Grid.RowSpan="3"
                                     Visibility="Collapsed"
-                                    Content="{x:Static properties:Resources.RemoteSourceView_OverlayOutdated}"
+                                    Content="{lang:Localize RemoteSourceView_OverlayOutdated}"
                                     Style="{DynamicResource TileOutOfDateOverlayStyle}" />
                 </Grid>
 
@@ -337,12 +337,12 @@
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                             <StackPanel x:Name="EmptySearchInfo" Visibility="Collapsed" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                 <iconPacks:PackIconOcticons Kind="Search" Width="72" Height="72" Foreground="{DynamicResource MahApps.Brushes.AccentBase}" HorizontalAlignment="Center" Margin="20" />
-                                                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFound}"
+                                                <TextBlock Text="{lang:Localize RemoteSourceView_SearchNoPackagesFound}"
                                                            HorizontalAlignment="Center"
                                                            FontSize="28"
                                                            Margin="10"
                                                            TextWrapping="Wrap"/>
-                                                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFoundHeading}"
+                                                <TextBlock Text="{lang:Localize RemoteSourceView_SearchNoPackagesFoundHeading}"
                                                            HorizontalAlignment="Center"
                                                            FontSize="20"
                                                            Margin="5"
@@ -408,7 +408,7 @@
             <WrapPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5">
                 <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
                     <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
-                           Target="{Binding ElementName=SearchTextBox}" Content="{x:Static properties:Resources.RemoteSourceView_SearchBoxText}"/>
+                           Target="{Binding ElementName=SearchTextBox}" Content="{lang:Localize RemoteSourceView_SearchBoxText}"/>
                     <TextBox x:Name="SearchTextBox"
                              Width="200"
                              FontSize="14"
@@ -425,17 +425,17 @@
                 <CheckBox Name="AllVersionsCheckBox"
                           Margin="5"
                           Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
-                          Content="{x:Static properties:Resources.RemoteSourceView_CheckboxAllVersions}"
+                          Content="{lang:Localize RemoteSourceView_CheckboxAllVersions}"
                           IsChecked="{Binding IncludeAllVersions}" />
                 <CheckBox Name="PrereleaseCheckBox"
                           Margin="5"
                           Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
-                          Content="{x:Static properties:Resources.RemoteSourceView_CheckboxIncludePrerelease}"
+                          Content="{lang:Localize RemoteSourceView_CheckboxIncludePrerelease}"
                           IsChecked="{Binding IncludePrerelease}" />
                 <CheckBox Name="MatchCheckBox"
                           Margin="5"
                           Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
-                          Content="{x:Static properties:Resources.RemoteSourceView_CheckboxMatchExactly}"
+                          Content="{lang:Localize RemoteSourceView_CheckboxMatchExactly}"
                           IsChecked="{Binding MatchWord}" />
                 <ComboBox Name="SortBox" Margin="5 1" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
             </WrapPanel>
@@ -443,7 +443,7 @@
                 <Button Command="{commands:DataContextCommandAdapter CheckForOutdatedPackages, CanCheckForOutdatedPackages}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
-                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static properties:Resources.RemoteSourceView_ButtonCheckForOutdatedPkgs}" Margin="0,0,2,0">
+                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{lang:Localize RemoteSourceView_ButtonCheckForOutdatedPkgs}" Margin="0,0,2,0">
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
                         <iconPacks:PackIconFontAwesome Kind="BoxSolid" Margin="2 0 0 0" />
@@ -453,20 +453,20 @@
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
                         Style="{DynamicResource IconFlatButtonStyle}"
-                        ToolTip="{x:Static properties:Resources.RemoteSourceView_ButtonRefreshPkgs}"
+                        ToolTip="{lang:Localize RemoteSourceView_ButtonRefreshPkgs}"
                         Margin="0,0,2,0">
                     <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
                 </Button>
                 <RadioButton Margin="6,0,1,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"
                              IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Standard}}"
-                             ToolTip="{x:Static properties:Resources.RemoteSourceView_ButtonListView}">
+                             ToolTip="{lang:Localize RemoteSourceView_ButtonListView}">
                     <iconPacks:PackIconModern Kind="TextAlignJustify" />
                 </RadioButton>
                 <RadioButton Margin="1,0,0,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"
                              IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Tile}}"
-                             ToolTip="{x:Static properties:Resources.RemoteSourceView_ButtonTileView}">
+                             ToolTip="{lang:Localize RemoteSourceView_ButtonTileView}">
                     <iconPacks:PackIconModern Kind="TilesFour" />
                 </RadioButton>
             </StackPanel>
@@ -482,14 +482,14 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0"
                     Name="FirstPage"
-                    Content="{x:Static properties:Resources.RemoteSourceView_ButtonGotoFirstPage}"
+                    Content="{lang:Localize RemoteSourceView_ButtonGotoFirstPage}"
                     AutomationProperties.Name="Go to First Page"
                     ToolTip="First"
                     Command="{commands:DataContextCommandAdapter Executed=GoToFirst, CanExecute=CanGoToFirst}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
             <Button Grid.Column="1"
                     Name="BackPage"
-                    Content="{x:Static properties:Resources.RemoteSourceView_ButtonGoBackAPage}"
+                    Content="{lang:Localize RemoteSourceView_ButtonGoBackAPage}"
                     AutomationProperties.Name="Go Back a Page"
                     ToolTip="Back"
                     Command="{commands:DataContextCommandAdapter Executed=GoToPrevious, CanExecute=CanGoToPrevious}"
@@ -511,14 +511,14 @@
 
             <Button Grid.Column="3"
                     Name="ForwardPage"
-                    Content="{x:Static properties:Resources.RemoteSourceView_ButtonGoForwardAPage}"
+                    Content="{lang:Localize RemoteSourceView_ButtonGoForwardAPage}"
                     AutomationProperties.Name="Go Forward a Page"
                     ToolTip="Forward"
                     Command="{commands:DataContextCommandAdapter Executed=GoToNext, CanExecute=CanGoToNext}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
             <Button Grid.Column="4"
                     Name="LastPage"
-                    Content="{x:Static properties:Resources.RemoteSourceView_ButtonGotoLastPage}"
+                    Content="{lang:Localize RemoteSourceView_ButtonGotoLastPage}"
                     AutomationProperties.Name="Go to Last Page"
                     ToolTip="Last"
                     Command="{commands:DataContextCommandAdapter Executed=GoToLast, CanExecute=CanGoToLast}"
@@ -539,17 +539,17 @@
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"
                         Visibility="{Binding ShowShouldPreventPreloadMessage, Converter={StaticResource BooleanToVisibility}}">
                 <iconPacks:PackIconOcticons Kind="Search" Width="72" Height="72" Foreground="{DynamicResource MahApps.Brushes.AccentBase}" HorizontalAlignment="Center" Margin="20" />
-                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_PreventPreloadNoResults}"
+                <TextBlock Text="{lang:Localize RemoteSourceView_PreventPreloadNoResults}"
                            HorizontalAlignment="Center"
                            FontSize="28"
                            Margin="10"
                            TextWrapping="Wrap"/>
-                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_PreventPreloadHeading}"
+                <TextBlock Text="{lang:Localize RemoteSourceView_PreventPreloadHeading}"
                            HorizontalAlignment="Center"
                            FontSize="22"
                            Margin="5"
                            TextWrapping="Wrap"/>
-                <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_PreventPreloadSubHeading}"
+                <TextBlock Text="{lang:Localize RemoteSourceView_PreventPreloadSubHeading}"
                            HorizontalAlignment="Center"
                            FontSize="20"
                            Margin="5"

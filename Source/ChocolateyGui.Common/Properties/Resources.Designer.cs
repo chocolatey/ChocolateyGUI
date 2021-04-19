@@ -2710,6 +2710,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selected Language.
+        /// </summary>
+        public static string SettingsView_SelectedLanguage {
+            get {
+                return ResourceManager.GetString("SettingsView_SelectedLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string SettingsView_Settings {

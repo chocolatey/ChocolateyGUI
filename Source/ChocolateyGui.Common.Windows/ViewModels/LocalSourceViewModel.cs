@@ -28,6 +28,7 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
+using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 using Serilog;
@@ -60,6 +61,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private bool _firstLoadIncomplete = true;
         private ListViewMode _listViewMode;
         private bool _showAdditionalPackageInformation;
+        private string _resourceId;
 
         public LocalSourceViewModel(
             IChocolateyService chocolateyService,
@@ -71,7 +73,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IAllowedCommandsService allowedCommandsService,
             IEventAggregator eventAggregator,
             string displayName,
-            IMapper mapper)
+            IMapper mapper,
+            TranslationSource translator)
         {
             _chocolateyService = chocolateyService;
             _dialogService = dialogService;
@@ -81,7 +84,19 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _configService = configService;
             _allowedCommandsService = allowedCommandsService;
 
-            DisplayName = displayName;
+            if (displayName[0] == '[' && displayName[displayName.Length - 1] == ']')
+            {
+                _resourceId = displayName.Trim('[', ']');
+                DisplayName = translator[_resourceId];
+                translator.PropertyChanged += (sender, e) =>
+                {
+                    DisplayName = translator[_resourceId];
+                };
+            }
+            else
+            {
+                DisplayName = displayName;
+            }
 
             _packages = new List<IPackageViewModel>();
             Packages = new ObservableCollection<IPackageViewModel>();

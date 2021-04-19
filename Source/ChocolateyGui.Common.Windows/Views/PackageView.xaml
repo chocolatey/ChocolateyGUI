@@ -7,7 +7,7 @@
              xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
+             xmlns:lang="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Extensions"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
@@ -45,12 +45,12 @@
             <StackPanel Margin="15 0 0 0" Orientation="Horizontal">
                 <TextBlock Style="{StaticResource SubtitleTextStyle}"
                            AutomationProperties.Name="{Binding Authors, Converter={StaticResource StringListToString}}">
-                    <Run Text="{x:Static properties:Resources.PackageView_Authors}" />
+                    <Run Text="{lang:Localize PackageView_Authors}" />
                     <Run FontSize="18" Text="{Binding Authors, Converter={StaticResource StringListToString}}" />
                 </TextBlock>
                 <TextBlock Style="{StaticResource SubtitleTextStyle}"
                            AutomationProperties.Name="{Binding Owners, Converter={StaticResource StringListToString}}">
-                    <Run Text="{x:Static properties:Resources.PackageView_Maintainers}" />
+                    <Run Text="{lang:Localize PackageView_Maintainers}" />
                     <Run FontSize="18" Text="{Binding Owners, Converter={StaticResource StringListToString}}" />
                 </TextBlock>
             </StackPanel>
@@ -83,13 +83,13 @@
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Install}">
                             <i:Interaction.Behaviors>
-                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationInstall}"
+                                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationInstall}"
                                                            IsFeatureEnabled="{Binding IsInstallAllowed, Mode=OneWay}"
-                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
                             </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Install" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonInstall}" FontSize="16"/>
+                                <TextBlock Text="{lang:Localize PackageView_ButtonInstall}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -100,13 +100,13 @@
                                 IsEnabled="{Binding IsPinAllowed}"
                                 Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibility}}">
                             <i:Interaction.Behaviors>
-                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationPin}"
+                                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationPin}"
                                                            IsFeatureEnabled="{Binding IsPinAllowed, Mode=OneWay}"
-                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
                             </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconModern Kind="Pin" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonPin}" FontSize="16"/>
+                                <TextBlock Text="{lang:Localize PackageView_ButtonPin}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
@@ -114,13 +114,13 @@
                                 IsEnabled="{Binding IsUnpinAllowed}"
                                 Visibility="{Binding CanUnpin, Converter={StaticResource BooleanToVisibility}}">
                             <i:Interaction.Behaviors>
-                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUnpin}"
+                                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationUnpin}"
                                                            IsFeatureEnabled="{Binding IsUnpinAllowed, Mode=OneWay}"
-                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
                             </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconModern Kind="PinRemove" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUnpin}" FontSize="16"/>
+                                <TextBlock Text="{lang:Localize PackageView_ButtonUnpin}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
@@ -128,13 +128,13 @@
                             IsEnabled="{Binding IsReinstallAllowed}"
                             Visibility="{Binding CanReinstall, Converter={StaticResource BooleanToVisibility}}">
                             <i:Interaction.Behaviors>
-                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationReinstall}"
+                                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationReinstall}"
                                                            IsFeatureEnabled="{Binding IsReinstallAllowed, Mode=OneWay}"
-                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
                             </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Cw" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonReinstall}" FontSize="16"/>
+                                <TextBlock Text="{lang:Localize PackageView_ButtonReinstall}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
@@ -142,13 +142,13 @@
                             IsEnabled="{Binding IsUninstallAllowed}"
                             Visibility="{Binding CanUninstall, Converter={StaticResource BooleanToVisibility}}">
                             <i:Interaction.Behaviors>
-                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUninstall}"
+                                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationUninstall}"
                                                            IsFeatureEnabled="{Binding IsUninstallAllowed, Mode=OneWay}"
-                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
                             </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Uninstall" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUninstall}" FontSize="16"/>
+                                <TextBlock Text="{lang:Localize PackageView_ButtonUninstall}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                         <Button Padding="10" Margin="5 0"
@@ -156,13 +156,13 @@
                             IsEnabled="{Binding IsUpgradeAllowed}"
                             Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}">
                             <i:Interaction.Behaviors>
-                                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUpgrade}"
+                                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationUpgrade}"
                                                            IsFeatureEnabled="{Binding IsUpgradeAllowed, Mode=OneWay}"
-                                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
                             </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Cycle" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static properties:Resources.PackageView_ButtonUpdate}" FontSize="16"/>
+                                <TextBlock Text="{lang:Localize PackageView_ButtonUpdate}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -178,7 +178,7 @@
                                     VerticalAlignment="Center"
                                     Margin="10" />
             <Label Style="{StaticResource PackageResourceLabel}"
-                   Content="{x:Static properties:Resources.PackageView_PackageID}"
+                   Content="{lang:Localize PackageView_PackageID}"
                    Visibility="{Binding Id, Converter={StaticResource NullToVisibility}}"
                    Target="{Binding ElementName=Id}" />
             <TextBlock x:Name="Id" Text="{Binding Id}"
@@ -186,30 +186,30 @@
                        Style="{StaticResource PackageResourceValue}" />
 
             <Label Style="{StaticResource PackageResourceLabel}"
-                   Content="{x:Static properties:Resources.PackageView_Version}"
+                   Content="{lang:Localize PackageView_Version}"
                    Target="{Binding ElementName=Version}" />
             <TextBlock x:Name="Version" Text="{Binding Version}"
                        Style="{StaticResource PackageResourceValue}" />
-
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_Downloads}"
+            
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{lang:Localize PackageView_Downloads}"
                    Target="{Binding ElementName=VersionDownloadCount}"
                    Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
             <TextBlock x:Name="VersionDownloadCount" Text="{Binding VersionDownloadCount, StringFormat=N0}"
                        Style="{StaticResource PackageResourceValue}"
                        Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
 
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_TotalDownloads}"
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{lang:Localize PackageView_TotalDownloads}"
                    Target="{Binding ElementName=DownloadCount}"
                    Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
             <TextBlock x:Name="DownloadCount" Text="{Binding DownloadCount, StringFormat=N0}"
                        Style="{StaticResource PackageResourceValue}"
                        Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />
 
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_LastUpdate}"
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{lang:Localize PackageView_LastUpdate}"
                    Target="{Binding ElementName=Published}" />
             <TextBlock x:Name="Published" Text="{Binding Published, StringFormat=g}" Style="{StaticResource PackageResourceValue}" />
 
-            <Label Style="{StaticResource PackageResourceLabel}" Content="{x:Static properties:Resources.PackageView_PackageSize}"
+            <Label Style="{StaticResource PackageResourceLabel}" Content="{lang:Localize PackageView_PackageSize}"
                    Target="{Binding ElementName=PackageSize}"
                    Visibility="{Binding IsPackageSizeAvailable, Converter={StaticResource BoolToVis}}"/>
             <TextBlock x:Name="PackageSize"
@@ -220,27 +220,27 @@
             <StackPanel Margin="5 5 0 40">
                 <TextBlock Visibility="{Binding ProjectUrl, Converter={StaticResource UriToVisibility}}">
                     <Hyperlink NavigateUri="{Binding ProjectUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
-                        <Run Text="{x:Static properties:Resources.PackageView_ProjectSite}" />
+                        <Run Text="{lang:Localize PackageView_ProjectSite}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Visibility="{Binding LicenseUrl, Converter={StaticResource UriToVisibility}}">
                     <Hyperlink NavigateUri="{Binding LicenseUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
-                        <Run Text="{x:Static properties:Resources.PackageView_License}" />
+                        <Run Text="{lang:Localize PackageView_License}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Visibility="{Binding GalleryDetailsUrl, Converter={StaticResource UriToVisibility}}">
                     <Hyperlink NavigateUri="{Binding GalleryDetailsUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
-                        <Run Text="{x:Static properties:Resources.PackageView_Gallery}" />
+                        <Run Text="{lang:Localize PackageView_Gallery}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Visibility="{Binding ReportAbuseUrl, Converter={StaticResource UriToVisibility}}">
                     <Hyperlink NavigateUri="{Binding ReportAbuseUrl, TargetNullValue=about:blank}" RequestNavigate="HandleLinkClick">
-                        <Run Text="{x:Static properties:Resources.PackageView_ReportAbuse}" />
+                        <Run Text="{lang:Localize PackageView_ReportAbuse}" />
                     </Hyperlink>
                 </TextBlock>
             </StackPanel>
 
-            <TextBlock Text="{x:Static properties:Resources.PackagesView_Outdated}"
+            <TextBlock Text="{lang:Localize PackagesView_Outdated}"
                        Background="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}"
                        Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}"
                        Padding="3"
@@ -253,14 +253,14 @@
                     </MultiBinding>
                 </TextBlock.Visibility>
             </TextBlock>
-            <TextBlock Text="{x:Static properties:Resources.PackagesView_Prerelease}"
+            <TextBlock Text="{lang:Localize PackagesView_Prerelease}"
                        Background="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseKey}}"
                        Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseForegroundKey}}"
                        Padding="3"
                        VerticalAlignment="Center"
                        TextAlignment="Center"
                        Visibility="{Binding IsPrerelease, Converter={StaticResource BoolToVis}}"/>
-            <TextBlock Text="{x:Static properties:Resources.PackagesView_Installed}"
+            <TextBlock Text="{lang:Localize PackagesView_Installed}"
                        Background="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledKey}}"
                        Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledForegroundKey}}"
                        Padding="3"
@@ -273,7 +273,7 @@
                     </MultiBinding>
                 </TextBlock.Visibility>
             </TextBlock>
-            <TextBlock Text="{x:Static properties:Resources.PackagesView_Pinned}"
+            <TextBlock Text="{lang:Localize PackagesView_Pinned}"
                        Background="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledKey}}"
                        Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.IsInstalledForegroundKey}}"
                        Padding="3"
@@ -285,7 +285,7 @@
         <ScrollViewer Margin="25 5 0 0" Background="{DynamicResource MahApps.Brushes.Control.Background}">
             <StackPanel Margin="5 0 5 5">
                 <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
-                                 Header="{x:Static properties:Resources.PackageView_Description}">
+                                 Header="{lang:Localize PackageView_Description}">
                     <i:Interaction.Behaviors>
                         <utilities:BubbleScrollEventBehavior />
                     </i:Interaction.Behaviors>
@@ -296,14 +296,14 @@
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
-                                 Header="{x:Static properties:Resources.PackageView_Dependencies}"
+                                 Header="{lang:Localize PackageView_Dependencies}"
                                  Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                     <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"
                                AutomationProperties.Name="Package Dependencies" />
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
-                                 Header="{x:Static properties:Resources.PackageView_ReleaseNotes}"
+                                 Header="{lang:Localize PackageView_ReleaseNotes}"
                                  Visibility="{Binding ReleaseNotes, Converter={StaticResource NullToVisibility}}">
                     <i:Interaction.Behaviors>
                         <utilities:BubbleScrollEventBehavior />

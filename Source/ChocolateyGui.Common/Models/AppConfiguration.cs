@@ -26,6 +26,10 @@ namespace ChocolateyGui.Common.Models
         [Config]
         public string NumberOfPackageVersionsForSelection { get; set; }
 
+        [LocalizedDescription("SettingsView_SelectedLanguage")]
+        [Config]
+        public string UseLanguage { get; set; }
+
         [LocalizedDescription("SettingsView_ToggleShowConsoleOutputDescription")]
         [Feature]
         public bool? ShowConsoleOutput { get; set; }
@@ -84,6 +88,7 @@ namespace ChocolateyGui.Common.Models
 
         [LocalizedDescription("SettingsView_ToggleDefaultToDarkMode")]
         [Feature]
+
         public bool? DefaultToDarkMode { get; set; }
 
         [LocalizedDescription("SettingsView_ToggleHideThisPCSourceDescription")]
@@ -99,26 +104,28 @@ namespace ChocolateyGui.Common.Models
             return @"
 OutdatedPackagesCacheDurationInMinutes: {0}
 DefaultSourceName: {1}
-ShowConsoleOutput: {2}
-DefaultToTileViewForLocalSource: {3}
-DefaultToTileViewForRemoteSource: {4}
-UseDelayedSearch: {5}
-PreventPreload: {6}
-PreventAutomatedOutdatedPackagesCheck: {7}
-ExcludeInstalledPackages: {8}
-ShowAggregatedSourceView: {9}
-ShowAdditionalPackageInformation: {10}
-AllowNonAdminAccessToSettings: {11}
-UseKeyboardBindings: {12}
-HidePackageDownloadCount: {13}
-PreventAllPackageIconDownloads: {14}
-HideAllRemoteChocolateySources: {15}
-DefaultToDarkMode: {16}
-HideThisPCSource: {17}
-PreventUsageOfUpdateAllButton: {18}
+UseLanguage: {2}
+ShowConsoleOutput: {3}
+DefaultToTileViewForLocalSource: {4}
+DefaultToTileViewForRemoteSource: {5}
+UseDelayedSearch: {6}
+PreventPreload: {7}
+PreventAutomatedOutdatedPackagesCheck: {8}
+ExcludeInstalledPackages: {9}
+ShowAggregatedSourceView: {10}
+ShowAdditionalPackageInformation: {11}
+AllowNonAdminAccessToSettings: {12}
+UseKeyboardBindings: {13}
+HidePackageDownloadCount: {14}
+PreventAllPackageIconDownloads: {15}
+HideAllRemoteChocolateySources: {16}
+DefaultToDarkMode: {17}
+HideThisPCSource: {18}
+PreventUsageOfUpdateAllButton: {19}
 ".format_with(
                 OutdatedPackagesCacheDurationInMinutes,
                 DefaultSourceName,
+                UseLanguage,
                 ShowConsoleOutput,
                 DefaultToTileViewForLocalSource,
                 DefaultToTileViewForRemoteSource,

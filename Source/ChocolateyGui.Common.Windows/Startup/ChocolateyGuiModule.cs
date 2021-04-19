@@ -25,6 +25,7 @@ using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
+using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.ViewModels;
 using ChocolateyGui.Common.Windows.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Views;
@@ -113,6 +114,8 @@ namespace ChocolateyGui.Common.Windows.Startup
 
             builder.RegisterType<BundledThemeService>().As<IBundledThemeService>().SingleInstance();
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
+
+            builder.Register(c => TranslationSource.Instance).SingleInstance();
 
             try
             {

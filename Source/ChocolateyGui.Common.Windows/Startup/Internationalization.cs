@@ -6,9 +6,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
+using System.Threading;
+using ChocolateyGui.Common.Windows.Utilities;
 
 namespace ChocolateyGui.Common.Windows.Startup
 {
@@ -16,14 +15,17 @@ namespace ChocolateyGui.Common.Windows.Startup
     {
         public static void Initialize()
         {
-            var lang = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag);
-            FrameworkContentElement.LanguageProperty.OverrideMetadata(typeof(TextElement), new FrameworkPropertyMetadata(lang));
-            FrameworkContentElement.LanguageProperty.OverrideMetadata(typeof(DefinitionBase), new FrameworkPropertyMetadata(lang));
-            FrameworkContentElement.LanguageProperty.OverrideMetadata(typeof(FixedDocument), new FrameworkPropertyMetadata(lang));
-            FrameworkContentElement.LanguageProperty.OverrideMetadata(typeof(FixedDocumentSequence), new FrameworkPropertyMetadata(lang));
-            FrameworkContentElement.LanguageProperty.OverrideMetadata(typeof(FlowDocument), new FrameworkPropertyMetadata(lang));
-            FrameworkContentElement.LanguageProperty.OverrideMetadata(typeof(TableColumn), new FrameworkPropertyMetadata(lang));
-            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(lang));
+            TranslationSource.Instance.CurrentCulture = CultureInfo.CurrentCulture;
+        }
+
+        public static void UpdateLanguage(string languageCode)
+        {
+            var culture = CultureInfo.GetCultureInfo(languageCode);
+            TranslationSource.Instance.CurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
         }
     }
 }

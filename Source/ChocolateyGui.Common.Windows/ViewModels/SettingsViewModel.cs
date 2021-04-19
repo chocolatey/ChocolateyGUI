@@ -21,6 +21,7 @@ using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows.Services;
+using ChocolateyGui.Common.Windows.Startup;
 using ChocolateyGui.Common.Windows.Theming;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
 using MahApps.Metro.Controls.Dialogs;
@@ -169,6 +170,27 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             get { return CollectionViewSource.GetDefaultView(ChocolateySettings); }
         }
+
+        public string UseLanguage
+        {
+            get
+            {
+                return _config.UseLanguage;
+            }
+
+            set
+            {
+                _config.UseLanguage = value;
+                NotifyOfPropertyChange();
+                Internationalization.UpdateLanguage(value);
+            }
+        }
+
+        public ObservableCollection<string> AllLanguages { get; } = new ObservableCollection<string>
+        {
+            "en",
+            "nb"
+        };
 
         public bool CanSave => SelectedSource != null;
 

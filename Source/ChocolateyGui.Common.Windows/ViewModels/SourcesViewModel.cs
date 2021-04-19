@@ -119,7 +119,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             if (_firstLoad)
             {
-                Items.Add(_localSourceVmFactory(Resources.Resources_ThisPC));
+                Items.Add(_localSourceVmFactory("[Resources_ThisPC]"));
 
                 _ = LoadSources();
                 _firstLoad = false;

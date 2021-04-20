@@ -40,6 +40,7 @@
   	<DefineConstants>$(DefineConstants);GuiProjectFolder=$(_GuiProjectFolder);GuiTargetDir=$(_GuiTargetDir);GuiCliProjectFolder=$(_GuiCliProjectFolder);GuiCliTargetDir=$(_GuiCliTargetDir)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="NetFx48.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>

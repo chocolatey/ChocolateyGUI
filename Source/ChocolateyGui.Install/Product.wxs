@@ -11,12 +11,12 @@
   <Product Id="*" Name="$(var.ProductName)" Language="$(var.Language)" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="f8164f91-fa5c-4789-b68d-9beb5b146155">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
 
-    <PropertyRef Id="WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED" />
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED" />
     <SetProperty Id="CHOCOLATEY_INSTALL" Value="$(env.ChocolateyInstall)" Before="LaunchConditions" Sequence="first"  />
 
 
-    <Condition Message="This application requires .NET Framework 4.5.2. Please install the .NET 4.5.2 Framework then run this installer again.">
-      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED]]>
+    <Condition Message="This application requires .NET Framework 4.8. Please install the .NET 4.8 Framework then run this installer again.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED]]>
     </Condition>
 
     <Condition Message="This application only runs in Windows 7 SP1 or later.">

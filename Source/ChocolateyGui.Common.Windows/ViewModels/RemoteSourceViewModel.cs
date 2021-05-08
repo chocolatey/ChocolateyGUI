@@ -35,6 +35,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
     {
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyService _chocolateyPackageService;
+        private readonly IDialogService _dialogService;
         private readonly IProgressService _progressService;
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IConfigService _configService;
@@ -58,6 +59,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public RemoteSourceViewModel(
             IChocolateyService chocolateyPackageService,
+            IDialogService dialogService,
             IProgressService progressService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
@@ -67,6 +69,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             Source = source;
             _chocolateyPackageService = chocolateyPackageService;
+            _dialogService = dialogService;
             _progressService = progressService;
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
@@ -320,7 +323,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             catch (Exception ex)
             {
                 Logger.Error(ex, "Failed to load new packages.");
-                await _progressService.ShowMessageAsync(
+                await _dialogService.ShowMessageAsync(
                     Resources.RemoteSourceViewModel_FailedToLoad,
                     string.Format(Resources.RemoteSourceViewModel_FailedToLoadRemotePackages, ex.Message));
                 throw;

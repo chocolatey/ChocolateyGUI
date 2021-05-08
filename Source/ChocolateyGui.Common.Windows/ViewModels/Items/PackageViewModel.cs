@@ -38,6 +38,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private readonly IEventAggregator _eventAggregator;
 
         private readonly IMapper _mapper;
+        private readonly IDialogService _dialogService;
         private readonly IProgressService _progressService;
 
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
@@ -116,6 +117,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             IChocolateyService chocolateyService,
             IEventAggregator eventAggregator,
             IMapper mapper,
+            IDialogService dialogService,
             IProgressService progressService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
@@ -124,6 +126,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
             _mapper = mapper;
+            _dialogService = dialogService;
             _progressService = progressService;
             eventAggregator?.Subscribe(this);
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
@@ -438,7 +441,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                             string.Join("\n", result.Messages),
                             exceptionMessage);
 
-                        await _progressService.ShowMessageAsync(
+                        await _dialogService.ShowMessageAsync(
                             Resources.ChocolateyRemotePackageService_InstallFailedTitle,
                             message);
 
@@ -457,7 +460,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 Logger.Error(ex, "Ran into an error while installing {Id}, version {Version}.", Id, Version);
 
-                await _progressService.ShowMessageAsync(
+                await _dialogService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToInstall,
                     string.Format(Resources.PackageViewModel_RanIntoInstallError, Id, ex.Message));
             }
@@ -467,7 +470,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                var confirmationResult = await _progressService.ShowConfirmationMessageAsync(
+                var confirmationResult = await _dialogService.ShowConfirmationMessageAsync(
                     Resources.Dialog_AreYouSureTitle,
                     string.Format(Resources.Dialog_AreYouSureReinstallMessage, Id));
 
@@ -484,7 +487,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             catch (Exception ex)
             {
                 Logger.Error(ex, "Ran into an error while reinstalling {Id}, version {Version}.", Id, Version);
-                await _progressService.ShowMessageAsync(
+                await _dialogService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToReinstall,
                     string.Format(Resources.PackageViewModel_RanIntoReinstallError, Id, ex.Message));
             }
@@ -494,7 +497,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                var confirmationResult = await _progressService.ShowConfirmationMessageAsync(
+                var confirmationResult = await _dialogService.ShowConfirmationMessageAsync(
                     Resources.Dialog_AreYouSureTitle,
                     string.Format(Resources.Dialog_AreYouSureUninstallMessage, Id));
 
@@ -517,7 +520,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                                 string.Join("\n", result.Messages),
                                 exceptionMessage);
 
-                            await _progressService.ShowMessageAsync(
+                            await _dialogService.ShowMessageAsync(
                                 Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
                                 message);
 
@@ -535,7 +538,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 Logger.Error(ex, "Ran into an error while uninstalling {Id}, version {Version}.", Id, Version);
 
-                await _progressService.ShowMessageAsync(
+                await _dialogService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToUninstall,
                     string.Format(Resources.PackageViewModel_RanIntoUninstallError, Id, ex.Message));
             }
@@ -561,7 +564,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                             string.Join("\n", result.Messages),
                             exceptionMessage);
 
-                        await _progressService.ShowMessageAsync(
+                        await _dialogService.ShowMessageAsync(
                             Resources.ChocolateyRemotePackageService_UpdateFailedTitle,
                             message);
 
@@ -578,7 +581,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 Logger.Error(ex, "Ran into an error while updating {Id}, version {Version}.", Id, Version);
 
-                await _progressService.ShowMessageAsync(
+                await _dialogService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToUpdate,
                     string.Format(Resources.PackageViewModel_RanIntoUpdateError, Id, ex.Message));
             }
@@ -605,7 +608,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                             string.Join("\n", result.Messages),
                             exceptionMessage);
 
-                        await _progressService.ShowMessageAsync(
+                        await _dialogService.ShowMessageAsync(
                             Resources.ChocolateyRemotePackageService_PinFailedTitle,
                             message);
 
@@ -622,7 +625,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 Logger.Error(ex, "Ran into an error while pinning {Id}, version {Version}.", Id, Version);
 
-                await _progressService.ShowMessageAsync(
+                await _dialogService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToPin,
                     string.Format(Resources.PackageViewModel_RanIntoPinningError, Id, ex.Message));
             }
@@ -649,7 +652,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                             string.Join("\n", result.Messages),
                             exceptionMessage);
 
-                        await _progressService.ShowMessageAsync(
+                        await _dialogService.ShowMessageAsync(
                             Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
                             message);
 
@@ -666,7 +669,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 Logger.Error(ex, "Ran into an error while unpinning {Id}, version {Version}.", Id, Version);
 
-                await _progressService.ShowMessageAsync(
+                await _dialogService.ShowMessageAsync(
                     Resources.PackageViewModel_FailedToUnpin,
                     string.Format(Resources.PackageViewModel_RanIntoUnpinError, Id, ex.Message));
             }

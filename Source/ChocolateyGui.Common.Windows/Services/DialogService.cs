@@ -67,5 +67,22 @@ namespace ChocolateyGui.Common.Windows.Services
                     : MessageDialogResult.Negative;
             }
         }
+
+        /// <inheritdoc />
+        public async Task<LoginDialogData> ShowLoginAsync(string title, string message, LoginDialogSettings settings = null)
+        {
+            using (await _lock.EnterAsync())
+            {
+                if (ShellView != null)
+                {
+                    return await ShellView.ShowLoginAsync(
+                        Resources.SettingsViewModel_SetSourceUsernameAndPasswordTitle,
+                        Resources.SettingsViewModel_SetSourceUsernameAndPasswordMessage,
+                        settings);
+                }
+
+                return null;
+            }
+        }
     }
 }

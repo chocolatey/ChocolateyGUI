@@ -105,7 +105,6 @@ namespace ChocolateyGui.Common.Windows.Startup
             });
 
             builder.RegisterType<BundledThemeService>().As<IBundledThemeService>().SingleInstance();
-            builder.RegisterInstance(DialogCoordinator.Instance).As<IDialogCoordinator>();
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
 
             try

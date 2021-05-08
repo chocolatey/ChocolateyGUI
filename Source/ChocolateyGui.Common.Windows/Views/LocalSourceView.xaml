@@ -17,8 +17,7 @@
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:LocalSourceViewModel}"
-             Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
-             mahapps:DialogParticipation.Register="{Binding}">
+             Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
 
     <UserControl.Resources>
         <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />

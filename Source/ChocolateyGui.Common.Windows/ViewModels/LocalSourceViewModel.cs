@@ -47,7 +47,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly IAllowedCommandsService _allowedCommandsService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
-        private readonly IDialogCoordinator _dialogCoordinator;
         private bool _exportAll = true;
         private bool _hasLoaded;
         private bool _matchWord;
@@ -72,8 +71,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IAllowedCommandsService allowedCommandsService,
             IEventAggregator eventAggregator,
             string displayName,
-            IMapper mapper,
-            IDialogCoordinator dialogCoordinator)
+            IMapper mapper)
         {
             _chocolateyService = chocolateyService;
             _dialogService = dialogService;
@@ -97,7 +95,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             _eventAggregator = eventAggregator;
             _mapper = mapper;
-            _dialogCoordinator = dialogCoordinator;
             _eventAggregator.Subscribe(this);
         }
 
@@ -189,16 +186,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                var result = await _dialogCoordinator.ShowMessageAsync(
-                    this,
+                var result = await _dialogService.ShowConfirmationMessageAsync(
                     Resources.Dialog_AreYouSureTitle,
-                    Resources.Dialog_AreYouSureUpdateAllMessage,
-                    MessageDialogStyle.AffirmativeAndNegative,
-                    new MetroDialogSettings
-                    {
-                        AffirmativeButtonText = Resources.Dialog_Yes,
-                        NegativeButtonText = Resources.Dialog_No
-                    });
+                    Resources.Dialog_AreYouSureUpdateAllMessage);
 
                 if (result == MessageDialogResult.Affirmative)
                 {

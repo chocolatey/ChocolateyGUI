@@ -37,7 +37,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
-        private readonly IDialogCoordinator _dialogCoordinator;
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IFileSystem _fileSystem;
 
@@ -61,7 +60,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IProgressService progressService,
             IConfigService configService,
             IEventAggregator eventAggregator,
-            IDialogCoordinator dialogCoordinator,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IFileSystem fileSystem)
         {
@@ -70,7 +68,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _progressService = progressService;
             _configService = configService;
             _eventAggregator = eventAggregator;
-            _dialogCoordinator = dialogCoordinator;
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _fileSystem = fileSystem;
             DisplayName = Resources.SettingsViewModel_DisplayName;
@@ -322,16 +319,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async Task PurgeIconCache()
         {
-            var result = await _dialogCoordinator.ShowMessageAsync(
-                this,
+            var result = await _dialogService.ShowConfirmationMessageAsync(
                 Resources.Dialog_AreYouSureTitle,
-                Resources.Dialog_AreYouSureIconsMessage,
-                MessageDialogStyle.AffirmativeAndNegative,
-                new MetroDialogSettings
-                {
-                    AffirmativeButtonText = Resources.Dialog_Yes,
-                    NegativeButtonText = Resources.Dialog_No
-                });
+                Resources.Dialog_AreYouSureIconsMessage);
 
             if (result == MessageDialogResult.Affirmative)
             {
@@ -341,16 +331,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async Task PurgeOutdatedPackagesCache()
         {
-            var result = await _dialogCoordinator.ShowMessageAsync(
-                this,
+            var result = await _dialogService.ShowConfirmationMessageAsync(
                 Resources.Dialog_AreYouSureTitle,
-                Resources.Dialog_AreYouSureOutdatedPackagesMessage,
-                MessageDialogStyle.AffirmativeAndNegative,
-                new MetroDialogSettings
-                {
-                    AffirmativeButtonText = Resources.Dialog_Yes,
-                    NegativeButtonText = Resources.Dialog_No
-                });
+                Resources.Dialog_AreYouSureOutdatedPackagesMessage);
 
             if (result == MessageDialogResult.Affirmative)
             {
@@ -433,16 +416,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async Task Remove()
         {
-            var result = await _dialogCoordinator.ShowMessageAsync(
-                this,
+            var result = await _dialogService.ShowConfirmationMessageAsync(
                 Resources.Dialog_AreYouSureTitle,
-                string.Format(Resources.Dialog_AreYourSureRemoveSourceMessage, _originalId),
-                MessageDialogStyle.AffirmativeAndNegative,
-                new MetroDialogSettings
-                {
-                    AffirmativeButtonText = Resources.Dialog_Yes,
-                    NegativeButtonText = Resources.Dialog_No
-                });
+                string.Format(Resources.Dialog_AreYourSureRemoveSourceMessage, _originalId));
 
             if (result == MessageDialogResult.Affirmative)
             {
@@ -495,7 +471,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 loginDialogSettings.EnablePasswordPreview = true;
             }
 
-            var result = await _dialogCoordinator.ShowLoginAsync(this, Resources.SettingsViewModel_SetSourceUsernameAndPasswordTitle, Resources.SettingsViewModel_SetSourceUsernameAndPasswordMessage, loginDialogSettings);
+            var result = await _dialogService.ShowLoginAsync(Resources.SettingsViewModel_SetSourceUsernameAndPasswordTitle, Resources.SettingsViewModel_SetSourceUsernameAndPasswordMessage, loginDialogSettings);
 
             if (result != null)
             {
@@ -525,7 +501,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 loginDialogSettings.EnablePasswordPreview = true;
             }
 
-            var result = await _dialogCoordinator.ShowLoginAsync(this, Resources.SettingsViewModel_SetSourceCertificateAndPasswordTitle, Resources.SettingsViewModel_SetSourceCertificateAndPasswordMessage, loginDialogSettings);
+            var result = await _dialogService.ShowLoginAsync(Resources.SettingsViewModel_SetSourceCertificateAndPasswordTitle, Resources.SettingsViewModel_SetSourceCertificateAndPasswordMessage, loginDialogSettings);
 
             if (result != null)
             {

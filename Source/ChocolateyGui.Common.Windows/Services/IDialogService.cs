@@ -30,5 +30,14 @@ namespace ChocolateyGui.Common.Windows.Services
         /// <param name="message">The message contained within the Dialog.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
         Task<MessageDialogResult> ShowConfirmationMessageAsync(string title, string message);
+
+        /// <summary>
+        /// Creates a Login dialog inside of the ShellView.
+        /// </summary>
+        /// <param name="title">The title of the Dialog.</param>
+        /// <param name="message">The message contained within the Dialog.</param>
+        /// <param name="settings">Optional settings that override the global dialog settings.</param>
+        /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
+        Task<LoginDialogData> ShowLoginAsync(string title, string message, LoginDialogSettings settings = null);
     }
 }

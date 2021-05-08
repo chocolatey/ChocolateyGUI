@@ -8,16 +8,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Controls;
 using ChocolateyGui.Common.Models;
-using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
 using ChocolateyGui.Common.Windows.Views;
-using MahApps.Metro.Controls.Dialogs;
 using Microsoft.VisualStudio.Threading;
 using Serilog;
 using Serilog.Events;
@@ -76,47 +73,6 @@ namespace ChocolateyGui.Common.Windows.Services
             NotifyPropertyChanged("Progress");
         }
 
-        public async Task<MessageDialogResult> ShowMessageAsync(string title, string message)
-        {
-            using (await _lock.EnterAsync())
-            {
-                if (ShellView != null)
-                {
-                    var dialogSettings = new MetroDialogSettings
-                    {
-                        AffirmativeButtonText = Resources.ChocolateyDialog_OK
-                    };
-
-                    return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message, MessageDialogStyle.Affirmative, dialogSettings));
-                }
-
-                return MessageBox.Show(message, title) == MessageBoxResult.OK
-                           ? MessageDialogResult.Affirmative
-                           : MessageDialogResult.Negative;
-            }
-        }
-
-        public async Task<MessageDialogResult> ShowConfirmationMessageAsync(string title, string message)
-        {
-            using (await _lock.EnterAsync())
-            {
-                if (ShellView != null)
-                {
-                    var dialogSettings = new MetroDialogSettings
-                    {
-                        AffirmativeButtonText = Resources.Dialog_Yes,
-                        NegativeButtonText = Resources.Dialog_No
-                    };
-
-                    return await RunOnUIAsync(() => ShellView.ShowMessageAsync(title, message, MessageDialogStyle.AffirmativeAndNegative, dialogSettings));
-                }
-
-                return MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes
-                           ? MessageDialogResult.Affirmative
-                           : MessageDialogResult.Negative;
-            }
-        }
-
         public async Task StartLoading(string title = null, bool isCancelable = false)
         {
             using (await _lock.EnterAsync())
@@ -156,7 +112,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 var currentCount = Interlocked.Decrement(ref _loadingItems);
                 if (currentCount == 0)
                 {
-                    await RunOnUIAsync(() => _progressController.CloseAsync());
+                    await _progressController.CloseAsync();
                     _progressController = null;
                     Report(0);
 
@@ -181,11 +137,6 @@ namespace ChocolateyGui.Common.Windows.Services
         }
 
         private static Task RunOnUIAsync(Func<Task> action)
-        {
-            return action.RunOnUIThreadAsync();
-        }
-
-        private static Task<T> RunOnUIAsync<T>(Func<Task<T>> action)
         {
             return action.RunOnUIThreadAsync();
         }

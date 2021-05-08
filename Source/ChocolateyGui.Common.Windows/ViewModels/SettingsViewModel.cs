@@ -33,6 +33,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private const string ChocolateyLicensedSourceId = "chocolatey.licensed";
         private readonly IChocolateyService _chocolateyService;
 
+        private readonly IDialogService _dialogService;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
@@ -56,6 +57,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public SettingsViewModel(
             IChocolateyService chocolateyService,
+            IDialogService dialogService,
             IProgressService progressService,
             IConfigService configService,
             IEventAggregator eventAggregator,
@@ -64,6 +66,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IFileSystem fileSystem)
         {
             _chocolateyService = chocolateyService;
+            _dialogService = dialogService;
             _progressService = progressService;
             _configService = configService;
             _eventAggregator = eventAggregator;
@@ -306,7 +309,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
             catch (UnauthorizedAccessException)
             {
-                await _progressService.ShowMessageAsync(
+                await _dialogService.ShowMessageAsync(
                     Resources.General_UnauthorisedException_Title,
                     Resources.General_UnauthorisedException_Description);
             }
@@ -360,17 +363,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             SelectedSource = new ChocolateySource();
         }
 
-        public async void Save()
+        public async Task Save()
         {
             if (string.IsNullOrWhiteSpace(DraftSource.Id))
             {
-                await _progressService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingId);
+                await _dialogService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingId);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(DraftSource.Value))
             {
-                await _progressService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingValue);
+                await _dialogService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingValue);
                 return;
             }
 
@@ -382,7 +385,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     if (DraftSource.Id == ChocolateyLicensedSourceId)
                     {
                         await _progressService.StopLoading();
-                        await _progressService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_InvalidSourceId);
+                        await _dialogService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_InvalidSourceId);
                         return;
                     }
 
@@ -417,7 +420,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
             catch (UnauthorizedAccessException)
             {
-                await _progressService.ShowMessageAsync(
+                await _dialogService.ShowMessageAsync(
                     Resources.General_UnauthorisedException_Title,
                     Resources.General_UnauthorisedException_Description);
             }
@@ -428,7 +431,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
         }
 
-        public async void Remove()
+        public async Task Remove()
         {
             var result = await _dialogCoordinator.ShowMessageAsync(
                 this,
@@ -453,7 +456,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    await _progressService.ShowMessageAsync(
+                    await _dialogService.ShowMessageAsync(
                         Resources.General_UnauthorisedException_Title,
                         Resources.General_UnauthorisedException_Description);
                 }

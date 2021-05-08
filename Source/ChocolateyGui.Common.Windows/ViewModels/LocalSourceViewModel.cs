@@ -41,6 +41,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly List<IPackageViewModel> _packages;
         private readonly IPersistenceService _persistenceService;
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
+        private readonly IDialogService _dialogService;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
         private readonly IAllowedCommandsService _allowedCommandsService;
@@ -63,6 +64,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public LocalSourceViewModel(
             IChocolateyService chocolateyService,
+            IDialogService dialogService,
             IProgressService progressService,
             IPersistenceService persistenceService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
@@ -74,6 +76,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IDialogCoordinator dialogCoordinator)
         {
             _chocolateyService = chocolateyService;
+            _dialogService = dialogService;
             _progressService = progressService;
             _persistenceService = persistenceService;
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
@@ -396,10 +399,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 var chocoPackage = _packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
                 if (chocoPackage != null && chocoPackage.CanUpdate)
                 {
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    _progressService.ShowMessageAsync(Resources.LocalSourceViewModel_Chocolatey, Resources.LocalSourceViewModel_UpdateAvailableForChocolatey)
+                    await _dialogService.ShowMessageAsync(
+                            Resources.LocalSourceViewModel_Chocolatey,
+                            Resources.LocalSourceViewModel_UpdateAvailableForChocolatey)
                         .ConfigureAwait(false);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 }
             }
             catch (Exception ex)

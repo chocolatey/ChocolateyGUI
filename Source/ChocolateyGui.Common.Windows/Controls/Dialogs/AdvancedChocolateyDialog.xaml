@@ -1,15 +1,16 @@
-﻿<UserControl x:Class="ChocolateyGui.Common.Windows.Controls.Dialogs.AdvancedChocolateyDialog"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:items="clr-namespace:ChocolateyGui.Common.Windows.ViewModels.Items"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
-             MaxHeight="500"
-             d:DataContext="{d:DesignInstance items:AdvancedInstallViewModel}"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
+﻿<UserControl x:Class="ChocolateyGui.Common.Windows.Controls.Dialogs.AdvancedChocolateyDialog" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:items="clr-namespace:ChocolateyGui.Common.Windows.ViewModels.Items" 
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common" 
+             MaxHeight="500" 
+             MaxWidth="700" 
+             d:DataContext="{d:DesignInstance items:AdvancedInstallViewModel}" 
+             d:DesignHeight="450" 
+             d:DesignWidth="800" 
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -18,6 +19,7 @@
 
         <Style TargetType="{x:Type mah:ToggleSwitch}" BasedOn="{StaticResource Chocolatey.Styles.ToggleSwitch}">
             <Setter Property="Margin" Value="0 1 0 0" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="OffContent" Value="{x:Static properties:Resources.AdvancedChocolateyDialog_Off}" />
             <Setter Property="OnContent" Value="{x:Static properties:Resources.AdvancedChocolateyDialog_On}" />
         </Style>
@@ -29,63 +31,86 @@
             <!-- Horizontal MetroHeader with SharedSizeGroup for the first column -->
             <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type mah:MetroHeader}">
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="Margin" Value="0 2" />
+                <Setter Property="Margin" Value="0 4" />
                 <Setter Property="MinHeight" Value="28" />
-                <Setter Property="Padding" Value="0" />
+                <Setter Property="Padding" Value="4 2" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type mah:MetroHeader}">
-                            <Grid Background="Transparent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" MinWidth="300" SharedSizeGroup="LabelColumn" />
                                 </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0" Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
-                                    <mah:ContentControlEx x:Name="PART_Header"
-                                                          Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
-                                                          HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
-                                                          VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
-                                                          Content="{TemplateBinding Header}"
-                                                          ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}"
-                                                          ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                          FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
-                                                          FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
-                                                          FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
-                                                          FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                                          Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
-                                                          IsTabStop="False"
-                                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Column="0" Grid.Row="0" Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
+                                    <mah:ContentControlEx x:Name="PART_Header" 
+                                                          Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}" 
+                                                          HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}" 
+                                                          VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}" 
+                                                          Content="{TemplateBinding Header}" 
+                                                          ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}" 
+                                                          ContentStringFormat="{TemplateBinding HeaderStringFormat}" 
+                                                          ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
+                                                          FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}" 
+                                                          FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}" 
+                                                          FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}" 
+                                                          FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}" 
+                                                          Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}" 
+                                                          IsTabStop="False" 
+                                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}" 
                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 </Grid>
-                                <Grid Grid.Column="1" Background="{TemplateBinding Background}">
-                                    <ContentPresenter x:Name="PART_Content"
-                                                      Margin="{TemplateBinding Padding}"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                      ContentSource="Content"
+
+                                <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Background="Transparent">
+                                    <ContentPresenter x:Name="PART_Content" 
+                                                      Margin="{TemplateBinding Padding}" 
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                                      ContentSource="Content" 
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Grid>
+
+                                <Grid Grid.Column="0" Grid.Row="1" Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
+                                    <TextBlock x:Name="PART_Description" 
+                                               Opacity="0.7" 
+                                                          Margin="6 4 4 4" 
+                                                          HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}" 
+                                                          VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}" 
+                                                          Text="{TemplateBinding Tag}" 
+                                                          TextTrimming="CharacterEllipsis" 
+                                                          TextWrapping="Wrap" 
+                                                          FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}" 
+                                                          FontSize="14" 
+                                                          FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}" 
+                                                          FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}" 
+                                                          Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}" 
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 </Grid>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
                 <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="Right" />
+                <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="Left" />
                 <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="Center" />
                 <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Mode=OneWay}" />
-                <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
+                <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="18" />
                 <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Mode=OneWay}" />
-                <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 8 1" />
+                <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="4 2 8 2" />
             </Style>
 
             <!--  quick change of the collapse storyboard duration  -->
             <Storyboard x:Key="Chocolatey.Storyboard.Expander.Collapse">
-                <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                                 Storyboard.TargetProperty="(UIElement.Opacity)"
-                                 From="1"
-                                 To="0"
+                <DoubleAnimation Storyboard.TargetName="ExpandSite" 
+                                 Storyboard.TargetProperty="(UIElement.Opacity)" 
+                                 From="1" 
+                                 To="0" 
                                  Duration="0" />
                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
@@ -106,9 +131,9 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type RadioButton}">
-                            <Expander Padding="{TemplateBinding Padding}"
-                                      Content="{TemplateBinding Content}"
-                                      Header="{TemplateBinding Tag}"
+                            <Expander Padding="{TemplateBinding Padding}" 
+                                      Content="{TemplateBinding Content}" 
+                                      Header="{TemplateBinding Tag}" 
                                       IsExpanded="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}" />
                         </ControlTemplate>
                     </Setter.Value>
@@ -123,10 +148,10 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                          VerticalScrollBarVisibility="Auto"
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
+                          VerticalScrollBarVisibility="Auto" 
                           Style="{DynamicResource MahApps.Styles.ScrollViewer}">
-                <Grid MinWidth="750">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -134,83 +159,73 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0"
-                                Margin="5 0 5 0"
-                                Grid.IsSharedSizeScope="True"
+                    <StackPanel Grid.Row="0" 
+                                Margin="5 0 5 0" 
+                                Grid.IsSharedSizeScope="True" 
                                 Orientation="Vertical">
-                        <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_Version_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_Version_ToolTip}">
+                        <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_Version_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_Version_ToolTip}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox x:Name="AvailableVersionsComboBox"
-                                          Grid.Column="0"
-                                          IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}"
-                                          ItemsSource="{Binding AvailableVersions.Result, Mode=OneWay}"
+                                <ComboBox x:Name="AvailableVersionsComboBox" 
+                                          Grid.Column="0" 
+                                          IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}" 
+                                          ItemsSource="{Binding AvailableVersions.Result, Mode=OneWay}" 
                                           SelectedItem="{Binding SelectedVersion, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                <mah:ProgressRing Grid.Column="0"
-                                                  Width="20"
-                                                  Height="20"
-                                                  IsActive="{Binding AvailableVersions.IsNotCompleted}"
-                                                  IsLarge="False"
-                                                  HorizontalAlignment="Left"
-                                                  VerticalAlignment="Center"
+                                <mah:ProgressRing Grid.Column="0" 
+                                                  Width="20" 
+                                                  Height="20" 
+                                                  IsActive="{Binding AvailableVersions.IsNotCompleted}" 
+                                                  IsLarge="False" 
+                                                  HorizontalAlignment="Left" 
+                                                  VerticalAlignment="Center" 
                                                   Margin="5 0 0 0" />
-                                <CheckBox x:Name="IncludePrereleaseCheckBox"
-                                          Grid.Column="1"
-                                          Margin="5 0 0 0"
-                                          Content="{x:Static properties:Resources.AdvancedChocolateyDialog_IncludePreRelease_Content}"
-                                          ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_IncludePreRelease_ToolTip}"
-                                          IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}"
+                                <CheckBox x:Name="IncludePrereleaseCheckBox" 
+                                          Grid.Column="1" 
+                                          Margin="5 0 0 0" 
+                                          Content="{x:Static properties:Resources.AdvancedChocolateyDialog_IncludePreRelease_Content}" 
+                                          ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_IncludePreRelease_ToolTip}" 
+                                          IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}" 
                                           IsChecked="{Binding IncludePreRelease}" />
                             </Grid>
                         </mah:MetroHeader>
-                        <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_PackageParameters_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_PackageParameters_ToolTip}">
+                        <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_PackageParameters_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_PackageParameters_ToolTip}">
                             <TextBox Text="{Binding PackageParameters, UpdateSourceTrigger=PropertyChanged}" />
                         </mah:MetroHeader>
-                        <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_InstallArguments_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_InstallArguments_ToolTip}">
+                        <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_InstallArguments_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_InstallArguments_ToolTip}">
                             <TextBox Text="{Binding InstallArguments, UpdateSourceTrigger=PropertyChanged}" />
                         </mah:MetroHeader>
-                        <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_ToolTip}">
+                        <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_ToolTip}">
                             <mah:NumericUpDown Value="{Binding ExecutionTimeoutInSeconds}" />
                         </mah:MetroHeader>
-                        <StackPanel Orientation="Horizontal">
-                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_PreRelease_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_PreRelease_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding PreRelease}" />
-                            </mah:MetroHeader>
-                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_Forcex86_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_Forcex86_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding Forcex86}" />
-                            </mah:MetroHeader>
-                        </StackPanel>
+                        <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_PreRelease_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_PreRelease_ToolTip}">
+                            <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding PreRelease}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_Forcex86_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_Forcex86_ToolTip}">
+                            <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding Forcex86}" />
+                        </mah:MetroHeader>
                     </StackPanel>
 
                     <RadioButton Grid.Row="1" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_AdvancedOptions_Header}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
-                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_LogFile_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_LogFile_ToolTip}">
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_LogFile_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_LogFile_ToolTip}">
                                 <TextBox Text="{Binding LogFile}" />
                             </mah:MetroHeader>
-                            <StackPanel Orientation="Horizontal">
-                                <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_OverrideArguments_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_OverrideArguments_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding OverrideArguments}" />
-                                </mah:MetroHeader>
-                                <mah:MetroHeader Margin="25 0 0 0"
-                                                 Header="{x:Static properties:Resources.AdvancedChocolateyDialog_NotSilent_Header}"
-                                                 ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_NotSilent_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding NotSilent}" />
-                                </mah:MetroHeader>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowDowngrade_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowDowngrade_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowDowngrade}" />
-                                </mah:MetroHeader>
-                                <mah:MetroHeader Margin="25 0 0 0"
-                                                 Header="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowMultipleVersions_Header}"
-                                                 ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowMultipleVersions}" />
-                                </mah:MetroHeader>
-                            </StackPanel>
-                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_SkipPowerShell_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_SkipPowerShell_ToolTip}">
+                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_OverrideArguments_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_OverrideArguments_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding OverrideArguments}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_NotSilent_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_NotSilent_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding NotSilent}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowDowngrade_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowDowngrade_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowDowngrade}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowMultipleVersions_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowMultipleVersions}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_SkipPowerShell_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_SkipPowerShell_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding SkipPowerShell}" />
                             </mah:MetroHeader>
                         </StackPanel>
@@ -218,65 +233,49 @@
 
                     <RadioButton Grid.Row="2" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_DependencyOptions_Header}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_IgnoreDependencies_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_IgnoreDependencies_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreDependencies}" />
-                                </mah:MetroHeader>
-                                <mah:MetroHeader Margin="25 0 0 0"
-                                                 Header="{x:Static properties:Resources.AdvancedChocolateyDialog_ForceDependencies_Header}"
-                                                 ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_ForceDependencies_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ForceDependencies}" />
-                                </mah:MetroHeader>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ApplyInstallArgumentsToDependencies}" />
-                                </mah:MetroHeader>
-                                <mah:MetroHeader Margin="25 0 0 0"
-                                                 Header="{x:Static properties:Resources.AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_Header}"
-                                                 ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ApplyPackageParametersToDependencies}" />
-                                </mah:MetroHeader>
-                            </StackPanel>
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_IgnoreDependencies_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_IgnoreDependencies_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreDependencies}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_ForceDependencies_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_ForceDependencies_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ForceDependencies}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ApplyInstallArgumentsToDependencies}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ApplyPackageParametersToDependencies}" />
+                            </mah:MetroHeader>
                         </StackPanel>
                     </RadioButton>
 
                     <RadioButton Grid.Row="3" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_ChecksumOptions_Header}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_IgnoreChecksums_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_IgnoreChecksums_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreChecksums}" />
-                                </mah:MetroHeader>
-                                <mah:MetroHeader Margin="25 0 0 0"
-                                                 Header="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowEmptyChecksums_Header}"
-                                                 ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksums}" />
-                                </mah:MetroHeader>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksumsSecure}" />
-                                </mah:MetroHeader>
-                                <mah:MetroHeader Margin="25 0 0 0"
-                                                 Header="{x:Static properties:Resources.AdvancedChocolateyDialog_RequireChecksums_Header}"
-                                                 ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_RequireChecksums_ToolTip}">
-                                    <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding RequireChecksums}" />
-                                </mah:MetroHeader>
-                            </StackPanel>
-                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksum_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksum_ToolTip}">
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_IgnoreChecksums_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_IgnoreChecksums_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreChecksums}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowEmptyChecksums_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksums}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksumsSecure}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_RequireChecksums_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_RequireChecksums_ToolTip}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding RequireChecksums}" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksum_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksum_ToolTip}">
                                 <TextBox Text="{Binding DownloadChecksum}" />
                             </mah:MetroHeader>
-                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksum64bit_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip}">
+                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksum64bit_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip}">
                                 <TextBox Text="{Binding DownloadChecksum64bit}" />
                             </mah:MetroHeader>
-                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksumType_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksumType_ToolTip}">
-                                <ComboBox x:Name="ChecksumTypesComboBox"
-                                          ItemsSource="{Binding AvailableChecksumTypes}"
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksumType_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksumType_ToolTip}">
+                                <ComboBox x:Name="ChecksumTypesComboBox" 
+                                          ItemsSource="{Binding AvailableChecksumTypes}" 
                                           SelectedItem="{Binding DownloadChecksumType}" />
                             </mah:MetroHeader>
-                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksumType64bit_Header}" ToolTip="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip}">
-                                <ComboBox x:Name="ChecksumTypes64BitComboBox"
-                                          ItemsSource="{Binding AvailableChecksumTypes}"
+                            <mah:MetroHeader Header="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksumType64bit_Header}" Tag="{x:Static properties:Resources.AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip}">
+                                <ComboBox x:Name="ChecksumTypes64BitComboBox" 
+                                          ItemsSource="{Binding AvailableChecksumTypes}" 
                                           SelectedItem="{Binding DownloadChecksumType64bit}" />
                             </mah:MetroHeader>
                         </StackPanel>
@@ -285,23 +284,23 @@
             </ScrollViewer>
         </Grid>
 
-        <StackPanel Grid.Row="1"
-                    MinHeight="65"
-                    HorizontalAlignment="Right"
+        <StackPanel Grid.Row="1" 
+                    MinHeight="65" 
+                    HorizontalAlignment="Right" 
                     Orientation="Horizontal">
-            <Button x:Name="InstallButton"
-                    Margin="0 0 5 0"
-                    mah:ControlsHelper.ContentCharacterCasing="Normal"
-                    Command="{Binding InstallCommand}"
-                    Content="{x:Static properties:Resources.AdvancedChocolateyDialog_Buttons_Install}"
-                    IsDefault="True"
+            <Button x:Name="InstallButton" 
+                    Margin="0 0 5 0" 
+                    mah:ControlsHelper.ContentCharacterCasing="Normal" 
+                    Command="{Binding InstallCommand}" 
+                    Content="{x:Static properties:Resources.AdvancedChocolateyDialog_Buttons_Install}" 
+                    IsDefault="True" 
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
-            <Button x:Name="CancelButton"
-                    Margin="5 0 0 0"
-                    mah:ControlsHelper.ContentCharacterCasing="Normal"
-                    Command="{Binding CancelCommand}"
-                    Content="{x:Static properties:Resources.AdvancedChocolateyDialog_Buttons_Cancel}"
-                    IsCancel="True"
+            <Button x:Name="CancelButton" 
+                    Margin="5 0 5 0" 
+                    mah:ControlsHelper.ContentCharacterCasing="Normal" 
+                    Command="{Binding CancelCommand}" 
+                    Content="{x:Static properties:Resources.AdvancedChocolateyDialog_Buttons_Cancel}" 
+                    IsCancel="True" 
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
         </StackPanel>
     </Grid>

@@ -13,12 +13,13 @@ using System.Windows.Input;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows.Commands;
+using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using Microsoft.VisualStudio.Threading;
 using NuGet;
 
 namespace ChocolateyGui.Common.Windows.ViewModels.Items
 {
-    public class AdvancedInstallViewModel : ObservableBase
+    public class AdvancedInstallViewModel : ObservableBase, IClosable<AdvancedInstallViewModel>
     {
         private readonly IChocolateyService _chocolateyService;
         private TaskCompletionSource<AdvancedInstallViewModel> _tcs;

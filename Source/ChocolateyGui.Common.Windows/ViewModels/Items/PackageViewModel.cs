@@ -8,7 +8,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Base;
@@ -430,31 +429,21 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public async void InstallAdvanced()
         {
-            var settings = new MetroDialogSettings { OwnerCanCloseWithDialog = true };
-
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.AdvancedChocolateyDialog_Title_Install,
-                DialogContentMargin = new GridLength(1, GridUnitType.Star),
-                DialogContentWidth = GridLength.Auto
-            };
-
             var numberOfPackageVersionsForSelectionSetting = _configService.GetEffectiveConfiguration().NumberOfPackageVersionsForSelection;
-            int numberOfPackageVersionsForSelection = 0;
+            var numberOfPackageVersionsForSelection = 0;
             if (!string.IsNullOrWhiteSpace(numberOfPackageVersionsForSelectionSetting))
             {
                 int.TryParse(numberOfPackageVersionsForSelectionSetting, out numberOfPackageVersionsForSelection);
             }
 
             var dataContext = new AdvancedInstallViewModel(_chocolateyService, Id, Version, 1, numberOfPackageVersionsForSelection);
+            var settings = new MetroDialogSettings { OwnerCanCloseWithDialog = true };
 
-            customDialog.Content = new AdvancedChocolateyDialog { DataContext = dataContext };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog, settings);
-
-            var result = await dataContext.WaitForClosingAsync();
-
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog, settings);
+            var result = await _dialogService.ShowDialogAsync<AdvancedInstallViewModel, AdvancedInstallViewModel>(
+                Resources.AdvancedChocolateyDialog_Title_Install,
+                new AdvancedChocolateyDialog { DataContext = dataContext },
+                dataContext,
+                settings);
 
             // null means that the Cancel button was clicked
             if (result != null)

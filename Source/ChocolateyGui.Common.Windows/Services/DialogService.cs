@@ -8,6 +8,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using ChocolateyGui.Common.Windows.Views;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.VisualStudio.Threading;
@@ -82,6 +83,39 @@ namespace ChocolateyGui.Common.Windows.Services
                 }
 
                 return null;
+            }
+        }
+
+        /// <inheritdoc />
+        public async Task<TResult> ShowDialogAsync<TDialogContext, TResult>(
+            string title,
+            object dialogContent,
+            TDialogContext dialogContext,
+            MetroDialogSettings settings = null)
+            where TDialogContext : IClosable<TResult>
+        {
+            using (await _lock.EnterAsync())
+            {
+                if (ShellView != null)
+                {
+                    var customDialog = new CustomDialog
+                    {
+                        Title = title,
+                        Content = dialogContent,
+                        DialogContentMargin = new GridLength(1, GridUnitType.Star),
+                        DialogContentWidth = GridLength.Auto
+                    };
+
+                    await ShellView.ShowMetroDialogAsync(customDialog, settings);
+
+                    var result = await dialogContext.WaitForClosingAsync();
+
+                    await ShellView.HideMetroDialogAsync(customDialog, settings);
+
+                    return result;
+                }
+
+                return default;
             }
         }
     }

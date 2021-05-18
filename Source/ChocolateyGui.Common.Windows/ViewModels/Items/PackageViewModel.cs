@@ -16,8 +16,8 @@ using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels.Items;
-using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using ChocolateyGui.Common.Windows.Services;
+using ChocolateyGui.Common.Windows.Views;
 using MahApps.Metro.Controls.Dialogs;
 using NuGet;
 using Action = System.Action;
@@ -440,7 +440,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
             var result = await _dialogService.ShowChildWindowAsync<AdvancedInstallViewModel, AdvancedInstallViewModel>(
                 Resources.AdvancedChocolateyDialog_Title_Install,
-                new AdvancedChocolateyDialog { DataContext = dataContext },
+                new AdvancedInstallView { DataContext = dataContext },
                 dataContext);
 
             // null means that the Cancel button was clicked

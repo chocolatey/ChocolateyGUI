@@ -17,7 +17,7 @@ using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using Microsoft.VisualStudio.Threading;
 using NuGet;
 
-namespace ChocolateyGui.Common.Windows.ViewModels.Items
+namespace ChocolateyGui.Common.Windows.ViewModels
 {
     public class AdvancedInstallViewModel : ObservableBase, IClosableChildWindow<AdvancedInstallViewModel>
     {
@@ -71,7 +71,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             FetchAvailableVersions();
 
             SelectedVersion = packageVersion;
-            AvailableChecksumTypes = new List<string> {"md5", "sha1", "sha256", "sha512"};
+            AvailableChecksumTypes = new List<string> { "md5", "sha1", "sha256", "sha512" };
             InstallCommand = new RelayCommand(
                 o => { Close?.Invoke(this); },
                 o => AvailableVersions.IsSuccessfullyCompleted && SelectedVersion != default);

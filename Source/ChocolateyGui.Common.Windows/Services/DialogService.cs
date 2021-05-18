@@ -137,7 +137,7 @@ namespace ChocolateyGui.Common.Windows.Services
             {
                 if (ShellView != null)
                 {
-                    var overlayBrush = new SolidColorBrush(((SolidColorBrush) ShellView.OverlayBrush).Color)
+                    var overlayBrush = new SolidColorBrush(((SolidColorBrush)ShellView.OverlayBrush).Color)
                     {
                         Opacity = ShellView.OverlayOpacity
                     };

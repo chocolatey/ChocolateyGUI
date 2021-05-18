@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="AdvancedChocolateyDialog.xaml.cs">
+// <copyright company="Chocolatey" file="AdvancedInstallView.xaml.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
@@ -7,14 +7,14 @@
 
 using System.Windows.Controls;
 
-namespace ChocolateyGui.Common.Windows.Controls.Dialogs
+namespace ChocolateyGui.Common.Windows.Views
 {
     /// <summary>
-    /// Interaction logic for AdvancedChocolateyDialog.xaml
+    /// Interaction logic for AdvancedInstallView.xaml
     /// </summary>
-    public partial class AdvancedChocolateyDialog : UserControl
+    public partial class AdvancedInstallView : UserControl
     {
-        public AdvancedChocolateyDialog()
+        public AdvancedInstallView()
         {
             InitializeComponent();
         }

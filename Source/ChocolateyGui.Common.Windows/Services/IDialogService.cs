@@ -52,6 +52,18 @@ namespace ChocolateyGui.Common.Windows.Services
         /// <typeparam name="TResult">The type of the result.</typeparam>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
         Task<TResult> ShowDialogAsync<TDialogContext, TResult>(string title, object dialogContent, TDialogContext dialogContext, MetroDialogSettings settings = null)
-            where TDialogContext : IClosable<TResult>;
+            where TDialogContext : IClosableDialog<TResult>;
+
+        /// <summary>
+        /// Creates a Custom child window inside of the ShellView.
+        /// </summary>
+        /// <param name="title">The title of the child window.</param>
+        /// <param name="dialogContent">The content within the child window.</param>
+        /// <param name="dialogContext">The context of the content within the child window.</param>
+        /// <typeparam name="TDialogContext">The type of the context.</typeparam>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
+        Task<TResult> ShowChildWindowAsync<TDialogContext, TResult>(string title, object dialogContent, TDialogContext dialogContext)
+            where TDialogContext : IClosableChildWindow<TResult>;
     }
 }

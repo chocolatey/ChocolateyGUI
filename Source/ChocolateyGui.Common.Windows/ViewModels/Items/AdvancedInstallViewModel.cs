@@ -5,10 +5,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Services;
@@ -19,10 +19,9 @@ using NuGet;
 
 namespace ChocolateyGui.Common.Windows.ViewModels.Items
 {
-    public class AdvancedInstallViewModel : ObservableBase, IClosable<AdvancedInstallViewModel>
+    public class AdvancedInstallViewModel : ObservableBase, IClosableChildWindow<AdvancedInstallViewModel>
     {
         private readonly IChocolateyService _chocolateyService;
-        private TaskCompletionSource<AdvancedInstallViewModel> _tcs;
         private CancellationTokenSource _cts;
         private SemanticVersion _selectedVersion;
         private bool _includePreRelease;
@@ -55,26 +54,32 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private int _page;
         private int _pageSize;
 
-        public AdvancedInstallViewModel(IChocolateyService chocolateyService, string packageId, SemanticVersion packageVersion, int page, int pageSize)
+        public AdvancedInstallViewModel(
+            IChocolateyService chocolateyService,
+            string packageId,
+            SemanticVersion packageVersion,
+            int page,
+            int pageSize)
         {
             _chocolateyService = chocolateyService;
             _packageId = packageId;
             _page = page;
             _pageSize = pageSize;
 
-            _tcs = new TaskCompletionSource<AdvancedInstallViewModel>();
             _cts = new CancellationTokenSource();
 
             FetchAvailableVersions();
 
             SelectedVersion = packageVersion;
-            AvailableChecksumTypes = new List<string> { "md5", "sha1", "sha256", "sha512" };
-            InstallCommand = new RelayCommand(o => _tcs.SetResult(this), o => AvailableVersions.IsSuccessfullyCompleted && SelectedVersion != default);
+            AvailableChecksumTypes = new List<string> {"md5", "sha1", "sha256", "sha512"};
+            InstallCommand = new RelayCommand(
+                o => { Close?.Invoke(this); },
+                o => AvailableVersions.IsSuccessfullyCompleted && SelectedVersion != default);
             CancelCommand = new RelayCommand(
                 o =>
                 {
                     _cts.Cancel();
-                    _tcs.SetResult(null);
+                    Close?.Invoke(null);
                 },
                 o => true);
             DownloadChecksumType = "md5";
@@ -262,10 +267,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public ICommand CancelCommand { get; }
 
-        public Task<AdvancedInstallViewModel> WaitForClosingAsync()
-        {
-            return _tcs.Task;
-        }
+        /// <inheritdoc />
+        public Action<AdvancedInstallViewModel> Close { get; set; }
 
         private void FetchAvailableVersions()
         {

@@ -5,12 +5,17 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using ChocolateyGui.Common.Windows.Views;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using Microsoft.VisualStudio.Threading;
 
 namespace ChocolateyGui.Common.Windows.Services
@@ -18,6 +23,8 @@ namespace ChocolateyGui.Common.Windows.Services
     public class DialogService : IDialogService
     {
         private readonly AsyncSemaphore _lock;
+        private EventHandler<ThemeChangedEventArgs> _themeChangedHandler = null;
+        private RoutedEventHandler _childWindowLoadedHandler = null;
 
         public DialogService()
         {
@@ -92,7 +99,7 @@ namespace ChocolateyGui.Common.Windows.Services
             object dialogContent,
             TDialogContext dialogContext,
             MetroDialogSettings settings = null)
-            where TDialogContext : IClosable<TResult>
+            where TDialogContext : IClosableDialog<TResult>
         {
             using (await _lock.EnterAsync())
             {
@@ -111,6 +118,80 @@ namespace ChocolateyGui.Common.Windows.Services
                     var result = await dialogContext.WaitForClosingAsync();
 
                     await ShellView.HideMetroDialogAsync(customDialog, settings);
+
+                    return result;
+                }
+
+                return default;
+            }
+        }
+
+        /// <inheritdoc />
+        public async Task<TResult> ShowChildWindowAsync<TDialogContext, TResult>(
+            string title,
+            object dialogContent,
+            TDialogContext dialogContext)
+            where TDialogContext : IClosableChildWindow<TResult>
+        {
+            using (await _lock.EnterAsync())
+            {
+                if (ShellView != null)
+                {
+                    var overlayBrush = new SolidColorBrush(((SolidColorBrush) ShellView.OverlayBrush).Color)
+                    {
+                        Opacity = ShellView.OverlayOpacity
+                    };
+                    overlayBrush.Freeze();
+
+                    var childWindow = new ChildWindow
+                    {
+                        Title = title,
+                        Content = dialogContent,
+                        DataContext = dialogContext,
+                        IsModal = true,
+                        AllowMove = true,
+                        ShowCloseButton = true,
+                        BorderThickness = new Thickness(1),
+                        OverlayBrush = overlayBrush
+                    };
+
+                    childWindow.SetResourceReference(Control.BorderBrushProperty, "MahApps.Brushes.Highlight");
+
+                    _childWindowLoadedHandler = (sender, e) =>
+                    {
+                        var cw = (ChildWindow)sender;
+
+                        if (cw.DataContext is IClosableChildWindow<TResult> vm)
+                        {
+                            vm.Close += r => { cw.Close(r); };
+                        }
+                        else
+                        {
+                            cw.Close();
+                        }
+                    };
+
+                    _themeChangedHandler = (s, e) =>
+                    {
+                        if (ShellView.OverlayBrush is SolidColorBrush brush)
+                        {
+                            overlayBrush = new SolidColorBrush(brush.Color)
+                            {
+                                Opacity = ShellView.OverlayOpacity
+                            };
+                            overlayBrush.Freeze();
+
+                            childWindow.OverlayBrush = overlayBrush;
+                        }
+                    };
+
+                    childWindow.Loaded += _childWindowLoadedHandler;
+                    ThemeManager.Current.ThemeChanged += _themeChangedHandler;
+
+                    var result = await ShellView.ShowChildWindowAsync<TResult>(childWindow);
+
+                    childWindow.Loaded -= _childWindowLoadedHandler;
+                    ThemeManager.Current.ThemeChanged -= _themeChangedHandler;
 
                     return result;
                 }

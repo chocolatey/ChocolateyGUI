@@ -437,13 +437,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             }
 
             var dataContext = new AdvancedInstallViewModel(_chocolateyService, Id, Version, 1, numberOfPackageVersionsForSelection);
-            var settings = new MetroDialogSettings { OwnerCanCloseWithDialog = true };
 
-            var result = await _dialogService.ShowDialogAsync<AdvancedInstallViewModel, AdvancedInstallViewModel>(
+            var result = await _dialogService.ShowChildWindowAsync<AdvancedInstallViewModel, AdvancedInstallViewModel>(
                 Resources.AdvancedChocolateyDialog_Title_Install,
                 new AdvancedChocolateyDialog { DataContext = dataContext },
-                dataContext,
-                settings);
+                dataContext);
 
             // null means that the Cancel button was clicked
             if (result != null)

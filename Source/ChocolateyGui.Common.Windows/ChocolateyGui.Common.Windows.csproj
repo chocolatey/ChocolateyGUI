@@ -105,6 +105,9 @@
     <Reference Include="MahApps.Metro.IconPacks.Octicons, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Octicons.4.8.0\lib\net47\MahApps.Metro.IconPacks.Octicons.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro.SimpleChildWindow, Version=2.0.0.0, Culture=neutral, PublicKeyToken=ca3e0454e54ef52a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.SimpleChildWindow.2.0.0\lib\net47\MahApps.Metro.SimpleChildWindow.dll</HintPath>
+    </Reference>
     <Reference Include="Markdig.Signed, Version=0.23.0.0, Culture=neutral, PublicKeyToken=870da25a133885f8, processorArchitecture=MSIL">
       <HintPath>..\packages\Markdig.Signed.0.23.0\lib\net452\Markdig.Signed.dll</HintPath>
     </Reference>
@@ -220,6 +223,8 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Controls\Dialogs\IClosableDialog.cs" />
+    <Compile Include="Controls\Dialogs\IClosableChildWindow.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Utilities\ToolTipBehavior.cs" />
@@ -281,9 +286,11 @@
     <Compile Include="Utilities\Extensions\DataGridExtensions.cs" />
     <Compile Include="Utilities\Extensions\MvvmExtensions.cs" />
     <Compile Include="Utilities\IDataGridColumnComparer.cs" />
+    <Compile Include="Utilities\NotifyTaskCompletion.cs" />
     <Compile Include="Utilities\PackageAuthorsComparer.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\AdvancedInstallViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
     <Compile Include="ViewModels\Items\SourceViewModel.cs" />
     <Compile Include="ViewModels\LocalSourceViewModel.cs" />
@@ -296,6 +303,9 @@
     <Compile Include="ViewModels\SourcesViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AdvancedInstallView.xaml.cs">
+      <DependentUpon>AdvancedInstallView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LocalSourceView.xaml.cs">
       <DependentUpon>LocalSourceView.xaml</DependentUpon>
@@ -365,6 +375,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AboutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AdvancedInstallView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

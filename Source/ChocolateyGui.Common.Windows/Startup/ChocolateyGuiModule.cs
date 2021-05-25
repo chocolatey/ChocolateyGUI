@@ -24,6 +24,7 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.ViewModels;
+using ChocolateyGui.Common.Windows.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Views;
 using LiteDB;
 using MahApps.Metro.Controls.Dialogs;
@@ -102,6 +103,8 @@ namespace ChocolateyGui.Common.Windows.Startup
 
                 config.CreateMap<ChocolateySource, Common.Models.ChocolateySource>()
                     .ForMember(dest => dest.VisibleToAdminsOnly, opt => opt.MapFrom(src => src.VisibleToAdminOnly));
+
+                config.CreateMap<AdvancedInstallViewModel, AdvancedInstall>();
             });
 
             builder.RegisterType<BundledThemeService>().As<IBundledThemeService>().SingleInstance();

@@ -16,7 +16,8 @@
              xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
              mc:Ignorable="d"
              d:DesignHeight="786" d:DesignWidth="1366"
-             d:DataContext="{d:DesignInstance viewModels:PackageViewModel}">
+             d:DataContext="{d:DesignInstance viewModels:PackageViewModel}"
+             mah:DialogParticipation.Register="{Binding Package}">
 
     <FrameworkElement.CommandBindings>
         <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="HandleMarkdownLink" />
@@ -60,6 +61,16 @@
                     VerticalAlignment="Stretch"
                     Background="{DynamicResource MahApps.Brushes.Accent4}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,20,10">
+                    <StackPanel Orientation="Horizontal"
+                                Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
+                        <Button Padding="10" Margin="5 0"
+                            Command="{commands:DataContextCommandAdapter InstallAdvanced}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconEntypo Kind="Install" Margin="0 0 5 0 " VerticalAlignment="Center" />
+                                <TextBlock Text="Install Advanced" FontSize="16"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
                         <Button Padding="10" Margin="5 0"

@@ -165,7 +165,8 @@ namespace ChocolateyGui.Common.Windows.Services
             string id,
             string version = null,
             Uri source = null,
-            bool force = false)
+            bool force = false,
+            AdvancedInstall advancedInstallOptions = null)
         {
             using (await Lock.WriteLockAsync())
             {
@@ -191,6 +192,39 @@ namespace ChocolateyGui.Common.Windows.Services
                             if (force)
                             {
                                 config.Force = true;
+                            }
+
+                            if (advancedInstallOptions != null)
+                            {
+                                config.InstallArguments = advancedInstallOptions.InstallArguments;
+                                config.PackageParameters = advancedInstallOptions.PackageParameters;
+                                config.CommandExecutionTimeoutSeconds = advancedInstallOptions.ExecutionTimeoutInSeconds;
+                                config.AdditionalLogFileLocation = advancedInstallOptions.LogFile;
+                                config.Prerelease = advancedInstallOptions.PreRelease;
+                                config.ForceX86 = advancedInstallOptions.Forcex86;
+                                config.OverrideArguments = advancedInstallOptions.OverrideArguments;
+                                config.NotSilent = advancedInstallOptions.NotSilent;
+                                config.ApplyInstallArgumentsToDependencies = advancedInstallOptions.ApplyInstallArgumentsToDependencies;
+                                config.ApplyPackageParametersToDependencies = advancedInstallOptions.ApplyPackageParametersToDependencies;
+                                config.AllowDowngrade = advancedInstallOptions.AllowDowngrade;
+                                config.AllowMultipleVersions = advancedInstallOptions.AllowMultipleVersions;
+                                config.IgnoreDependencies = advancedInstallOptions.IgnoreDependencies;
+                                config.ForceDependencies = advancedInstallOptions.ForceDependencies;
+                                config.SkipPackageInstallProvider = advancedInstallOptions.SkipPowerShell;
+                                config.Features.ChecksumFiles = !advancedInstallOptions.IgnoreChecksums;
+                                config.Features.AllowEmptyChecksums = advancedInstallOptions.AllowEmptyChecksums;
+                                config.Features.AllowEmptyChecksumsSecure = advancedInstallOptions.AllowEmptyChecksumsSecure;
+
+                                if (advancedInstallOptions.RequireChecksums)
+                                {
+                                    config.Features.AllowEmptyChecksums = false;
+                                    config.Features.AllowEmptyChecksumsSecure = false;
+                                }
+
+                                config.DownloadChecksum = advancedInstallOptions.DownloadChecksum;
+                                config.DownloadChecksum64 = advancedInstallOptions.DownloadChecksum64bit;
+                                config.DownloadChecksumType = advancedInstallOptions.DownloadChecksumType;
+                                config.DownloadChecksumType64 = advancedInstallOptions.DownloadChecksumType64bit;
                             }
                         });
 
@@ -276,6 +310,29 @@ namespace ChocolateyGui.Common.Windows.Services
             }
 
             return GetMappedPackage(_choco, new PackageResult(nugetPackage, null, chocoConfig.Sources), _mapper);
+        }
+
+        public async Task<List<SemanticVersion>> GetAvailableVersionsForPackageIdAsync(string id, int page, int pageSize, bool includePreRelease)
+        {
+            _choco.Set(
+                config =>
+                {
+                    config.CommandName = "list";
+                    config.Input = id;
+                    config.ListCommand.Exact = true;
+                    config.ListCommand.Page = page;
+                    config.ListCommand.PageSize = pageSize;
+                    config.Prerelease = includePreRelease;
+                    config.AllVersions = true;
+                    config.QuietOutput = true;
+                    config.RegularOutput = false;
+#if !DEBUG
+                                config.Verbose = false;
+#endif // DEBUG
+                });
+            var chocoConfig = _choco.GetConfiguration();
+            var packages = await _choco.ListAsync<PackageResult>();
+            return packages.Select(p => new SemanticVersion(p.Version)).OrderByDescending(p => p.Version).ToList();
         }
 
         public async Task<PackageOperationResult> UninstallPackage(string id, string version, bool force = false)

@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Base;
+using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
+using ChocolateyGui.Common.Windows.Views;
 using MahApps.Metro.Controls.Dialogs;
 using NuGet;
 using Action = System.Action;
@@ -422,47 +424,31 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public async Task Install()
         {
-            try
+            await InstallPackage(Version.ToString());
+        }
+
+        public async void InstallAdvanced()
+        {
+            var numberOfPackageVersionsForSelectionSetting = _configService.GetEffectiveConfiguration().NumberOfPackageVersionsForSelection;
+            var numberOfPackageVersionsForSelection = 0;
+            if (!string.IsNullOrWhiteSpace(numberOfPackageVersionsForSelectionSetting))
             {
-                using (await StartProgressDialog(Resources.PackageViewModel_InstallingPackage, Resources.PackageViewModel_InstallingPackage, Id))
-                {
-                    var result = await _chocolateyService.InstallPackage(Id, Version.ToString(), Source).ConfigureAwait(false);
-
-                    if (!result.Successful)
-                    {
-                        var exceptionMessage = result.Exception == null
-                            ? string.Empty
-                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
-
-                        var message = string.Format(
-                            Resources.ChocolateyRemotePackageService_InstallFailedMessage,
-                            Id,
-                            Version,
-                            string.Join("\n", result.Messages),
-                            exceptionMessage);
-
-                        await _dialogService.ShowMessageAsync(
-                            Resources.ChocolateyRemotePackageService_InstallFailedTitle,
-                            message);
-
-                        Logger.Warning(result.Exception, "Failed to install {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
-
-                        return;
-                    }
-
-                    IsInstalled = true;
-
-                    _chocolateyGuiCacheService.PurgeOutdatedPackages();
-                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
-                }
+                int.TryParse(numberOfPackageVersionsForSelectionSetting, out numberOfPackageVersionsForSelection);
             }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "Ran into an error while installing {Id}, version {Version}.", Id, Version);
 
-                await _dialogService.ShowMessageAsync(
-                    Resources.PackageViewModel_FailedToInstall,
-                    string.Format(Resources.PackageViewModel_RanIntoInstallError, Id, ex.Message));
+            var dataContext = new AdvancedInstallViewModel(_chocolateyService, Id, Version, 1, numberOfPackageVersionsForSelection);
+
+            var result = await _dialogService.ShowChildWindowAsync<AdvancedInstallViewModel, AdvancedInstallViewModel>(
+                Resources.AdvancedChocolateyDialog_Title_Install,
+                new AdvancedInstallView { DataContext = dataContext },
+                dataContext);
+
+            // null means that the Cancel button was clicked
+            if (result != null)
+            {
+                var advancedOptions = _mapper.Map<AdvancedInstall>(result);
+
+                await InstallPackage(result.SelectedVersion.ToString(), advancedOptions);
             }
         }
 
@@ -696,6 +682,57 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
             LatestVersion = message.Version;
             IsLatestVersion = false;
+        }
+
+        private async Task InstallPackage(string version, AdvancedInstall advancedOptions = null)
+        {
+            try
+            {
+                using (await StartProgressDialog(Resources.PackageViewModel_InstallingPackage, Resources.PackageViewModel_InstallingPackage, Id))
+                {
+                    var packageInstallResult = await _chocolateyService.InstallPackage(
+                        Id,
+                        version,
+                        Source,
+                        false,
+                        advancedOptions).ConfigureAwait(false);
+
+                    if (!packageInstallResult.Successful)
+                    {
+                        var exceptionMessage = packageInstallResult.Exception == null
+                            ? string.Empty
+                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, packageInstallResult.Exception);
+
+                        var message = string.Format(
+                            Resources.ChocolateyRemotePackageService_InstallFailedMessage,
+                            Id,
+                            Version,
+                            string.Join("\n", packageInstallResult.Messages),
+                            exceptionMessage);
+
+                        await _dialogService.ShowMessageAsync(
+                            Resources.ChocolateyRemotePackageService_InstallFailedTitle,
+                            message);
+
+                        Logger.Warning(packageInstallResult.Exception, "Failed to install {Package}, version {Version}. Errors: {Errors}", Id, Version, packageInstallResult.Messages);
+
+                        return;
+                    }
+
+                    IsInstalled = true;
+
+                    _chocolateyGuiCacheService.PurgeOutdatedPackages();
+                    _eventAggregator.BeginPublishOnUIThread(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while installing {Id}, version {Version}.", Id, Version);
+
+                await _dialogService.ShowMessageAsync(
+                    Resources.PackageViewModel_FailedToInstall,
+                    string.Format(Resources.PackageViewModel_RanIntoInstallError, Id, ex.Message));
+            }
         }
 
         private async Task<IDisposable> StartProgressDialog(string commandString, string initialProgressText, string id = "")

@@ -1,14 +1,14 @@
 Contributors
 ============
 
-Submitting an Issue? See the [Submitting Issues](https://github.com/chocolatey/chocolateygui#submitting-issues) section in the [README](https://github.com/chocolatey/chocolateygui/blob/master/README.md#submitting-issues).
+Submitting an Issue? See the [Submitting Issues](https://github.com/chocolatey/chocolateygui#submitting-issues) section in the README.
 
 The process for contributions is roughly as follows:
 
 ## Prerequisites
 
  * Ensure you have signed the Contributor License Agreement (CLA) - without this we are not able to take contributions that are not trivial.
-  * [Sign the Contributor License Agreement.](https://www.clahub.com/agreements/chocolatey/ChocolateyGUI)
+  * [Sign the Contributor License Agreement.](https://cla-assistant.io/chocolatey/ChocolateyGUI)
   * You must do this for each Chocolatey project that requires it.
   * If you are curious why we would require a CLA, we agree with Julien Ponge - take a look at his [post](https://julien.ponge.org/blog/in-defense-of-contributor-license-agreements/).
 
@@ -16,22 +16,24 @@ The process for contributions is roughly as follows:
 
 ### Get Buyoff Or Find Open Community Issues/Features
 
- * Through GitHub, or through the [mailing list](https://groups.google.com/forum/#!forum/chocolateygui) (preferred), you talk about a feature you would like to see (or a bug), and why it should be in Chocolatey.
-   * If approved through the mailing list, ensure the accompanying GitHub issue is created with information and a link back to the mailing list discussion.
+ * Through [GitHub discussions](https://github.com/chocolatey/ChocolateyGUI/discussions) you talk about a feature you would like to see (or a bug), and why it should be in Chocolatey GUI.
+ * If approved, ensure the accompanying [GitHub issue](https://github.com/chocolatey/ChocolateyGUI/issues) is created with information and a link back to the GitHub discussion.
  * Once you get a nod from one of the [Chocolatey Team](https://github.com/chocolatey?tab=members), you can start on the feature.
  * Alternatively, if a feature is on the issues list with the [community tag](https://github.com/chocolatey/chocolateygui/labels/Community), it is open for a patch. You should comment that you are signing up for it on the issue so someone else doesn't also sign up for the work.
 
 ### Set Up Your Environment
 
  * You create, or update, a fork of chocolatey/chocolateygui under your GitHub account.
- * From there you create a branch named specific to the feature.
+ * Clone the forked repo to your computer. `git clone https://github.com/your-github/ChocolateyGUI.git`
+ * Set the remote upstream. `git remote add upstream https://github.com/chocolatey/ChocolateyGUI.git`
+ * From there you create a branch named specific to the feature. `git checkout -b feature-name`
  * In the branch you do work specific to the feature.
  * Please also observe the following:
     * No reformatting
     * No changing files that are not specific to the feature
-    * More covered below in the **Prepare commits** section.
+    * More covered below in the **Prepare Commits** section.
  * Test your changes and please help us out by updating and implementing some automated tests. It is recommended that all contributors spend some time looking over the tests in the source code. You can't go wrong emulating one of the existing tests and then changing it specific to the behavior you are testing.
- * Please do not update your branch from the master unless we ask you to. See the responding to feedback section below.
+ * Please do not update your branch from the master unless we ask you to. See the **Respond to Feedback** section below.
 
 ### Prepare Commits
 
@@ -85,7 +87,7 @@ Submitting PR:
 
 ### Respond to Feedback on Pull Request
 
-We may have feedback for you to fix or change some things. We generally like to see that pushed against the same topic branch (it will automatically update the Pull Request). You can also fix/squash/rebase commits and push the same topic branch with `--force` (it's generally acceptable to do this on topic branches not in the main repository, it is generally unacceptable and should be avoided at all costs against the main repository).
+We may have feedback for you to fix or change some things. We generally like to see that pushed against the same topic branch (it will automatically update the Pull Request). You can also fix/squash/rebase commits and push the same topic branch with `--force`. (It's generally acceptable to do this on topic branches not in the main repository. It is generally unacceptable and should be avoided at all costs against the main repository).
 
 If we have comments or questions when we do evaluate it and receive no response, it will probably lessen the chance of getting accepted. Eventually this means it will be closed if it is not accepted. Please know this doesn't mean we don't value your contribution, just that things go stale. If in the future you want to pick it back up, feel free to address our concerns/questions/feedback and reopen the issue/open a new PR (referencing old one).
 
@@ -108,4 +110,4 @@ The only reasons a pull request should be closed and resubmitted are as follows:
 
 If you reformat code or hit core functionality without an approval from a person on the Chocolatey Team, it's likely that no matter how awesome it looks afterwards, it will probably not get accepted. Reformatting code makes it harder for us to evaluate exactly what was changed.
 
-If you do these things, it will be make evaluation and acceptance easy. Now if you stray outside of the guidelines we have above, it doesn't mean we are going to ignore your pull request. It will just make things harder for us.  Harder for us roughly translates to a longer SLA for your pull request.
+If you follow the guidelines we have above it will make evaluation and acceptance easy. If you stray from them it doesn't mean we are going to ignore your pull request, but it will make things harder for us. Harder for us roughly translates to a longer SLA for your pull request.

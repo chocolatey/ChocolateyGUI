@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.IO;
+using System.Reflection;
 using Autofac;
 using chocolatey.infrastructure.filesystem;
 using ChocolateyGui.Common;
@@ -21,7 +22,10 @@ namespace ChocolateyGuiCli
         private static readonly IFileSystem _fileSystem = new DotNetFileSystem();
 
 #pragma warning disable SA1202
-        public static readonly string ChocolateyGuiInstallLocation = _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
+
+        // Due to an unknown reason, we can not use chocolateys own get_current_assembly() function here,
+        // as it will be returning the path to the choco.exe executable instead.
+        public static readonly string ChocolateyGuiInstallLocation = _fileSystem.get_directory_name(Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", string.Empty));
         public static readonly string ChocolateyInstallEnvironmentVariableName = "ChocolateyInstall";
         public static readonly string ChocolateyInstallLocation = System.Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName) ?? _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
         public static readonly string LicensedGuiAssemblyLocation = _fileSystem.combine_paths(ChocolateyInstallLocation, "extensions", "chocolateygui", "chocolateygui.licensed.dll");

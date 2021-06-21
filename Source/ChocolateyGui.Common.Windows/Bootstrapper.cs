@@ -112,7 +112,7 @@ namespace ChocolateyGui.Common.Windows
             {
                 // Do not remove! Load Chocolatey once so all config gets set
                 // properly for future calls
-                var choco = Lets.GetChocolatey();
+                var choco = Lets.GetChocolatey(initializeLogging: false);
 
                 Mapper.Initialize(config =>
                 {

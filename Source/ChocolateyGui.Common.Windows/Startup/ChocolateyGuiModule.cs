@@ -65,7 +65,7 @@ namespace ChocolateyGui.Common.Windows.Startup
 
             builder.RegisterType<PackageViewModel>().As<IPackageViewModel>();
 
-            var choco = Lets.GetChocolatey();
+            var choco = Lets.GetChocolatey(initializeLogging: true);
             builder.RegisterInstance(choco.Container().GetInstance<IChocolateyConfigSettingsService>())
                 .As<IChocolateyConfigSettingsService>().SingleInstance();
             builder.RegisterInstance(choco.Container().GetInstance<IXmlService>())

@@ -464,7 +464,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 {
                     using (await StartProgressDialog(Resources.PackageViewModel_ReinstallingPackage, Resources.PackageViewModel_ReinstallingPackage, Id))
                     {
-                        await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true).ConfigureAwait(false);
+                        await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true);
                         _chocolateyGuiCacheService.PurgeOutdatedPackages();
                         await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
                     }
@@ -491,7 +491,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 {
                     using (await StartProgressDialog(Resources.PackageViewModel_UninstallingPackage, Resources.PackageViewModel_UninstallingPackage, Id))
                     {
-                        var result = await _chocolateyService.UninstallPackage(Id, Version.ToString(), true).ConfigureAwait(false);
+                        var result = await _chocolateyService.UninstallPackage(Id, Version.ToString(), true);
 
                         if (!result.Successful)
                         {
@@ -536,7 +536,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 using (await StartProgressDialog(Resources.PackageViewModel_UpdatingPackage, Resources.PackageViewModel_UpdatingPackage, Id))
                 {
-                    var result = await _chocolateyService.UpdatePackage(Id, Source).ConfigureAwait(false);
+                    var result = await _chocolateyService.UpdatePackage(Id, Source);
 
                     if (!result.Successful)
                     {
@@ -579,7 +579,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 using (await StartProgressDialog(Resources.PackageViewModel_PinningPackage, Resources.PackageViewModel_PinningPackage, Id))
                 {
-                    var result = await _chocolateyService.PinPackage(Id, Version.ToString()).ConfigureAwait(false);
+                    var result = await _chocolateyService.PinPackage(Id, Version.ToString());
 
                     if (!result.Successful)
                     {
@@ -623,7 +623,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 using (await StartProgressDialog(Resources.PackageViewModel_UnpinningPackage, Resources.PackageViewModel_UnpinningPackage, Id))
                 {
-                    var result = await _chocolateyService.UnpinPackage(Id, Version.ToString()).ConfigureAwait(false);
+                    var result = await _chocolateyService.UnpinPackage(Id, Version.ToString());
 
                     if (!result.Successful)
                     {
@@ -695,7 +695,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                         version,
                         Source,
                         false,
-                        advancedOptions).ConfigureAwait(false);
+                        advancedOptions);
 
                     if (!packageInstallResult.Successful)
                     {
@@ -753,7 +753,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
             public void Dispose()
             {
-                _disposeAction();
+                _disposeAction?.Invoke();
             }
         }
     }

@@ -15,7 +15,7 @@
 There are a number of shared functions/methods within the Chocolatey GUI codebase.  So that these can be shared between both the GUI and CLI version of Chocolatey GUI, these have been split into their own library, which can then also be consumed elsewhere, if/when required.
     </description>
     <releaseNotes>
-All release notes for Chocolatey GUI can be found on the GitHub site - https://github.com/chocolatey/ChocolateyGUI/releases
+All release notes for Chocolatey GUI can be found on docs site - https://docs.chocolatey.org/en-us/chocolatey-gui/release-notes
     </releaseNotes>
   </metadata>
   <files>

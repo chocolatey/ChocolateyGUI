@@ -54,7 +54,7 @@ And if you wanted to set these options globally so that all users on the machine
     </description>
     <summary>A GUI for Chocolatey</summary>
   <releaseNotes>
-All release notes for Chocolatey GUI can be found on the GitHub site - https://github.com/chocolatey/ChocolateyGUI/releases
+All release notes for Chocolatey GUI can be found on the docs site - https://docs.chocolatey.org/en-us/chocolatey-gui/release-notes
   </releaseNotes>
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>

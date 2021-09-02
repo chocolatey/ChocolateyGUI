@@ -54,6 +54,8 @@
     </Reference>
     <Reference Include="chocolatey, Version=0.10.15.0, Culture=neutral, PublicKeyToken=79d02ea9cad655eb, processorArchitecture=MSIL">
       <HintPath>..\packages\chocolatey.lib.0.10.15\lib\chocolatey.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="LiteDB, Version=5.0.5.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.5.0.5\lib\net45\LiteDB.dll</HintPath>
@@ -185,6 +187,7 @@
     <Compile Include="Services\IVersionService.cs" />
     <Compile Include="Services\LiteDBFileStorageService.cs" />
     <Compile Include="Services\VersionService.cs" />
+    <Compile Include="Startup\AssemblyResolver.cs" />
     <Compile Include="Startup\AutoFacConfiguration.cs" />
     <Compile Include="Utilities\DefaultsExtensions.cs" />
     <Compile Include="Utilities\LogSetup.cs" />
@@ -219,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <SourceRoot Include="$(MSBuildThisFileDirectory)/../" />
+    <Folder Include="Startup\Adapters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

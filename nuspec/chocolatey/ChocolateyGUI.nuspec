@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/chocolatey/ChocolateyGUI</projectUrl>
     <projectSourceUrl>https://github.com/chocolatey/ChocolateyGUI</projectSourceUrl>
     <packageSourceUrl>https://github.com/chocolatey/ChocolateyGUI/tree/develop/nuspec/chocolatey</packageSourceUrl>
-    <iconUrl>https://raw.githubusercontent.com/chocolatey/choco/master/docs/logo/chocolateyicon.gif</iconUrl>
+    <iconUrl>https://chocolatey.org/assets/images/nupkg/chocolateyicon.png</iconUrl>
     <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE.txt</licenseUrl>
     <bugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</bugTrackerUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -54,7 +54,7 @@ And if you wanted to set these options globally so that all users on the machine
     </description>
     <summary>A GUI for Chocolatey</summary>
   <releaseNotes>
-All release notes for Chocolatey GUI can be found on the GitHub site - https://github.com/chocolatey/ChocolateyGUI/releases
+All release notes for Chocolatey GUI can be found on the docs site - https://docs.chocolatey.org/en-us/chocolatey-gui/release-notes
   </releaseNotes>
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>

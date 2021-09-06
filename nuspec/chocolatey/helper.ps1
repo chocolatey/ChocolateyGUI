@@ -121,6 +121,14 @@ function Set-UserSettings {
         Set-FeatureState "DefaultToDarkMode" ($pp.DefaultToDarkMode -eq $true) $applyGlobally
     }
 
+    if($pp.ContainsKey("HideThisPCSource")) {
+        Set-FeatureState "HideThisPCSource" ($pp.HideThisPCSource -eq $true) $applyGlobally
+    }
+
+    if($pp.ContainsKey("PreventUsageOfUpdateAllButton")) {
+        Set-FeatureState "PreventUsageOfUpdateAllButton" ($pp.PreventUsageOfUpdateAllButton -eq $true) $applyGlobally
+    }
+
     # config
     if($pp.ContainsKey("OutdatedPackagesCacheDurationInMinutes")) {
         Set-Config "OutdatedPackagesCacheDurationInMinutes" ($pp.OutdatedPackagesCacheDurationInMinutes) $applyGlobally

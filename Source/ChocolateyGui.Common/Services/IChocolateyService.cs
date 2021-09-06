@@ -61,5 +61,7 @@ namespace ChocolateyGui.Common.Services
         Task DisableSource(string id);
 
         Task<bool> RemoveSource(string id);
+
+        Task ExportPackages(string exportFilePath, bool includeVersionNumbers);
     }
 }

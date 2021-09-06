@@ -28,5 +28,10 @@ namespace ChocolateyGui.Common.Services
         {
             get { return true; }
         }
+
+        public bool IsUpgradeAllCommandAllowed
+        {
+            get { return true; }
+        }
     }
 }

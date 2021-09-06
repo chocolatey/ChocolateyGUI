@@ -173,9 +173,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             get { return _allowedCommandsService.IsUpgradeCommandAllowed; }
         }
 
+        public bool IsUpgradeAllAllowed
+        {
+            get { return _allowedCommandsService.IsUpgradeAllCommandAllowed; }
+        }
+
         public bool CanUpdateAll()
         {
-            return Packages.Any(p => p.CanUpdate) && _allowedCommandsService.IsUpgradeCommandAllowed;
+            return Packages.Any(p => p.CanUpdate) && _allowedCommandsService.IsUpgradeCommandAllowed && _allowedCommandsService.IsUpgradeAllCommandAllowed;
         }
 
         public async void UpdateAll()

@@ -215,6 +215,7 @@
                         VerticalAlignment="Center"
                         Style="{DynamicResource IconFlatButtonStyle}"
                         ToolTip=""
+                        Visibility="{Binding IsUpgradeAllAllowed, Converter={StaticResource BooleanToVisibility}}"
                         Margin="2,0,2,0">
                     <i:Interaction.Behaviors>
                         <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.LocalSourceView_ButtonUpdateAll}"

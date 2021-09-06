@@ -16,5 +16,7 @@ namespace ChocolateyGui.Common.Services
         bool IsUninstallCommandAllowed { get; }
 
         bool IsUpgradeCommandAllowed { get; }
+
+        bool IsUpgradeAllCommandAllowed { get; }
     }
 }

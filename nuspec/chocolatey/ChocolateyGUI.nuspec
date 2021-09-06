@@ -16,13 +16,6 @@
     <description>
 Chocolatey GUI is a delicious GUI on top of the Chocolatey command line tool.
 
-## Features
-
-* View all **installed** and **available** packages
-* **Upgrade** installed, but outdated packages
-* **Install** and **uninstall** packages
-* See detailed **package information**
-
 ## Package Parameters
 
 - `/Global` - Should the configuration change be applied globally, or for the current user.
@@ -50,7 +43,7 @@ As an example, the following installation command could be used to enable `ShowC
 
 `choco install chocolateygui --params="'/ShowConsoleOutput=$true /UseDelayedSearch=$false /OutdatedPackagesCacheDurationInMinutes=120'"`
 
-And if you wanted to set these options globally so that all users on the machine got these values, you would run the following:
+If you wanted to set these options globally so that all users on the machine got these values, run the following:
 
 `choco install chocolateygui --params="'/ShowConsoleOutput=$true /UseDelayedSearch=$false /OutdatedPackagesCacheDurationInMinutes=120 /Global'"`
     </description>

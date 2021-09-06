@@ -2323,6 +2323,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Controls whether or not the This PC source is displayed in Chocolatey GUI.  Enabling this feature means that Chocolatey GUI will no longer show a list of all the currently installed packages on the machine.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_ToggleHideThisPCSourceDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleHideThisPCSourceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allows control over whether package download count is displayed on remote source views..
         /// </summary>
         public static string SettingsView_TogglePackageDownloadCountDescription {

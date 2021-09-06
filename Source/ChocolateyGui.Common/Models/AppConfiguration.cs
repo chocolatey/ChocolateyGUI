@@ -82,6 +82,10 @@ namespace ChocolateyGui.Common.Models
         [Feature]
         public bool? DefaultToDarkMode { get; set; }
 
+        [LocalizedDescription("SettingsView_ToggleHideThisPCSourceDescription")]
+        [Feature]
+        public bool? HideThisPCSource { get; set; }
+
         public override string ToString()
         {
             return @"

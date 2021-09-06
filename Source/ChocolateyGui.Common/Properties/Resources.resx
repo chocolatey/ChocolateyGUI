@@ -1043,4 +1043,7 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="SettingsView_ToggleHideThisPCSourceDescription" xml:space="preserve">
     <value>Controls whether or not the This PC source is displayed in Chocolatey GUI.  Enabling this feature means that Chocolatey GUI will no longer show a list of all the currently installed packages on the machine.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
   </data>
+  <data name="SettingsView_TogglePreventUsageOfUpdateAllButtonDescription" xml:space="preserve">
+    <value>Prevents the ability for user to use the Update All button. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
+  </data>
 </root>

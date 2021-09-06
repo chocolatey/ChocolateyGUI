@@ -2368,6 +2368,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prevents the ability for user to use the Update All button. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_TogglePreventUsageOfUpdateAllButtonDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePreventUsageOfUpdateAllButtonDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show additional package information on Local and Remote views..
         /// </summary>
         public static string SettingsView_ToggleShowAdditionalPackageInformationDescription {

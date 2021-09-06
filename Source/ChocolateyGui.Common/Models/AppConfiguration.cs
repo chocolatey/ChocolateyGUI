@@ -82,6 +82,14 @@ namespace ChocolateyGui.Common.Models
         [Feature]
         public bool? DefaultToDarkMode { get; set; }
 
+        [LocalizedDescription("SettingsView_ToggleHideThisPCSourceDescription")]
+        [Feature]
+        public bool? HideThisPCSource { get; set; }
+
+        [LocalizedDescription("SettingsView_TogglePreventUsageOfUpdateAllButtonDescription")]
+        [Feature]
+        public bool? PreventUsageOfUpdateAllButton { get; set; }
+
         public override string ToString()
         {
             return @"
@@ -102,6 +110,8 @@ HidePackageDownloadCount: {13}
 PreventAllPackageIconDownloads: {14}
 HideAllRemoteChocolateySources: {15}
 DefaultToDarkMode: {16}
+HideThisPCSource: {17}
+PreventUsageOfUpdateAllButton: {18}
 ".format_with(
                 OutdatedPackagesCacheDurationInMinutes,
                 DefaultSourceName,
@@ -119,7 +129,9 @@ DefaultToDarkMode: {16}
                 HidePackageDownloadCount,
                 PreventAllPackageIconDownloads,
                 HideAllRemoteChocolateySources,
-                DefaultToDarkMode);
+                DefaultToDarkMode,
+                HideThisPCSource,
+                PreventUsageOfUpdateAllButton);
         }
     }
 }

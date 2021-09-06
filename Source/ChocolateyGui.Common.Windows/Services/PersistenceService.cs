@@ -30,5 +30,14 @@ namespace ChocolateyGui.Common.Windows.Services
 
             return result != null && result.Value ? fd.OpenFile() : null;
         }
+
+        public string GetFilePath(string defaultExtension, string filter)
+        {
+            var fd = new SaveFileDialog { DefaultExt = defaultExtension, Filter = filter };
+
+            var result = fd.ShowDialog();
+
+            return result != null && result.Value ? fd.FileName : null;
+        }
     }
 }

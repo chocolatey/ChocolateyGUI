@@ -1146,6 +1146,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All the currrently installed packages have been exported to {0}.
+        /// </summary>
+        public static string LocalSourceViewModel_ExportComplete {
+            get {
+                return ResourceManager.GetString("LocalSourceViewModel_ExportComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fetching packages....
         /// </summary>
         public static string LocalSourceViewModel_FetchingPackages {
@@ -2323,6 +2332,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Controls whether or not the This PC source is displayed in Chocolatey GUI.  Enabling this feature means that Chocolatey GUI will no longer show a list of all the currently installed packages on the machine.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_ToggleHideThisPCSourceDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_ToggleHideThisPCSourceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allows control over whether package download count is displayed on remote source views..
         /// </summary>
         public static string SettingsView_TogglePackageDownloadCountDescription {
@@ -2355,6 +2373,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string SettingsView_TogglePreventPreloadDescription {
             get {
                 return ResourceManager.GetString("SettingsView_TogglePreventPreloadDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevents the ability for user to use the Update All button. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        /// </summary>
+        public static string SettingsView_TogglePreventUsageOfUpdateAllButtonDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_TogglePreventUsageOfUpdateAllButtonDescription", resourceCulture);
             }
         }
         

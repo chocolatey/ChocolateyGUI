@@ -529,6 +529,19 @@ namespace ChocolateyGui.Common.Windows.Services
             }
         }
 
+        public async Task ExportPackages(string exportFilePath, bool includeVersionNumbers)
+        {
+            _choco.Set(
+                config =>
+                {
+                    config.CommandName = "export";
+                    config.ExportCommand.OutputFilePath = exportFilePath;
+                    config.ExportCommand.IncludeVersionNumbers = includeVersionNumbers;
+                });
+
+            await _choco.RunAsync();
+        }
+
         private static Package GetMappedPackage(GetChocolatey choco, PackageResult package, IMapper mapper, bool forceInstalled = false)
         {
             var mappedPackage = package == null ? null : mapper.Map<Package>(package.Package);

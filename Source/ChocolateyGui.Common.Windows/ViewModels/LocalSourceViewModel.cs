@@ -173,9 +173,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             get { return _allowedCommandsService.IsUpgradeCommandAllowed; }
         }
 
+        public bool IsUpgradeAllAllowed
+        {
+            get { return _allowedCommandsService.IsUpgradeAllCommandAllowed; }
+        }
+
         public bool CanUpdateAll()
         {
-            return Packages.Any(p => p.CanUpdate) && _allowedCommandsService.IsUpgradeCommandAllowed;
+            return Packages.Any(p => p.CanUpdate) && _allowedCommandsService.IsUpgradeCommandAllowed && _allowedCommandsService.IsUpgradeAllCommandAllowed;
         }
 
         public async void UpdateAll()
@@ -214,37 +219,25 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
         }
 
-        public void ExportAll()
+        public async void ExportAll()
         {
             _exportAll = false;
 
             try
             {
-                using (var fileStream = _persistenceService.SaveFile("*.config", Resources.LocalSourceViewModel_ConfigFiles.format_with("(.config)|*.config")))
+                var exportFilePath = _persistenceService.GetFilePath("*.config", Resources.LocalSourceViewModel_ConfigFiles.format_with("(.config)|*.config"));
+
+                if (string.IsNullOrEmpty(exportFilePath))
                 {
-                    if (fileStream == null)
-                    {
-                        return;
-                    }
-
-                    var settings = new XmlWriterSettings { Indent = true };
-
-                    using (var xw = XmlWriter.Create(fileStream, settings))
-                    {
-                        xw.WriteStartDocument();
-                        xw.WriteStartElement("packages");
-
-                        foreach (var package in Packages)
-                        {
-                            xw.WriteStartElement("package");
-                            xw.WriteAttributeString("id", package.Id);
-                            xw.WriteAttributeString("version", package.Version.ToString());
-                            xw.WriteEndElement();
-                        }
-
-                        xw.WriteEndElement();
-                    }
+                    return;
                 }
+
+                await _chocolateyService.ExportPackages(exportFilePath, true);
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                _progressService.ShowMessageAsync(Resources.LocalSourceView_ButtonExport, string.Format(Resources.LocalSourceViewModel_ExportComplete, exportFilePath))
+                    .ConfigureAwait(false);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
             catch (Exception ex)
             {

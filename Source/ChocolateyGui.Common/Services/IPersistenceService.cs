@@ -14,5 +14,7 @@ namespace ChocolateyGui.Common.Services
         Stream OpenFile(string defaultExtension, string filter);
 
         Stream SaveFile(string defaultExtension, string filter);
+
+        string GetFilePath(string defaultExtension, string filter);
     }
 }

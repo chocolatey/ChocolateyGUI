@@ -1146,6 +1146,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All the currrently installed packages have been exported to {0}.
+        /// </summary>
+        public static string LocalSourceViewModel_ExportComplete {
+            get {
+                return ResourceManager.GetString("LocalSourceViewModel_ExportComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fetching packages....
         /// </summary>
         public static string LocalSourceViewModel_FetchingPackages {

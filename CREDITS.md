@@ -57,6 +57,5 @@ Chocolatey GUI is tested and analyzed with the following rockstar frameworks:
 
 We would like to credit other super sweet tools/frameworks/services that aid in the development of Chocolatey GUI:
 
-* [Gitter](https://gitter.im)
 * [NuGet Framework](https://www.nuget.org/)
 * [ReSharper](https://www.jetbrains.com/resharper/)

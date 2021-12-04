@@ -23,9 +23,10 @@ TeamCity  | Appveyor
 
 ## Chat Room
 
-Come join in the conversation about Chocolatey GUI in our Gitter Chat Room
+Come join in the conversation about Chocolatey GUI in our Community Chat Room
 
-[![Gitter chat](https://badges.gitter.im/chocolatey/ChocolateyGUI.png)](https://gitter.im/chocolatey/ChocolateyGUI)
+
+[![Discord](https://img.shields.io/discord/778552361454141460?logo=Discord)](https://ch0.co/community)
 
 Or, you can find us in IRC at #chocolatey.
 

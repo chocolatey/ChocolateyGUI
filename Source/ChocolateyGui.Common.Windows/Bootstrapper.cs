@@ -24,6 +24,7 @@ using ChocolateyGui.Common.Startup;
 using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Startup;
+using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.ViewModels;
 using LiteDB;
 using Serilog;
@@ -135,7 +136,7 @@ namespace ChocolateyGui.Common.Windows
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format(Resources.Fatal_Startup_Error_Formatted, ex.Message));
+                ChocolateyMessageBox.Show(string.Format(Resources.Fatal_Startup_Error_Formatted, ex.Message));
                 Logger.Fatal(ex, Resources.Fatal_Startup_Error);
                 await OnExitAsync();
             }
@@ -192,7 +193,7 @@ namespace ChocolateyGui.Common.Windows
                     return;
                 }
 
-                MessageBox.Show(
+                ChocolateyMessageBox.Show(
                     e.ExceptionObject.ToString(),
                     Resources.Bootstrapper_UnhandledException,
                     MessageBoxButton.OK,

@@ -229,6 +229,7 @@
     <Compile Include="Controls\Dialogs\IClosableChildWindow.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Utilities\ChocolateyMessageBox.cs" />
     <Compile Include="Utilities\ToolTipBehavior.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />

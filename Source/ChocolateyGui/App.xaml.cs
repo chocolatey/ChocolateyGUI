@@ -15,6 +15,7 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Startup;
 using ChocolateyGui.Common.Windows;
 using ChocolateyGui.Common.Windows.Theming;
+using ChocolateyGui.Common.Windows.Utilities;
 
 namespace ChocolateyGui
 {
@@ -80,7 +81,7 @@ namespace ChocolateyGui
                 catch (Exception ex)
                 {
                     var errorMessage = string.Format("Unable to load Chocolatey GUI assembly. {0}", ex.Message);
-                    MessageBox.Show(errorMessage);
+                    ChocolateyMessageBox.Show(errorMessage);
                     throw new ApplicationException(errorMessage);
                 }
 

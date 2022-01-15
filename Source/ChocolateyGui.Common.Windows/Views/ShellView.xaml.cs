@@ -18,6 +18,7 @@ using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using ChocolateyGui.Common.Windows.Services;
+using ChocolateyGui.Common.Windows.Utilities;
 using MahApps.Metro.Controls.Dialogs;
 using ChocolateyDialog = ChocolateyGui.Common.Windows.Controls.Dialogs.ChocolateyDialog;
 
@@ -74,7 +75,7 @@ namespace ChocolateyGui.Common.Windows.Views
             if (operatingSystemVersion.Version.Major == 10 &&
                 !_chocolateyConfigurationProvider.IsChocolateyExecutableBeingUsed)
             {
-                MessageBox.Show(
+                ChocolateyMessageBox.Show(
                     "Usage of the PowerShell Version of Chocolatey (i.e. <= 0.9.8.33) has been detected.  Chocolatey GUI does not support using this version of Chocolatey on Windows 10.  Please update Chocolatey to the new C# Version (i.e. > 0.9.9.0) and restart Chocolatey GUI.  This application will now close.",
                     "Incompatible Operating System Version",
                     MessageBoxButton.OK,

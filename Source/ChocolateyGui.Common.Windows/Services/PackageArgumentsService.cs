@@ -6,8 +6,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using chocolatey;
 using chocolatey.infrastructure.adapters;
+using chocolatey.infrastructure.app.utility;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Providers;
 using IFileSystem = chocolatey.infrastructure.filesystem.IFileSystem;
@@ -21,34 +23,79 @@ namespace ChocolateyGui.Common.Windows.Services
         private readonly IEncryptionUtility _encryptionUtility;
         private readonly IFileSystem _fileSystem;
         private readonly IChocolateyConfigurationProvider _chocolateyConfigurationProvider;
+        private readonly IDialogService _dialogService;
 
-        public PackageArgumentsService(IEncryptionUtility encryptionUtility, IFileSystem fileSystem, IChocolateyConfigurationProvider chocolateyConfigurationProvider)
+        public PackageArgumentsService(
+            IEncryptionUtility encryptionUtility,
+            IFileSystem fileSystem,
+            IChocolateyConfigurationProvider chocolateyConfigurationProvider,
+            IDialogService dialogService)
         {
             _encryptionUtility = encryptionUtility;
             _fileSystem = fileSystem;
             _chocolateyConfigurationProvider = chocolateyConfigurationProvider;
+            _dialogService = dialogService;
         }
 
-        public string DecryptPackageArgumentsFile(string id, string version)
+        public IEnumerable<string> DecryptPackageArgumentsFile(string id, string version)
         {
             var argumentsPath = _fileSystem.combine_paths(_chocolateyConfigurationProvider.ChocolateyInstall, ".chocolatey", "{0}.{1}".format_with(id, version));
             var argumentsFile = _fileSystem.combine_paths(argumentsPath, ".arguments");
+
+            string arguments = string.Empty;
 
             // Get the arguments decrypted in here and return them
             try
             {
                 if (_fileSystem.file_exists(argumentsFile))
                 {
-                    return _encryptionUtility.decrypt_string(_fileSystem.read_file(argumentsFile));
+                    arguments = _fileSystem.read_file(argumentsFile);
                 }
-
-                return Resources.PackageView_UnableToFindArgumentsFile.format_with(version, id);
             }
             catch (Exception ex)
             {
                 var message = Resources.Application_PackageArgumentsError.format_with(version, id);
                 Logger.Error(ex, message);
-                return message;
+            }
+
+            if (string.IsNullOrEmpty(arguments))
+            {
+                _dialogService.ShowMessageAsync(
+                    string.Empty,
+                    Resources.PackageView_UnableToFindArgumentsFile.format_with(version, id));
+                yield break;
+            }
+
+            // The following code is borrowed from the Chocolatey codebase, should
+            // be extracted to a separate location in choco executable so we can re-use it.
+            var packageArgumentsUnencrypted = arguments.contains(" --") && arguments.to_string().Length > 4
+                ? arguments
+                : _encryptionUtility.decrypt_string(arguments);
+
+            var sensitiveArgs = ArgumentsUtility.arguments_contain_sensitive_information(packageArgumentsUnencrypted);
+
+            var packageArgumentsSplit =
+                packageArgumentsUnencrypted.Split(new[] { " --" }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var packageArgument in packageArgumentsSplit.or_empty_list_if_null())
+            {
+                var packageArgumentSplit =
+                    packageArgument.Split(new[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries);
+                var optionName = packageArgumentSplit[0].to_string();
+                var optionValue = string.Empty;
+
+                if (packageArgumentSplit.Length == 2)
+                {
+                    optionValue = packageArgumentSplit[1].to_string().remove_surrounding_quotes();
+                    if (optionValue.StartsWith("'"))
+                    {
+                        optionValue.remove_surrounding_quotes();
+                    }
+                }
+
+                yield return "--{0}{1}".format_with(
+                    optionName,
+                    string.IsNullOrWhiteSpace(optionValue) ? string.Empty : "=" + optionValue);
             }
         }
     }

@@ -5,10 +5,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+
 namespace ChocolateyGui.Common.Windows.Services
 {
     public interface IPackageArgumentsService
     {
-        string DecryptPackageArgumentsFile(string id, string version);
+        IEnumerable<string> DecryptPackageArgumentsFile(string id, string version);
     }
 }

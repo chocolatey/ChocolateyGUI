@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1255,5 +1255,9 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="PackageView_UnableToFindArgumentsFile" xml:space="preserve">
     <value>Unable to locate .arguments file for version {0} of package '{1}'</value>
     <comment>{0} = The version of the selected package  {1} = The id for the currently selected package</comment>
+  </data>
+  <data name="PackageViewModel_ArgumentsForPackageFormat" xml:space="preserve">
+    <value>Arguments for the Package {0}</value>
+    <comment>{0} = The Title of the package</comment>
   </data>
 </root>

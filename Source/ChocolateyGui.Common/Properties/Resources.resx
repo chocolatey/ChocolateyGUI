@@ -444,13 +444,13 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Authors:</value>
   </data>
   <data name="RemoteSourceView_ButtonGoBackAPage" xml:space="preserve">
-    <value>Go Back a Page</value>
+    <value>Back</value>
   </data>
   <data name="RemoteSourceView_ButtonGoForwardAPage" xml:space="preserve">
     <value>Next</value>
   </data>
   <data name="RemoteSourceView_ButtonGotoFirstPage" xml:space="preserve">
-    <value>Go to First Page</value>
+    <value>First</value>
   </data>
   <data name="RemoteSourceView_ButtonGotoLastPage" xml:space="preserve">
     <value>Last</value>
@@ -1244,8 +1244,92 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="LocalSourceViewModel_ExportComplete" xml:space="preserve">
     <value>All the currrently installed packages have been exported to {0}</value>
     <comment>{0} = The path to where the exported packages have been placed</comment>
-  <data name="SettingsView_SelectedLanguage" xml:space="preserve">
-    <value>Selected Language</value>
+  </data>
+  <data name="SettingsView_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="RemoteSourceView_TooltipGoBackAPage" xml:space="preserve">
+    <value>Go to the Previous Page</value>
+  </data>
+  <data name="RemoteSourceView_TooltipGoForwardAPage" xml:space="preserve">
+    <value>Go to the Next Page</value>
+  </data>
+  <data name="RemoteSourceView_TooltipGotoFirstPage" xml:space="preserve">
+    <value>Go to the First Page</value>
+  </data>
+  <data name="RemoteSourceView_TooltipGotoLastPage" xml:space="preserve">
+    <value>Go to the Last Page</value>
+  </data>
+  <data name="ChocolateyGUI_AllowNonAdminAccessToSettingsTitle" xml:space="preserve">
+    <value>Allow Non Admin Access to Settings</value>
+  </data>
+  <data name="ChocolateyGUI_DefaultSourceNameTitle" xml:space="preserve">
+    <value>Default Source Name</value>
+  </data>
+  <data name="ChocolateyGUI_DefaultToDarkModeTitle" xml:space="preserve">
+    <value>Default to Dark Mode</value>
+  </data>
+  <data name="ChocolateyGUI_DefaultToTileViewForLocalSourceTitle" xml:space="preserve">
+    <value>Default to Tile View for Local Sources</value>
+  </data>
+  <data name="ChocolateyGUI_DefaultToTileViewForRemoteSourceTitle" xml:space="preserve">
+    <value>Default to Tile View for Remote Sources</value>
+  </data>
+  <data name="ChocolateyGUI_ExcludeInstalledPackagesTitle" xml:space="preserve">
+    <value>Exclude Installed Packages</value>
+  </data>
+  <data name="ChocolateyGUI_HideAllRemoteChocolateySourcesTitle" xml:space="preserve">
+    <value>Hide All Remote Chocolatey Sources</value>
+  </data>
+  <data name="ChocolateyGUI_HideThisPCSourceTitle" xml:space="preserve">
+    <value>Hide This PC Source</value>
+  </data>
+  <data name="ChocolateyGUI_NumberOfPackageVersionsForSelectionTitle" xml:space="preserve">
+    <value>Number of Package Versions for Selection</value>
+  </data>
+  <data name="ChocolateyGUI_OutdatedPackagesCacheDurationInMinutesTitle" xml:space="preserve">
+    <value>Outdated Packages Cache Duration in Minutes</value>
+  </data>
+  <data name="ChocolateyGUI_PreventAllPackageIconDownloadsTitle" xml:space="preserve">
+    <value>Prevent All Package Icon Downloads</value>
+  </data>
+  <data name="ChocolateyGUI_PreventAutomatedOutdatedPackagesCheckTitle" xml:space="preserve">
+    <value>Prevent Automated Outdated Packages Check</value>
+  </data>
+  <data name="ChocolateyGUI_PreventPreloadTitle" xml:space="preserve">
+    <value>Prevent Preload</value>
+  </data>
+  <data name="ChocolateyGUI_PreventUsageOfUpdateAllButtonTitle" xml:space="preserve">
+    <value>Prevent Usage of Update All Button</value>
+  </data>
+  <data name="ChocolateyGUI_ShowAdditionalPackageInformationTitle" xml:space="preserve">
+    <value>Show Additional Package Information</value>
+  </data>
+  <data name="ChocolateyGUI_ShowConsoleOutputTitle" xml:space="preserve">
+    <value>Show Console Output</value>
+  </data>
+  <data name="ChocolateyGUI_UseKeyboardBindingsTitle" xml:space="preserve">
+    <value>Use Keyboard Bindings</value>
+  </data>
+  <data name="PackageView_InstallAdvanced" xml:space="preserve">
+    <value>Install Advanced</value>
+  </data>
+  <data name="ChocolateyGUI_HidePackageDownloadCountTitle" xml:space="preserve">
+    <value>Hide Package Download Count</value>
+  </data>
+  <data name="ChocolateyGUI_ShowAggregatedSourceViewTitle" xml:space="preserve">
+    <value>Show Aggregated Source View</value>
+  </data>
+  <data name="SettingsView_ConfigNameFormat" xml:space="preserve">
+    <value>Original Name for this Configuration: '{0}'</value>
+    <comment>{0} = The Name of this Configuration</comment>
+  </data>
+  <data name="SettingsView_FeatureTitleFormat" xml:space="preserve">
+    <value>Original Title for this Feature: '{0}'</value>
+    <comment>{0} = The Title of the Feature</comment>
+  </data>
+  <data name="ChocolateyGUI_UseDelayedSearchTitle" xml:space="preserve">
+    <value>Use Delayed Search</value>
   </data>
   <data name="Application_PackageArgumentsError" xml:space="preserve">
     <value>There as an error attempting to read the contents of the .arguments file for version {0} of package '{1}'.  See log file for more information.</value>

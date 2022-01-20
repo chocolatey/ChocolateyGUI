@@ -207,6 +207,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public ObservableCollection<CultureInfo> AllLanguages { get; private set; } =
             new ObservableCollection<CultureInfo>();
+
         public bool CanSave => SelectedSource != null;
 
         public bool CanRemove => SelectedSource != null && !_isNewItem && SelectedSource.Id != ChocolateyLicensedSourceId;
@@ -665,7 +666,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 #if DEBUG
                 var descriptionKey = string.Empty;
 #else
-                var descriptionKey = "ChocolateyGUI_" + chocolateyGuiFeature.Key + "Description";
+                var descriptionKey = "ChocolateyGUI_" + chocolateyGuiSetting.Key + "Description";
 #endif
 
                 var newDescription = _translationSource[descriptionKey];

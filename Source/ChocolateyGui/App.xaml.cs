@@ -133,7 +133,6 @@ namespace ChocolateyGui
             var configService = Bootstrapper.Container.Resolve<IConfigService>();
             var effectiveConfiguration = configService.GetEffectiveConfiguration();
 
-
             ThemeMode themeMode;
             if (effectiveConfiguration.DefaultToDarkMode == null)
             {
@@ -161,14 +160,9 @@ namespace ChocolateyGui
             ThemeAssist.BundledTheme.SyncTheme(themeMode);
         }
 
-        protected static string L(string key)
+        private static string L(string key)
         {
             return _translationSource[key];
-        }
-
-        protected string L(string key, params object[] parameters)
-        {
-            return _translationSource[key, parameters];
         }
     }
 }

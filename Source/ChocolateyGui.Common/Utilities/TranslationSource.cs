@@ -1,6 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="TranslationSource.cs">
-//   Copyright 2014 - Present Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+//   Copyright 2017 - Present Chocolatey Software, LLC
+//   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -18,6 +19,7 @@ namespace ChocolateyGui.Common.Utilities
     {
         private static readonly Lazy<TranslationSource> _instance =
             new Lazy<TranslationSource>(() => new TranslationSource());
+
         private readonly ResourceManager _resourceManager = Resources.ResourceManager;
         private CultureInfo _currentCulture;
 

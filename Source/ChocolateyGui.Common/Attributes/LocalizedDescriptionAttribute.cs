@@ -14,13 +14,13 @@ namespace ChocolateyGui.Common.Attributes
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public sealed class LocalizedDescriptionAttribute : DescriptionAttribute
     {
-        public string Key { get; set; }
-
         public LocalizedDescriptionAttribute(string key)
             : base(Localize(key))
         {
             Key = key;
         }
+
+        public string Key { get; set; }
 
         private static string Localize(string key)
         {

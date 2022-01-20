@@ -12,12 +12,12 @@ namespace ChocolateyGui.Common.Attributes
 {
     public class LocalizedCommandForAttribute : CommandForAttribute
     {
-        public string Key { get; set; }
-
         public LocalizedCommandForAttribute(string commandName, string key)
         : base(commandName, Localize(key))
         {
         }
+
+        public string Key { get; set; }
 
         private static string Localize(string key)
         {

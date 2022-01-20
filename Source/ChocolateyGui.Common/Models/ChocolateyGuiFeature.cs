@@ -25,6 +25,7 @@ namespace ChocolateyGui.Common.Models
             {
                 return _displayTitle ?? Title;
             }
+
             set
             {
                 _displayTitle = value;

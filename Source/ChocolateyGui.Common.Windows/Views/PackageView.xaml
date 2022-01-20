@@ -74,7 +74,7 @@
                             Command="{commands:DataContextCommandAdapter InstallAdvanced}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Install" Margin="0 0 5 0 " VerticalAlignment="Center" />
-                                <TextBlock Text="Install Advanced" FontSize="16"/>
+                                <TextBlock Text="{lang:Localize PackageView_InstallAdvanced}" FontSize="16"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>

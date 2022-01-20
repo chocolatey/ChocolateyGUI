@@ -18,6 +18,7 @@
              d:DesignHeight="786" d:DesignWidth="1366">
 
     <UserControl.Resources>
+        <converters:LocalizationConverter x:Key="LocalizationConverter"/>
         <Style TargetType="{x:Type metro:ToggleSwitch}" BasedOn="{StaticResource Chocolatey.Styles.ToggleSwitch}">
             <Setter Property="OnContent" Value="{lang:Localize SettingsView_On}"/>
             <Setter Property="OffContent" Value="{lang:Localize SettingsView_Off}"/>
@@ -37,7 +38,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Title}" TextWrapping="Wrap" />
+                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding DisplayTitle}" TextWrapping="Wrap" ToolTip="{Binding Title, ConverterParameter=SettingsView_FeatureTitleFormat, Converter={StaticResource LocalizationConverter}}" />
                     <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event Toggled] = [Action ChocolateyGuiFeatureToggled($dataContext)]"/>
                     <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="5 5 0 0" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
                 </Grid>
@@ -147,8 +148,6 @@
                         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="{DynamicResource MahApps.Brushes.Control.Background}">
                             <StackPanel>
                                 <ItemsControl AlternationCount="2" ItemsSource="{Binding ChocolateyGuiFeaturesView}" ItemTemplate="{StaticResource ChocolateyGuiFeatureTemplate}" />
-                                <TextBlock Text="{lang:Localize SettingsView_SelectedLanguage}" Style="{StaticResource BaseAltTextBlockStyle}" TextWrapping="Wrap" />
-                                <ComboBox ItemsSource="{Binding AllLanguages}" SelectedValue="{Binding UseLanguage}" />
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
@@ -161,9 +160,27 @@
 
                         <DockPanel Grid.Row="0" Margin="0 0 0 5">
                             <TextBlock DockPanel.Dock="Left" Style="{StaticResource TitleTextBlockStyle}" Text="{lang:Localize SettingsView_Settings}" />
-                            <TextBox DockPanel.Dock="Right"
+                                <TextBox DockPanel.Dock="Right"
                                      Style="{StaticResource Chocolatey.Styles.TextBox.Search}"
                                      Text="{Binding ChocolateyGuiSettingSearchQuery, Delay=250, UpdateSourceTrigger=PropertyChanged}" />
+                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
+                                <TextBlock Text="{lang:Localize SettingsView_Language}" Style="{StaticResource BaseAltTextBlockStyle}" Margin="0,0,3,0"  />
+                                <ComboBox ItemsSource="{Binding AllLanguages}" SelectedValue="{Binding UseLanguage}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{} {0} ({1})">
+                                                        <Binding Path="NativeName" />
+                                                        <Binding Path="EnglishName" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                </StackPanel>
+
                         </DockPanel>
                         <DataGrid Grid.Row="1"
                                   CanUserAddRows="False"
@@ -172,8 +189,14 @@
                                   AutoGenerateColumns="False"
                                   cal:Message.Attach="[Event RowEditEnding] = [Action ChocolateyGuiSettingsRowEditEnding($eventArgs)]">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="{lang:Localize SettingsView_PropertyName}" Width="*" IsReadOnly="True" Binding="{Binding Key}"/>
-                                <DataGridTextColumn Header="{lang:Localize SettingsView_PropertyValue}" Width="2*" Binding="{Binding Value}"/>
+                                <DataGridTextColumn Header="{lang:Localize SettingsView_PropertyName}" Width="*" IsReadOnly="True" Binding="{Binding DisplayName }">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="ToolTip" Value="{Binding Key, ConverterParameter=SettingsView_ConfigNameFormat, Converter={StaticResource LocalizationConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{lang:Localize SettingsView_PropertyValue}" Width="2*" Binding="{Binding Value}" />
                                 <DataGridTextColumn Header="{lang:Localize SettingsView_PropertyDescription}" Width="2*" IsReadOnly="True" Binding="{Binding Description}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">

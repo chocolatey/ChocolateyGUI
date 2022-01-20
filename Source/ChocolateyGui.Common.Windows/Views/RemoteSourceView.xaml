@@ -484,14 +484,14 @@
                     Name="FirstPage"
                     Content="{lang:Localize RemoteSourceView_ButtonGotoFirstPage}"
                     AutomationProperties.Name="Go to First Page"
-                    ToolTip="First"
+                    ToolTip="{lang:Localize RemoteSourceView_TooltipGotoFirstPage}"
                     Command="{commands:DataContextCommandAdapter Executed=GoToFirst, CanExecute=CanGoToFirst}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
             <Button Grid.Column="1"
                     Name="BackPage"
                     Content="{lang:Localize RemoteSourceView_ButtonGoBackAPage}"
                     AutomationProperties.Name="Go Back a Page"
-                    ToolTip="Back"
+                    ToolTip="{lang:Localize RemoteSourceView_TooltipGoBackAPage}"
                     Command="{commands:DataContextCommandAdapter Executed=GoToPrevious, CanExecute=CanGoToPrevious}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
 
@@ -513,14 +513,14 @@
                     Name="ForwardPage"
                     Content="{lang:Localize RemoteSourceView_ButtonGoForwardAPage}"
                     AutomationProperties.Name="Go Forward a Page"
-                    ToolTip="Forward"
+                    ToolTip="{lang:Localize RemoteSourceView_TooltipGoForwardAPage}"
                     Command="{commands:DataContextCommandAdapter Executed=GoToNext, CanExecute=CanGoToNext}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
             <Button Grid.Column="4"
                     Name="LastPage"
                     Content="{lang:Localize RemoteSourceView_ButtonGotoLastPage}"
                     AutomationProperties.Name="Go to Last Page"
-                    ToolTip="Last"
+                    ToolTip="{lang:Localize RemoteSourceView_TooltipGotoLastPage}"
                     Command="{commands:DataContextCommandAdapter Executed=GoToLast, CanExecute=CanGoToLast}"
                     Style="{DynamicResource PaginationButtonStyle}"/>
         </Grid>

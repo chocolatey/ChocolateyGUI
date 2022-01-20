@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="PackageViewModel.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -7,10 +7,11 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
+using chocolatey;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
@@ -426,10 +427,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             get { return PackageSize != -1; }
         }
 
-        public void ShowArguments()
+        public async Task ShowArguments()
         {
-            var decryptedArguments = _packageArgumentsService.DecryptPackageArgumentsFile(Id, Version.ToString());
-            MessageBox.Show(decryptedArguments);
+            var decryptedArguments = _packageArgumentsService.DecryptPackageArgumentsFile(Id, Version.ToString()).ToList();
+
+            await _dialogService.ShowMessageAsync(
+                Resources.PackageViewModel_ArgumentsForPackageFormat.format_with(Title),
+                string.Join(Environment.NewLine, decryptedArguments));
         }
 
         public async Task Install()

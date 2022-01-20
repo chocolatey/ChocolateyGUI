@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using chocolatey;
 using chocolatey.infrastructure.commandline;
 using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Models;
@@ -18,7 +17,7 @@ using Serilog;
 
 namespace ChocolateyGui.Common.Commands
 {
-    [LocalizedCommandFor("purge", "PurgeCommand_Description")]
+    [LocalizedCommandFor("purge", nameof(Resources.PurgeCommand_Description))]
     public class PurgeCommand : BaseCommand, ICommand
     {
         private static readonly ILogger Logger = Log.ForContext<PurgeCommand>();
@@ -53,22 +52,22 @@ namespace ChocolateyGui.Common.Commands
         {
             if (configuration.PurgeCommand.Command == PurgeCommandType.Unknown)
             {
-                Logger.Error(Resources.PurgeCommand_UnknownCommandError.format_with(configuration.Input, "icons", "outdated"));
+                Logger.Error(L(nameof(Resources.PurgeCommand_UnknownCommandError), configuration.Input, "icons", "outdated"));
                 Environment.Exit(-1);
             }
         }
 
         public virtual void HelpMessage(ChocolateyGuiConfiguration configuration)
         {
-            Logger.Warning(Resources.PurgeCommand_Title);
+            Logger.Warning(L(nameof(Resources.PurgeCommand_Title)));
             Logger.Information(string.Empty);
-            Logger.Information(Resources.PurgeCommand_Help);
+            Logger.Information(L(nameof(Resources.PurgeCommand_Help)));
             Logger.Information(string.Empty);
-            Logger.Warning(Resources.Command_Usage);
+            Logger.Warning(L(nameof(Resources.Command_Usage)));
             Logger.Information(@"
     chocolateyguicli pruge icons|outdated [<options/switches>]
 ");
-            Logger.Warning(Resources.Command_Examples);
+            Logger.Warning(L(nameof(Resources.Command_Examples)));
             Logger.Information(@"
     chocolateyguicli purge icons
     chocolateyguicli purge outdated

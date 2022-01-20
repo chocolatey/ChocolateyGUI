@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.Views;
@@ -43,7 +44,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 {
                     var dialogSettings = new MetroDialogSettings
                     {
-                        AffirmativeButtonText = Resources.ChocolateyDialog_OK
+                        AffirmativeButtonText = L(nameof(Resources.ChocolateyDialog_OK))
                     };
 
                     return await ShellView.ShowMessageAsync(title, message, MessageDialogStyle.Affirmative, dialogSettings);
@@ -64,8 +65,8 @@ namespace ChocolateyGui.Common.Windows.Services
                 {
                     var dialogSettings = new MetroDialogSettings
                     {
-                        AffirmativeButtonText = Resources.Dialog_Yes,
-                        NegativeButtonText = Resources.Dialog_No
+                        AffirmativeButtonText = L(nameof(Resources.Dialog_Yes)),
+                        NegativeButtonText = L(nameof(Resources.Dialog_No))
                     };
 
                     return await ShellView.ShowMessageAsync(title, message, MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
@@ -85,8 +86,8 @@ namespace ChocolateyGui.Common.Windows.Services
                 if (ShellView != null)
                 {
                     return await ShellView.ShowLoginAsync(
-                        Resources.SettingsViewModel_SetSourceUsernameAndPasswordTitle,
-                        Resources.SettingsViewModel_SetSourceUsernameAndPasswordMessage,
+                        L(nameof(Resources.SettingsViewModel_SetSourceUsernameAndPasswordTitle)),
+                        L(nameof(Resources.SettingsViewModel_SetSourceUsernameAndPasswordMessage)),
                         settings);
                 }
 
@@ -199,6 +200,16 @@ namespace ChocolateyGui.Common.Windows.Services
 
                 return default;
             }
+        }
+
+        private static string L(string key)
+        {
+            return TranslationSource.Instance[key];
+        }
+
+        private static string L(string key, params object[] parameters)
+        {
+            return TranslationSource.Instance[key, parameters];
         }
     }
 }

@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="SettingsViewModel.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -32,7 +32,7 @@ using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
-    public sealed class SettingsViewModel : Screen
+    public sealed class SettingsViewModel : ViewModelScreen
     {
         private const string ChocolateyLicensedSourceId = "chocolatey.licensed";
         private readonly IChocolateyService _chocolateyService;
@@ -51,6 +51,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private AppConfiguration _config;
         private ChocolateySource _selectedSource;
         private ChocolateySource _draftSource;
+        private TranslationSource _translationSource;
         private string _originalId;
         private bool _isNewItem;
         private string _chocolateyGuiFeatureSearchQuery;
@@ -67,6 +68,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IFileSystem fileSystem,
             TranslationSource translationSource)
+            : base(translationSource)
         {
             _chocolateyService = chocolateyService;
             _dialogService = dialogService;
@@ -76,6 +78,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _fileSystem = fileSystem;
             _translationSource = translationSource;
+            DisplayName = L(nameof(Resources.SettingsViewModel_DisplayName));
             Activated += OnActivated;
             Deactivated += OnDeactivated;
 
@@ -341,8 +344,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             catch (UnauthorizedAccessException)
             {
                 await _dialogService.ShowMessageAsync(
-                    Resources.General_UnauthorisedException_Title,
-                    Resources.General_UnauthorisedException_Description);
+                    L(nameof(Resources.General_UnauthorisedException_Title)),
+                    L(nameof(Resources.General_UnauthorisedException_Description)));
             }
         }
 
@@ -354,8 +357,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         public async Task PurgeIconCache()
         {
             var result = await _dialogService.ShowConfirmationMessageAsync(
-                Resources.Dialog_AreYouSureTitle,
-                Resources.Dialog_AreYouSureIconsMessage);
+                L(nameof(Resources.Dialog_AreYouSureTitle)),
+                L(nameof(Resources.Dialog_AreYouSureIconsMessage)));
 
             if (result == MessageDialogResult.Affirmative)
             {
@@ -366,8 +369,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         public async Task PurgeOutdatedPackagesCache()
         {
             var result = await _dialogService.ShowConfirmationMessageAsync(
-                Resources.Dialog_AreYouSureTitle,
-                Resources.Dialog_AreYouSureOutdatedPackagesMessage);
+                L(nameof(Resources.Dialog_AreYouSureTitle)),
+                L(nameof(Resources.Dialog_AreYouSureOutdatedPackagesMessage)));
 
             if (result == MessageDialogResult.Affirmative)
             {
@@ -384,17 +387,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             if (string.IsNullOrWhiteSpace(DraftSource.Id))
             {
-                await _dialogService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingId);
+                await _dialogService.ShowMessageAsync(L(nameof(Resources.SettingsViewModel_SavingSource)), L(nameof(Resources.SettingsViewModel_SourceMissingId)));
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(DraftSource.Value))
             {
-                await _dialogService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_SourceMissingValue);
+                await _dialogService.ShowMessageAsync(L(nameof(Resources.SettingsViewModel_SavingSource)), L(nameof(Resources.SettingsViewModel_SourceMissingValue)));
                 return;
             }
 
-            await _progressService.StartLoading(Resources.SettingsViewModel_SavingSourceLoading);
+            await _progressService.StartLoading(L(nameof(Resources.SettingsViewModel_SavingSourceLoading)));
             try
             {
                 if (_isNewItem)
@@ -402,7 +405,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     if (DraftSource.Id == ChocolateyLicensedSourceId)
                     {
                         await _progressService.StopLoading();
-                        await _dialogService.ShowMessageAsync(Resources.SettingsViewModel_SavingSource, Resources.SettingsViewModel_InvalidSourceId);
+                        await _dialogService.ShowMessageAsync(L(nameof(Resources.SettingsViewModel_SavingSource)), L(nameof(Resources.SettingsViewModel_InvalidSourceId)));
                         return;
                     }
 
@@ -438,8 +441,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             catch (UnauthorizedAccessException)
             {
                 await _dialogService.ShowMessageAsync(
-                    Resources.General_UnauthorisedException_Title,
-                    Resources.General_UnauthorisedException_Description);
+                    L(nameof(Resources.General_UnauthorisedException_Title)),
+                    L(nameof(Resources.General_UnauthorisedException_Description)));
             }
             finally
             {
@@ -451,12 +454,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         public async Task Remove()
         {
             var result = await _dialogService.ShowConfirmationMessageAsync(
-                Resources.Dialog_AreYouSureTitle,
-                string.Format(Resources.Dialog_AreYourSureRemoveSourceMessage, _originalId));
+                L(nameof(Resources.Dialog_AreYouSureTitle)),
+                L(nameof(Resources.Dialog_AreYourSureRemoveSourceMessage), _originalId));
 
             if (result == MessageDialogResult.Affirmative)
             {
-                await _progressService.StartLoading(Resources.SettingsViewModel_RemovingSource);
+                await _progressService.StartLoading(L(nameof(Resources.SettingsViewModel_RemovingSource)));
                 try
                 {
                     await _chocolateyService.RemoveSource(_originalId);
@@ -467,8 +470,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 catch (UnauthorizedAccessException)
                 {
                     await _dialogService.ShowMessageAsync(
-                        Resources.General_UnauthorisedException_Title,
-                        Resources.General_UnauthorisedException_Description);
+                        L(nameof(Resources.General_UnauthorisedException_Title)),
+                        L(nameof(Resources.General_UnauthorisedException_Description)));
                 }
                 finally
                 {
@@ -491,8 +494,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             var loginDialogSettings = new LoginDialogSettings
             {
-                AffirmativeButtonText = Resources.SettingsView_ButtonSave,
-                NegativeButtonText = Resources.SettingsView_ButtonCancel,
+                AffirmativeButtonText = L(nameof(Resources.SettingsView_ButtonSave)),
+                NegativeButtonText = L(nameof(Resources.SettingsView_ButtonCancel)),
                 NegativeButtonVisibility = Visibility.Visible,
                 InitialUsername = DraftSource.UserName,
                 InitialPassword = DraftSource.Password
@@ -505,7 +508,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 loginDialogSettings.EnablePasswordPreview = true;
             }
 
-            var result = await _dialogService.ShowLoginAsync(Resources.SettingsViewModel_SetSourceUsernameAndPasswordTitle, Resources.SettingsViewModel_SetSourceUsernameAndPasswordMessage, loginDialogSettings);
+            var result = await _dialogService.ShowLoginAsync(L(nameof(Resources.SettingsViewModel_SetSourceUsernameAndPasswordTitle)), L(nameof(Resources.SettingsViewModel_SetSourceUsernameAndPasswordMessage)), loginDialogSettings);
 
             if (result != null)
             {
@@ -519,13 +522,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             var loginDialogSettings = new LoginDialogSettings
             {
-                AffirmativeButtonText = Resources.SettingsView_ButtonSave,
-                NegativeButtonText = Resources.SettingsView_ButtonCancel,
+                AffirmativeButtonText = L(nameof(Resources.SettingsView_ButtonSave)),
+                NegativeButtonText = L(nameof(Resources.SettingsView_ButtonCancel)),
                 NegativeButtonVisibility = Visibility.Visible,
                 InitialUsername = DraftSource.Certificate,
                 InitialPassword = DraftSource.CertificatePassword,
-                UsernameWatermark = Resources.SettingsViewModel_SetSourceCertificateAndPasswordUsernameWatermark,
-                PasswordWatermark = Resources.SettingsViewModel_SetSourceCertificateAndPasswordPasswordWatermark
+                UsernameWatermark = L(nameof(Resources.SettingsViewModel_SetSourceCertificateAndPasswordUsernameWatermark)),
+                PasswordWatermark = L(nameof(Resources.SettingsViewModel_SetSourceCertificateAndPasswordPasswordWatermark))
             };
 
             // Only allow the previewing of a password when creating a new source
@@ -535,7 +538,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 loginDialogSettings.EnablePasswordPreview = true;
             }
 
-            var result = await _dialogService.ShowLoginAsync(Resources.SettingsViewModel_SetSourceCertificateAndPasswordTitle, Resources.SettingsViewModel_SetSourceCertificateAndPasswordMessage, loginDialogSettings);
+            var result = await _dialogService.ShowLoginAsync(L(nameof(Resources.SettingsViewModel_SetSourceCertificateAndPasswordTitle)), L(nameof(Resources.SettingsViewModel_SetSourceCertificateAndPasswordMessage)), loginDialogSettings);
 
             if (result != null)
             {
@@ -543,6 +546,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 DraftSource.CertificatePassword = result.Password;
                 NotifyOfPropertyChange(nameof(DraftSource));
             }
+        }
+
+        protected override void OnLanguageChanged()
+        {
+            DisplayName = L(nameof(Resources.SettingsViewModel_DisplayName));
         }
 
         private async void OnActivated(object sender, ActivationEventArgs activationEventArgs)

@@ -8,11 +8,25 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ChocolateyGui.Common.Utilities;
 
 namespace ChocolateyGui.Common.Base
 {
     public abstract class ObservableBase : INotifyPropertyChanged
     {
+        private readonly TranslationSource _translationSource;
+
+        protected ObservableBase()
+            : this(TranslationSource.Instance)
+        {
+        }
+
+        protected ObservableBase(TranslationSource translationSource)
+        {
+            _translationSource = translationSource;
+            _translationSource.PropertyChanged += (sender, args) => OnLanguageChanged();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public bool SetPropertyValue<T>(ref T property, T value, [CallerMemberName] string propertyName = "")
@@ -34,6 +48,20 @@ namespace ChocolateyGui.Common.Base
             {
                 propertyChangedEvent(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        protected string L(string key)
+        {
+            return _translationSource[key];
+        }
+
+        protected string L(string key, params object[] parameters)
+        {
+            return _translationSource[key, parameters];
+        }
+
+        protected virtual void OnLanguageChanged()
+        {
         }
     }
 }

@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="RemoteSourceViewModel.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -21,6 +21,7 @@ using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
@@ -32,7 +33,7 @@ using ILogger = Serilog.ILogger;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
-    public sealed class RemoteSourceViewModel : Screen, ISourceViewModelBase
+    public sealed class RemoteSourceViewModel : ViewModelScreen, ISourceViewModelBase
     {
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyService _chocolateyPackageService;
@@ -52,7 +53,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private int _pageCount = 1;
         private int _pageSize = 50;
         private string _searchQuery;
-        private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
+        private string _sortSelection;
+        private string _sortSelectionName;
         private ListViewMode _listViewMode;
         private bool _showAdditionalPackageInformation;
         private string _resourceId;
@@ -69,6 +71,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             ChocolateySource source,
             IMapper mapper,
             TranslationSource translator)
+            : base(translator)
         {
             Source = source;
             _chocolateyPackageService = chocolateyPackageService;
@@ -101,6 +104,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
 
             _eventAggregator.Subscribe(this);
+
+            SortSelection = L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity));
         }
 
         public bool HasLoaded
@@ -177,16 +182,26 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             set { this.SetPropertyValue(ref _searchQuery, value); }
         }
 
-        public IReadOnlyList<string> SortOptions { get; } = new List<string>
+        public IReadOnlyList<string> SortOptions => new List<string>
         {
-            Resources.RemoteSourceViewModel_SortSelectionPopularity,
-            Resources.RemoteSourceViewModel_SortSelectionAtoZ
+            L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity)),
+            L(nameof(Resources.RemoteSourceViewModel_SortSelectionAtoZ))
         };
 
         public string SortSelection
         {
-            get { return _sortSelection; }
-            set { this.SetPropertyValue(ref _sortSelection, value); }
+            get
+            {
+                return _sortSelection;
+            }
+
+            set
+            {
+                _sortSelectionName = value == L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity))
+                    ? "DownloadCount"
+                    : "Title";
+                this.SetPropertyValue(ref _sortSelection, value);
+            }
         }
 
         public bool CanGoToFirst()
@@ -278,11 +293,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 HasLoaded = false;
                 ShowShouldPreventPreloadMessage = false;
 
-                var sort = SortSelection == Resources.RemoteSourceViewModel_SortSelectionPopularity ? "DownloadCount" : "Title";
+                var sort = _sortSelectionName;
 
-                await _progressService.StartLoading(string.Format(Resources.RemoteSourceViewModel_LoadingPage, CurrentPage));
+                await _progressService.StartLoading(L(nameof(Resources.RemoteSourceViewModel_LoadingPage), CurrentPage));
 
-                _progressService.WriteMessage(Resources.RemoteSourceViewModel_FetchingPackages);
+                _progressService.WriteMessage(L(nameof(Resources.RemoteSourceViewModel_FetchingPackages)));
 
                 try
                 {
@@ -340,8 +355,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             {
                 Logger.Error(ex, "Failed to load new packages.");
                 await _dialogService.ShowMessageAsync(
-                    Resources.RemoteSourceViewModel_FailedToLoad,
-                    string.Format(Resources.RemoteSourceViewModel_FailedToLoadRemotePackages, ex.Message));
+                    L(nameof(Resources.RemoteSourceViewModel_FailedToLoad)),
+                    L(nameof(Resources.RemoteSourceViewModel_FailedToLoadRemotePackages), ex.Message));
                 throw;
             }
         }
@@ -418,17 +433,27 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             catch (InvalidOperationException ex)
             {
                 Logger.Error(ex, "Failed to initialize remote source view model.");
+                var message = L(nameof(Resources.RemoteSourceViewModel_UnableToConnectToFeed));
+                var caption = L(nameof(Resources.RemoteSourceViewModel_FeedSearchError));
                 ChocolateyMessageBox.Show(
                     string.Format(
                         CultureInfo.InvariantCulture,
-                        Resources.RemoteSourceViewModel_UnableToConnectToFeed,
+                        message,
                         Source.Value),
-                    Resources.RemoteSourceViewModel_FeedSearchError,
+                    caption,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error,
                     MessageBoxResult.OK,
                     MessageBoxOptions.ServiceNotification);
             }
+        }
+
+        protected override void OnLanguageChanged()
+        {
+            NotifyOfPropertyChange(nameof(SortOptions));
+            SortSelection = _sortSelectionName == "DownloadCount"
+                ? L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity))
+                : L(nameof(Resources.RemoteSourceViewModel_SortSelectionAtoZ));
         }
 
         private void SubscribeToLoadPackagesOnSearchQueryChange()

@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Runner.cs" company="Chocolatey">
 // Copyright 2017 - Present Chocolatey Software, LLC
 // Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -18,6 +18,7 @@ using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.Windows.Startup;
 using LiteDB;
 using Serilog;
@@ -75,7 +76,7 @@ namespace ChocolateyGuiCli
 
                     if (args.Length == 0)
                     {
-                        Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsText.format_with("chocolateyguicli"));
+                        Bootstrapper.Logger.Information(L(nameof(ChocolateyGui.Common.Properties.Resources.Command_CommandsText), "chocolateyguicli"));
                     }
                 }
 
@@ -141,7 +142,7 @@ namespace ChocolateyGuiCli
                     option_set
                         .Add(
                             "r|limitoutput|limit-output",
-                            ChocolateyGui.Common.Properties.Resources.Command_LimitOutputOption,
+                            L(nameof(ChocolateyGui.Common.Properties.Resources.Command_LimitOutputOption)),
                             option => configuration.RegularOutput = option == null);
                 },
                 (unparsedArgs) =>
@@ -167,14 +168,14 @@ namespace ChocolateyGuiCli
                         }
                     }
 
-                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsListText.format_with("chocolateyguicli"));
+                    Bootstrapper.Logger.Information(L(nameof(ChocolateyGui.Common.Properties.Resources.Command_CommandsListText), "chocolateyguicli"));
                     Bootstrapper.Logger.Information(string.Empty);
-                    Bootstrapper.Logger.Warning(ChocolateyGui.Common.Properties.Resources.Command_CommandsTitle);
+                    Bootstrapper.Logger.Warning(L(nameof(ChocolateyGui.Common.Properties.Resources.Command_CommandsTitle)));
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Information("{0}".format_with(commandsLog.ToString()));
-                    Bootstrapper.Logger.Information(ChocolateyGui.Common.Properties.Resources.Command_CommandsText.format_with("chocolateyguicli"));
+                    Bootstrapper.Logger.Information(L(nameof(ChocolateyGui.Common.Properties.Resources.Command_CommandsText), "chocolateyguicli"));
                     Bootstrapper.Logger.Information(string.Empty);
-                    Bootstrapper.Logger.Warning(ChocolateyGui.Common.Properties.Resources.Command_DefaultOptionsAndSwitches);
+                    Bootstrapper.Logger.Warning(L(nameof(ChocolateyGui.Common.Properties.Resources.Command_DefaultOptionsAndSwitches)));
                 });
         }
 
@@ -203,7 +204,7 @@ namespace ChocolateyGuiCli
                 _optionSet
                     .Add(
                         "?|help|h",
-                        ChocolateyGui.Common.Properties.Resources.Command_HelpOption,
+                        L(nameof(ChocolateyGui.Common.Properties.Resources.Command_HelpOption)),
                         option => configuration.HelpRequested = option != null);
             }
 
@@ -268,6 +269,16 @@ namespace ChocolateyGuiCli
             }
 
             optionSet.WriteOptionDescriptions(Console.Out);
+        }
+
+        private static string L(string key)
+        {
+            return TranslationSource.Instance[key];
+        }
+
+        private static string L(string key, params object[] parameters)
+        {
+            return TranslationSource.Instance[key, parameters];
         }
     }
 }

@@ -8,6 +8,7 @@
 using System.Linq;
 using System.Reflection;
 using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Utilities;
 
 namespace ChocolateyGui.Common.Providers
 {
@@ -29,7 +30,7 @@ namespace ChocolateyGui.Common.Providers
                     ((AssemblyInformationalVersionAttribute[])assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute)))
                         .First();
 
-                _version = string.Format(Resources.VersionNumberProvider_VersionFormat, informational.InformationalVersion);
+                _version = TranslationSource.Instance[nameof(Resources.VersionNumberProvider_VersionFormat), informational.InformationalVersion];
                 return _version;
             }
         }

@@ -17,6 +17,7 @@ using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using LiteDB;
 
 namespace ChocolateyGuiCli.Startup
@@ -82,7 +83,7 @@ namespace ChocolateyGuiCli.Startup
             }
             catch (IOException ex)
             {
-                Bootstrapper.Logger.Error(ex, Resources.Error_DatabaseAccessCli);
+                Bootstrapper.Logger.Error(ex, TranslationSource.Instance[Resources.Error_DatabaseAccessCli]);
                 Environment.Exit(-1);
             }
 

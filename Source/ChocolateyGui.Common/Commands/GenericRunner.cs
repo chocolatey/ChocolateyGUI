@@ -13,6 +13,7 @@ using chocolatey;
 using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Utilities;
 using Serilog;
 
 namespace ChocolateyGui.Common.Commands
@@ -50,7 +51,7 @@ namespace ChocolateyGui.Common.Commands
             {
                 if (!string.IsNullOrWhiteSpace(configuration.CommandName))
                 {
-                    Logger.Error(Resources.Command_NotFoundError.format_with(configuration.CommandName, "chocolateyguicli"));
+                    Logger.Error(TranslationSource.Instance[nameof(Resources.Command_NotFoundError), configuration.CommandName, "chocolateyguicli"]);
                     Environment.Exit(-1);
                 }
             }

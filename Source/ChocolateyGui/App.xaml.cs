@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="App.xaml.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -28,6 +28,7 @@ namespace ChocolateyGui
     public partial class App
     {
         private static readonly App _application = new App();
+        private static readonly TranslationSource _translationSource = TranslationSource.Instance;
 
         #region DupFinder Exclusion
         public App()
@@ -83,6 +84,7 @@ namespace ChocolateyGui
                 }
                 catch (Exception ex)
                 {
+                    // TODO: Possibly make these values translatable, do not use Resources directly, instead Use L(nameof(Resources.KEY_NAME));
                     var errorMessage = string.Format("Unable to load Chocolatey GUI assembly. {0}", ex.Message);
                     ChocolateyMessageBox.Show(errorMessage);
                     throw new ApplicationException(errorMessage);
@@ -113,7 +115,7 @@ namespace ChocolateyGui
             {
                 if (Bootstrapper.IsExiting)
                 {
-                    Bootstrapper.Logger.Error(ex, Common.Properties.Resources.Command_GeneralError);
+                    Bootstrapper.Logger.Error(ex, L(nameof(Common.Properties.Resources.Command_GeneralError)));
                     return;
                 }
 
@@ -157,6 +159,16 @@ namespace ChocolateyGui
             }
 
             ThemeAssist.BundledTheme.SyncTheme(themeMode);
+        }
+
+        protected static string L(string key)
+        {
+            return _translationSource[key];
+        }
+
+        protected string L(string key, params object[] parameters)
+        {
+            return _translationSource[key, parameters];
         }
     }
 }

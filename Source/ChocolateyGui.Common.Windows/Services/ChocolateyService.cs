@@ -20,6 +20,7 @@ using chocolatey.infrastructure.services;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using Microsoft.VisualStudio.Threading;
 using NuGet;
 using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;
@@ -149,7 +150,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex, Resources.Application_OutdatedPackagesError);
+                        Logger.Error(ex, L(nameof(Resources.Application_OutdatedPackagesError)));
                     }
 
                     return results.ToList();
@@ -643,6 +644,16 @@ namespace ChocolateyGui.Common.Windows.Services
                 }
             };
             return errors;
+        }
+
+        private static string L(string key)
+        {
+            return TranslationSource.Instance[key];
+        }
+
+        private static string L(string key, params object[] parameters)
+        {
+            return TranslationSource.Instance[key, parameters];
         }
 
         private async Task<PackageOperationResult> RunCommand(GetChocolatey choco, SerilogLogger logger)

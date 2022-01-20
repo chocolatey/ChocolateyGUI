@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="ChocolateyGuiModule.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -8,6 +8,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Security.AccessControl;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
@@ -23,6 +24,7 @@ using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Utilities;
@@ -160,7 +162,7 @@ namespace ChocolateyGui.Common.Windows.Startup
             }
             catch (IOException ex)
             {
-                Bootstrapper.Logger.Error(ex, Resources.Error_DatabaseAccessGui);
+                Bootstrapper.Logger.Error(ex, TranslationSource.Instance[nameof(Resources.Error_DatabaseAccessGui)]);
                 throw;
             }
 

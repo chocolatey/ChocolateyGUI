@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Utilities;
 using Serilog;
 
 namespace ChocolateyGui.Common.Commands
@@ -13,14 +14,25 @@ namespace ChocolateyGui.Common.Commands
     public abstract class BaseCommand
     {
         private static readonly ILogger Logger = Log.ForContext<BaseCommand>();
+        private static readonly TranslationSource TranslationSource = TranslationSource.Instance;
 
         protected static void PrintExitCodeInformation()
         {
-            Logger.Warning(Resources.Command_ExitCodesTitle);
+            Logger.Warning(L(nameof(Resources.Command_ExitCodesTitle)));
             Logger.Information(string.Empty);
-            Logger.Information(Resources.Command_ExitCodesText);
+            Logger.Information(L(nameof(Resources.Command_ExitCodesText)));
             Logger.Information(string.Empty);
-            Logger.Warning(Resources.Command_OptionsAndSwitches);
+            Logger.Warning(L(nameof(Resources.Command_OptionsAndSwitches)));
+        }
+
+        protected static string L(string key)
+        {
+            return TranslationSource[key];
+        }
+
+        protected static string L(string key, params object[] parameters)
+        {
+            return TranslationSource[key, parameters];
         }
     }
 }

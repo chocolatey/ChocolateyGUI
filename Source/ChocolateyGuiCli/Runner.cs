@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Runner.cs" company="Chocolatey">
 // Copyright 2017 - Present Chocolatey Software, LLC
 // Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -18,6 +18,7 @@ using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Commands;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Windows.Startup;
 using LiteDB;
 using Serilog;
 using Console = System.Console;
@@ -55,6 +56,10 @@ namespace ChocolateyGuiCli
 
                     commandArgs.Add(arg);
                 }
+
+                // We need to initialize the current culture before we
+                // use any translatable strings.
+                SetUpPreferredLanguage(Bootstrapper.Container.Resolve<IConfigService>());
 
                 var configuration = new ChocolateyGuiConfiguration();
                 SetUpGlobalOptions(args, configuration, Bootstrapper.Container);
@@ -118,6 +123,12 @@ namespace ChocolateyGuiCli
                     Bootstrapper.Container.Dispose();
                 }
             }
+        }
+
+        private static void SetUpPreferredLanguage(IConfigService configService)
+        {
+            var effectiveService = configService.GetEffectiveConfiguration();
+            Internationalization.UpdateLanguage(effectiveService.UseLanguage);
         }
 
         private static void SetUpGlobalOptions(IList<string> args, ChocolateyGuiConfiguration configuration, IContainer container)

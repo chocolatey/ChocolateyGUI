@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="Bootstrapper.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -23,7 +23,6 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Startup;
 using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels.Items;
-using ChocolateyGui.Common.Windows.Startup;
 using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.ViewModels;
 using LiteDB;
@@ -105,8 +104,6 @@ namespace ChocolateyGui.Common.Windows
             Logger = Log.Logger = logConfig.CreateLogger();
 
             Container = AutoFacConfiguration.RegisterAutoFac(LicensedChocolateyGuiAssemblySimpleName, LicensedGuiAssemblyLocation);
-
-            Internationalization.Initialize();
         }
 
         protected override async void OnStartup(object sender, StartupEventArgs e)

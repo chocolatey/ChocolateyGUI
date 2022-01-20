@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="App.xaml.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -13,7 +14,9 @@ using Autofac;
 using ChocolateyGui.Common.Enums;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Startup;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.Windows;
+using ChocolateyGui.Common.Windows.Startup;
 using ChocolateyGui.Common.Windows.Theming;
 using ChocolateyGui.Common.Windows.Utilities;
 
@@ -126,20 +129,31 @@ namespace ChocolateyGui
             ThemeAssist.BundledTheme.Generate("ChocolateyGui");
 
             var configService = Bootstrapper.Container.Resolve<IConfigService>();
-            var defaultToDarkMode = configService.GetEffectiveConfiguration().DefaultToDarkMode;
+            var effectiveConfiguration = configService.GetEffectiveConfiguration();
+
 
             ThemeMode themeMode;
-            if (defaultToDarkMode == null)
+            if (effectiveConfiguration.DefaultToDarkMode == null)
             {
                 themeMode = ThemeMode.WindowsDefault;
             }
-            else if (defaultToDarkMode.Value)
+            else if (effectiveConfiguration.DefaultToDarkMode.Value)
             {
                 themeMode = ThemeMode.Dark;
             }
             else
             {
                 themeMode = ThemeMode.Light;
+            }
+
+            if (string.IsNullOrEmpty(effectiveConfiguration.UseLanguage))
+            {
+                Internationalization.Initialize();
+                configService.SetConfigValue(nameof(effectiveConfiguration.UseLanguage), CultureInfo.CurrentCulture.Name);
+            }
+            else
+            {
+                Internationalization.UpdateLanguage(effectiveConfiguration.UseLanguage);
             }
 
             ThemeAssist.BundledTheme.SyncTheme(themeMode);

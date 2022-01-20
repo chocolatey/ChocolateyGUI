@@ -10,7 +10,6 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using chocolatey;
-using ChocolateyGui.Common.Annotations;
 using ChocolateyGui.Common.Properties;
 
 namespace ChocolateyGui.Common.Utilities
@@ -73,7 +72,6 @@ namespace ChocolateyGui.Common.Utilities
             }
         }
 
-        [NotifyPropertyChangedInvocator]
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

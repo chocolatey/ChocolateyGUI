@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="SettingsViewModel.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -8,6 +8,8 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
@@ -20,6 +22,7 @@ using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Startup;
 using ChocolateyGui.Common.Windows.Theming;
@@ -62,7 +65,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IConfigService configService,
             IEventAggregator eventAggregator,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
-            IFileSystem fileSystem)
+            IFileSystem fileSystem,
+            TranslationSource translationSource)
         {
             _chocolateyService = chocolateyService;
             _dialogService = dialogService;
@@ -71,7 +75,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _eventAggregator = eventAggregator;
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _fileSystem = fileSystem;
-            DisplayName = Resources.SettingsViewModel_DisplayName;
+            _translationSource = translationSource;
             Activated += OnActivated;
             Deactivated += OnDeactivated;
 
@@ -171,27 +175,35 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             get { return CollectionViewSource.GetDefaultView(ChocolateySettings); }
         }
 
-        public string UseLanguage
+        public CultureInfo UseLanguage
         {
             get
             {
-                return _config.UseLanguage;
+                if (string.IsNullOrEmpty(_config.UseLanguage))
+                {
+                    return Internationalization.GetFallbackCulture();
+                }
+                else
+                {
+                    return new CultureInfo(_config.UseLanguage);
+                }
             }
 
             set
             {
-                _config.UseLanguage = value;
+                _config.UseLanguage = value.Name;
                 NotifyOfPropertyChange();
-                Internationalization.UpdateLanguage(value);
+                Internationalization.UpdateLanguage(value.Name);
+
+                // We explicitly update settings when the language changes
+                _configService.SetConfigValue(nameof(UseLanguage), value.Name);
+                ChocolateyGuiFeaturesView.Refresh();
+                ChocolateyGuiSettingsView.Refresh();
             }
         }
 
-        public ObservableCollection<string> AllLanguages { get; } = new ObservableCollection<string>
-        {
-            "en",
-            "nb"
-        };
-
+        public ObservableCollection<CultureInfo> AllLanguages { get; private set; } =
+            new ObservableCollection<CultureInfo>();
         public bool CanSave => SelectedSource != null;
 
         public bool CanRemove => SelectedSource != null && !_isNewItem && SelectedSource.Id != ChocolateyLicensedSourceId;
@@ -540,6 +552,26 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             var chocolateyFeatures = await _chocolateyService.GetFeatures();
             foreach (var chocolateyFeature in chocolateyFeatures)
             {
+#if !DEBUG // We hide this during DEBUG as it is a dark feature
+                var descriptionKey = "Chocolatey_" + chocolateyFeature.Name + "Description";
+
+                var newDescription = _translationSource[descriptionKey];
+
+                if (string.IsNullOrEmpty(newDescription))
+                {
+                    descriptionKey = chocolateyFeature.Description;
+                    newDescription = _translationSource[descriptionKey];
+                }
+
+                if (!string.IsNullOrEmpty(newDescription))
+                {
+                    chocolateyFeature.Description = newDescription;
+                    _translationSource.PropertyChanged += (s, e) =>
+                    {
+                        chocolateyFeature.Description = _translationSource[descriptionKey];
+                    };
+                }
+#endif
                 ChocolateyFeatures.Add(chocolateyFeature);
             }
 
@@ -552,6 +584,26 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             var chocolateySettings = await _chocolateyService.GetSettings();
             foreach (var chocolateySetting in chocolateySettings)
             {
+#if !DEBUG // We hide this during DEBUG as it is a dark feature
+                var descriptionKey = "Chocolatey_" + chocolateySetting.Key + "Description";
+
+                var newDescription = _translationSource[descriptionKey];
+
+                if (string.IsNullOrEmpty(newDescription))
+                {
+                    descriptionKey = chocolateySetting.Description;
+                    newDescription = _translationSource[descriptionKey];
+                }
+
+                if (!string.IsNullOrEmpty(newDescription))
+                {
+                    chocolateySetting.Description = newDescription;
+                    _translationSource.PropertyChanged += (s, e) =>
+                    {
+                        chocolateySetting.Description = _translationSource[descriptionKey];
+                    };
+                }
+#endif
                 ChocolateySettings.Add(chocolateySetting);
             }
 
@@ -561,9 +613,34 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         .Concat()
                         .Subscribe();
 
-            var chocolateyGuiFeatures = _configService.GetFeatures(global: false);
+            var chocolateyGuiFeatures = _configService.GetFeatures(global: false, useResourceKeys: true);
             foreach (var chocolateyGuiFeature in chocolateyGuiFeatures)
             {
+                chocolateyGuiFeature.DisplayTitle = _translationSource["ChocolateyGUI_" + chocolateyGuiFeature.Title + "Title"];
+#if DEBUG
+                var descriptionKey = string.Empty;
+#else
+                var descriptionKey = "ChocolateyGUI_" + chocolateyGuiFeature.Title + "Description";
+#endif
+
+                var newDescription = _translationSource[descriptionKey];
+
+                if (string.IsNullOrEmpty(newDescription))
+                {
+                    descriptionKey = chocolateyGuiFeature.Description;
+                    newDescription = _translationSource[descriptionKey];
+                }
+
+                if (!string.IsNullOrEmpty(newDescription))
+                {
+                    chocolateyGuiFeature.Description = newDescription;
+                    _translationSource.PropertyChanged += (s, e) =>
+                    {
+                        chocolateyGuiFeature.DisplayTitle = _translationSource["ChocolateyGUI_" + chocolateyGuiFeature.Title + "Title"];
+                        chocolateyGuiFeature.Description = _translationSource[descriptionKey];
+                    };
+                }
+
                 ChocolateyGuiFeatures.Add(chocolateyGuiFeature);
             }
 
@@ -573,9 +650,35 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 .Concat()
                 .Subscribe();
 
-            var chocolateyGuiSettings = _configService.GetSettings(global: false);
-            foreach (var chocolateyGuiSetting in chocolateyGuiSettings)
+            var chocolateyGuiSettings = _configService.GetSettings(global: false, useResourceKeys: true);
+            foreach (var chocolateyGuiSetting in chocolateyGuiSettings.Where(c => !string.Equals(c.Key, nameof(UseLanguage), StringComparison.OrdinalIgnoreCase)))
             {
+                chocolateyGuiSetting.DisplayName = _translationSource["ChocolateyGUI_" + chocolateyGuiSetting.Key + "Title"];
+#if DEBUG
+                var descriptionKey = string.Empty;
+#else
+                var descriptionKey = "ChocolateyGUI_" + chocolateyGuiFeature.Key + "Description";
+#endif
+
+                var newDescription = _translationSource[descriptionKey];
+
+                if (string.IsNullOrEmpty(newDescription))
+                {
+                    descriptionKey = chocolateyGuiSetting.Description;
+                    newDescription = _translationSource[descriptionKey];
+                }
+
+                if (!string.IsNullOrEmpty(newDescription))
+                {
+                    chocolateyGuiSetting.Description = newDescription;
+                    _translationSource.PropertyChanged += (s, e) =>
+                    {
+                        chocolateyGuiSetting.DisplayName =
+                            _translationSource["ChocolateyGUI_" + chocolateyGuiSetting.Key + "Title"];
+                        chocolateyGuiSetting.Description = _translationSource[descriptionKey];
+                    };
+                }
+
                 ChocolateyGuiSettings.Add(chocolateyGuiSetting);
             }
 
@@ -590,6 +693,20 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             {
                 Sources.Add(source);
             }
+
+            AllLanguages.Clear();
+
+            foreach (var language in Internationalization.GetAllSupportedCultures().OrderBy(c => c.NativeName))
+            {
+                AllLanguages.Add(language);
+            }
+
+            var selectedLanguage = _config.UseLanguage;
+
+            // We set it to the configuration itself, instead of the property
+            // as we do not want to save the configuration file when it is not needed.
+            _config.UseLanguage = Internationalization.GetSupportedCultureInfo(selectedLanguage).Name;
+            NotifyOfPropertyChange(nameof(UseLanguage));
         }
 
         private void OnDeactivated(object sender, DeactivationEventArgs deactivationEventArgs)
@@ -603,13 +720,15 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private bool FilterChocolateyGuiFeatures(ChocolateyGuiFeature chocolateyGuiFeature)
         {
             return ChocolateyGuiFeatureSearchQuery == null
-                   || chocolateyGuiFeature.Title.IndexOf(ChocolateyGuiFeatureSearchQuery, StringComparison.OrdinalIgnoreCase) != -1;
+                   || chocolateyGuiFeature.Title.IndexOf(ChocolateyGuiFeatureSearchQuery, StringComparison.OrdinalIgnoreCase) != -1
+                   || chocolateyGuiFeature.DisplayTitle.IndexOf(ChocolateyGuiFeatureSearchQuery, StringComparison.OrdinalIgnoreCase) != -1;
         }
 
         private bool FilterChocolateyGuiSettings(ChocolateyGuiSetting chocolateyGuiSetting)
         {
             return ChocolateyGuiSettingSearchQuery == null
-                   || chocolateyGuiSetting.Key.IndexOf(ChocolateyGuiSettingSearchQuery, StringComparison.OrdinalIgnoreCase) != -1;
+                   || chocolateyGuiSetting.Key.IndexOf(ChocolateyGuiSettingSearchQuery, StringComparison.OrdinalIgnoreCase) != -1
+                   || chocolateyGuiSetting.DisplayName.IndexOf(ChocolateyGuiSettingSearchQuery, StringComparison.OrdinalIgnoreCase) != -1;
         }
 
         private bool FilterChocolateyFeatures(ChocolateyFeature chocolateyFeature)

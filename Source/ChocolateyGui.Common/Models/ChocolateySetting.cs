@@ -5,14 +5,64 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace ChocolateyGui.Common.Models
 {
-    public class ChocolateySetting
+    public class ChocolateySetting : INotifyPropertyChanged
     {
-        public string Key { get; set; }
+        private string _key;
+        private string _value;
+        private string _description;
 
-        public string Value { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Description { get; set; }
+        public string Key
+        {
+            get
+            {
+                return _key;
+            }
+
+            set
+            {
+                _key = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Value
+        {
+            get
+            {
+                return _value;
+            }
+
+            set
+            {
+                _value = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+
+            set
+            {
+                _description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -233,6 +233,7 @@
     <Compile Include="Utilities\ChocolateyMessageBox.cs" />
     <Compile Include="Services\IPackageArgumentsService.cs" />
     <Compile Include="Services\PackageArgumentsService.cs" />
+    <Compile Include="Utilities\Converters\LocalizationConverter.cs" />
     <Compile Include="Utilities\Extensions\LocalizeExtension.cs" />
     <Compile Include="Utilities\ToolTipBehavior.cs" />
     <Compile Include="Bootstrapper.cs" />

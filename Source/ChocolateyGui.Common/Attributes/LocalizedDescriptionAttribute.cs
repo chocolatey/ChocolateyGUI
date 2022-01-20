@@ -7,21 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Utilities;
 
 namespace ChocolateyGui.Common.Attributes
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public sealed class LocalizedDescriptionAttribute : DescriptionAttribute
     {
+        public string Key { get; set; }
+
         public LocalizedDescriptionAttribute(string key)
             : base(Localize(key))
         {
+            Key = key;
         }
 
         private static string Localize(string key)
         {
-            return Resources.ResourceManager.GetString(key);
+            return TranslationSource.Instance[key];
         }
     }
 }

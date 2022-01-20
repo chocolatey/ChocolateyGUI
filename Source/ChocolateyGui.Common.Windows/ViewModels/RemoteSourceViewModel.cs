@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="RemoteSourceViewModel.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -55,6 +55,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private string _sortSelection = Resources.RemoteSourceViewModel_SortSelectionPopularity;
         private ListViewMode _listViewMode;
         private bool _showAdditionalPackageInformation;
+        private string _resourceId;
 
         private IDisposable _searchQuerySubscription;
 
@@ -66,7 +67,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IConfigService configService,
             IEventAggregator eventAggregator,
             ChocolateySource source,
-            IMapper mapper)
+            IMapper mapper,
+            TranslationSource translator)
         {
             Source = source;
             _chocolateyPackageService = chocolateyPackageService;
@@ -78,7 +80,20 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _mapper = mapper;
 
             Packages = new ObservableCollection<IPackageViewModel>();
-            DisplayName = source.Id;
+
+            if (source.Id[0] == '[' && source.Id[source.Id.Length - 1] == ']')
+            {
+                _resourceId = source.Id.Trim('[', ']');
+                DisplayName = translator[_resourceId];
+                translator.PropertyChanged += (sender, e) =>
+                {
+                    DisplayName = translator[_resourceId];
+                };
+            }
+            else
+            {
+                DisplayName = source.Id;
+            }
 
             if (eventAggregator == null)
             {

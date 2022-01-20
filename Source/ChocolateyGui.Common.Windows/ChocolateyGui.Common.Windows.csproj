@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <BuildToolsFxCopVersion>1.0.1</BuildToolsFxCopVersion>
     <TargetFrameworkProfile />
+    <LangVersion>7.1</LangVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -295,7 +296,6 @@
     <Compile Include="Utilities\NotifyTaskCompletion.cs" />
     <Compile Include="Utilities\PackageAuthorsComparer.cs" />
     <Compile Include="Utilities\ResourceReader.cs" />
-    <Compile Include="Utilities\TranslationSource.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\AdvancedInstallViewModel.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
@@ -420,9 +420,6 @@
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\HarfBuzzSharp.2.6.1.4\build\net462\HarfBuzzSharp.targets" Condition="Exists('..\packages\HarfBuzzSharp.2.6.1.4\build\net462\HarfBuzzSharp.targets')" />

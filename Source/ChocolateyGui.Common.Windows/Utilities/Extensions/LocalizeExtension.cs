@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Windows.Data;
+using ChocolateyGui.Common.Utilities;
 
 namespace ChocolateyGui.Common.Windows.Utilities.Extensions
 {

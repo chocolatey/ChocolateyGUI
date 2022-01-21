@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="PackageViewModel.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -7,9 +7,11 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
+using chocolatey;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
@@ -46,6 +48,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
         private readonly IConfigService _configService;
         private readonly IAllowedCommandsService _allowedCommandsService;
+        private readonly IPackageArgumentsService _packageArgumentsService;
 
         private string[] _authors;
 
@@ -123,7 +126,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             IProgressService progressService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
-            IAllowedCommandsService allowedCommandsService)
+            IAllowedCommandsService allowedCommandsService,
+            IPackageArgumentsService packageArgumentsService)
         {
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
@@ -134,6 +138,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
             _allowedCommandsService = allowedCommandsService;
+            _packageArgumentsService = packageArgumentsService;
         }
 
         public DateTime Created
@@ -420,6 +425,15 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         public bool IsPackageSizeAvailable
         {
             get { return PackageSize != -1; }
+        }
+
+        public async Task ShowArguments()
+        {
+            var decryptedArguments = _packageArgumentsService.DecryptPackageArgumentsFile(Id, Version.ToString()).ToList();
+
+            await _dialogService.ShowMessageAsync(
+                Resources.PackageViewModel_ArgumentsForPackageFormat.format_with(Title),
+                string.Join(Environment.NewLine, decryptedArguments));
         }
 
         public async Task Install()

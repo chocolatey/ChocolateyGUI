@@ -12,6 +12,7 @@ using chocolatey.infrastructure.adapters;
 using chocolatey.infrastructure.app.utility;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Providers;
+using ChocolateyGui.Common.Utilities;
 using IFileSystem = chocolatey.infrastructure.filesystem.IFileSystem;
 using ILogger = Serilog.ILogger;
 
@@ -54,7 +55,7 @@ namespace ChocolateyGui.Common.Windows.Services
             }
             catch (Exception ex)
             {
-                var message = Resources.Application_PackageArgumentsError.format_with(version, id);
+                var message = L(nameof(Resources.Application_PackageArgumentsError), version, id);
                 Logger.Error(ex, message);
             }
 
@@ -62,7 +63,7 @@ namespace ChocolateyGui.Common.Windows.Services
             {
                 _dialogService.ShowMessageAsync(
                     string.Empty,
-                    Resources.PackageView_UnableToFindArgumentsFile.format_with(version, id));
+                    L(nameof(Resources.PackageView_UnableToFindArgumentsFile), version, id));
                 yield break;
             }
 
@@ -97,6 +98,16 @@ namespace ChocolateyGui.Common.Windows.Services
                     optionName,
                     string.IsNullOrWhiteSpace(optionValue) ? string.Empty : "=" + optionValue);
             }
+        }
+
+        private static string L(string key)
+        {
+            return TranslationSource.Instance[key];
+        }
+
+        private static string L(string key, params object[] parameters)
+        {
+            return TranslationSource.Instance[key, parameters];
         }
     }
 }

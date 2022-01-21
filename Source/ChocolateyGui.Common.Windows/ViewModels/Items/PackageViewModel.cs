@@ -432,7 +432,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             var decryptedArguments = _packageArgumentsService.DecryptPackageArgumentsFile(Id, Version.ToString()).ToList();
 
             await _dialogService.ShowMessageAsync(
-                Resources.PackageViewModel_ArgumentsForPackageFormat.format_with(Title),
+                L(nameof(Resources.PackageViewModel_ArgumentsForPackageFormat), Title),
                 string.Join(Environment.NewLine, decryptedArguments));
         }
 

@@ -77,7 +77,6 @@ namespace ChocolateyGui.Common.Windows.Views
                 !_chocolateyConfigurationProvider.IsChocolateyExecutableBeingUsed)
             {
                 // TODO: Possibly make these values translatable, do not use Resources directly, instead Use TranslationSource.Instance["KEY_NAME"];
-
                 ChocolateyMessageBox.Show(
                     "Usage of the PowerShell Version of Chocolatey (i.e. <= 0.9.8.33) has been detected.  Chocolatey GUI does not support using this version of Chocolatey on Windows 10.  Please update Chocolatey to the new C# Version (i.e. > 0.9.9.0) and restart Chocolatey GUI.  This application will now close.",
                     "Incompatible Operating System Version",

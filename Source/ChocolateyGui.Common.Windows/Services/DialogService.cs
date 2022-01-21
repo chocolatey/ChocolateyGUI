@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
+using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.Views;
 using ControlzEx.Theming;
 using MahApps.Metro.Controls.Dialogs;
@@ -48,7 +49,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     return await ShellView.ShowMessageAsync(title, message, MessageDialogStyle.Affirmative, dialogSettings);
                 }
 
-                return MessageBox.Show(message, title) == MessageBoxResult.OK
+                return ChocolateyMessageBox.Show(message, title) == MessageBoxResult.OK
                     ? MessageDialogResult.Affirmative
                     : MessageDialogResult.Negative;
             }
@@ -70,7 +71,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     return await ShellView.ShowMessageAsync(title, message, MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
                 }
 
-                return MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes
+                return ChocolateyMessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes
                     ? MessageDialogResult.Affirmative
                     : MessageDialogResult.Negative;
             }

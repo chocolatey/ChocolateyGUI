@@ -24,6 +24,7 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
+using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
 using NuGet;
 using Serilog;
@@ -402,7 +403,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             catch (InvalidOperationException ex)
             {
                 Logger.Error(ex, "Failed to initialize remote source view model.");
-                MessageBox.Show(
+                ChocolateyMessageBox.Show(
                     string.Format(
                         CultureInfo.InvariantCulture,
                         Resources.RemoteSourceViewModel_UnableToConnectToFeed,

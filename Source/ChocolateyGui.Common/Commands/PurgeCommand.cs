@@ -65,7 +65,7 @@ namespace ChocolateyGui.Common.Commands
             Logger.Information(string.Empty);
             Logger.Warning(L(nameof(Resources.Command_Usage)));
             Logger.Information(@"
-    chocolateyguicli pruge icons|outdated [<options/switches>]
+    chocolateyguicli purge icons|outdated [<options/switches>]
 ");
             Logger.Warning(L(nameof(Resources.Command_Examples)));
             Logger.Information(@"

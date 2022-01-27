@@ -1929,6 +1929,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [REDACTED ARGUMENT].
+        /// </summary>
+        public static string PackageArgumentService_RedactedArgument {
+            get {
+                return ResourceManager.GetString("PackageArgumentService_RedactedArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installed.
         /// </summary>
         public static string PackagesView_Installed {
@@ -2276,6 +2285,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string PackageViewModel_LoadingPackageInfo {
             get {
                 return ResourceManager.GetString("PackageViewModel_LoadingPackageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no Persisted Arguments available for this package!.
+        /// </summary>
+        public static string PackageViewModel_NoArgumentsAvailableForPackage {
+            get {
+                return ResourceManager.GetString("PackageViewModel_NoArgumentsAvailableForPackage", resourceCulture);
             }
         }
         
@@ -2628,7 +2646,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Got to the Previous Page.
+        ///   Looks up a localized string similar to Go to the Previous Page.
         /// </summary>
         public static string RemoteSourceView_TooltipGoBackAPage {
             get {
@@ -2877,6 +2895,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string SettingsView_Language {
             get {
                 return ResourceManager.GetString("SettingsView_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The preferred language for Chocolatey GUI. Defaults to Windows System Locale..
+        /// </summary>
+        public static string SettingsView_LanguageDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_LanguageDescription", resourceCulture);
             }
         }
         

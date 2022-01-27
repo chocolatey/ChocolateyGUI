@@ -1346,4 +1346,13 @@ Please contact your System Administrator to enable this operation.</value>
     <value>Arguments for the Package {0}</value>
     <comment>{0} = The Title of the package</comment>
   </data>
+  <data name="PackageArgumentService_RedactedArgument" xml:space="preserve">
+    <value>[REDACTED ARGUMENT]</value>
+  </data>
+  <data name="PackageViewModel_NoArgumentsAvailableForPackage" xml:space="preserve">
+    <value>There are no Persisted Arguments available for this package!</value>
+  </data>
+  <data name="SettingsView_LanguageDescription" xml:space="preserve">
+    <value>The preferred language for Chocolatey GUI. Defaults to Windows System Locale.</value>
+  </data>
 </root>

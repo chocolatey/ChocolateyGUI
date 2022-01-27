@@ -61,7 +61,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
             if (string.IsNullOrEmpty(arguments))
             {
-                _dialogService.ShowMessageAsync(
+                Logger.Debug(
                     string.Empty,
                     L(nameof(Resources.PackageView_UnableToFindArgumentsFile), version, id));
                 yield break;
@@ -73,6 +73,8 @@ namespace ChocolateyGui.Common.Windows.Services
                 ? arguments
                 : _encryptionUtility.decrypt_string(arguments);
 
+            // Lets do a global check first to see if there are any sensitive arguments
+            // before we filter out the values used later.
             var sensitiveArgs = ArgumentsUtility.arguments_contain_sensitive_information(packageArgumentsUnencrypted);
 
             var packageArgumentsSplit =
@@ -80,12 +82,19 @@ namespace ChocolateyGui.Common.Windows.Services
 
             foreach (var packageArgument in packageArgumentsSplit.or_empty_list_if_null())
             {
+                var isSensitiveArgument = sensitiveArgs && ArgumentsUtility.arguments_contain_sensitive_information(packageArgument);
+
                 var packageArgumentSplit =
                     packageArgument.Split(new[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries);
+
                 var optionName = packageArgumentSplit[0].to_string();
                 var optionValue = string.Empty;
 
-                if (packageArgumentSplit.Length == 2)
+                if (packageArgumentSplit.Length == 2 && isSensitiveArgument)
+                {
+                    optionValue = L(nameof(Resources.PackageArgumentService_RedactedArgument));
+                }
+                else if (packageArgumentSplit.Length == 2)
                 {
                     optionValue = packageArgumentSplit[1].to_string().remove_surrounding_quotes();
                     if (optionValue.StartsWith("'"))

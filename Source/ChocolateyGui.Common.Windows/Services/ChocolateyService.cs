@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="ChocolateyService.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -54,7 +54,7 @@ namespace ChocolateyGui.Common.Windows.Services
             _xmlService = xmlService;
             _fileSystem = fileSystem;
             _configService = configService;
-            _choco = Lets.GetChocolatey().SetCustomLogging(new SerilogLogger(Logger, _progressService));
+            _choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(new SerilogLogger(Logger, _progressService), logExistingMessages: false, addToExistingLoggers: true);
 
             _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), "Chocolatey GUI");
         }
@@ -119,7 +119,7 @@ namespace ChocolateyGui.Common.Windows.Services
             }
             else
             {
-                var choco = Lets.GetChocolatey();
+                var choco = Lets.GetChocolatey(initializeLogging: false);
                 choco.Set(
                     config =>
                     {
@@ -172,7 +172,7 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey().SetCustomLogging(logger);
+                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: true);
                 choco.Set(
                     config =>
                         {
@@ -341,7 +341,7 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey().SetCustomLogging(logger);
+                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: true);
                 choco.Set(
                     config =>
                         {
@@ -364,7 +364,7 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey().SetCustomLogging(logger);
+                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: true);
                 choco.Set(
                     config =>
                         {

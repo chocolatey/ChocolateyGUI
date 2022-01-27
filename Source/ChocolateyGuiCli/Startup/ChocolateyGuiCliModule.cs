@@ -35,7 +35,7 @@ namespace ChocolateyGuiCli.Startup
             builder.RegisterType<ChocolateyConfigurationProvider>().As<IChocolateyConfigurationProvider>().SingleInstance();
             builder.RegisterType<DotNetFileSystem>().As<chocolatey.infrastructure.filesystem.IFileSystem>().SingleInstance();
 
-            var choco = Lets.GetChocolatey();
+            var choco = Lets.GetChocolatey(initializeLogging: false);
             builder.RegisterInstance(choco.Container().GetInstance<IChocolateyConfigSettingsService>())
                 .As<IChocolateyConfigSettingsService>().SingleInstance();
             builder.RegisterInstance(choco.Container().GetInstance<IXmlService>())

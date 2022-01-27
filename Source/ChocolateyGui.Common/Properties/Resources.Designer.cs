@@ -2899,6 +2899,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The preferred language for Chocolatey GUI. Defaults to Windows System Locale..
+        /// </summary>
+        public static string SettingsView_LanguageDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_LanguageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default number of package versions shown when performing an advanced installation.  Default is 20. 0 should be used to show all available package versions..
         /// </summary>
         public static string SettingsView_NumberOfPackageVersionsForSelectionDescription {

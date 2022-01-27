@@ -1352,4 +1352,7 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="PackageViewModel_NoArgumentsAvailableForPackage" xml:space="preserve">
     <value>There are no Persisted Arguments available for this package!</value>
   </data>
+  <data name="SettingsView_LanguageDescription" xml:space="preserve">
+    <value>The preferred language for Chocolatey GUI. Defaults to Windows System Locale.</value>
+  </data>
 </root>

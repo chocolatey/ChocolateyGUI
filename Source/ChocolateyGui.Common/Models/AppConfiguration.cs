@@ -27,7 +27,7 @@ namespace ChocolateyGui.Common.Models
         [Config]
         public string NumberOfPackageVersionsForSelection { get; set; }
 
-        [LocalizedDescription(nameof(Resources.SettingsView_Language))]
+        [LocalizedDescription(nameof(Resources.SettingsView_LanguageDescription))]
         [Config]
         public string UseLanguage { get; set; }
 

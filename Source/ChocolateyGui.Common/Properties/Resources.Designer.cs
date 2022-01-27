@@ -133,7 +133,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Use this switch is not recommended if using sources that download resources from the internet. Overrides the default feature &apos;allowEmptyChecksums&apos; set to &apos;False&apos;. Available in Chocolatey Version 0.10.0+..
+        ///   Looks up a localized string similar to Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Using this switch is not recommended if using sources that download resources from the internet. Only overrides the value in the configuration when &apos;On&apos; is specified..
         /// </summary>
         public static string AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip {
             get {
@@ -151,7 +151,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allow packages to have empty checksums for downloaded resources from secure locations (HTTPS). Overrides the default feature &apos;allowEmptyChecksumsSecure&apos; set to &apos;True&apos;. Available in Chocolatey Version 0.10.0+..
+        ///   Looks up a localized string similar to Allow packages to have empty checksums for downloaded resources from secure locations (HTTPS).  Only overrides the value in the configuration when &apos;On&apos; is specified..
         /// </summary>
         public static string AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_ToolTip {
             get {
@@ -295,7 +295,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A user provided checksum for downloaded resources for the package. Overrides the package checksum (if it has one). Defaults to empty. Available in Chocolatey Version 0.10.0+..
+        ///   Looks up a localized string similar to A user provided checksum for downloaded resources for the package. Overrides the package checksum (if it has one)..
         /// </summary>
         public static string AdvancedChocolateyDialog_DownloadChecksum_ToolTip {
             get {
@@ -313,7 +313,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one). Defaults to same as Download Checksum. Available in Chocolatey Version 0.10.0+..
+        ///   Looks up a localized string similar to A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one)..
         /// </summary>
         public static string AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip {
             get {
@@ -331,7 +331,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A user provided checksum type. Overrides the package checksum type (if it has one). Used in conjunction with Download Checksum. Available values are &apos;md5&apos;, &apos;sha1&apos;, &apos;sha256&apos; or &apos;sha512&apos;. Defaults to &apos;md5&apos;. Available in Chocolatey Version 0.10.0+..
+        ///   Looks up a localized string similar to A user provided checksum type. Overrides the package checksum type (if it has one). Used in conjunction with Download Checksum..
         /// </summary>
         public static string AdvancedChocolateyDialog_DownloadChecksumType_ToolTip {
             get {
@@ -349,7 +349,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one). Used in conjunction with Download Checksum 64bit. Available values are &apos;md5&apos;, &apos;sha1&apos;, &apos;sha256&apos; or &apos;sha512&apos;. Defaults to same as Download Checksum Type. Available in Chocolatey Version 0.10.0+..
+        ///   Looks up a localized string similar to A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one)..
         /// </summary>
         public static string AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip {
             get {
@@ -367,7 +367,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The time to allow a command to finish before timing out. Overrides the default execution timeout in the configuration of 2700 seconds. &apos;0&apos; for infinite starting in Chocolatey Version 0.10.4..
+        ///   Looks up a localized string similar to The time to allow a command to finish before timing out. Overrides the default execution timeout in the configuration. &apos;0&apos; for infinite starting in Chocolatey Version 0.10.4..
         /// </summary>
         public static string AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_ToolTip {
             get {
@@ -421,7 +421,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ignore checksums provided by the package. Overrides the default feature &apos;checksumFiles&apos; set to &apos;True&apos;. Available in Chocolatey Version 0.9.9.9+..
+        ///   Looks up a localized string similar to Ignore checksums provided by the package. Overrides the default feature &apos;checksumFiles&apos; if it is set to &apos;True&apos;. Only overrides the value in the configuration when &apos;On&apos; is specified..
         /// </summary>
         public static string AdvancedChocolateyDialog_IgnoreChecksums_ToolTip {
             get {
@@ -493,7 +493,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File to output to in addition to regular loggers. Available in Chocolatey Version 0.10.8+..
+        ///   Looks up a localized string similar to File to output to in addition to regular loggers..
         /// </summary>
         public static string AdvancedChocolateyDialog_LogFile_ToolTip {
             get {
@@ -601,7 +601,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requires packages to have checksums for downloaded resources (both non-secure and secure). Overrides the default feature &apos;allowEmptyChecksums&apos; set to &apos;False&apos; and &apos;allowEmptyChecksumsSecure&apos; set to &apos;True&apos;. Available in Chocolatey Version 0.10.0+..
+        ///   Looks up a localized string similar to Requires packages to have checksums for downloaded resources (both non-secure and secure)..
         /// </summary>
         public static string AdvancedChocolateyDialog_RequireChecksums_ToolTip {
             get {

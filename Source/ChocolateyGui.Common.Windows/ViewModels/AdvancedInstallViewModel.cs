@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="AdvancedInstallViewModel.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -9,8 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using chocolatey;
 using ChocolateyGui.Common.Base;
+using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows.Commands;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
@@ -22,6 +25,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
     public class AdvancedInstallViewModel : ObservableBase, IClosableChildWindow<AdvancedInstallViewModel>
     {
         private readonly IChocolateyService _chocolateyService;
+        private readonly IPersistenceService _persistenceService;
         private CancellationTokenSource _cts;
         private SemanticVersion _selectedVersion;
         private bool _includePreRelease;
@@ -30,6 +34,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private string _installArguments;
         private int _executionTimeoutInSeconds;
         private string _logFile;
+        private string _cacheLocation;
         private bool _preRelease;
         private bool _forcex86;
         private bool _overrideArguments;
@@ -56,12 +61,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public AdvancedInstallViewModel(
             IChocolateyService chocolateyService,
+            IPersistenceService persistenceService,
             string packageId,
             SemanticVersion packageVersion,
             int page,
             int pageSize)
         {
             _chocolateyService = chocolateyService;
+            _persistenceService = persistenceService;
             _packageId = packageId;
             _page = page;
             _pageSize = pageSize;
@@ -82,9 +89,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     Close?.Invoke(null);
                 },
                 o => true);
-            DownloadChecksumType = "md5";
-            DownloadChecksumType64bit = "md5";
-            ExecutionTimeoutInSeconds = 2700;
+            BrowseCacheLocationCommand = new RelayCommand(BrowseCacheLocation);
+
+            SetDefaults();
         }
 
         public SemanticVersion SelectedVersion
@@ -141,6 +148,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             get { return _logFile; }
             set { SetPropertyValue(ref _logFile, value); }
+        }
+
+        public string CacheLocation
+        {
+            get { return _cacheLocation; }
+            set { SetPropertyValue(ref _cacheLocation, value); }
         }
 
         public bool PreRelease
@@ -267,6 +280,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public ICommand CancelCommand { get; }
 
+        public ICommand BrowseCacheLocationCommand { get; }
+
         /// <inheritdoc />
         public Action<AdvancedInstallViewModel> Close { get; set; }
 
@@ -276,6 +291,24 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 _chocolateyService.GetAvailableVersionsForPackageIdAsync(_packageId, _page, _pageSize, IncludePreRelease)
                     .ContinueWith(task => new ObservableCollection<SemanticVersion>(task.Result))
                     .WithCancellation(_cts.Token));
+        }
+
+        private void SetDefaults()
+        {
+            var choco = Lets.GetChocolatey();
+            var config = choco.GetConfiguration();
+            CacheLocation = config.CacheLocation;
+        }
+
+        private void BrowseCacheLocation(object value)
+        {
+            var description = L(nameof(Resources.AdvancedChocolateyDialog_CacheLocation_BrowseDescription));
+            var cacheDirectory = _persistenceService.GetFolderPath(CacheLocation, description);
+
+            if (!string.IsNullOrEmpty(cacheDirectory))
+            {
+                CacheLocation = cacheDirectory;
+            }
         }
     }
 }

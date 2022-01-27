@@ -15,6 +15,8 @@ namespace ChocolateyGui.Common.Models
 
         public int ExecutionTimeoutInSeconds { get; set; }
 
+        public string CacheLocation { get; set; }
+
         public string LogFile { get; set; }
 
         public bool PreRelease { get; set; }

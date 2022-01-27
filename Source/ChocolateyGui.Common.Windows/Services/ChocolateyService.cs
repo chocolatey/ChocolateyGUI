@@ -222,6 +222,11 @@ namespace ChocolateyGui.Common.Windows.Services
                                     config.Features.AllowEmptyChecksumsSecure = false;
                                 }
 
+                                if (!string.IsNullOrEmpty(advancedInstallOptions.CacheLocation))
+                                {
+                                    config.CacheLocation = advancedInstallOptions.CacheLocation;
+                                }
+
                                 config.DownloadChecksum = advancedInstallOptions.DownloadChecksum;
                                 config.DownloadChecksum64 = advancedInstallOptions.DownloadChecksum64bit;
                                 config.DownloadChecksumType = advancedInstallOptions.DownloadChecksumType;

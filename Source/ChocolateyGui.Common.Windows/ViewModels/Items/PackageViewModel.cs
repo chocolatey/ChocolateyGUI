@@ -49,6 +49,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         private readonly IConfigService _configService;
         private readonly IAllowedCommandsService _allowedCommandsService;
         private readonly IPackageArgumentsService _packageArgumentsService;
+        private readonly IPersistenceService _persistenceService;
 
         private string[] _authors;
 
@@ -127,7 +128,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             IChocolateyGuiCacheService chocolateyGuiCacheService,
             IConfigService configService,
             IAllowedCommandsService allowedCommandsService,
-            IPackageArgumentsService packageArgumentsService)
+            IPackageArgumentsService packageArgumentsService,
+            IPersistenceService persistenceService)
         {
             _chocolateyService = chocolateyService;
             _eventAggregator = eventAggregator;
@@ -139,6 +141,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             _configService = configService;
             _allowedCommandsService = allowedCommandsService;
             _packageArgumentsService = packageArgumentsService;
+            _persistenceService = persistenceService;
         }
 
         public DateTime Created
@@ -450,7 +453,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             await InstallPackage(Version.ToString());
         }
 
-        public async void InstallAdvanced()
+        public async Task InstallAdvanced()
         {
             var numberOfPackageVersionsForSelectionSetting = _configService.GetEffectiveConfiguration().NumberOfPackageVersionsForSelection;
             var numberOfPackageVersionsForSelection = 0;
@@ -459,7 +462,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 int.TryParse(numberOfPackageVersionsForSelectionSetting, out numberOfPackageVersionsForSelection);
             }
 
-            var dataContext = new AdvancedInstallViewModel(_chocolateyService, Id, Version, 1, numberOfPackageVersionsForSelection);
+            var dataContext = new AdvancedInstallViewModel(_chocolateyService, _persistenceService, Id, Version, 1, numberOfPackageVersionsForSelection);
 
             var result = await _dialogService.ShowChildWindowAsync<AdvancedInstallViewModel, AdvancedInstallViewModel>(
                 L(nameof(Resources.AdvancedChocolateyDialog_Title_Install)),

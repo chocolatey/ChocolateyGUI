@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ChocolateyGui.Common.Windows.Views.AdvancedInstallView" 
+<UserControl x:Class="ChocolateyGui.Common.Windows.Views.AdvancedInstallView" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -7,6 +7,7 @@
              xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels"
              xmlns:lang="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Extensions"
+             xmlns:Converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters" xmlns:local="clr-namespace:ChocolateyGui.Common.Windows.Views" x:Class="ChocolateyGui.Common.Windows.Views.AdvancedInstallView"
              MaxHeight="500" 
              MaxWidth="700" 
              d:DataContext="{d:DesignInstance viewModels:AdvancedInstallViewModel}" 
@@ -211,6 +212,16 @@
 
                     <RadioButton Grid.Row="1" Tag="{lang:Localize AdvancedChocolateyDialog_AdvancedOptions_Header}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_CacheLocation_ToolTip}" Tag="{lang:Localize AdvancedChocolateyDialog_CacheLocation_ToolTip}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Text="{Binding CacheLocation}" />
+                                    <Button Grid.Column="1" Content="{lang:Localize AdvancedChocolateyDialog_Browse}" Command="{Binding BrowseCacheLocationCommand}"   />
+                                </Grid>
+                            </mah:MetroHeader>
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_LogFile_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_LogFile_ToolTip}">
                                 <TextBox Text="{Binding LogFile}" />
                             </mah:MetroHeader>

@@ -1355,4 +1355,17 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="SettingsView_LanguageDescription" xml:space="preserve">
     <value>The preferred language for Chocolatey GUI. Defaults to Windows System Locale.</value>
   </data>
+  <data name="AdvancedChocolateyDialog_CacheLocation_Header" xml:space="preserve">
+    <value>Cache Location</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_CacheLocation_ToolTip" xml:space="preserve">
+    <value>Location for download cache, defaults to %TEMP% or value in chocolatey.config file.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_CacheLocation_BrowseDescription" xml:space="preserve">
+    <value>The location to store any files downloaded by package during installations or upgrades.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Browse" xml:space="preserve">
+    <value>Browse</value>
+    <comment>This text is used for both when a user clicks a button supposed to select a file, and when selecting a folder.</comment>
+  </data>
 </root>

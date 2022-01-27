@@ -1929,6 +1929,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [REDACTED ARGUMENT].
+        /// </summary>
+        public static string PackageArgumentService_RedactedArgument {
+            get {
+                return ResourceManager.GetString("PackageArgumentService_RedactedArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installed.
         /// </summary>
         public static string PackagesView_Installed {
@@ -2628,7 +2637,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Got to the Previous Page.
+        ///   Looks up a localized string similar to Go to the Previous Page.
         /// </summary>
         public static string RemoteSourceView_TooltipGoBackAPage {
             get {

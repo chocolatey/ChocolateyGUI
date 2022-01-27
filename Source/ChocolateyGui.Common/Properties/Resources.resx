@@ -1346,4 +1346,7 @@ Please contact your System Administrator to enable this operation.</value>
     <value>Arguments for the Package {0}</value>
     <comment>{0} = The Title of the package</comment>
   </data>
+  <data name="PackageArgumentService_RedactedArgument" xml:space="preserve">
+    <value>[REDACTED ARGUMENT]</value>
+  </data>
 </root>

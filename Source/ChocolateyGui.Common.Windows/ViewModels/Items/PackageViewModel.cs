@@ -432,7 +432,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             var decryptedArguments = _packageArgumentsService.DecryptPackageArgumentsFile(Id, Version.ToString()).ToList();
 
             await _dialogService.ShowMessageAsync(
-                Resources.PackageViewModel_ArgumentsForPackageFormat.format_with(Title),
+                L(nameof(Resources.PackageViewModel_ArgumentsForPackageFormat), Title),
                 string.Join(Environment.NewLine, decryptedArguments));
         }
 
@@ -453,7 +453,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             var dataContext = new AdvancedInstallViewModel(_chocolateyService, Id, Version, 1, numberOfPackageVersionsForSelection);
 
             var result = await _dialogService.ShowChildWindowAsync<AdvancedInstallViewModel, AdvancedInstallViewModel>(
-                Resources.AdvancedChocolateyDialog_Title_Install,
+                L(nameof(Resources.AdvancedChocolateyDialog_Title_Install)),
                 new AdvancedInstallView { DataContext = dataContext },
                 dataContext);
 
@@ -471,12 +471,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             try
             {
                 var confirmationResult = await _dialogService.ShowConfirmationMessageAsync(
-                    Resources.Dialog_AreYouSureTitle,
-                    string.Format(Resources.Dialog_AreYouSureReinstallMessage, Id));
+                    L(nameof(Resources.Dialog_AreYouSureTitle)),
+                    L(nameof(Resources.Dialog_AreYouSureReinstallMessage), Id));
 
                 if (confirmationResult == MessageDialogResult.Affirmative)
                 {
-                    using (await StartProgressDialog(Resources.PackageViewModel_ReinstallingPackage, Resources.PackageViewModel_ReinstallingPackage, Id))
+                    using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_ReinstallingPackage)), L(nameof(Resources.PackageViewModel_ReinstallingPackage)), Id))
                     {
                         await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true);
                         _chocolateyGuiCacheService.PurgeOutdatedPackages();
@@ -488,8 +488,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 Logger.Error(ex, "Ran into an error while reinstalling {Id}, version {Version}.", Id, Version);
                 await _dialogService.ShowMessageAsync(
-                    Resources.PackageViewModel_FailedToReinstall,
-                    string.Format(Resources.PackageViewModel_RanIntoReinstallError, Id, ex.Message));
+                    L(nameof(Resources.PackageViewModel_FailedToReinstall)),
+                    L(nameof(Resources.PackageViewModel_RanIntoInstallError), Id, ex.Message));
             }
         }
 
@@ -498,12 +498,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             try
             {
                 var confirmationResult = await _dialogService.ShowConfirmationMessageAsync(
-                    Resources.Dialog_AreYouSureTitle,
-                    string.Format(Resources.Dialog_AreYouSureUninstallMessage, Id));
+                    L(nameof(Resources.Dialog_AreYouSureTitle)),
+                    L(nameof(Resources.Dialog_AreYouSureUninstallMessage), Id));
 
                 if (confirmationResult == MessageDialogResult.Affirmative)
                 {
-                    using (await StartProgressDialog(Resources.PackageViewModel_UninstallingPackage, Resources.PackageViewModel_UninstallingPackage, Id))
+                    using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_UninstallingPackage)), L(nameof(Resources.PackageViewModel_UninstallingPackage)), Id))
                     {
                         var result = await _chocolateyService.UninstallPackage(Id, Version.ToString(), true);
 
@@ -511,17 +511,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                         {
                             var exceptionMessage = result.Exception == null
                                 ? string.Empty
-                                : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                                : L(nameof(Resources.ChocolateyRemotePackageService_ExceptionFormat), result.Exception);
 
-                            var message = string.Format(
-                                Resources.ChocolateyRemotePackageService_UninstallFailedMessage,
+                            var message = L(
+                                nameof(Resources.ChocolateyRemotePackageService_UninstallFailedMessage),
                                 Id,
                                 Version,
                                 string.Join("\n", result.Messages),
                                 exceptionMessage);
 
                             await _dialogService.ShowMessageAsync(
-                                Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
+                                L(nameof(Resources.ChocolateyRemotePackageService_UninstallFailedTitle)),
                                 message);
 
                             Logger.Warning(result.Exception, "Failed to uninstall {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
@@ -539,8 +539,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while uninstalling {Id}, version {Version}.", Id, Version);
 
                 await _dialogService.ShowMessageAsync(
-                    Resources.PackageViewModel_FailedToUninstall,
-                    string.Format(Resources.PackageViewModel_RanIntoUninstallError, Id, ex.Message));
+                    L(nameof(Resources.PackageViewModel_FailedToUninstall)),
+                    L(nameof(Resources.PackageViewModel_RanIntoUninstallError), Id, ex.Message));
             }
         }
 
@@ -548,7 +548,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog(Resources.PackageViewModel_UpdatingPackage, Resources.PackageViewModel_UpdatingPackage, Id))
+                using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_UpdatingPackage)), L(nameof(Resources.PackageViewModel_UpdatingPackage)), Id))
                 {
                     var result = await _chocolateyService.UpdatePackage(Id, Source);
 
@@ -556,16 +556,16 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                     {
                         var exceptionMessage = result.Exception == null
                             ? string.Empty
-                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                            : L(nameof(Resources.ChocolateyRemotePackageService_ExceptionFormat), result.Exception);
 
-                        var message = string.Format(
-                            Resources.ChocolateyRemotePackageService_UpdateFailedMessage,
+                        var message = L(
+                            nameof(Resources.ChocolateyRemotePackageService_UpdateFailedMessage),
                             Id,
                             string.Join("\n", result.Messages),
                             exceptionMessage);
 
                         await _dialogService.ShowMessageAsync(
-                            Resources.ChocolateyRemotePackageService_UpdateFailedTitle,
+                            L(nameof(Resources.ChocolateyRemotePackageService_UpdateFailedTitle)),
                             message);
 
                         Logger.Warning(result.Exception, "Failed to update {Package}. Errors: {Errors}", Id, result.Messages);
@@ -582,8 +582,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while updating {Id}, version {Version}.", Id, Version);
 
                 await _dialogService.ShowMessageAsync(
-                    Resources.PackageViewModel_FailedToUpdate,
-                    string.Format(Resources.PackageViewModel_RanIntoUpdateError, Id, ex.Message));
+                    L(nameof(Resources.PackageViewModel_FailedToUpdate)),
+                    L(nameof(Resources.PackageViewModel_RanIntoUpdateError), Id, ex.Message));
             }
         }
 
@@ -591,7 +591,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog(Resources.PackageViewModel_PinningPackage, Resources.PackageViewModel_PinningPackage, Id))
+                using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_PinningPackage)), L(nameof(Resources.PackageViewModel_PinningPackage)), Id))
                 {
                     var result = await _chocolateyService.PinPackage(Id, Version.ToString());
 
@@ -599,17 +599,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                     {
                         var exceptionMessage = result.Exception == null
                             ? string.Empty
-                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                            : L(nameof(Resources.ChocolateyRemotePackageService_ExceptionFormat), result.Exception);
 
-                        var message = string.Format(
-                            Resources.ChocolateyRemotePackageService_PinFailedMessage,
+                        var message = L(
+                            nameof(Resources.ChocolateyRemotePackageService_PinFailedMessage),
                             Id,
                             Version,
                             string.Join("\n", result.Messages),
                             exceptionMessage);
 
                         await _dialogService.ShowMessageAsync(
-                            Resources.ChocolateyRemotePackageService_PinFailedTitle,
+                            L(nameof(Resources.ChocolateyRemotePackageService_PinFailedTitle)),
                             message);
 
                         Logger.Warning(result.Exception, "Failed to pin {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
@@ -626,8 +626,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while pinning {Id}, version {Version}.", Id, Version);
 
                 await _dialogService.ShowMessageAsync(
-                    Resources.PackageViewModel_FailedToPin,
-                    string.Format(Resources.PackageViewModel_RanIntoPinningError, Id, ex.Message));
+                    L(nameof(Resources.PackageViewModel_FailedToPin)),
+                    L(nameof(Resources.PackageViewModel_RanIntoPinningError), Id, ex.Message));
             }
         }
 
@@ -635,7 +635,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog(Resources.PackageViewModel_UnpinningPackage, Resources.PackageViewModel_UnpinningPackage, Id))
+                using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_UnpinningPackage)), L(nameof(Resources.PackageViewModel_UnpinningPackage)), Id))
                 {
                     var result = await _chocolateyService.UnpinPackage(Id, Version.ToString());
 
@@ -643,17 +643,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                     {
                         var exceptionMessage = result.Exception == null
                             ? string.Empty
-                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, result.Exception);
+                            : L(nameof(Resources.ChocolateyRemotePackageService_ExceptionFormat), result.Exception);
 
-                        var message = string.Format(
-                            Resources.ChocolateyRemotePackageService_UnpinFailedMessage,
+                        var message = L(
+                            nameof(Resources.ChocolateyRemotePackageService_UnpinFailedMessage),
                             Id,
                             Version,
                             string.Join("\n", result.Messages),
                             exceptionMessage);
 
                         await _dialogService.ShowMessageAsync(
-                            Resources.ChocolateyRemotePackageService_UninstallFailedTitle,
+                            L(nameof(Resources.ChocolateyRemotePackageService_UninstallFailedTitle)),
                             message);
 
                         Logger.Warning(result.Exception, "Failed to unpin {Package}, version {Version}. Errors: {Errors}", Id, Version, result.Messages);
@@ -670,8 +670,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while unpinning {Id}, version {Version}.", Id, Version);
 
                 await _dialogService.ShowMessageAsync(
-                    Resources.PackageViewModel_FailedToUnpin,
-                    string.Format(Resources.PackageViewModel_RanIntoUnpinError, Id, ex.Message));
+                    L(nameof(Resources.PackageViewModel_FailedToUnpin)),
+                    L(nameof(Resources.PackageViewModel_RanIntoUnpinError), Id, ex.Message));
             }
         }
 
@@ -702,7 +702,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                using (await StartProgressDialog(Resources.PackageViewModel_InstallingPackage, Resources.PackageViewModel_InstallingPackage, Id))
+                using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_InstallingPackage)), L(nameof(Resources.PackageViewModel_InstallingPackage)), Id))
                 {
                     var packageInstallResult = await _chocolateyService.InstallPackage(
                         Id,
@@ -715,17 +715,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                     {
                         var exceptionMessage = packageInstallResult.Exception == null
                             ? string.Empty
-                            : string.Format(Resources.ChocolateyRemotePackageService_ExceptionFormat, packageInstallResult.Exception);
+                            : L(nameof(Resources.ChocolateyRemotePackageService_ExceptionFormat), packageInstallResult.Exception);
 
-                        var message = string.Format(
-                            Resources.ChocolateyRemotePackageService_InstallFailedMessage,
+                        var message = L(
+                            nameof(Resources.ChocolateyRemotePackageService_InstallFailedMessage),
                             Id,
                             Version,
                             string.Join("\n", packageInstallResult.Messages),
                             exceptionMessage);
 
                         await _dialogService.ShowMessageAsync(
-                            Resources.ChocolateyRemotePackageService_InstallFailedTitle,
+                            L(nameof(Resources.ChocolateyRemotePackageService_InstallFailedTitle)),
                             message);
 
                         Logger.Warning(packageInstallResult.Exception, "Failed to install {Package}, version {Version}. Errors: {Errors}", Id, Version, packageInstallResult.Messages);
@@ -744,14 +744,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 Logger.Error(ex, "Ran into an error while installing {Id}, version {Version}.", Id, Version);
 
                 await _dialogService.ShowMessageAsync(
-                    Resources.PackageViewModel_FailedToInstall,
-                    string.Format(Resources.PackageViewModel_RanIntoInstallError, Id, ex.Message));
+                    L(nameof(Resources.PackageViewModel_FailedToInstall)),
+                    L(nameof(Resources.PackageViewModel_RanIntoInstallError), Id, ex.Message));
             }
         }
 
         private async Task<IDisposable> StartProgressDialog(string commandString, string initialProgressText, string id = "")
         {
-            await _progressService.StartLoading(string.Format(Resources.PackageViewModel_StartLoadingFormat, commandString, id));
+            await _progressService.StartLoading(L(nameof(Resources.PackageViewModel_StartLoadingFormat), commandString, id));
             _progressService.WriteMessage(initialProgressText);
             return new DisposableAction(() => _progressService.StopLoading());
         }

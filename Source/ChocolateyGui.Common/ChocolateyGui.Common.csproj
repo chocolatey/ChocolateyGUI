@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <BuildToolsFxCopVersion>1.0.1</BuildToolsFxCopVersion>
     <TargetFrameworkProfile />
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -195,6 +196,7 @@
     <Compile Include="Startup\AutoFacConfiguration.cs" />
     <Compile Include="Utilities\DefaultsExtensions.cs" />
     <Compile Include="Utilities\LogSetup.cs" />
+    <Compile Include="Utilities\TranslationSource.cs" />
     <Compile Include="ViewModels\ISourceViewModelBase.cs" />
     <Compile Include="ViewModels\Items\IPackageViewModel.cs" />
   </ItemGroup>

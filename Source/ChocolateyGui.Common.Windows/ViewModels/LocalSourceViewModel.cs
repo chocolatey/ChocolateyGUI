@@ -15,16 +15,15 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Xml;
 using AutoMapper;
 using Caliburn.Micro;
-using chocolatey;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Enums;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
@@ -34,7 +33,7 @@ using Serilog;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
-    public sealed class LocalSourceViewModel : Screen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
+    public sealed class LocalSourceViewModel : ViewModelScreen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
     {
         private static readonly ILogger Logger = Log.ForContext<LocalSourceViewModel>();
         private readonly IChocolateyService _chocolateyService;
@@ -60,6 +59,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private bool _firstLoadIncomplete = true;
         private ListViewMode _listViewMode;
         private bool _showAdditionalPackageInformation;
+        private string _resourceId;
 
         public LocalSourceViewModel(
             IChocolateyService chocolateyService,
@@ -71,7 +71,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IAllowedCommandsService allowedCommandsService,
             IEventAggregator eventAggregator,
             string displayName,
-            IMapper mapper)
+            IMapper mapper,
+            TranslationSource translator)
+        : base(translator)
         {
             _chocolateyService = chocolateyService;
             _dialogService = dialogService;
@@ -81,7 +83,19 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _configService = configService;
             _allowedCommandsService = allowedCommandsService;
 
-            DisplayName = displayName;
+            if (displayName[0] == '[' && displayName[displayName.Length - 1] == ']')
+            {
+                _resourceId = displayName.Trim('[', ']');
+                DisplayName = translator[_resourceId];
+                translator.PropertyChanged += (sender, e) =>
+                {
+                    DisplayName = translator[_resourceId];
+                };
+            }
+            else
+            {
+                DisplayName = displayName;
+            }
 
             _packages = new List<IPackageViewModel>();
             Packages = new ObservableCollection<IPackageViewModel>();
@@ -192,15 +206,15 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             try
             {
                 var result = await _dialogService.ShowConfirmationMessageAsync(
-                    Resources.Dialog_AreYouSureTitle,
-                    Resources.Dialog_AreYouSureUpdateAllMessage);
+                    L(nameof(Resources.Dialog_AreYouSureTitle)),
+                    L(nameof(Resources.Dialog_AreYouSureUpdateAllMessage)));
 
                 if (result == MessageDialogResult.Affirmative)
                 {
-                    await _progressService.StartLoading(Resources.LocalSourceViewModel_Packages, true);
+                    await _progressService.StartLoading(L(nameof(Resources.LocalSourceViewModel_Packages)), true);
                     IsLoading = true;
 
-                    _progressService.WriteMessage(Resources.LocalSourceViewModel_FetchingPackages);
+                    _progressService.WriteMessage(L(nameof(Resources.LocalSourceViewModel_FetchingPackages)));
                     var token = _progressService.GetCancellationToken();
                     var packages = Packages.Where(p => p.CanUpdate && !p.IsPinned).ToList();
                     double current = 0.0f;
@@ -236,7 +250,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             try
             {
-                var exportFilePath = _persistenceService.GetFilePath("*.config", Resources.LocalSourceViewModel_ConfigFiles.format_with("(.config)|*.config"));
+                var exportFilePath = _persistenceService.GetFilePath("*.config", L(nameof(Resources.LocalSourceViewModel_ConfigFiles), "(.config)|*.config"));
 
                 if (string.IsNullOrEmpty(exportFilePath))
                 {
@@ -246,8 +260,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 await _chocolateyService.ExportPackages(exportFilePath, true);
 
                 await _dialogService.ShowMessageAsync(
-                        Resources.LocalSourceView_ButtonExport,
-                        string.Format(Resources.LocalSourceViewModel_ExportComplete, exportFilePath))
+                        L(nameof(Resources.LocalSourceView_ButtonExport)),
+                        L(nameof(Resources.LocalSourceViewModel_ExportComplete), exportFilePath))
                     .ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -383,8 +397,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 if (chocoPackage != null && chocoPackage.CanUpdate)
                 {
                     await _dialogService.ShowMessageAsync(
-                            Resources.LocalSourceViewModel_Chocolatey,
-                            Resources.LocalSourceViewModel_UpdateAvailableForChocolatey)
+                            L(nameof(Resources.LocalSourceViewModel_Chocolatey)),
+                            L(nameof(Resources.LocalSourceViewModel_UpdateAvailableForChocolatey)))
                         .ConfigureAwait(false);
                 }
             }

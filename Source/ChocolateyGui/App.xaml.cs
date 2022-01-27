@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -13,7 +14,9 @@ using Autofac;
 using ChocolateyGui.Common.Enums;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Startup;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.Windows;
+using ChocolateyGui.Common.Windows.Startup;
 using ChocolateyGui.Common.Windows.Theming;
 using ChocolateyGui.Common.Windows.Utilities;
 
@@ -25,6 +28,7 @@ namespace ChocolateyGui
     public partial class App
     {
         private static readonly App _application = new App();
+        private static readonly TranslationSource _translationSource = TranslationSource.Instance;
 
         #region DupFinder Exclusion
         public App()
@@ -80,6 +84,7 @@ namespace ChocolateyGui
                 }
                 catch (Exception ex)
                 {
+                    // TODO: Possibly make these values translatable, do not use Resources directly, instead Use L(nameof(Resources.KEY_NAME));
                     var errorMessage = string.Format("Unable to load Chocolatey GUI assembly. {0}", ex.Message);
                     ChocolateyMessageBox.Show(errorMessage);
                     throw new ApplicationException(errorMessage);
@@ -110,7 +115,7 @@ namespace ChocolateyGui
             {
                 if (Bootstrapper.IsExiting)
                 {
-                    Bootstrapper.Logger.Error(ex, Common.Properties.Resources.Command_GeneralError);
+                    Bootstrapper.Logger.Error(ex, L(nameof(Common.Properties.Resources.Command_GeneralError)));
                     return;
                 }
 
@@ -126,14 +131,14 @@ namespace ChocolateyGui
             ThemeAssist.BundledTheme.Generate("ChocolateyGui");
 
             var configService = Bootstrapper.Container.Resolve<IConfigService>();
-            var defaultToDarkMode = configService.GetEffectiveConfiguration().DefaultToDarkMode;
+            var effectiveConfiguration = configService.GetEffectiveConfiguration();
 
             ThemeMode themeMode;
-            if (defaultToDarkMode == null)
+            if (effectiveConfiguration.DefaultToDarkMode == null)
             {
                 themeMode = ThemeMode.WindowsDefault;
             }
-            else if (defaultToDarkMode.Value)
+            else if (effectiveConfiguration.DefaultToDarkMode.Value)
             {
                 themeMode = ThemeMode.Dark;
             }
@@ -142,7 +147,22 @@ namespace ChocolateyGui
                 themeMode = ThemeMode.Light;
             }
 
+            if (string.IsNullOrEmpty(effectiveConfiguration.UseLanguage))
+            {
+                Internationalization.Initialize();
+                configService.SetConfigValue(nameof(effectiveConfiguration.UseLanguage), CultureInfo.CurrentCulture.Name);
+            }
+            else
+            {
+                Internationalization.UpdateLanguage(effectiveConfiguration.UseLanguage);
+            }
+
             ThemeAssist.BundledTheme.SyncTheme(themeMode);
+        }
+
+        private static string L(string key)
+        {
+            return _translationSource[key];
         }
     }
 }

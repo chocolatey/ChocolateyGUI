@@ -18,7 +18,7 @@ using Serilog;
 
 namespace ChocolateyGui.Common.Commands
 {
-    [LocalizedCommandFor("config", "ConfigCommand_Description")]
+    [LocalizedCommandFor("config", nameof(Resources.ConfigCommand_Description))]
     public class ConfigCommand : BaseCommand, ICommand
     {
         private static readonly ILogger Logger = Log.ForContext<ConfigCommand>();
@@ -34,15 +34,15 @@ namespace ChocolateyGui.Common.Commands
             optionSet
                 .Add(
                     "name=",
-                    Resources.ConfigCommand_NameOption,
+                    L(nameof(Resources.ConfigCommand_NameOption)),
                     option => configuration.ConfigCommand.Name = option.remove_surrounding_quotes())
                 .Add(
                     "value=",
-                    Resources.ConfigCommand_ValueOption,
+                    L(nameof(Resources.ConfigCommand_ValueOption)),
                     option => configuration.ConfigCommand.ConfigValue = option.remove_surrounding_quotes())
                 .Add(
                     "g|global",
-                    Resources.GlobalOption,
+                    L(nameof(Resources.GlobalOption)),
                     option => configuration.Global = option != null);
         }
 
@@ -57,7 +57,7 @@ namespace ChocolateyGui.Common.Commands
             {
                 if (!string.IsNullOrWhiteSpace(unparsedCommand))
                 {
-                    Logger.Warning(Resources.ConfigCommand_UnknownCommandError.format_with(unparsedCommand, "list"));
+                    Logger.Warning(L(nameof(Resources.ConfigCommand_UnknownCommandError), unparsedCommand, "list"));
                 }
 
                 command = ConfigCommandType.List;
@@ -67,7 +67,7 @@ namespace ChocolateyGui.Common.Commands
 
             if ((configuration.ConfigCommand.Command == ConfigCommandType.List || !string.IsNullOrWhiteSpace(configuration.ConfigCommand.Name)) && unparsedArguments.Count > 1)
             {
-                Logger.Error(Resources.ConfigCommand_SingleConfigError);
+                Logger.Error(L(nameof(Resources.ConfigCommand_SingleConfigError)));
                 Environment.Exit(-1);
             }
 
@@ -87,30 +87,30 @@ namespace ChocolateyGui.Common.Commands
             if (configuration.ConfigCommand.Command != ConfigCommandType.List &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.Name))
             {
-                Logger.Error(Resources.ConfigCommand_MissingNameOptionError.format_with(configuration.ConfigCommand.Command.to_string(), "--name"));
+                Logger.Error(L(nameof(Resources.ConfigCommand_MissingNameOptionError), configuration.ConfigCommand.Command.to_string(), "--name"));
                 Environment.Exit(-1);
             }
 
             if (configuration.ConfigCommand.Command == ConfigCommandType.Set &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.ConfigValue))
             {
-                Logger.Error(Resources.ConfigCommand_MissingValueOptionError.format_with(configuration.ConfigCommand.Command.to_string(), "--value"));
+                Logger.Error(L(nameof(Resources.ConfigCommand_MissingValueOptionError), configuration.ConfigCommand.Command.to_string(), "--value"));
                 Environment.Exit(-1);
             }
         }
 
         public virtual void HelpMessage(ChocolateyGuiConfiguration configuration)
         {
-            Logger.Warning(Resources.ConfigCommand_Title);
+            Logger.Warning(L(nameof(Resources.ConfigCommand_Title)));
             Logger.Information(string.Empty);
-            Logger.Information(Resources.ConfigCommand_Help);
+            Logger.Information(L(nameof(Resources.ConfigCommand_Help)));
             Logger.Information(string.Empty);
-            Logger.Warning(Resources.Command_Usage);
+            Logger.Warning(L(nameof(Resources.Command_Usage)));
             Logger.Information(@"
     chocolateyguicli config [list]|get|set|unset [<options/switches>]
 ");
 
-            Logger.Warning(Resources.Command_Examples);
+            Logger.Warning(L(nameof(Resources.Command_Examples)));
             Logger.Information(@"
     chocolateyguicli config
     chocolateyguicli config list

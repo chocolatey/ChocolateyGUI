@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <BuildToolsFxCopVersion>1.0.1</BuildToolsFxCopVersion>
     <TargetFrameworkProfile />
+    <LangVersion>7.1</LangVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -232,6 +233,8 @@
     <Compile Include="Utilities\ChocolateyMessageBox.cs" />
     <Compile Include="Services\IPackageArgumentsService.cs" />
     <Compile Include="Services\PackageArgumentsService.cs" />
+    <Compile Include="Utilities\Converters\LocalizationConverter.cs" />
+    <Compile Include="Utilities\Extensions\LocalizeExtension.cs" />
     <Compile Include="Utilities\ToolTipBehavior.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />
@@ -296,6 +299,7 @@
     <Compile Include="Utilities\ResourceReader.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\AdvancedInstallViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelScreen.cs" />
     <Compile Include="ViewModels\Items\PackageViewModel.cs" />
     <Compile Include="ViewModels\Items\SourceViewModel.cs" />
     <Compile Include="ViewModels\LocalSourceViewModel.cs" />

@@ -3,13 +3,13 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:custom="http://metro.mahapps.com/winfx/xaml/shared"
-                    xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
                     xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
                     xmlns:items="clr-namespace:ChocolateyGui.Common.Windows.ViewModels.Items"
                     xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
+                    xmlns:lang="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Extensions"
                     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
                     mc:Ignorable="d">
@@ -450,74 +450,74 @@
     <ContextMenu x:Key="PackagesContextMenu"
                  DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
                  d:DataContext="{d:DesignInstance Type=items:PackageViewModel}">
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuPin}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuPin}"
                   Icon="{iconPacks:Modern Kind=Pin}"
                   Command="{commands:DataContextCommandAdapter Pin}"
                   IsEnabled="{Binding IsPinAllowed}"
                   Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibility}}">
             <b:Interaction.Behaviors>
-                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationPin}"
+                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationPin}"
                                            IsFeatureEnabled="{Binding IsPinAllowed, Mode=OneWay}"
-                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
             </b:Interaction.Behaviors>
         </MenuItem>
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUnpin}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuUnpin}"
                   Icon="{iconPacks:Modern Kind=PinRemove}"
                   Command="{commands:DataContextCommandAdapter Unpin}"
                   IsEnabled="{Binding IsUnpinAllowed}"
                   Visibility="{Binding CanUnpin, Converter={StaticResource BooleanToVisibility}}">
             <b:Interaction.Behaviors>
-                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUnpin}"
+                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationUnpin}"
                                            IsFeatureEnabled="{Binding IsUnpinAllowed, Mode=OneWay}"
-                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
             </b:Interaction.Behaviors>
         </MenuItem>
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuDetails}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuDetails}"
                   Icon="{iconPacks:BoxIcons Kind=RegularInfoCircle}"
                   Command="{commands:DataContextCommandAdapter ViewDetails}" />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUpdate}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuUpdate}"
                   Icon="{iconPacks:Entypo Kind=Cycle}"
                   IsEnabled="{Binding IsUpgradeAllowed}"
                   Visibility="{Binding CanUpdate, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Update}">
             <b:Interaction.Behaviors>
-                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUpgrade}"
+                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationUpgrade}"
                                            IsFeatureEnabled="{Binding IsUpgradeAllowed, Mode=OneWay}"
-                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
             </b:Interaction.Behaviors>
         </MenuItem>
         <Separator />
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuInstall}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuInstall}"
                   Icon="{iconPacks:Entypo Kind=Install}"
                   IsEnabled="{Binding IsInstallAllowed}"
                   Visibility="{Binding CanInstall, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Install}">
             <b:Interaction.Behaviors>
-                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationInstall}"
+                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationInstall}"
                                            IsFeatureEnabled="{Binding IsInstallAllowed, Mode=OneWay}"
-                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
             </b:Interaction.Behaviors>
         </MenuItem>
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuReinstall}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuReinstall}"
                   Icon="{iconPacks:Entypo Kind=Cw}"
                   IsEnabled="{Binding IsReinstallAllowed}"
                   Visibility="{Binding CanReinstall, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Reinstall}">
             <b:Interaction.Behaviors>
-                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationReinstall}"
+                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationReinstall}"
                                            IsFeatureEnabled="{Binding IsReinstallAllowed, Mode=OneWay}"
-                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
             </b:Interaction.Behaviors>
         </MenuItem>
-        <MenuItem Header="{x:Static properties:Resources.Controls_PackagesContextMenuUninstall}"
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuUninstall}"
                   Icon="{iconPacks:Entypo Kind=Uninstall}"
                   IsEnabled="{Binding IsUninstallAllowed}"
                   Visibility="{Binding CanUninstall, Converter={StaticResource BooleanToVisibility}}"
                   Command="{commands:DataContextCommandAdapter Uninstall}">
             <b:Interaction.Behaviors>
-                <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.Application_OperationUninstall}"
+                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationUninstall}"
                                            IsFeatureEnabled="{Binding IsUninstallAllowed, Mode=OneWay}"
-                                           DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
             </b:Interaction.Behaviors>
         </MenuItem>
     </ContextMenu>

@@ -13,6 +13,7 @@ using chocolatey;
 using ChocolateyGui.Common.Attributes;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Utilities;
 using LiteDB;
 using Serilog;
 
@@ -20,6 +21,8 @@ namespace ChocolateyGui.Common.Services
 {
     public class ConfigService : IConfigService
     {
+        private static readonly TranslationSource TranslationSource = TranslationSource.Instance;
+
         public ConfigService(LiteDatabase globalDatabase, LiteDatabase userDatabase)
         {
             var defaultGlobalSettings = new AppConfiguration()
@@ -176,13 +179,26 @@ namespace ChocolateyGui.Common.Services
             }
             else
             {
-                settingsCollection.Insert(settings);
+                try
+                {
+                    settingsCollection.Insert(settings);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
 
             SettingsChanged?.Invoke(GetEffectiveConfiguration(), EventArgs.Empty);
         }
 
         public IEnumerable<ChocolateyGuiFeature> GetFeatures(bool global)
+        {
+            return GetFeatures(global, useResourceKeys: false);
+        }
+
+        public IEnumerable<ChocolateyGuiFeature> GetFeatures(bool global, bool useResourceKeys)
         {
             var features = new List<ChocolateyGuiFeature>();
 
@@ -196,7 +212,7 @@ namespace ChocolateyGui.Common.Services
                 {
                     var propertyValue = (bool?)property.GetValue(global ? GlobalAppConfiguration : EffectiveAppConfiguration);
 
-                    features.Add(new ChocolateyGuiFeature { Description = GetDescriptionFromProperty(property), Enabled = propertyValue ?? false, Title = propertyName });
+                    features.Add(new ChocolateyGuiFeature { Description = GetDescriptionFromProperty(property, useResourceKeys), Enabled = propertyValue ?? false, Title = propertyName });
                 }
             }
 
@@ -213,12 +229,17 @@ namespace ChocolateyGui.Common.Services
                 }
                 else
                 {
-                    Logger.Information("{0}|{1}|{2}".format_with(feature.Title, !feature.Enabled ? Resources.FeatureCommand_Disabled : Resources.FeatureCommand_Enabled, feature.Description));
+                    Logger.Information("{0}|{1}|{2}".format_with(feature.Title, L(!feature.Enabled ? nameof(Resources.FeatureCommand_Disabled) : nameof(Resources.FeatureCommand_Enabled)), feature.Description));
                 }
             }
         }
 
         public IEnumerable<ChocolateyGuiSetting> GetSettings(bool global)
+        {
+            return GetSettings(global, useResourceKeys: false);
+        }
+
+        public IEnumerable<ChocolateyGuiSetting> GetSettings(bool global, bool useResourceKeys)
         {
             var settings = new List<ChocolateyGuiSetting>();
 
@@ -232,7 +253,7 @@ namespace ChocolateyGui.Common.Services
                 {
                     var propertyValue = (string)property.GetValue(global ? GlobalAppConfiguration : EffectiveAppConfiguration);
 
-                    settings.Add(new ChocolateyGuiSetting { Description = GetDescriptionFromProperty(property), Value = propertyValue, Key = propertyName });
+                    settings.Add(new ChocolateyGuiSetting { Description = GetDescriptionFromProperty(property, useResourceKeys), Value = propertyValue, Key = propertyName });
                 }
             }
 
@@ -259,7 +280,7 @@ namespace ChocolateyGui.Common.Services
             if (configuration.Global && !Hacks.IsElevated)
             {
                 // This is not allowed!
-                Logger.Error(Resources.FeatureCommand_ElevatedPermissionsError);
+                Logger.Error(L(nameof(Resources.FeatureCommand_ElevatedPermissionsError)));
                 return;
             }
 
@@ -275,13 +296,15 @@ namespace ChocolateyGui.Common.Services
                 // since the update happened successfully, update the effective configuration
                 featureProperty.SetValue(EffectiveAppConfiguration, requiredValue);
 
-                Logger.Warning(requiredValue
-                    ? Resources.FeatureCommand_EnabledWarning.format_with(configuration.FeatureCommand.Name)
-                    : Resources.FeatureCommand_DisabledWarning.format_with(configuration.FeatureCommand.Name));
+                Logger.Warning(L(
+                    requiredValue
+                        ? nameof(Resources.FeatureCommand_EnabledWarning)
+                        : nameof(Resources.FeatureCommand_DisabledWarning),
+                    configuration.FeatureCommand.Name));
             }
             else
             {
-                Logger.Warning(Resources.FeatureCommand_NoChangeMessage);
+                Logger.Warning(L(nameof(Resources.FeatureCommand_NoChangeMessage)));
             }
         }
 
@@ -294,12 +317,27 @@ namespace ChocolateyGui.Common.Services
             Logger.Information("{0}".format_with(configValue ?? string.Empty));
         }
 
+        public void SetConfigValue(string key, string value)
+        {
+            var configuration = new ChocolateyGuiConfiguration
+            {
+                CommandName = "config",
+                ConfigCommand =
+                {
+                    Name = key,
+                    ConfigValue = value
+                }
+            };
+
+            SetConfigValue(configuration);
+        }
+
         public void SetConfigValue(ChocolateyGuiConfiguration configuration)
         {
             if (configuration.Global && !Hacks.IsElevated)
             {
                 // This is not allowed!
-                Logger.Error(Resources.ConfigCommand_ElevatedPermissionsError);
+                Logger.Error(L(nameof(Resources.ConfigCommand_ElevatedPermissionsError)));
                 return;
             }
 
@@ -311,7 +349,7 @@ namespace ChocolateyGui.Common.Services
             // since the update happened successfully, update the effective configuration
             configProperty.SetValue(EffectiveAppConfiguration, configuration.ConfigCommand.ConfigValue);
 
-            Logger.Warning(Resources.ConfigCommand_Updated.format_with(configuration.ConfigCommand.Name, configuration.ConfigCommand.ConfigValue));
+            Logger.Warning(L(nameof(Resources.ConfigCommand_Updated), configuration.ConfigCommand.Name, configuration.ConfigCommand.ConfigValue));
         }
 
         public void UnsetConfigValue(ChocolateyGuiConfiguration configuration)
@@ -319,7 +357,7 @@ namespace ChocolateyGui.Common.Services
             if (configuration.Global && !Hacks.IsElevated)
             {
                 // This is not allowed!
-                Logger.Error(Resources.ConfigCommand_Unset_ElevatedPermissionsError);
+                Logger.Error(L(nameof(Resources.ConfigCommand_Unset_ElevatedPermissionsError)));
                 return;
             }
 
@@ -331,7 +369,7 @@ namespace ChocolateyGui.Common.Services
             // since the update happened successfully, update the effective configuration
             configProperty.SetValue(EffectiveAppConfiguration, string.Empty);
 
-            Logger.Warning(Resources.ConfigCommand_Unset.format_with(configuration.ConfigCommand.Name));
+            Logger.Warning(L(nameof(Resources.ConfigCommand_Unset), configuration.ConfigCommand.Name));
         }
 
         private static PropertyInfo GetProperty(string propertyName, bool isFeature)
@@ -340,7 +378,11 @@ namespace ChocolateyGui.Common.Services
 
             if (featureProperty == null)
             {
-                Logger.Error((isFeature ? Resources.FeatureCommand_FeatureNotFoundError : Resources.ConfigCommand_ConfigNotFoundError).format_with(propertyName));
+                var key = isFeature
+                    ? nameof(Resources.FeatureCommand_FeatureNotFoundError)
+                    : nameof(Resources.ConfigCommand_ConfigNotFoundError);
+
+                Logger.Error(L(key, propertyName));
                 Environment.Exit(-1);
             }
 
@@ -353,11 +395,21 @@ namespace ChocolateyGui.Common.Services
             return propertyValue;
         }
 
-        private string GetDescriptionFromProperty(PropertyInfo property)
+        private static string L(string key)
+        {
+            return TranslationSource[key];
+        }
+
+        private static string L(string key, params object[] parameters)
+        {
+            return TranslationSource[key, parameters];
+        }
+
+        private string GetDescriptionFromProperty(PropertyInfo property, bool useResourceKey = false)
         {
             var attributes = property.GetCustomAttributes(typeof(LocalizedDescriptionAttribute), true);
             var attribute = attributes.Length > 0 ? (LocalizedDescriptionAttribute)attributes[0] : null;
-            return attribute?.Description;
+            return useResourceKey ? attribute?.Key : attribute?.Description;
         }
 
         private AppConfiguration GetChosenAppConfiguration(bool global)

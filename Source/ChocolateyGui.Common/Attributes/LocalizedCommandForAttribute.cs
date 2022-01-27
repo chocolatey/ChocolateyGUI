@@ -5,13 +5,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using chocolatey.infrastructure.app.attributes;
-using ChocolateyGui.Common.Properties;
+using ChocolateyGui.Common.Utilities;
 
 namespace ChocolateyGui.Common.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class LocalizedCommandForAttribute : CommandForAttribute
     {
         public LocalizedCommandForAttribute(string commandName, string key)
@@ -19,9 +17,11 @@ namespace ChocolateyGui.Common.Attributes
         {
         }
 
+        public string Key { get; set; }
+
         private static string Localize(string key)
         {
-            return Resources.ResourceManager.GetString(key);
+            return TranslationSource.Instance[key];
         }
     }
 }

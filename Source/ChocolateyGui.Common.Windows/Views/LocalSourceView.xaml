@@ -7,7 +7,7 @@
              xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:items="clr-namespace:ChocolateyGui.Common.ViewModels.Items;assembly=ChocolateyGui.Common"
-             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
+             xmlns:lang="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Extensions"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:enums="clr-namespace:ChocolateyGui.Common.Enums;assembly=ChocolateyGui.Common"
              xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
@@ -51,11 +51,11 @@
                             Margin="2 2 0 0"
                             HorizontalAlignment="Left" VerticalAlignment="Top">
                     <iconPacks:PackIconEntypo Width="24" Height="24"
-                                              ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_Pinned}"
+                                              ToolTip="{lang:Localize LocalSourceView_ToolTip_Pinned}"
                                               Kind="Pin" Margin="0 2"
                                               Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                     <iconPacks:PackIconEntypo Width="24" Height="24"
-                                              ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_InstalledSideBySide}"
+                                              ToolTip="{lang:Localize LocalSourceView_ToolTip_InstalledSideBySide}"
                                               Kind="Bookmarks" Margin="0 2"
                                               Visibility="{Binding IsSideBySide, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                 </StackPanel>
@@ -72,7 +72,7 @@
 
                 <ContentControl x:Name="OutOfDateOverlay" Grid.Row="0" Grid.RowSpan="4"
                                 Visibility="Collapsed"
-                                Content="{x:Static properties:Resources.LocalSourceView_Outdated}"
+                                Content="{lang:Localize LocalSourceView_Outdated}"
                                 Style="{DynamicResource TileOutOfDateOverlayStyle}" />
             </Grid>
 
@@ -98,12 +98,12 @@
                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <StackPanel x:Name="EmptySearchInfo" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <iconPacks:PackIconOcticons Kind="Search" Width="72" Height="72" Foreground="{DynamicResource MahApps.Brushes.AccentBase}" HorizontalAlignment="Center" Margin="20" />
-                        <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFound}"
+                        <TextBlock Text="{lang:Localize RemoteSourceView_SearchNoPackagesFound}"
                                    HorizontalAlignment="Center"
                                    FontSize="28"
                                    Margin="10"
                                    TextWrapping="Wrap"/>
-                        <TextBlock Text="{x:Static properties:Resources.RemoteSourceView_SearchNoPackagesFoundHeading}"
+                        <TextBlock Text="{lang:Localize RemoteSourceView_SearchNoPackagesFoundHeading}"
                                    HorizontalAlignment="Center"
                                    FontSize="20"
                                    Margin="5"
@@ -175,7 +175,7 @@
             <WrapPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5">
                 <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
                     <Label Margin="5,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
-                           Target="{Binding ElementName=SearchTextBox}" Content="{x:Static properties:Resources.LocalSourceView_SearchBoxText}"/>
+                           Target="{Binding ElementName=SearchTextBox}" Content="{lang:Localize LocalSourceView_SearchBoxText}"/>
                     <TextBox x:Name="SearchTextBox"
                              Width="200"
                              FontSize="14"
@@ -185,13 +185,13 @@
                 <CheckBox Name="MatchCheckBox"
                           Margin="5"
                           Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
-                          Content="{x:Static properties:Resources.LocalSourceView_CheckboxMatchExact}"
+                          Content="{lang:Localize LocalSourceView_CheckboxMatchExact}"
                           IsChecked="{Binding MatchWord}" />
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                 <CheckBox Name="UpdatesCheckBox"
                           Margin="5"
                           Style="{StaticResource Chocolatey.Styles.CheckBox.SourceHeader}"
-                          Content="{x:Static properties:Resources.LocalSourceView_CheckboxPkgsWithUpdates}"
+                          Content="{lang:Localize LocalSourceView_CheckboxPkgsWithUpdates}"
                           IsChecked="{Binding ShowOnlyPackagesWithUpdate}"
                           IsEnabled="{Binding IsShowOnlyPackagesWithUpdateEnabled}"/>
             </WrapPanel>
@@ -199,7 +199,7 @@
                 <Button Command="{commands:DataContextCommandAdapter CheckForOutdatedPackages, CanCheckForOutdatedPackages}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
-                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static properties:Resources.LocalSourceView_ButtonCheckForOutdatedPkgs}" Margin="0,0,2,0">
+                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{lang:Localize LocalSourceView_ButtonCheckForOutdatedPkgs}" Margin="0,0,2,0">
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
                         <iconPacks:PackIconFontAwesome Kind="BoxSolid" Margin="2 0 0 0" />
@@ -208,7 +208,7 @@
                 <Button Command="{commands:DataContextCommandAdapter RefreshPackages, CanRefreshPackages}"
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
-                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{x:Static properties:Resources.LocalSourceView_ButtonRefreshPkgs}" Margin="0,0,2,0">
+                        Style="{DynamicResource IconFlatButtonStyle}" ToolTip="{lang:Localize LocalSourceView_ButtonRefreshPkgs}" Margin="0,0,2,0">
                     <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
                 </Button>
                 <Button Command="{commands:DataContextCommandAdapter UpdateAll, CanUpdateAll}"
@@ -218,10 +218,10 @@
                         Visibility="{Binding IsUpgradeAllAllowed, Converter={StaticResource BooleanToVisibility}}"
                         Margin="2,0,2,0">
                     <i:Interaction.Behaviors>
-                        <utilities:ToolTipBehavior EnabledToolTip="{x:Static properties:Resources.LocalSourceView_ButtonUpdateAll}"
-                                                   DisabledToolTip="{x:Static properties:Resources.LocalSourceView_ButtonUpdateAllDisabled}"
+                        <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize LocalSourceView_ButtonUpdateAll}"
+                                                   DisabledToolTip="{lang:Localize LocalSourceView_ButtonUpdateAllDisabled}"
                                                    IsFeatureEnabled="{Binding IsUpgradeAllowed, Mode=OneWay}"
-                                                   DisabledFeatureToolTip="{x:Static properties:Resources.Application_OperationNotAllowed}" />
+                                                   DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
                     </i:Interaction.Behaviors>
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconFontAwesome Kind="SyncSolid" />
@@ -232,20 +232,20 @@
                         ToolTipService.ShowOnDisabled="True"
                         VerticalAlignment="Center"
                         Style="{DynamicResource IconFlatButtonStyle}"
-                        ToolTip="{x:Static properties:Resources.LocalSourceView_ButtonExport}"
+                        ToolTip="{lang:Localize LocalSourceView_ButtonExport}"
                         Margin="2,0,2,0">
                     <iconPacks:PackIconFontAwesome Kind="SaveRegular" />
                 </Button>
                 <RadioButton Margin="6,0,1,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"
                              IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Standard}}"
-                             ToolTip="{x:Static properties:Resources.LocalSourceView_ButtonListView}">
+                             ToolTip="{lang:Localize LocalSourceView_ButtonListView}">
                     <iconPacks:PackIconModern Kind="TextAlignJustify" />
                 </RadioButton>
                 <RadioButton Margin="1,0,0,0"
                              Style="{DynamicResource ListViewModeRadioButtonStyle}"
                              IsChecked="{Binding ListViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:ListViewMode.Tile}}"
-                             ToolTip="{x:Static properties:Resources.LocalSourceView_ButtonTileView}">
+                             ToolTip="{lang:Localize LocalSourceView_ButtonTileView}">
                     <iconPacks:PackIconModern Kind="TilesFour" />
                 </RadioButton>
             </StackPanel>
@@ -276,31 +276,31 @@
                                         </Style>
                                     </DataGrid.RowStyle>
                                     <DataGrid.Columns>
-                                        <DataGridTemplateColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Name}" SortMemberPath="Title" Width="2*">
+                                        <DataGridTemplateColumn Header="{lang:Localize LocalSourceView_Grid_Name}" SortMemberPath="Title" Width="2*">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_Pinned}" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityHidden}}" />
-                                                        <iconPacks:PackIconEntypo ToolTip="{x:Static properties:Resources.LocalSourceView_ToolTip_InstalledSideBySide}" Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BooleanToVisibilityHidden}}" />
+                                                        <iconPacks:PackIconEntypo ToolTip="{lang:Localize LocalSourceView_ToolTip_Pinned}" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityHidden}}" />
+                                                        <iconPacks:PackIconEntypo ToolTip="{lang:Localize LocalSourceView_ToolTip_InstalledSideBySide}" Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BooleanToVisibilityHidden}}" />
                                                         <TextBlock Text="{Binding Title}"/>
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
-                                        <DataGridTextColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Id}"
+                                        <DataGridTextColumn Header="{lang:Localize LocalSourceView_Grid_Id}"
                                                             Width="1*"
                                                             Binding="{Binding LowerCaseId}"
                                                             Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BooleanToVisibility}}"/>
-                                        <DataGridTextColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Authors}"
+                                        <DataGridTextColumn Header="{lang:Localize LocalSourceView_Grid_Authors}"
                                                             utilities:DataGridCustomSortBehavior.CustomComparer="{StaticResource PackageAuthorsComparer}"
                                                             Binding="{Binding Authors, Converter={StaticResource StringListToString}}" Width="1*" />
-                                        <DataGridTextColumn Header="{x:Static properties:Resources.LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
+                                        <DataGridTextColumn Header="{lang:Localize LocalSourceView_Grid_Version}" Binding="{Binding Version}" Width="1*" />
                                         <DataGridTemplateColumn Width="0.5*"
-                                                                Header="{x:Static properties:Resources.LocalSourceView_Grid_Prerelease}"
+                                                                Header="{lang:Localize LocalSourceView_Grid_Prerelease}"
                                                                 Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.ShowAdditionalPackageInformation, Converter={StaticResource BooleanToVisibility}}">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
-                                                    <TextBlock Text="{x:Static properties:Resources.LocalSourceView_Grid_Prerelease}"
+                                                    <TextBlock Text="{lang:Localize LocalSourceView_Grid_Prerelease}"
                                                                Background="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseKey}}"
                                                                Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.PreReleaseForegroundKey}}"
                                                                Padding="3"
@@ -312,7 +312,7 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
                                         <DataGridTemplateColumn Width="0.7*"
-                                                                Header="{x:Static properties:Resources.LocalSourceView_Grid_LatestVersion}">
+                                                                Header="{lang:Localize LocalSourceView_Grid_LatestVersion}">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <Grid Background="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}"
@@ -331,7 +331,7 @@
                                                                    HorizontalAlignment="Left"
                                                                    TextAlignment="Center" />
                                                         <TextBlock Grid.Column="1"
-                                                                   Text="{x:Static properties:Resources.LocalSourceView_Outdated}"
+                                                                   Text="{lang:Localize LocalSourceView_Outdated}"
                                                                    TextTrimming="CharacterEllipsis"
                                                                    Padding="2 3 3 3"
                                                                    VerticalAlignment="Stretch"

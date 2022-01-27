@@ -2289,6 +2289,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no Persisted Arguments available for this package!.
+        /// </summary>
+        public static string PackageViewModel_NoArgumentsAvailableForPackage {
+            get {
+                return ResourceManager.GetString("PackageViewModel_NoArgumentsAvailableForPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pinning package.
         /// </summary>
         public static string PackageViewModel_PinningPackage {

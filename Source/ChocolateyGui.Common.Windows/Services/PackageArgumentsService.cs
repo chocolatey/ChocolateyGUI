@@ -61,7 +61,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
             if (string.IsNullOrEmpty(arguments))
             {
-                _dialogService.ShowMessageAsync(
+                Logger.Debug(
                     string.Empty,
                     L(nameof(Resources.PackageView_UnableToFindArgumentsFile), version, id));
                 yield break;

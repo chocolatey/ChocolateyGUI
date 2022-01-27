@@ -1349,4 +1349,7 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="PackageArgumentService_RedactedArgument" xml:space="preserve">
     <value>[REDACTED ARGUMENT]</value>
   </data>
+  <data name="PackageViewModel_NoArgumentsAvailableForPackage" xml:space="preserve">
+    <value>There are no Persisted Arguments available for this package!</value>
+  </data>
 </root>

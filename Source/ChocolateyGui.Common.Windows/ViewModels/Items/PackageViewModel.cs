@@ -431,9 +431,18 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             var decryptedArguments = _packageArgumentsService.DecryptPackageArgumentsFile(Id, Version.ToString()).ToList();
 
-            await _dialogService.ShowMessageAsync(
-                L(nameof(Resources.PackageViewModel_ArgumentsForPackageFormat), Title),
-                string.Join(Environment.NewLine, decryptedArguments));
+            if (decryptedArguments.Count == 0)
+            {
+                await _dialogService.ShowMessageAsync(
+                    L(nameof(Resources.PackageViewModel_ArgumentsForPackageFormat), Title),
+                    L(nameof(Resources.PackageViewModel_NoArgumentsAvailableForPackage)));
+            }
+            else
+            {
+                await _dialogService.ShowMessageAsync(
+                    L(nameof(Resources.PackageViewModel_ArgumentsForPackageFormat), Title),
+                    string.Join(Environment.NewLine, decryptedArguments));
+            }
         }
 
         public async Task Install()

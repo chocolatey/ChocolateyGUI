@@ -10,7 +10,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Resources;
 using System.Runtime.CompilerServices;
-using chocolatey;
 using ChocolateyGui.Common.Properties;
 
 namespace ChocolateyGui.Common.Utilities

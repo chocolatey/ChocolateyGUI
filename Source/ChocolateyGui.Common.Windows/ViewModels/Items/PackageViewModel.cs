@@ -11,7 +11,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
-using chocolatey;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
@@ -693,6 +692,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         }
 
 #pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
+
         public async void ViewDetails()
 #pragma warning restore RECS0165 // Asynchronous methods should return a Task instead of void
         {

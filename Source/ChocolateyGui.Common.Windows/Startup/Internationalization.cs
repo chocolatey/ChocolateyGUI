@@ -102,7 +102,7 @@ namespace ChocolateyGui.Common.Windows.Startup
 
             var culture = GetSupportedCultureInfo(languageCode);
 
-            if (culture != existingLanguage)
+            if (!Equals(culture, existingLanguage))
             {
                 TranslationSource.Instance.CurrentCulture = culture;
                 CultureInfo.DefaultThreadCurrentCulture = culture;

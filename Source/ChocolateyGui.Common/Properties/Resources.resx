@@ -432,6 +432,9 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="RemoteSourceViewModel_SortSelectionAtoZ" xml:space="preserve">
     <value>A-Z</value>
+    <comment>The letter 'A' should be translated to the first letter in your language,
+and the letter 'Z' to the last letter in your alphabet.
+Or if there is a traditional way to show sorting by the Title in your language, that should be used instead.</comment>
   </data>
   <data name="RemoteSourceViewModel_SortSelectionPopularity" xml:space="preserve">
     <value>Popularity</value>

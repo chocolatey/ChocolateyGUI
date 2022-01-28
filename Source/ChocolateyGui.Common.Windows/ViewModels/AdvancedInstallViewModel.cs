@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="AdvancedInstallViewModel.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -183,14 +183,38 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public bool OverrideArguments
         {
-            get { return _overrideArguments; }
-            set { SetPropertyValue(ref _overrideArguments, value); }
+            get
+            {
+                return _overrideArguments;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _overrideArguments, value);
+
+                if (value)
+                {
+                    NotSilent = false;
+                }
+            }
         }
 
         public bool NotSilent
         {
-            get { return _notSilent; }
-            set { SetPropertyValue(ref _notSilent, value); }
+            get
+            {
+                return _notSilent;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _notSilent, value);
+
+                if (value)
+                {
+                    OverrideArguments = false;
+                }
+            }
         }
 
         public bool ApplyInstallArgumentsToDependencies
@@ -219,44 +243,131 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public bool IgnoreDependencies
         {
-            get { return _ignoreDependencies; }
-            set { SetPropertyValue(ref _ignoreDependencies, value); }
+            get
+            {
+                return _ignoreDependencies;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _ignoreDependencies, value);
+
+                if (value)
+                {
+                    ForceDependencies = false;
+                }
+            }
         }
 
         public bool ForceDependencies
         {
-            get { return _forceDependencies; }
-            set { SetPropertyValue(ref _forceDependencies, value); }
+            get
+            {
+                return _forceDependencies;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _forceDependencies, value);
+
+                if (value)
+                {
+                    IgnoreDependencies = false;
+                }
+            }
         }
 
         public bool SkipPowerShell
         {
-            get { return _skipPowerShell; }
-            set { SetPropertyValue(ref _skipPowerShell, value); }
+            get
+            {
+                return _skipPowerShell;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _skipPowerShell, value);
+
+                if (value)
+                {
+                    OverrideArguments = false;
+                    NotSilent = false;
+                }
+            }
         }
 
         public bool IgnoreChecksums
         {
-            get { return _ignoreChecksums; }
-            set { SetPropertyValue(ref _ignoreChecksums, value); }
+            get
+            {
+                return _ignoreChecksums;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _ignoreChecksums, value);
+
+                if (value)
+                {
+                    RequireChecksums = false;
+                }
+            }
         }
 
         public bool AllowEmptyChecksums
         {
-            get { return _allowEmptyChecksums; }
-            set { SetPropertyValue(ref _allowEmptyChecksums, value); }
+            get
+            {
+                return _allowEmptyChecksums;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _allowEmptyChecksums, value);
+
+                if (value)
+                {
+                    RequireChecksums = false;
+                }
+            }
         }
 
         public bool AllowEmptyChecksumsSecure
         {
-            get { return _allowEmptyChecksumsSecure; }
-            set { SetPropertyValue(ref _allowEmptyChecksumsSecure, value); }
+            get
+            {
+                return _allowEmptyChecksumsSecure;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _allowEmptyChecksumsSecure, value);
+
+                if (value)
+                {
+                    RequireChecksums = false;
+                }
+            }
         }
 
         public bool RequireChecksums
         {
-            get { return _requireChecksums; }
-            set { SetPropertyValue(ref _requireChecksums, value); }
+            get
+            {
+                return _requireChecksums;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _requireChecksums, value);
+
+                if (value)
+                {
+                    IgnoreChecksums = false;
+                    AllowEmptyChecksums = false;
+                    AllowEmptyChecksumsSecure = false;
+                }
+            }
         }
 
         public string DownloadChecksum
@@ -273,8 +384,16 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public string DownloadChecksumType
         {
-            get { return _downloadChecksumType; }
-            set { SetPropertyValue(ref _downloadChecksumType, value); }
+            get
+            {
+                return _downloadChecksumType;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _downloadChecksumType, value);
+                DownloadChecksumType64bit = value;
+            }
         }
 
         public string DownloadChecksumType64bit
@@ -323,6 +442,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             var choco = Lets.GetChocolatey();
             var config = choco.GetConfiguration();
+            DownloadChecksumType = "md5";
+            DownloadChecksumType64bit = "md5";
+            ExecutionTimeoutInSeconds = config.CommandExecutionTimeoutSeconds;
             CacheLocation = config.CacheLocation;
             LogFile = config.AdditionalLogFileLocation;
         }

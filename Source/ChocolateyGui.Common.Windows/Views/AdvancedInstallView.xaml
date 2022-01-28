@@ -1,10 +1,9 @@
-<UserControl x:Class="ChocolateyGui.Common.Windows.Views.AdvancedInstallView" 
+﻿<UserControl x:Class="ChocolateyGui.Common.Windows.Views.AdvancedInstallView" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels"
              xmlns:lang="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Extensions"
              xmlns:Converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters" xmlns:local="clr-namespace:ChocolateyGui.Common.Windows.Views" x:Class="ChocolateyGui.Common.Windows.Views.AdvancedInstallView"
@@ -16,6 +15,9 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
+        <Converters:BooleanToVisibilityInverted x:Key="BooleanToVisibilityInverted"/>
+        <Converters:NullToInverseBool x:Key="NullToInverseBool"/>
+        <Converters:BooleanInverter x:Key="BooleanInverter"/>
         <GridLength x:Key="ToggleSwitchPreContentMargin">0</GridLength>
         <GridLength x:Key="ToggleSwitchPostContentMargin">0</GridLength>
 
@@ -25,9 +27,13 @@
             <Setter Property="OffContent" Value="{lang:Localize AdvancedChocolateyDialog_Off}" />
             <Setter Property="OnContent" Value="{lang:Localize AdvancedChocolateyDialog_On}" />
         </Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="MaxWidth" Value="450" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
     </UserControl.Resources>
 
-    <Grid Margin="0 10 0 0" FocusManager.FocusedElement="{Binding ElementName=AvailableVersionsComboBox}">
+    <Grid Margin="0 10 0 0">
 
         <Grid.Resources>
             <!-- Horizontal MetroHeader with SharedSizeGroup for the first column -->
@@ -195,10 +201,17 @@
                             </Grid>
                         </mah:MetroHeader>
                         <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_PackageParameters_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_PackageParameters_ToolTip}">
-                            <TextBox Text="{Binding PackageParameters, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding PackageParameters, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding SkipPowerShell, Converter={StaticResource BooleanInverter}}" />
                         </mah:MetroHeader>
                         <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_InstallArguments_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_InstallArguments_ToolTip}">
-                            <TextBox Text="{Binding InstallArguments, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding InstallArguments, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanInverter}">
+                                        <Binding Path="NotSilent"/>
+                                        <Binding Path="SkipPowerShell" />
+                                    </MultiBinding>
+                                </TextBox.IsEnabled>
+                            </TextBox>
                         </mah:MetroHeader>
                         <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_ToolTip}">
                             <mah:NumericUpDown Value="{Binding ExecutionTimeoutInSeconds}" />
@@ -206,14 +219,14 @@
                         <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_PreRelease_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_PreRelease_ToolTip}">
                             <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding PreRelease}" />
                         </mah:MetroHeader>
-                        <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_Forcex86_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_Forcex86_ToolTip}">
-                            <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding Forcex86}" />
+                        <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_Forcex86_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_Forcex86_ToolTip}" Visibility="{Binding Is32BitPlatform, Converter={StaticResource BooleanToVisibilityInverted}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AdvancedInstallView}}}">
+                            <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding Forcex86}" x:Name="ForceX86Switch" />
                         </mah:MetroHeader>
                     </StackPanel>
 
                     <RadioButton Grid.Row="1" Tag="{lang:Localize AdvancedChocolateyDialog_AdvancedOptions_Header}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
-                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_CacheLocation_ToolTip}" Tag="{lang:Localize AdvancedChocolateyDialog_CacheLocation_ToolTip}">
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_CacheLocation_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_CacheLocation_ToolTip}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -234,10 +247,24 @@
                                 </Grid>
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding OverrideArguments}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding OverrideArguments}">
+                                    <mah:ToggleSwitch.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanInverter}">
+                                            <Binding Path="NotSilent" />
+                                            <Binding Path="SkipPowerShell" />
+                                        </MultiBinding>
+                                    </mah:ToggleSwitch.IsEnabled>
+                                </mah:ToggleSwitch>
                             </mah:MetroHeader>
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_NotSilent_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_NotSilent_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding NotSilent}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding NotSilent}">
+                                    <mah:ToggleSwitch.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanInverter}">
+                                            <Binding Path="OverrideArguments" />
+                                            <Binding Path="SkipPowerShell" />
+                                        </MultiBinding>
+                                    </mah:ToggleSwitch.IsEnabled>
+                                </mah:ToggleSwitch>
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_AllowDowngrade_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_AllowDowngrade_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowDowngrade}" />
@@ -254,10 +281,10 @@
                     <RadioButton Grid.Row="2" Tag="{lang:Localize AdvancedChocolateyDialog_DependencyOptions_Header}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_IgnoreDependencies_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_IgnoreDependencies_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreDependencies}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreDependencies}" IsEnabled="{Binding ForceDependencies, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_ForceDependencies_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_ForceDependencies_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ForceDependencies}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ForceDependencies}" IsEnabled="{Binding IgnoreDependencies, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ApplyInstallArgumentsToDependencies}" />
@@ -268,32 +295,54 @@
                         </StackPanel>
                     </RadioButton>
 
-                    <RadioButton Grid.Row="3" Tag="{lang:Localize AdvancedChocolateyDialog_ChecksumOptions_Header}">
+                    <RadioButton Grid.Row="3" Tag="{lang:Localize AdvancedChocolateyDialog_ChecksumOptions_Header}" Visibility="{Binding SkipPowerShell, Converter={StaticResource BooleanToVisibilityInverted}}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_IgnoreChecksums_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_IgnoreChecksums_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreChecksums}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreChecksums}" x:Name="IgnoreChecksumsSwitch" IsEnabled="{Binding Path=RequireChecksums, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_AllowEmptyChecksums_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksums}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksums}" IsEnabled="{Binding Path=RequireChecksums, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksumsSecure}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksumsSecure}" IsEnabled="{Binding Path=RequireChecksums, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_RequireChecksums_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_RequireChecksums_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding RequireChecksums}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding RequireChecksums}">
+                                    <mah:ToggleSwitch.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanInverter}">
+                                            <Binding Path="IgnoreChecksums" />
+                                            <Binding Path="AllowEmptyChecksums" />
+                                            <Binding Path="AllowEmptyChecksumsSecure" />
+                                        </MultiBinding>
+                                    </mah:ToggleSwitch.IsEnabled>
+                                </mah:ToggleSwitch>
                             </mah:MetroHeader>
-                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum_ToolTip}">
-                                <TextBox Text="{Binding DownloadChecksum}" />
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum_ToolTip}" Visibility="{Binding IsOn, Converter={StaticResource BooleanToVisibilityInverted}, ElementName=IgnoreChecksumsSwitch}">
+                                <TextBox Text="{Binding DownloadChecksum}" x:Name="DownloadChecksumTextBox" />
                             </mah:MetroHeader>
-                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum64bit_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip}">
-                                <TextBox Text="{Binding DownloadChecksum64bit}" />
-                            </mah:MetroHeader>
-                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType_ToolTip}">
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType_ToolTip}" IsEnabled="{Binding Text, Converter={StaticResource NullToInverseBool}, ElementName=DownloadChecksumTextBox}" Visibility="{Binding IsOn, Converter={StaticResource BooleanToVisibilityInverted}, ElementName=IgnoreChecksumsSwitch}">
                                 <ComboBox x:Name="ChecksumTypesComboBox" 
                                           ItemsSource="{Binding AvailableChecksumTypes}" 
                                           SelectedItem="{Binding DownloadChecksumType}" />
                             </mah:MetroHeader>
-                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType64bit_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip}">
+                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum64bit_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip}">
+                                <mah:MetroHeader.Visibility>
+                                    <MultiBinding Converter="{StaticResource BooleanToVisibilityInverted}">
+                                        <Binding Path="IgnoreChecksums" />
+                                        <Binding Path="Forcex86" />
+                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:AdvancedInstallView}}" Path="Is32BitPlatform" />
+                                    </MultiBinding>
+                                </mah:MetroHeader.Visibility>
+                                <TextBox Text="{Binding DownloadChecksum64bit}" x:Name="DownloadChecksum64bitTextBox" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType64bit_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip}" IsEnabled="{Binding Text, Converter={StaticResource NullToInverseBool}, ElementName=DownloadChecksum64bitTextBox}">
+                                <mah:MetroHeader.Visibility>
+                                    <MultiBinding Converter="{StaticResource BooleanToVisibilityInverted}">
+                                        <Binding Path="IgnoreChecksums" />
+                                        <Binding Path="Forcex86" />
+                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:AdvancedInstallView}}" Path="Is32BitPlatform" />
+                                    </MultiBinding>
+                                </mah:MetroHeader.Visibility>
                                 <ComboBox x:Name="ChecksumTypes64BitComboBox" 
                                           ItemsSource="{Binding AvailableChecksumTypes}" 
                                           SelectedItem="{Binding DownloadChecksumType64bit}" />

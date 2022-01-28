@@ -5,6 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Windows.Controls;
 
 namespace ChocolateyGui.Common.Windows.Views
@@ -17,6 +18,10 @@ namespace ChocolateyGui.Common.Windows.Views
         public AdvancedInstallView()
         {
             InitializeComponent();
+
+            Is32BitPlatform = !Environment.Is64BitOperatingSystem;
         }
+
+        public bool Is32BitPlatform { get; set; }
     }
 }

@@ -472,9 +472,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             // null means that the Cancel button was clicked
             if (result != null)
             {
+                if (string.Equals(result.SelectedVersion, Resources.AdvancedChocolateyDialog_LatestVersion, StringComparison.OrdinalIgnoreCase))
+                {
+                    result.SelectedVersion = null;
+                }
+
                 var advancedOptions = _mapper.Map<AdvancedInstall>(result);
 
-                await InstallPackage(result.SelectedVersion.ToString(), advancedOptions);
+                await InstallPackage(result.SelectedVersion, advancedOptions);
             }
         }
 

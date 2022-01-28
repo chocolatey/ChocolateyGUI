@@ -175,7 +175,8 @@
                                           Grid.Column="0" 
                                           IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}" 
                                           ItemsSource="{Binding AvailableVersions.Result, Mode=OneWay}" 
-                                          SelectedItem="{Binding SelectedVersion, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                          SelectedItem="{Binding SelectedVersion, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                          IsEditable="True" />
                                 <mah:ProgressRing Grid.Column="0" 
                                                   Width="20" 
                                                   Height="20" 
@@ -184,13 +185,13 @@
                                                   HorizontalAlignment="Left" 
                                                   VerticalAlignment="Center" 
                                                   Margin="5 0 0 0" />
-                                <CheckBox x:Name="IncludePrereleaseCheckBox" 
+                                <!--<CheckBox x:Name="IncludePrereleaseCheckBox" 
                                           Grid.Column="1" 
                                           Margin="5 0 0 0" 
                                           Content="{lang:Localize AdvancedChocolateyDialog_IncludePreRelease_Content}" 
                                           ToolTip="{lang:Localize AdvancedChocolateyDialog_IncludePreRelease_ToolTip}" 
                                           IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}" 
-                                          IsChecked="{Binding IncludePreRelease}" />
+                                          IsChecked="{Binding IncludePreRelease}" />-->
                             </Grid>
                         </mah:MetroHeader>
                         <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_PackageParameters_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_PackageParameters_ToolTip}">

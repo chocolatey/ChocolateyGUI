@@ -1364,6 +1364,9 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="FilePicker_TextFiles" xml:space="preserve">
     <value>Text Files</value>
   </data>
+  <data name="AdvancedChocolateyDialog_LatestVersion" xml:space="preserve">
+    <value>Latest Version</value>
+  </data>
   <data name="AdvancedChocolateyDialog_CacheLocation_Header" xml:space="preserve">
     <value>Cache Location</value>
   </data>

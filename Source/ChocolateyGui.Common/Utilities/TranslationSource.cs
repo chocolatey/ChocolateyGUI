@@ -67,7 +67,7 @@ namespace ChocolateyGui.Common.Utilities
 
                 if (parameters != null && parameters.Length > 0)
                 {
-                    return value.format_with(parameters);
+                    return string.Format(CurrentCulture, value, parameters);
                 }
 
                 return value;

@@ -17,7 +17,7 @@ using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows.Commands;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
-using Microsoft.VisualStudio.Threading;
+using ChocolateyGui.Common.Windows.Utilities;
 using NuGet;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
@@ -27,9 +27,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly IChocolateyService _chocolateyService;
         private readonly IPersistenceService _persistenceService;
         private CancellationTokenSource _cts;
-        private SemanticVersion _selectedVersion;
+        private string _selectedVersion;
         private bool _includePreRelease;
-        private Utilities.NotifyTaskCompletion<ObservableCollection<SemanticVersion>> _availableVersions;
+        private Utilities.NotifyTaskCompletion<ObservableCollection<string>> _availableVersions;
         private string _packageParamaters;
         private string _installArguments;
         private int _executionTimeoutInSeconds;
@@ -58,6 +58,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private string _packageId;
         private int _page;
         private int _pageSize;
+        private string _packageVersion;
 
         public AdvancedInstallViewModel(
             IChocolateyService chocolateyService,
@@ -75,13 +76,15 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             _cts = new CancellationTokenSource();
 
+            _packageVersion = packageVersion.ToString();
+            SelectedVersion = _packageVersion;
+
             FetchAvailableVersions();
 
-            SelectedVersion = packageVersion;
             AvailableChecksumTypes = new List<string> { "md5", "sha1", "sha256", "sha512" };
             InstallCommand = new RelayCommand(
                 o => { Close?.Invoke(this); },
-                o => AvailableVersions.IsSuccessfullyCompleted && SelectedVersion != default);
+                o => string.IsNullOrEmpty(SelectedVersion) || SelectedVersion == Resources.AdvancedChocolateyDialog_LatestVersion || SemanticVersion.TryParse(SelectedVersion, out _));
             CancelCommand = new RelayCommand(
                 o =>
                 {
@@ -96,10 +99,18 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             SetDefaults();
         }
 
-        public SemanticVersion SelectedVersion
+        public string SelectedVersion
         {
-            get { return _selectedVersion; }
-            set { SetPropertyValue(ref _selectedVersion, value); }
+            get
+            {
+                return _selectedVersion;
+            }
+
+            set
+            {
+                SetPropertyValue(ref _selectedVersion, value);
+                OnSelectedVersionChanged(value);
+            }
         }
 
         public bool IncludePreRelease
@@ -291,10 +302,21 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         private void FetchAvailableVersions()
         {
-            AvailableVersions = new Utilities.NotifyTaskCompletion<ObservableCollection<SemanticVersion>>(
-                _chocolateyService.GetAvailableVersionsForPackageIdAsync(_packageId, _page, _pageSize, IncludePreRelease)
-                    .ContinueWith(task => new ObservableCollection<SemanticVersion>(task.Result))
-                    .WithCancellation(_cts.Token));
+            var availableVersions = new ObservableCollection<string>();
+            availableVersions.Add(Resources.AdvancedChocolateyDialog_LatestVersion);
+
+            if (!string.IsNullOrEmpty(_packageVersion))
+            {
+                availableVersions.Add(_packageVersion);
+            }
+
+            AvailableVersions =
+                new NotifyTaskCompletion<ObservableCollection<string>>(Task.FromResult(availableVersions));
+
+            // AvailableVersions = new Utilities.NotifyTaskCompletion<ObservableCollection<SemanticVersion>>(
+            //    _chocolateyService.GetAvailableVersionsForPackageIdAsync(_packageId, _page, _pageSize, IncludePreRelease)
+            //        .ContinueWith(task => new ObservableCollection<SemanticVersion>(task.Result))
+            //        .WithCancellation(_cts.Token));
         }
 
         private void SetDefaults()
@@ -303,6 +325,16 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             var config = choco.GetConfiguration();
             CacheLocation = config.CacheLocation;
             LogFile = config.AdditionalLogFileLocation;
+        }
+
+        private void OnSelectedVersionChanged(string stringVersion)
+        {
+            SemanticVersion version;
+
+            if (SemanticVersion.TryParse(stringVersion, out version))
+            {
+                PreRelease = !string.IsNullOrEmpty(version.SpecialVersion);
+            }
         }
 
         private void BrowseLogFile(object value)

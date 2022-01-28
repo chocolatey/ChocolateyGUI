@@ -1355,6 +1355,15 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="SettingsView_LanguageDescription" xml:space="preserve">
     <value>The preferred language for Chocolatey GUI. Defaults to Windows System Locale.</value>
   </data>
+  <data name="FilePicker_LogFiles" xml:space="preserve">
+    <value>Log Files</value>
+  </data>
+  <data name="FilePicker_AllFiles" xml:space="preserve">
+    <value>All Files</value>
+  </data>
+  <data name="FilePicker_TextFiles" xml:space="preserve">
+    <value>Text Files</value>
+  </data>
   <data name="AdvancedChocolateyDialog_CacheLocation_Header" xml:space="preserve">
     <value>Cache Location</value>
   </data>

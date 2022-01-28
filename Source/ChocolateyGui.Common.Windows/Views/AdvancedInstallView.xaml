@@ -222,8 +222,15 @@
                                     <Button Grid.Column="1" Content="{lang:Localize AdvancedChocolateyDialog_Browse}" Command="{Binding BrowseCacheLocationCommand}"   />
                                 </Grid>
                             </mah:MetroHeader>
-                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_LogFile_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_LogFile_ToolTip}">
-                                <TextBox Text="{Binding LogFile}" />
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_LogFile_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_LogFile_ToolTip}" Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Text="{Binding LogFile}" />
+                                    <Button Grid.Column="1" Content="{lang:Localize AdvancedChocolateyDialog_Browse}" Command="{Binding BrowseLogFileCommand}"   />
+                                </Grid>
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding OverrideArguments}" />

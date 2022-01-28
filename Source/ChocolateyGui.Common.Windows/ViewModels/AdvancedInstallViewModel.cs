@@ -89,6 +89,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     Close?.Invoke(null);
                 },
                 o => true);
+
+            BrowseLogFileCommand = new RelayCommand(BrowseLogFile);
             BrowseCacheLocationCommand = new RelayCommand(BrowseCacheLocation);
 
             SetDefaults();
@@ -280,6 +282,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public ICommand CancelCommand { get; }
 
+        public ICommand BrowseLogFileCommand { get; }
+
         public ICommand BrowseCacheLocationCommand { get; }
 
         /// <inheritdoc />
@@ -298,6 +302,22 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             var choco = Lets.GetChocolatey();
             var config = choco.GetConfiguration();
             CacheLocation = config.CacheLocation;
+            LogFile = config.AdditionalLogFileLocation;
+        }
+
+        private void BrowseLogFile(object value)
+        {
+            var filter = "{0}|{1}|{2}".format_with(
+                L(nameof(Resources.FilePicker_LogFiles)) + "|*.log;*.klg",
+                L(nameof(Resources.FilePicker_TextFiles)) + "|*.txt;*.text;*.plain",
+                L(nameof(Resources.FilePicker_AllFiles)) + "|*.*");
+
+            var logFile = _persistenceService.GetFilePath("log", filter);
+
+            if (!string.IsNullOrEmpty(logFile))
+            {
+                LogFile = logFile;
+            }
         }
 
         private void BrowseCacheLocation(object value)

@@ -200,7 +200,12 @@ namespace ChocolateyGui.Common.Windows.Services
                                 config.InstallArguments = advancedInstallOptions.InstallArguments;
                                 config.PackageParameters = advancedInstallOptions.PackageParameters;
                                 config.CommandExecutionTimeoutSeconds = advancedInstallOptions.ExecutionTimeoutInSeconds;
-                                config.AdditionalLogFileLocation = advancedInstallOptions.LogFile;
+
+                                if (!string.IsNullOrEmpty(advancedInstallOptions.LogFile))
+                                {
+                                    config.AdditionalLogFileLocation = advancedInstallOptions.LogFile;
+                                }
+
                                 config.Prerelease = advancedInstallOptions.PreRelease;
                                 config.ForceX86 = advancedInstallOptions.Forcex86;
                                 config.OverrideArguments = advancedInstallOptions.OverrideArguments;

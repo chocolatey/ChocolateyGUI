@@ -1713,6 +1713,33 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Files.
+        /// </summary>
+        public static string FilePicker_AllFiles {
+            get {
+                return ResourceManager.GetString("FilePicker_AllFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log Files.
+        /// </summary>
+        public static string FilePicker_LogFiles {
+            get {
+                return ResourceManager.GetString("FilePicker_LogFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Files.
+        /// </summary>
+        public static string FilePicker_TextFiles {
+            get {
+                return ResourceManager.GetString("FilePicker_TextFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You may not have the appropriate permissions to perform this action..
         /// </summary>
         public static string General_UnauthorisedException_Description {

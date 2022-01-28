@@ -39,9 +39,7 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
 
             if (parameter is string sParameter)
             {
-                format = string.Format(
-                    TranslationSource.Instance[sParameter],
-                    value);
+                format = TranslationSource.Instance[sParameter, value];
             }
 
             return format;

@@ -293,14 +293,16 @@
                     <markdig:MarkdownViewer AutomationProperties.Name="Package Description"
                                             VerticalAlignment="Stretch"
                                             HorizontalAlignment="Stretch"
-                                            Markdown="{Binding Description}" />
+                                            Markdown="{Binding Description}"
+                                            FlowDirection="LeftToRight"/>
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
                                  Header="{lang:Localize PackageView_Dependencies}"
                                  Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                     <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"
-                               AutomationProperties.Name="Package Dependencies" />
+                               AutomationProperties.Name="Package Dependencies"
+                               FlowDirection="LeftToRight"/>
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
@@ -312,7 +314,8 @@
                     <markdig:MarkdownViewer AutomationProperties.Name="Package Release Notes"
                                             VerticalAlignment="Stretch"
                                             HorizontalAlignment="Stretch"
-                                            Markdown="{Binding ReleaseNotes}" />
+                                            Markdown="{Binding ReleaseNotes}"
+                                            FlowDirection="LeftToRight"/>
                 </mah:MetroHeader>
             </StackPanel>
         </ScrollViewer>

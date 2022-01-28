@@ -297,6 +297,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async Task UpdateChocolateyGuiFeature(ChocolateyGuiFeature feature)
         {
+            // When the flow direction gets changed, this results in the feature
+            // being null some times immediately. As such, if the feature is null
+            // then just return so we don't encounter an exception.
+            if (feature == null)
+            {
+                return;
+            }
+
             var configuration = new ChocolateyGuiConfiguration();
             configuration.CommandName = "feature";
             configuration.FeatureCommand.Name = feature.Title;

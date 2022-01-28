@@ -133,7 +133,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
         }
 
-        public Utilities.NotifyTaskCompletion<ObservableCollection<SemanticVersion>> AvailableVersions
+        public Utilities.NotifyTaskCompletion<ObservableCollection<string>> AvailableVersions
         {
             get { return _availableVersions; }
             set { SetPropertyValue(ref _availableVersions, value); }

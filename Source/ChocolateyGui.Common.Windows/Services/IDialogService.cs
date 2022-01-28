@@ -5,6 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using ChocolateyGui.Common.Windows.Views;
@@ -14,6 +15,10 @@ namespace ChocolateyGui.Common.Windows.Services
 {
     public interface IDialogService
     {
+        event EventHandler<object> ChildWindowOpened;
+
+        event EventHandler<object> ChildWindowClosed;
+
         ShellView ShellView { get; set; }
 
         /// <summary>

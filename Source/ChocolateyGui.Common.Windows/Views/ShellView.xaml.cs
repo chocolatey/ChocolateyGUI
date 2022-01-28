@@ -67,6 +67,9 @@ namespace ChocolateyGui.Common.Windows.Views
             {
                 Environment.CurrentDirectory = Bootstrapper.ApplicationFilesPath;
             }
+
+            dialogService.ChildWindowOpened += (sender, o) => IsAnyDialogOpen = true;
+            dialogService.ChildWindowClosed += (sender, o) => IsAnyDialogOpen = false;
         }
 
         public void CheckOperatingSystemCompatibility()

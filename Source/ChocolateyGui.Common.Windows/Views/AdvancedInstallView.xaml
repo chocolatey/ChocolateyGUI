@@ -1,20 +1,24 @@
-﻿<UserControl x:Class="ChocolateyGui.Common.Windows.Views.AdvancedInstallView" 
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
-             xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels"
+﻿<UserControl x:Class="ChocolateyGui.Common.Windows.Views.AdvancedInstallView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
              xmlns:lang="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Extensions"
-             MaxHeight="500" 
-             MaxWidth="700" 
-             d:DataContext="{d:DesignInstance viewModels:AdvancedInstallViewModel}" 
-             d:DesignHeight="450" 
-             d:DesignWidth="800" 
+             xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels"
+             xmlns:local="clr-namespace:ChocolateyGui.Common.Windows.Views"
+             MaxHeight="500"
+             MaxWidth="700"
+             d:DataContext="{d:DesignInstance viewModels:AdvancedInstallViewModel}"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
              mc:Ignorable="d">
 
     <UserControl.Resources>
+        <converters:BooleanToVisibilityInverted x:Key="BooleanToVisibilityInverted" />
+        <converters:NullToInverseBool x:Key="NullToInverseBool" />
+        <converters:BooleanInverter x:Key="BooleanInverter" />
         <GridLength x:Key="ToggleSwitchPreContentMargin">0</GridLength>
         <GridLength x:Key="ToggleSwitchPostContentMargin">0</GridLength>
 
@@ -24,9 +28,13 @@
             <Setter Property="OffContent" Value="{lang:Localize AdvancedChocolateyDialog_Off}" />
             <Setter Property="OnContent" Value="{lang:Localize AdvancedChocolateyDialog_On}" />
         </Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="MaxWidth" Value="450" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
     </UserControl.Resources>
 
-    <Grid Margin="0 10 0 0" FocusManager.FocusedElement="{Binding ElementName=AvailableVersionsComboBox}">
+    <Grid Margin="0 10 0 0">
 
         <Grid.Resources>
             <!-- Horizontal MetroHeader with SharedSizeGroup for the first column -->
@@ -49,48 +57,48 @@
                                 </Grid.RowDefinitions>
 
                                 <Grid Grid.Column="0" Grid.Row="0" Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
-                                    <mah:ContentControlEx x:Name="PART_Header" 
-                                                          Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}" 
-                                                          HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}" 
-                                                          VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}" 
-                                                          Content="{TemplateBinding Header}" 
-                                                          ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}" 
-                                                          ContentStringFormat="{TemplateBinding HeaderStringFormat}" 
-                                                          ContentTemplate="{TemplateBinding HeaderTemplate}" 
-                                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
-                                                          FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}" 
-                                                          FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}" 
-                                                          FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}" 
-                                                          FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}" 
-                                                          Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}" 
-                                                          IsTabStop="False" 
-                                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}" 
+                                    <mah:ContentControlEx x:Name="PART_Header"
+                                                          Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
+                                                          HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                          VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
+                                                          Content="{TemplateBinding Header}"
+                                                          ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}"
+                                                          ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                          FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
+                                                          FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
+                                                          FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
+                                                          FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
+                                                          Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
+                                                          IsTabStop="False"
+                                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 </Grid>
 
                                 <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Background="Transparent">
-                                    <ContentPresenter x:Name="PART_Content" 
-                                                      Margin="{TemplateBinding Padding}" 
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                                      ContentSource="Content" 
+                                    <ContentPresenter x:Name="PART_Content"
+                                                      Margin="{TemplateBinding Padding}"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      ContentSource="Content"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 </Grid>
 
                                 <Grid Grid.Column="0" Grid.Row="1" Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
-                                    <TextBlock x:Name="PART_Description" 
-                                               Opacity="0.7" 
-                                                          Margin="6 4 4 4" 
-                                                          HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}" 
-                                                          VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}" 
-                                                          Text="{TemplateBinding Tag}" 
-                                                          TextTrimming="CharacterEllipsis" 
-                                                          TextWrapping="Wrap" 
-                                                          FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}" 
-                                                          FontSize="14" 
-                                                          FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}" 
-                                                          FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}" 
-                                                          Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}" 
+                                    <TextBlock x:Name="PART_Description"
+                                               Opacity="0.7"
+                                                          Margin="6 4 4 4"
+                                                          HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                          VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
+                                                          Text="{TemplateBinding Tag}"
+                                                          TextTrimming="CharacterEllipsis"
+                                                          TextWrapping="Wrap"
+                                                          FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
+                                                          FontSize="14"
+                                                          FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
+                                                          FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
+                                                          Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 </Grid>
                             </Grid>
@@ -108,10 +116,10 @@
 
             <!--  quick change of the collapse storyboard duration  -->
             <Storyboard x:Key="Chocolatey.Storyboard.Expander.Collapse">
-                <DoubleAnimation Storyboard.TargetName="ExpandSite" 
-                                 Storyboard.TargetProperty="(UIElement.Opacity)" 
-                                 From="1" 
-                                 To="0" 
+                <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                                 Storyboard.TargetProperty="(UIElement.Opacity)"
+                                 From="1"
+                                 To="0"
                                  Duration="0" />
                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
@@ -132,9 +140,9 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type RadioButton}">
-                            <Expander Padding="{TemplateBinding Padding}" 
-                                      Content="{TemplateBinding Content}" 
-                                      Header="{TemplateBinding Tag}" 
+                            <Expander Padding="{TemplateBinding Padding}"
+                                      Content="{TemplateBinding Content}"
+                                      Header="{TemplateBinding Tag}"
                                       IsExpanded="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}" />
                         </ControlTemplate>
                     </Setter.Value>
@@ -149,8 +157,8 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
-                          VerticalScrollBarVisibility="Auto" 
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto"
                           Style="{DynamicResource MahApps.Styles.ScrollViewer}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -160,43 +168,51 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" 
-                                Margin="5 0 5 0" 
-                                Grid.IsSharedSizeScope="True" 
+                    <StackPanel Grid.Row="0"
+                                Margin="5 0 5 0"
+                                Grid.IsSharedSizeScope="True"
                                 Orientation="Vertical">
                         <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_Version_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_Version_ToolTip}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <ComboBox x:Name="AvailableVersionsComboBox" 
-                                          Grid.Column="0" 
-                                          IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}" 
-                                          ItemsSource="{Binding AvailableVersions.Result, Mode=OneWay}" 
-                                          SelectedItem="{Binding SelectedVersion, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                <mah:ProgressRing Grid.Column="0" 
-                                                  Width="20" 
-                                                  Height="20" 
-                                                  IsActive="{Binding AvailableVersions.IsNotCompleted}" 
-                                                  IsLarge="False" 
-                                                  HorizontalAlignment="Left" 
-                                                  VerticalAlignment="Center" 
+                                <ComboBox x:Name="AvailableVersionsComboBox"
+                                          Grid.Column="0"
+                                          IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}"
+                                          ItemsSource="{Binding AvailableVersions.Result, Mode=OneWay}"
+                                          SelectedItem="{Binding SelectedVersion, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                          IsEditable="True" />
+                                <mah:ProgressRing Grid.Column="0"
+                                                  Width="20"
+                                                  Height="20"
+                                                  IsActive="{Binding AvailableVersions.IsNotCompleted}"
+                                                  IsLarge="False"
+                                                  HorizontalAlignment="Left"
+                                                  VerticalAlignment="Center"
                                                   Margin="5 0 0 0" />
-                                <CheckBox x:Name="IncludePrereleaseCheckBox" 
-                                          Grid.Column="1" 
-                                          Margin="5 0 0 0" 
-                                          Content="{lang:Localize AdvancedChocolateyDialog_IncludePreRelease_Content}" 
-                                          ToolTip="{lang:Localize AdvancedChocolateyDialog_IncludePreRelease_ToolTip}" 
-                                          IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}" 
-                                          IsChecked="{Binding IncludePreRelease}" />
+                                <!--<CheckBox x:Name="IncludePrereleaseCheckBox"
+                                          Grid.Column="1"
+                                          Margin="5 0 0 0"
+                                          Content="{lang:Localize AdvancedChocolateyDialog_IncludePreRelease_Content}"
+                                          ToolTip="{lang:Localize AdvancedChocolateyDialog_IncludePreRelease_ToolTip}"
+                                          IsEnabled="{Binding AvailableVersions.IsSuccessfullyCompleted}"
+                                          IsChecked="{Binding IncludePreRelease}" />-->
                             </Grid>
                         </mah:MetroHeader>
                         <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_PackageParameters_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_PackageParameters_ToolTip}">
-                            <TextBox Text="{Binding PackageParameters, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding PackageParameters, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding SkipPowerShell, Converter={StaticResource BooleanInverter}}" />
                         </mah:MetroHeader>
                         <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_InstallArguments_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_InstallArguments_ToolTip}">
-                            <TextBox Text="{Binding InstallArguments, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding InstallArguments, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanInverter}">
+                                        <Binding Path="NotSilent" />
+                                        <Binding Path="SkipPowerShell" />
+                                    </MultiBinding>
+                                </TextBox.IsEnabled>
+                            </TextBox>
                         </mah:MetroHeader>
                         <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_ToolTip}">
                             <mah:NumericUpDown Value="{Binding ExecutionTimeoutInSeconds}" />
@@ -204,21 +220,52 @@
                         <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_PreRelease_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_PreRelease_ToolTip}">
                             <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding PreRelease}" />
                         </mah:MetroHeader>
-                        <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_Forcex86_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_Forcex86_ToolTip}">
-                            <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding Forcex86}" />
+                        <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_Forcex86_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_Forcex86_ToolTip}" Visibility="{Binding Is32BitPlatform, Converter={StaticResource BooleanToVisibilityInverted}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AdvancedInstallView}}}">
+                            <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding Forcex86}" x:Name="ForceX86Switch" />
                         </mah:MetroHeader>
                     </StackPanel>
 
                     <RadioButton Grid.Row="1" Tag="{lang:Localize AdvancedChocolateyDialog_AdvancedOptions_Header}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
-                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_LogFile_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_LogFile_ToolTip}">
-                                <TextBox Text="{Binding LogFile}" />
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_CacheLocation_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_CacheLocation_ToolTip}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Text="{Binding CacheLocation}" />
+                                    <Button Grid.Column="1" Content="{lang:Localize AdvancedChocolateyDialog_Browse}" Command="{Binding BrowseCacheLocationCommand}" />
+                                </Grid>
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_LogFile_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_LogFile_ToolTip}" Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Text="{Binding LogFile}" />
+                                    <Button Grid.Column="1" Content="{lang:Localize AdvancedChocolateyDialog_Browse}" Command="{Binding BrowseLogFileCommand}" />
+                                </Grid>
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding OverrideArguments}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding OverrideArguments}">
+                                    <mah:ToggleSwitch.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanInverter}">
+                                            <Binding Path="NotSilent" />
+                                            <Binding Path="SkipPowerShell" />
+                                        </MultiBinding>
+                                    </mah:ToggleSwitch.IsEnabled>
+                                </mah:ToggleSwitch>
                             </mah:MetroHeader>
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_NotSilent_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_NotSilent_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding NotSilent}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding NotSilent}">
+                                    <mah:ToggleSwitch.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanInverter}">
+                                            <Binding Path="OverrideArguments" />
+                                            <Binding Path="SkipPowerShell" />
+                                        </MultiBinding>
+                                    </mah:ToggleSwitch.IsEnabled>
+                                </mah:ToggleSwitch>
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_AllowDowngrade_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_AllowDowngrade_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowDowngrade}" />
@@ -235,10 +282,10 @@
                     <RadioButton Grid.Row="2" Tag="{lang:Localize AdvancedChocolateyDialog_DependencyOptions_Header}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_IgnoreDependencies_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_IgnoreDependencies_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreDependencies}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreDependencies}" IsEnabled="{Binding ForceDependencies, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_ForceDependencies_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_ForceDependencies_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ForceDependencies}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ForceDependencies}" IsEnabled="{Binding IgnoreDependencies, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding ApplyInstallArgumentsToDependencies}" />
@@ -249,34 +296,56 @@
                         </StackPanel>
                     </RadioButton>
 
-                    <RadioButton Grid.Row="3" Tag="{lang:Localize AdvancedChocolateyDialog_ChecksumOptions_Header}">
+                    <RadioButton Grid.Row="3" Tag="{lang:Localize AdvancedChocolateyDialog_ChecksumOptions_Header}" Visibility="{Binding SkipPowerShell, Converter={StaticResource BooleanToVisibilityInverted}}">
                         <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_IgnoreChecksums_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_IgnoreChecksums_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreChecksums}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreChecksums}" x:Name="IgnoreChecksumsSwitch" IsEnabled="{Binding Path=RequireChecksums, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_AllowEmptyChecksums_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksums}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksums}" IsEnabled="{Binding Path=RequireChecksums, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksumsSecure}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowEmptyChecksumsSecure}" IsEnabled="{Binding Path=RequireChecksums, Converter={StaticResource BooleanInverter}}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_RequireChecksums_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_RequireChecksums_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding RequireChecksums}" />
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding RequireChecksums}">
+                                    <mah:ToggleSwitch.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanInverter}">
+                                            <Binding Path="IgnoreChecksums" />
+                                            <Binding Path="AllowEmptyChecksums" />
+                                            <Binding Path="AllowEmptyChecksumsSecure" />
+                                        </MultiBinding>
+                                    </mah:ToggleSwitch.IsEnabled>
+                                </mah:ToggleSwitch>
                             </mah:MetroHeader>
-                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum_ToolTip}">
-                                <TextBox Text="{Binding DownloadChecksum}" />
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum_ToolTip}" Visibility="{Binding IsOn, Converter={StaticResource BooleanToVisibilityInverted}, ElementName=IgnoreChecksumsSwitch}">
+                                <TextBox Text="{Binding DownloadChecksum}" x:Name="DownloadChecksumTextBox" />
                             </mah:MetroHeader>
-                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum64bit_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip}">
-                                <TextBox Text="{Binding DownloadChecksum64bit}" />
-                            </mah:MetroHeader>
-                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType_ToolTip}">
-                                <ComboBox x:Name="ChecksumTypesComboBox" 
-                                          ItemsSource="{Binding AvailableChecksumTypes}" 
+                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType_ToolTip}" IsEnabled="{Binding Text, Converter={StaticResource NullToInverseBool}, ElementName=DownloadChecksumTextBox}" Visibility="{Binding IsOn, Converter={StaticResource BooleanToVisibilityInverted}, ElementName=IgnoreChecksumsSwitch}">
+                                <ComboBox x:Name="ChecksumTypesComboBox"
+                                          ItemsSource="{Binding AvailableChecksumTypes}"
                                           SelectedItem="{Binding DownloadChecksumType}" />
                             </mah:MetroHeader>
-                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType64bit_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip}">
-                                <ComboBox x:Name="ChecksumTypes64BitComboBox" 
-                                          ItemsSource="{Binding AvailableChecksumTypes}" 
+                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum64bit_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip}">
+                                <mah:MetroHeader.Visibility>
+                                    <MultiBinding Converter="{StaticResource BooleanToVisibilityInverted}">
+                                        <Binding Path="IgnoreChecksums" />
+                                        <Binding Path="Forcex86" />
+                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:AdvancedInstallView}}" Path="Is32BitPlatform" />
+                                    </MultiBinding>
+                                </mah:MetroHeader.Visibility>
+                                <TextBox Text="{Binding DownloadChecksum64bit}" x:Name="DownloadChecksum64bitTextBox" />
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType64bit_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip}" IsEnabled="{Binding Text, Converter={StaticResource NullToInverseBool}, ElementName=DownloadChecksum64bitTextBox}">
+                                <mah:MetroHeader.Visibility>
+                                    <MultiBinding Converter="{StaticResource BooleanToVisibilityInverted}">
+                                        <Binding Path="IgnoreChecksums" />
+                                        <Binding Path="Forcex86" />
+                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:AdvancedInstallView}}" Path="Is32BitPlatform" />
+                                    </MultiBinding>
+                                </mah:MetroHeader.Visibility>
+                                <ComboBox x:Name="ChecksumTypes64BitComboBox"
+                                          ItemsSource="{Binding AvailableChecksumTypes}"
                                           SelectedItem="{Binding DownloadChecksumType64bit}" />
                             </mah:MetroHeader>
                         </StackPanel>
@@ -285,25 +354,24 @@
             </ScrollViewer>
         </Grid>
 
-        <StackPanel Grid.Row="1" 
-                    MinHeight="65" 
-                    HorizontalAlignment="Right" 
+        <StackPanel Grid.Row="1"
+                    MinHeight="65"
+                    HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button x:Name="InstallButton" 
-                    Margin="0 0 5 0" 
-                    mah:ControlsHelper.ContentCharacterCasing="Normal" 
-                    Command="{Binding InstallCommand}" 
-                    Content="{lang:Localize AdvancedChocolateyDialog_Buttons_Install}" 
-                    IsDefault="True" 
+            <Button x:Name="InstallButton"
+                    Margin="0 0 5 0"
+                    mah:ControlsHelper.ContentCharacterCasing="Normal"
+                    Command="{Binding InstallCommand}"
+                    Content="{lang:Localize AdvancedChocolateyDialog_Buttons_Install}"
+                    IsDefault="True"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
-            <Button x:Name="CancelButton" 
-                    Margin="5 0 5 0" 
-                    mah:ControlsHelper.ContentCharacterCasing="Normal" 
-                    Command="{Binding CancelCommand}" 
-                    Content="{lang:Localize AdvancedChocolateyDialog_Buttons_Cancel}" 
-                    IsCancel="True" 
+            <Button x:Name="CancelButton"
+                    Margin="5 0 5 0"
+                    mah:ControlsHelper.ContentCharacterCasing="Normal"
+                    Command="{Binding CancelCommand}"
+                    Content="{lang:Localize AdvancedChocolateyDialog_Buttons_Cancel}"
+                    IsCancel="True"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
         </StackPanel>
     </Grid>
-
 </UserControl>

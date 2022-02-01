@@ -200,7 +200,12 @@ namespace ChocolateyGui.Common.Windows.Services
                                 config.InstallArguments = advancedInstallOptions.InstallArguments;
                                 config.PackageParameters = advancedInstallOptions.PackageParameters;
                                 config.CommandExecutionTimeoutSeconds = advancedInstallOptions.ExecutionTimeoutInSeconds;
-                                config.AdditionalLogFileLocation = advancedInstallOptions.LogFile;
+
+                                if (!string.IsNullOrEmpty(advancedInstallOptions.LogFile))
+                                {
+                                    config.AdditionalLogFileLocation = advancedInstallOptions.LogFile;
+                                }
+
                                 config.Prerelease = advancedInstallOptions.PreRelease;
                                 config.ForceX86 = advancedInstallOptions.Forcex86;
                                 config.OverrideArguments = advancedInstallOptions.OverrideArguments;
@@ -220,6 +225,11 @@ namespace ChocolateyGui.Common.Windows.Services
                                 {
                                     config.Features.AllowEmptyChecksums = false;
                                     config.Features.AllowEmptyChecksumsSecure = false;
+                                }
+
+                                if (!string.IsNullOrEmpty(advancedInstallOptions.CacheLocation))
+                                {
+                                    config.CacheLocation = advancedInstallOptions.CacheLocation;
                                 }
 
                                 config.DownloadChecksum = advancedInstallOptions.DownloadChecksum;
@@ -437,6 +447,11 @@ namespace ChocolateyGui.Common.Windows.Services
 
         public async Task SetFeature(ChocolateyFeature feature)
         {
+            if (feature == null)
+            {
+                return;
+            }
+
             using (await Lock.WriteLockAsync())
             {
                 _choco.Set(

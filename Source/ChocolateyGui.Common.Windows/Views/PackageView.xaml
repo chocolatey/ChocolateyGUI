@@ -70,9 +70,15 @@
                             </StackPanel>
                         </Button>
                     <StackPanel Orientation="Horizontal"
+                                IsEnabled="{Binding IsInstallAllowed}"
                                 Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter InstallAdvanced}">
+                            <i:Interaction.Behaviors>
+                                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationInstall}"
+                                                           IsFeatureEnabled="{Binding IsInstallAllowed, Mode=OneWay}"
+                                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
+                            </i:Interaction.Behaviors>
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconEntypo Kind="Install" Margin="0 0 5 0 " VerticalAlignment="Center" />
                                 <TextBlock Text="{lang:Localize PackageView_InstallAdvanced}" FontSize="16"/>
@@ -80,6 +86,7 @@
                         </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
+                                IsEnabled="{Binding IsInstallAllowed}"
                                 Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Install}">
@@ -293,14 +300,16 @@
                     <markdig:MarkdownViewer AutomationProperties.Name="Package Description"
                                             VerticalAlignment="Stretch"
                                             HorizontalAlignment="Stretch"
-                                            Markdown="{Binding Description}" />
+                                            Markdown="{Binding Description}"
+                                            FlowDirection="LeftToRight"/>
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
                                  Header="{lang:Localize PackageView_Dependencies}"
                                  Visibility="{Binding Dependencies, Converter={StaticResource NullToVisibility}}">
                     <TextBlock Text="{Binding Dependencies, Converter={StaticResource PackageDependenciesToString}}"
-                               AutomationProperties.Name="Package Dependencies" />
+                               AutomationProperties.Name="Package Dependencies"
+                               FlowDirection="LeftToRight"/>
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Style="{StaticResource MarkdownHeading1Style}"
@@ -312,7 +321,8 @@
                     <markdig:MarkdownViewer AutomationProperties.Name="Package Release Notes"
                                             VerticalAlignment="Stretch"
                                             HorizontalAlignment="Stretch"
-                                            Markdown="{Binding ReleaseNotes}" />
+                                            Markdown="{Binding ReleaseNotes}"
+                                            FlowDirection="LeftToRight"/>
                 </mah:MetroHeader>
             </StackPanel>
         </ScrollViewer>

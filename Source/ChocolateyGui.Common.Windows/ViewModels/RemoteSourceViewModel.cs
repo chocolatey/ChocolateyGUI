@@ -6,7 +6,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
@@ -105,6 +104,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             _eventAggregator.Subscribe(this);
 
+            AddSortOptions();
+
             SortSelection = L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity));
         }
 
@@ -182,11 +183,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             set { this.SetPropertyValue(ref _searchQuery, value); }
         }
 
-        public IReadOnlyList<string> SortOptions => new List<string>
-        {
-            L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity)),
-            L(nameof(Resources.RemoteSourceViewModel_SortSelectionAtoZ))
-        };
+        public ObservableCollection<string> SortOptions { get; } = new ObservableCollection<string>();
 
         public string SortSelection
         {
@@ -278,7 +275,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                if (!CanLoadRemotePackages() && Packages.Any())
+                if (!IsActive || (!CanLoadRemotePackages() && Packages.Any()))
                 {
                     return;
                 }
@@ -372,6 +369,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             await LoadPackages(true);
         }
 
+        protected override async void OnActivate()
+        {
+            if (!HasLoaded)
+            {
+                await LoadPackages(false);
+            }
+        }
+
         protected override void OnViewAttached(object view, object context)
         {
             _eventAggregator.Subscribe(view);
@@ -399,10 +404,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         ListViewMode = appConfig.DefaultToTileViewForRemoteSource ?? false ? ListViewMode.Tile : ListViewMode.Standard;
                         ShowAdditionalPackageInformation = appConfig.ShowAdditionalPackageInformation ?? false;
                     });
-
-#pragma warning disable 4014
-                LoadPackages(false);
-#pragma warning restore 4014
 
                 var immediateProperties = new[]
                 {
@@ -450,10 +451,41 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         protected override void OnLanguageChanged()
         {
-            NotifyOfPropertyChange(nameof(SortOptions));
+            AddSortOptions();
+
             SortSelection = _sortSelectionName == "DownloadCount"
                 ? L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity))
                 : L(nameof(Resources.RemoteSourceViewModel_SortSelectionAtoZ));
+
+            RemoveOldSortOptions();
+        }
+
+        private void AddSortOptions()
+        {
+            var downloadCount = L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity));
+            var title = L(nameof(Resources.RemoteSourceViewModel_SortSelectionAtoZ));
+
+            var index = SortOptions.IndexOf(downloadCount);
+
+            if (index == -1)
+            {
+                SortOptions.Insert(0, downloadCount);
+            }
+
+            index = SortOptions.IndexOf(title);
+
+            if (index == -1)
+            {
+                SortOptions.Insert(1, title);
+            }
+        }
+
+        private void RemoveOldSortOptions()
+        {
+            var downloadCount = L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity));
+            var title = L(nameof(Resources.RemoteSourceViewModel_SortSelectionAtoZ));
+
+            SortOptions.RemoveAll(so => so != downloadCount && so != title);
         }
 
         private void SubscribeToLoadPackagesOnSearchQueryChange()

@@ -338,6 +338,15 @@
         <Setter Property="AutomationProperties.HelpText" Value="Go's back" />
         <Setter Property="AutomationProperties.AcceleratorKey" Value="B" />
         <Setter Property="ToolTip" Value="Back" />
+        <Style.Triggers>
+            <Trigger Property="FlowDirection" Value="RightToLeft">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <iconPacks:PackIconModern Kind="ChevronRight" Width="18" Height="18" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="IconFlatButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.Flat}">

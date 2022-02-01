@@ -8,7 +8,6 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Security.AccessControl;
 using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
@@ -27,14 +26,12 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
-using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.ViewModels;
-using ChocolateyGui.Common.Windows.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Views;
 using LiteDB;
-using MahApps.Metro.Controls.Dialogs;
 using NuGet;
 using ChocolateySource = chocolatey.infrastructure.app.configuration.ChocolateySource;
+using Environment = System.Environment;
 using PackageViewModel = ChocolateyGui.Common.Windows.ViewModels.Items.PackageViewModel;
 
 namespace ChocolateyGui.Common.Windows.Startup
@@ -111,7 +108,33 @@ namespace ChocolateyGui.Common.Windows.Startup
                 config.CreateMap<ChocolateySource, Common.Models.ChocolateySource>()
                     .ForMember(dest => dest.VisibleToAdminsOnly, opt => opt.MapFrom(src => src.VisibleToAdminOnly));
 
-                config.CreateMap<AdvancedInstallViewModel, AdvancedInstall>();
+                config.CreateMap<AdvancedInstallViewModel, AdvancedInstall>()
+                    .ForMember(
+                        dest => dest.DownloadChecksum,
+                        opt => opt.Condition(source => !source.IgnoreChecksums))
+                    .ForMember(
+                        dest => dest.DownloadChecksumType,
+                        opt => opt.Condition(source =>
+                            !source.IgnoreChecksums && !string.IsNullOrEmpty(source.DownloadChecksum)))
+                    .ForMember(
+                        dest => dest.DownloadChecksum64bit,
+                        opt => opt.Condition(source =>
+                            Environment.Is64BitOperatingSystem
+                            && !source.IgnoreChecksums
+                            && !source.Forcex86))
+                    .ForMember(
+                        dest => dest.DownloadChecksumType64bit,
+                        opt => opt.Condition(source =>
+                            Environment.Is64BitOperatingSystem
+                            && !source.IgnoreChecksums
+                            && !source.Forcex86
+                            && !string.IsNullOrEmpty(source.DownloadChecksum64bit)))
+                    .ForMember(
+                        dest => dest.PackageParameters,
+                        opt => opt.Condition(source => !source.SkipPowerShell))
+                    .ForMember(
+                        dest => dest.InstallArguments,
+                        opt => opt.Condition(source => !source.SkipPowerShell && !source.NotSilent));
             });
 
             builder.RegisterType<BundledThemeService>().As<IBundledThemeService>().SingleInstance();

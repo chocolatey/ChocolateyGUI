@@ -8,9 +8,11 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using chocolatey.infrastructure.filesystem;
@@ -67,6 +69,13 @@ namespace ChocolateyGui.Common.Windows.Views
             {
                 Environment.CurrentDirectory = Bootstrapper.ApplicationFilesPath;
             }
+
+            dialogService.ChildWindowOpened += (sender, o) => IsAnyDialogOpen = true;
+            dialogService.ChildWindowClosed += (sender, o) => IsAnyDialogOpen = false;
+
+            SetLanguage(TranslationSource.Instance.CurrentCulture);
+
+            TranslationSource.Instance.PropertyChanged += TranslationLanguageChanged;
         }
 
         public void CheckOperatingSystemCompatibility()
@@ -153,6 +162,19 @@ namespace ChocolateyGui.Common.Windows.Views
             // https://github.com/theunrepentantgeek/Markdown.XAML/issues/5
             Process.Start(new ProcessStartInfo(e.Parameter.ToString()));
             e.Handled = true;
+        }
+
+        private void TranslationLanguageChanged(object sender, PropertyChangedEventArgs e)
+        {
+            SetLanguage(TranslationSource.Instance.CurrentCulture);
+        }
+
+        private void SetLanguage(CultureInfo culture)
+        {
+            Language = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
+            FlowDirection = culture.TextInfo.IsRightToLeft
+                ? FlowDirection.RightToLeft
+                : FlowDirection.LeftToRight;
         }
     }
 }

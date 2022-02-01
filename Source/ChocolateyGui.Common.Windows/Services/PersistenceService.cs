@@ -8,6 +8,8 @@
 using System.IO;
 using ChocolateyGui.Common.Services;
 using Microsoft.Win32;
+using DialogResult = System.Windows.Forms.DialogResult;
+using FolderBrowserDialog = System.Windows.Forms.FolderBrowserDialog;
 
 namespace ChocolateyGui.Common.Windows.Services
 {
@@ -29,6 +31,22 @@ namespace ChocolateyGui.Common.Windows.Services
             var result = fd.ShowDialog();
 
             return result != null && result.Value ? fd.OpenFile() : null;
+        }
+
+        public string GetFolderPath(string defaultLocation, string description = null)
+        {
+            var fd = new FolderBrowserDialog();
+            fd.SelectedPath = defaultLocation;
+            fd.Description = description;
+
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                var path = fd.SelectedPath;
+
+                return path;
+            }
+
+            return null;
         }
 
         public string GetFilePath(string defaultExtension, string filter)

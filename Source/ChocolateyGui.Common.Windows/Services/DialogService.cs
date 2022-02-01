@@ -33,6 +33,10 @@ namespace ChocolateyGui.Common.Windows.Services
             _lock = new AsyncSemaphore(1);
         }
 
+        public event EventHandler<object> ChildWindowOpened;
+
+        public event EventHandler<object> ChildWindowClosed;
+
         public ShellView ShellView { get; set; }
 
         /// <inheritdoc />
@@ -161,7 +165,10 @@ namespace ChocolateyGui.Common.Windows.Services
 
                     _childWindowLoadedHandler = (sender, e) =>
                     {
+                        ChildWindowOpened?.Invoke(sender, e);
+
                         var cw = (ChildWindow)sender;
+                        cw.ClosingFinished += (senderObj, r) => ChildWindowClosed?.Invoke(senderObj, r);
 
                         if (cw.DataContext is IClosableChildWindow<TResult> vm)
                         {

@@ -10,7 +10,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Resources;
 using System.Runtime.CompilerServices;
-using chocolatey;
 using ChocolateyGui.Common.Properties;
 
 namespace ChocolateyGui.Common.Utilities
@@ -67,7 +66,7 @@ namespace ChocolateyGui.Common.Utilities
 
                 if (parameters != null && parameters.Length > 0)
                 {
-                    return value.format_with(parameters);
+                    return string.Format(CurrentCulture, value, parameters);
                 }
 
                 return value;

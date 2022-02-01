@@ -64,7 +64,8 @@
 
                     <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BaseAltTextBlockStyle}" Text="{Binding Name}" TextWrapping="Wrap" />
                     <metro:ToggleSwitch Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4" IsOn="{Binding Enabled}" cal:Message.Attach="[Event Toggled] = [Action ChocolateyFeatureToggled($dataContext)]"/>
-                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
+                    <!-- Remove the following FlowDirection once we can translate Chocolatey feature descriptions -->
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" FlowDirection="LeftToRight" />
                 </Grid>
             </Grid>
             <DataTemplate.Triggers>
@@ -261,6 +262,8 @@
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Margin" Value="2" />
                                             <Setter Property="TextWrapping" Value="Wrap" />
+                                            <!-- Remove the following setter once we can translate the Chocolatey configuration values -->
+                                            <Setter Property="FlowDirection" Value="LeftToRight" />
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>

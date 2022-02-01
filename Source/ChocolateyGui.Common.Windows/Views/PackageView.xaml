@@ -1,4 +1,4 @@
-<UserControl x:Class="ChocolateyGui.Common.Windows.Views.PackageView"
+﻿<UserControl x:Class="ChocolateyGui.Common.Windows.Views.PackageView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -70,6 +70,7 @@
                             </StackPanel>
                         </Button>
                     <StackPanel Orientation="Horizontal"
+                                IsEnabled="{Binding IsInstallAllowed}"
                                 Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter InstallAdvanced}">
@@ -85,6 +86,7 @@
                         </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
+                                IsEnabled="{Binding IsInstallAllowed}"
                                 Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
                         <Button Padding="10" Margin="5 0"
                             Command="{commands:DataContextCommandAdapter Install}">

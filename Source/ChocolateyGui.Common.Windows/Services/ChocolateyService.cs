@@ -447,6 +447,11 @@ namespace ChocolateyGui.Common.Windows.Services
 
         public async Task SetFeature(ChocolateyFeature feature)
         {
+            if (feature == null)
+            {
+                return;
+            }
+
             using (await Lock.WriteLockAsync())
             {
                 _choco.Set(

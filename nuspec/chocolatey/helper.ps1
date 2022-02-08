@@ -48,7 +48,7 @@ function Set-Config {
         Start-ChocolateyProcessAsAdmin -Statements "config set --name=$ConfigName --value=$ConfigValue" -ExeToRun "chocolateyguicli"
     } else {
         Write-Output "Setting $ConfigName..."
-    Start-ChocolateyProcessAsAdmin -Statements "config set --name=$ConfigName --value=$ConfigValue --global" -ExeToRun "chocolateyguicli"
+        Start-ChocolateyProcessAsAdmin -Statements "config set --name=$ConfigName --value=$ConfigValue --global" -ExeToRun "chocolateyguicli"
     }
 }
 

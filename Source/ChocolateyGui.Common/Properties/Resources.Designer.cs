@@ -2980,15 +2980,6 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default number of package versions shown when performing an advanced installation.  Default is 20. 0 should be used to show all available package versions..
-        /// </summary>
-        public static string SettingsView_NumberOfPackageVersionsForSelectionDescription {
-            get {
-                return ResourceManager.GetString("SettingsView_NumberOfPackageVersionsForSelectionDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Off.
         /// </summary>
         public static string SettingsView_Off {

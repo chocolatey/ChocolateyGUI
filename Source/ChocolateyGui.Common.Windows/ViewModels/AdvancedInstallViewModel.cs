@@ -55,24 +55,15 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private string _downloadChecksumType;
         private string _downloadChecksumType64bit;
         private List<string> _availableChecksumTypes;
-        private string _packageId;
-        private int _page;
-        private int _pageSize;
         private string _packageVersion;
 
         public AdvancedInstallViewModel(
             IChocolateyService chocolateyService,
             IPersistenceService persistenceService,
-            string packageId,
-            SemanticVersion packageVersion,
-            int page,
-            int pageSize)
+            SemanticVersion packageVersion)
         {
             _chocolateyService = chocolateyService;
             _persistenceService = persistenceService;
-            _packageId = packageId;
-            _page = page;
-            _pageSize = pageSize;
 
             _cts = new CancellationTokenSource();
 
@@ -431,11 +422,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             AvailableVersions =
                 new NotifyTaskCompletion<ObservableCollection<string>>(Task.FromResult(availableVersions));
-
-            // AvailableVersions = new Utilities.NotifyTaskCompletion<ObservableCollection<SemanticVersion>>(
-            //    _chocolateyService.GetAvailableVersionsForPackageIdAsync(_packageId, _page, _pageSize, IncludePreRelease)
-            //        .ContinueWith(task => new ObservableCollection<SemanticVersion>(task.Result))
-            //        .WithCancellation(_cts.Token));
         }
 
         private void SetDefaults()

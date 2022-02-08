@@ -454,14 +454,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public async Task InstallAdvanced()
         {
-            var numberOfPackageVersionsForSelectionSetting = _configService.GetEffectiveConfiguration().NumberOfPackageVersionsForSelection;
-            var numberOfPackageVersionsForSelection = 0;
-            if (!string.IsNullOrWhiteSpace(numberOfPackageVersionsForSelectionSetting))
-            {
-                int.TryParse(numberOfPackageVersionsForSelectionSetting, out numberOfPackageVersionsForSelection);
-            }
-
-            var dataContext = new AdvancedInstallViewModel(_chocolateyService, _persistenceService, Id, Version, 1, numberOfPackageVersionsForSelection);
+            var dataContext = new AdvancedInstallViewModel(_chocolateyService, _persistenceService, Version);
 
             var result = await _dialogService.ShowChildWindowAsync<AdvancedInstallViewModel, AdvancedInstallViewModel>(
                 L(nameof(Resources.AdvancedChocolateyDialog_Title_Install)),

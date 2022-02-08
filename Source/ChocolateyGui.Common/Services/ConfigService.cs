@@ -31,8 +31,7 @@ namespace ChocolateyGui.Common.Services
                 OutdatedPackagesCacheDurationInMinutes = "60",
                 UseKeyboardBindings = true,
                 DefaultToTileViewForLocalSource = true,
-                DefaultToTileViewForRemoteSource = true,
-                NumberOfPackageVersionsForSelection = "25"
+                DefaultToTileViewForRemoteSource = true
             };
 
             var defaultUserSettings = new AppConfiguration()

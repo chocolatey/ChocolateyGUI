@@ -23,10 +23,6 @@ namespace ChocolateyGui.Common.Models
         [Config]
         public string DefaultSourceName { get; set; }
 
-        [LocalizedDescription(nameof(Resources.SettingsView_NumberOfPackageVersionsForSelectionDescription))]
-        [Config]
-        public string NumberOfPackageVersionsForSelection { get; set; }
-
         [LocalizedDescription(nameof(Resources.SettingsView_LanguageDescription))]
         [Config]
         public string UseLanguage { get; set; }

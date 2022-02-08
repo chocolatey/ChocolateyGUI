@@ -976,9 +976,6 @@ Normal:
   <data name="GlobalOption" xml:space="preserve">
     <value>Should the command be applied to the global (machine) level?  Defaults to false.</value>
   </data>
-  <data name="SettingsView_NumberOfPackageVersionsForSelectionDescription" xml:space="preserve">
-    <value>Default number of package versions shown when performing an advanced installation.  Default is 20. 0 should be used to show all available package versions.</value>
-  </data>
   <data name="FeatureCommand_ElevatedPermissionsError" xml:space="preserve">
     <value>Elevated permissions are required to set a feature at the global level.</value>
   </data>

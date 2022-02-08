@@ -137,4 +137,8 @@ function Set-UserSettings {
     if($pp.ContainsKey("DefaultSourceName")) {
         Set-Config "DefaultSourceName" ($pp.DefaultSourceName) $applyGlobally
     }
+
+    if($pp.ContainsKey("UseLanguage")) {
+        Set-Config "UseLanguage" ($pp.UseLanguage) $applyGlobally
+    }
 }

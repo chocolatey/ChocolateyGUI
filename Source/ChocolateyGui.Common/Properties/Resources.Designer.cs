@@ -97,6 +97,573 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced Options.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_AdvancedOptions_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_AdvancedOptions_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Downgrade.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_AllowDowngrade_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowDowngrade_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Should an attempt at downgrading be allowed?.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_AllowDowngrade_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowDowngrade_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Empty Checksums.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_AllowEmptyChecksums_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowEmptyChecksums_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Using this switch is not recommended if using sources that download resources from the internet. Only overrides the value in the configuration when &apos;On&apos; is specified..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Empty Checksums Secure.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow packages to have empty checksums for downloaded resources from secure locations (HTTPS).  Only overrides the value in the configuration when &apos;On&apos; is specified..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Multiple Versions.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_AllowMultipleVersions_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowMultipleVersions_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Should multiple versions of a package be installed?.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply Install Arguments to Dependencies.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Should install arguments be applied to dependent packages?.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply Package Parameters to Dependencies.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Should package parameters be applied to dependent packages?.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_Browse {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_Buttons_Cancel {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_Buttons_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_Buttons_Install {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_Buttons_Install", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The location to store any files downloaded by package during installations or upgrades..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_CacheLocation_BrowseDescription {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_CacheLocation_BrowseDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cache Location.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_CacheLocation_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_CacheLocation_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location for download cache, defaults to %TEMP% or value in chocolatey.config file..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_CacheLocation_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_CacheLocation_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checksum Options.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_ChecksumOptions_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_ChecksumOptions_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dependency Options.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_DependencyOptions_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_DependencyOptions_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Checksum.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_DownloadChecksum_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_DownloadChecksum_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user provided checksum for downloaded resources for the package. Overrides the package checksum (if it has one)..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_DownloadChecksum_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_DownloadChecksum_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Checksum 64bit.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_DownloadChecksum64bit_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_DownloadChecksum64bit_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one)..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Checksum Type.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_DownloadChecksumType_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_DownloadChecksumType_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user provided checksum type. Overrides the package checksum type (if it has one). Used in conjunction with Download Checksum..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_DownloadChecksumType_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_DownloadChecksumType_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Checksum Type 64bit.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_DownloadChecksumType64bit_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_DownloadChecksumType64bit_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one)..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Execution Timeout In Seconds.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time to allow a command to finish before timing out. Overrides the default execution timeout in the configuration. &apos;0&apos; for infinite starting in Chocolatey Version 0.10.4..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force Dependencies.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_ForceDependencies_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_ForceDependencies_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force dependencies to be reinstalled when force installing package(s). Must be used in conjunction with --force..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_ForceDependencies_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_ForceDependencies_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force x86.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_Forcex86_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_Forcex86_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force x86 (32bit) installation on 64 bit systems.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_Forcex86_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_Forcex86_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore Checksums.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_IgnoreChecksums_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_IgnoreChecksums_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore checksums provided by the package. Overrides the default feature &apos;checksumFiles&apos; if it is set to &apos;True&apos;. Only overrides the value in the configuration when &apos;On&apos; is specified..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_IgnoreChecksums_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_IgnoreChecksums_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore Dependencies.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_IgnoreDependencies_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_IgnoreDependencies_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore dependencies when installing package(s)..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_IgnoreDependencies_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_IgnoreDependencies_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include PreRelease?.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_IncludePreRelease_Content {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_IncludePreRelease_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include prerelease package in the version list.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_IncludePreRelease_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_IncludePreRelease_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Arguments.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_InstallArguments_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_InstallArguments_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Arguments to pass to the native installer in the package.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_InstallArguments_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_InstallArguments_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latest Version.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_LatestVersion {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_LatestVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log File.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_LogFile_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_LogFile_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File to output to in addition to regular loggers..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_LogFile_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_LogFile_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Silent.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_NotSilent_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_NotSilent_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not install this silently..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_NotSilent_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_NotSilent_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_Off {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_On {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Override Arguments.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_OverrideArguments_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_OverrideArguments_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Should install arguments be used exclusively without appending to current package passed arguments?.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_OverrideArguments_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_OverrideArguments_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package Parameters.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_PackageParameters_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_PackageParameters_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters to pass to the package.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_PackageParameters_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_PackageParameters_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PreRelease.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_PreRelease_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_PreRelease_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Prereleases?.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_PreRelease_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_PreRelease_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Require Checksums.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_RequireChecksums_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_RequireChecksums_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requires packages to have checksums for downloaded resources (both non-secure and secure)..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_RequireChecksums_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_RequireChecksums_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip PowerShell.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_SkipPowerShell_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_SkipPowerShell_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not run chocolateyInstall.ps1..
+        /// </summary>
+        public static string AdvancedChocolateyDialog_SkipPowerShell_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_SkipPowerShell_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Options.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_Title_Install {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_Title_Install", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_Version_Header {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_Version_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A specific version to install.
+        /// </summary>
+        public static string AdvancedChocolateyDialog_Version_ToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedChocolateyDialog_Version_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not locate any instances of contract {0}.
         /// </summary>
         public static string Application_ContainerError {
@@ -191,6 +758,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There as an error attempting to read the contents of the .arguments file for version {0} of package &apos;{1}&apos;.  See log file for more information..
+        /// </summary>
+        public static string Application_PackageArgumentsError {
+            get {
+                return ResourceManager.GetString("Application_PackageArgumentsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unhandled Exception.
         /// </summary>
         public static string Application_UnhandledException {
@@ -250,6 +826,186 @@ namespace ChocolateyGui.Common.Properties {
         public static string ChocolateyDialog_OK {
             get {
                 return ResourceManager.GetString("ChocolateyDialog_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Non Admin Access to Settings.
+        /// </summary>
+        public static string ChocolateyGUI_AllowNonAdminAccessToSettingsTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_AllowNonAdminAccessToSettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Source Name.
+        /// </summary>
+        public static string ChocolateyGUI_DefaultSourceNameTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_DefaultSourceNameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default to Dark Mode.
+        /// </summary>
+        public static string ChocolateyGUI_DefaultToDarkModeTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_DefaultToDarkModeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default to Tile View for Local Sources.
+        /// </summary>
+        public static string ChocolateyGUI_DefaultToTileViewForLocalSourceTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_DefaultToTileViewForLocalSourceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default to Tile View for Remote Sources.
+        /// </summary>
+        public static string ChocolateyGUI_DefaultToTileViewForRemoteSourceTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_DefaultToTileViewForRemoteSourceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude Installed Packages.
+        /// </summary>
+        public static string ChocolateyGUI_ExcludeInstalledPackagesTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_ExcludeInstalledPackagesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide All Remote Chocolatey Sources.
+        /// </summary>
+        public static string ChocolateyGUI_HideAllRemoteChocolateySourcesTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_HideAllRemoteChocolateySourcesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide Package Download Count.
+        /// </summary>
+        public static string ChocolateyGUI_HidePackageDownloadCountTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_HidePackageDownloadCountTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide This PC Source.
+        /// </summary>
+        public static string ChocolateyGUI_HideThisPCSourceTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_HideThisPCSourceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Package Versions for Selection.
+        /// </summary>
+        public static string ChocolateyGUI_NumberOfPackageVersionsForSelectionTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_NumberOfPackageVersionsForSelectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outdated Packages Cache Duration in Minutes.
+        /// </summary>
+        public static string ChocolateyGUI_OutdatedPackagesCacheDurationInMinutesTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_OutdatedPackagesCacheDurationInMinutesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevent All Package Icon Downloads.
+        /// </summary>
+        public static string ChocolateyGUI_PreventAllPackageIconDownloadsTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_PreventAllPackageIconDownloadsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevent Automated Outdated Packages Check.
+        /// </summary>
+        public static string ChocolateyGUI_PreventAutomatedOutdatedPackagesCheckTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_PreventAutomatedOutdatedPackagesCheckTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevent Preload.
+        /// </summary>
+        public static string ChocolateyGUI_PreventPreloadTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_PreventPreloadTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevent Usage of Update All Button.
+        /// </summary>
+        public static string ChocolateyGUI_PreventUsageOfUpdateAllButtonTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_PreventUsageOfUpdateAllButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Additional Package Information.
+        /// </summary>
+        public static string ChocolateyGUI_ShowAdditionalPackageInformationTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_ShowAdditionalPackageInformationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Aggregated Source View.
+        /// </summary>
+        public static string ChocolateyGUI_ShowAggregatedSourceViewTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_ShowAggregatedSourceViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Console Output.
+        /// </summary>
+        public static string ChocolateyGUI_ShowConsoleOutputTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_ShowConsoleOutputTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Delayed Search.
+        /// </summary>
+        public static string ChocolateyGUI_UseDelayedSearchTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_UseDelayedSearchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Keyboard Bindings.
+        /// </summary>
+        public static string ChocolateyGUI_UseKeyboardBindingsTitle {
+            get {
+                return ResourceManager.GetString("ChocolateyGUI_UseKeyboardBindingsTitle", resourceCulture);
             }
         }
         
@@ -723,6 +1479,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This action will remove the &apos;{0}&apos; source from both Chocolatey and Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?.
+        /// </summary>
+        public static string Dialog_AreYourSureRemoveSourceMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYourSureRemoveSourceMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This action will delete all cached icons that appear on the Tile Views of Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?.
         /// </summary>
         public static string Dialog_AreYouSureIconsMessage {
@@ -741,11 +1506,38 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This action will attempt to reinstall the &apos;{0}&apos; package.  Are you sure you want to proceed?.
+        /// </summary>
+        public static string Dialog_AreYouSureReinstallMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureReinstallMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure?.
         /// </summary>
         public static string Dialog_AreYouSureTitle {
             get {
                 return ResourceManager.GetString("Dialog_AreYouSureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action will attempt to uninstall the &apos;{0}&apos; package. Are you sure you want to proceed?.
+        /// </summary>
+        public static string Dialog_AreYouSureUninstallMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureUninstallMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action, depending on the number of currently outdated packages, may take a long time to complete. Are you sure that you want to continue?.
+        /// </summary>
+        public static string Dialog_AreYouSureUpdateAllMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureUpdateAllMessage", resourceCulture);
             }
         }
         
@@ -926,6 +1718,33 @@ namespace ChocolateyGui.Common.Properties {
         public static string FeatureCommand_UnknownCommandError {
             get {
                 return ResourceManager.GetString("FeatureCommand_UnknownCommandError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Files.
+        /// </summary>
+        public static string FilePicker_AllFiles {
+            get {
+                return ResourceManager.GetString("FilePicker_AllFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log Files.
+        /// </summary>
+        public static string FilePicker_LogFiles {
+            get {
+                return ResourceManager.GetString("FilePicker_LogFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Files.
+        /// </summary>
+        public static string FilePicker_TextFiles {
+            get {
+                return ResourceManager.GetString("FilePicker_TextFiles", resourceCulture);
             }
         }
         
@@ -1182,6 +2001,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [REDACTED ARGUMENT].
+        /// </summary>
+        public static string PackageArgumentService_RedactedArgument {
+            get {
+                return ResourceManager.GetString("PackageArgumentService_RedactedArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installed.
         /// </summary>
         public static string PackagesView_Installed {
@@ -1232,6 +2060,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string PackageView_ButtonInstall {
             get {
                 return ResourceManager.GetString("PackageView_ButtonInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Package Arguments.
+        /// </summary>
+        public static string PackageView_ButtonPackageArguments {
+            get {
+                return ResourceManager.GetString("PackageView_ButtonPackageArguments", resourceCulture);
             }
         }
         
@@ -1313,6 +2150,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string PackageView_Gallery {
             get {
                 return ResourceManager.GetString("PackageView_Gallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Advanced.
+        /// </summary>
+        public static string PackageView_InstallAdvanced {
+            get {
+                return ResourceManager.GetString("PackageView_InstallAdvanced", resourceCulture);
             }
         }
         
@@ -1407,11 +2253,29 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to locate .arguments file for version {0} of package &apos;{1}&apos;.
+        /// </summary>
+        public static string PackageView_UnableToFindArgumentsFile {
+            get {
+                return ResourceManager.GetString("PackageView_UnableToFindArgumentsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version.
         /// </summary>
         public static string PackageView_Version {
             get {
                 return ResourceManager.GetString("PackageView_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arguments for the Package {0}.
+        /// </summary>
+        public static string PackageViewModel_ArgumentsForPackageFormat {
+            get {
+                return ResourceManager.GetString("PackageViewModel_ArgumentsForPackageFormat", resourceCulture);
             }
         }
         
@@ -1493,6 +2357,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string PackageViewModel_LoadingPackageInfo {
             get {
                 return ResourceManager.GetString("PackageViewModel_LoadingPackageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no Persisted Arguments available for this package!.
+        /// </summary>
+        public static string PackageViewModel_NoArgumentsAvailableForPackage {
+            get {
+                return ResourceManager.GetString("PackageViewModel_NoArgumentsAvailableForPackage", resourceCulture);
             }
         }
         
@@ -1665,7 +2538,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go Back a Page.
+        ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string RemoteSourceView_ButtonGoBackAPage {
             get {
@@ -1683,7 +2556,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to First Page.
+        ///   Looks up a localized string similar to First.
         /// </summary>
         public static string RemoteSourceView_ButtonGotoFirstPage {
             get {
@@ -1841,6 +2714,42 @@ namespace ChocolateyGui.Common.Properties {
         public static string RemoteSourceView_SearchNoPackagesFoundHeading {
             get {
                 return ResourceManager.GetString("RemoteSourceView_SearchNoPackagesFoundHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to the Previous Page.
+        /// </summary>
+        public static string RemoteSourceView_TooltipGoBackAPage {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_TooltipGoBackAPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to the Next Page.
+        /// </summary>
+        public static string RemoteSourceView_TooltipGoForwardAPage {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_TooltipGoForwardAPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to the First Page.
+        /// </summary>
+        public static string RemoteSourceView_TooltipGotoFirstPage {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_TooltipGotoFirstPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to the Last Page.
+        /// </summary>
+        public static string RemoteSourceView_TooltipGotoLastPage {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_TooltipGotoLastPage", resourceCulture);
             }
         }
         
@@ -2017,6 +2926,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original Name for this Configuration: &apos;{0}&apos;.
+        /// </summary>
+        public static string SettingsView_ConfigNameFormat {
+            get {
+                return ResourceManager.GetString("SettingsView_ConfigNameFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default timeout for outdated packages to be cached.  Default is 60 minutes..
         /// </summary>
         public static string SettingsView_ConfigOutdatedPackagesCacheDurationInMinutesDescription {
@@ -2031,6 +2949,33 @@ namespace ChocolateyGui.Common.Properties {
         public static string SettingsView_Features {
             get {
                 return ResourceManager.GetString("SettingsView_Features", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Title for this Feature: &apos;{0}&apos;.
+        /// </summary>
+        public static string SettingsView_FeatureTitleFormat {
+            get {
+                return ResourceManager.GetString("SettingsView_FeatureTitleFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string SettingsView_Language {
+            get {
+                return ResourceManager.GetString("SettingsView_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The preferred language for Chocolatey GUI. Defaults to Windows System Locale..
+        /// </summary>
+        public static string SettingsView_LanguageDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_LanguageDescription", resourceCulture);
             }
         }
         
@@ -2103,6 +3048,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string SettingsView_PurgeOutdatedPackagesCache {
             get {
                 return ResourceManager.GetString("SettingsView_PurgeOutdatedPackagesCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string SettingsView_SearchWatermark {
+            get {
+                return ResourceManager.GetString("SettingsView_SearchWatermark", resourceCulture);
             }
         }
         

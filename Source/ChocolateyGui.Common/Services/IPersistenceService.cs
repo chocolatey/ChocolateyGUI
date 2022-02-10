@@ -15,6 +15,8 @@ namespace ChocolateyGui.Common.Services
 
         Stream SaveFile(string defaultExtension, string filter);
 
+        string GetFolderPath(string defaultLocation, string description = null);
+
         string GetFilePath(string defaultExtension, string filter);
     }
 }

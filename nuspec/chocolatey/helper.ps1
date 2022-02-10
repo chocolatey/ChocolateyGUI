@@ -48,7 +48,7 @@ function Set-Config {
         Start-ChocolateyProcessAsAdmin -Statements "config set --name=$ConfigName --value=$ConfigValue" -ExeToRun "chocolateyguicli"
     } else {
         Write-Output "Setting $ConfigName..."
-    Start-ChocolateyProcessAsAdmin -Statements "config set --name=$ConfigName --value=$ConfigValue --global" -ExeToRun "chocolateyguicli"
+        Start-ChocolateyProcessAsAdmin -Statements "config set --name=$ConfigName --value=$ConfigValue --global" -ExeToRun "chocolateyguicli"
     }
 }
 
@@ -136,5 +136,9 @@ function Set-UserSettings {
 
     if($pp.ContainsKey("DefaultSourceName")) {
         Set-Config "DefaultSourceName" ($pp.DefaultSourceName) $applyGlobally
+    }
+
+    if($pp.ContainsKey("UseLanguage")) {
+        Set-Config "UseLanguage" ($pp.UseLanguage) $applyGlobally
     }
 }

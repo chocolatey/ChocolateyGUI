@@ -15,31 +15,32 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Xml;
 using AutoMapper;
 using Caliburn.Micro;
-using chocolatey;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Enums;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
+using MahApps.Metro.Controls.Dialogs;
 using Serilog;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
-    public sealed class LocalSourceViewModel : Screen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
+    public sealed class LocalSourceViewModel : ViewModelScreen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
     {
         private static readonly ILogger Logger = Log.ForContext<LocalSourceViewModel>();
         private readonly IChocolateyService _chocolateyService;
         private readonly List<IPackageViewModel> _packages;
         private readonly IPersistenceService _persistenceService;
         private readonly IChocolateyGuiCacheService _chocolateyGuiCacheService;
+        private readonly IDialogService _dialogService;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
         private readonly IAllowedCommandsService _allowedCommandsService;
@@ -58,9 +59,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private bool _firstLoadIncomplete = true;
         private ListViewMode _listViewMode;
         private bool _showAdditionalPackageInformation;
+        private string _resourceId;
 
         public LocalSourceViewModel(
             IChocolateyService chocolateyService,
+            IDialogService dialogService,
             IProgressService progressService,
             IPersistenceService persistenceService,
             IChocolateyGuiCacheService chocolateyGuiCacheService,
@@ -68,16 +71,31 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             IAllowedCommandsService allowedCommandsService,
             IEventAggregator eventAggregator,
             string displayName,
-            IMapper mapper)
+            IMapper mapper,
+            TranslationSource translator)
+        : base(translator)
         {
             _chocolateyService = chocolateyService;
+            _dialogService = dialogService;
             _progressService = progressService;
             _persistenceService = persistenceService;
             _chocolateyGuiCacheService = chocolateyGuiCacheService;
             _configService = configService;
             _allowedCommandsService = allowedCommandsService;
 
-            DisplayName = displayName;
+            if (displayName[0] == '[' && displayName[displayName.Length - 1] == ']')
+            {
+                _resourceId = displayName.Trim('[', ']');
+                DisplayName = translator[_resourceId];
+                translator.PropertyChanged += (sender, e) =>
+                {
+                    DisplayName = translator[_resourceId];
+                };
+            }
+            else
+            {
+                DisplayName = displayName;
+            }
 
             _packages = new List<IPackageViewModel>();
             Packages = new ObservableCollection<IPackageViewModel>();
@@ -187,30 +205,37 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                await _progressService.StartLoading(Resources.LocalSourceViewModel_Packages, true);
-                IsLoading = true;
+                var result = await _dialogService.ShowConfirmationMessageAsync(
+                    L(nameof(Resources.Dialog_AreYouSureTitle)),
+                    L(nameof(Resources.Dialog_AreYouSureUpdateAllMessage)));
 
-                _progressService.WriteMessage(Resources.LocalSourceViewModel_FetchingPackages);
-                var token = _progressService.GetCancellationToken();
-                var packages = Packages.Where(p => p.CanUpdate && !p.IsPinned).ToList();
-                double current = 0.0f;
-                foreach (var package in packages)
+                if (result == MessageDialogResult.Affirmative)
                 {
-                    if (token.IsCancellationRequested)
+                    await _progressService.StartLoading(L(nameof(Resources.LocalSourceViewModel_Packages)), true);
+                    IsLoading = true;
+
+                    _progressService.WriteMessage(L(nameof(Resources.LocalSourceViewModel_FetchingPackages)));
+                    var token = _progressService.GetCancellationToken();
+                    var packages = Packages.Where(p => p.CanUpdate && !p.IsPinned).ToList();
+                    double current = 0.0f;
+                    foreach (var package in packages)
                     {
-                        await _progressService.StopLoading();
-                        IsLoading = false;
-                        return;
+                        if (token.IsCancellationRequested)
+                        {
+                            await _progressService.StopLoading();
+                            IsLoading = false;
+                            return;
+                        }
+
+                        _progressService.Report(Math.Min(current++ / packages.Count, 100));
+                        await package.Update();
                     }
 
-                    _progressService.Report(Math.Min(current++ / packages.Count, 100));
-                    await package.Update();
+                    await _progressService.StopLoading();
+                    IsLoading = false;
+                    ShowOnlyPackagesWithUpdate = false;
+                    RefreshPackages();
                 }
-
-                await _progressService.StopLoading();
-                IsLoading = false;
-                ShowOnlyPackagesWithUpdate = false;
-                RefreshPackages();
             }
             catch (Exception ex)
             {
@@ -225,7 +250,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             try
             {
-                var exportFilePath = _persistenceService.GetFilePath("*.config", Resources.LocalSourceViewModel_ConfigFiles.format_with("(.config)|*.config"));
+                var exportFilePath = _persistenceService.GetFilePath("*.config", L(nameof(Resources.LocalSourceViewModel_ConfigFiles), "(.config)|*.config"));
 
                 if (string.IsNullOrEmpty(exportFilePath))
                 {
@@ -234,10 +259,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
                 await _chocolateyService.ExportPackages(exportFilePath, true);
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                _progressService.ShowMessageAsync(Resources.LocalSourceView_ButtonExport, string.Format(Resources.LocalSourceViewModel_ExportComplete, exportFilePath))
+                await _dialogService.ShowMessageAsync(
+                        L(nameof(Resources.LocalSourceView_ButtonExport)),
+                        L(nameof(Resources.LocalSourceViewModel_ExportComplete), exportFilePath))
                     .ConfigureAwait(false);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
             catch (Exception ex)
             {
@@ -371,10 +396,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 var chocoPackage = _packages.FirstOrDefault(p => p.Id.ToLower() == "chocolatey");
                 if (chocoPackage != null && chocoPackage.CanUpdate)
                 {
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    _progressService.ShowMessageAsync(Resources.LocalSourceViewModel_Chocolatey, Resources.LocalSourceViewModel_UpdateAvailableForChocolatey)
+                    await _dialogService.ShowMessageAsync(
+                            L(nameof(Resources.LocalSourceViewModel_Chocolatey)),
+                            L(nameof(Resources.LocalSourceViewModel_UpdateAvailableForChocolatey)))
                         .ConfigureAwait(false);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 }
             }
             catch (Exception ex)

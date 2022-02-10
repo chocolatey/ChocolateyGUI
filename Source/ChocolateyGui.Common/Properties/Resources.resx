@@ -1,17 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -432,6 +432,9 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   </data>
   <data name="RemoteSourceViewModel_SortSelectionAtoZ" xml:space="preserve">
     <value>A-Z</value>
+    <comment>The letter 'A' should be translated to the first letter in your language,
+and the letter 'Z' to the last letter in your alphabet.
+Or if there is a traditional way to show sorting by the Title in your language, that should be used instead.</comment>
   </data>
   <data name="RemoteSourceViewModel_SortSelectionPopularity" xml:space="preserve">
     <value>Popularity</value>
@@ -444,13 +447,13 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Authors:</value>
   </data>
   <data name="RemoteSourceView_ButtonGoBackAPage" xml:space="preserve">
-    <value>Go Back a Page</value>
+    <value>Back</value>
   </data>
   <data name="RemoteSourceView_ButtonGoForwardAPage" xml:space="preserve">
     <value>Next</value>
   </data>
   <data name="RemoteSourceView_ButtonGotoFirstPage" xml:space="preserve">
-    <value>Go to First Page</value>
+    <value>First</value>
   </data>
   <data name="RemoteSourceView_ButtonGotoLastPage" xml:space="preserve">
     <value>Last</value>
@@ -1040,6 +1043,198 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="LocalSourceView_ButtonUpdateAllDisabled" xml:space="preserve">
     <value>No packages need to be updated</value>
   </data>
+  <data name="AdvancedChocolateyDialog_AdvancedOptions_Header" xml:space="preserve">
+    <value>Advanced Options</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowDowngrade_Header" xml:space="preserve">
+    <value>Allow Downgrade</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowDowngrade_ToolTip" xml:space="preserve">
+    <value>Should an attempt at downgrading be allowed?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_Header" xml:space="preserve">
+    <value>Allow Empty Checksums Secure</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowEmptyChecksumsSecure_ToolTip" xml:space="preserve">
+    <value>Allow packages to have empty checksums for downloaded resources from secure locations (HTTPS).  Only overrides the value in the configuration when 'On' is specified.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowEmptyChecksums_Header" xml:space="preserve">
+    <value>Allow Empty Checksums</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip" xml:space="preserve">
+    <value>Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Using this switch is not recommended if using sources that download resources from the internet. Only overrides the value in the configuration when 'On' is specified.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowMultipleVersions_Header" xml:space="preserve">
+    <value>Allow Multiple Versions</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip" xml:space="preserve">
+    <value>Should multiple versions of a package be installed?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header" xml:space="preserve">
+    <value>Apply Install Arguments to Dependencies</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_ToolTip" xml:space="preserve">
+    <value>Should install arguments be applied to dependent packages?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_Header" xml:space="preserve">
+    <value>Apply Package Parameters to Dependencies</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ApplyPackageParametersToDependencies_ToolTip" xml:space="preserve">
+    <value>Should package parameters be applied to dependent packages?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Buttons_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Buttons_Install" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ChecksumOptions_Header" xml:space="preserve">
+    <value>Checksum Options</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DependencyOptions_Header" xml:space="preserve">
+    <value>Dependency Options</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksum64bit_Header" xml:space="preserve">
+    <value>Download Checksum 64bit</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksum64bit_ToolTip" xml:space="preserve">
+    <value>A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one).</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksumType64bit_Header" xml:space="preserve">
+    <value>Download Checksum Type 64bit</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksumType64bit_ToolTip" xml:space="preserve">
+    <value>A user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one).</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksumType_Header" xml:space="preserve">
+    <value>Download Checksum Type</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksumType_ToolTip" xml:space="preserve">
+    <value>A user provided checksum type. Overrides the package checksum type (if it has one). Used in conjunction with Download Checksum.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksum_Header" xml:space="preserve">
+    <value>Download Checksum</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_DownloadChecksum_ToolTip" xml:space="preserve">
+    <value>A user provided checksum for downloaded resources for the package. Overrides the package checksum (if it has one).</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_Header" xml:space="preserve">
+    <value>Execution Timeout In Seconds</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ExecutionTimeoutInSeconds_ToolTip" xml:space="preserve">
+    <value>The time to allow a command to finish before timing out. Overrides the default execution timeout in the configuration. '0' for infinite starting in Chocolatey Version 0.10.4.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ForceDependencies_Header" xml:space="preserve">
+    <value>Force Dependencies</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_ForceDependencies_ToolTip" xml:space="preserve">
+    <value>Force dependencies to be reinstalled when force installing package(s). Must be used in conjunction with --force.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Forcex86_Header" xml:space="preserve">
+    <value>Force x86</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Forcex86_ToolTip" xml:space="preserve">
+    <value>Force x86 (32bit) installation on 64 bit systems</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IgnoreChecksums_Header" xml:space="preserve">
+    <value>Ignore Checksums</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IgnoreChecksums_ToolTip" xml:space="preserve">
+    <value>Ignore checksums provided by the package. Overrides the default feature 'checksumFiles' if it is set to 'True'. Only overrides the value in the configuration when 'On' is specified.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IgnoreDependencies_Header" xml:space="preserve">
+    <value>Ignore Dependencies</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IgnoreDependencies_ToolTip" xml:space="preserve">
+    <value>Ignore dependencies when installing package(s).</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_InstallArguments_Header" xml:space="preserve">
+    <value>Install Arguments</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_InstallArguments_ToolTip" xml:space="preserve">
+    <value>Install Arguments to pass to the native installer in the package</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_LogFile_Header" xml:space="preserve">
+    <value>Log File</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_LogFile_ToolTip" xml:space="preserve">
+    <value>File to output to in addition to regular loggers.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_NotSilent_Header" xml:space="preserve">
+    <value>Not Silent</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_NotSilent_ToolTip" xml:space="preserve">
+    <value>Do not install this silently.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_OverrideArguments_Header" xml:space="preserve">
+    <value>Override Arguments</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_OverrideArguments_ToolTip" xml:space="preserve">
+    <value>Should install arguments be used exclusively without appending to current package passed arguments?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_PackageParameters_Header" xml:space="preserve">
+    <value>Package Parameters</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_PackageParameters_ToolTip" xml:space="preserve">
+    <value>Parameters to pass to the package</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_PreRelease_Header" xml:space="preserve">
+    <value>PreRelease</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_PreRelease_ToolTip" xml:space="preserve">
+    <value>Include Prereleases?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_RequireChecksums_Header" xml:space="preserve">
+    <value>Require Checksums</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_RequireChecksums_ToolTip" xml:space="preserve">
+    <value>Requires packages to have checksums for downloaded resources (both non-secure and secure).</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_SkipPowerShell_Header" xml:space="preserve">
+    <value>Skip PowerShell</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_SkipPowerShell_ToolTip" xml:space="preserve">
+    <value>Do not run chocolateyInstall.ps1.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Title_Install" xml:space="preserve">
+    <value>Install Options</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Version_Header" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Version_ToolTip" xml:space="preserve">
+    <value>A specific version to install</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IncludePreRelease_Content" xml:space="preserve">
+    <value>Include PreRelease?</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_IncludePreRelease_ToolTip" xml:space="preserve">
+    <value>Include prerelease package in the version list</value>
+  </data>
+  <data name="Dialog_AreYourSureRemoveSourceMessage" xml:space="preserve">
+    <value>This action will remove the '{0}' source from both Chocolatey and Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?</value>
+    <comment>{0} = The id of the source which is away to be deleted, i.e. chocolatey, chocolatey.licensed, etc</comment>
+  </data>
+  <data name="Dialog_AreYouSureUpdateAllMessage" xml:space="preserve">
+    <value>This action, depending on the number of currently outdated packages, may take a long time to complete. Are you sure that you want to continue?</value>
+  </data>
+  <data name="Dialog_AreYouSureReinstallMessage" xml:space="preserve">
+    <value>This action will attempt to reinstall the '{0}' package.  Are you sure you want to proceed?</value>
+    <comment>{0} = The id of the package that is going to be reinstalled</comment>
+  </data>
+  <data name="Dialog_AreYouSureUninstallMessage" xml:space="preserve">
+    <value>This action will attempt to uninstall the '{0}' package. Are you sure you want to proceed?</value>
+    <comment>{0} = The id of the package that is going to be uninstalled</comment>
+  </data>
+  <data name="SettingsView_SearchWatermark" xml:space="preserve">
+    <value>Search...</value>
+  </data>
   <data name="SettingsView_ToggleHideThisPCSourceDescription" xml:space="preserve">
     <value>Controls whether or not the This PC source is displayed in Chocolatey GUI.  Enabling this feature means that Chocolatey GUI will no longer show a list of all the currently installed packages on the machine.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
   </data>
@@ -1049,5 +1244,140 @@ Please contact your System Administrator to enable this operation.</value>
   <data name="LocalSourceViewModel_ExportComplete" xml:space="preserve">
     <value>All the currrently installed packages have been exported to {0}</value>
     <comment>{0} = The path to where the exported packages have been placed</comment>
+  </data>
+  <data name="SettingsView_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="RemoteSourceView_TooltipGoBackAPage" xml:space="preserve">
+    <value>Go to the Previous Page</value>
+  </data>
+  <data name="RemoteSourceView_TooltipGoForwardAPage" xml:space="preserve">
+    <value>Go to the Next Page</value>
+  </data>
+  <data name="RemoteSourceView_TooltipGotoFirstPage" xml:space="preserve">
+    <value>Go to the First Page</value>
+  </data>
+  <data name="RemoteSourceView_TooltipGotoLastPage" xml:space="preserve">
+    <value>Go to the Last Page</value>
+  </data>
+  <data name="ChocolateyGUI_AllowNonAdminAccessToSettingsTitle" xml:space="preserve">
+    <value>Allow Non Admin Access to Settings</value>
+  </data>
+  <data name="ChocolateyGUI_DefaultSourceNameTitle" xml:space="preserve">
+    <value>Default Source Name</value>
+  </data>
+  <data name="ChocolateyGUI_DefaultToDarkModeTitle" xml:space="preserve">
+    <value>Default to Dark Mode</value>
+  </data>
+  <data name="ChocolateyGUI_DefaultToTileViewForLocalSourceTitle" xml:space="preserve">
+    <value>Default to Tile View for Local Sources</value>
+  </data>
+  <data name="ChocolateyGUI_DefaultToTileViewForRemoteSourceTitle" xml:space="preserve">
+    <value>Default to Tile View for Remote Sources</value>
+  </data>
+  <data name="ChocolateyGUI_ExcludeInstalledPackagesTitle" xml:space="preserve">
+    <value>Exclude Installed Packages</value>
+  </data>
+  <data name="ChocolateyGUI_HideAllRemoteChocolateySourcesTitle" xml:space="preserve">
+    <value>Hide All Remote Chocolatey Sources</value>
+  </data>
+  <data name="ChocolateyGUI_HideThisPCSourceTitle" xml:space="preserve">
+    <value>Hide This PC Source</value>
+  </data>
+  <data name="ChocolateyGUI_NumberOfPackageVersionsForSelectionTitle" xml:space="preserve">
+    <value>Number of Package Versions for Selection</value>
+  </data>
+  <data name="ChocolateyGUI_OutdatedPackagesCacheDurationInMinutesTitle" xml:space="preserve">
+    <value>Outdated Packages Cache Duration in Minutes</value>
+  </data>
+  <data name="ChocolateyGUI_PreventAllPackageIconDownloadsTitle" xml:space="preserve">
+    <value>Prevent All Package Icon Downloads</value>
+  </data>
+  <data name="ChocolateyGUI_PreventAutomatedOutdatedPackagesCheckTitle" xml:space="preserve">
+    <value>Prevent Automated Outdated Packages Check</value>
+  </data>
+  <data name="ChocolateyGUI_PreventPreloadTitle" xml:space="preserve">
+    <value>Prevent Preload</value>
+  </data>
+  <data name="ChocolateyGUI_PreventUsageOfUpdateAllButtonTitle" xml:space="preserve">
+    <value>Prevent Usage of Update All Button</value>
+  </data>
+  <data name="ChocolateyGUI_ShowAdditionalPackageInformationTitle" xml:space="preserve">
+    <value>Show Additional Package Information</value>
+  </data>
+  <data name="ChocolateyGUI_ShowConsoleOutputTitle" xml:space="preserve">
+    <value>Show Console Output</value>
+  </data>
+  <data name="ChocolateyGUI_UseKeyboardBindingsTitle" xml:space="preserve">
+    <value>Use Keyboard Bindings</value>
+  </data>
+  <data name="PackageView_InstallAdvanced" xml:space="preserve">
+    <value>Install Advanced</value>
+  </data>
+  <data name="ChocolateyGUI_HidePackageDownloadCountTitle" xml:space="preserve">
+    <value>Hide Package Download Count</value>
+  </data>
+  <data name="ChocolateyGUI_ShowAggregatedSourceViewTitle" xml:space="preserve">
+    <value>Show Aggregated Source View</value>
+  </data>
+  <data name="SettingsView_ConfigNameFormat" xml:space="preserve">
+    <value>Original Name for this Configuration: '{0}'</value>
+    <comment>{0} = The Name of this Configuration</comment>
+  </data>
+  <data name="SettingsView_FeatureTitleFormat" xml:space="preserve">
+    <value>Original Title for this Feature: '{0}'</value>
+    <comment>{0} = The Title of the Feature</comment>
+  </data>
+  <data name="ChocolateyGUI_UseDelayedSearchTitle" xml:space="preserve">
+    <value>Use Delayed Search</value>
+  </data>
+  <data name="Application_PackageArgumentsError" xml:space="preserve">
+    <value>There as an error attempting to read the contents of the .arguments file for version {0} of package '{1}'.  See log file for more information.</value>
+    <comment>{0} = The version of the selected package  {1} = The id for the currently selected package</comment>
+  </data>
+  <data name="PackageView_ButtonPackageArguments" xml:space="preserve">
+    <value>View Package Arguments</value>
+  </data>
+  <data name="PackageView_UnableToFindArgumentsFile" xml:space="preserve">
+    <value>Unable to locate .arguments file for version {0} of package '{1}'</value>
+    <comment>{0} = The version of the selected package  {1} = The id for the currently selected package</comment>
+  </data>
+  <data name="PackageViewModel_ArgumentsForPackageFormat" xml:space="preserve">
+    <value>Arguments for the Package {0}</value>
+    <comment>{0} = The Title of the package</comment>
+  </data>
+  <data name="PackageArgumentService_RedactedArgument" xml:space="preserve">
+    <value>[REDACTED ARGUMENT]</value>
+  </data>
+  <data name="PackageViewModel_NoArgumentsAvailableForPackage" xml:space="preserve">
+    <value>There are no Persisted Arguments available for this package!</value>
+  </data>
+  <data name="SettingsView_LanguageDescription" xml:space="preserve">
+    <value>The preferred language for Chocolatey GUI. Defaults to Windows System Locale.</value>
+  </data>
+  <data name="FilePicker_LogFiles" xml:space="preserve">
+    <value>Log Files</value>
+  </data>
+  <data name="FilePicker_AllFiles" xml:space="preserve">
+    <value>All Files</value>
+  </data>
+  <data name="FilePicker_TextFiles" xml:space="preserve">
+    <value>Text Files</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_LatestVersion" xml:space="preserve">
+    <value>Latest Version</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_CacheLocation_Header" xml:space="preserve">
+    <value>Cache Location</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_CacheLocation_ToolTip" xml:space="preserve">
+    <value>Location for download cache, defaults to %TEMP% or value in chocolatey.config file.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_CacheLocation_BrowseDescription" xml:space="preserve">
+    <value>The location to store any files downloaded by package during installations or upgrades.</value>
+  </data>
+  <data name="AdvancedChocolateyDialog_Browse" xml:space="preserve">
+    <value>Browse</value>
+    <comment>This text is used for both when a user clicks a button supposed to select a file, and when selecting a folder.</comment>
   </data>
 </root>

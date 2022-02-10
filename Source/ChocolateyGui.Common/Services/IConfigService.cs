@@ -20,15 +20,21 @@ namespace ChocolateyGui.Common.Services
 
         IEnumerable<ChocolateyGuiFeature> GetFeatures(bool global);
 
+        IEnumerable<ChocolateyGuiFeature> GetFeatures(bool global, bool useResourceKeys);
+
         void ListFeatures(ChocolateyGuiConfiguration configuration);
 
         IEnumerable<ChocolateyGuiSetting> GetSettings(bool global);
+
+        IEnumerable<ChocolateyGuiSetting> GetSettings(bool global, bool useResourceKeys);
 
         void ListSettings(ChocolateyGuiConfiguration configuration);
 
         void ToggleFeature(ChocolateyGuiConfiguration configuration, bool requiredValue);
 
         void GetConfigValue(ChocolateyGuiConfiguration configuration);
+
+        void SetConfigValue(string key, string value);
 
         void SetConfigValue(ChocolateyGuiConfiguration configuration);
 

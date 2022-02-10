@@ -5,7 +5,7 @@
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:cal="http://www.caliburnproject.org"
-                 xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
+                 xmlns:lang="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Extensions"
                  xmlns:system="clr-namespace:System;assembly=mscorlib"
                  xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
                  xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
@@ -94,11 +94,11 @@
             <Button x:Name="ShowSettings"
                     Visibility="{Binding Path=CanShowSettings, Converter={StaticResource BooleanToVisibility}, ConverterParameter=False}"
                     IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"
-                    Content="{x:Static properties:Resources.ShellView_ButtonSettings}" ClickMode="Release"
+                    Content="{lang:Localize ShellView_ButtonSettings}" ClickMode="Release"
                     cal:Message.Attach="ShowSettings()" />
             <Button x:Name="ShowAbout"
                     IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=IsAnyDialogOpen, Converter={StaticResource BooleanInverter}}"
-                    Content="{x:Static properties:Resources.ShellView_ButtonAbout}" ClickMode="Release"
+                    Content="{lang:Localize ShellView_ButtonAbout}" ClickMode="Release"
                     cal:Message.Attach="ShowAbout()" />
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>

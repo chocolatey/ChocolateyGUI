@@ -12,20 +12,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChocolateyGui.Common.Controls;
 using ChocolateyGui.Common.Models;
-using MahApps.Metro.Controls.Dialogs;
+using ChocolateyGui.Common.Windows.Views;
 
 namespace ChocolateyGui.Common.Windows.Services
 {
     public interface IProgressService : INotifyPropertyChanged, IProgress<double>
     {
+        ShellView ShellView { get; set; }
+
         bool IsLoading { get; }
 
         ObservableRingBufferCollection<PowerShellOutputLine> Output { get; }
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Not appropriate")]
         CancellationToken GetCancellationToken();
-
-        Task<MessageDialogResult> ShowMessageAsync(string title, string message);
 
         Task StartLoading(string title = null, bool isCancelable = false);
 

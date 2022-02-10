@@ -7,12 +7,13 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
 namespace ChocolateyGui.Common.Windows.Utilities.Converters
 {
-    public class BooleanToVisibilityInverted : DependencyObject, IValueConverter
+    public class BooleanToVisibilityInverted : DependencyObject, IValueConverter, IMultiValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -21,7 +22,19 @@ namespace ChocolateyGui.Common.Windows.Utilities.Converters
                 : Visibility.Collapsed;
         }
 
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var collapsed = values.Aggregate(false, (current, value) => current || !IsCollapsed(value, parameter));
+
+            return collapsed ? Visibility.Collapsed : Visibility.Visible;
+        }
+
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

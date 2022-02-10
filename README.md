@@ -23,9 +23,10 @@ TeamCity  | Appveyor
 
 ## Chat Room
 
-Come join in the conversation about Chocolatey GUI in our Gitter Chat Room
+Come join in the conversation about Chocolatey GUI in our Community Chat Room
 
-[![Gitter chat](https://badges.gitter.im/chocolatey/ChocolateyGUI.png)](https://gitter.im/chocolatey/ChocolateyGUI)
+
+[![Discord](https://img.shields.io/discord/778552361454141460?logo=Discord)](https://ch0.co/community)
 
 Or, you can find us in IRC at #chocolatey.
 
@@ -42,7 +43,7 @@ You can find information about Chocolatey GUI here: [https://docs.chocolatey.org
 
 ### Requirements
 
-* .NET Framework 4.5.2
+* .NET Framework 4.8
 * Should work on all Windows Operating Systems from Windows 7 SP1 and above, and Windows Server 2008 R2 SP1 and above
 
 ### License / Credits
@@ -93,7 +94,7 @@ If you would like to contribute code or help squash a bug or two, that's awesome
 
 ### Localization
 
-If you are interested in helping with the effort in translating the various portions of the Chocolatey GUI UI into different languages, you can find out more about using the [transifex](https://www.transifex.com/) service in this [how to article](https://chocolatey.github.io/ChocolateyGUI/docs/localization).
+If you are interested in helping with the effort in translating the various portions of the Chocolatey GUI UI into different languages, you can find out more about using the [transifex](https://www.transifex.com/) service in this [how to article](https://docs.chocolatey.org/en-us/chocolatey-gui/localization).
 
 ## Committers
 

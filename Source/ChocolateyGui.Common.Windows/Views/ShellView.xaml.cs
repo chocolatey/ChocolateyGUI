@@ -8,16 +8,20 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using chocolatey.infrastructure.filesystem;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using ChocolateyGui.Common.Windows.Services;
+using ChocolateyGui.Common.Windows.Utilities;
 using MahApps.Metro.Controls.Dialogs;
 using ChocolateyDialog = ChocolateyGui.Common.Windows.Controls.Dialogs.ChocolateyDialog;
 
@@ -37,6 +41,7 @@ namespace ChocolateyGui.Common.Windows.Views
         private bool _closeInitiated = false;
 
         public ShellView(
+            IDialogService dialogService,
             IProgressService progressService,
             IChocolateyConfigurationProvider chocolateyConfigurationProvider,
             IConfigService configService,
@@ -45,11 +50,8 @@ namespace ChocolateyGui.Common.Windows.Views
         {
             InitializeComponent();
 
-            var service = progressService as ProgressService;
-            if (service != null)
-            {
-                service.ShellView = this;
-            }
+            dialogService.ShellView = this;
+            progressService.ShellView = this;
 
             _progressService = progressService;
             _chocolateyConfigurationProvider = chocolateyConfigurationProvider;
@@ -67,6 +69,13 @@ namespace ChocolateyGui.Common.Windows.Views
             {
                 Environment.CurrentDirectory = Bootstrapper.ApplicationFilesPath;
             }
+
+            dialogService.ChildWindowOpened += (sender, o) => IsAnyDialogOpen = true;
+            dialogService.ChildWindowClosed += (sender, o) => IsAnyDialogOpen = false;
+
+            SetLanguage(TranslationSource.Instance.CurrentCulture);
+
+            TranslationSource.Instance.PropertyChanged += TranslationLanguageChanged;
         }
 
         public void CheckOperatingSystemCompatibility()
@@ -76,7 +85,8 @@ namespace ChocolateyGui.Common.Windows.Views
             if (operatingSystemVersion.Version.Major == 10 &&
                 !_chocolateyConfigurationProvider.IsChocolateyExecutableBeingUsed)
             {
-                MessageBox.Show(
+                // TODO: Possibly make these values translatable, do not use Resources directly, instead Use TranslationSource.Instance["KEY_NAME"];
+                ChocolateyMessageBox.Show(
                     "Usage of the PowerShell Version of Chocolatey (i.e. <= 0.9.8.33) has been detected.  Chocolatey GUI does not support using this version of Chocolatey on Windows 10.  Please update Chocolatey to the new C# Version (i.e. > 0.9.9.0) and restart Chocolatey GUI.  This application will now close.",
                     "Incompatible Operating System Version",
                     MessageBoxButton.OK,
@@ -106,8 +116,8 @@ namespace ChocolateyGui.Common.Windows.Views
                 if (settings == null)
                 {
                     settings = MetroDialogOptions;
-                    settings.NegativeButtonText = Common.Properties.Resources.ChocolateyDialog_Cancel;
-                    settings.AffirmativeButtonText = Common.Properties.Resources.ChocolateyDialog_OK;
+                    settings.NegativeButtonText = L(nameof(Properties.Resources.ChocolateyDialog_Cancel));
+                    settings.AffirmativeButtonText = L(nameof(Properties.Resources.ChocolateyDialog_OK));
                 }
 
                 dialog.NegativeButtonText = settings.NegativeButtonText;
@@ -135,6 +145,11 @@ namespace ChocolateyGui.Common.Windows.Views
             }
         }
 
+        private static string L(string key)
+        {
+            return TranslationSource.Instance[key];
+        }
+
         private void CanGoToPage(object sender, CanExecuteRoutedEventArgs e)
         {
             // GEP: I can't think of any reason that we would want to prevent going to the linked
@@ -147,6 +162,29 @@ namespace ChocolateyGui.Common.Windows.Views
             // https://github.com/theunrepentantgeek/Markdown.XAML/issues/5
             Process.Start(new ProcessStartInfo(e.Parameter.ToString()));
             e.Handled = true;
+        }
+
+        private void TranslationLanguageChanged(object sender, PropertyChangedEventArgs e)
+        {
+            SetLanguage(TranslationSource.Instance.CurrentCulture);
+        }
+
+        private void SetLanguage(CultureInfo culture)
+        {
+            // This was introduced after testing Chocolatey GUI with Chocolatey GUI Licensed Extension.
+            // When installed, and run for the first time, the Culture is null, which we believe is due
+            // to the way that the overriding of the ShellViewModel is done within the Caliburn.Micro
+            // view locator.  Since this only happens on initial loading of Chocolatey GUI, the thought
+            // is to simply return, as this doesn't cause any other known issues.
+            if (culture == null)
+            {
+                return;
+            }
+
+            Language = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
+            FlowDirection = culture.TextInfo.IsRightToLeft
+                ? FlowDirection.RightToLeft
+                : FlowDirection.LeftToRight;
         }
     }
 }

@@ -12,7 +12,7 @@ using ChocolateyGui.Common.ViewModels.Items;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
-    public sealed class PackageViewModel : Screen
+    public sealed class PackageViewModel : ViewModelScreen
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -23,11 +23,16 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public IPackageViewModel Package { get; set; }
 
-        public new string DisplayName => string.Format(Resources.PackageViewModel_DisplayName, Package?.Title);
+        public new string DisplayName => L(nameof(Resources.PackageViewModel_DisplayName), Package?.Title);
 
         public void Back()
         {
             _eventAggregator.PublishOnUIThread(new ShowSourcesMessage(null));
+        }
+
+        protected override void OnLanguageChanged()
+        {
+            NotifyOfPropertyChange(nameof(DisplayName));
         }
     }
 }

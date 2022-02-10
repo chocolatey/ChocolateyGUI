@@ -15,7 +15,6 @@ using System.Windows.Media;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
-using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.ViewModels;
 using ChocolateyGui.Common.Windows.Services;
@@ -119,7 +118,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             if (_firstLoad)
             {
-                Items.Add(_localSourceVmFactory(Resources.Resources_ThisPC));
+                Items.Add(_localSourceVmFactory("[Resources_ThisPC]"));
 
                 _ = LoadSources();
                 _firstLoad = false;

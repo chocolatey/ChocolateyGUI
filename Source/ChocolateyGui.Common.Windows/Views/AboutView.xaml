@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
-             xmlns:properties="clr-namespace:ChocolateyGui.Common.Properties;assembly=ChocolateyGui.Common"
+             xmlns:lang="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Extensions"
              xmlns:viewModels="clr-namespace:ChocolateyGui.Common.Windows.ViewModels;assembly=ChocolateyGui.Common.Windows"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
              xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
@@ -21,7 +21,7 @@
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button x:Name="Back" Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBlock Text="{x:Static properties:Resources.AboutView_About}" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Text="{lang:Localize AboutView_About}" Style="{StaticResource TitleTextStyle}"/>
             <TextBlock Text=" - " Style="{StaticResource TitleTextStyle}"/>
             <TextBlock Text="{Binding ChocolateyGuiVersion}" Style="{StaticResource TitleTextStyle}"/>
             <TextBlock AutomationProperties.Name="{Binding ChocolateyGuiInformationalVersion}"
@@ -31,7 +31,7 @@
             </TextBlock>
         </StackPanel>
         <TabControl Background="Transparent" metro:TabControlHelper.Underlined="TabPanel">
-            <TabItem Header="{x:Static properties:Resources.AboutView_History}">
+            <TabItem Header="{lang:Localize AboutView_History}">
                 <Grid Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -48,7 +48,7 @@
                             controls:MarkdownEx.Url="pack://application:,,,/../../Resources/ABOUT.md" />
                 </Grid>
             </TabItem>
-            <TabItem Header="{x:Static properties:Resources.AboutView_Credits}">
+            <TabItem Header="{lang:Localize AboutView_Credits}">
                 <Grid Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -65,7 +65,7 @@
                             controls:MarkdownEx.Url="pack://application:,,,/../../Resources/CREDITS.md" />
                 </Grid>
             </TabItem>
-            <TabItem Header="{x:Static properties:Resources.AboutView_ReleaseNotes}">
+            <TabItem Header="{lang:Localize AboutView_ReleaseNotes}">
                 <Grid Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

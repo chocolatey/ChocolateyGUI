@@ -18,7 +18,7 @@ using Serilog;
 
 namespace ChocolateyGui.Common.Commands
 {
-    [LocalizedCommandFor("feature", "FeatureCommand_Description")]
+    [LocalizedCommandFor("feature", nameof(Resources.FeatureCommand_Description))]
     public class FeatureCommand : BaseCommand, ICommand
     {
         private static readonly ILogger Logger = Log.ForContext<FeatureCommand>();
@@ -34,11 +34,11 @@ namespace ChocolateyGui.Common.Commands
             optionSet
                 .Add(
                     "n=|name=",
-                    Resources.FeatureCommand_NameOption,
+                    L(nameof(Resources.FeatureCommand_NameOption)),
                     option => configuration.FeatureCommand.Name = option.remove_surrounding_quotes())
                 .Add(
                     "g|global",
-                    Resources.GlobalOption,
+                    L(nameof(Resources.GlobalOption)),
                     option => configuration.Global = option != null);
         }
 
@@ -48,7 +48,7 @@ namespace ChocolateyGui.Common.Commands
 
             if (unparsedArguments.Count > 1)
             {
-                Logger.Error(Resources.FeatureCommand_SingleFeatureError);
+                Logger.Error(L(nameof(Resources.FeatureCommand_SingleFeatureError)));
                 Environment.Exit(-1);
             }
 
@@ -59,7 +59,7 @@ namespace ChocolateyGui.Common.Commands
             {
                 if (!string.IsNullOrWhiteSpace(unparsedCommand))
                 {
-                    Logger.Warning(Resources.FeatureCommand_UnknownCommandError.format_with(unparsedCommand, "list"));
+                    Logger.Warning(L(nameof(Resources.FeatureCommand_UnknownCommandError), unparsedCommand, "list"));
                 }
 
                 command = FeatureCommandType.List;
@@ -72,22 +72,22 @@ namespace ChocolateyGui.Common.Commands
         {
             if (configuration.FeatureCommand.Command != FeatureCommandType.List && string.IsNullOrWhiteSpace(configuration.FeatureCommand.Name))
             {
-                Logger.Error(Resources.FeatureCommand_MissingNameOptionError.format_with(configuration.FeatureCommand.Command.to_string(), "--name"));
+                Logger.Error(L(nameof(Resources.FeatureCommand_MissingNameOptionError), configuration.FeatureCommand.Command.to_string(), "--name"));
                 Environment.Exit(-1);
             }
         }
 
         public virtual void HelpMessage(ChocolateyGuiConfiguration configuration)
         {
-            Logger.Warning(Resources.FeatureCommand_Title);
+            Logger.Warning(L(nameof(Resources.FeatureCommand_Title)));
             Logger.Information(string.Empty);
-            Logger.Information(Resources.FeatureCommand_Help);
+            Logger.Information(L(nameof(Resources.FeatureCommand_Help)));
             Logger.Information(string.Empty);
-            Logger.Warning(Resources.Command_Usage);
+            Logger.Warning(L(nameof(Resources.Command_Usage)));
             Logger.Information(@"
     chocolateyguicli feature [list]|disable|enable [<options/switches>]
 ");
-            Logger.Warning(Resources.Command_Examples);
+            Logger.Warning(L(nameof(Resources.Command_Examples)));
             Logger.Information(@"
     chocolateyguicli feature
     chocolateyguicli feature list

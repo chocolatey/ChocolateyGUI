@@ -5,15 +5,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using ChocolateyGui.Common.Properties;
-
 namespace ChocolateyGui.Common.Models
 {
     public class ChocolateyAggregatedSources : ChocolateySource
     {
         public ChocolateyAggregatedSources()
         {
-            Id = Resources.SourcesView_AggregatedSourcesId;
+            Id = "[SourcesView_AggregatedSourcesId]";
         }
     }
 }

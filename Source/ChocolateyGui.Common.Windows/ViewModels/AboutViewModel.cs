@@ -11,7 +11,7 @@ using ChocolateyGui.Common.Services;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
-    public sealed class AboutViewModel : Screen
+    public sealed class AboutViewModel : ViewModelScreen
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IVersionService _versionService;

@@ -23,7 +23,7 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Startup;
 using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels.Items;
-using ChocolateyGui.Common.Windows.Startup;
+using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.ViewModels;
 using LiteDB;
 using Serilog;
@@ -104,8 +104,6 @@ namespace ChocolateyGui.Common.Windows
             Logger = Log.Logger = logConfig.CreateLogger();
 
             Container = AutoFacConfiguration.RegisterAutoFac(LicensedChocolateyGuiAssemblySimpleName, LicensedGuiAssemblyLocation);
-
-            Internationalization.Initialize();
         }
 
         protected override async void OnStartup(object sender, StartupEventArgs e)
@@ -114,7 +112,7 @@ namespace ChocolateyGui.Common.Windows
             {
                 // Do not remove! Load Chocolatey once so all config gets set
                 // properly for future calls
-                var choco = Lets.GetChocolatey();
+                var choco = Lets.GetChocolatey(initializeLogging: false);
 
                 Mapper.Initialize(config =>
                 {
@@ -135,8 +133,10 @@ namespace ChocolateyGui.Common.Windows
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format(Resources.Fatal_Startup_Error_Formatted, ex.Message));
-                Logger.Fatal(ex, Resources.Fatal_Startup_Error);
+                var messageFormat = L(nameof(Resources.Fatal_Startup_Error_Formatted), ex.Message);
+
+                ChocolateyMessageBox.Show(messageFormat);
+                Logger.Fatal(ex, L(nameof(Resources.Fatal_Startup_Error)));
                 await OnExitAsync();
             }
         }
@@ -163,7 +163,9 @@ namespace ChocolateyGui.Common.Windows
                 }
             }
 
-            throw new Exception(string.Format(Resources.Application_ContainerError, key ?? service.Name));
+            throw new Exception(L(
+                nameof(Resources.Application_ContainerError),
+                key ?? service.Name));
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
@@ -178,7 +180,7 @@ namespace ChocolateyGui.Common.Windows
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            Logger.Information(Resources.Application_Exiting);
+            Logger.Information(L(nameof(Resources.Application_Exiting)));
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -186,15 +188,17 @@ namespace ChocolateyGui.Common.Windows
             FinalizeDatabaseTransaction();
             if (e.IsTerminating)
             {
-                Logger.Fatal(Resources.Application_UnhandledException, e.ExceptionObject as Exception);
+                Logger.Fatal(L(nameof(Resources.Application_UnhandledException)), e.ExceptionObject as Exception);
                 if (IsExiting)
                 {
                     return;
                 }
 
-                MessageBox.Show(
+                var message = L(nameof(Resources.Bootstrapper_UnhandledException));
+
+                ChocolateyMessageBox.Show(
                     e.ExceptionObject.ToString(),
-                    Resources.Bootstrapper_UnhandledException,
+                    message,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error,
                     MessageBoxResult.OK,
@@ -202,7 +206,7 @@ namespace ChocolateyGui.Common.Windows
             }
             else
             {
-                Logger.Error(Resources.Application_UnhandledException, e.ExceptionObject as Exception);
+                Logger.Error(L(nameof(Resources.Application_UnhandledException)), e.ExceptionObject as Exception);
             }
         }
 
@@ -222,6 +226,16 @@ namespace ChocolateyGui.Common.Windows
                     userDatabase.Dispose();
                 }
             }
+        }
+
+        private static string L(string key)
+        {
+            return TranslationSource.Instance[key];
+        }
+
+        private static string L(string key, params object[] parameters)
+        {
+            return TranslationSource.Instance[key, parameters];
         }
     }
 }

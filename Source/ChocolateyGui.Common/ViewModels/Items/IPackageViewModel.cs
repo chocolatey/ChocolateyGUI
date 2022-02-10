@@ -81,6 +81,8 @@ namespace ChocolateyGui.Common.ViewModels.Items
 
         Task Install();
 
+        Task InstallAdvanced();
+
         Task Uninstall();
 
         Task Update();

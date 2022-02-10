@@ -7,6 +7,7 @@
 
 using chocolatey;
 using ChocolateyGui.Common.Attributes;
+using ChocolateyGui.Common.Properties;
 
 namespace ChocolateyGui.Common.Models
 {
@@ -14,79 +15,84 @@ namespace ChocolateyGui.Common.Models
     {
         public string Id { get; set; }
 
-        [LocalizedDescription("SettingsView_ConfigOutdatedPackagesCacheDurationInMinutesDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ConfigOutdatedPackagesCacheDurationInMinutesDescription))]
         [Config]
         public string OutdatedPackagesCacheDurationInMinutes { get; set; }
 
-        [LocalizedDescription("SettingsView_ConfigDefaultSourceName")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ConfigDefaultSourceName))]
         [Config]
         public string DefaultSourceName { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleShowConsoleOutputDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_LanguageDescription))]
+        [Config]
+        public string UseLanguage { get; set; }
+
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleShowConsoleOutputDescription))]
         [Feature]
         public bool? ShowConsoleOutput { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleDefaultTileViewLocalDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleDefaultTileViewLocalDescription))]
         [Feature]
         public bool? DefaultToTileViewForLocalSource { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleDefaultTileViewRemoteDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleDefaultTileViewRemoteDescription))]
         [Feature]
         public bool? DefaultToTileViewForRemoteSource { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleUseDelayedSearchDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleUseDelayedSearchDescription))]
         [Feature]
         public bool? UseDelayedSearch { get; set; }
 
-        [LocalizedDescription("SettingsView_TogglePreventPreloadDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_TogglePreventPreloadDescription))]
         [Feature]
         public bool? PreventPreload { get; set; }
 
-        [LocalizedDescription("SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_TogglePreventAutomatedOutdatedPackagesCheckDescription))]
         [Feature]
         public bool? PreventAutomatedOutdatedPackagesCheck { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleExcludeInstalledPackagesDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleExcludeInstalledPackagesDescription))]
         [Feature]
         public bool? ExcludeInstalledPackages { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleShowAggregatedSourceViewDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleShowAggregatedSourceViewDescription))]
         [Feature]
         public bool? ShowAggregatedSourceView { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleShowAdditionalPackageInformationDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleShowAdditionalPackageInformationDescription))]
         [Feature]
         public bool? ShowAdditionalPackageInformation { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleAllowNonAdminAccessToSettingsDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleAllowNonAdminAccessToSettingsDescription))]
         [Feature]
         public bool? AllowNonAdminAccessToSettings { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleUseKeyboardBindings")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleUseKeyboardBindings))]
         [Feature]
         public bool? UseKeyboardBindings { get; set; }
 
-        [LocalizedDescription("SettingsView_TogglePackageDownloadCountDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_TogglePackageDownloadCountDescription))]
         [Feature]
         public bool? HidePackageDownloadCount { get; set; }
 
-        [LocalizedDescription("SettingsView_TogglePreventAllPackageIconDownloads")]
+        [LocalizedDescription(nameof(Resources.SettingsView_TogglePreventAllPackageIconDownloads))]
         [Feature]
         public bool? PreventAllPackageIconDownloads { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleHideAllRemoteChocolateySources")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleHideAllRemoteChocolateySources))]
         [Feature]
         public bool? HideAllRemoteChocolateySources { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleDefaultToDarkMode")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleDefaultToDarkMode))]
         [Feature]
+
         public bool? DefaultToDarkMode { get; set; }
 
-        [LocalizedDescription("SettingsView_ToggleHideThisPCSourceDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_ToggleHideThisPCSourceDescription))]
         [Feature]
         public bool? HideThisPCSource { get; set; }
 
-        [LocalizedDescription("SettingsView_TogglePreventUsageOfUpdateAllButtonDescription")]
+        [LocalizedDescription(nameof(Resources.SettingsView_TogglePreventUsageOfUpdateAllButtonDescription))]
         [Feature]
         public bool? PreventUsageOfUpdateAllButton { get; set; }
 
@@ -95,26 +101,28 @@ namespace ChocolateyGui.Common.Models
             return @"
 OutdatedPackagesCacheDurationInMinutes: {0}
 DefaultSourceName: {1}
-ShowConsoleOutput: {2}
-DefaultToTileViewForLocalSource: {3}
-DefaultToTileViewForRemoteSource: {4}
-UseDelayedSearch: {5}
-PreventPreload: {6}
-PreventAutomatedOutdatedPackagesCheck: {7}
-ExcludeInstalledPackages: {8}
-ShowAggregatedSourceView: {9}
-ShowAdditionalPackageInformation: {10}
-AllowNonAdminAccessToSettings: {11}
-UseKeyboardBindings: {12}
-HidePackageDownloadCount: {13}
-PreventAllPackageIconDownloads: {14}
-HideAllRemoteChocolateySources: {15}
-DefaultToDarkMode: {16}
-HideThisPCSource: {17}
-PreventUsageOfUpdateAllButton: {18}
+UseLanguage: {2}
+ShowConsoleOutput: {3}
+DefaultToTileViewForLocalSource: {4}
+DefaultToTileViewForRemoteSource: {5}
+UseDelayedSearch: {6}
+PreventPreload: {7}
+PreventAutomatedOutdatedPackagesCheck: {8}
+ExcludeInstalledPackages: {9}
+ShowAggregatedSourceView: {10}
+ShowAdditionalPackageInformation: {11}
+AllowNonAdminAccessToSettings: {12}
+UseKeyboardBindings: {13}
+HidePackageDownloadCount: {14}
+PreventAllPackageIconDownloads: {15}
+HideAllRemoteChocolateySources: {16}
+DefaultToDarkMode: {17}
+HideThisPCSource: {18}
+PreventUsageOfUpdateAllButton: {19}
 ".format_with(
                 OutdatedPackagesCacheDurationInMinutes,
                 DefaultSourceName,
+                UseLanguage,
                 ShowConsoleOutput,
                 DefaultToTileViewForLocalSource,
                 DefaultToTileViewForRemoteSource,

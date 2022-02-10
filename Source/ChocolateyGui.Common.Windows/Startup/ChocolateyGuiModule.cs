@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="ChocolateyGuiModule.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -12,23 +12,26 @@ using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
 using chocolatey;
+using chocolatey.infrastructure.adapters;
 using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.nuget;
 using chocolatey.infrastructure.app.services;
+using chocolatey.infrastructure.cryptography;
 using chocolatey.infrastructure.filesystem;
 using chocolatey.infrastructure.services;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.Utilities;
 using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.ViewModels;
 using ChocolateyGui.Common.Windows.Views;
 using LiteDB;
-using MahApps.Metro.Controls.Dialogs;
 using NuGet;
 using ChocolateySource = chocolatey.infrastructure.app.configuration.ChocolateySource;
+using Environment = System.Environment;
 using PackageViewModel = ChocolateyGui.Common.Windows.ViewModels.Items.PackageViewModel;
 
 namespace ChocolateyGui.Common.Windows.Startup
@@ -47,6 +50,8 @@ namespace ChocolateyGui.Common.Windows.Startup
             builder.RegisterType<ChocolateyConfigurationProvider>().As<IChocolateyConfigurationProvider>().SingleInstance();
             builder.RegisterType<ChocolateyService>().As<IChocolateyService>().SingleInstance();
             builder.RegisterType<DotNetFileSystem>().As<chocolatey.infrastructure.filesystem.IFileSystem>().SingleInstance();
+            builder.RegisterType<PackageArgumentsService>().As<IPackageArgumentsService>().SingleInstance();
+            builder.RegisterType<DefaultEncryptionUtility>().As<IEncryptionUtility>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterAssemblyTypes(viewModelAssembly)
@@ -57,7 +62,7 @@ namespace ChocolateyGui.Common.Windows.Startup
 
             builder.RegisterType<PackageViewModel>().As<IPackageViewModel>();
 
-            var choco = Lets.GetChocolatey();
+            var choco = Lets.GetChocolatey(initializeLogging: true);
             builder.RegisterInstance(choco.Container().GetInstance<IChocolateyConfigSettingsService>())
                 .As<IChocolateyConfigSettingsService>().SingleInstance();
             builder.RegisterInstance(choco.Container().GetInstance<IXmlService>())
@@ -76,6 +81,7 @@ namespace ChocolateyGui.Common.Windows.Startup
             builder.Register<IEventAggregator>(c => new EventAggregator()).InstancePerLifetimeScope();
 
             // Register Services
+            builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
             builder.RegisterType<ProgressService>().As<IProgressService>().SingleInstance();
             builder.RegisterType<PersistenceService>().As<IPersistenceService>().SingleInstance();
             builder.RegisterType<LiteDBFileStorageService>().As<IFileStorageService>().SingleInstance();
@@ -101,11 +107,40 @@ namespace ChocolateyGui.Common.Windows.Startup
 
                 config.CreateMap<ChocolateySource, Common.Models.ChocolateySource>()
                     .ForMember(dest => dest.VisibleToAdminsOnly, opt => opt.MapFrom(src => src.VisibleToAdminOnly));
+
+                config.CreateMap<AdvancedInstallViewModel, AdvancedInstall>()
+                    .ForMember(
+                        dest => dest.DownloadChecksum,
+                        opt => opt.Condition(source => !source.IgnoreChecksums))
+                    .ForMember(
+                        dest => dest.DownloadChecksumType,
+                        opt => opt.Condition(source =>
+                            !source.IgnoreChecksums && !string.IsNullOrEmpty(source.DownloadChecksum)))
+                    .ForMember(
+                        dest => dest.DownloadChecksum64bit,
+                        opt => opt.Condition(source =>
+                            Environment.Is64BitOperatingSystem
+                            && !source.IgnoreChecksums
+                            && !source.Forcex86))
+                    .ForMember(
+                        dest => dest.DownloadChecksumType64bit,
+                        opt => opt.Condition(source =>
+                            Environment.Is64BitOperatingSystem
+                            && !source.IgnoreChecksums
+                            && !source.Forcex86
+                            && !string.IsNullOrEmpty(source.DownloadChecksum64bit)))
+                    .ForMember(
+                        dest => dest.PackageParameters,
+                        opt => opt.Condition(source => !source.SkipPowerShell))
+                    .ForMember(
+                        dest => dest.InstallArguments,
+                        opt => opt.Condition(source => !source.SkipPowerShell && !source.NotSilent));
             });
 
             builder.RegisterType<BundledThemeService>().As<IBundledThemeService>().SingleInstance();
-            builder.RegisterInstance(DialogCoordinator.Instance).As<IDialogCoordinator>();
             builder.RegisterInstance(mapperConfiguration.CreateMapper()).As<IMapper>();
+
+            builder.Register(c => TranslationSource.Instance).SingleInstance();
 
             try
             {
@@ -150,7 +185,7 @@ namespace ChocolateyGui.Common.Windows.Startup
             }
             catch (IOException ex)
             {
-                Bootstrapper.Logger.Error(ex, Resources.Error_DatabaseAccessGui);
+                Bootstrapper.Logger.Error(ex, TranslationSource.Instance[nameof(Resources.Error_DatabaseAccessGui)]);
                 throw;
             }
 

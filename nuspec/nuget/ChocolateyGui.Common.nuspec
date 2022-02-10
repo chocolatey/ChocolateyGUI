@@ -19,6 +19,6 @@ All release notes for Chocolatey GUI can be found on docs site - https://docs.ch
     </releaseNotes>
   </metadata>
   <files>
-    <file src="ChocolateyGui.Common.dll" target="lib/net452" />
+    <file src="ChocolateyGui.Common.dll" target="lib/net48" />
   </files>
 </package>

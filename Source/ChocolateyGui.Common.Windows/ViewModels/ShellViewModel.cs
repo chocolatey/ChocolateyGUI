@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="ShellViewModel.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -187,6 +187,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             else
             {
                 _lastActiveItem = ActiveItem;
+                DeactivateItem(ActiveItem, false);
             }
 
             ActivateItem(newItem);

@@ -171,6 +171,16 @@ namespace ChocolateyGui.Common.Windows.Views
 
         private void SetLanguage(CultureInfo culture)
         {
+            // This was introduced after testing Chocolatey GUI with Chocolatey GUI Licensed Extension.
+            // When installed, and run for the first time, the Culture is null, which we believe is due
+            // to the way that the overriding of the ShellViewModel is done within the Caliburn.Micro
+            // view locator.  Since this only happens on initial loading of Chocolatey GUI, the thought
+            // is to simply return, as this doesn't cause any other known issues.
+            if (culture == null)
+            {
+                return;
+            }
+
             Language = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
             FlowDirection = culture.TextInfo.IsRightToLeft
                 ? FlowDirection.RightToLeft

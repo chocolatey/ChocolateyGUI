@@ -224,8 +224,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SolutionInfo.cs">
-      <Link>Properties\SolutionInfo.cs</Link>
+    <Compile Include="..\SolutionVersion.cs">
+      <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
     <Compile Include="Controls\Dialogs\IClosableDialog.cs" />
     <Compile Include="Controls\Dialogs\IClosableChildWindow.cs" />

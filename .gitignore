@@ -224,5 +224,6 @@ docs/input/tasks
 .DS_Store
 
 SolutionInfo.cs
+SolutionVersion.cs
 
 config.wyam.packages.xml

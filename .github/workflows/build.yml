@@ -25,13 +25,8 @@ jobs:
           key: ${{ runner.os }}-tools-${{ hashFiles('recipe.cake') }}
 
       - name: Build project
-        uses: cake-build/cake-action@v1
-        with:
-          script-path: recipe.cake
-          target: CI
-          verbosity: Normal
-          cake-version: 0.38.5
-          cake-bootstrap: true
+        run: |
+          ./build.ps1 --target=CI
 
       - name: Upload Issues-Report
         uses: actions/upload-artifact@v2

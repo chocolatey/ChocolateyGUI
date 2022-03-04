@@ -2,6 +2,14 @@ name: Build
 
 on:
   push:
+    branches:
+      - master
+      - develop
+      - "feature/**"
+      - "release/**"
+      - "hotfix/**"
+    tags:
+      - "*"
   pull_request:
 
     # Allows you to run this workflow manually from the Actions tab
@@ -21,7 +29,9 @@ jobs:
       - name: Cache Tools
         uses: actions/cache@v2
         with:
-          path: tools
+          path: |
+            tools
+            Source/packages
           key: ${{ runner.os }}-tools-${{ hashFiles('recipe.cake') }}
 
       - name: Build project

@@ -12,18 +12,14 @@ using System.Runtime.InteropServices;
 using System.Windows;
 
 [assembly: AssemblyTitle("Chocolatey GUI")]
-[assembly: AssemblyDescription("GUI for Chocolatey")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
-[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: CLSCompliant(false)]
 
-[assembly: ComVisible(false)]
 [assembly: ThemeInfo(
 
     // where theme specific resource dictionaries are located

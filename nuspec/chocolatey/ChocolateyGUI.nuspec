@@ -35,8 +35,8 @@ All release notes for Chocolatey GUI can be found on the docs site - https://doc
     <file src="chocolateyInstall.ps1" target="tools"/>
     <file src="chocolateyUninstall.ps1" target="tools"/>
     <file src="helper.ps1" target="tools"/>
-    <file src="..\..\BuildArtifacts\ChocolateyGUI.msi" target="tools"/>
-    <file src="..\..\LICENSE.txt" target="tools\LICENSE.txt"/>
+    <file src="..\..\..\ChocolateyGUI.msi" target="tools"/>
+    <file src="..\..\..\..\LICENSE.txt" target="tools\LICENSE.txt"/>
     <file src="VERIFICATION.txt" target="tools"/>
   </files>
 </package>

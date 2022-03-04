@@ -199,6 +199,7 @@ tools/**
 !tools/Addins/packages.config
 !tools/Modules/packages.config
 BuildArtifacts/
+code_drop/
 \.vs/
 
 # Transifex related

@@ -74,7 +74,6 @@ object ChocolateyGUI : BuildType({
 
     features {
         pullRequests {
-            vcsRootExtId = "${DslContext.settingsRoot}"
             provider = github {
                 authType = token {
                     token = "%system.GitHubPAT%"

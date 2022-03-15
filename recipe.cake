@@ -92,6 +92,17 @@ Func<FilePathCollection> getMsisToSign = () =>
     return msisToSign;
 };
 
+var nugetSources = new List<string>
+{
+    "https://www.nuget.org/api/v2/",
+    "https://api.nuget.org/v3/index.json"
+};
+
+if (HasEnvironmentVariable("NUGETDEV_SOURCE"))
+{
+    nugetSources.Add(EnvironmentVariable("NUGETDEV_SOURCE"));
+}
+
 BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./Source",
@@ -110,6 +121,7 @@ BuildParameters.SetParameters(context: Context,
                             getFilesToSign: getFilesToSign,
                             getMsisToSign: getMsisToSign,
                             shouldBuildMsi: true,
+                            nuGetSources: nugetSources,
                             strongNameDependentAssembliesInputPath: string.Format("{0}{1}", ((FilePath)("./Source")).FullPath, "\\packages\\Splat*"));
 
 ToolSettings.SetToolSettings(context: Context,

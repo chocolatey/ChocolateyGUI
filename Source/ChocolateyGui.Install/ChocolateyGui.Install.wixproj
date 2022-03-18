@@ -21,13 +21,13 @@
     <WixTasksPath>$(WixToolPath)wixtasks.dll</WixTasksPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>..\..\BuildArtifacts\</OutputPath>
+    <OutputPath>..\..\code_drop\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
     <SuppressIces>ICE38;ICE43;ICE18;ICE61</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>..\..\BuildArtifacts\</OutputPath>
+    <OutputPath>..\..\code_drop\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <SuppressPdbOutput>True</SuppressPdbOutput>
     <SuppressIces>ICE38;ICE43;ICE18;ICE61</SuppressIces>
@@ -35,8 +35,8 @@
   <PropertyGroup>
   	<_GuiProjectFolder>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\ChocolateyGui'))</_GuiProjectFolder>
   	<_GuiCliProjectFolder>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\ChocolateyGuiCli'))</_GuiCliProjectFolder>
-  	<_GuiTargetDir>$(_GuiProjectFolder)\..\..\BuildArtifacts\temp\_PublishedApplications\ChocolateyGui</_GuiTargetDir>
-    <_GuiCliTargetDir>$(_GuiCliProjectFolder)\..\..\BuildArtifacts\temp\_PublishedApplications\ChocolateyGuiCli</_GuiCliTargetDir>
+  	<_GuiTargetDir>$(_GuiProjectFolder)\..\..\code_drop\temp\_PublishedApps\ChocolateyGui</_GuiTargetDir>
+    <_GuiCliTargetDir>$(_GuiCliProjectFolder)\..\..\code_drop\temp\_PublishedApps\ChocolateyGuiCli</_GuiCliTargetDir>
   	<DefineConstants>$(DefineConstants);GuiProjectFolder=$(_GuiProjectFolder);GuiTargetDir=$(_GuiTargetDir);GuiCliProjectFolder=$(_GuiCliProjectFolder);GuiCliTargetDir=$(_GuiCliTargetDir)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>

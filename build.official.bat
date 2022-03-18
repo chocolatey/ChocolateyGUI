@@ -6,7 +6,7 @@ echo ============= WRAP POWERSHELL SCRIPT =============
 echo ==================================================
 
 echo calling %psscript% with args %*
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& '%psscript%' -Configuration ReleaseOfficial %*"
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& '%psscript%' -Configuration ReleaseOfficial -Target CI %*"
 
 echo ==================================================
 endlocal

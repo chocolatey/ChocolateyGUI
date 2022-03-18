@@ -12,6 +12,7 @@ using Caliburn.Micro;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.Providers;
 using ChocolateyGui.Common.Services;
+using ChocolateyGui.Common.ViewModels;
 using ChocolateyGui.Common.Windows.Commands;
 using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.ViewModels.Items;
@@ -159,7 +160,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
 
             var sourceIndex = obj as int?;
-            return sourceIndex.HasValue && sourceIndex > 0 && sourceIndex <= _sourcesViewModel.Items.Count;
+            return sourceIndex.HasValue && sourceIndex > 0 && sourceIndex <= _sourcesViewModel.Items.Count(vm => !(vm is SourceSeparatorViewModel));
         }
 
         private void GoToSource(object obj)
@@ -169,12 +170,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             {
                 --sourceIndex;
 
-                if (sourceIndex < 0 || sourceIndex > _sourcesViewModel.Items.Count)
+                var items = _sourcesViewModel.Items.Where(vm => !(vm is SourceSeparatorViewModel)).ToList();
+                if (sourceIndex < 0 || sourceIndex > items.Count)
                 {
                     return;
                 }
 
-                _sourcesViewModel.ActivateItem(_sourcesViewModel.Items[sourceIndex.Value]);
+                _sourcesViewModel.ActivateItem(items[sourceIndex.Value]);
             }
         }
 

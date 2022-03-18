@@ -1242,7 +1242,7 @@ Please contact your System Administrator to enable this operation.</value>
     <value>Prevents the ability for user to use the Update All button. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
   </data>
   <data name="LocalSourceViewModel_ExportComplete" xml:space="preserve">
-    <value>All the currrently installed packages have been exported to {0}</value>
+    <value>All the currently installed packages have been exported to {0}</value>
     <comment>{0} = The path to where the exported packages have been placed</comment>
   </data>
   <data name="SettingsView_Language" xml:space="preserve">

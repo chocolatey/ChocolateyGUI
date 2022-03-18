@@ -14,15 +14,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Chocolatey GUI CLI")]
-[assembly: AssemblyDescription("Command line access to the Chocolatey GUI Configuration Database")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
-[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: CLSCompliant(false)]
-
-[assembly: ComVisible(false)]

@@ -199,6 +199,7 @@ tools/**
 !tools/Addins/packages.config
 !tools/Modules/packages.config
 BuildArtifacts/
+code_drop/
 \.vs/
 
 # Transifex related
@@ -223,5 +224,6 @@ docs/input/tasks
 .DS_Store
 
 SolutionInfo.cs
+SolutionVersion.cs
 
 config.wyam.packages.xml

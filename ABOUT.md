@@ -12,4 +12,4 @@ Since then, with a set of major contributions from [Richard Simpson](https://twi
 
 ## Support
 
-If you have any questions, comments, concerns, or problems with Chocolatey GUI, please feel free to get in touch with us.  The best starting place would be our [Community Chat Room](https://ch0.co/community), and from there, you may be directed to raise an issue on our [Issues List](https://github.com/chocolatey/ChocolateyGUI/issues).
+If you have any questions, comments, concerns, or problems with Chocolatey GUI, please feel free to get in touch with us.  The best starting place would be our [Community Chat Room](https://ch0.co/community), and from there, you may be directed to raise an issue on our [Issues List](https://github.com/chocolatey/ChocolateyGUI/issues).Before raising an issue, just crosscheck if there is an issue already present to avoid duplication.

@@ -25,17 +25,15 @@ This uses the public Chocolatey GUI feed which is hosted on [MyGet.org](https://
 
 Come join in the conversation about Chocolatey GUI in our Community Chat Room
 
-
 [![Discord](https://img.shields.io/discord/778552361454141460?logo=Discord)](https://ch0.co/community)
 
 Or, you can find us in IRC at #chocolatey.
 
 ## Information
 
-* [Community Feed aka Chocolatey.org](https://chocolatey.org) (if this is down, try the backup at <http://chocolatey.apphb.com> )
-* [Mailing List/Forum](http://groups.google.com/group/chocolateygui)
+* [Chocolatey Community Repository](https://community.chocolatey.org)
+* [Chocolatey Documentation](https://docs.chocolatey.org)
 * [Twitter](https://twitter.com/chocolateynuget)
-* [Build Status Email List](http://groups.google.com/group/chocolatey-build-status)
 
 ### Documentation
 

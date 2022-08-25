@@ -172,8 +172,8 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: false);
-                choco.Set(
+                var currentConfig = _choco.GetConfiguration();
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.install.ToString();
@@ -244,7 +244,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
                 using (logger.Intercept(grabErrors))
                 {
-                    await choco.RunAsync();
+                    await _choco.RunAsync();
 
                     if (Environment.ExitCode != 0)
                     {
@@ -252,6 +252,10 @@ namespace ChocolateyGui.Common.Windows.Services
                         return new PackageOperationResult { Successful = false, Messages = errors.ToArray() };
                     }
 
+                    _choco.Set(config =>
+                    {
+                        config = currentConfig;
+                    });
                     return PackageOperationResult.SuccessfulCached;
                 }
             }

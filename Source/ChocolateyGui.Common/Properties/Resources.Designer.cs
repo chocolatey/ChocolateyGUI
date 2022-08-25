@@ -1974,7 +1974,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All the currrently installed packages have been exported to {0}.
+        ///   Looks up a localized string similar to All the currently installed packages have been exported to {0}.
         /// </summary>
         public static string LocalSourceViewModel_ExportComplete {
             get {

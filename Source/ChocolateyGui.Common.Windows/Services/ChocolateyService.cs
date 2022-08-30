@@ -37,6 +37,7 @@ namespace ChocolateyGui.Common.Windows.Services
         private static readonly AsyncReaderWriterLock Lock = new AsyncReaderWriterLock();
         private readonly IMapper _mapper;
         private readonly IProgressService _progressService;
+        private readonly IChocolateyConfigSettingsService _configSettingsService;
         private readonly IXmlService _xmlService;
         private readonly IFileSystem _fileSystem;
         private readonly IConfigService _configService;
@@ -45,10 +46,11 @@ namespace ChocolateyGui.Common.Windows.Services
 #pragma warning disable SA1401 // Fields must be private
 #pragma warning restore SA1401 // Fields must be private
 
-        public ChocolateyService(IMapper mapper, IProgressService progressService, IXmlService xmlService, IFileSystem fileSystem, IConfigService configService)
+        public ChocolateyService(IMapper mapper, IProgressService progressService, IChocolateyConfigSettingsService configSettingsService, IXmlService xmlService, IFileSystem fileSystem, IConfigService configService)
         {
             _mapper = mapper;
             _progressService = progressService;
+            _configSettingsService = configSettingsService;
             _xmlService = xmlService;
             _fileSystem = fileSystem;
             _configService = configService;
@@ -495,8 +497,8 @@ namespace ChocolateyGui.Common.Windows.Services
             // we need to read all information from the config file, i.e. the username and password
             var config = await GetConfigFile();
             var allSources = config.Sources.Select(_mapper.Map<ChocolateySource>).ToArray();
-            var configSettingsService = new ChocolateyConfigSettingsService(_xmlService);
-            var filteredSourceIds = configSettingsService.source_list(_choco.GetConfiguration()).Select(s => s.Id).ToArray();
+
+            var filteredSourceIds = _configSettingsService.source_list(_choco.GetConfiguration()).Select(s => s.Id).ToArray();
 
             var mappedSources = allSources.Where(s => filteredSourceIds.Contains(s.Id)).ToArray();
             return mappedSources;

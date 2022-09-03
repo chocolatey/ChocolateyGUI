@@ -172,13 +172,13 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var currentConfig = _choco.GetConfiguration();
                 _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.install.ToString();
                             config.PackageNames = id;
                             config.Features.UsePackageExitCodes = false;
+                            config.Verbose = true;
 
                             if (version != null)
                             {
@@ -238,9 +238,7 @@ namespace ChocolateyGui.Common.Windows.Services
                                 config.DownloadChecksumType64 = advancedInstallOptions.DownloadChecksumType64bit;
                             }
                         });
-                var chocoResult = await RunCommand(_choco, logger);
-                _choco.Set(config => { config = currentConfig; });
-                return chocoResult;
+                return await RunCommand(_choco, logger);
             }
         }
 
@@ -338,13 +336,13 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var currentConfig = _choco.GetConfiguration();
                 _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.uninstall.ToString();
                             config.PackageNames = id;
                             config.Features.UsePackageExitCodes = false;
+                            config.Verbose = true;
 
                             if (version != null)
                             {
@@ -352,12 +350,7 @@ namespace ChocolateyGui.Common.Windows.Services
                             }
                         });
 
-                var chocoResult = await RunCommand(_choco, logger);
-                _choco.Set(config =>
-                {
-                    config = currentConfig;
-                });
-                return chocoResult;
+                return await RunCommand(_choco, logger);
             }
         }
 
@@ -366,17 +359,15 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var currentConfig = _choco.GetConfiguration();
                 _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.upgrade.ToString();
                             config.PackageNames = id;
                             config.Features.UsePackageExitCodes = false;
+                            config.Verbose = true;
                         });
-                var chocoReturn = await RunCommand(_choco, logger);
-                _choco.Set(config => { config = currentConfig; });
-                return chocoReturn;
+                return await RunCommand(_choco, logger);
             }
         }
 

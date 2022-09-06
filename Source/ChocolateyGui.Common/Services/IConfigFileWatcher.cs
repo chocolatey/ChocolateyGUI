@@ -5,9 +5,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.IO;
+
 namespace ChocolateyGui.Common.Services
 {
     public interface IConfigFileWatcher
     {
+        void OnConfigFileChanged(object sender, FileSystemEventArgs e);
     }
 }

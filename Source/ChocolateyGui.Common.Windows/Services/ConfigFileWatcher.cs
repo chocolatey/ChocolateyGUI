@@ -21,7 +21,7 @@ namespace ChocolateyGui.Common.Windows.Services
         private readonly IEventAggregator _eventAggregator;
         private readonly FileSystemWatcher _fileSystemWatcher;
         private readonly IXmlService _xmlService;
-        private readonly string _configFile = chocolatey.infrastructure.app.ApplicationParameters.GlobalConfigFileLocation;
+        private readonly string _configFilePath = chocolatey.infrastructure.app.ApplicationParameters.GlobalConfigFileLocation;
         private int _lastKnownConfigFileHash;
 
         public ConfigFileWatcher(IFileSystem fileSystem, IEventAggregator eventAggregator, IXmlService xmlService)
@@ -31,18 +31,18 @@ namespace ChocolateyGui.Common.Windows.Services
             _xmlService = xmlService;
             _fileSystemWatcher = new FileSystemWatcher
             {
-                Path = _fileSystem.get_directory_name(_configFile),
-                Filter = _fileSystem.get_file_name(_configFile),
+                Path = _fileSystem.get_directory_name(_configFilePath),
+                Filter = _fileSystem.get_file_name(_configFilePath),
                 NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName,
             };
-            _fileSystemWatcher.Changed += ConfigFileChanged;
+            _fileSystemWatcher.Changed += OnConfigFileChanged;
             _fileSystemWatcher.EnableRaisingEvents = true;
-            _lastKnownConfigFileHash = _xmlService.deserialize<ConfigFileSettings>(_configFile).GetHashCode();
+            _lastKnownConfigFileHash = _xmlService.deserialize<ConfigFileSettings>(_configFilePath).GetHashCode();
         }
 
-        private void ConfigFileChanged(object sender, FileSystemEventArgs e)
+        public void OnConfigFileChanged(object sender, FileSystemEventArgs e)
         {
-            var currentSettingsHash = _xmlService.deserialize<ConfigFileSettings>(_configFile).GetHashCode();
+            var currentSettingsHash = _xmlService.deserialize<ConfigFileSettings>(_configFilePath).GetHashCode();
             if (currentSettingsHash != _lastKnownConfigFileHash)
             {
                 _eventAggregator.PublishOnUIThread(new SourcesUpdatedMessage());

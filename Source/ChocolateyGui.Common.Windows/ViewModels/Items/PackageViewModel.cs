@@ -479,9 +479,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                var confirmationResult = await _dialogService.ShowConfirmationMessageAsync(
-                    L(nameof(Resources.Dialog_AreYouSureTitle)),
-                    L(nameof(Resources.Dialog_AreYouSureReinstallMessage), Id));
+                var confirmationResult = MessageDialogResult.Affirmative;
+                if (!_configService.GetEffectiveConfiguration().SkipModalDialogConfirmation.GetValueOrDefault(false))
+                {
+                    confirmationResult = await _dialogService.ShowConfirmationMessageAsync(
+                        L(nameof(Resources.Dialog_AreYouSureTitle)),
+                        L(nameof(Resources.Dialog_AreYouSureReinstallMessage), Id));
+                }
 
                 if (confirmationResult == MessageDialogResult.Affirmative)
                 {
@@ -506,9 +510,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
         {
             try
             {
-                var confirmationResult = await _dialogService.ShowConfirmationMessageAsync(
+                var confirmationResult = MessageDialogResult.Affirmative;
+                if (!_configService.GetEffectiveConfiguration().SkipModalDialogConfirmation.GetValueOrDefault(false))
+                {
+                    confirmationResult = await _dialogService.ShowConfirmationMessageAsync(
                     L(nameof(Resources.Dialog_AreYouSureTitle)),
                     L(nameof(Resources.Dialog_AreYouSureUninstallMessage), Id));
+                }
 
                 if (confirmationResult == MessageDialogResult.Affirmative)
                 {

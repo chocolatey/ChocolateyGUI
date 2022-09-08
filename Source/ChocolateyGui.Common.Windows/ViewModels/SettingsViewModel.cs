@@ -365,9 +365,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async Task PurgeIconCache()
         {
-            var result = await _dialogService.ShowConfirmationMessageAsync(
-                L(nameof(Resources.Dialog_AreYouSureTitle)),
-                L(nameof(Resources.Dialog_AreYouSureIconsMessage)));
+            var result = MessageDialogResult.Affirmative;
+            if (!_config.SkipModalDialogConfirmation.GetValueOrDefault(false))
+            {
+                result = await _dialogService.ShowConfirmationMessageAsync(
+                    L(nameof(Resources.Dialog_AreYouSureTitle)),
+                    L(nameof(Resources.Dialog_AreYouSureIconsMessage)));
+            }
 
             if (result == MessageDialogResult.Affirmative)
             {
@@ -377,9 +381,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async Task PurgeOutdatedPackagesCache()
         {
-            var result = await _dialogService.ShowConfirmationMessageAsync(
-                L(nameof(Resources.Dialog_AreYouSureTitle)),
-                L(nameof(Resources.Dialog_AreYouSureOutdatedPackagesMessage)));
+            var result = MessageDialogResult.Affirmative;
+            if (!_config.SkipModalDialogConfirmation.GetValueOrDefault(false))
+            {
+                result = await _dialogService.ShowConfirmationMessageAsync(
+                    L(nameof(Resources.Dialog_AreYouSureTitle)),
+                    L(nameof(Resources.Dialog_AreYouSureOutdatedPackagesMessage)));
+            }
 
             if (result == MessageDialogResult.Affirmative)
             {
@@ -462,9 +470,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async Task Remove()
         {
-            var result = await _dialogService.ShowConfirmationMessageAsync(
-                L(nameof(Resources.Dialog_AreYouSureTitle)),
-                L(nameof(Resources.Dialog_AreYourSureRemoveSourceMessage), _originalId));
+            var result = MessageDialogResult.Affirmative;
+            if (!_config.SkipModalDialogConfirmation.GetValueOrDefault(false))
+            {
+                result = await _dialogService.ShowConfirmationMessageAsync(
+                    L(nameof(Resources.Dialog_AreYouSureTitle)),
+                    L(nameof(Resources.Dialog_AreYourSureRemoveSourceMessage), _originalId));
+            }
 
             if (result == MessageDialogResult.Affirmative)
             {

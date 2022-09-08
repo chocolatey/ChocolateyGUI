@@ -205,9 +205,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             try
             {
-                var result = await _dialogService.ShowConfirmationMessageAsync(
-                    L(nameof(Resources.Dialog_AreYouSureTitle)),
-                    L(nameof(Resources.Dialog_AreYouSureUpdateAllMessage)));
+                var result = MessageDialogResult.Affirmative;
+                if (!_configService.GetEffectiveConfiguration().SkipModalDialogConfirmation.GetValueOrDefault(false))
+                {
+                    result = await _dialogService.ShowConfirmationMessageAsync(
+                        L(nameof(Resources.Dialog_AreYouSureTitle)),
+                        L(nameof(Resources.Dialog_AreYouSureUpdateAllMessage)));
+                }
 
                 if (result == MessageDialogResult.Affirmative)
                 {

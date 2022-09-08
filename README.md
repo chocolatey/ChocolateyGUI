@@ -16,15 +16,14 @@ This uses the public Chocolatey GUI feed which is hosted on [MyGet.org](https://
 
 ## Build Status
 
-TeamCity  | Appveyor
-------------- | -------------
-[![TeamCity Build Status](http://img.shields.io/teamcity/codebetter/bt613.svg)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt613) | [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/t7p3ywv3msu5ahl7/branch/develop?svg=true)](https://ci.appveyor.com/project/chocolatey/chocolateygui/branch/develop)
+| GitHub Action                                                                                                                                                                                                  |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/chocolatey/ChocolateyGUI/Build/develop?logo=github)](https://github.com/chocolatey/ChocolateyGUI/actions/workflows/build.yml)  |
 
 
 ## Chat Room
 
 Come join in the conversation about Chocolatey GUI in our Community Chat Room
-
 
 [![Discord](https://img.shields.io/discord/778552361454141460?logo=Discord)](https://ch0.co/community)
 
@@ -86,7 +85,7 @@ If you would like to contribute code or help squash a bug or two, that's awesome
    refreshenv
    ```
 * Install WiX toolset integration for your Visual Studio Integration from [here](https://marketplace.visualstudio.com/items?itemName=WixToolset.WixToolsetVisualStudio2019Extension)
-* From and **Administrative** PowerShell Window, navigate to the folder where you have cloned the Chocolatey GUI repository and run `build.ps1`, this will run Cake and it will go through the build script.
+* From an **Administrative** PowerShell Window, navigate to the folder where you have cloned the Chocolatey GUI repository and run `build.ps1`, this will run Cake and it will go through the build script.
   ```
   ./build.ps1
   ```

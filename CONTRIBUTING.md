@@ -106,6 +106,12 @@ The only reasons a pull request should be closed and resubmitted are as follows:
   * When the pull request is targeting the wrong branch (this doesn't happen as often).
   * When there are updates made to the original by someone other than the original contributor. Then the old branch is closed with a note on the newer branch this supersedes #github_number.
 
+### Testing
+
+There are some barebones Pester tests used to test the very basic functionalities of `chocolateyguicli`. These require Pester version 5.3.1 or newer. They can be launched by running `Invoke-Pester` within the `Tests` directory of the repository.
+
+It is **not currently** expected that these Pester tests are run before submitting a PR. Their purpose at the moment is to establish a base to build upon.
+
 ### Debugging with Chocolatey library information
 
 In order to debug Chocolatey GUI, you need Chocolatey.Lib referenced in the project to match the Chocolatey version installed locally on your system. The easiest way to do this is to run `./Update-DebugConfiguration.ps1` from the root of the repository.

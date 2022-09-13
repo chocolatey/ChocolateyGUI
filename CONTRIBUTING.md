@@ -106,6 +106,16 @@ The only reasons a pull request should be closed and resubmitted are as follows:
   * When the pull request is targeting the wrong branch (this doesn't happen as often).
   * When there are updates made to the original by someone other than the original contributor. Then the old branch is closed with a note on the newer branch this supersedes #github_number.
 
+### Debugging with Chocolatey library information
+
+In order to debug Chocolatey GUI, you need Chocolatey.Lib referenced in the project to match the Chocolatey version installed locally on your system. The easiest way to do this is to run `./Update-DebugConfiguration.ps1` from the root of the repository.
+
+> :warning: **NOTE**
+>
+> You will need to have `nuget.commandline` installed for this script to work.
+>
+> You will also want to **not** commit the changes this script makes to the `.csproj` and `packages.config` files. As such, if you're making changes that would modify any of these files, it is recommended to make those changes, commit, then run the `./Update-DebugConfiguration.ps1` script.
+
 ## Other General Information
 
 If you reformat code or hit core functionality without an approval from a person on the Chocolatey Team, it's likely that no matter how awesome it looks afterwards, it will probably not get accepted. Reformatting code makes it harder for us to evaluate exactly what was changed.

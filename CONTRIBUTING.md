@@ -110,7 +110,7 @@ The only reasons a pull request should be closed and resubmitted are as follows:
 
 In order to debug Chocolatey GUI, you need Chocolatey.Lib referenced in the project to match the Chocolatey version installed locally on your system. The easiest way to do this is to run `./Update-DebugConfiguration.ps1` from the root of the repository.
 
-> :warning: **Note:**
+> :warning: **NOTE**
 >
 > You will need to have `nuget.commandline` installed for this script to work.
 >

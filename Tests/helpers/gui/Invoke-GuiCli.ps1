@@ -1,12 +1,12 @@
 function Invoke-GuiCli {
     <#
         .Synopsis
-            Helper function to call chocolatey with any number of specified arguments,
+            Helper function to call chocolateyguicli with any number of specified arguments,
             and return a hashtable with the output as well as the exit code.
     #>
     [CmdletBinding()]
     param(
-        # The arguments to use when calling the Choco executable
+        # The arguments to use when calling the chocolateyguicli executable
         [Parameter(Position = 1, ValueFromRemainingArguments)]
         [string[]]$Arguments
     )

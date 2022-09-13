@@ -1,10 +1,9 @@
-Import-Module helpers/gui-helpers
+Import-Module ./helpers/gui-helpers.psm1
 
 Describe "chocolateyguicli" -Tag ChocolateyGuiCli {
     BeforeDiscovery {
         # Perhaps a better way is to pull these from the LiteDB similar to how we do features from the xml in CLI, but this will do for an initial setup.
-        $Features = (Invoke-GuiCli feature list -r).Lines | ConvertFrom-Csv -Delimiter '|' -Header Name, state, description | Select-Object Name, @{Name = 'enabled'; Expression = { $_.state -eq 'Enabled' } }
-        $Features | Out-string | write-host
+        $Features = Get-GuiFeature
     }
 
     Context "Basic CLI functionality" {

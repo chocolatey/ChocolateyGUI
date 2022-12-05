@@ -1,4 +1,4 @@
-#load nuget:?package=Chocolatey.Cake.Recipe&version=0.19.0
+#load nuget:?package=Chocolatey.Cake.Recipe&version=0.20.1
 
 ///////////////////////////////////////////////////////////////////////////////
 // MODULES
@@ -112,8 +112,7 @@ BuildParameters.SetParameters(context: Context,
                             shouldBuildMsi: true,
                             strongNameDependentAssembliesInputPath: string.Format("{0}{1}", ((FilePath)("./Source")).FullPath, "\\packages\\Splat*"));
 
-ToolSettings.SetToolSettings(context: Context,
-                            buildMSBuildToolVersion: MSBuildToolVersion.VS2019);
+ToolSettings.SetToolSettings(context: Context);
 
 BuildParameters.PrintParameters(Context);
 

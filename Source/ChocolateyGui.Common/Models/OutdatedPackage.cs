@@ -6,7 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Xml.Serialization;
-using NuGet;
+using NuGet.Versioning;
 
 namespace ChocolateyGui.Common.Models
 {
@@ -17,9 +17,9 @@ namespace ChocolateyGui.Common.Models
         public string VersionString { get; set;  }
 
         [XmlIgnore]
-        public SemanticVersion Version
+        public NuGetVersion Version
         {
-            get { return new SemanticVersion(VersionString); }
+            get { return NuGetVersion.Parse(VersionString); }
         }
     }
 }

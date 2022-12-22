@@ -5,7 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NuGet;
+using NuGet.Versioning;
 
 namespace ChocolateyGui.Common.Models.Messages
 {
@@ -20,7 +20,7 @@ namespace ChocolateyGui.Common.Models.Messages
 
     public class PackageChangedMessage
     {
-        public PackageChangedMessage(string id, PackageChangeType changeType, SemanticVersion version = null)
+        public PackageChangedMessage(string id, PackageChangeType changeType, NuGetVersion version = null)
         {
             Id = id;
             ChangeType = changeType;
@@ -29,7 +29,7 @@ namespace ChocolateyGui.Common.Models.Messages
 
         public string Id { get; }
 
-        public SemanticVersion Version { get; }
+        public NuGetVersion Version { get; }
 
         public PackageChangeType ChangeType { get; }
     }

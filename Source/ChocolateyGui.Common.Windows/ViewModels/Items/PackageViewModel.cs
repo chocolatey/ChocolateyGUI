@@ -20,7 +20,7 @@ using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Views;
 using MahApps.Metro.Controls.Dialogs;
-using NuGet;
+using NuGet.Versioning;
 using Action = System.Action;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
@@ -84,7 +84,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private DateTime _lastUpdated;
 
-        private SemanticVersion _latestVersion;
+        private NuGetVersion _latestVersion;
 
         private string _licenseUrl = string.Empty;
 
@@ -114,7 +114,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private string _title;
 
-        private SemanticVersion _version;
+        private NuGetVersion _version;
 
         private int _versionDownloadCount;
 
@@ -314,7 +314,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             set { SetPropertyValue(ref _language, value); }
         }
 
-        public SemanticVersion LatestVersion
+        public NuGetVersion LatestVersion
         {
             get { return _latestVersion; }
             set { SetPropertyValue(ref _latestVersion, value); }
@@ -404,7 +404,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             set { SetPropertyValue(ref _title, value); }
         }
 
-        public SemanticVersion Version
+        public NuGetVersion Version
         {
             get { return _version; }
             set { SetPropertyValue(ref _version, value); }

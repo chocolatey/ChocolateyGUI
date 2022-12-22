@@ -23,6 +23,7 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Utilities;
 using Microsoft.VisualStudio.Threading;
 using NuGet;
+using NuGet.Versioning;
 using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;
 using IFileSystem = chocolatey.infrastructure.filesystem.IFileSystem;
 
@@ -323,7 +324,7 @@ namespace ChocolateyGui.Common.Windows.Services
             return GetMappedPackage(_choco, new PackageResult(nugetPackage, null, chocoConfig.Sources), _mapper);
         }
 
-        public async Task<List<SemanticVersion>> GetAvailableVersionsForPackageIdAsync(string id, int page, int pageSize, bool includePreRelease)
+        public async Task<List<NuGetVersion>> GetAvailableVersionsForPackageIdAsync(string id, int page, int pageSize, bool includePreRelease)
         {
             _choco.Set(
                 config =>
@@ -343,7 +344,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 });
             var chocoConfig = _choco.GetConfiguration();
             var packages = await _choco.ListAsync<PackageResult>();
-            return packages.Select(p => new SemanticVersion(p.Version)).OrderByDescending(p => p.Version).ToList();
+            return packages.Select(p => NuGetVersion.Parse(p.Version)).OrderByDescending(p => p.Version).ToList();
         }
 
         public async Task<PackageOperationResult> UninstallPackage(string id, string version, bool force = false)
@@ -628,7 +629,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
                 mappedPackage.IsSideBySide = packageInfo.IsSideBySide;
 
-                mappedPackage.IsPrerelease = !string.IsNullOrWhiteSpace(mappedPackage.Version.SpecialVersion);
+                mappedPackage.IsPrerelease = mappedPackage.Version.IsPrerelease;
 
                 // Add a sanity check here for pre-release packages
                 // By default, pre-release packages are marked as IsLatestVersion = false, however, IsLatestVersion is

@@ -6,7 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using NuGet;
+using NuGet.Versioning;
 
 namespace ChocolateyGui.Common.Models
 {
@@ -72,7 +72,7 @@ namespace ChocolateyGui.Common.Models
 
         public string Title { get; set; }
 
-        public SemanticVersion Version { get; set; }
+        public NuGetVersion Version { get; set; }
 
         public int VersionDownloadCount { get; set; }
     }

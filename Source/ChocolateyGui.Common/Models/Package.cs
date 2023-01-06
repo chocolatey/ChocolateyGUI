@@ -28,15 +28,11 @@ namespace ChocolateyGui.Common.Models
 
         public string Id { get; set; }
 
-        public bool IsAbsoluteLatestVersion { get; set; }
-
         public bool IsInstalled { get; set; }
 
         public bool IsPinned { get; set; }
 
         public bool IsSideBySide { get; set; }
-
-        public bool IsLatestVersion { get; set; }
 
         public bool IsPrerelease { get; set; }
 

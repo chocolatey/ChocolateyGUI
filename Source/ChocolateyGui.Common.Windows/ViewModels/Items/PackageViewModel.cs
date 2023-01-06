@@ -68,15 +68,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private string _id;
 
-        private bool _isAbsoluteLatestVersion;
+        private bool _isOutdated;
 
         private bool _isInstalled;
 
         private bool _isPinned;
 
         private bool _isSideBySide;
-
-        private bool _isLatestVersion;
 
         private bool _isPrerelease;
 
@@ -173,7 +171,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public bool IsUninstallAllowed => _allowedCommandsService.IsUninstallCommandAllowed;
 
-        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && !IsLatestVersion;
+        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && IsOutdated;
 
         public bool IsUpgradeAllowed => _allowedCommandsService.IsUpgradeCommandAllowed;
 
@@ -232,12 +230,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             get { return Id.ToLowerInvariant(); }
         }
 
-        public bool IsAbsoluteLatestVersion
-        {
-            get { return _isAbsoluteLatestVersion; }
-            set { SetPropertyValue(ref _isAbsoluteLatestVersion, value); }
-        }
-
         public bool IsInstalled
         {
             get
@@ -286,16 +278,16 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             }
         }
 
-        public bool IsLatestVersion
+        public bool IsOutdated
         {
             get
             {
-                return _isLatestVersion;
+                return _isOutdated;
             }
 
             set
             {
-                if (SetPropertyValue(ref _isLatestVersion, value))
+                if (SetPropertyValue(ref _isOutdated, value))
                 {
                     NotifyPropertyChanged(nameof(CanUpdate));
                 }
@@ -713,7 +705,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             }
 
             LatestVersion = message.Version;
-            IsLatestVersion = false;
+            IsOutdated = true;
         }
 
         private async Task InstallPackage(string version, AdvancedInstall advancedOptions = null)

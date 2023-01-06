@@ -31,15 +31,13 @@ namespace ChocolateyGui.Common.ViewModels.Items
 
         string Id { get; set; }
 
-        bool IsAbsoluteLatestVersion { get; set; }
+        bool IsOutdated { get; set; }
 
         bool IsInstalled { get; set; }
 
         bool IsPinned { get; set; }
 
         bool IsSideBySide { get; set; }
-
-        bool IsLatestVersion { get; set; }
 
         bool IsPrerelease { get; set; }
 

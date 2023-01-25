@@ -257,7 +257,7 @@
                 <TextBlock.Visibility>
                     <MultiBinding Converter="{StaticResource MultiBooleanAndToVisibility}">
                         <Binding Path="IsInstalled" />
-                        <Binding Path="IsLatestVersion" Converter="{StaticResource BooleanInverter}" />
+                        <Binding Path="IsOutdated" />
                     </MultiBinding>
                 </TextBlock.Visibility>
             </TextBlock>
@@ -277,7 +277,7 @@
                 <TextBlock.Visibility>
                     <MultiBinding Converter="{StaticResource MultiBooleanAndToVisibility}">
                         <Binding Path="IsInstalled" />
-                        <Binding Path="IsLatestVersion" />
+                        <Binding Path="IsOutdated" Converter="{StaticResource BooleanInverter}" />
                     </MultiBinding>
                 </TextBlock.Visibility>
             </TextBlock>

@@ -7,7 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
-using NuGet;
+using NuGet.Versioning;
 
 namespace ChocolateyGui.Common.ViewModels.Items
 {
@@ -31,7 +31,7 @@ namespace ChocolateyGui.Common.ViewModels.Items
 
         string Id { get; set; }
 
-        bool IsAbsoluteLatestVersion { get; set; }
+        bool IsOutdated { get; set; }
 
         bool IsInstalled { get; set; }
 
@@ -39,13 +39,11 @@ namespace ChocolateyGui.Common.ViewModels.Items
 
         bool IsSideBySide { get; set; }
 
-        bool IsLatestVersion { get; set; }
-
         bool IsPrerelease { get; set; }
 
         string Language { get; set; }
 
-        SemanticVersion LatestVersion { get; }
+        NuGetVersion LatestVersion { get; }
 
         string LicenseUrl { get; set; }
 
@@ -75,7 +73,7 @@ namespace ChocolateyGui.Common.ViewModels.Items
 
         string Title { get; set; }
 
-        SemanticVersion Version { get; set; }
+        NuGetVersion Version { get; set; }
 
         int VersionDownloadCount { get; set; }
 

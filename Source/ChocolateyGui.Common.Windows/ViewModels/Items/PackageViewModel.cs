@@ -20,7 +20,7 @@ using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Views;
 using MahApps.Metro.Controls.Dialogs;
-using NuGet;
+using NuGet.Versioning;
 using Action = System.Action;
 using MemoryCache = System.Runtime.Caching.MemoryCache;
 
@@ -68,7 +68,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private string _id;
 
-        private bool _isAbsoluteLatestVersion;
+        private bool _isOutdated;
 
         private bool _isInstalled;
 
@@ -76,15 +76,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private bool _isSideBySide;
 
-        private bool _isLatestVersion;
-
         private bool _isPrerelease;
 
         private string _language;
 
         private DateTime _lastUpdated;
 
-        private SemanticVersion _latestVersion;
+        private NuGetVersion _latestVersion;
 
         private string _licenseUrl = string.Empty;
 
@@ -114,7 +112,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private string _title;
 
-        private SemanticVersion _version;
+        private NuGetVersion _version;
 
         private int _versionDownloadCount;
 
@@ -173,7 +171,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public bool IsUninstallAllowed => _allowedCommandsService.IsUninstallCommandAllowed;
 
-        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && !IsLatestVersion;
+        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && IsOutdated;
 
         public bool IsUpgradeAllowed => _allowedCommandsService.IsUpgradeCommandAllowed;
 
@@ -232,12 +230,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             get { return Id.ToLowerInvariant(); }
         }
 
-        public bool IsAbsoluteLatestVersion
-        {
-            get { return _isAbsoluteLatestVersion; }
-            set { SetPropertyValue(ref _isAbsoluteLatestVersion, value); }
-        }
-
         public bool IsInstalled
         {
             get
@@ -286,16 +278,16 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             }
         }
 
-        public bool IsLatestVersion
+        public bool IsOutdated
         {
             get
             {
-                return _isLatestVersion;
+                return _isOutdated;
             }
 
             set
             {
-                if (SetPropertyValue(ref _isLatestVersion, value))
+                if (SetPropertyValue(ref _isOutdated, value))
                 {
                     NotifyPropertyChanged(nameof(CanUpdate));
                 }
@@ -314,7 +306,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             set { SetPropertyValue(ref _language, value); }
         }
 
-        public SemanticVersion LatestVersion
+        public NuGetVersion LatestVersion
         {
             get { return _latestVersion; }
             set { SetPropertyValue(ref _latestVersion, value); }
@@ -404,7 +396,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             set { SetPropertyValue(ref _title, value); }
         }
 
-        public SemanticVersion Version
+        public NuGetVersion Version
         {
             get { return _version; }
             set { SetPropertyValue(ref _version, value); }
@@ -713,7 +705,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             }
 
             LatestVersion = message.Version;
-            IsLatestVersion = false;
+            IsOutdated = true;
         }
 
         private async Task InstallPackage(string version, AdvancedInstall advancedOptions = null)

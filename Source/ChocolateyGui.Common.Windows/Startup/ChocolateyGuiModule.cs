@@ -29,7 +29,7 @@ using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.ViewModels;
 using ChocolateyGui.Common.Windows.Views;
 using LiteDB;
-using NuGet;
+using NuGet.Protocol.Core.Types;
 using ChocolateySource = chocolatey.infrastructure.app.configuration.ChocolateySource;
 using Environment = System.Environment;
 using PackageViewModel = ChocolateyGui.Common.Windows.ViewModels.Items.PackageViewModel;
@@ -94,10 +94,11 @@ namespace ChocolateyGui.Common.Windows.Startup
                 config.CreateMap<IPackageViewModel, IPackageViewModel>()
                     .ForMember(vm => vm.IsInstalled, options => options.Ignore());
 
-                config.CreateMap<DataServicePackage, Package>()
+                config.CreateMap<IPackageSearchMetadata, Package>()
+                    .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Identity.Version))
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Identity.Id))
                     .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.Authors.Split(',')))
                     .ForMember(dest => dest.Owners, opt => opt.MapFrom(src => src.Owners.Split(',')));
-                config.CreateMap<IPackage, Package>();
 
                 config.CreateMap<ConfigFileFeatureSetting, ChocolateyFeature>();
                 config.CreateMap<ConfigFileConfigSetting, ChocolateySetting>();

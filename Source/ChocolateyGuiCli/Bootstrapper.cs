@@ -72,7 +72,13 @@ namespace ChocolateyGuiCli
 
             Logger = Log.Logger = logConfig.CreateLogger();
 
-            Container = AutoFacConfiguration.RegisterAutoFac(LicensedChocolateyGuiAssemblySimpleName, LicensedGuiAssemblyLocation);
+#if FORCE_CHOCOLATEY_OFFICIAL_KEY
+            var chocolateyGuiPublicKey = OfficialChocolateyGuiPublicKey;
+#else
+            var chocolateyGuiPublicKey = UnofficialChocolateyGuiPublicKey;
+#endif
+
+            Container = AutoFacConfiguration.RegisterAutoFac(LicensedChocolateyGuiAssemblySimpleName, LicensedGuiAssemblyLocation, chocolateyGuiPublicKey);
         }
     }
 }

@@ -36,8 +36,8 @@ namespace ChocolateyGuiCli
         public static readonly string ChocolateyGuiCommonAssemblySimpleName = "ChocolateyGui.Common";
         public static readonly string ChocolateyGuiCommonWindowsAssemblySimpleName = "ChocolateyGui.Common.Windows";
 
-        public static readonly string UnofficialChocolateyPublicKey = "ffc115b9f4eb5c26";
-        public static readonly string OfficialChocolateyPublicKey = "dfd1909b30b79d8b";
+        public static readonly string UnofficialChocolateyGuiPublicKey = "ffc115b9f4eb5c26";
+        public static readonly string OfficialChocolateyGuiPublicKey = "dfd1909b30b79d8b";
 
         public static readonly string Name = "Chocolatey GUI";
 

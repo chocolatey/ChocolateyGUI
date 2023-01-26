@@ -59,9 +59,9 @@ namespace ChocolateyGui
                     }
 
 #if FORCE_CHOCOLATEY_OFFICIAL_KEY
-                    var chocolateyGuiPublicKey = Bootstrapper.OfficialChocolateyPublicKey;
+                    var chocolateyGuiPublicKey = Bootstrapper.OfficialChocolateyGuiPublicKey;
 #else
-                    var chocolateyGuiPublicKey = Bootstrapper.UnofficialChocolateyPublicKey;
+                    var chocolateyGuiPublicKey = Bootstrapper.UnofficialChocolateyGuiPublicKey;
 #endif
 
                     if (AssemblyResolver.DoesPublicKeyTokenMatch(requestedAssembly, chocolateyGuiPublicKey)

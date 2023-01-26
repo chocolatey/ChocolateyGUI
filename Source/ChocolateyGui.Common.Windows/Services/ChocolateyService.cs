@@ -150,6 +150,16 @@ namespace ChocolateyGui.Common.Windows.Services
 
                     try
                     {
+                        // The XmlService won't create a new file, if the file already exists with the same hash,
+                        // i.e. the list of outdated packages hasn't changed. Currently, we check for new outdated
+                        // packages, when the serialized file has become old/stale, so we NEED the file to be re-written
+                        // when this check is done, so that it isn't always doing the check. Therefore, when we are
+                        // getting ready to serialize the list of outdated packages, if the file already exists, delete it.
+                        if (_fileSystem.file_exists(outdatedPackagesFile))
+                        {
+                            _fileSystem.delete_file(outdatedPackagesFile);
+                        }
+
                         _xmlService.serialize(results, outdatedPackagesFile);
                     }
                     catch (Exception ex)

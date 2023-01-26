@@ -43,7 +43,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseOfficial|AnyCPU'">
     <OutputPath>bin\ReleaseOfficial\</OutputPath>
-    <DefineConstants>TRACE;CODE_ANALYSIS;CODE_ANALYSIS;FORCE_CHOCOLATEY_OFFICIAL_KEY</DefineConstants>
+    <DefineConstants>TRACE;CODE_ANALYSIS;FORCE_CHOCOLATEY_OFFICIAL_KEY</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>

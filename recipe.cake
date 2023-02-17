@@ -110,7 +110,8 @@ BuildParameters.SetParameters(context: Context,
                             getFilesToSign: getFilesToSign,
                             getMsisToSign: getMsisToSign,
                             shouldBuildMsi: true,
-                            strongNameDependentAssembliesInputPath: string.Format("{0}{1}", ((FilePath)("./Source")).FullPath, "\\packages\\Splat*"));
+                            strongNameDependentAssembliesInputPath: string.Format("{0}{1}", ((FilePath)("./Source")).FullPath, "\\packages\\Splat*"),
+                            shouldRunTransifex: false);
 
 ToolSettings.SetToolSettings(context: Context);
 

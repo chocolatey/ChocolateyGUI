@@ -55,7 +55,7 @@
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="chocolatey">
-      <HintPath>..\packages\chocolatey.lib.2.0.0-alpha-20230203-845\lib\net48\chocolatey.dll</HintPath>
+      <HintPath>..\packages\chocolatey.lib.2.0.0-alpha-20230216-883\lib\net48\chocolatey.dll</HintPath>
     </Reference>
     <Reference Include="LiteDB, Version=5.0.5.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.5.0.5\lib\net45\LiteDB.dll</HintPath>

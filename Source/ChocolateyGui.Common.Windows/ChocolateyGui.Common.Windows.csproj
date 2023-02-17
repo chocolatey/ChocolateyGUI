@@ -68,7 +68,7 @@
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
     </Reference>
     <Reference Include="chocolatey">
-      <HintPath>..\packages\chocolatey.lib.2.0.0-alpha-20230203-845\lib\net48\chocolatey.dll</HintPath>
+      <HintPath>..\packages\chocolatey.lib.2.0.0-alpha-20230216-883\lib\net48\chocolatey.dll</HintPath>
     </Reference>
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.4.4.0\lib\net462\ControlzEx.dll</HintPath>

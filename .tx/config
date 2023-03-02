@@ -2,9 +2,8 @@
 host = https://www.transifex.com
 lang_map = en_GB: en-GB, en_US: en-US, zh_CN: zh-CN, cs_CZ: cs-CZ
 
-[chocolatey-gui.resourcesresx]
+[o:chocolatey:p:chocolatey-gui:r:resourcesresx]
 file_filter = Source/ChocolateyGui.Common/Properties/Resources.<lang>.resx
 source_file = Source/ChocolateyGui.Common/Properties/Resources.resx
 source_lang = en
 type = RESX
-

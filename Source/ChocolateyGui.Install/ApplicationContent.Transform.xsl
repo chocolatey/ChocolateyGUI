@@ -36,4 +36,9 @@
   <xsl:key name="d3d-search" match="wix:Component[contains(wix:File/@Source, 'd3dcompiler_43.dll')]" use="@Id" />
   <xsl:template match="wix:Component[key('d3d-search', @Id)]" />
   <xsl:template match="wix:ComponentRef[key('d3d-search', @Id)]" />
+
+  <xsl:key name="ChocolateyAssemblyToRemove" match="wix:Component[contains(wix:File/@Source, 'chocolatey.dll')]" use="@Id" />
+  <xsl:key name="ChocolateyPdbToRemove" match="wix:Component[contains(wix:File/@Source, 'chocolatey.pdb')]" use="@Id" />
+  <xsl:template match="*[ self::wix:Component or self::wix:ComponentRef ][ key( 'ChocolateyAssemblyToRemove', @Id ) ]" />
+  <xsl:template match="*[ self::wix:Component or self::wix:ComponentRef ][ key( 'ChocolateyPdbToRemove', @Id ) ]" />
 </xsl:stylesheet>

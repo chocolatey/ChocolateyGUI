@@ -57,7 +57,7 @@
       <HintPath>..\packages\Autofac.4.6.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="chocolatey">
-      <HintPath>..\packages\chocolatey.lib.2.0.0-alpha-20230221\lib\net48\chocolatey.dll</HintPath>
+      <HintPath>..\packages\chocolatey.lib.2.0.0-alpha-20230307\lib\net48\chocolatey.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private Condition="'$(Configuration)' != 'Debug'">False</Private>
     </Reference>

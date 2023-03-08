@@ -66,7 +66,7 @@ Chocolatey GUI Editions uses Chocolatey FOSS components and also adds the follow
 * Caliburn.Micro.Core @ 3.2.0
 * ControlzEx @ 4.4.0
 * HarfBuzzSharp @ 2.6.1.4
-* LiteDB @ 5.0.5
+* LiteDB @ 5.0.15
 * MahApps.Metro @ 2.4.4
 * MahApps.Metro.IconPacks.BoxIcons @ 4.8.0
 * MahApps.Metro.IconPacks.Entypo @ 4.8.0

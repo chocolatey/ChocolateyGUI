@@ -68,7 +68,7 @@
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
     </Reference>
     <Reference Include="chocolatey">
-      <HintPath>..\packages\chocolatey.lib.2.0.0-alpha-20230307\lib\net48\chocolatey.dll</HintPath>
+      <HintPath>..\packages\chocolatey.lib.2.0.0-alpha-20230317-982\lib\net48\chocolatey.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private Condition="'$(Configuration)' != 'Debug'">False</Private>
     </Reference>

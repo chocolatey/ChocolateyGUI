@@ -37,8 +37,6 @@ namespace ChocolateyGui.Common.ViewModels.Items
 
         bool IsPinned { get; set; }
 
-        bool IsSideBySide { get; set; }
-
         bool IsPrerelease { get; set; }
 
         string Language { get; set; }

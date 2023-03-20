@@ -42,7 +42,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private bool _applyInstallArgumentsToDependencies;
         private bool _applyPackageParametersToDependencies;
         private bool _allowDowngrade;
-        private bool _allowMultipleVersions;
         private bool _ignoreDependencies;
         private bool _forceDependencies;
         private bool _skipPowerShell;
@@ -224,12 +223,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             get { return _allowDowngrade; }
             set { SetPropertyValue(ref _allowDowngrade, value); }
-        }
-
-        public bool AllowMultipleVersions
-        {
-            get { return _allowMultipleVersions; }
-            set { SetPropertyValue(ref _allowMultipleVersions, value); }
         }
 
         public bool IgnoreDependencies

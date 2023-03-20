@@ -635,9 +635,6 @@ Or if there is a traditional way to show sorting by the Title in your language, 
   <data name="RemoteSourceViewModel_FetchingPackages" xml:space="preserve">
     <value>Fetching packages...</value>
   </data>
-  <data name="LocalSourceView_ToolTip_InstalledSideBySide" xml:space="preserve">
-    <value>Installed Side by Side with another version of the same package.</value>
-  </data>
   <data name="LocalSourceView_ToolTip_Pinned" xml:space="preserve">
     <value>Pinned</value>
   </data>
@@ -1063,12 +1060,6 @@ Please contact your System Administrator to enable this operation.</value>
   </data>
   <data name="AdvancedChocolateyDialog_AllowEmptyChecksums_ToolTip" xml:space="preserve">
     <value>Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Using this switch is not recommended if using sources that download resources from the internet. Only overrides the value in the configuration when 'On' is specified.</value>
-  </data>
-  <data name="AdvancedChocolateyDialog_AllowMultipleVersions_Header" xml:space="preserve">
-    <value>Allow Multiple Versions</value>
-  </data>
-  <data name="AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip" xml:space="preserve">
-    <value>Should multiple versions of a package be installed?</value>
   </data>
   <data name="AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header" xml:space="preserve">
     <value>Apply Install Arguments to Dependencies</value>

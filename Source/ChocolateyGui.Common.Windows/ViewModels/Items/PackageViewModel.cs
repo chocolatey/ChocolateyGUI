@@ -74,8 +74,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private bool _isPinned;
 
-        private bool _isSideBySide;
-
         private bool _isPrerelease;
 
         private string _language;
@@ -171,7 +169,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public bool IsUninstallAllowed => _allowedCommandsService.IsUninstallCommandAllowed;
 
-        public bool CanUpdate => IsInstalled && !IsPinned && !IsSideBySide && IsOutdated;
+        public bool CanUpdate => IsInstalled && !IsPinned && IsOutdated;
 
         public bool IsUpgradeAllowed => _allowedCommandsService.IsUpgradeCommandAllowed;
 
@@ -256,22 +254,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             set
             {
                 if (SetPropertyValue(ref _isPinned, value))
-                {
-                    NotifyPropertyChanged(nameof(CanUpdate));
-                }
-            }
-        }
-
-        public bool IsSideBySide
-        {
-            get
-            {
-                return _isSideBySide;
-            }
-
-            set
-            {
-                if (SetPropertyValue(ref _isSideBySide, value))
                 {
                     NotifyPropertyChanged(nameof(CanUpdate));
                 }

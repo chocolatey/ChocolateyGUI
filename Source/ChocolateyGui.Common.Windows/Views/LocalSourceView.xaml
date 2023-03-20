@@ -54,10 +54,6 @@
                                               ToolTip="{lang:Localize LocalSourceView_ToolTip_Pinned}"
                                               Kind="Pin" Margin="0 2"
                                               Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
-                    <iconPacks:PackIconEntypo Width="24" Height="24"
-                                              ToolTip="{lang:Localize LocalSourceView_ToolTip_InstalledSideBySide}"
-                                              Kind="Bookmarks" Margin="0 2"
-                                              Visibility="{Binding IsSideBySide, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                 </StackPanel>
 
                 <TextBlock Grid.Row="2"
@@ -281,7 +277,6 @@
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <iconPacks:PackIconEntypo ToolTip="{lang:Localize LocalSourceView_ToolTip_Pinned}" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityHidden}}" />
-                                                        <iconPacks:PackIconEntypo ToolTip="{lang:Localize LocalSourceView_ToolTip_InstalledSideBySide}" Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BooleanToVisibilityHidden}}" />
                                                         <TextBlock Text="{Binding Title}"/>
                                                     </StackPanel>
                                                 </DataTemplate>

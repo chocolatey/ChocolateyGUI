@@ -32,8 +32,6 @@ namespace ChocolateyGui.Common.Models
 
         public bool IsPinned { get; set; }
 
-        public bool IsSideBySide { get; set; }
-
         public bool IsPrerelease { get; set; }
 
         public string Language { get; set; }

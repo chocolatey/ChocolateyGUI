@@ -33,8 +33,6 @@ namespace ChocolateyGui.Common.Models
 
         public bool AllowDowngrade { get; set; }
 
-        public bool AllowMultipleVersions { get; set; }
-
         public bool IgnoreDependencies { get; set; }
 
         public bool ForceDependencies { get; set; }

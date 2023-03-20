@@ -74,7 +74,6 @@ namespace ChocolateyGui.Common.Windows.Services
                 config =>
                     {
                         config.CommandName = CommandNameType.list.ToString();
-                        config.ListCommand.LocalOnly = true;
                     });
 
             var chocoConfig = _choco.GetConfiguration();
@@ -227,9 +226,6 @@ namespace ChocolateyGui.Common.Windows.Services
                                 config.ApplyInstallArgumentsToDependencies = advancedInstallOptions.ApplyInstallArgumentsToDependencies;
                                 config.ApplyPackageParametersToDependencies = advancedInstallOptions.ApplyPackageParametersToDependencies;
                                 config.AllowDowngrade = advancedInstallOptions.AllowDowngrade;
-#pragma warning disable CS0618 // Type or member is obsolete
-                                config.AllowMultipleVersions = advancedInstallOptions.AllowMultipleVersions;
-#pragma warning restore CS0618 // Type or member is obsolete
                                 config.IgnoreDependencies = advancedInstallOptions.IgnoreDependencies;
                                 config.ForceDependencies = advancedInstallOptions.ForceDependencies;
                                 config.SkipPackageInstallProvider = advancedInstallOptions.SkipPowerShell;
@@ -278,7 +274,7 @@ namespace ChocolateyGui.Common.Windows.Services
             _choco.Set(
                 config =>
                     {
-                        config.CommandName = CommandNameType.list.ToString();
+                        config.CommandName = "search";
                         config.Input = query;
                         config.AllVersions = options.IncludeAllVersions;
                         config.ListCommand.Page = options.CurrentPage;
@@ -653,9 +649,6 @@ namespace ChocolateyGui.Common.Windows.Services
                 var packageInfo = packageInfoService.get_package_information(package.PackageMetadata);
                 mappedPackage.IsPinned = packageInfo.IsPinned;
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
-#pragma warning disable CS0618 // Type or member is obsolete
-                mappedPackage.IsSideBySide = packageInfo.IsSideBySide;
-#pragma warning restore CS0618 // Type or member is obsolete
 
                 mappedPackage.IsPrerelease = mappedPackage.Version.IsPrerelease;
             }

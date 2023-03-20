@@ -74,7 +74,6 @@ namespace ChocolateyGui.Common.Windows.Services
                 config =>
                     {
                         config.CommandName = CommandNameType.list.ToString();
-                        config.ListCommand.LocalOnly = true;
                     });
 
             var chocoConfig = _choco.GetConfiguration();
@@ -278,7 +277,7 @@ namespace ChocolateyGui.Common.Windows.Services
             _choco.Set(
                 config =>
                     {
-                        config.CommandName = CommandNameType.list.ToString();
+                        config.CommandName = "search";
                         config.Input = query;
                         config.AllVersions = options.IncludeAllVersions;
                         config.ListCommand.Page = options.CurrentPage;

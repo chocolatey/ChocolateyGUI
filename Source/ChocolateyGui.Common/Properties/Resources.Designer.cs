@@ -160,24 +160,6 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allow Multiple Versions.
-        /// </summary>
-        public static string AdvancedChocolateyDialog_AllowMultipleVersions_Header {
-            get {
-                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowMultipleVersions_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Should multiple versions of a package be installed?.
-        /// </summary>
-        public static string AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip {
-            get {
-                return ResourceManager.GetString("AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Apply Install Arguments to Dependencies.
         /// </summary>
         public static string AdvancedChocolateyDialog_ApplyInstallArgumentsToDependencies_Header {
@@ -1934,15 +1916,6 @@ namespace ChocolateyGui.Common.Properties {
         public static string LocalSourceView_SearchBoxText {
             get {
                 return ResourceManager.GetString("LocalSourceView_SearchBoxText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Installed Side by Side with another version of the same package..
-        /// </summary>
-        public static string LocalSourceView_ToolTip_InstalledSideBySide {
-            get {
-                return ResourceManager.GetString("LocalSourceView_ToolTip_InstalledSideBySide", resourceCulture);
             }
         }
         

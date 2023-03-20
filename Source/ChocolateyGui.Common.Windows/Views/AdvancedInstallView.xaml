@@ -270,9 +270,6 @@
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_AllowDowngrade_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_AllowDowngrade_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowDowngrade}" />
                             </mah:MetroHeader>
-                            <mah:MetroHeader Background="{DynamicResource MahApps.Brushes.Gray10}" Header="{lang:Localize AdvancedChocolateyDialog_AllowMultipleVersions_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_AllowMultipleVersions_ToolTip}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding AllowMultipleVersions}" />
-                            </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_SkipPowerShell_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_SkipPowerShell_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding SkipPowerShell}" />
                             </mah:MetroHeader>

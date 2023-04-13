@@ -1,4 +1,4 @@
-@everyone We have just released v{0} of the Chocolatey GUI!
+We have just released v{0} of the Chocolatey GUI!
 
 Release notes can be found here:
 

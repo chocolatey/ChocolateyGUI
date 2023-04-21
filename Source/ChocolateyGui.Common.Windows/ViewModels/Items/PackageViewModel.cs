@@ -60,7 +60,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private string _description;
 
-        private int _downloadCount;
+        private long _downloadCount;
 
         private string _galleryDetailsUrl;
 
@@ -112,7 +112,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         private NuGetVersion _version;
 
-        private int _versionDownloadCount;
+        private long _versionDownloadCount;
 
         public PackageViewModel(
             IChocolateyService chocolateyService,
@@ -199,7 +199,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             set { SetPropertyValue(ref _description, value); }
         }
 
-        public int DownloadCount
+        public long DownloadCount
         {
             get { return _downloadCount; }
             set { SetPropertyValue(ref _downloadCount, value); }
@@ -384,7 +384,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             set { SetPropertyValue(ref _version, value); }
         }
 
-        public int VersionDownloadCount
+        public long VersionDownloadCount
         {
             get { return _versionDownloadCount; }
             set { SetPropertyValue(ref _versionDownloadCount, value); }

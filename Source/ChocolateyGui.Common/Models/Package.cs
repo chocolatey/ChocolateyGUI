@@ -20,7 +20,7 @@ namespace ChocolateyGui.Common.Models
 
         public string Description { get; set; }
 
-        public int DownloadCount { get; set; }
+        public long DownloadCount { get; set; }
 
         public string GalleryDetailsUrl { get; set; }
 
@@ -68,6 +68,6 @@ namespace ChocolateyGui.Common.Models
 
         public NuGetVersion Version { get; set; }
 
-        public int VersionDownloadCount { get; set; }
+        public long VersionDownloadCount { get; set; }
     }
 }

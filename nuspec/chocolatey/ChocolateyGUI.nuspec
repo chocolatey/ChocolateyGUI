@@ -13,6 +13,7 @@
     <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE.txt</licenseUrl>
     <bugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</bugTrackerUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>2017-2023 Chocolatey Software, Inc</copyright>
     <description>
 Chocolatey GUI is a delicious GUI on top of the Chocolatey command line tool.
 

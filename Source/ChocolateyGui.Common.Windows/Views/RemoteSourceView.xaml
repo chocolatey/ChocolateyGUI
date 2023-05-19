@@ -287,14 +287,14 @@
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
                             <Condition Binding="{Binding IsInstalled, Mode=OneWay}" Value="True" />
-                            <Condition Binding="{Binding IsLatestVersion, Mode=OneWay}" Value="True" />
+                            <Condition Binding="{Binding IsOutdated, Mode=OneWay}" Value="False" />
                         </MultiDataTrigger.Conditions>
                         <Setter TargetName="IsInstalledOverlay" Property="Visibility" Value="Visible" />
                     </MultiDataTrigger>
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
                             <Condition Binding="{Binding IsInstalled, Mode=OneWay}" Value="True" />
-                            <Condition Binding="{Binding IsLatestVersion, Mode=OneWay}" Value="False" />
+                            <Condition Binding="{Binding IsOutdated, Mode=OneWay}" Value="True" />
                         </MultiDataTrigger.Conditions>
                         <Setter TargetName="OutOfDateOverlay" Property="Visibility" Value="Visible" />
                     </MultiDataTrigger>

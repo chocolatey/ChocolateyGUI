@@ -6,7 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using NuGet;
+using NuGet.Versioning;
 
 namespace ChocolateyGui.Common.Models
 {
@@ -20,7 +20,7 @@ namespace ChocolateyGui.Common.Models
 
         public string Description { get; set; }
 
-        public int DownloadCount { get; set; }
+        public long DownloadCount { get; set; }
 
         public string GalleryDetailsUrl { get; set; }
 
@@ -28,15 +28,9 @@ namespace ChocolateyGui.Common.Models
 
         public string Id { get; set; }
 
-        public bool IsAbsoluteLatestVersion { get; set; }
-
         public bool IsInstalled { get; set; }
 
         public bool IsPinned { get; set; }
-
-        public bool IsSideBySide { get; set; }
-
-        public bool IsLatestVersion { get; set; }
 
         public bool IsPrerelease { get; set; }
 
@@ -72,8 +66,8 @@ namespace ChocolateyGui.Common.Models
 
         public string Title { get; set; }
 
-        public SemanticVersion Version { get; set; }
+        public NuGetVersion Version { get; set; }
 
-        public int VersionDownloadCount { get; set; }
+        public long VersionDownloadCount { get; set; }
     }
 }

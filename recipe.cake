@@ -1,4 +1,4 @@
-#load nuget:?package=Chocolatey.Cake.Recipe&version=0.16.0
+#load nuget:?package=Chocolatey.Cake.Recipe&version=0.22.0
 
 ///////////////////////////////////////////////////////////////////////////////
 // MODULES
@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // TOOLS
 ///////////////////////////////////////////////////////////////////////////////
-#tool choco:?package=transifex-client&version=0.12.4
+#tool choco:?package=transifex-cli&version=1.6.5
 
 if (BuildSystem.IsLocalBuild)
 {
@@ -102,6 +102,7 @@ BuildParameters.SetParameters(context: Context,
                             repositoryOwner: "chocolatey",
                             repositoryName: "ChocolateyGUI",
                             shouldDownloadMilestoneReleaseNotes: true,
+                            treatWarningsAsErrors: false,
                             productName: "Chocolatey GUI",
                             productDescription: "Chocolatey GUI is a product of Chocolatey Software, Inc. - All Rights Reserved",
                             productCopyright: "Copyright 2014 - Present Open Source maintainers of Chocolatey GUI, and Chocolatey Software, Inc. - All Rights Reserved.",
@@ -112,8 +113,7 @@ BuildParameters.SetParameters(context: Context,
                             shouldBuildMsi: true,
                             strongNameDependentAssembliesInputPath: string.Format("{0}{1}", ((FilePath)("./Source")).FullPath, "\\packages\\Splat*"));
 
-ToolSettings.SetToolSettings(context: Context,
-                            buildMSBuildToolVersion: MSBuildToolVersion.VS2019);
+ToolSettings.SetToolSettings(context: Context);
 
 BuildParameters.PrintParameters(Context);
 

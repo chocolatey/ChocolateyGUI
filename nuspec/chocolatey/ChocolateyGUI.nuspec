@@ -13,6 +13,7 @@
     <licenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE.txt</licenseUrl>
     <bugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</bugTrackerUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>2017-2023 Chocolatey Software, Inc</copyright>
     <description>
 Chocolatey GUI is a delicious GUI on top of the Chocolatey command line tool.
 
@@ -26,7 +27,7 @@ All release notes for Chocolatey GUI can be found on the docs site - https://doc
   </releaseNotes>
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>
-      <dependency id="Chocolatey" version="[1.0.0, 2.0.0)" />
+      <dependency id="Chocolatey" version="[2.0.0, 2.999.999]" />
       <dependency id="chocolatey-core.extension" version="1.3.3" />
       <dependency id="dotnetfx" version="4.8.0.20190930" />
     </dependencies>
@@ -36,7 +37,8 @@ All release notes for Chocolatey GUI can be found on the docs site - https://doc
     <file src="chocolateyUninstall.ps1" target="tools"/>
     <file src="helper.ps1" target="tools"/>
     <file src="..\..\..\ChocolateyGUI.msi" target="tools"/>
-    <file src="..\..\..\..\LICENSE.txt" target="tools\LICENSE.txt"/>
+    <file src="..\..\..\..\LICENSE.txt" target="legal\LICENSE.txt"/>
+    <file src="..\..\..\..\CREDITS.md" target="legal\CREDITS.md" />
     <file src="VERIFICATION.txt" target="tools"/>
   </files>
 </package>

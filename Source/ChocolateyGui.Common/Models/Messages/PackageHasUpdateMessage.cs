@@ -5,13 +5,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NuGet;
+using NuGet.Versioning;
 
 namespace ChocolateyGui.Common.Models.Messages
 {
     public class PackageHasUpdateMessage
     {
-        public PackageHasUpdateMessage(string id, SemanticVersion version)
+        public PackageHasUpdateMessage(string id, NuGetVersion version)
         {
             Id = id;
             Version = version;
@@ -19,6 +19,6 @@ namespace ChocolateyGui.Common.Models.Messages
 
         public string Id { get; }
 
-        public SemanticVersion Version { get; set; }
+        public NuGetVersion Version { get; set; }
     }
 }

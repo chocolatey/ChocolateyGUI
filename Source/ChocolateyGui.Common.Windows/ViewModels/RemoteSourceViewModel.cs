@@ -27,6 +27,7 @@ using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
 using NuGet;
+using NuGet.Packaging;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
@@ -321,10 +322,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                         if (installed.Any(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)))
                         {
                             p.IsInstalled = true;
-                        }
-                        if (outdated.Any(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)))
-                        {
-                            p.IsLatestVersion = false;
                         }
 
                         Packages.Add(Mapper.Map<IPackageViewModel>(p));

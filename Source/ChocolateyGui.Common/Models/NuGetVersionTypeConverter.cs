@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Chocolatey" file="SemanticVersionTypeConverter.cs">
+// <copyright company="Chocolatey" file="NuGetVersionTypeConverter.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
 // </copyright>
@@ -8,11 +8,11 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using NuGet;
+using NuGet.Versioning;
 
 namespace ChocolateyGui.Common.Models
 {
-    public class SemanticVersionTypeConverter : TypeConverter
+    public class NuGetVersionTypeConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
@@ -22,8 +22,8 @@ namespace ChocolateyGui.Common.Models
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var version = value as string;
-            SemanticVersion semanticVersion;
-            if (version != null && SemanticVersion.TryParse(version, out semanticVersion))
+            NuGetVersion semanticVersion;
+            if (version != null && NuGetVersion.TryParse(version, out semanticVersion))
             {
                 return semanticVersion;
             }

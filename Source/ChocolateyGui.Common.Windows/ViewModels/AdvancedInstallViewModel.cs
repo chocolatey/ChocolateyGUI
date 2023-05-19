@@ -18,7 +18,7 @@ using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Windows.Commands;
 using ChocolateyGui.Common.Windows.Controls.Dialogs;
 using ChocolateyGui.Common.Windows.Utilities;
-using NuGet;
+using NuGet.Versioning;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
@@ -42,7 +42,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private bool _applyInstallArgumentsToDependencies;
         private bool _applyPackageParametersToDependencies;
         private bool _allowDowngrade;
-        private bool _allowMultipleVersions;
         private bool _ignoreDependencies;
         private bool _forceDependencies;
         private bool _skipPowerShell;
@@ -60,7 +59,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         public AdvancedInstallViewModel(
             IChocolateyService chocolateyService,
             IPersistenceService persistenceService,
-            SemanticVersion packageVersion)
+            NuGetVersion packageVersion)
         {
             _chocolateyService = chocolateyService;
             _persistenceService = persistenceService;
@@ -75,7 +74,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             AvailableChecksumTypes = new List<string> { "md5", "sha1", "sha256", "sha512" };
             InstallCommand = new RelayCommand(
                 o => { Close?.Invoke(this); },
-                o => string.IsNullOrEmpty(SelectedVersion) || SelectedVersion == Resources.AdvancedChocolateyDialog_LatestVersion || SemanticVersion.TryParse(SelectedVersion, out _));
+                o => string.IsNullOrEmpty(SelectedVersion) || SelectedVersion == Resources.AdvancedChocolateyDialog_LatestVersion || NuGetVersion.TryParse(SelectedVersion, out _));
             CancelCommand = new RelayCommand(
                 o =>
                 {
@@ -224,12 +223,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             get { return _allowDowngrade; }
             set { SetPropertyValue(ref _allowDowngrade, value); }
-        }
-
-        public bool AllowMultipleVersions
-        {
-            get { return _allowMultipleVersions; }
-            set { SetPropertyValue(ref _allowMultipleVersions, value); }
         }
 
         public bool IgnoreDependencies
@@ -437,11 +430,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         private void OnSelectedVersionChanged(string stringVersion)
         {
-            SemanticVersion version;
+            NuGetVersion version;
 
-            if (SemanticVersion.TryParse(stringVersion, out version))
+            if (NuGetVersion.TryParse(stringVersion, out version))
             {
-                PreRelease = !string.IsNullOrEmpty(version.SpecialVersion);
+                PreRelease = version.IsPrerelease;
             }
         }
 

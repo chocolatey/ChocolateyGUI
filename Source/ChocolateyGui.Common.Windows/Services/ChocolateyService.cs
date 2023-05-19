@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using chocolatey;
+using chocolatey.infrastructure.app;
 using chocolatey.infrastructure.app.configuration;
 using chocolatey.infrastructure.app.domain;
 using chocolatey.infrastructure.app.nuget;
@@ -22,7 +23,8 @@ using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Utilities;
 using Microsoft.VisualStudio.Threading;
-using NuGet;
+using NuGet.Protocol.Core.Types;
+using NuGet.Versioning;
 using ChocolateySource = ChocolateyGui.Common.Models.ChocolateySource;
 using IFileSystem = chocolatey.infrastructure.filesystem.IFileSystem;
 
@@ -30,6 +32,8 @@ namespace ChocolateyGui.Common.Windows.Services
 {
     using ChocolateySource = ChocolateySource;
     using ILogger = Serilog.ILogger;
+    using LogLevel = Models.LogLevel;
+    using LogMessage = Models.LogMessage;
 
     public class ChocolateyService : IChocolateyService
     {
@@ -70,7 +74,6 @@ namespace ChocolateyGui.Common.Windows.Services
                 config =>
                     {
                         config.CommandName = CommandNameType.list.ToString();
-                        config.ListCommand.LocalOnly = true;
                     });
 
             var chocoConfig = _choco.GetConfiguration();
@@ -141,11 +144,21 @@ namespace ChocolateyGui.Common.Windows.Services
                     var results = packages
                         .Where(p => !p.Value.Inconclusive)
                         .Select(p => new OutdatedPackage
-                        { Id = p.Value.Package.Id, VersionString = p.Value.Package.Version.ToNormalizedString() })
+                        { Id = p.Value.Name, VersionString = p.Value.Version })
                         .ToArray();
 
                     try
                     {
+                        // The XmlService won't create a new file, if the file already exists with the same hash,
+                        // i.e. the list of outdated packages hasn't changed. Currently, we check for new outdated
+                        // packages, when the serialized file has become old/stale, so we NEED the file to be re-written
+                        // when this check is done, so that it isn't always doing the check. Therefore, when we are
+                        // getting ready to serialize the list of outdated packages, if the file already exists, delete it.
+                        if (_fileSystem.file_exists(outdatedPackagesFile))
+                        {
+                            _fileSystem.delete_file(outdatedPackagesFile);
+                        }
+
                         _xmlService.serialize(results, outdatedPackagesFile);
                     }
                     catch (Exception ex)
@@ -213,7 +226,6 @@ namespace ChocolateyGui.Common.Windows.Services
                                 config.ApplyInstallArgumentsToDependencies = advancedInstallOptions.ApplyInstallArgumentsToDependencies;
                                 config.ApplyPackageParametersToDependencies = advancedInstallOptions.ApplyPackageParametersToDependencies;
                                 config.AllowDowngrade = advancedInstallOptions.AllowDowngrade;
-                                config.AllowMultipleVersions = advancedInstallOptions.AllowMultipleVersions;
                                 config.IgnoreDependencies = advancedInstallOptions.IgnoreDependencies;
                                 config.ForceDependencies = advancedInstallOptions.ForceDependencies;
                                 config.SkipPackageInstallProvider = advancedInstallOptions.SkipPowerShell;
@@ -262,7 +274,7 @@ namespace ChocolateyGui.Common.Windows.Services
             _choco.Set(
                 config =>
                     {
-                        config.CommandName = CommandNameType.list.ToString();
+                        config.CommandName = "search";
                         config.Input = query;
                         config.AllVersions = options.IncludeAllVersions;
                         config.ListCommand.Page = options.CurrentPage;
@@ -312,9 +324,11 @@ namespace ChocolateyGui.Common.Windows.Services
                 });
             var chocoConfig = _choco.GetConfiguration();
 
-            var nugetLogger = _choco.Container().GetInstance<NuGet.ILogger>();
-            var semvar = new SemanticVersion(version);
-            var nugetPackage = await Task.Run(() => (NugetList.GetPackages(chocoConfig, nugetLogger) as IQueryable<IPackage>).FirstOrDefault(p => p.Version == semvar));
+            var nugetLogger = _choco.Container().GetInstance<NuGet.Common.ILogger>();
+            var origVer = chocoConfig.Version;
+            chocoConfig.Version = version;
+            var nugetPackage = await Task.Run(() => (NugetList.GetPackages(chocoConfig, nugetLogger, _fileSystem) as IQueryable<IPackageSearchMetadata>).FirstOrDefault());
+            chocoConfig.Version = origVer;
             if (nugetPackage == null)
             {
                 throw new Exception("No Package Found");
@@ -323,7 +337,7 @@ namespace ChocolateyGui.Common.Windows.Services
             return GetMappedPackage(_choco, new PackageResult(nugetPackage, null, chocoConfig.Sources), _mapper);
         }
 
-        public async Task<List<SemanticVersion>> GetAvailableVersionsForPackageIdAsync(string id, int page, int pageSize, bool includePreRelease)
+        public async Task<List<NuGetVersion>> GetAvailableVersionsForPackageIdAsync(string id, int page, int pageSize, bool includePreRelease)
         {
             _choco.Set(
                 config =>
@@ -343,7 +357,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 });
             var chocoConfig = _choco.GetConfiguration();
             var packages = await _choco.ListAsync<PackageResult>();
-            return packages.Select(p => new SemanticVersion(p.Version)).OrderByDescending(p => p.Version).ToList();
+            return packages.Select(p => NuGetVersion.Parse(p.Version)).OrderByDescending(p => p.Version).ToList();
         }
 
         public async Task<PackageOperationResult> UninstallPackage(string id, string version, bool force = false)
@@ -398,6 +412,7 @@ namespace ChocolateyGui.Common.Windows.Services
                             config.PinCommand.Command = PinCommandType.add;
                             config.PinCommand.Name = id;
                             config.Version = version;
+                            config.Sources = ApplicationParameters.PackagesLocation;
                         });
 
                 try
@@ -424,6 +439,7 @@ namespace ChocolateyGui.Common.Windows.Services
                             config.PinCommand.Command = PinCommandType.remove;
                             config.PinCommand.Name = id;
                             config.Version = version;
+                            config.Sources = ApplicationParameters.PackagesLocation;
                         });
                 try
                 {
@@ -619,26 +635,22 @@ namespace ChocolateyGui.Common.Windows.Services
 
         private static Package GetMappedPackage(GetChocolatey choco, PackageResult package, IMapper mapper, bool forceInstalled = false)
         {
-            var mappedPackage = package == null ? null : mapper.Map<Package>(package.Package);
+            var mappedPackage = package == null ? null : mapper.Map<Package>(package.SearchMetadata);
             if (mappedPackage != null)
             {
+                if (package.PackageMetadata != null)
+                {
+                    mappedPackage.ReleaseNotes = package.PackageMetadata.ReleaseNotes;
+                    mappedPackage.Language = package.PackageMetadata.Language;
+                    mappedPackage.Copyright = package.PackageMetadata.Copyright;
+                }
+
                 var packageInfoService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
-                var packageInfo = packageInfoService.get_package_information(package.Package);
+                var packageInfo = packageInfoService.get_package_information(package.PackageMetadata);
                 mappedPackage.IsPinned = packageInfo.IsPinned;
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
-                mappedPackage.IsSideBySide = packageInfo.IsSideBySide;
 
-                mappedPackage.IsPrerelease = !string.IsNullOrWhiteSpace(mappedPackage.Version.SpecialVersion);
-
-                // Add a sanity check here for pre-release packages
-                // By default, pre-release packages are marked as IsLatestVersion = false, however, IsLatestVersion is
-                // what is used to show/hide the Out of Date message in the UI.  In these cases, if it is a pre-release
-                // mark IsLatestVersion as true, and then the outcome of the call to choco outdated will correct whether
-                // it is actually Out of Date or not
-                if (mappedPackage.IsPrerelease && mappedPackage.IsAbsoluteLatestVersion && !mappedPackage.IsLatestVersion)
-                {
-                    mappedPackage.IsLatestVersion = true;
-                }
+                mappedPackage.IsPrerelease = mappedPackage.Version.IsPrerelease;
             }
 
             return mappedPackage;

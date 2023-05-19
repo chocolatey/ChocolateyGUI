@@ -54,10 +54,6 @@
                                               ToolTip="{lang:Localize LocalSourceView_ToolTip_Pinned}"
                                               Kind="Pin" Margin="0 2"
                                               Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
-                    <iconPacks:PackIconEntypo Width="24" Height="24"
-                                              ToolTip="{lang:Localize LocalSourceView_ToolTip_InstalledSideBySide}"
-                                              Kind="Bookmarks" Margin="0 2"
-                                              Visibility="{Binding IsSideBySide, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                 </StackPanel>
 
                 <TextBlock Grid.Row="2"
@@ -80,7 +76,7 @@
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
                         <Condition Binding="{Binding IsInstalled, Mode=OneWay}" Value="True" />
-                        <Condition Binding="{Binding IsLatestVersion, Mode=OneWay}" Value="False" />
+                        <Condition Binding="{Binding IsOutdated, Mode=OneWay}" Value="True" />
                     </MultiDataTrigger.Conditions>
                     <Setter TargetName="OutOfDateOverlay" Property="Visibility" Value="Visible" />
                 </MultiDataTrigger>
@@ -281,7 +277,6 @@
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <iconPacks:PackIconEntypo ToolTip="{lang:Localize LocalSourceView_ToolTip_Pinned}" Kind="Pin" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityHidden}}" />
-                                                        <iconPacks:PackIconEntypo ToolTip="{lang:Localize LocalSourceView_ToolTip_InstalledSideBySide}" Kind="Bookmarks" Visibility="{Binding IsSideBySide, Converter={StaticResource BooleanToVisibilityHidden}}" />
                                                         <TextBlock Text="{Binding Title}"/>
                                                     </StackPanel>
                                                 </DataTemplate>
@@ -317,7 +312,7 @@
                                                 <DataTemplate DataType="{x:Type items:IPackageViewModel}">
                                                     <Grid Background="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}"
                                                           TextElement.Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}"
-                                                          Visibility="{Binding IsLatestVersion, Converter={StaticResource BooleanToVisibilityInverted}}"
+                                                          Visibility="{Binding IsOutdated, Converter={StaticResource BooleanToVisibility}}"
                                                           HorizontalAlignment="Stretch"
                                                           VerticalAlignment="Stretch">
                                                         <Grid.ColumnDefinitions>

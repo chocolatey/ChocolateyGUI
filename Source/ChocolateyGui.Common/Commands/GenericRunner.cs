@@ -33,7 +33,7 @@ namespace ChocolateyGui.Common.Commands
 
             if (command != null)
             {
-                Logger.Debug("_ {0}:{1} - Normal Run Mode _".format_with("Chocolatey GUI", command.GetType().Name));
+                Logger.Debug("_ {0}:{1} - Normal Run Mode _".FormatWith("Chocolatey GUI", command.GetType().Name));
                 command.Run(configuration);
             }
         }
@@ -44,7 +44,7 @@ namespace ChocolateyGui.Common.Commands
             var command = commands.Where((c) =>
             {
                 var attributes = c.GetType().GetCustomAttributes(typeof(LocalizedCommandForAttribute), false);
-                return attributes.Cast<LocalizedCommandForAttribute>().Any(attribute => attribute.CommandName.is_equal_to(configuration.CommandName));
+                return attributes.Cast<LocalizedCommandForAttribute>().Any(attribute => attribute.CommandName.IsEqualTo(configuration.CommandName));
             }).FirstOrDefault();
 
             if (command == null)

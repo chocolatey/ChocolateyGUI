@@ -50,9 +50,9 @@ namespace ChocolateyGui.Common.Providers
 
         private void DetermineIfChocolateyExecutableIsBeingUsed()
         {
-            var exePath = _fileSystem.combine_paths(ChocolateyInstall, "choco.exe");
+            var exePath = _fileSystem.CombinePaths(ChocolateyInstall, "choco.exe");
 
-            if (_fileSystem.file_exists(exePath))
+            if (_fileSystem.FileExists(exePath))
             {
                 IsChocolateyExecutableBeingUsed = true;
             }

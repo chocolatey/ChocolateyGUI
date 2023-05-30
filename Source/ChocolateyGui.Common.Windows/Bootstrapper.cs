@@ -37,13 +37,13 @@ namespace ChocolateyGui.Common.Windows
         private static readonly IFileSystem _fileSystem = new DotNetFileSystem();
 
 #pragma warning disable SA1202
-        public static readonly string ChocolateyGuiInstallLocation = _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
+        public static readonly string ChocolateyGuiInstallLocation = _fileSystem.GetDirectoryName(_fileSystem.GetCurrentAssemblyPath());
         public static readonly string ChocolateyInstallEnvironmentVariableName = "ChocolateyInstall";
-        public static readonly string ChocolateyInstallLocation = System.Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName) ?? _fileSystem.get_directory_name(_fileSystem.get_current_assembly_path());
-        public static readonly string LicensedGuiAssemblyLocation = _fileSystem.combine_paths(ChocolateyInstallLocation, "extensions", "chocolateygui", "chocolateygui.licensed.dll");
+        public static readonly string ChocolateyInstallLocation = System.Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName) ?? _fileSystem.GetDirectoryName(_fileSystem.GetCurrentAssemblyPath());
+        public static readonly string LicensedGuiAssemblyLocation = _fileSystem.CombinePaths(ChocolateyInstallLocation, "extensions", "chocolateygui", "chocolateygui.licensed.dll");
 
-        public static readonly string ChocolateyGuiCommonAssemblyLocation = _fileSystem.combine_paths(ChocolateyGuiInstallLocation, "ChocolateyGui.Common.dll");
-        public static readonly string ChocolateyGuiCommonWindowsAssemblyLocation = _fileSystem.combine_paths(ChocolateyGuiInstallLocation, "ChocolateyGui.Common.Windows.dll");
+        public static readonly string ChocolateyGuiCommonAssemblyLocation = _fileSystem.CombinePaths(ChocolateyGuiInstallLocation, "ChocolateyGui.Common.dll");
+        public static readonly string ChocolateyGuiCommonWindowsAssemblyLocation = _fileSystem.CombinePaths(ChocolateyGuiInstallLocation, "ChocolateyGui.Common.Windows.dll");
 
         public static readonly string ChocolateyGuiCommonAssemblySimpleName = "ChocolateyGui.Common";
         public static readonly string ChocolateyGuiCommonWindowsAssemblySimpleName = "ChocolateyGui.Common.Windows";

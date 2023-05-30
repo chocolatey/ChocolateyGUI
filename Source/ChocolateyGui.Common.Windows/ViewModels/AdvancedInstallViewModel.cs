@@ -440,7 +440,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         private void BrowseLogFile(object value)
         {
-            var filter = "{0}|{1}|{2}".format_with(
+            var filter = "{0}|{1}|{2}".FormatWith(
                 L(nameof(Resources.FilePicker_LogFiles)) + "|*.log;*.klg",
                 L(nameof(Resources.FilePicker_TextFiles)) + "|*.txt;*.text;*.plain",
                 L(nameof(Resources.FilePicker_AllFiles)) + "|*.*");

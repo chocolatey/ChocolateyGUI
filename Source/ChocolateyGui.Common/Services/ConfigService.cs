@@ -224,11 +224,11 @@ namespace ChocolateyGui.Common.Services
             {
                 if (configuration.RegularOutput)
                 {
-                    Logger.Information("{0} {1} - {2}".format_with(feature.Enabled ? "[x]" : "[ ]", feature.Title, feature.Description));
+                    Logger.Information("{0} {1} - {2}".FormatWith(feature.Enabled ? "[x]" : "[ ]", feature.Title, feature.Description));
                 }
                 else
                 {
-                    Logger.Information("{0}|{1}|{2}".format_with(feature.Title, L(!feature.Enabled ? nameof(Resources.FeatureCommand_Disabled) : nameof(Resources.FeatureCommand_Enabled)), feature.Description));
+                    Logger.Information("{0}|{1}|{2}".FormatWith(feature.Title, L(!feature.Enabled ? nameof(Resources.FeatureCommand_Disabled) : nameof(Resources.FeatureCommand_Enabled)), feature.Description));
                 }
             }
         }
@@ -265,11 +265,11 @@ namespace ChocolateyGui.Common.Services
             {
                 if (configuration.RegularOutput)
                 {
-                    Logger.Information("{0} = {1} - {2}".format_with(setting.Key, setting.Value, setting.Description));
+                    Logger.Information("{0} = {1} - {2}".FormatWith(setting.Key, setting.Value, setting.Description));
                 }
                 else
                 {
-                    Logger.Information("{0}|{1}|{2}".format_with(setting.Key, setting.Value, setting.Description));
+                    Logger.Information("{0}|{1}|{2}".FormatWith(setting.Key, setting.Value, setting.Description));
                 }
             }
         }
@@ -313,7 +313,7 @@ namespace ChocolateyGui.Common.Services
             var configProperty = GetProperty(configuration.ConfigCommand.Name, false);
             var configValue = (string)configProperty.GetValue(chosenAppConfiguration);
 
-            Logger.Information("{0}".format_with(configValue ?? string.Empty));
+            Logger.Information("{0}".FormatWith(configValue ?? string.Empty));
         }
 
         public void SetConfigValue(string key, string value)

@@ -124,7 +124,7 @@ DefaultToDarkMode: {17}
 HideThisPCSource: {18}
 PreventUsageOfUpdateAllButton: {19}
 SkipModalDialogConfirmation: {20}
-".format_with(
+".FormatWith(
                 OutdatedPackagesCacheDurationInMinutes,
                 DefaultSourceName,
                 UseLanguage,

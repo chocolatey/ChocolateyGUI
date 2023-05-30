@@ -22,7 +22,7 @@ namespace ChocolateyGui.Common.Services
             _fileStorageService = fileStorageService;
             _fileSystem = fileSystem;
 
-            _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), "Chocolatey GUI");
+            _localAppDataPath = _fileSystem.CombinePaths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), "Chocolatey GUI");
         }
 
         public void PurgeIcons()
@@ -32,17 +32,17 @@ namespace ChocolateyGui.Common.Services
 
         public void PurgeOutdatedPackages()
         {
-            var outdatedPackagesFile = _fileSystem.combine_paths(_localAppDataPath, "outdatedPackages.xml");
-            var outdatedPackagesBackupFile = _fileSystem.combine_paths(_localAppDataPath, "outdatedPackages.xml.backup");
+            var outdatedPackagesFile = _fileSystem.CombinePaths(_localAppDataPath, "outdatedPackages.xml");
+            var outdatedPackagesBackupFile = _fileSystem.CombinePaths(_localAppDataPath, "outdatedPackages.xml.backup");
 
-            if (_fileSystem.file_exists(outdatedPackagesFile))
+            if (_fileSystem.FileExists(outdatedPackagesFile))
             {
-                _fileSystem.delete_file(outdatedPackagesFile);
+                _fileSystem.DeleteFile(outdatedPackagesFile);
             }
 
-            if (_fileSystem.file_exists(outdatedPackagesBackupFile))
+            if (_fileSystem.FileExists(outdatedPackagesBackupFile))
             {
-                _fileSystem.delete_file(outdatedPackagesBackupFile);
+                _fileSystem.DeleteFile(outdatedPackagesBackupFile);
             }
         }
     }

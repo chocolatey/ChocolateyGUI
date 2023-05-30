@@ -40,17 +40,17 @@ namespace ChocolateyGui.Common.Windows.Services
 
         public IEnumerable<string> DecryptPackageArgumentsFile(string id, string version)
         {
-            var argumentsPath = _fileSystem.combine_paths(_chocolateyConfigurationProvider.ChocolateyInstall, ".chocolatey", "{0}.{1}".format_with(id, version));
-            var argumentsFile = _fileSystem.combine_paths(argumentsPath, ".arguments");
+            var argumentsPath = _fileSystem.CombinePaths(_chocolateyConfigurationProvider.ChocolateyInstall, ".chocolatey", "{0}.{1}".FormatWith(id, version));
+            var argumentsFile = _fileSystem.CombinePaths(argumentsPath, ".arguments");
 
             string arguments = string.Empty;
 
             // Get the arguments decrypted in here and return them
             try
             {
-                if (_fileSystem.file_exists(argumentsFile))
+                if (_fileSystem.FileExists(argumentsFile))
                 {
-                    arguments = _fileSystem.read_file(argumentsFile);
+                    arguments = _fileSystem.ReadFile(argumentsFile);
                 }
             }
             catch (Exception ex)
@@ -69,25 +69,25 @@ namespace ChocolateyGui.Common.Windows.Services
 
             // The following code is borrowed from the Chocolatey codebase, should
             // be extracted to a separate location in choco executable so we can re-use it.
-            var packageArgumentsUnencrypted = arguments.contains(" --") && arguments.to_string().Length > 4
+            var packageArgumentsUnencrypted = arguments.Contains(" --") && arguments.ToStringSafe().Length > 4
                 ? arguments
-                : _encryptionUtility.decrypt_string(arguments);
+                : _encryptionUtility.DecryptString(arguments);
 
             // Lets do a global check first to see if there are any sensitive arguments
             // before we filter out the values used later.
-            var sensitiveArgs = ArgumentsUtility.arguments_contain_sensitive_information(packageArgumentsUnencrypted);
+            var sensitiveArgs = ArgumentsUtility.SensitiveArgumentsProvided(packageArgumentsUnencrypted);
 
             var packageArgumentsSplit =
                 packageArgumentsUnencrypted.Split(new[] { " --" }, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (var packageArgument in packageArgumentsSplit.or_empty_list_if_null())
+            foreach (var packageArgument in packageArgumentsSplit.OrEmpty())
             {
-                var isSensitiveArgument = sensitiveArgs && ArgumentsUtility.arguments_contain_sensitive_information(string.Concat("--", packageArgument));
+                var isSensitiveArgument = sensitiveArgs && ArgumentsUtility.SensitiveArgumentsProvided(string.Concat("--", packageArgument));
 
                 var packageArgumentSplit =
                     packageArgument.Split(new[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries);
 
-                var optionName = packageArgumentSplit[0].to_string();
+                var optionName = packageArgumentSplit[0].ToStringSafe();
                 var optionValue = string.Empty;
 
                 if (packageArgumentSplit.Length == 2 && isSensitiveArgument)
@@ -96,14 +96,14 @@ namespace ChocolateyGui.Common.Windows.Services
                 }
                 else if (packageArgumentSplit.Length == 2)
                 {
-                    optionValue = packageArgumentSplit[1].to_string().remove_surrounding_quotes();
+                    optionValue = packageArgumentSplit[1].ToStringSafe().UnquoteSafe();
                     if (optionValue.StartsWith("'"))
                     {
-                        optionValue.remove_surrounding_quotes();
+                        optionValue.UnquoteSafe();
                     }
                 }
 
-                yield return "--{0}{1}".format_with(
+                yield return "--{0}{1}".FormatWith(
                     optionName,
                     string.IsNullOrWhiteSpace(optionValue) ? string.Empty : "=" + optionValue);
             }

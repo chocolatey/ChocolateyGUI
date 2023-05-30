@@ -82,7 +82,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
             foreach (var packageArgument in packageArgumentsSplit.or_empty_list_if_null())
             {
-                var isSensitiveArgument = sensitiveArgs && ArgumentsUtility.arguments_contain_sensitive_information(packageArgument);
+                var isSensitiveArgument = sensitiveArgs && ArgumentsUtility.arguments_contain_sensitive_information(string.Concat("--", packageArgument));
 
                 var packageArgumentSplit =
                     packageArgument.Split(new[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries);

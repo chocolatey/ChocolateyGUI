@@ -1,15 +1,1 @@
 next-version: 2.0.0
-branches:
-  support:
-    mode: ContinuousDeployment
-    tag: alpha
-    increment: Minor
-    prevent-increment-of-merged-branch-version: false
-    track-merge-target: true
-    regex: ^support[/-]
-    source-branches:
-    - master
-    tracks-release-branches: true
-    is-release-branch: false
-    is-mainline: false
-    pre-release-weight: 55000

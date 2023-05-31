@@ -35,11 +35,11 @@ namespace ChocolateyGui.Common.Commands
                 .Add(
                     "name=",
                     L(nameof(Resources.ConfigCommand_NameOption)),
-                    option => configuration.ConfigCommand.Name = option.remove_surrounding_quotes())
+                    option => configuration.ConfigCommand.Name = option.UnquoteSafe())
                 .Add(
                     "value=",
                     L(nameof(Resources.ConfigCommand_ValueOption)),
-                    option => configuration.ConfigCommand.ConfigValue = option.remove_surrounding_quotes())
+                    option => configuration.ConfigCommand.ConfigValue = option.UnquoteSafe())
                 .Add(
                     "g|global",
                     L(nameof(Resources.GlobalOption)),
@@ -51,7 +51,7 @@ namespace ChocolateyGui.Common.Commands
             configuration.Input = string.Join(" ", unparsedArguments);
 
             var command = ConfigCommandType.Unknown;
-            var unparsedCommand = unparsedArguments.DefaultIfEmpty(string.Empty).FirstOrDefault().to_string().Replace("-", string.Empty);
+            var unparsedCommand = unparsedArguments.DefaultIfEmpty(string.Empty).FirstOrDefault().ToStringSafe().Replace("-", string.Empty);
             Enum.TryParse(unparsedCommand, true, out command);
             if (command == ConfigCommandType.Unknown)
             {
@@ -87,14 +87,14 @@ namespace ChocolateyGui.Common.Commands
             if (configuration.ConfigCommand.Command != ConfigCommandType.List &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.Name))
             {
-                Logger.Error(L(nameof(Resources.ConfigCommand_MissingNameOptionError), configuration.ConfigCommand.Command.to_string(), "--name"));
+                Logger.Error(L(nameof(Resources.ConfigCommand_MissingNameOptionError), configuration.ConfigCommand.Command.ToStringSafe(), "--name"));
                 Environment.Exit(-1);
             }
 
             if (configuration.ConfigCommand.Command == ConfigCommandType.Set &&
                 string.IsNullOrWhiteSpace(configuration.ConfigCommand.ConfigValue))
             {
-                Logger.Error(L(nameof(Resources.ConfigCommand_MissingValueOptionError), configuration.ConfigCommand.Command.to_string(), "--value"));
+                Logger.Error(L(nameof(Resources.ConfigCommand_MissingValueOptionError), configuration.ConfigCommand.Command.ToStringSafe(), "--value"));
                 Environment.Exit(-1);
             }
         }

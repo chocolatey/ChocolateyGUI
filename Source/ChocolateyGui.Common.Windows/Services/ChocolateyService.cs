@@ -60,7 +60,7 @@ namespace ChocolateyGui.Common.Windows.Services
             _configService = configService;
             _choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(new SerilogLogger(Logger, _progressService), logExistingMessages: false, addToExistingLoggers: true);
 
-            _localAppDataPath = _fileSystem.combine_paths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), "Chocolatey GUI");
+            _localAppDataPath = _fileSystem.CombinePaths(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify), "Chocolatey GUI");
         }
 
         public Task<bool> IsElevated()
@@ -73,7 +73,7 @@ namespace ChocolateyGui.Common.Windows.Services
             _choco.Set(
                 config =>
                     {
-                        config.CommandName = CommandNameType.list.ToString();
+                        config.CommandName = CommandNameType.List.ToString();
                     });
 
             var chocoConfig = _choco.GetConfiguration();
@@ -91,7 +91,7 @@ namespace ChocolateyGui.Common.Windows.Services
             else
             {
                 var nugetService = _choco.Container().GetInstance<INugetService>();
-                var packages = await Task.Run(() => nugetService.list_run(chocoConfig));
+                var packages = await Task.Run(() => nugetService.List(chocoConfig));
                 return packages
                     .Select(package => GetMappedPackage(_choco, package, _mapper, true))
                     .ToArray();
@@ -107,7 +107,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 return new List<OutdatedPackage>();
             }
 
-            var outdatedPackagesFile = _fileSystem.combine_paths(_localAppDataPath, "outdatedPackages.xml");
+            var outdatedPackagesFile = _fileSystem.CombinePaths(_localAppDataPath, "outdatedPackages.xml");
 
             var outdatedPackagesCacheDurationInMinutesSetting = _configService.GetEffectiveConfiguration().OutdatedPackagesCacheDurationInMinutes;
             int outdatedPackagesCacheDurationInMinutes = 0;
@@ -116,9 +116,9 @@ namespace ChocolateyGui.Common.Windows.Services
                 int.TryParse(outdatedPackagesCacheDurationInMinutesSetting, out outdatedPackagesCacheDurationInMinutes);
             }
 
-            if (_fileSystem.file_exists(outdatedPackagesFile) && (DateTime.Now - _fileSystem.get_file_modified_date(outdatedPackagesFile)).TotalMinutes < outdatedPackagesCacheDurationInMinutes)
+            if (_fileSystem.FileExists(outdatedPackagesFile) && (DateTime.Now - _fileSystem.GetFileModifiedDate(outdatedPackagesFile)).TotalMinutes < outdatedPackagesCacheDurationInMinutes)
             {
-                return _xmlService.deserialize<List<OutdatedPackage>>(outdatedPackagesFile);
+                return _xmlService.Deserialize<List<OutdatedPackage>>(outdatedPackagesFile);
             }
             else
             {
@@ -140,7 +140,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 if (chocoConfig.Sources != null)
                 {
                     var nugetService = choco.Container().GetInstance<INugetService>();
-                    var packages = await Task.Run(() => nugetService.upgrade_noop(chocoConfig, null));
+                    var packages = await Task.Run(() => nugetService.UpgradeDryRun(chocoConfig, null));
                     var results = packages
                         .Where(p => !p.Value.Inconclusive)
                         .Select(p => new OutdatedPackage
@@ -154,12 +154,12 @@ namespace ChocolateyGui.Common.Windows.Services
                         // packages, when the serialized file has become old/stale, so we NEED the file to be re-written
                         // when this check is done, so that it isn't always doing the check. Therefore, when we are
                         // getting ready to serialize the list of outdated packages, if the file already exists, delete it.
-                        if (_fileSystem.file_exists(outdatedPackagesFile))
+                        if (_fileSystem.FileExists(outdatedPackagesFile))
                         {
-                            _fileSystem.delete_file(outdatedPackagesFile);
+                            _fileSystem.DeleteFile(outdatedPackagesFile);
                         }
 
-                        _xmlService.serialize(results, outdatedPackagesFile);
+                        _xmlService.Serialize(results, outdatedPackagesFile);
                     }
                     catch (Exception ex)
                     {
@@ -189,7 +189,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 choco.Set(
                     config =>
                         {
-                            config.CommandName = CommandNameType.install.ToString();
+                            config.CommandName = CommandNameType.Install.ToString();
                             config.PackageNames = id;
                             config.Features.UsePackageExitCodes = false;
 
@@ -369,7 +369,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 choco.Set(
                     config =>
                         {
-                            config.CommandName = CommandNameType.uninstall.ToString();
+                            config.CommandName = CommandNameType.Uninstall.ToString();
                             config.PackageNames = id;
                             config.Features.UsePackageExitCodes = false;
 
@@ -392,7 +392,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 choco.Set(
                     config =>
                         {
-                            config.CommandName = CommandNameType.upgrade.ToString();
+                            config.CommandName = CommandNameType.Upgrade.ToString();
                             config.PackageNames = id;
                             config.Features.UsePackageExitCodes = false;
                         });
@@ -409,7 +409,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     config =>
                         {
                             config.CommandName = "pin";
-                            config.PinCommand.Command = PinCommandType.add;
+                            config.PinCommand.Command = PinCommandType.Add;
                             config.PinCommand.Name = id;
                             config.Version = version;
                             config.Sources = ApplicationParameters.PackagesLocation;
@@ -436,7 +436,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     config =>
                         {
                             config.CommandName = "pin";
-                            config.PinCommand.Command = PinCommandType.remove;
+                            config.PinCommand.Command = PinCommandType.Remove;
                             config.PinCommand.Name = id;
                             config.Version = version;
                             config.Sources = ApplicationParameters.PackagesLocation;
@@ -474,7 +474,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     config =>
                     {
                         config.CommandName = "feature";
-                        config.FeatureCommand.Command = feature.Enabled ? chocolatey.infrastructure.app.domain.FeatureCommandType.enable : chocolatey.infrastructure.app.domain.FeatureCommandType.disable;
+                        config.FeatureCommand.Command = feature.Enabled ? chocolatey.infrastructure.app.domain.FeatureCommandType.Enable : chocolatey.infrastructure.app.domain.FeatureCommandType.Disable;
                         config.FeatureCommand.Name = feature.Name;
                     });
 
@@ -497,7 +497,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     config =>
                         {
                             config.CommandName = "config";
-                            config.ConfigCommand.Command = chocolatey.infrastructure.app.domain.ConfigCommandType.set;
+                            config.ConfigCommand.Command = chocolatey.infrastructure.app.domain.ConfigCommandType.Set;
                             config.ConfigCommand.Name = setting.Key;
                             config.ConfigCommand.ConfigValue = setting.Value;
                         });
@@ -514,7 +514,7 @@ namespace ChocolateyGui.Common.Windows.Services
             var config = await GetConfigFile();
             var allSources = config.Sources.Select(_mapper.Map<ChocolateySource>).ToArray();
 
-            var filteredSourceIds = _configSettingsService.source_list(_choco.GetConfiguration()).Select(s => s.Id).ToArray();
+            var filteredSourceIds = _configSettingsService.ListSources(_choco.GetConfiguration()).Select(s => s.Id).ToArray();
 
             var mappedSources = allSources.Where(s => filteredSourceIds.Contains(s.Id)).ToArray();
             return mappedSources;
@@ -528,7 +528,7 @@ namespace ChocolateyGui.Common.Windows.Services
                     config =>
                     {
                         config.CommandName = "source";
-                        config.SourceCommand.Command = SourceCommandType.add;
+                        config.SourceCommand.Command = SourceCommandType.Add;
                         config.SourceCommand.Name = source.Id;
                         config.Sources = source.Value;
                         config.SourceCommand.Username = source.UserName;
@@ -560,7 +560,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 config =>
                 {
                     config.CommandName = "source";
-                    config.SourceCommand.Command = SourceCommandType.disable;
+                    config.SourceCommand.Command = SourceCommandType.Disable;
                     config.SourceCommand.Name = id;
                 });
 
@@ -573,7 +573,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 config =>
                 {
                     config.CommandName = "source";
-                    config.SourceCommand.Command = SourceCommandType.enable;
+                    config.SourceCommand.Command = SourceCommandType.Enable;
                     config.SourceCommand.Name = id;
                 });
 
@@ -611,7 +611,7 @@ namespace ChocolateyGui.Common.Windows.Services
                         config =>
                         {
                             config.CommandName = "source";
-                            config.SourceCommand.Command = SourceCommandType.remove;
+                            config.SourceCommand.Command = SourceCommandType.Remove;
                             config.SourceCommand.Name = id;
                         });
 
@@ -646,7 +646,7 @@ namespace ChocolateyGui.Common.Windows.Services
                 }
 
                 var packageInfoService = choco.Container().GetInstance<IChocolateyPackageInformationService>();
-                var packageInfo = packageInfoService.get_package_information(package.PackageMetadata);
+                var packageInfo = packageInfoService.Get(package.PackageMetadata);
                 mappedPackage.IsPinned = packageInfo.IsPinned;
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
 
@@ -714,7 +714,7 @@ namespace ChocolateyGui.Common.Windows.Services
             var xmlService = _choco.Container().GetInstance<IXmlService>();
             var config =
                 await Task.Run(
-                    () => xmlService.deserialize<ConfigFileSettings>(chocolatey.infrastructure.app.ApplicationParameters.GlobalConfigFileLocation));
+                    () => xmlService.Deserialize<ConfigFileSettings>(chocolatey.infrastructure.app.ApplicationParameters.GlobalConfigFileLocation));
             return config;
         }
     }

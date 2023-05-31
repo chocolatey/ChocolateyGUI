@@ -65,7 +65,7 @@ namespace ChocolateyGui.Common.Windows.Views
 
             // Certain things like Cef (our markdown browser engine) get unhappy when GUI is started from a different cwd.
             // If we're in a different one, reset it to our app files directory.
-            if (_fileSystem.get_directory_name(Environment.CurrentDirectory) != Bootstrapper.ApplicationFilesPath)
+            if (_fileSystem.GetDirectoryName(Environment.CurrentDirectory) != Bootstrapper.ApplicationFilesPath)
             {
                 Environment.CurrentDirectory = Bootstrapper.ApplicationFilesPath;
             }

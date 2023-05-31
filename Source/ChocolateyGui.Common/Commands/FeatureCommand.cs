@@ -35,7 +35,7 @@ namespace ChocolateyGui.Common.Commands
                 .Add(
                     "n=|name=",
                     L(nameof(Resources.FeatureCommand_NameOption)),
-                    option => configuration.FeatureCommand.Name = option.remove_surrounding_quotes())
+                    option => configuration.FeatureCommand.Name = option.UnquoteSafe())
                 .Add(
                     "g|global",
                     L(nameof(Resources.GlobalOption)),
@@ -72,7 +72,7 @@ namespace ChocolateyGui.Common.Commands
         {
             if (configuration.FeatureCommand.Command != FeatureCommandType.List && string.IsNullOrWhiteSpace(configuration.FeatureCommand.Name))
             {
-                Logger.Error(L(nameof(Resources.FeatureCommand_MissingNameOptionError), configuration.FeatureCommand.Command.to_string(), "--name"));
+                Logger.Error(L(nameof(Resources.FeatureCommand_MissingNameOptionError), configuration.FeatureCommand.Command.ToStringSafe(), "--name"));
                 Environment.Exit(-1);
             }
         }

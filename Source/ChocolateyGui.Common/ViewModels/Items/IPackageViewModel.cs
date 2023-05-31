@@ -23,7 +23,7 @@ namespace ChocolateyGui.Common.ViewModels.Items
 
         string Description { get; set; }
 
-        int DownloadCount { get; set; }
+        long DownloadCount { get; set; }
 
         string GalleryDetailsUrl { get; set; }
 
@@ -73,7 +73,7 @@ namespace ChocolateyGui.Common.ViewModels.Items
 
         NuGetVersion Version { get; set; }
 
-        int VersionDownloadCount { get; set; }
+        long VersionDownloadCount { get; set; }
 
         Task Install();
 

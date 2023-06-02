@@ -14,12 +14,14 @@
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
              xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
+             xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
-             d:DataContext="{d:DesignInstance viewModels:LocalSourceViewModel}"
+             d:DataContext="{d:DesignInstance {x:Type viewModels:LocalSourceViewModel}}"
              Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
 
     <UserControl.Resources>
+        <converters:NuGetVersionToString x:Key="NuGetVersionToString"/>
         <utilities:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
         <utilities:PackageAuthorsComparer x:Key="PackageAuthorsComparer" />
 
@@ -59,12 +61,12 @@
                 <TextBlock Grid.Row="2"
                            Margin="4 0"
                            Style="{DynamicResource TileLatestVersionTextStyle}"
-                           Text="{Binding LatestVersion, Mode=OneWay}" />
+                           Text="{Binding LatestVersion, Converter={StaticResource NuGetVersionToString}, Mode=OneWay}" />
 
                 <TextBlock Grid.Row="3"
                            Margin="4 0 4 1"
                            Style="{DynamicResource TileVersionTextStyle}"
-                           Text="{Binding Version, Mode=OneWay}" />
+                           Text="{Binding Version, Converter={StaticResource NuGetVersionToString}, Mode=OneWay}" />
 
                 <ContentControl x:Name="OutOfDateOverlay" Grid.Row="0" Grid.RowSpan="4"
                                 Visibility="Collapsed"
@@ -320,7 +322,7 @@
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Grid.Column="0"
-                                                                   Text="{Binding LatestVersion, IsAsync=True}"
+                                                                   Text="{Binding LatestVersion, Converter={StaticResource NuGetVersionToString}, IsAsync=True}"
                                                                    Padding="3 3 2 3"
                                                                    VerticalAlignment="Stretch"
                                                                    HorizontalAlignment="Left"

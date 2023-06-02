@@ -235,6 +235,7 @@
     <Compile Include="Services\IPackageArgumentsService.cs" />
     <Compile Include="Services\PackageArgumentsService.cs" />
     <Compile Include="Utilities\Converters\LocalizationConverter.cs" />
+    <Compile Include="Utilities\Converters\NuGetVersionToString.cs" />
     <Compile Include="Utilities\Extensions\LocalizeExtension.cs" />
     <Compile Include="Utilities\Converters\NullToInverseBool.cs" />
     <Compile Include="Utilities\ToolTipBehavior.cs" />

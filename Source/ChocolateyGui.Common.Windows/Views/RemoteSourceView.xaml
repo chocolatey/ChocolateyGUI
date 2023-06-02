@@ -12,6 +12,7 @@
              xmlns:commands="clr-namespace:ChocolateyGui.Common.Windows.Commands"
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
              xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
+             xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}"
@@ -19,6 +20,7 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <converters:NuGetVersionToString x:Key="NuGetVersionToString"/>
             <DataTemplate x:Key="PackageListTemplate" DataType="{x:Type items:IPackageViewModel}">
                 <Grid Height="115" Margin="5"
                       Background="Transparent"
@@ -43,7 +45,7 @@
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} {1}">
                                         <Binding Path="Title" Mode="OneWay" />
-                                        <Binding Path="Version" Mode="OneWay" />
+                                        <Binding Path="Version" Mode="OneWay" Converter="{StaticResource NuGetVersionToString}" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -151,7 +153,7 @@
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} {1}">
                                             <Binding Path="Title" Mode="OneWay" />
-                                            <Binding Path="Version" Mode="OneWay" />
+                                            <Binding Path="Version" Mode="OneWay" Converter="{StaticResource NuGetVersionToString}" />
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
@@ -270,7 +272,7 @@
                     <TextBlock Grid.Row="2"
                                Margin="4 0 4 1"
                                Style="{DynamicResource TileVersionTextStyle}"
-                               Text="{Binding Version, Mode=OneWay}" />
+                               Text="{Binding Version, Converter={StaticResource NuGetVersionToString}, Mode=OneWay}" />
 
                     <ContentControl x:Name="IsInstalledOverlay" Grid.Row="0" Grid.RowSpan="3"
                                     Visibility="Collapsed"

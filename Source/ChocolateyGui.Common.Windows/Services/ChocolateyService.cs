@@ -195,7 +195,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
                             if (version != null)
                             {
-                                config.Version = version.ToString();
+                                config.Version = version;
                             }
 
                             if (source != null)

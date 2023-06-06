@@ -24,6 +24,7 @@
     </FrameworkElement.CommandBindings>
 
     <UserControl.Resources>
+        <converters:NuGetVersionToString x:Key="NuGetVersionToString"/>
         <converters:NullToVisibility x:Key="UriToVisibility" />
         <converters:NullToVisibility x:Key="NullToVisibility" />
         <converters:LongSizeToFileSizeString x:Key="LongSizeToFileSizeString" />
@@ -196,7 +197,7 @@
             <Label Style="{StaticResource PackageResourceLabel}"
                    Content="{lang:Localize PackageView_Version}"
                    Target="{Binding ElementName=Version}" />
-            <TextBlock x:Name="Version" Text="{Binding Version}"
+            <TextBlock x:Name="Version" Text="{Binding Version, Converter={StaticResource NuGetVersionToString}}"
                        Style="{StaticResource PackageResourceValue}" />
             
             <Label Style="{StaticResource PackageResourceLabel}" Content="{lang:Localize PackageView_Downloads}"

@@ -226,12 +226,19 @@
     <SourceRoot Include="$(MSBuildThisFileDirectory)/../" />
   </ItemGroup>
   <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.4\analyzers\dotnet\cs\Microsoft.CodeAnalysis.BannedApiAnalyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.4\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.BannedApiAnalyzers.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
     <SourceRoot Include="$(MSBuildThisFileDirectory)/../" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Startup\Adapters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\ChocolateyGui\BannedSymbols.txt">
+      <Link>BannedSymbols.txt</Link>
+    </AdditionalFiles>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

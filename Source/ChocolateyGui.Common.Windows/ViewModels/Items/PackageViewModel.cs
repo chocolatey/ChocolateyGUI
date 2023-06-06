@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Caliburn.Micro;
+using chocolatey;
 using ChocolateyGui.Common.Base;
 using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Models.Messages;
@@ -405,7 +406,8 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public async Task ShowArguments()
         {
-            var decryptedArguments = _packageArgumentsService.DecryptPackageArgumentsFile(Id, Version.ToString()).ToList();
+            // TODO: Add legacy handling for packages installed prior to v2.0.0.
+            var decryptedArguments = _packageArgumentsService.DecryptPackageArgumentsFile(Id, Version.ToNormalizedStringChecked()).ToList();
 
             if (decryptedArguments.Count == 0)
             {
@@ -423,7 +425,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
 
         public async Task Install()
         {
-            await InstallPackage(Version.ToString());
+            await InstallPackage(Version.ToNormalizedStringChecked());
         }
 
         public async Task InstallAdvanced()
@@ -465,7 +467,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 {
                     using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_ReinstallingPackage)), L(nameof(Resources.PackageViewModel_ReinstallingPackage)), Id))
                     {
-                        await _chocolateyService.InstallPackage(Id, Version.ToString(), Source, true);
+                        await _chocolateyService.InstallPackage(Id, Version.ToNormalizedStringChecked(), Source, true);
                         _chocolateyGuiCacheService.PurgeOutdatedPackages();
                         await _eventAggregator.PublishOnUIThreadAsync(new PackageChangedMessage(Id, PackageChangeType.Installed, Version));
                     }
@@ -496,7 +498,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 {
                     using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_UninstallingPackage)), L(nameof(Resources.PackageViewModel_UninstallingPackage)), Id))
                     {
-                        var result = await _chocolateyService.UninstallPackage(Id, Version.ToString(), true);
+                        var result = await _chocolateyService.UninstallPackage(Id, Version.ToNormalizedStringChecked(), true);
 
                         if (!result.Successful)
                         {
@@ -584,7 +586,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_PinningPackage)), L(nameof(Resources.PackageViewModel_PinningPackage)), Id))
                 {
-                    var result = await _chocolateyService.PinPackage(Id, Version.ToString());
+                    var result = await _chocolateyService.PinPackage(Id, Version.ToNormalizedStringChecked());
 
                     if (!result.Successful)
                     {
@@ -628,7 +630,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             {
                 using (await StartProgressDialog(L(nameof(Resources.PackageViewModel_UnpinningPackage)), L(nameof(Resources.PackageViewModel_UnpinningPackage)), Id))
                 {
-                    var result = await _chocolateyService.UnpinPackage(Id, Version.ToString());
+                    var result = await _chocolateyService.UnpinPackage(Id, Version.ToNormalizedStringChecked());
 
                     if (!result.Successful)
                     {

@@ -66,7 +66,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             _cts = new CancellationTokenSource();
 
-            _packageVersion = packageVersion.ToString();
+            _packageVersion = packageVersion.ToNormalizedStringChecked();
             SelectedVersion = _packageVersion;
 
             FetchAvailableVersions();

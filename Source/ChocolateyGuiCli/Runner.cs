@@ -69,7 +69,7 @@ namespace ChocolateyGuiCli
                 if (configuration.RegularOutput)
                 {
 #if DEBUG
-                    Bootstrapper.Logger.Warning(" (DEBUG BUILD)".format_with("Chocolatey GUI", configuration.Information.DisplayVersion));
+                    Bootstrapper.Logger.Warning(" (DEBUG BUILD)".FormatWith("Chocolatey GUI", configuration.Information.DisplayVersion));
 #else
                     Bootstrapper.Logger.Warning("{0}".format_with(configuration.Information.DisplayVersion));
 #endif
@@ -159,10 +159,10 @@ namespace ChocolateyGuiCli
                 {
                     var commandsLog = new StringBuilder();
                     var commands = container.Resolve<IEnumerable<ICommand>>();
-                    foreach (var command in commands.or_empty_list_if_null())
+                    foreach (var command in commands.OrEmpty())
                     {
                         var attributes = command.GetType().GetCustomAttributes(typeof(LocalizedCommandForAttribute), false).Cast<LocalizedCommandForAttribute>();
-                        foreach (var attribute in attributes.or_empty_list_if_null())
+                        foreach (var attribute in attributes.OrEmpty())
                         {
                             commandsLog.AppendFormat(" * {0} - {1}\n", attribute.CommandName, attribute.Description);
                         }
@@ -172,7 +172,7 @@ namespace ChocolateyGuiCli
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Warning(L(nameof(ChocolateyGui.Common.Properties.Resources.Command_CommandsTitle)));
                     Bootstrapper.Logger.Information(string.Empty);
-                    Bootstrapper.Logger.Information("{0}".format_with(commandsLog.ToString()));
+                    Bootstrapper.Logger.Information("{0}".FormatWith(commandsLog.ToString()));
                     Bootstrapper.Logger.Information(L(nameof(ChocolateyGui.Common.Properties.Resources.Command_CommandsText), "chocolateyguicli"));
                     Bootstrapper.Logger.Information(string.Empty);
                     Bootstrapper.Logger.Warning(L(nameof(ChocolateyGui.Common.Properties.Resources.Command_DefaultOptionsAndSwitches)));
@@ -232,7 +232,7 @@ namespace ChocolateyGuiCli
                 {
                     configuration.CommandName = commandName;
                 }
-                else if (commandName.is_equal_to("-v") || commandName.is_equal_to("--version"))
+                else if (commandName.IsEqualTo("-v") || commandName.IsEqualTo("--version"))
                 {
                     // skip help menu
                 }

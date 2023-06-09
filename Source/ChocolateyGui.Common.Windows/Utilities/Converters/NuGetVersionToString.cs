@@ -1,4 +1,11 @@
-﻿namespace ChocolateyGui.Common.Windows.Utilities.Converters
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Chocolatey" file="NuGetVersionToString.cs">
+//   Copyright 2017 - Present Chocolatey Software, LLC
+//   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ChocolateyGui.Common.Windows.Utilities.Converters
 {
     using System;
     using System.Collections.Generic;

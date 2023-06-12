@@ -61,7 +61,7 @@ object ChocolateyGUI : BuildType({
 
         script {
             name = "Call Cake"
-            scriptContent = scriptContent = """
+            scriptContent = """
                 IF "%teamcity.build.triggeredBy%" == "Schedule Trigger" (SET TestType=all) ELSE (SET TestType=unit)
                 call build.official.bat --verbosity=diagnostic --target=CI --testExecutionType=%%TestType%% --shouldRunOpenCover=false
             """.trimIndent()

@@ -19,6 +19,7 @@
         <converters:BooleanToVisibilityInverted x:Key="BooleanToVisibilityInverted" />
         <converters:NullToInverseBool x:Key="NullToInverseBool" />
         <converters:BooleanInverter x:Key="BooleanInverter" />
+        <converters:BooleanToVisibility x:Key="BooleanToVisibilty" />
         <GridLength x:Key="ToggleSwitchPreContentMargin">0</GridLength>
         <GridLength x:Key="ToggleSwitchPostContentMargin">0</GridLength>
 
@@ -246,6 +247,9 @@
                                     <TextBox Grid.Column="0" Text="{Binding LogFile}" />
                                     <Button Grid.Column="1" Content="{lang:Localize AdvancedChocolateyDialog_Browse}" Command="{Binding BrowseLogFileCommand}" />
                                 </Grid>
+                            </mah:MetroHeader>
+                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_IgnoreHTTPCache_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_IgnoreHTTPCache_ToolTip}" Visibility="{Binding IgnoreHTTPCacheIsAvailable, Converter={StaticResource BooleanToVisibilty}}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreHTTPCache}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding OverrideArguments}">

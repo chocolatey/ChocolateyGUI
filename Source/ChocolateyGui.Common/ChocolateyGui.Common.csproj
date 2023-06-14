@@ -119,6 +119,7 @@
     <Compile Include="Attributes\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Base\ConnectionClosedException.cs" />
     <Compile Include="Base\ObservableBase.cs" />
+    <Compile Include="ChocolateyConfigurationExtensions.cs" />
     <Compile Include="ChocolateyExtensions.cs" />
     <Compile Include="ColouredConsoleSink.cs" />
     <Compile Include="Commands\BaseCommand.cs" />

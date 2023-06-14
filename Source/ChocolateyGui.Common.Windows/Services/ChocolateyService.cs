@@ -135,7 +135,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
                         if (forceCheckForOutdatedPackages)
                         {
-                            config.CacheExpirationInMinutes = 0;
+                            config.SetCacheExpirationInMinutes(0);
                         }
                     });
                 var chocoConfig = choco.GetConfiguration();
@@ -253,6 +253,11 @@ namespace ChocolateyGui.Common.Windows.Services
                                 config.DownloadChecksum64 = advancedInstallOptions.DownloadChecksum64bit;
                                 config.DownloadChecksumType = advancedInstallOptions.DownloadChecksumType;
                                 config.DownloadChecksumType64 = advancedInstallOptions.DownloadChecksumType64bit;
+
+                                if (advancedInstallOptions.IgnoreHTTPCache)
+                                {
+                                    config.SetCacheExpirationInMinutes(0);
+                                }
                             }
                         });
 

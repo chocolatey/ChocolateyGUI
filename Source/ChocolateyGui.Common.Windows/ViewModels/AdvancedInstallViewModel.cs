@@ -42,6 +42,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private bool _applyInstallArgumentsToDependencies;
         private bool _applyPackageParametersToDependencies;
         private bool _allowDowngrade;
+        private bool _ignoreHttpCache;
         private bool _ignoreDependencies;
         private bool _forceDependencies;
         private bool _skipPowerShell;
@@ -223,6 +224,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             get { return _allowDowngrade; }
             set { SetPropertyValue(ref _allowDowngrade, value); }
+        }
+
+        public bool IgnoreHTTPCache
+        {
+            get { return _ignoreHttpCache; }
+            set { SetPropertyValue(ref _ignoreHttpCache, value); }
+        }
+
+        public bool IgnoreHTTPCacheIsAvailable
+        {
+            get { return ChocolateyConfigurationExtensions.HasCacheExpirationInMinutes(); }
         }
 
         public bool IgnoreDependencies

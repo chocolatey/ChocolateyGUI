@@ -132,6 +132,11 @@ namespace ChocolateyGui.Common.Windows.Services
                         config.RegularOutput = false;
                         config.QuietOutput = true;
                         config.Prerelease = false;
+
+                        if (forceCheckForOutdatedPackages)
+                        {
+                            config.CacheExpirationInMinutes = 0;
+                        }
                     });
                 var chocoConfig = choco.GetConfiguration();
 

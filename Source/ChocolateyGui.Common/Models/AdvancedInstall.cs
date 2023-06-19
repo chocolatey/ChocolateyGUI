@@ -39,6 +39,8 @@ namespace ChocolateyGui.Common.Models
 
         public bool SkipPowerShell { get; set; }
 
+        public bool IgnoreHttpCache { get; set; }
+
         public bool IgnoreChecksums { get; set; }
 
         public bool AllowEmptyChecksums { get; set; }

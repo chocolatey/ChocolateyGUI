@@ -248,8 +248,8 @@
                                     <Button Grid.Column="1" Content="{lang:Localize AdvancedChocolateyDialog_Browse}" Command="{Binding BrowseLogFileCommand}" />
                                 </Grid>
                             </mah:MetroHeader>
-                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_IgnoreHTTPCache_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_IgnoreHTTPCache_ToolTip}" Visibility="{Binding IgnoreHTTPCacheIsAvailable, Converter={StaticResource BooleanToVisibilty}}">
-                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreHTTPCache}" />
+                            <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_IgnoreHttpCache_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_IgnoreHttpCache_ToolTip}" Visibility="{Binding IgnoreHttpCacheIsAvailable, Converter={StaticResource BooleanToVisibilty}}">
+                                <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding IgnoreHttpCache}" />
                             </mah:MetroHeader>
                             <mah:MetroHeader Header="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_Header}" Tag="{lang:Localize AdvancedChocolateyDialog_OverrideArguments_ToolTip}">
                                 <mah:ToggleSwitch VerticalAlignment="Center" IsOn="{Binding OverrideArguments}">

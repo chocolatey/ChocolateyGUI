@@ -39,7 +39,7 @@ namespace ChocolateyGui.Common.Models
 
         public bool SkipPowerShell { get; set; }
 
-        public bool IgnoreHTTPCache { get; set; }
+        public bool IgnoreHttpCache { get; set; }
 
         public bool IgnoreChecksums { get; set; }
 

@@ -254,7 +254,7 @@ namespace ChocolateyGui.Common.Windows.Services
                                 config.DownloadChecksumType = advancedInstallOptions.DownloadChecksumType;
                                 config.DownloadChecksumType64 = advancedInstallOptions.DownloadChecksumType64bit;
 
-                                if (advancedInstallOptions.IgnoreHTTPCache)
+                                if (advancedInstallOptions.IgnoreHttpCache)
                                 {
                                     config.SetCacheExpirationInMinutes(0);
                                 }

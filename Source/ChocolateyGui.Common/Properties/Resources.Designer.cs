@@ -432,18 +432,18 @@ namespace ChocolateyGui.Common.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ignore HTTP Cache.
         /// </summary>
-        public static string AdvancedChocolateyDialog_IgnoreHTTPCache_Header {
+        public static string AdvancedChocolateyDialog_IgnoreHttpCache_Header {
             get {
-                return ResourceManager.GetString("AdvancedChocolateyDialog_IgnoreHTTPCache_Header", resourceCulture);
+                return ResourceManager.GetString("AdvancedChocolateyDialog_IgnoreHttpCache_Header", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ignore any previously cached HTTP resources.
+        ///   Looks up a localized string similar to Ignore any HTTP caches that have previously been created when querying sources, and create new caches.
         /// </summary>
-        public static string AdvancedChocolateyDialog_IgnoreHTTPCache_ToolTip {
+        public static string AdvancedChocolateyDialog_IgnoreHttpCache_ToolTip {
             get {
-                return ResourceManager.GetString("AdvancedChocolateyDialog_IgnoreHTTPCache_ToolTip", resourceCulture);
+                return ResourceManager.GetString("AdvancedChocolateyDialog_IgnoreHttpCache_ToolTip", resourceCulture);
             }
         }
         

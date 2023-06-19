@@ -1377,10 +1377,10 @@ Please contact your System Administrator to enable this operation.</value>
     <value>Browse</value>
     <comment>This text is used for both when a user clicks a button supposed to select a file, and when selecting a folder.</comment>
   </data>
-  <data name="AdvancedChocolateyDialog_IgnoreHTTPCache_Header" xml:space="preserve">
+  <data name="AdvancedChocolateyDialog_IgnoreHttpCache_Header" xml:space="preserve">
     <value>Ignore HTTP Cache</value>
   </data>
-  <data name="AdvancedChocolateyDialog_IgnoreHTTPCache_ToolTip" xml:space="preserve">
-    <value>Ignore any previously cached HTTP resources</value>
+  <data name="AdvancedChocolateyDialog_IgnoreHttpCache_ToolTip" xml:space="preserve">
+    <value>Ignore any HTTP caches that have previously been created when querying sources, and create new caches.</value>
   </data>
 </root>

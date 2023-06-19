@@ -226,13 +226,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             set { SetPropertyValue(ref _allowDowngrade, value); }
         }
 
-        public bool IgnoreHTTPCache
+        public bool IgnoreHttpCache
         {
             get { return _ignoreHttpCache; }
             set { SetPropertyValue(ref _ignoreHttpCache, value); }
         }
 
-        public bool IgnoreHTTPCacheIsAvailable
+        public bool IgnoreHttpCacheIsAvailable
         {
             get { return ChocolateyConfigurationExtensions.HasCacheExpirationInMinutes(); }
         }

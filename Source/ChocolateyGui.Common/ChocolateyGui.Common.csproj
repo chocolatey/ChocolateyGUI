@@ -55,7 +55,7 @@
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="chocolatey">
-      <HintPath>..\packages\chocolatey.lib.2.1.0-alpha-20230608\lib\net48\chocolatey.dll</HintPath>
+      <HintPath>..\packages\chocolatey.lib.2.1.0\lib\net48\chocolatey.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private Condition="'$(Configuration)' != 'Debug'">False</Private>
     </Reference>

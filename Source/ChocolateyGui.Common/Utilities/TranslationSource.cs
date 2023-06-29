@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Chocolatey" file="TranslationSource.cs">
 //   Copyright 2017 - Present Chocolatey Software, LLC
 //   Copyright 2014 - 2017 Rob Reynolds, the maintainers of Chocolatey, and RealDimensions Software, LLC
@@ -47,6 +47,14 @@ namespace ChocolateyGui.Common.Utilities
         {
             get
             {
+                if (string.IsNullOrEmpty(key))
+                {
+                    // If the key is null we can't pass it to the resource manager.
+                    // As it also doesn't make sense to pass in an empty value we check for both.
+                    // We pass this empty string as we don't want anything to break even on empty values.
+                    return string.Empty;
+                }
+
                 var value = _resourceManager.GetString(key, CurrentCulture);
 #if DEBUG
                 if (string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(key))

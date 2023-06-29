@@ -29,6 +29,9 @@ namespace ChocolateyGui.Common.Providers
 
         private void GetChocolateyInstallLocation()
         {
+#if DEBUG
+            ChocolateyInstall = _fileSystem.GetDirectoryName(_fileSystem.GetCurrentAssemblyPath());
+#else
             ChocolateyInstall = Environment.GetEnvironmentVariable("ChocolateyInstall");
             if (string.IsNullOrWhiteSpace(ChocolateyInstall))
             {
@@ -46,16 +49,21 @@ namespace ChocolateyGui.Common.Providers
             {
                 ChocolateyInstall = string.Empty;
             }
+#endif
         }
 
         private void DetermineIfChocolateyExecutableIsBeingUsed()
         {
+#if DEBUG
+            IsChocolateyExecutableBeingUsed = true;
+#else
             var exePath = _fileSystem.CombinePaths(ChocolateyInstall, "choco.exe");
 
             if (_fileSystem.FileExists(exePath))
             {
                 IsChocolateyExecutableBeingUsed = true;
             }
+#endif
         }
     }
 }

@@ -132,6 +132,11 @@ namespace ChocolateyGui.Common.Windows.Services
                         config.RegularOutput = false;
                         config.QuietOutput = true;
                         config.Prerelease = false;
+
+                        if (forceCheckForOutdatedPackages)
+                        {
+                            config.SetCacheExpirationInMinutes(0);
+                        }
                     });
                 var chocoConfig = choco.GetConfiguration();
 
@@ -195,7 +200,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
                             if (version != null)
                             {
-                                config.Version = version.ToString();
+                                config.Version = version;
                             }
 
                             if (source != null)
@@ -248,6 +253,11 @@ namespace ChocolateyGui.Common.Windows.Services
                                 config.DownloadChecksum64 = advancedInstallOptions.DownloadChecksum64bit;
                                 config.DownloadChecksumType = advancedInstallOptions.DownloadChecksumType;
                                 config.DownloadChecksumType64 = advancedInstallOptions.DownloadChecksumType64bit;
+
+                                if (advancedInstallOptions.IgnoreHttpCache)
+                                {
+                                    config.SetCacheExpirationInMinutes(0);
+                                }
                             }
                         });
 

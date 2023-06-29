@@ -27,7 +27,7 @@ All release notes for Chocolatey GUI can be found on the docs site - https://doc
   </releaseNotes>
     <tags>chocolateygui chocolatey admin foss</tags>
     <dependencies>
-      <dependency id="Chocolatey" version="[2.1.0-alpha-20230608, 2.999.999]" />
+      <dependency id="Chocolatey" version="[2.0.0, 2.999.999]" />
       <dependency id="chocolatey-core.extension" version="1.3.3" />
       <dependency id="dotnetfx" version="4.8.0.20190930" />
     </dependencies>

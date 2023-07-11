@@ -124,8 +124,7 @@ Write-Host "Building choco at $ChocoSourceLocation with Debug..."
 
 Push-Location $ChocoSourceLocation
 if (Test-Path "recipe.cake") {
-    & ./build.debug.bat --target='Build'
-    & ./build.debug.bat --target='Run-ILMerge' --exclusive
+    & ./build.debug.bat --target='Run-ILMerge' --shouldRunTests=false --shouldRunAnalyze=false
 }
 else {
     & ./build.debug.bat

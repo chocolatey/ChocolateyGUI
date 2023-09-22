@@ -5,6 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.Reflection;
 using Autofac;
@@ -27,8 +28,31 @@ namespace ChocolateyGuiCli
         // as it will be returning the path to the choco.exe executable instead.
         public static readonly string ChocolateyGuiInstallLocation = _fileSystem.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", string.Empty));
         public static readonly string ChocolateyInstallEnvironmentVariableName = "ChocolateyInstall";
-        public static readonly string ChocolateyInstallLocation = System.Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName) ?? _fileSystem.GetDirectoryName(_fileSystem.GetCurrentAssemblyPath());
+
+#if FORCE_CHOCOLATEY_OFFICIAL_KEY
+        // always look at the official location of the machine installation
+        public static readonly string ChocolateyInstallLocation = Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName) ?? _fileSystem.GetDirectoryName(_fileSystem.GetCurrentAssemblyPath());
         public static readonly string LicensedGuiAssemblyLocation = _fileSystem.CombinePaths(ChocolateyInstallLocation, "extensions", "chocolateygui", "chocolateygui.licensed.dll");
+#elif DEBUG
+        public static readonly string ChocolateyInstallLocation = _fileSystem.GetDirectoryName(_fileSystem.GetCurrentAssemblyPath());
+        public static readonly string LicensedGuiAssemblyLocation = _fileSystem.CombinePaths(ChocolateyInstallLocation, "extensions", "chocolateygui", "chocolateygui.licensed.dll");
+#else
+        // Install locations is Chocolatey.dll or choco.exe - In Release mode
+        // we might be testing on a server or in the local debugger. Either way,
+        // start from the assembly location and if unfound, head to the machine
+        // locations instead. This is a merge of official and Debug modes.
+        private static Assembly _assemblyForLocation = Assembly.GetEntryAssembly() != null ? Assembly.GetEntryAssembly() : Assembly.GetExecutingAssembly();
+        public static readonly string ChocolateyInstallLocation = _fileSystem.FileExists(_fileSystem.CombinePaths(_fileSystem.GetDirectoryName(_assemblyForLocation.CodeBase), "chocolatey.dll")) ||
+                                                                  _fileSystem.FileExists(_fileSystem.CombinePaths(_fileSystem.GetDirectoryName(_assemblyForLocation.CodeBase), "choco.exe")) ?
+                _fileSystem.GetDirectoryName(_assemblyForLocation.CodeBase) :
+                !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName)) ?
+                    Environment.GetEnvironmentVariable(ChocolateyInstallEnvironmentVariableName) :
+                    @"C:\ProgramData\Chocolatey"
+            ;
+
+        // when being used as a reference, start by looking next to Chocolatey, then in a subfolder.
+        public static readonly string LicensedGuiAssemblyLocation = _fileSystem.FileExists(_fileSystem.CombinePaths(ChocolateyInstallLocation, "chocolateygui.licensed.dll")) ? _fileSystem.CombinePaths(ChocolateyInstallLocation, "chocolateygui.licensed.dll") : _fileSystem.CombinePaths(ChocolateyInstallLocation, "extensions", "chocolateygui", "chocolateygui.licensed.dll");
+#endif
 
         public static readonly string ChocolateyGuiCommonAssemblyLocation = _fileSystem.CombinePaths(ChocolateyGuiInstallLocation, "ChocolateyGui.Common.dll");
         public static readonly string ChocolateyGuiCommonWindowsAssemblyLocation = _fileSystem.CombinePaths(ChocolateyGuiInstallLocation, "ChocolateyGui.Common.Windows.dll");

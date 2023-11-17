@@ -24,7 +24,7 @@ namespace ChocolateyGui.Common.Windows.Services
         public void Show()
         {
             _splashScreen = new SplashScreen(_imageService.SplashScreenImageName);
-            _splashScreen.Show(true, true);
+            _splashScreen.Show(true);
         }
 
         public void Close(TimeSpan duration)

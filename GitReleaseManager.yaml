@@ -34,7 +34,7 @@ close:
     - [GitHub Release](https://github.com/{owner}/{repository}/releases/tag/{milestone})
     - [Chocolatey Package](https://chocolatey.org/packages/chocolateygui/{milestone})
 
-    Your **[GitReleaseManager](https://github.com/GitTools/GitReleaseManager)** bot :package::rocket:
+    Your **[GitReleaseManager](https://github.com/GitTools/GitReleaseManager)** bot :package: :rocket:
 export:
   include-created-date-in-title: true
   created-date-string-format: MMMM dd, yyyy

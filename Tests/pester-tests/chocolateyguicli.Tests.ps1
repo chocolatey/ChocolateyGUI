@@ -1,4 +1,4 @@
-Import-Module ./helpers/gui-helpers.psm1
+Import-Module ../helpers/gui-helpers.psm1
 
 Describe "chocolateyguicli" -Tag ChocolateyGuiCli {
     BeforeDiscovery {
@@ -29,20 +29,21 @@ Describe "chocolateyguicli" -Tag ChocolateyGuiCli {
             $Output.String | Should -Match $Name
         }
     }
-    
+
     Context "Toggles the feature (<_.Name>) successfully" -ForEach $Features {
         BeforeAll {
-            $Outputs = if ($Enabled) {
-                Invoke-GuiCli feature disable --name $_.Name
-                Invoke-GuiCli feature enable --name $_.Name
+            if ($Enabled) {
+                $DisableOutput = Invoke-GuiCli feature disable --name $_.Name
+                $EnableOutput = Invoke-GuiCli feature enable --name $_.Name
             } else {
-                Invoke-GuiCli feature enable --name $_.Name
-                Invoke-GuiCli feature disable --name $_.Name
+                $EnableOutput = Invoke-GuiCli feature enable --name $_.Name
+                $DisableOutput = Invoke-GuiCli feature disable --name $_.Name
             }
         }
 
-        It "Should exit success" {
-            $Outputs.ExitCode | Should -Not -Contain 1
+        It "Should exit success (0)" {
+            $EnableOutput.ExitCode | Should -Be 0 -Because $EnableOutput.String
+            $DisableOutput.ExitCode | Should -Be 0 -Because $DisableOutput.String
         }
     }
 }

@@ -21,10 +21,8 @@ These are the committers to Chocolatey/Chocolatey GUI repository:
 
 Chocolatey GUI is built, with the following fantastic frameworks and services:
 
-* [AppVeyor](http://www.appveyor.com/)
 * [Cake](http://cakebuild.net/)
 * [Cake.Recipe](https://github.com/cake-contrib/Cake.Recipe)
-* [MyGet](http://www.myget.org/)
 * [NuGet.exe](https://www.nuget.org/)
 
 Chocolatey GUI is tested and analyzed with the following rockstar frameworks:

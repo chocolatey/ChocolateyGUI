@@ -10,7 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C6760D8F-E01B-4F26-9B0C-4E2D825509D2}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
-		..\appveyor.yml = ..\appveyor.yml
 		..\nuspec\chocolatey\ChocolateyGUI.nuspec = ..\nuspec\chocolatey\ChocolateyGUI.nuspec
 		..\nuspec\chocolatey\chocolateyInstall.ps1 = ..\nuspec\chocolatey\chocolateyInstall.ps1
 		..\nuspec\chocolatey\chocolateyUninstall.ps1 = ..\nuspec\chocolatey\chocolateyUninstall.ps1

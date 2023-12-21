@@ -8,12 +8,6 @@ You can install Chocolatey GUI via Chocolatey itself by executing:
 
 ```choco install ChocolateyGUI```
 
-If you are interested in trying out the latest pre-release version of Chocolatey GUI then you can use the following installation command:
-
-```choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre```
-
-This uses the public Chocolatey GUI feed which is hosted on [MyGet.org](https://www.myget.org) as the source.
-
 ## Build Status
 
 | GitHub Action                                                                                                                                                                                                  |

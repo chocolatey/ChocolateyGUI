@@ -190,13 +190,13 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: true);
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.Install.ToString();
                             config.PackageNames = id;
                             config.Features.UsePackageExitCodes = false;
+                            config.Verbose = true;
 
                             if (version != null)
                             {
@@ -260,22 +260,7 @@ namespace ChocolateyGui.Common.Windows.Services
                                 }
                             }
                         });
-
-                Action<LogMessage> grabErrors;
-                var errors = GetErrors(out grabErrors);
-
-                using (logger.Intercept(grabErrors))
-                {
-                    await choco.RunAsync();
-
-                    if (Environment.ExitCode != 0)
-                    {
-                        Environment.ExitCode = 0;
-                        return new PackageOperationResult { Successful = false, Messages = errors.ToArray() };
-                    }
-
-                    return PackageOperationResult.SuccessfulCached;
-                }
+                return await RunCommand(_choco, logger);
             }
         }
 
@@ -375,13 +360,13 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: true);
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.Uninstall.ToString();
                             config.PackageNames = id;
                             config.Features.UsePackageExitCodes = false;
+                            config.Verbose = true;
 
                             if (version != null)
                             {
@@ -389,7 +374,7 @@ namespace ChocolateyGui.Common.Windows.Services
                             }
                         });
 
-                return await RunCommand(choco, logger);
+                return await RunCommand(_choco, logger);
             }
         }
 
@@ -398,16 +383,15 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: true);
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.Upgrade.ToString();
                             config.PackageNames = id;
                             config.Features.UsePackageExitCodes = false;
+                            config.Verbose = true;
                         });
-
-                return await RunCommand(choco, logger);
+                return await RunCommand(_choco, logger);
             }
         }
 

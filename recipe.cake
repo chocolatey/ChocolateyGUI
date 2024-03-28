@@ -13,7 +13,7 @@
 if (BuildSystem.IsLocalBuild)
 {
     Environment.SetVariableNames(
-        gitHubTokenVariable: "CHOCOLATEYGUI_GITHUB_PAT",
+        githubTokenVariable: "CHOCOLATEYGUI_GITHUB_PAT",
         transifexApiTokenVariable: "CHOCOLATEYGUI_TRANSIFEX_API_TOKEN"
     );
 }

@@ -48,8 +48,6 @@ namespace ChocolateyGui.Common.Windows.Services
         private GetChocolatey _choco;
         private string _localAppDataPath = string.Empty;
         private const string ErrorRegex = "^\\s*(ERROR|FATAL|WARN)";
-#pragma warning disable SA1401 // Fields must be private
-#pragma warning restore SA1401 // Fields must be private
 
         public ChocolateyService(IMapper mapper, IProgressService progressService, IChocolateyConfigSettingsService configSettingsService, IXmlService xmlService, IFileSystem fileSystem, IConfigService configService)
         {

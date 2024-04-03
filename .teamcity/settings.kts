@@ -18,11 +18,6 @@ object ChocolateyGUI : BuildType({
     name = "Chocolatey GUI (Built with Unit Tests)"
 
     artifactRules = """
-        code_drop/MsBuild.log
-        code_drop/MSBuild.msi.log
-        code_drop/ChocolateyGUI.msi
-        code_drop/TestResults/issues-report.html
-        code_drop/Packages/**/*.nupkg
     """.trimIndent()
 
     params {
@@ -92,11 +87,6 @@ object ChocolateyGUISchd : BuildType({
     name = "Chocolatey GUI (Scheduled Integration Testing)"
 
     artifactRules = """
-        code_drop/MsBuild.log
-        code_drop/MSBuild.msi.log
-        code_drop/ChocolateyGUI.msi
-        code_drop/TestResults/issues-report.html
-        code_drop/Packages/**/*.nupkg
     """.trimIndent()
 
     params {

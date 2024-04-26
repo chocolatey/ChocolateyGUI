@@ -58,7 +58,7 @@ namespace ChocolateyGuiCli.Startup
                         Directory.CreateDirectory(globalConfigDirectory);
                         Hacks.LockDirectory(globalConfigDirectory);
                     }
-                    
+
                     globalDatabase = new LiteDatabase($"filename={globalConfigDatabaseFile};upgrade=true");
                 }
                 else

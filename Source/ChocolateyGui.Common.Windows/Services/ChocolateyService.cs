@@ -47,8 +47,7 @@ namespace ChocolateyGui.Common.Windows.Services
         private readonly IConfigService _configService;
         private GetChocolatey _choco;
         private string _localAppDataPath = string.Empty;
-#pragma warning disable SA1401 // Fields must be private
-#pragma warning restore SA1401 // Fields must be private
+        private const string ErrorRegex = "^\\s*(ERROR|FATAL|WARN)";
 
         public ChocolateyService(IMapper mapper, IProgressService progressService, IChocolateyConfigSettingsService configSettingsService, IXmlService xmlService, IFileSystem fileSystem, IConfigService configService)
         {
@@ -677,6 +676,13 @@ namespace ChocolateyGui.Common.Windows.Services
                     case LogLevel.Error:
                     case LogLevel.Fatal:
                         errors.Add(m.Message);
+                        break;
+                    case LogLevel.Info:
+                        if (System.Text.RegularExpressions.Regex.IsMatch(m.Message, ErrorRegex))
+                        {
+                            errors.Add(m.Message);
+                        }
+
                         break;
                 }
             };

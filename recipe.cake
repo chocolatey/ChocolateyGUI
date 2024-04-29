@@ -1,4 +1,4 @@
-#load nuget:?package=Chocolatey.Cake.Recipe&version=0.23.0
+#load nuget:?package=Chocolatey.Cake.Recipe&version=0.27.0
 
 ///////////////////////////////////////////////////////////////////////////////
 // MODULES
@@ -13,7 +13,7 @@
 if (BuildSystem.IsLocalBuild)
 {
     Environment.SetVariableNames(
-        gitHubTokenVariable: "CHOCOLATEYGUI_GITHUB_PAT",
+        gitReleaseManagerTokenVariable: "CHOCOLATEYGUI_GITHUB_PAT",
         transifexApiTokenVariable: "CHOCOLATEYGUI_TRANSIFEX_API_TOKEN"
     );
 }

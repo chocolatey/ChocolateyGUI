@@ -48,13 +48,22 @@ namespace ChocolateyGuiCli.Startup
                 var userDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.LocalAppDataPath, "data.db")};upgrade=true");
 
                 LiteDatabase globalDatabase;
+                var globalConfigDirectory = Path.Combine(Bootstrapper.AppDataPath, "Config");
+                var globalConfigDatabaseFile = Path.Combine(globalConfigDirectory, "data.db");
+
                 if (Hacks.IsElevated)
                 {
-                    globalDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};upgrade=true");
+                    if (!Directory.Exists(globalConfigDirectory))
+                    {
+                        Directory.CreateDirectory(globalConfigDirectory);
+                        Hacks.LockDirectory(globalConfigDirectory);
+                    }
+
+                    globalDatabase = new LiteDatabase($"filename={globalConfigDatabaseFile};upgrade=true");
                 }
                 else
                 {
-                    if (!File.Exists(Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")))
+                    if (!File.Exists(globalConfigDatabaseFile))
                     {
                         // Since the global configuration database file doesn't exist, we must be running in a state where an administrator user
                         // has never run Chocolatey GUI. In this case, use null, which will mean attempts to use the global database will be ignored.
@@ -63,7 +72,7 @@ namespace ChocolateyGuiCli.Startup
                     else
                     {
                         // Since this is a non-administrator user, they should only have read permissions to this database
-                        globalDatabase = new LiteDatabase($"filename={Path.Combine(Bootstrapper.AppDataPath, "Config", "data.db")};readonly=true");
+                        globalDatabase = new LiteDatabase($"filename={globalConfigDatabaseFile};readonly=true");
                     }
                 }
 

@@ -1,4 +1,4 @@
-#load nuget:?package=Chocolatey.Cake.Recipe&version=0.22.0
+#load nuget:?package=Chocolatey.Cake.Recipe&version=0.28.4
 
 ///////////////////////////////////////////////////////////////////////////////
 // MODULES
@@ -13,7 +13,7 @@
 if (BuildSystem.IsLocalBuild)
 {
     Environment.SetVariableNames(
-        gitHubTokenVariable: "CHOCOLATEYGUI_GITHUB_PAT",
+        gitReleaseManagerTokenVariable: "CHOCOLATEYGUI_GITHUB_PAT",
         transifexApiTokenVariable: "CHOCOLATEYGUI_TRANSIFEX_API_TOKEN"
     );
 }
@@ -22,10 +22,22 @@ else
     Environment.SetVariableNames();
 }
 
+Func<FilePathCollection> getScriptsToVerify = () =>
+{
+    var scriptsToVerify = GetFiles(BuildParameters.Paths.Directories.ChocolateyNuspecDirectory + "/**/*.{ps1|psm1|psd1}");
+
+    Information("The following PowerShell scripts have been selected to be verified...");
+    foreach (var scriptToVerify in scriptsToVerify)
+    {
+        Information(scriptToVerify.FullPath);
+    }
+
+    return scriptsToVerify;
+};
+
 Func<FilePathCollection> getScriptsToSign = () =>
 {
-    var scriptsToSign = GetFiles(BuildParameters.Paths.Directories.NuGetNuspecDirectory + "/**/*.ps1") +
-                        GetFiles(BuildParameters.Paths.Directories.ChocolateyNuspecDirectory + "/**/*.ps1");
+    var scriptsToSign = GetFiles("./nuspec/**/*.{ps1|psm1|psd1}");
 
     Information("The following PowerShell scripts have been selected to be signed...");
     foreach (var scriptToSign in scriptsToSign)
@@ -107,6 +119,7 @@ BuildParameters.SetParameters(context: Context,
                             productDescription: "Chocolatey GUI is a product of Chocolatey Software, Inc. - All Rights Reserved",
                             productCopyright: "Copyright 2014 - Present Open Source maintainers of Chocolatey GUI, and Chocolatey Software, Inc. - All Rights Reserved.",
                             useChocolateyGuiStrongNameKey: true,
+                            getScriptsToVerify: getScriptsToVerify,
                             getScriptsToSign: getScriptsToSign,
                             getFilesToSign: getFilesToSign,
                             getMsisToSign: getMsisToSign,

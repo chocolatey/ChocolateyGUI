@@ -11,6 +11,7 @@ project {
     buildType(ChocolateyGUI)
     buildType(ChocolateyGUISchd)
     buildType(ChocolateyGUIQA)
+    buildType(ChocolateyGUISign)
 }
 
 object ChocolateyGUI : BuildType({
@@ -52,15 +53,10 @@ object ChocolateyGUI : BuildType({
             }
         }
 
-        step {
-            name = "Include Signing Keys"
-            type = "PrepareSigningEnvironment"
-        }
-
         script {
             name = "Call Cake"
             scriptContent = """
-                build.official.bat --verbosity=diagnostic --target=CI --testExecutionType=unit --shouldRunOpenCover=false
+                build.bat --verbosity=diagnostic --target=CI --testExecutionType=unit --shouldRunOpenCover=false
             """.trimIndent()
         }
     }
@@ -189,15 +185,10 @@ object ChocolateyGUIQA : BuildType({
             }
         }
 
-        step {
-            name = "Include Signing Keys"
-            type = "PrepareSigningEnvironment"
-        }
-
         script {
             name = "Call Cake"
             scriptContent = """
-                build.official.bat --verbosity=diagnostic --target=CI --testExecutionType=none --shouldRunAnalyze=false --shouldRunIlMerge=false --shouldObfuscateOutputAssemblies=false --shouldRunChocolatey=false --shouldRunNuGet=false --shouldRunSonarQube=true --shouldRunDependencyCheck=true --shouldAuthenticodeSignMsis=false --shouldAuthenticodeSignOutputAssemblies=false --shouldAuthenticodeSignPowerShellScripts=false
+                build.bat --verbosity=diagnostic --target=CI --testExecutionType=none --shouldRunAnalyze=false --shouldRunIlMerge=false --shouldObfuscateOutputAssemblies=false --shouldRunChocolatey=false --shouldRunNuGet=false --shouldRunSonarQube=true --shouldRunDependencyCheck=true --shouldAuthenticodeSignMsis=false --shouldAuthenticodeSignOutputAssemblies=false --shouldAuthenticodeSignPowerShellScripts=false
             """.trimIndent()
         }
     }
@@ -215,5 +206,72 @@ object ChocolateyGUIQA : BuildType({
             triggerBuild = always()
             withPendingChangesOnly = false
         }
+    }
+})
+
+object ChocolateyGUISign : BuildType({
+    id = AbsoluteId("ChocolateyGUISign")
+    name = "Chocolatey GUI (Script Signing)"
+
+    artifactRules = """
+    """.trimIndent()
+
+    params {
+        param("env.vcsroot.branch", "%vcsroot.branch%")
+        param("env.Git_Branch", "%teamcity.build.vcs.branch.ChocolateyGUI_ChocolateyGuiVcsRoot%")
+        param("env.FORCE_OFFICIAL_AUTHENTICODE_SIGNATURE", "true")
+        param("teamcity.git.fetchAllHeads", "true")
+        password("env.GITHUB_PAT", "%system.GitHubPAT%", display = ParameterDisplay.HIDDEN, readOnly = true)
+    }
+
+    vcs {
+        root(DslContext.settingsRoot)
+
+        branchFilter = """
+            +:*
+        """.trimIndent()
+    }
+
+    steps {
+        powerShell {
+            name = "Prerequisites"
+            scriptMode = script {
+                content = """
+                    # Install Chocolatey Requirements
+                    if ((Get-WindowsFeature -Name NET-Framework-Features).InstallState -ne 'Installed') {
+                        Install-WindowsFeature -Name NET-Framework-Features
+                    }
+
+                    choco install windows-sdk-7.1 netfx-4.0.3-devpack dotnet-6.0-runtime --confirm --no-progress
+                    exit ${'$'}LastExitCode
+                """.trimIndent()
+            }
+        }
+
+        step {
+            name = "Include Signing Keys"
+            type = "PrepareSigningEnvironment"
+        }
+
+        script {
+            name = "Call Cake"
+            scriptContent = """
+                build.official.bat --verbosity=diagnostic --target=Sign-PowerShellScripts --exclusive
+            """.trimIndent()
+        }
+    }
+
+    triggers {
+        vcs {
+            triggerRules = """
+                +:nuspec/**/*.ps1
+            """.trimIndent()
+            branchFilter = "+:develop"
+        }
+    }
+
+    requirements {
+        doesNotExist("docker.server.version")
+        doesNotContain("teamcity.agent.name", "Docker")
     }
 })

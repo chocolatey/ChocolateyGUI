@@ -35,6 +35,7 @@ jobs:
           key: ${{ runner.os }}-tools-${{ hashFiles('recipe.cake') }}
 
       - name: Build project
+        shell: powershell
         run: |
           ./build.ps1 --target=CI
 

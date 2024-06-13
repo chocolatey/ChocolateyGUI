@@ -53,10 +53,15 @@ object ChocolateyGUI : BuildType({
             }
         }
 
+        step {
+            name = "Include Signing Keys"
+            type = "PrepareSigningEnvironment"
+        }
+
         script {
             name = "Call Cake"
             scriptContent = """
-                build.bat --verbosity=diagnostic --target=CI --testExecutionType=unit --shouldRunOpenCover=false
+                build.official.bat --verbosity=diagnostic --target=CI --testExecutionType=unit --shouldRunOpenCover=false
             """.trimIndent()
         }
     }
@@ -117,15 +122,10 @@ object ChocolateyGUISchd : BuildType({
             }
         }
 
-        step {
-            name = "Include Signing Keys"
-            type = "PrepareSigningEnvironment"
-        }
-
         script {
             name = "Call Cake"
             scriptContent = """
-                build.official.bat --verbosity=diagnostic --target=CI --testExecutionType=all --shouldRunOpenCover=false --shouldRunAnalyze=false --shouldRunIlMerge=false --shouldObfuscateOutputAssemblies=false --shouldRunChocolatey=false --shouldRunNuGet=false --shouldAuthenticodeSignMsis=false --shouldAuthenticodeSignOutputAssemblies=false --shouldAuthenticodeSignPowerShellScripts=false
+                build.bat --verbosity=diagnostic --target=CI --testExecutionType=all --shouldRunOpenCover=false --shouldRunAnalyze=false --shouldRunIlMerge=false --shouldObfuscateOutputAssemblies=false --shouldRunChocolatey=false --shouldRunNuGet=false --shouldAuthenticodeSignMsis=false --shouldAuthenticodeSignOutputAssemblies=false --shouldAuthenticodeSignPowerShellScripts=false
             """.trimIndent()
         }
     }

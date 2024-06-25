@@ -150,6 +150,7 @@ namespace ChocolateyGui.Common.Windows
 
                 var packageService = Container.Resolve<IChocolateyService>();
                 var features = await packageService.GetFeatures();
+                var fileSystemWatcher = Container.Resolve<IConfigFileWatcher>();
 
                 var backgroundFeature = features.FirstOrDefault(feature => string.Equals(feature.Name, "useBackgroundService", StringComparison.OrdinalIgnoreCase));
                 var elevationProvider = Elevation.Instance;

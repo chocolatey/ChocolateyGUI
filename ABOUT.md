@@ -10,6 +10,10 @@ In 2013, Christiaan handed over maintainance of Chocolatey GUI to [Gary Ewan Par
 
 Since then, with a set of major contributions from [Richard Simpson](https://twitter.com/richardsimp), Chocolatey GUI has changed from a Windows Forms application to a WPF application, with a much richer User Interface.
 
+## Accessibility
+
+As Chocolatey CLI works well with screen readers and other accessibility tools, Chocolatey GUI is not [WCAG compliant](https://www.w3.org/WAI/standards-guidelines/wcag/). If you need WCAG compliance, please use [Chocolatey CLI](https://docs.chocolatey.org/en-us/choco/) instead.
+
 ## Support
 
 If you have any questions, comments, concerns, or problems with Chocolatey GUI, please feel free to get in touch with us.  The best starting place would be our [Community Chat Room](https://ch0.co/community), and from there, you may be directed to raise an issue on our [Issues List](https://github.com/chocolatey/ChocolateyGUI/issues).

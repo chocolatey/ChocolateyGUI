@@ -18,6 +18,8 @@ object ChocolateyGUI : BuildType({
     id = AbsoluteId("ChocolateyGUI")
     name = "Chocolatey GUI (Built with Unit Tests)"
 
+    templates(AbsoluteId("SlackNotificationTemplate"))
+
     artifactRules = """
     """.trimIndent()
 
@@ -87,6 +89,8 @@ object ChocolateyGUISchd : BuildType({
     id = AbsoluteId("ChocolateyGUISchd")
     name = "Chocolatey GUI (Scheduled Integration Testing)"
 
+    templates(AbsoluteId("SlackNotificationTemplate"))
+
     artifactRules = """
     """.trimIndent()
 
@@ -148,6 +152,8 @@ object ChocolateyGUISchd : BuildType({
 object ChocolateyGUIQA : BuildType({
     id = AbsoluteId("ChocolateyGUIQA")
     name = "Chocolatey GUI (SonarQube)"
+
+    templates(AbsoluteId("SlackNotificationTemplate"))
 
     artifactRules = """
     """.trimIndent()
@@ -212,6 +218,8 @@ object ChocolateyGUIQA : BuildType({
 object ChocolateyGUISign : BuildType({
     id = AbsoluteId("ChocolateyGUISign")
     name = "Chocolatey GUI (Script Signing)"
+
+    templates(AbsoluteId("SlackNotificationTemplate"))
 
     artifactRules = """
     """.trimIndent()

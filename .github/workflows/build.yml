@@ -27,7 +27,7 @@ jobs:
         run: git fetch --prune --unshallow
 
       - name: Cache Tools
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             tools
@@ -40,14 +40,14 @@ jobs:
           ./build.ps1 --target=CI
 
       - name: Upload Issues-Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: warn
           name: issues
           path: code_drop/issues-report.html
 
       - name: Upload Packages
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: warn
           name: package

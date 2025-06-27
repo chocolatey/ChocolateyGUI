@@ -295,7 +295,7 @@ Error: {1}{2}</value>
   <data name="PackageViewModel_InstallingPackage" xml:space="preserve">
     <value>Installing package</value>
   </data>
-  <data name="PackageViewModel_InstallingPackage" xml:space="preserve">
+  <data name="PackageViewModel_InstallingPackages" xml:space="preserve">
     <value>Installing packages</value>
   </data>
   <data name="PackageViewModel_LoadingPackageInfo" xml:space="preserve">

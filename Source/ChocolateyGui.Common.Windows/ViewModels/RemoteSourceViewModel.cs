@@ -396,7 +396,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
                 if (result == MessageDialogResult.Affirmative)
                 {
-                    await _progressService.StartLoading(L(nameof(Resources.PackageViewModel_InstallingPackage)), true);
+                    await _progressService.StartLoading(L(nameof(Resources.PackageViewModel_InstallingPackages)), true);
 
                     _progressService.WriteMessage(L(nameof(Resources.RemoteSourceViewModel_FetchingPackages)));
                     var token = _progressService.GetCancellationToken();

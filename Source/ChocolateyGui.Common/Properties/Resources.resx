@@ -243,6 +243,9 @@ Error: {1}{2}</value>
   <data name="RemoteSourceView_ButtonCheckForOutdatedPkgs" xml:space="preserve">
     <value>Check for outdated packages (forced)</value>
   </data>
+  <data name="LocalSourceView_InstallSelectedPackages" xml:space="preserve">
+    <value>Install Selected Packages</value>
+  </data>
   <data name="LocalSourceView_ButtonUpdateAll" xml:space="preserve">
     <value>Update All</value>
   </data>
@@ -291,6 +294,9 @@ Error: {1}{2}</value>
   </data>
   <data name="PackageViewModel_InstallingPackage" xml:space="preserve">
     <value>Installing package</value>
+  </data>
+  <data name="PackageViewModel_InstallingPackage" xml:space="preserve">
+    <value>Installing packages</value>
   </data>
   <data name="PackageViewModel_LoadingPackageInfo" xml:space="preserve">
     <value>Loading package information...</value>
@@ -1214,6 +1220,9 @@ Please contact your System Administrator to enable this operation.</value>
   </data>
   <data name="Dialog_AreYouSureUpdateAllMessage" xml:space="preserve">
     <value>This action, depending on the number of currently outdated packages, may take a long time to complete. Are you sure that you want to continue?</value>
+  </data>
+  <data name="Dialog_AreYouSureInstallAllMessage" xml:space="preserve">
+    <value>This action, depending on the number of selected packages, may take a long time to complete. Are you sure that you want to continue?</value>
   </data>
   <data name="Dialog_AreYouSureReinstallMessage" xml:space="preserve">
     <value>This action will attempt to reinstall the '{0}' package.  Are you sure you want to proceed?</value>

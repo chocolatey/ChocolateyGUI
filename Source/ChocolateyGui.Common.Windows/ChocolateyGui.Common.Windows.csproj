@@ -238,6 +238,7 @@
     <Compile Include="Utilities\Converters\NuGetVersionToString.cs" />
     <Compile Include="Utilities\Extensions\LocalizeExtension.cs" />
     <Compile Include="Utilities\Converters\NullToInverseBool.cs" />
+    <Compile Include="Utilities\ListViewSelectedItemsBehavior.cs" />
     <Compile Include="Utilities\ToolTipBehavior.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandExecutionManager.cs" />

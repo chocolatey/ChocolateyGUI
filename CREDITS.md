@@ -37,7 +37,7 @@ Chocolatey uses a number of 3rd party components. Their details are below.
     * [Shim Generator (shimgen)@1.0.0](#shim-generator-\(shimgen\)100)
 * [Chocolatey GUI](#chocolatey-gui)
   * [Apache v2.0 License](#apache-v20-license-2)
-    * [Chocolatey CLI / Chocolatey.Lib@2.0.0](#chocolatey-cli--chocolateylib200)
+    * [Chocolatey CLI / Chocolatey.Lib@2.1.0](#chocolatey-cli--chocolateylib210)
     * [Serilog@2.5.0](#serilog250)
     * [Serilog.Formatting.Compact@1.0.0](#serilogformattingcompact100)
     * [Serilog.Sinks.Async@1.1.0](#serilogsinksasync110)
@@ -823,9 +823,9 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 ### Apache v2.0 License
 
-#### Chocolatey CLI / Chocolatey.Lib@2.0.0
+#### Chocolatey CLI / Chocolatey.Lib@2.1.0
 
-[Chocolatey CLI / Chocolatey.Lib](https://github.com/chocolatey/choco) - [License terms.](https://github.com/chocolatey/choco/blob/38b5e5ce3b083acf591f988243e9d8e8ccbfb832/LICENSE)
+[Chocolatey CLI / Chocolatey.Lib](https://github.com/chocolatey/choco) - [License terms.](https://github.com/chocolatey/choco/blob/a500fc573954494893dad503317ad676759d186a/LICENSE)
 
 #### Serilog@2.5.0
 

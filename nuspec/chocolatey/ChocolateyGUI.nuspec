@@ -39,6 +39,8 @@ All release notes for Chocolatey GUI can be found on the docs site - https://doc
     <file src="..\..\..\ChocolateyGUI.msi" target="tools"/>
     <file src="..\..\..\..\LICENSE.txt" target="legal\LICENSE.txt"/>
     <file src="..\..\..\..\CREDITS.md" target="legal\CREDITS.md" />
+    <file src="..\..\..\..\CREDITS.json" target="legal\CREDITS.json" />
+    <file src="..\..\..\..\CREDITS.pdf" target="legal\CREDITS.pdf" />
     <file src="VERIFICATION.txt" target="tools"/>
   </files>
 </package>

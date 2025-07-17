@@ -4,7 +4,7 @@
     "link": "https://github.com/chocolatey/ChocolateyGUI",
     "licenseName": "LICENSE.txt",
     "licenseLink": "https://github.com/chocolatey/ChocolateyGUI/blob/master/LICENSE.txt",
-    "version": "2.0.0",
+    "version": "2.1.1",
     "dependencies": [
         {
             "name": "Autofac",
@@ -56,11 +56,11 @@
         {
             "name": "Chocolatey CLI / Chocolatey.Lib",
             "link": "https://github.com/chocolatey/choco",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "licenses": [
                 {
                     "type": "Apache-2.0",
-                    "link": "https://github.com/chocolatey/choco/blob/d25f993696b4d665ee2dc94ceb0937a2ed5698eb/LICENSE",
+                    "link": "https://github.com/chocolatey/choco/blob/46976cfc9b97391b923a03bdc18203f4524e7f41/LICENSE",
                     "name": "LICENSE"
                 }
             ]

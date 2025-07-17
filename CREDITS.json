@@ -4,7 +4,7 @@
     "link": "https://github.com/chocolatey/ChocolateyGUI",
     "licenseName": "LICENSE.txt",
     "licenseLink": "https://github.com/chocolatey/ChocolateyGUI/blob/master/LICENSE.txt",
-    "version": "2.1.1",
+    "version": "2.0.0",
     "dependencies": [
         {
             "name": "Autofac",
@@ -56,11 +56,11 @@
         {
             "name": "Chocolatey CLI / Chocolatey.Lib",
             "link": "https://github.com/chocolatey/choco",
-            "version": "2.1.0",
+            "version": "2.0.0",
             "licenses": [
                 {
                     "type": "Apache-2.0",
-                    "link": "https://github.com/chocolatey/choco/blob/a500fc573954494893dad503317ad676759d186a/LICENSE",
+                    "link": "https://github.com/chocolatey/choco/blob/d25f993696b4d665ee2dc94ceb0937a2ed5698eb/LICENSE",
                     "name": "LICENSE"
                 }
             ]
@@ -96,7 +96,8 @@
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://github.com/mono/SkiaSharp/blob/fd9484a06ae96f0195a80d93e80d6b54323f450a/LICENSE.md",
+                    "link": "https://github.com/mono/SkiaSharp/blob/080e31cf319624dbccc2103b91aabb54398b93c1/LICENSE.md",
+                    "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE.md"
                 }
             ]
@@ -235,12 +236,13 @@
         },
         {
             "name": "Microsoft.VisualStudio.Validation",
-            "link": "https://www.nuget.org/packages/Microsoft.VisualStudio.Validation/15.3.32",
+            "link": "https://github.com/microsoft/vs-validation",
             "version": "15.3.32",
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://raw.githubusercontent.com/Microsoft/vs-validation/653b14c15e/LICENSE",
+                    "link": "https://github.com/microsoft/vs-validation/blob/919ad1e29af82dc2db88cb69be9e38962464ec82/LICENSE",
+                    "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE"
                 }
             ]
@@ -380,7 +382,7 @@
         {
             "name": "Svg.Custom",
             "link": "https://github.com/wieslawsoltes/Svg.Skia",
-            "version": "release/0.3.0",
+            "version": "0.3.0",
             "licenses": [
                 {
                     "type": "MS-PL",
@@ -397,7 +399,7 @@
                 {
                     "type": "MIT",
                     "link": "https://github.com/wieslawsoltes/Svg.Skia/blob/c65367905b814451a9e3d00dc8da31ecb5d5914a/LICENSE.TXT",
-                    "name": "LICENSE.txt"
+                    "name": "LICENSE.TXT"
                 }
             ]
         },
@@ -408,7 +410,8 @@
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
+                    "link": "https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT",
+                    "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE.txt"
                 }
             ]
@@ -420,7 +423,8 @@
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
+                    "link": "https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT",
+                    "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE.txt"
                 }
             ]
@@ -432,7 +436,8 @@
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
+                    "link": "https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT",
+                    "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE.txt"
                 }
             ]
@@ -515,7 +520,8 @@
             "licenses": [
                 {
                     "type": "MS-SL",
-                    "link": "https://github.com/dotnet/core/blob/main/license-information.md",
+                    "link": "https://github.com/dotnet/core/blob/f448548f18ed90b8ade9dba5567fa3e401ad3d2b/license-information.md",
+                    "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "license-information.md"
                 }
             ]
@@ -527,7 +533,8 @@
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
+                    "link": "https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT",
+                    "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE.txt"
                 }
             ]
@@ -539,7 +546,8 @@
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
+                    "link": "https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT",
+                    "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE.txt"
                 }
             ]

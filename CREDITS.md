@@ -37,7 +37,7 @@ Chocolatey uses a number of 3rd party components. Their details are below.
     * [Shim Generator (shimgen)@1.0.0](#shim-generator-\(shimgen\)100)
 * [Chocolatey GUI](#chocolatey-gui)
   * [Apache v2.0 License](#apache-v20-license-2)
-    * [Chocolatey CLI / Chocolatey.Lib@2.1.0](#chocolatey-cli--chocolateylib210)
+    * [Chocolatey CLI / Chocolatey.Lib@2.0.0](#chocolatey-cli--chocolateylib200)
     * [Serilog@2.5.0](#serilog250)
     * [Serilog.Formatting.Compact@1.0.0](#serilogformattingcompact100)
     * [Serilog.Sinks.Async@1.1.0](#serilogsinksasync110)
@@ -55,7 +55,7 @@ Chocolatey uses a number of 3rd party components. Their details are below.
   * [GNU Lesser General Public License (LGPL) v3.0](#gnu-lesser-general-public-license-\(lgpl\)-v30-1)
     * [Fizzler@1.2.0](#fizzler120)
   * [Microsoft Public License](#microsoft-public-license-1)
-    * [Svg.Custom@release/0.3.0](#svgcustomrelease030)
+    * [Svg.Custom@0.3.0](#svgcustom030)
   * [Microsoft Software License](#microsoft-software-license-1)
     * [System.Runtime.InteropServices.RuntimeInformation@4.3.0](#systemruntimeinteropservicesruntimeinformation430)
   * [MIT License](#mit-license-2)
@@ -589,7 +589,7 @@ https://www.apache.org/licenses/LICENSE-2.0
 
 #### System.Reactive@rxnet-v5.0.0
 
-[System.Reactive](https://github.com/dotnet/reactive) - [License terms.](https://github.com/dotnet/reactive/blob/8a2df0b7850a373b3bad68b43b3839d1cb47eb2e/LICENSE)
+[System.Reactive](https://github.com/dotnet/reactive) - [License terms.](https://github.com/dotnet/reactive/blob/103c252a0ec94eac753f353131ad95cc0be1b390/LICENSE)
 
 #### System.Runtime.CompilerServices.Unsafe@4.5.3
 
@@ -823,9 +823,9 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 ### Apache v2.0 License
 
-#### Chocolatey CLI / Chocolatey.Lib@2.1.0
+#### Chocolatey CLI / Chocolatey.Lib@2.0.0
 
-[Chocolatey CLI / Chocolatey.Lib](https://github.com/chocolatey/choco) - [License terms.](https://github.com/chocolatey/choco/blob/a500fc573954494893dad503317ad676759d186a/LICENSE)
+[Chocolatey CLI / Chocolatey.Lib](https://github.com/chocolatey/choco) - [License terms.](https://github.com/chocolatey/choco/blob/d25f993696b4d665ee2dc94ceb0937a2ed5698eb/LICENSE)
 
 #### Serilog@2.5.0
 
@@ -889,7 +889,7 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 ### Microsoft Public License
 
-#### Svg.Custom@release/0.3.0
+#### Svg.Custom@0.3.0
 
 [Svg.Custom](https://github.com/wieslawsoltes/Svg.Skia) - [License terms.](https://github.com/wieslawsoltes/Svg.Skia/blob/c65367905b814451a9e3d00dc8da31ecb5d5914a/src/Svg.Custom/LICENSE.TXT)
 
@@ -897,7 +897,7 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 #### System.Runtime.InteropServices.RuntimeInformation@4.3.0
 
-[System.Runtime.InteropServices.RuntimeInformation](https://www.nuget.org/packages/System.Runtime.InteropServices.RuntimeInformation/4.3.0) - [License terms.](https://github.com/dotnet/core/blob/main/license-information.md)
+[System.Runtime.InteropServices.RuntimeInformation](https://www.nuget.org/packages/System.Runtime.InteropServices.RuntimeInformation/4.3.0) - [License terms.](https://github.com/dotnet/core/blob/f448548f18ed90b8ade9dba5567fa3e401ad3d2b/license-information.md)
 
 ### MIT License
 
@@ -923,7 +923,7 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 #### HarfBuzzSharp@2.6.1.4
 
-[HarfBuzzSharp](https://github.com/mono/SkiaSharp) - [License terms.](https://github.com/mono/SkiaSharp/blob/fd9484a06ae96f0195a80d93e80d6b54323f450a/LICENSE.md)
+[HarfBuzzSharp](https://github.com/mono/SkiaSharp) - [License terms.](https://github.com/mono/SkiaSharp/blob/080e31cf319624dbccc2103b91aabb54398b93c1/LICENSE.md)
 
 #### LiteDB@5.0.15
 
@@ -967,7 +967,7 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 #### Microsoft.VisualStudio.Validation@15.3.32
 
-[Microsoft.VisualStudio.Validation](https://www.nuget.org/packages/Microsoft.VisualStudio.Validation/15.3.32) - [License terms.](https://raw.githubusercontent.com/Microsoft/vs-validation/653b14c15e/LICENSE)
+[Microsoft.VisualStudio.Validation](https://github.com/microsoft/vs-validation) - [License terms.](https://github.com/microsoft/vs-validation/blob/919ad1e29af82dc2db88cb69be9e38962464ec82/LICENSE)
 
 #### Microsoft.Xaml.Behaviors.Wpf@1.1.19
 
@@ -991,15 +991,15 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 #### System.Buffers@4.5.1
 
-[System.Buffers](https://www.nuget.org/packages/System.Buffers/4.5.1) - [License terms.](https://github.com/dotnet/corefx/blob/master/LICENSE.TXT)
+[System.Buffers](https://www.nuget.org/packages/System.Buffers/4.5.1) - [License terms.](https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT)
 
 #### System.Memory@4.5.4
 
-[System.Memory](https://www.nuget.org/packages/System.Memory/4.5.4) - [License terms.](https://github.com/dotnet/corefx/blob/master/LICENSE.TXT)
+[System.Memory](https://www.nuget.org/packages/System.Memory/4.5.4) - [License terms.](https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT)
 
 #### System.Numerics.Vectors@4.5.0
 
-[System.Numerics.Vectors](https://www.nuget.org/packages/System.Numerics.Vectors/4.5.0) - [License terms.](https://github.com/dotnet/corefx/blob/master/LICENSE.TXT)
+[System.Numerics.Vectors](https://www.nuget.org/packages/System.Numerics.Vectors/4.5.0) - [License terms.](https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT)
 
 #### System.Runtime.CompilerServices.Unsafe@4.7.1
 
@@ -1007,8 +1007,8 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 #### System.Threading.Tasks.Extensions@4.4.0
 
-[System.Threading.Tasks.Extensions](https://www.nuget.org/packages/System.Threading.Tasks.Extensions/4.4.0) - [License terms.](https://github.com/dotnet/corefx/blob/master/LICENSE.TXT)
+[System.Threading.Tasks.Extensions](https://www.nuget.org/packages/System.Threading.Tasks.Extensions/4.4.0) - [License terms.](https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT)
 
 #### System.ValueTuple@4.5.0
 
-[System.ValueTuple](https://www.nuget.org/packages/System.ValueTuple/4.5.0) - [License terms.](https://github.com/dotnet/corefx/blob/master/LICENSE.TXT)
+[System.ValueTuple](https://www.nuget.org/packages/System.ValueTuple/4.5.0) - [License terms.](https://github.com/dotnet/corefx/blob/b8b81a66738bb10ef0790023598396861d92b2c4/LICENSE.TXT)

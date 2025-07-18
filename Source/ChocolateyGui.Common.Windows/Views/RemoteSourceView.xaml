@@ -13,6 +13,7 @@
              xmlns:controls="clr-namespace:ChocolateyGui.Common.Windows.Controls"
              xmlns:theming="clr-namespace:ChocolateyGui.Common.Windows.Theming"
              xmlns:converters="clr-namespace:ChocolateyGui.Common.Windows.Utilities.Converters"
+             xmlns:utilities="clr-namespace:ChocolateyGui.Common.Windows.Utilities"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1366"
              d:DataContext="{d:DesignInstance viewModels:RemoteSourceViewModel}"
@@ -440,6 +441,12 @@
                           Content="{lang:Localize RemoteSourceView_CheckboxMatchExactly}"
                           IsChecked="{Binding MatchWord}" />
                 <ComboBox Name="SortBox" Margin="5 1" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SortSelection}"/>
+                <Button Content="Install Selected"
+                        Command="{commands:DataContextCommandAdapter InstallSelectedPackages, CanInstallSelectedPackages}"
+                        ToolTipService.ShowOnDisabled="True"
+                        VerticalAlignment="Center"
+                        Style="{DynamicResource IconFlatButtonStyle}" 
+                        ToolTip="{lang:Localize LocalSourceView_InstallSelectedPackages}" Margin="0,0,2,0" />
             </WrapPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,6">
                 <Button Command="{commands:DataContextCommandAdapter CheckForOutdatedPackages, CanCheckForOutdatedPackages}"
@@ -536,7 +543,9 @@
                       HorizontalContentAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.IsDeferredScrollingEnabled="False"
-                      MouseDoubleClick="Packages_OnMouseDoubleClick" />
+                      MouseDoubleClick="Packages_OnMouseDoubleClick"
+                      SelectionMode="Extended"
+                      utilities:ListViewSelectedItemsBehavior.SelectedItems="{Binding SelectedPackages}"/>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"
                         Visibility="{Binding ShowShouldPreventPreloadMessage, Converter={StaticResource BooleanToVisibility}}">

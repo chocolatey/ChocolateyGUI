@@ -1551,6 +1551,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This action, depending on the number of selected packages, may take a long time to complete. Are you sure that you want to continue?.
+        /// </summary>
+        public static string Dialog_AreYouSureInstallAllMessage {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSureInstallAllMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string Dialog_No {
@@ -2348,6 +2357,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string PackageViewModel_InstallingPackage {
             get {
                 return ResourceManager.GetString("PackageViewModel_InstallingPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing packages.
+        /// </summary>
+        public static string PackageViewModel_InstallingPackages {
+            get {
+                return ResourceManager.GetString("PackageViewModel_InstallingPackages", resourceCulture);
             }
         }
         

@@ -52,6 +52,7 @@ namespace ChocolateyGui.Common.Windows.Startup
             builder.RegisterType<DotNetFileSystem>().As<chocolatey.infrastructure.filesystem.IFileSystem>().SingleInstance();
             builder.RegisterType<PackageArgumentsService>().As<IPackageArgumentsService>().SingleInstance();
             builder.RegisterType<DefaultEncryptionUtility>().As<IEncryptionUtility>().SingleInstance();
+            builder.RegisterType<ConfigFileWatcher>().As<IConfigFileWatcher>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterAssemblyTypes(viewModelAssembly)

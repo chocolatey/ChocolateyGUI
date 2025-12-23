@@ -26,6 +26,7 @@ using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
+using MahApps.Metro.Controls.Dialogs;
 using NuGet;
 using NuGet.Packaging;
 using Serilog;
@@ -50,6 +51,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private bool _includePrerelease;
         private bool _matchWord;
         private ObservableCollection<IPackageViewModel> _packageViewModels;
+        private ObservableCollection<IPackageViewModel> _selectedPackages;
         private int _pageCount = 1;
         private int _pageSize = 50;
         private string _searchQuery;
@@ -83,6 +85,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             _mapper = mapper;
 
             Packages = new ObservableCollection<IPackageViewModel>();
+            _selectedPackages = new ObservableCollection<IPackageViewModel>();
 
             if (source.Id[0] == '[' && source.Id[source.Id.Length - 1] == ']')
             {
@@ -140,6 +143,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             get { return _packageViewModels; }
             set { this.SetPropertyValue(ref _packageViewModels, value); }
+        }
+
+        public ObservableCollection<IPackageViewModel> SelectedPackages
+        {
+            get { return _selectedPackages; }
+            set { this.SetPropertyValue(ref _selectedPackages, value); }
         }
 
         public int CurrentPage
@@ -364,6 +373,60 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             _chocolateyGuiCacheService.PurgeOutdatedPackages();
             await LoadPackages(true);
+        }
+
+        public bool CanInstallSelectedPackages()
+        {
+            return HasLoaded & SelectedPackages.Any();
+        }
+
+        public async Task InstallSelectedPackages()
+        {
+            try
+            {
+                HasLoaded = false;
+
+                var result = MessageDialogResult.Affirmative;
+                if (!_configService.GetEffectiveConfiguration().SkipModalDialogConfirmation.GetValueOrDefault(false))
+                {
+                    result = await _dialogService.ShowConfirmationMessageAsync(
+                        L(nameof(Resources.Dialog_AreYouSureTitle)),
+                        L(nameof(Resources.Dialog_AreYouSureInstallAllMessage)));
+                }
+
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    await _progressService.StartLoading(L(nameof(Resources.PackageViewModel_InstallingPackages)), true);
+
+                    _progressService.WriteMessage(L(nameof(Resources.RemoteSourceViewModel_FetchingPackages)));
+                    var token = _progressService.GetCancellationToken();
+
+                    double current = 0.0f;
+                    foreach (var package in SelectedPackages)
+                    {
+                        if (token.IsCancellationRequested)
+                        {
+                            await _progressService.StopLoading();
+                            HasLoaded = true;
+                            return;
+                        }
+
+                        _progressService.Report(Math.Min(current++ / SelectedPackages.Count, 100));
+                        await package.Install();
+                    }
+
+                    await _progressService.StopLoading();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Fatal("Install all has failed.", ex);
+                throw;
+            }
+            finally
+            {
+                HasLoaded = true;
+            }
         }
 
         protected override async void OnActivate()

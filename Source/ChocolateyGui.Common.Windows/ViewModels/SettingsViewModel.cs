@@ -453,7 +453,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 }
 
                 _originalId = DraftSource?.Id;
-                await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
             }
             catch (UnauthorizedAccessException)
             {
@@ -486,7 +485,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     await _chocolateyService.RemoveSource(_originalId);
                     Sources.Remove(SelectedSource);
                     SelectedSource = null;
-                    await _eventAggregator.PublishOnUIThreadAsync(new SourcesUpdatedMessage());
                 }
                 catch (UnauthorizedAccessException)
                 {

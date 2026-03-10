@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using chocolatey.infrastructure.filesystem;
 
 namespace ChocolateyGui.Common.Services
@@ -32,17 +33,11 @@ namespace ChocolateyGui.Common.Services
 
         public void PurgeOutdatedPackages()
         {
-            var outdatedPackagesFile = _fileSystem.CombinePaths(_localAppDataPath, "outdatedPackages.xml");
-            var outdatedPackagesBackupFile = _fileSystem.CombinePaths(_localAppDataPath, "outdatedPackages.xml.backup");
+            var outdatedFiles = Directory.GetFiles(_localAppDataPath, "outdatedPackages*.xml");
 
-            if (_fileSystem.FileExists(outdatedPackagesFile))
+            foreach (var outdatedFile in outdatedFiles)
             {
-                _fileSystem.DeleteFile(outdatedPackagesFile);
-            }
-
-            if (_fileSystem.FileExists(outdatedPackagesBackupFile))
-            {
-                _fileSystem.DeleteFile(outdatedPackagesBackupFile);
+                _fileSystem.DeleteFile(outdatedFile);
             }
         }
     }

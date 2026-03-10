@@ -19,7 +19,10 @@ namespace ChocolateyGui.Common.Services
 
         Task<IEnumerable<Package>> GetInstalledPackages();
 
+        [Obsolete("Use the new overload that includes passing in the source for the package as well.")]
         Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null, bool forceCheckForOutdatedPackages = false);
+
+        Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null, bool forceCheckForOutdatedPackages = false, ChocolateySource source = null);
 
         Task<PackageResults> Search(string query, PackageSearchOptions options);
 

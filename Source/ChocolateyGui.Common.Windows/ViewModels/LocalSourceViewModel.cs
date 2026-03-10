@@ -321,10 +321,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     else
                     {
                         var outOfDatePackages =
-                            await _chocolateyService.GetOutdatedPackages(package.IsPrerelease, package.Id, false);
+                            await _chocolateyService.GetOutdatedPackages(includePrerelease: package.IsPrerelease, packageName: package.Id, forceCheckForOutdatedPackages: false, source: null);
                         foreach (var update in outOfDatePackages)
                         {
-                            await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version));
+                            await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version, sourceUrl: null));
                         }
 
                         PackageSource.Refresh();
@@ -476,10 +476,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             try
             {
-                var updates = await _chocolateyService.GetOutdatedPackages(false, null, forceCheckForOutdated);
+                var updates = await _chocolateyService.GetOutdatedPackages(includePrerelease: false, packageName: null, forceCheckForOutdatedPackages: forceCheckForOutdated, source: null);
 
                 // Use a list of task for correct async loop
-                var listOfTasks = updates.Select(update => _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version))).ToList();
+                var listOfTasks = updates.Select(update => _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version, sourceUrl: null))).ToList();
                 await Task.WhenAll(listOfTasks);
 
                 PackageSource.Refresh();

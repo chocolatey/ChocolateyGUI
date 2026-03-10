@@ -688,6 +688,11 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                 return;
             }
 
+            if (message.SourceUrl != null && Source != message.SourceUrl)
+            {
+                return;
+            }
+
             LatestVersion = message.Version;
             IsOutdated = true;
         }

@@ -99,6 +99,11 @@ namespace ChocolateyGui.Common.Windows.Services
 
         public async Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null, bool forceCheckForOutdatedPackages = false)
         {
+            return await GetOutdatedPackages(includePrerelease, packageName, forceCheckForOutdatedPackages, source: null);
+        }
+
+        public async Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null, bool forceCheckForOutdatedPackages = false, ChocolateySource source = null)
+        {
             var preventAutomatedOutdatedPackagesCheck = _configService.GetEffectiveConfiguration().PreventAutomatedOutdatedPackagesCheck ?? false;
 
             if (preventAutomatedOutdatedPackagesCheck && !forceCheckForOutdatedPackages)
@@ -106,7 +111,23 @@ namespace ChocolateyGui.Common.Windows.Services
                 return new List<OutdatedPackage>();
             }
 
-            var outdatedPackagesFile = _fileSystem.CombinePaths(_localAppDataPath, "outdatedPackages.xml");
+            var outdatedPackageFileName = "outdatedPackages";
+
+            if (source != null)
+            {
+                outdatedPackageFileName = $"{outdatedPackageFileName}-{source.Id}";
+            }
+
+            if (includePrerelease)
+            {
+                outdatedPackageFileName = $"{outdatedPackageFileName}-pre.xml";
+            }
+            else
+            {
+                outdatedPackageFileName = $"{outdatedPackageFileName}.xml";
+            }
+
+            var outdatedPackagesFile = _fileSystem.CombinePaths(_localAppDataPath, outdatedPackageFileName);
 
             var outdatedPackagesCacheDurationInMinutesSetting = _configService.GetEffectiveConfiguration().OutdatedPackagesCacheDurationInMinutes;
             int outdatedPackagesCacheDurationInMinutes = 0;
@@ -122,6 +143,7 @@ namespace ChocolateyGui.Common.Windows.Services
             else
             {
                 var choco = Lets.GetChocolatey(initializeLogging: false);
+                var chocoConfig = choco.GetConfiguration();
                 choco.Set(
                     config =>
                     {
@@ -130,21 +152,30 @@ namespace ChocolateyGui.Common.Windows.Services
                         config.UpgradeCommand.NotifyOnlyAvailableUpgrades = true;
                         config.RegularOutput = false;
                         config.QuietOutput = true;
-                        config.Prerelease = false;
+                        config.Prerelease = includePrerelease;
 
                         if (forceCheckForOutdatedPackages)
                         {
                             config.SetCacheExpirationInMinutes(0);
                         }
+
+                        if (source == null)
+                        {
+                            config.Sources = chocoConfig.Sources;
+                        }
+                        else
+                        {
+                            config.Sources = source.Value;
+                        }
                     });
-                var chocoConfig = choco.GetConfiguration();
+                
 
                 // If there are no Sources configured, for example, if they are all disabled, then figuring out
                 // which packages are outdated can't be completed.
-                if (chocoConfig.Sources != null)
+                if (choco.GetConfiguration().Sources != null)
                 {
                     var nugetService = choco.Container().GetInstance<INugetService>();
-                    var packages = await Task.Run(() => nugetService.UpgradeDryRun(chocoConfig, null));
+                    var packages = await Task.Run(() => nugetService.UpgradeDryRun(choco.GetConfiguration(), null));
                     var results = packages
                         .Where(p => !p.Value.Inconclusive)
                         .Select(p => new OutdatedPackage

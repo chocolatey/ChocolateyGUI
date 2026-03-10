@@ -884,7 +884,7 @@ Normal:
     <value>This action will delete all cached icons that appear on the Tile Views of Chocolatey GUI.  Are you sure you want to proceed (this action cannot be undone)?</value>
   </data>
   <data name="Dialog_AreYouSureOutdatedPackagesMessage" xml:space="preserve">
-    <value>This action will delete the file containing the list of outdated packages for this computer.  Are you sure you want to proceed (this action cannot be undone)?</value>
+    <value>This action will delete the files containing the list of outdated packages for this computer.  Are you sure you want to proceed (this action cannot be undone)?</value>
   </data>
   <data name="Dialog_AreYouSureTitle" xml:space="preserve">
     <value>Are you sure?</value>
@@ -1382,5 +1382,8 @@ Please contact your System Administrator to enable this operation.</value>
   </data>
   <data name="AdvancedChocolateyDialog_IgnoreHttpCache_ToolTip" xml:space="preserve">
     <value>Ignore any HTTP caches that have previously been created when querying sources, and create new caches.</value>
+  </data>
+  <data name="RemoteSourceView_Outdated" xml:space="preserve">
+    <value>Out of Date</value>
   </data>
 </root>

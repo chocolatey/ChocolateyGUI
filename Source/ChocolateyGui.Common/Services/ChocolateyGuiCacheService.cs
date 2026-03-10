@@ -6,7 +6,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using chocolatey.infrastructure.filesystem;
+using ChocolateyGui.Common.Models;
 
 namespace ChocolateyGui.Common.Services
 {
@@ -32,17 +34,42 @@ namespace ChocolateyGui.Common.Services
 
         public void PurgeOutdatedPackages()
         {
-            var outdatedPackagesFile = _fileSystem.CombinePaths(_localAppDataPath, "outdatedPackages.xml");
-            var outdatedPackagesBackupFile = _fileSystem.CombinePaths(_localAppDataPath, "outdatedPackages.xml.backup");
+            PurgeOutdatedPackages(source: null, includePrerelease: false);
+        }
 
-            if (_fileSystem.FileExists(outdatedPackagesFile))
+        public void PurgeOutdatedPackages(ChocolateySource source, bool includePrerelease)
+        {
+            if (source == null)
             {
-                _fileSystem.DeleteFile(outdatedPackagesFile);
+                var outdatedFiles = Directory.GetFiles(_localAppDataPath, "outdatedPackages*.xml");
+
+                foreach (var outdatedFile in outdatedFiles)
+                {
+                    _fileSystem.DeleteFile(outdatedFile);
+                }
             }
-
-            if (_fileSystem.FileExists(outdatedPackagesBackupFile))
+            else
             {
-                _fileSystem.DeleteFile(outdatedPackagesBackupFile);
+                var outdatedPackageFileName = "outdatedPackages";
+
+                if (source != null)
+                {
+                    outdatedPackageFileName = $"{outdatedPackageFileName}-{source.Id}";
+                }
+
+                if (includePrerelease)
+                {
+                    outdatedPackageFileName = $"{outdatedPackageFileName}-pre.xml";
+                }
+                else
+                {
+                    outdatedPackageFileName = $"{outdatedPackageFileName}.xml";
+                }
+
+                if (_fileSystem.FileExists(outdatedPackageFileName))
+                {
+                    _fileSystem.DeleteFile(outdatedPackageFileName);
+                }
             }
         }
     }

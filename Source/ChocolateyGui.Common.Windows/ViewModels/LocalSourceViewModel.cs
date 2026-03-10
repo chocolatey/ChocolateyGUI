@@ -33,7 +33,11 @@ using Serilog;
 
 namespace ChocolateyGui.Common.Windows.ViewModels
 {
-    public sealed class LocalSourceViewModel : ViewModelScreen, ISourceViewModelBase, IHandleWithTask<PackageChangedMessage>
+    public sealed class LocalSourceViewModel : 
+        ViewModelScreen,
+        ISourceViewModelBase,
+        IHandleWithTask<PackageInstalledMessage>,
+        IHandle<PackageUninstalledMessage>
     {
         private static readonly ILogger Logger = Log.ForContext<LocalSourceViewModel>();
         private readonly IChocolateyService _chocolateyService;
@@ -291,7 +295,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async Task CheckForOutdatedPackages()
         {
-            _chocolateyGuiCacheService.PurgeOutdatedPackages();
+            // We need to clear out all files, as there may be incorrect information cached for 
+            // all the sources.
+            _chocolateyGuiCacheService.PurgeOutdatedPackages(source: null, includePrerelease: false);
             await CheckOutdated(true);
         }
 
@@ -305,41 +311,14 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             await LoadPackages();
         }
 
-        public async Task Handle(PackageChangedMessage message)
+        public void Handle(PackageUninstalledMessage message)
         {
-            switch (message.ChangeType)
-            {
-                case PackageChangeType.Pinned:
-                    PackageSource.Refresh();
-                    break;
-                case PackageChangeType.Unpinned:
-                    var package = Packages.First(p => p.Id == message.Id);
-                    if (package.LatestVersion != null)
-                    {
-                        PackageSource.Refresh();
-                    }
-                    else
-                    {
-                        var outOfDatePackages =
-                            await _chocolateyService.GetOutdatedPackages(package.IsPrerelease, package.Id, false);
-                        foreach (var update in outOfDatePackages)
-                        {
-                            await _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version));
-                        }
+            Packages.Remove(Packages.First(p => p.Id == message.Id));
+        }
 
-                        PackageSource.Refresh();
-                    }
-
-                    break;
-
-                case PackageChangeType.Uninstalled:
-                    Packages.Remove(Packages.First(p => p.Id == message.Id));
-                    break;
-
-                default:
-                    await LoadPackages();
-                    break;
-            }
+        public async Task Handle(PackageInstalledMessage message)
+        {
+            await LoadPackages();
         }
 
 #pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
@@ -461,6 +440,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             foreach (var packageViewModel in packages)
             {
+                packageViewModel.ChocolateySource = null;
                 _packages.Add(packageViewModel);
                 Packages.Add(packageViewModel);
             }
@@ -476,10 +456,10 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             try
             {
-                var updates = await _chocolateyService.GetOutdatedPackages(false, null, forceCheckForOutdated);
+                var updates = await _chocolateyService.GetOutdatedPackages(includePrerelease: false, forceCheckForOutdatedPackages: forceCheckForOutdated, source: null);
 
                 // Use a list of task for correct async loop
-                var listOfTasks = updates.Select(update => _eventAggregator.PublishOnUIThreadAsync(new PackageHasUpdateMessage(update.Id, update.Version))).ToList();
+                var listOfTasks = updates.Select(update => _eventAggregator.PublishOnUIThreadAsync(new PackageOutdatedMessage(update.Id, update.Version, source: null))).ToList();
                 await Task.WhenAll(listOfTasks);
 
                 PackageSource.Refresh();

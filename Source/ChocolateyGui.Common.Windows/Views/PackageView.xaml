@@ -199,7 +199,15 @@
                    Target="{Binding ElementName=Version}" />
             <TextBlock x:Name="Version" Text="{Binding Version, Converter={StaticResource NuGetVersionToString}}"
                        Style="{StaticResource PackageResourceValue}" />
-            
+
+            <Label Style="{StaticResource PackageResourceLabel}"
+                   Content="{lang:Localize PackageView_AvailableVersion}"
+                   Target="{Binding ElementName=AvailableVersion}"
+                   Visibility="{Binding IsOutdated, Converter={StaticResource BoolToVis}}" />
+            <TextBlock x:Name="AvailableVersion" Text="{Binding LatestVersion, Converter={StaticResource NuGetVersionToString}}"
+                       Style="{StaticResource PackageResourceValue}"
+                       Visibility="{Binding IsOutdated, Converter={StaticResource BoolToVis}}" />
+
             <Label Style="{StaticResource PackageResourceLabel}" Content="{lang:Localize PackageView_Downloads}"
                    Target="{Binding ElementName=VersionDownloadCount}"
                    Visibility="{Binding IsDownloadCountAvailable, Converter={StaticResource BoolToVis}}" />

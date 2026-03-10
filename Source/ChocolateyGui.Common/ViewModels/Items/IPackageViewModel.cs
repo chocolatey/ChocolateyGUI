@@ -65,6 +65,8 @@ namespace ChocolateyGui.Common.ViewModels.Items
 
         Uri Source { get; set; }
 
+        Models.ChocolateySource ChocolateySource { get; set; }
+
         string Summary { get; set; }
 
         string Tags { get; set; }
@@ -72,6 +74,8 @@ namespace ChocolateyGui.Common.ViewModels.Items
         string Title { get; set; }
 
         NuGetVersion Version { get; set; }
+
+        NuGetVersion RemoteVersion { get; set; }
 
         long VersionDownloadCount { get; set; }
 

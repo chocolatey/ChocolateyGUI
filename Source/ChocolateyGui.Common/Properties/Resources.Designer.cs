@@ -19,7 +19,7 @@ namespace ChocolateyGui.Common.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -439,7 +439,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ignore any HTTP caches that have previously been created when querying sources, and create new caches.
+        ///   Looks up a localized string similar to Ignore any HTTP caches that have previously been created when querying sources, and create new caches..
         /// </summary>
         public static string AdvancedChocolateyDialog_IgnoreHttpCache_ToolTip {
             get {
@@ -1506,7 +1506,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This action will delete the file containing the list of outdated packages for this computer.  Are you sure you want to proceed (this action cannot be undone)?.
+        ///   Looks up a localized string similar to This action will delete the files containing the list of outdated packages for this computer.  Are you sure you want to proceed (this action cannot be undone)?.
         /// </summary>
         public static string Dialog_AreYouSureOutdatedPackagesMessage {
             get {
@@ -2055,6 +2055,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Available Version.
+        /// </summary>
+        public static string PackageView_AvailableVersion {
+            get {
+                return ResourceManager.GetString("PackageView_AvailableVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Install.
         /// </summary>
         public static string PackageView_ButtonInstall {
@@ -2262,7 +2271,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version.
+        ///   Looks up a localized string similar to Installed Version.
         /// </summary>
         public static string PackageView_Version {
             get {
@@ -2633,6 +2642,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string RemoteSourceView_Downloads {
             get {
                 return ResourceManager.GetString("RemoteSourceView_Downloads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Out of Date.
+        /// </summary>
+        public static string RemoteSourceView_Outdated {
+            get {
+                return ResourceManager.GetString("RemoteSourceView_Outdated", resourceCulture);
             }
         }
         

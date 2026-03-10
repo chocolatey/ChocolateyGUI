@@ -71,6 +71,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -106,13 +107,38 @@
                                    TextTrimming="CharacterEllipsis"
                                    AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}" />
 
-                        <iconPacks:PackIconEntypo Grid.Row="0"
-                                                  Grid.RowSpan="2"
-                                                  Grid.Column="2"
+                        <Grid Background="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}"
+                              Grid.Row="0"
+                              Grid.Column="2"                          
+                              TextElement.Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}"
+                              Visibility="{Binding IsOutdated, Converter={StaticResource BooleanToVisibility}}"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding LatestVersion, Converter={StaticResource NuGetVersionToString}, IsAsync=True}"
+                                           Grid.Column="0"
+                                           Padding="3 3 2 3"
+                                           VerticalAlignment="Stretch"
+                                           HorizontalAlignment="Left"
+                                           TextAlignment="Center" />
+                                <TextBlock Text="{lang:Localize RemoteSourceView_Outdated}"
+                                           Grid.Column="1"
+                                           TextTrimming="CharacterEllipsis"
+                                           Padding="2 3 3 3"
+                                           VerticalAlignment="Stretch"
+                                           HorizontalAlignment="Right"
+                                           TextAlignment="Center" />
+                        </Grid>
+                        <iconPacks:PackIconEntypo Grid.Column="3"
                                                   Kind="Check"
                                                   Width="16"
                                                   Height="16"
                                                   VerticalAlignment="Center"
+                                                  Margin="5,0,0,0"
                                                   Visibility="{Binding IsInstalled, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                     </Grid>
                 </Grid>
@@ -193,6 +219,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -228,13 +255,40 @@
                                        TextTrimming="CharacterEllipsis"
                                        AutomationProperties.Name="{Binding Tags, Mode=OneWay, Converter={StaticResource StringListToString}}" />
 
+                            <Grid Background="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateKey}}"
+                                  Grid.Row="0"
+                                  Grid.Column="2"                          
+                                  TextElement.Foreground="{DynamicResource {x:Static theming:ChocolateyBrushes.OutOfDateForegroundKey}}"
+                                  Visibility="{Binding IsOutdated, Converter={StaticResource BooleanToVisibility}}"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding LatestVersion, Converter={StaticResource NuGetVersionToString}, IsAsync=True}"
+                                           Grid.Column="0"
+                                           Padding="3 3 2 3"
+                                           VerticalAlignment="Stretch"
+                                           HorizontalAlignment="Left"
+                                           TextAlignment="Center" />
+                                <TextBlock Text="{lang:Localize RemoteSourceView_Outdated}"
+                                           Grid.Column="1"
+                                           TextTrimming="CharacterEllipsis"
+                                           Padding="2 3 3 3"
+                                           VerticalAlignment="Stretch"
+                                           HorizontalAlignment="Right"
+                                           TextAlignment="Center" />
+                            </Grid>
+                            
                             <iconPacks:PackIconEntypo Grid.Row="0"
-                                                      Grid.RowSpan="2"
-                                                      Grid.Column="2"
+                                                      Grid.Column="3"
                                                       Kind="Check"
                                                       Width="16"
                                                       Height="16"
                                                       VerticalAlignment="Center"
+                                                      Margin="5,0,0,0"
                                                       Visibility="{Binding IsInstalled, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
                         </Grid>
                     </Grid>
@@ -248,6 +302,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
@@ -270,16 +325,21 @@
                                               Visibility="{Binding IsPinned, Mode=OneWay, Converter={StaticResource BooleanToVisibility}}" />
 
                     <TextBlock Grid.Row="2"
+                           Margin="4 0"
+                           Style="{DynamicResource TileLatestVersionTextStyle}"
+                           Text="{Binding LatestVersion, Converter={StaticResource NuGetVersionToString}, Mode=OneWay}" />
+                    
+                    <TextBlock Grid.Row="3"
                                Margin="4 0 4 1"
                                Style="{DynamicResource TileVersionTextStyle}"
                                Text="{Binding Version, Converter={StaticResource NuGetVersionToString}, Mode=OneWay}" />
 
-                    <ContentControl x:Name="IsInstalledOverlay" Grid.Row="0" Grid.RowSpan="3"
+                    <ContentControl x:Name="IsInstalledOverlay" Grid.Row="0" Grid.RowSpan="4"
                                     Visibility="Collapsed"
                                     Content="{lang:Localize RemoteSourceView_OverlayInstalled}"
                                     Style="{DynamicResource TileIsInstalledOverlayStyle}" />
 
-                    <ContentControl x:Name="OutOfDateOverlay" Grid.Row="0" Grid.RowSpan="3"
+                    <ContentControl x:Name="OutOfDateOverlay" Grid.Row="0" Grid.RowSpan="4"
                                     Visibility="Collapsed"
                                     Content="{lang:Localize RemoteSourceView_OverlayOutdated}"
                                     Style="{DynamicResource TileOutOfDateOverlayStyle}" />
@@ -529,7 +589,7 @@
 
         <Grid Grid.Row="1">
             <ListView x:Name="Packages"
-                      ItemsSource="{Binding Packages, Mode=OneWay}"
+                      ItemsSource="{Binding PackageSource, Mode=OneWay}"
                       VerticalAlignment="Stretch"
                       IsTextSearchEnabled="True"
                       TextSearch.TextPath="Title"

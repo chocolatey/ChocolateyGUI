@@ -19,7 +19,10 @@ namespace ChocolateyGui.Common.Services
 
         Task<IEnumerable<Package>> GetInstalledPackages();
 
+        [Obsolete("Use the new overload that includes passing in the source for the package as well.")]
         Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, string packageName = null, bool forceCheckForOutdatedPackages = false);
+
+        Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackages(bool includePrerelease = false, bool forceCheckForOutdatedPackages = false, ChocolateySource source = null);
 
         Task<PackageResults> Search(string query, PackageSearchOptions options);
 
@@ -36,7 +39,10 @@ namespace ChocolateyGui.Common.Services
 
         Task<PackageOperationResult> UninstallPackage(string id, string version, bool force = false);
 
+        [Obsolete("Use the new overload that includes passing in the version for the package as well.")]
         Task<PackageOperationResult> UpdatePackage(string id, Uri source = null);
+
+        Task<PackageOperationResult> UpdatePackage(string id, string version = null, Uri source = null);
 
         Task<PackageOperationResult> PinPackage(string id, string version);
 

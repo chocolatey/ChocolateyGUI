@@ -84,7 +84,7 @@ namespace ChocolateyGui.Common.Commands
                     _chocolateyGuiCacheService.PurgeIcons();
                     break;
                 case PurgeCommandType.Outdated:
-                    _chocolateyGuiCacheService.PurgeOutdatedPackages();
+                    _chocolateyGuiCacheService.PurgeOutdatedPackages(source: null, includePrerelease: false);
                     break;
             }
         }

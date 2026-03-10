@@ -391,7 +391,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
             if (result == MessageDialogResult.Affirmative)
             {
-                _chocolateyGuiCacheService.PurgeOutdatedPackages();
+                // We need to clear out all files, as there may be incorrect information cached for 
+                // all the sources.
+                _chocolateyGuiCacheService.PurgeOutdatedPackages(source: null, includePrerelease: false);
             }
         }
 

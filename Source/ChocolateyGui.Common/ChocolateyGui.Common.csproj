@@ -80,6 +80,10 @@
     </AdditionalFiles>
   </ItemGroup>
   <ItemGroup>
+    <!-- Suppress AutoMapper advisory, set the max depth for mappings as a remediation -->
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-rvv3-g6hj-g44x" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.1" />
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="BuildTools.FxCop" Version="1.0.1" />

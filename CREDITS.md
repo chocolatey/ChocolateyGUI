@@ -36,6 +36,8 @@ Chocolatey uses a number of 3rd party components. Their details are below.
     * [Serilog.Sinks.Console@v6.1.1](#serilogsinksconsolev611)
     * [Serilog.Sinks.PeriodicBatching@v5.0.0](#serilogsinksperiodicbatchingv500)
     * [Serilog.Sinks.RollingFile@3.3.0](#serilogsinksrollingfile330)
+  * [BSD-3-Clause](#bsd-3-clause-2)
+    * [Markdig.Signed@0.23.0](#markdigsigned0230)
   * [MIT License](#mit-license-2)
     * [Autofac@4.6.1](#autofac461)
     * [AutoMapper@7.0.1](#automapper701)
@@ -608,6 +610,12 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 #### Serilog.Sinks.RollingFile@3.3.0
 
 [Serilog.Sinks.RollingFile](https://github.com/serilog/serilog-sinks-rollingfile) - [License terms.](https://github.com/serilog/serilog-sinks-rollingfile/blob/2a24d25b8fb56f9aab7eeb9887b728c060bf50d6/LICENSE)
+
+### BSD-3-Clause
+
+#### Markdig.Signed@0.23.0
+
+[Markdig.Signed](https://github.com/xoofx/markdig) - [License terms.](https://github.com/xoofx/markdig/blob/751c79fce4e92857f861d8af0854a8eff0b29071/license.txt)
 
 ### MIT License
 

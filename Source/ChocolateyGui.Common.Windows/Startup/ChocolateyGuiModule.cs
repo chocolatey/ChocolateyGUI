@@ -91,6 +91,8 @@ namespace ChocolateyGui.Common.Windows.Startup
             // Register Mapper
             var mapperConfiguration = new MapperConfiguration(config =>
             {
+                config.ForAllMaps((_, mapping) => mapping.MaxDepth(64));
+
                 config.CreateMap<IPackageViewModel, IPackageViewModel>()
                     .ForMember(vm => vm.IsInstalled, options => options.Ignore());
 

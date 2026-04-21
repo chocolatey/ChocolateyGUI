@@ -163,6 +163,18 @@
             ]
         },
         {
+            "name": "Markdig.Signed",
+            "link": "https://github.com/xoofx/markdig",
+            "version": "0.23.0",
+            "licenses": [
+                {
+                    "type": "BSD-3-Clause",
+                    "link": "https://github.com/xoofx/markdig/blob/751c79fce4e92857f861d8af0854a8eff0b29071/license.txt",
+                    "name": "license.txt"
+                }
+            ]
+        },
+        {
             "name": "Microsoft.CSharp",
             "link": "https://github.com/dotnet/runtime",
             "version": "v4.7.0",

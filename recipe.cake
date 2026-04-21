@@ -32,12 +32,19 @@ Func<FilePathCollection> getScriptsToVerify = () =>
         Information(scriptToVerify.FullPath);
     }
 
+    var numberOfScriptsToVerify = scriptsToVerify.Count();
+
+    if (numberOfScriptsToVerify != 3)
+    {
+        throw new Exception(string.Format("Expected to find 3 scripts to verify, but found {0}", numberOfScriptsToVerify));
+    }
+
     return scriptsToVerify;
 };
 
 Func<FilePathCollection> getScriptsToSign = () =>
 {
-    var scriptsToSign = GetFiles("./nuspec/**/*.{ps1|psm1|psd1}");
+    var scriptsToSign = GetFiles(BuildParameters.Paths.Directories.ChocolateyNuspecDirectory + "/**/*.{ps1|psm1|psd1}");
 
     Information("The following PowerShell scripts have been selected to be signed...");
     foreach (var scriptToSign in scriptsToSign)
@@ -45,13 +52,20 @@ Func<FilePathCollection> getScriptsToSign = () =>
         Information(scriptToSign.FullPath);
     }
 
+    var numberOfScriptsToSign = scriptsToSign.Count();
+
+    if (numberOfScriptsToSign != 3)
+    {
+        throw new Exception(string.Format("Expected to find 3 scripts to verify, but found {0}", numberOfScriptsToSign));
+    }
+
     return scriptsToSign;
 };
 
 Func<FilePathCollection> getFilesToSign = () =>
 {
-    var filesToSign = GetFiles(BuildParameters.Paths.Directories.PublishedApplications + "/^{ChocolateyGui|ChocolateyGuiCli}/{ChocolateyGui|ChocolateyGuiCli}*.{exe|dll}") +
-                    GetFiles(BuildParameters.Paths.Directories.PublishedLibraries + "/ChocolateyGui*/ChocolateyGui*.dll");
+    var filesToSign = GetFiles(BuildParameters.Paths.Directories.PublishedApplications + "/^{ChocolateyGui|ChocolateyGuiCli}/net48/{ChocolateyGui|ChocolateyGuiCli}*.{exe|dll}") +
+                    GetFiles(BuildParameters.Paths.Directories.PublishedLibraries + "/ChocolateyGui*/net48/ChocolateyGui*.dll");
 
     var platformTarget = ToolSettings.BuildPlatformTarget == PlatformTarget.MSIL ? "AnyCPU" : ToolSettings.BuildPlatformTarget.ToString();
     foreach(var project in ParseSolution(BuildParameters.SolutionFilePath).GetProjects())
@@ -88,6 +102,13 @@ Func<FilePathCollection> getFilesToSign = () =>
         Information(fileToSign.FullPath);
     }
 
+    var numberOfFilesToSign = filesToSign.Count();
+
+    if (numberOfFilesToSign != 13)
+    {
+        throw new Exception(string.Format("Expected to find 13 files to sign, but found {0}", numberOfFilesToSign));
+    }
+
     return filesToSign;
 };
 
@@ -99,6 +120,13 @@ Func<FilePathCollection> getMsisToSign = () =>
     foreach (var msiToSign in msisToSign)
     {
         Information(msiToSign.FullPath);
+    }
+
+    var numberOfMsisToSign = msisToSign.Count();
+
+    if (numberOfMsisToSign != 1)
+    {
+        throw new Exception(string.Format("Expected to find 1 msis to sign, but found {0}", numberOfMsisToSign));
     }
 
     return msisToSign;

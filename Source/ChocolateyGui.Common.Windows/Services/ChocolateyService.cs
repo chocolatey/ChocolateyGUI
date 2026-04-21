@@ -189,8 +189,7 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: false);
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.Install.ToString();
@@ -265,7 +264,7 @@ namespace ChocolateyGui.Common.Windows.Services
 
                 using (logger.Intercept(grabErrors))
                 {
-                    await choco.RunAsync();
+                    await _choco.RunAsync();
 
                     if (Environment.ExitCode != 0)
                     {
@@ -374,8 +373,7 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: false);
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.Uninstall.ToString();
@@ -388,7 +386,7 @@ namespace ChocolateyGui.Common.Windows.Services
                             }
                         });
 
-                return await RunCommand(choco, logger);
+                return await RunCommand(_choco, logger);
             }
         }
 
@@ -397,8 +395,7 @@ namespace ChocolateyGui.Common.Windows.Services
             using (await Lock.WriteLockAsync())
             {
                 var logger = new SerilogLogger(Logger, _progressService);
-                var choco = Lets.GetChocolatey(initializeLogging: false).SetCustomLogging(logger, logExistingMessages: false, addToExistingLoggers: false);
-                choco.Set(
+                _choco.Set(
                     config =>
                         {
                             config.CommandName = CommandNameType.Upgrade.ToString();
@@ -406,7 +403,7 @@ namespace ChocolateyGui.Common.Windows.Services
                             config.Features.UsePackageExitCodes = false;
                         });
 
-                return await RunCommand(choco, logger);
+                return await RunCommand(_choco, logger);
             }
         }
 

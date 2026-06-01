@@ -19,7 +19,7 @@ namespace ChocolateyGui.UITests
 
         internal static AutomationElement[] LocateAllByText(this AutomationElement automationElement, string text)
         {
-            return automationElement.FindAllDescendants(cf => cf.ByControlType(ControlType.Text).And(cf.ByName(text)));
+            return automationElement.FindAllChildren(cf => cf.ByControlType(ControlType.Text).And(cf.ByName(text)));
         }
 
         internal static AutomationElement LocateFirstByText(this AutomationElement automationElement, string text)

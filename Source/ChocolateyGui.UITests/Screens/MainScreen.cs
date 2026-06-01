@@ -75,7 +75,7 @@ namespace ChocolateyGui.UITests.Screens
             // As such, we sleep for half a second on each side of the detection.
             Thread.Sleep(500);
 
-            Retry.WhileNotNull(() => FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.DIALOG)),
+            Retry.WhileNotNull(() => FindFirstChild(cf => cf.ByAutomationId(AutomationIds.DIALOG)),
                 timeout: TimeSpan.FromSeconds(120),
                 interval: TimeSpan.FromMilliseconds(100),
                 throwOnTimeout: true);

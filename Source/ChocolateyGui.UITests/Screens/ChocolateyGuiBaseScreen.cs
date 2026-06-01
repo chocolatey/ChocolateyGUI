@@ -18,7 +18,7 @@ namespace ChocolateyGui.UITests.Screens
             var items = list.FindAllDescendants(cf => cf.ByControlType(controlType: ControlType.ListItem));
 
             return items.FirstOrDefault(item =>
-                item.FindFirstDescendant(cf =>
+                item.FindFirstChild(cf =>
                     cf.ByControlType(ControlType.Text) // TextBlock maps to ControlType.Text in UIA
                       .And(cf.ByName(wantedName))
                 ) != null);

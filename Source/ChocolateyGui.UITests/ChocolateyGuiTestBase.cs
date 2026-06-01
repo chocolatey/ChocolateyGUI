@@ -22,7 +22,7 @@ namespace ChocolateyGui.UITests
             var application = Application.Launch(System.IO.Path.Combine(testDirectory, "ChocolateyGUI.exe"));
 
             var window = Retry.Find(
-                () => application.GetMainWindow(Automation).FindFirstDescendant(cf => cf.ByAutomationId("PART_TitleBar")),
+                () => application.GetMainWindow(Automation).FindFirstChild(cf => cf.ByAutomationId("PART_TitleBar")),
                 new RetrySettings
                 {
                     Timeout = TimeSpan.FromSeconds(30),

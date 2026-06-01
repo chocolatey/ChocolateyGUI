@@ -20,6 +20,12 @@ namespace ChocolateyGui.UITests.Screens
         public PackageDetailsScreen GetPackageDetailsScreen(string packageTitle)
         {
             var packagesListView = this.Parent.FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.PACKAGES_LIST));
+            
+            if (packagesListView == null)
+            {
+                throw new ApplicationException("Packages List not found.");
+            }
+
             var targetPackageListItem = FindItemByTextBlockName(packagesListView, packageTitle);
             targetPackageListItem.AsListBoxItem().Click();
             targetPackageListItem.AsListBoxItem().DoubleClick();

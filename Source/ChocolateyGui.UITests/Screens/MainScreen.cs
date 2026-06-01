@@ -53,6 +53,12 @@ namespace ChocolateyGui.UITests.Screens
         public RemoteSourceScreen OpenAndGetRemoteSourceScreen(string sourceName = "chocolatey")
         {
             var sourcesListView = FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.SOURCES_LIST_VIEW));
+            
+            if (sourcesListView == null)
+            {
+                throw new ApplicationException("Sources list not found.");
+            }
+
             var chocolateyRemoteSourceListItem = FindItemByTextBlockName(sourcesListView, sourceName);
 
             chocolateyRemoteSourceListItem.AsListBoxItem().Click();

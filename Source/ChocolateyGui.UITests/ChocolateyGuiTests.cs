@@ -1,7 +1,7 @@
-﻿using ChocolateyGui.TestUtilities;
-using ChocolateyGui.UITests.Screens;
+﻿using ChocolateyGui.UITests.Screens;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
+using FlaUI.TestUtilities;
 using NUnit.Framework;
 
 namespace ChocolateyGui.UITests

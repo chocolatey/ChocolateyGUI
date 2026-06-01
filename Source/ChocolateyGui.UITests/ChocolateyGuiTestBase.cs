@@ -1,7 +1,7 @@
-﻿using ChocolateyGui.TestUtilities;
-using FlaUI.Core;
+﻿using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Tools;
+using FlaUI.TestUtilities;
 using FlaUI.UIA3;
 using NUnit.Framework;
 using System;

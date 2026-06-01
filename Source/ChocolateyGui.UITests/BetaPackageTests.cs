@@ -1,13 +1,12 @@
-﻿using ChocolateyGui.TestUtilities;
-using ChocolateyGui.UITests.Screens;
+﻿using ChocolateyGui.UITests.Screens;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Input;
 using FlaUI.Core.WindowsAPI;
+using FlaUI.TestUtilities;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace ChocolateyGui.UITests
 {

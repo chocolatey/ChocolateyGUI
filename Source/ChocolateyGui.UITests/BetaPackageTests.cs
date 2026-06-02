@@ -1,13 +1,12 @@
-﻿using ChocolateyGui.TestUtilities;
-using ChocolateyGui.UITests.Screens;
+﻿using ChocolateyGui.UITests.Screens;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Input;
 using FlaUI.Core.WindowsAPI;
+using FlaUI.TestUtilities;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace ChocolateyGui.UITests
 {
@@ -40,8 +39,8 @@ namespace ChocolateyGui.UITests
         public void RemoteScreenFindsStableVersionOfDesiredPackage()
         {
             var packageList = RemoteSourceScreen.GetPackageList();
-            
-            Assert.AreEqual(1, packageList.Length);
+
+            Assert.That(packageList, Has.Length.EqualTo(1));
             
             var targetPackage = packageList.FirstOrDefault();
             targetPackage.Click();
@@ -49,7 +48,7 @@ namespace ChocolateyGui.UITests
             targetPackage.DoubleClick();
             var versionItem = MainScreen.FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.VERSION_TEXT));
 
-            Assert.That(string.Equals(LATEST_STABLE_VERSION, versionItem.Name));
+            Assert.That(versionItem.Name, Is.EqualTo(LATEST_STABLE_VERSION));
         }
 
         [Test]
@@ -60,7 +59,7 @@ namespace ChocolateyGui.UITests
 
             var packageList = RemoteSourceScreen.GetPackageList();
 
-            Assert.AreEqual(1, packageList.Length);
+            Assert.That(packageList, Has.Length.EqualTo(1));
 
             var targetPackage = packageList.FirstOrDefault();
             targetPackage.Click();
@@ -68,7 +67,7 @@ namespace ChocolateyGui.UITests
             targetPackage.DoubleClick();
             var versionItem = MainScreen.FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.VERSION_TEXT));
 
-            Assert.That(string.Equals(LATEST_BETA_VERSION, versionItem.Name));
+            Assert.That(versionItem.Name, Is.EqualTo(LATEST_BETA_VERSION));
         }
 
         [Test]
@@ -79,7 +78,7 @@ namespace ChocolateyGui.UITests
 
             var packageList = RemoteSourceScreen.GetPackageList();
 
-            Assert.AreEqual(3, packageList.Length);
+            Assert.That(packageList, Has.Length.EqualTo(3));
 
             var targetPackage = packageList.FirstOrDefault();
             targetPackage.Click();
@@ -87,7 +86,7 @@ namespace ChocolateyGui.UITests
             targetPackage.DoubleClick();
             var versionItem = MainScreen.FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.VERSION_TEXT));
 
-            Assert.That(string.Equals(LATEST_STABLE_VERSION, versionItem.Name));
+            Assert.That(versionItem.Name, Is.EqualTo(LATEST_STABLE_VERSION));
         }
 
         [Test]
@@ -101,7 +100,7 @@ namespace ChocolateyGui.UITests
 
             var packageList = RemoteSourceScreen.GetPackageList();
 
-            Assert.AreEqual(10, packageList.Length);
+            Assert.That(packageList, Has.Length.EqualTo(10));
 
             var targetPackage = packageList.FirstOrDefault();
             targetPackage.Click();
@@ -109,7 +108,7 @@ namespace ChocolateyGui.UITests
             targetPackage.DoubleClick();
             var versionItem = MainScreen.FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.VERSION_TEXT));
 
-            Assert.That(string.Equals(LATEST_BETA_VERSION, versionItem.Name));
+            Assert.That(versionItem.Name, Is.EqualTo(LATEST_BETA_VERSION));
         }
     }
 }

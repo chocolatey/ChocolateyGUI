@@ -53,6 +53,12 @@ namespace ChocolateyGui.UITests.Screens
         public RemoteSourceScreen OpenAndGetRemoteSourceScreen(string sourceName = "chocolatey")
         {
             var sourcesListView = FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.SOURCES_LIST_VIEW));
+            
+            if (sourcesListView == null)
+            {
+                throw new ApplicationException("Sources list not found.");
+            }
+
             var chocolateyRemoteSourceListItem = FindItemByTextBlockName(sourcesListView, sourceName);
 
             chocolateyRemoteSourceListItem.AsListBoxItem().Click();
@@ -75,7 +81,7 @@ namespace ChocolateyGui.UITests.Screens
             // As such, we sleep for half a second on each side of the detection.
             Thread.Sleep(500);
 
-            Retry.WhileNotNull(() => FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.DIALOG)),
+            Retry.WhileNotNull(() => FindFirstChild(cf => cf.ByAutomationId(AutomationIds.DIALOG)),
                 timeout: TimeSpan.FromSeconds(120),
                 interval: TimeSpan.FromMilliseconds(100),
                 throwOnTimeout: true);

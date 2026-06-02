@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Definitions;
@@ -17,11 +18,18 @@ namespace ChocolateyGui.UITests.Screens
             // scope this to whatever contains the items: the List/ItemsControl/ListBox element
             var items = list.FindAllDescendants(cf => cf.ByControlType(controlType: ControlType.ListItem));
 
-            return items.FirstOrDefault(item =>
-                item.FindFirstDescendant(cf =>
+            var returnItem = items.FirstOrDefault(item =>
+                item.FindFirstChild(cf =>
                     cf.ByControlType(ControlType.Text) // TextBlock maps to ControlType.Text in UIA
                       .And(cf.ByName(wantedName))
                 ) != null);
+
+            if (returnItem == null)
+            {
+                throw new ApplicationException(string.Format("Unable to find a TextBlock with text {0}", wantedName));
+            }
+
+            return returnItem;
         }
     }
 }

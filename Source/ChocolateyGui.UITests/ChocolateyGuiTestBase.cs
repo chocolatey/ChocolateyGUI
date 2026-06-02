@@ -1,8 +1,8 @@
-﻿using ChocolateyGui.TestUtilities;
-using FlaUI.Core;
+﻿using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Tools;
-using FlaUI.UIA2;
+using FlaUI.TestUtilities;
+using FlaUI.UIA3;
 using NUnit.Framework;
 using System;
 
@@ -12,7 +12,7 @@ namespace ChocolateyGui.UITests
     {
         protected override AutomationBase GetAutomation()
         {
-            var automation = new UIA2Automation();
+            var automation = new UIA3Automation();
             return automation;
         }
 
@@ -22,7 +22,7 @@ namespace ChocolateyGui.UITests
             var application = Application.Launch(System.IO.Path.Combine(testDirectory, "ChocolateyGUI.exe"));
 
             var window = Retry.Find(
-                () => application.GetMainWindow(Automation).FindFirstDescendant(cf => cf.ByAutomationId("PART_TitleBar")),
+                () => application.GetMainWindow(Automation).FindFirstChild(cf => cf.ByAutomationId("PART_TitleBar")),
                 new RetrySettings
                 {
                     Timeout = TimeSpan.FromSeconds(30),

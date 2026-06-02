@@ -1,7 +1,7 @@
-﻿using ChocolateyGui.TestUtilities;
-using ChocolateyGui.UITests.Screens;
+﻿using ChocolateyGui.UITests.Screens;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
+using FlaUI.TestUtilities;
 using NUnit.Framework;
 
 namespace ChocolateyGui.UITests
@@ -17,11 +17,8 @@ namespace ChocolateyGui.UITests
         {
             var mainScreen = Application.GetMainWindow(Automation).As<MainScreen>();
 
-            Assert.DoesNotThrow(() =>
-            {
-                var aboutScreen = mainScreen.OpenAndGetAboutScreen();
-                aboutScreen.BackButton.Invoke();
-            });
+            var aboutScreen = mainScreen.OpenAndGetAboutScreen();
+            aboutScreen.BackButton.Invoke();
         }
 
         [Test]
@@ -29,11 +26,8 @@ namespace ChocolateyGui.UITests
         {
             var mainScreen = Application.GetMainWindow(Automation).As<MainScreen>();
 
-            Assert.DoesNotThrow(() =>
-            {
-                var settingsScreen = mainScreen.OpenAndGetSettingsScreen();
-                settingsScreen.BackButton.Invoke();
-            });
+            var settingsScreen = mainScreen.OpenAndGetSettingsScreen();
+            settingsScreen.BackButton.Invoke();
         }
 
         [Test]
@@ -41,14 +35,11 @@ namespace ChocolateyGui.UITests
         {
             var mainScreen = Application.GetMainWindow(Automation).As<MainScreen>();
 
-            Assert.DoesNotThrow(() =>
-            {
-                var remoteSourceScreen = mainScreen.OpenAndGetRemoteSourceScreen("hermes");
+            var remoteSourceScreen = mainScreen.OpenAndGetRemoteSourceScreen("hermes");
 
-                var packageDetailsScreen = remoteSourceScreen.GetPackageDetailsScreen("absolute-extracted-path");
+            var packageDetailsScreen = remoteSourceScreen.GetPackageDetailsScreen("absolute-extracted-path");
 
-                packageDetailsScreen.BackButton.Invoke();
-            });
+            packageDetailsScreen.BackButton.Invoke();
         }
     }
 }

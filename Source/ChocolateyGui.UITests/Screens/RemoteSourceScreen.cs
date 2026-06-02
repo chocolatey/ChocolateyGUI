@@ -20,12 +20,18 @@ namespace ChocolateyGui.UITests.Screens
         public PackageDetailsScreen GetPackageDetailsScreen(string packageTitle)
         {
             var packagesListView = this.Parent.FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.PACKAGES_LIST));
-            var adobeReaderListItem = FindItemByTextBlockName(packagesListView, packageTitle);
-            adobeReaderListItem.AsListBoxItem().Click();
-            adobeReaderListItem.AsListBoxItem().DoubleClick();
+            
+            if (packagesListView == null)
+            {
+                throw new ApplicationException("Packages List not found.");
+            }
+
+            var targetPackageListItem = FindItemByTextBlockName(packagesListView, packageTitle);
+            targetPackageListItem.AsListBoxItem().Click();
+            targetPackageListItem.AsListBoxItem().DoubleClick();
 
             // Do a retry to wait for the window
-            return Retry.Find(() => this.Parent.FindFirstChild(cf => cf.ByControlType(ControlType.Window)),
+            return Retry.Find(() => this.Parent.FindFirstDescendant(cf => cf.ByControlType(ControlType.Window)),
                 new RetrySettings
                 {
                     Timeout = TimeSpan.FromSeconds(5),
@@ -48,7 +54,7 @@ namespace ChocolateyGui.UITests.Screens
         {
             return Parent
                 .FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.PACKAGES_LIST))
-                .FindAllDescendants(cf => cf.ByControlType(ControlType.ListItem));
+                .FindAllChildren(cf => cf.ByControlType(ControlType.ListItem));
         }
     }
 }

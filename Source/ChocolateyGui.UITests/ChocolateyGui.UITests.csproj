@@ -10,8 +10,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="FlaUI.UIA2" Version="5.0.0" />
-    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="FlaUI.TestUtilities" Version="5.0.0" />
+    <PackageReference Include="FlaUI.UIA3.Signed" Version="5.0.0" />
+    <PackageReference Include="NUnit" Version="4.6.1" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.13.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NUnit3TestAdapter" Version="6.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
   </ItemGroup>

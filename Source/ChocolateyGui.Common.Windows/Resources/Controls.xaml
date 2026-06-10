@@ -529,6 +529,15 @@
                                            DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
             </b:Interaction.Behaviors>
         </MenuItem>
+        <MenuItem Header="{lang:Localize Controls_PackagesContextMenuOpenGallery}"
+                  Icon="{iconPacks:Entypo Kind=Browser}"
+                  Visibility="{Binding GalleryDetailsUrl, Converter={StaticResource StringToVisibilityConverter}}"
+                  Command="{commands:DataContextCommandAdapter OpenGallery}">
+            <b:Interaction.Behaviors>
+                <utilities:ToolTipBehavior EnabledToolTip="{lang:Localize Application_OperationOpenGallery}"
+                                           DisabledFeatureToolTip="{lang:Localize Application_OperationNotAllowed}" />
+            </b:Interaction.Behaviors>
+        </MenuItem>
     </ContextMenu>
 
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">

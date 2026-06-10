@@ -66,9 +66,23 @@ function CheckoutTag {
 
 Write-Host "We are at $PSScriptRoot"
 
-[xml]$packagesConfigFile = Get-Content -Path "$PSScriptRoot/Source/ChocolateyGui/packages.config"
+$isNewCsproj = $false
+$packageConfigPath = "$PSScriptRoot/Source/ChocolateyGui/packages.config"
+$packageProjectPath = "$PSScriptRoot/Source/ChocolateyGui.Common/Chocolateygui.Common.csproj"
 
-$chocolateyLibPackageVersion = $($packagesConfigFile.packages.package | Where-Object { $_.id -eq "chocolatey.lib" }).version
+if (Test-Path $packageConfigPath) {
+    [xml]$packagesConfigFile = Get-Content -Path $packageConfigPath
+    $chocolateyLibPackageVersion = $($packagesConfigFile.packages.package | Where-Object { $_.id -eq "chocolatey.lib" }).version
+}
+elseif (Test-Path $packageProjectPath) {
+    [xml]$packagesProjectFile = Get-Content -Path $packageProjectPath
+    $chocolateyLibPackageVersion = $($packagesProjectFile.Project.ItemGroup.PackageReference | Where-Object { $_.Include -eq "chocolatey.lib" }).Version
+    $isNewCsproj = $true
+}
+else
+{
+    throw "No Packages.config or C# Project Files found. Unable to continue..."
+}
 
 if ($CheckoutRefTag) {
 
@@ -117,8 +131,8 @@ if (-not (Test-Path -Path $ChocoSourceLocation)) {
     throw "Location '$ChocoSourceLocation' not found; please rerun with the -ChocoSourceLocation parameter or set the CHOCO_SOURCE_LOCATION environment variable."
 }
 
-Write-Host "Restore packages on project first..."
-& ./build.debug.bat --target='Restore'
+Write-Host "Initializes project first..."
+& ./build.debug.bat --target='Init'
 
 Write-Host "Building choco at $ChocoSourceLocation with Debug..."
 
@@ -133,7 +147,12 @@ Pop-Location
 
 Write-Host "Copying chocolatey artifacts to current Chocolatey Package Version folder..."
 
-$chocolateyLibPackageFolder = "$PSScriptRoot/Source/packages/chocolatey.lib.$chocolateyLibPackageVersion/lib/net48"
+$chocolateyLibPackageFolder = if ($isNewCsproj) {
+    "$PSScriptRoot/Source/packages/chocolatey.lib/$chocolateyLibPackageVersion/lib/net48"
+}
+else {
+    "$PSScriptRoot/Source/packages/chocolatey.lib.$chocolateyLibPackageVersion/lib/net48"
+}
 
 if (-not (Test-Path -Path $chocolateyLibPackageFolder)) {
     New-Item -ItemType Directory -Path $chocolateyLibPackageFolder > $null
@@ -141,7 +160,10 @@ if (-not (Test-Path -Path $chocolateyLibPackageFolder)) {
 
 $codeDropLibs = "$ChocoSourceLocation/code_drop/temp/_PublishedLibs/chocolatey_merged"
 
-if (!(Test-Path $codeDropLibs)) {
+if (Test-Path "$codeDropLibs/net48") {
+    $codeDropLibs = "$codeDropLibs/net48"
+}
+elseif (!(Test-Path $codeDropLibs)) {
   $codeDropLibs = "$ChocoSourceLocation/code_drop/chocolatey/lib"
 }
 

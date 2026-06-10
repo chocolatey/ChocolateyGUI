@@ -472,6 +472,26 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
             }
         }
 
+        public async Task OpenGallery()
+        {
+            if (string.IsNullOrWhiteSpace(GalleryDetailsUrl))
+            {
+                return;
+            }
+
+            try
+            {
+                Process.Start(new ProcessStartInfo(GalleryDetailsUrl));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Ran into an error while opening the gallery page for {Id}, version {Version}.", Id, Version);
+                await _dialogService.ShowMessageAsync(
+                    L(nameof(Resources.PackageViewModel_FailedToOpenGallery)),
+                    L(nameof(Resources.PackageViewModel_RanIntoOpenGalleryError), Id, Version, ex.Message));
+            }
+        }
+
         public async Task Reinstall()
         {
             try

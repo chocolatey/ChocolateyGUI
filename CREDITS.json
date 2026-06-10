@@ -192,7 +192,7 @@
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://github.com/dotnet/runtime/blob/ed3d384706c03937e4eac3c377779f0048fa4c3e/LICENSE.TXT",
+                    "link": "https://github.com/dotnet/runtime/blob/62e1031be5e0e0f11800e4ac8afca3a3682e92d8/LICENSE.TXT",
                     "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE.TXT"
                 }
@@ -217,7 +217,7 @@
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://github.com/microsoft/vs-validation/blob/919ad1e29af82dc2db88cb69be9e38962464ec82/LICENSE",
+                    "link": "https://github.com/microsoft/vs-validation/blob/fb5e81b365d0c447e6a2313894290675f550f986/LICENSE",
                     "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE"
                 }
@@ -338,7 +338,7 @@
             "licenses": [
                 {
                     "type": "MIT",
-                    "link": "https://github.com/dotnet/runtime/blob/ed3d384706c03937e4eac3c377779f0048fa4c3e/LICENSE.TXT",
+                    "link": "https://github.com/dotnet/runtime/blob/62e1031be5e0e0f11800e4ac8afca3a3682e92d8/LICENSE.TXT",
                     "info": "No tag present for this specific release point; falling back to the current permalink of the latest license file from the default branch.",
                     "name": "LICENSE.TXT"
                 }

@@ -157,6 +157,8 @@ BuildParameters.SetParameters(context: Context,
 
 ToolSettings.SetToolSettings(context: Context);
 
+BuildParameters.Tasks.InitTask.IsDependentOn("Strong-Name-Signer");
+
 BuildParameters.PrintParameters(Context);
 
 Build.RunDotNet();

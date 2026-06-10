@@ -23,6 +23,7 @@ using ChocolateyGui.Common.Models;
 using ChocolateyGui.Common.Properties;
 using ChocolateyGui.Common.Services;
 using ChocolateyGui.Common.Utilities;
+using ChocolateyGui.Common.Windows.Utilities;
 using Microsoft.VisualStudio.Threading;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
@@ -716,6 +717,13 @@ namespace ChocolateyGui.Common.Windows.Services
                 mappedPackage.IsInstalled = !string.IsNullOrWhiteSpace(package.InstallLocation) || forceInstalled;
 
                 mappedPackage.IsPrerelease = mappedPackage.Version.IsPrerelease;
+
+                var sourceUrl = packageInfo.SourceInstalledFrom ?? package.Source;
+
+                if (string.IsNullOrWhiteSpace(mappedPackage.GalleryDetailsUrl) && GalleryUriBuilder.IsKnownSource(sourceUrl))
+                {
+                    mappedPackage.GalleryDetailsUrl = GalleryUriBuilder.BuildFromPackageAndSource(package.Identity.Id, sourceUrl, package.Identity.Version)?.ToString();
+                }
             }
 
             return mappedPackage;

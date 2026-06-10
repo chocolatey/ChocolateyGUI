@@ -704,6 +704,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open the known URL to the Gallery in a new browser tab.
+        /// </summary>
+        public static string Application_OperationOpenGallery {
+            get {
+                return ResourceManager.GetString("Application_OperationOpenGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pin package to currently installed package version.
         /// </summary>
         public static string Application_OperationPin {
@@ -758,7 +767,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There as an error attempting to read the contents of the .arguments file for version {0} of package &apos;{1}&apos;.  See log file for more information..
+        ///   Looks up a localized string similar to There was an error attempting to read the contents of the .arguments file for version {0} of package &apos;{1}&apos;.  See log file for more information..
         /// </summary>
         public static string Application_PackageArgumentsError {
             get {
@@ -1439,6 +1448,15 @@ namespace ChocolateyGui.Common.Properties {
         public static string Controls_PackagesContextMenuInstall {
             get {
                 return ResourceManager.GetString("Controls_PackagesContextMenuInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Gallery.
+        /// </summary>
+        public static string Controls_PackagesContextMenuOpenGallery {
+            get {
+                return ResourceManager.GetString("Controls_PackagesContextMenuOpenGallery", resourceCulture);
             }
         }
         
@@ -2307,6 +2325,15 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to open gallery URL.
+        /// </summary>
+        public static string PackageViewModel_FailedToOpenGallery {
+            get {
+                return ResourceManager.GetString("PackageViewModel_FailedToOpenGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to Pin.
         /// </summary>
         public static string PackageViewModel_FailedToPin {
@@ -2394,6 +2421,16 @@ namespace ChocolateyGui.Common.Properties {
         public static string PackageViewModel_RanIntoInstallError {
             get {
                 return ResourceManager.GetString("PackageViewModel_RanIntoInstallError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to open gallery URL {0} for package {1}, version {2}.
+        ///Error: {3}.
+        /// </summary>
+        public static string PackageViewModel_RanIntoOpenGalleryError {
+            get {
+                return ResourceManager.GetString("PackageViewModel_RanIntoOpenGalleryError", resourceCulture);
             }
         }
         

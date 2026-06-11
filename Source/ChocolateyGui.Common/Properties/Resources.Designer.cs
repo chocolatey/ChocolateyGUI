@@ -767,7 +767,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There as an error attempting to read the contents of the .arguments file for version {0} of package &apos;{1}&apos;.  See log file for more information..
+        ///   Looks up a localized string similar to There was an error attempting to read the contents of the .arguments file for version {0} of package &apos;{1}&apos;.  See log file for more information..
         /// </summary>
         public static string Application_PackageArgumentsError {
             get {

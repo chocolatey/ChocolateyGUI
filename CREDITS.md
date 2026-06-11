@@ -16,7 +16,7 @@ Chocolatey uses a number of 3rd party components. Their details are below.
   * [Apache v2.0 License](#apache-v20-license-1)
     * [Checksum@0.3.1](#checksum031)
     * [Chocolatey.NuGet.Client@3.5.0](#chocolateynugetclient350)
-    * [log4net@rel/3.3.1](#log4netrel331)
+    * [log4net@rel/3.2.0](#log4netrel320)
   * [BSD-3-Clause](#bsd-3-clause-1)
     * [Rhino.Licensing@1.4.1](#rhinolicensing141)
   * [MIT License](#mit-license-1)
@@ -30,7 +30,7 @@ Chocolatey uses a number of 3rd party components. Their details are below.
 * [Chocolatey GUI](#chocolatey-gui)
   * [Apache v2.0 License](#apache-v20-license-2)
     * [Chocolatey CLI / Chocolatey.Lib@2.7.0](#chocolatey-cli--chocolateylib270)
-    * [log4net@rel/3.3.1](#log4netrel331-1)
+    * [log4net@rel/3.3.1](#log4netrel331)
     * [Serilog@v4.3.0](#serilogv430)
     * [Serilog.Formatting.Compact@v3.0.0](#serilogformattingcompactv300)
     * [Serilog.Sinks.Async@v2.1.0](#serilogsinksasyncv210)
@@ -332,9 +332,9 @@ https://www.apache.org/licenses/LICENSE-2.0
 
 [Chocolatey.NuGet.Client](https://github.com/NuGet/NuGet.Client) [(modified)](https://github.com/chocolatey/NuGet.Client) - [License terms.](https://github.com/chocolatey/NuGet.Client/blob/d08e5cc246b384fd424e99371168d7cf4534723e/LICENSE.txt)
 
-#### log4net@rel/3.3.1
+#### log4net@rel/3.2.0
 
-[log4net](https://github.com/apache/logging-log4net) - [License terms.](https://github.com/apache/logging-log4net/blob/7fcc7f425b81b9df7c8a8719ed90953b938cd10e/LICENSE)
+[log4net](https://github.com/apache/logging-log4net) - [License terms.](https://github.com/apache/logging-log4net/blob/5e9e2b0ea8a57a441e779d23429f6759a06d93ce/LICENSE)
 
 ### BSD-3-Clause
 
@@ -674,7 +674,7 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 #### Microsoft.CSharp@v4.7.0
 
-[Microsoft.CSharp](https://github.com/dotnet/runtime) - [License terms.](https://github.com/dotnet/runtime/blob/ed3d384706c03937e4eac3c377779f0048fa4c3e/LICENSE.TXT)
+[Microsoft.CSharp](https://github.com/dotnet/runtime) - [License terms.](https://github.com/dotnet/runtime/blob/62e1031be5e0e0f11800e4ac8afca3a3682e92d8/LICENSE.TXT)
 
 #### Microsoft.VisualStudio.Threading@v17.14.15
 
@@ -682,7 +682,7 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 #### Microsoft.VisualStudio.Validation@v17.13.22
 
-[Microsoft.VisualStudio.Validation](https://github.com/microsoft/vs-validation) - [License terms.](https://github.com/microsoft/vs-validation/blob/919ad1e29af82dc2db88cb69be9e38962464ec82/LICENSE)
+[Microsoft.VisualStudio.Validation](https://github.com/microsoft/vs-validation) - [License terms.](https://github.com/microsoft/vs-validation/blob/fb5e81b365d0c447e6a2313894290675f550f986/LICENSE)
 
 #### SkiaSharp.HarfBuzz@1.68.3
 
@@ -698,7 +698,7 @@ licenses. You can learn more by contacting Chocolatey at https://chocolatey.org/
 
 #### System.Data.DataSetExtensions@v4.5.0
 
-[System.Data.DataSetExtensions](https://github.com/dotnet/runtime) - [License terms.](https://github.com/dotnet/runtime/blob/ed3d384706c03937e4eac3c377779f0048fa4c3e/LICENSE.TXT)
+[System.Data.DataSetExtensions](https://github.com/dotnet/runtime) - [License terms.](https://github.com/dotnet/runtime/blob/62e1031be5e0e0f11800e4ac8afca3a3682e92d8/LICENSE.TXT)
 
 #### System.Net.Http@4.3.4
 

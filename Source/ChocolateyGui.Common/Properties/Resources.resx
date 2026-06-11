@@ -421,7 +421,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
   <data name="RemoteSourceViewModel_FailedToLoadRemotePackages" xml:space="preserve">
     <value>Failed to load remote packages!
 {0}</value>
-    <comment>{0} = The exception message that occured</comment>
+    <comment>{0} = The exception message that occurred</comment>
   </data>
   <data name="RemoteSourceViewModel_FeedSearchError" xml:space="preserve">
     <value>Feed Search Error</value>
@@ -1329,8 +1329,10 @@ Please contact your System Administrator to enable this operation.</value>
     <value>Use Delayed Search</value>
   </data>
   <data name="Application_PackageArgumentsError" xml:space="preserve">
-    <value>There as an error attempting to read the contents of the .arguments file for version {0} of package '{1}'.  See log file for more information.</value>
-    <comment>{0} = The version of the selected package  {1} = The id for the currently selected package</comment>
+    <value>There was an error attempting to read the contents of the .arguments file for version {0} of package '{1}'.  See log file for more information.</value>
+    <comment>{0} = The version of the selected package
+{1} = The id for the currently selected package
+</comment>
   </data>
   <data name="PackageView_ButtonPackageArguments" xml:space="preserve">
     <value>View Package Arguments</value>

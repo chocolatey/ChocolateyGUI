@@ -749,7 +749,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update the currently installed package version.
+        ///   Looks up a localized string similar to Upgrade the currently installed package version.
         /// </summary>
         public static string Application_OperationUpgrade {
             get {
@@ -965,7 +965,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prevent Usage of Update All Button.
+        ///   Looks up a localized string similar to Prevent Usage of Upgrade All Button.
         /// </summary>
         public static string ChocolateyGUI_PreventUsageOfUpdateAllButtonTitle {
             get {
@@ -1114,7 +1114,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to update package &quot;{0}&quot;.
+        ///   Looks up a localized string similar to Failed to upgrade package &quot;{0}&quot;.
         ///Error: {1}{2}.
         /// </summary>
         public static string ChocolateyRemotePackageService_UpdateFailedMessage {
@@ -1124,7 +1124,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to update package..
+        ///   Looks up a localized string similar to Failed to upgrade package..
         /// </summary>
         public static string ChocolateyRemotePackageService_UpdateFailedTitle {
             get {
@@ -1461,7 +1461,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pin (Ignore Updates).
+        ///   Looks up a localized string similar to Pin (Ignore Upgrades).
         /// </summary>
         public static string Controls_PackagesContextMenuPin {
             get {
@@ -1497,7 +1497,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to Upgrade.
         /// </summary>
         public static string Controls_PackagesContextMenuUpdate {
             get {
@@ -1848,7 +1848,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update All.
+        ///   Looks up a localized string similar to Upgrade All.
         /// </summary>
         public static string LocalSourceView_ButtonUpdateAll {
             get {
@@ -1857,7 +1857,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No packages need to be updated.
+        ///   Looks up a localized string similar to No packages need to be upgraded.
         /// </summary>
         public static string LocalSourceView_ButtonUpdateAllDisabled {
             get {
@@ -1875,7 +1875,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Only Packages with Updates.
+        ///   Looks up a localized string similar to Show Only Packages with Upgrades.
         /// </summary>
         public static string LocalSourceView_CheckboxPkgsWithUpdates {
             get {
@@ -2010,7 +2010,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There&apos;s an update available for Chocolatey..
+        ///   Looks up a localized string similar to There&apos;s an upgrade available for Chocolatey..
         /// </summary>
         public static string LocalSourceViewModel_UpdateAvailableForChocolatey {
             get {
@@ -2100,7 +2100,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pin (Ignore Updates).
+        ///   Looks up a localized string similar to Pin (Ignore Upgrades).
         /// </summary>
         public static string PackageView_ButtonPin {
             get {
@@ -2136,7 +2136,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to Upgrade.
         /// </summary>
         public static string PackageView_ButtonUpdate {
             get {
@@ -2370,7 +2370,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to Update.
+        ///   Looks up a localized string similar to Failed to Upgrade.
         /// </summary>
         public static string PackageViewModel_FailedToUpdate {
             get {
@@ -3386,7 +3386,7 @@ namespace ChocolateyGui.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prevents the ability for user to use the Update All button. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
+        ///   Looks up a localized string similar to Prevents the ability for user to use the Upgrade All button. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed..
         /// </summary>
         public static string SettingsView_TogglePreventUsageOfUpdateAllButtonDescription {
             get {

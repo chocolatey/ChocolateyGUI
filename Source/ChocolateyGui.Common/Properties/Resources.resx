@@ -179,14 +179,14 @@ Error {2}{3}</value>
     <value>Failed to unpin package.</value>
   </data>
   <data name="ChocolateyRemotePackageService_UpdateFailedMessage" xml:space="preserve">
-    <value>Failed to update package "{0}".
+    <value>Failed to upgrade package "{0}".
 Error: {1}{2}</value>
-    <comment>{0} = The name of the package that failed to update
+    <comment>{0} = The name of the package that failed to upgrade
 {1} = A collection of messages returned from Chocolatey
 {2} = The message of the exception that is being thrown</comment>
   </data>
   <data name="ChocolateyRemotePackageService_UpdateFailedTitle" xml:space="preserve">
-    <value>Failed to update package.</value>
+    <value>Failed to upgrade package.</value>
   </data>
   <data name="Controls_PackageListByAuthor" xml:space="preserve">
     <value>By: </value>
@@ -204,7 +204,7 @@ Error: {1}{2}</value>
     <value>Install</value>
   </data>
   <data name="Controls_PackagesContextMenuPin" xml:space="preserve">
-    <value>Pin (Ignore Updates)</value>
+    <value>Pin (Ignore Upgrades)</value>
   </data>
   <data name="Controls_PackagesContextMenuReinstall" xml:space="preserve">
     <value>Reinstall</value>
@@ -216,7 +216,7 @@ Error: {1}{2}</value>
     <value>Unpin</value>
   </data>
   <data name="Controls_PackagesContextMenuUpdate" xml:space="preserve">
-    <value>Update</value>
+    <value>Upgrade</value>
   </data>
   <data name="LocalSourceViewModel_Chocolatey" xml:space="preserve">
     <value>Chocolatey</value>
@@ -229,7 +229,7 @@ Error: {1}{2}</value>
     <value>Packages</value>
   </data>
   <data name="LocalSourceViewModel_UpdateAvailableForChocolatey" xml:space="preserve">
-    <value>There's an update available for Chocolatey.</value>
+    <value>There's an upgrade available for Chocolatey.</value>
   </data>
   <data name="LocalSourceView_ButtonExport" xml:space="preserve">
     <value>Export</value>
@@ -244,13 +244,13 @@ Error: {1}{2}</value>
     <value>Check for outdated packages (forced)</value>
   </data>
   <data name="LocalSourceView_ButtonUpdateAll" xml:space="preserve">
-    <value>Update All</value>
+    <value>Upgrade All</value>
   </data>
   <data name="LocalSourceView_CheckboxMatchExact" xml:space="preserve">
     <value>Match Word Exactly</value>
   </data>
   <data name="LocalSourceView_CheckboxPkgsWithUpdates" xml:space="preserve">
-    <value>Show Only Packages with Updates</value>
+    <value>Show Only Packages with Upgrades</value>
   </data>
   <data name="LocalSourceView_Grid_Authors" xml:space="preserve">
     <value>Authors</value>
@@ -287,7 +287,7 @@ Error: {1}{2}</value>
     <value>Failed to Unpin</value>
   </data>
   <data name="PackageViewModel_FailedToUpdate" xml:space="preserve">
-    <value>Failed to Update</value>
+    <value>Failed to Upgrade</value>
   </data>
   <data name="PackageViewModel_InstallingPackage" xml:space="preserve">
     <value>Installing package</value>
@@ -359,7 +359,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Install</value>
   </data>
   <data name="PackageView_ButtonPin" xml:space="preserve">
-    <value>Pin (Ignore Updates)</value>
+    <value>Pin (Ignore Upgrades)</value>
   </data>
   <data name="PackageView_ButtonReinstall" xml:space="preserve">
     <value>Reinstall</value>
@@ -371,7 +371,7 @@ NOTE: Probably only necessary to change in RTL languages.</comment>
     <value>Unpin</value>
   </data>
   <data name="PackageView_ButtonUpdate" xml:space="preserve">
-    <value>Update</value>
+    <value>Upgrade</value>
   </data>
   <data name="PackageView_Dependencies" xml:space="preserve">
     <value>Dependencies</value>
@@ -1035,10 +1035,10 @@ Please contact your System Administrator to enable this operation.</value>
     <value>Unpin from the currently installed package version</value>
   </data>
   <data name="Application_OperationUpgrade" xml:space="preserve">
-    <value>Update the currently installed package version</value>
+    <value>Upgrade the currently installed package version</value>
   </data>
   <data name="LocalSourceView_ButtonUpdateAllDisabled" xml:space="preserve">
-    <value>No packages need to be updated</value>
+    <value>No packages need to be upgraded</value>
   </data>
   <data name="AdvancedChocolateyDialog_AdvancedOptions_Header" xml:space="preserve">
     <value>Advanced Options</value>
@@ -1230,7 +1230,7 @@ Please contact your System Administrator to enable this operation.</value>
     <value>Controls whether or not the This PC source is displayed in Chocolatey GUI.  Enabling this feature means that Chocolatey GUI will no longer show a list of all the currently installed packages on the machine.  NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
   </data>
   <data name="SettingsView_TogglePreventUsageOfUpdateAllButtonDescription" xml:space="preserve">
-    <value>Prevents the ability for user to use the Update All button. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
+    <value>Prevents the ability for user to use the Upgrade All button. NOTE: This feature will only work with Chocolatey for Business and the Chocolatey GUI licensed extension installed.</value>
   </data>
   <data name="SettingsView_ToggleSkipModalDialogConfirmationDescription" xml:space="preserve">
     <value>Skip modal dialog confirmations when performing potentially destructive actions.</value>
@@ -1294,7 +1294,7 @@ Please contact your System Administrator to enable this operation.</value>
     <value>Prevent Preload</value>
   </data>
   <data name="ChocolateyGUI_PreventUsageOfUpdateAllButtonTitle" xml:space="preserve">
-    <value>Prevent Usage of Update All Button</value>
+    <value>Prevent Usage of Upgrade All Button</value>
   </data>
   <data name="ChocolateyGUI_SkipModalDialogConfirmationTitle" xml:space="preserve">
     <value>Skip Modal Dialog Confirmation</value>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<feed xml:base="http://community.chocolatey.org/api/v2/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">mock-Search</title>
+  <id>http://community.chocolatey.org/api/v2/Search</id>
+  <updated>2026-06-26T07:38:32Z</updated>
+  <link rel="self" title="Search" href="Search" />
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-choco-shortcuts-winconfig',Version='0.0.4')</id>
+    <title type="text">mock-choco-shortcuts-winconfig</title>
+    <summary type="text">This package creates Windows Start Menu shortcuts to run common Chocolatey functions.</summary>
+    <updated>2026-06-22T22:45:28Z</updated>
+    <author>
+      <name>bcurran3</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-choco-shortcuts-winconfig',Version='0.0.4')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-choco-shortcuts-winconfig',Version='0.0.4')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-choco-shortcuts-winconfig/0.0.4" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>0.0.4</d:Version>
+      <d:Title>Mock (unofficial) Chocolatey Shortcuts (Config)</d:Title>
+      <d:Description>---
+
+### [choco://choco-shortcuts-winconfig](choco://choco-shortcuts-winconfig)
+To use choco:// protocol URLs, install [(unofficial) choco:// Protocol support ](https://chocolatey.org/packages/choco-protocol-support)
+
+---
+
+
+![Screenshot of Choco Shortcuts](https://cdn.staticaly.com/gh/bcurran3/ChocolateyPackages/master/choco-shortcuts-winconfig/choco-shortcuts-winconfig_screenshot.png)	
+
+# This package creates Windows Start Menu shortcuts to run common Chocolatey functions.
+
+### WHO IS THIS FOR?
+ **Chocolatey Shortcuts** is designed for those who aren't comfortable with the Command Prompt or just don't like to type much. **Chocolatey Shortcuts** allows you to perform the most common Chocolatey functions right from the Windows Start Menu. The shortcuts still shell out to the Command Prompt to run, but **Chocolatey Shortcuts** is designed to be incredibly simple to use with minimal typing; install or remove a program in a few clicks and type in the package name. **Chocolatey Shortcuts** is also useful to support professionals who know the difficulty of getting end users to type in commands correctly, now you can just point them to the Windows Start Menu!
+
+### WHY DO I NEED THIS?
+If you're a power user or use the Command Prompt and/or PowerShell all the time, you probably don't; though the website links might be useful for remembering where to find various Chocolatey resources.
+
+### FEATURES:
+* Search for, install, and uninstall a package from the Windows Start Menu.
+* List installed and outdated packages from the Windows Start Menu.
+* Upgrade all installed packages from the Windows Start Menu (will use [choco-upgrade-all.ps1](https://raw.githubusercontent.com/bcurran3/ChocolateyPackages/master/choco-upgrade-all-at/tools/choco-upgrade-all.ps1) if **[Choco Upgrade All at](https://community.chocolatey.org/packages/choco-upgrade-all-at)** or **[Choco Upgrade All at Startup](https://community.chocolatey.org/packages/choco-upgrade-all-at-startup)** are installed)
+* Optimize your packages from the Windows Start Menu. ([Chocolatey licensed](https://chocolatey.org/pricing) users)
+* Moves **[Choco Cleaner](https://community.chocolatey.org/packages/choco-cleaner)**, **[ChocolateyGUI](https://community.chocolatey.org/packages/chocolateygui)**, **[Choco Package List Backup](https://community.chocolatey.org/packages/choco-package-list-backup)**, and **[Chocolatey  PowerShell](https://community.chocolatey.org/packages/chocolateypowershell)** icons to the new Chocolatey Start Menu folder if they are installed.
+* View chocolatey.log from the Windows Start Menu.
+* Website links to prominent Chocolatey information.
+
+For a different take on Chocolatey Shortcuts for the desktop, checkout [mica](https://community.chocolatey.org/profiles/mica)'s [Chocolatey Shortcuts (unofficial)](https://community.chocolatey.org/packages/ChocoShortcuts).
+
+Also check out **[(unofficial) Install Chocolatey Packages from your Web Browser](https://community.chocolatey.org/packages/choco-install-packages-from-web-winconfig)** which is another package I made that makes Chocolatey easy (Chocolateasy!) for new users to digest.
+
+**If you find Chocolatey Shortcuts useful, please consider donating: 
+https://www.paypal.me/bcurran3donations or become a patron at https://www.patreon.com/bcurran3**
+
+**[PACKAGE NOTES](https://github.com/bcurran3/ChocolateyPackages/blob/master/choco-shortcuts-winconfig/readme.md)**</d:Description>
+      <d:Tags>bcurran3 unofficial choco shortcuts start menu chocolateasy</d:Tags>
+      <d:Copyright>public domain</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2023-06-12T17:18:16.587</d:Created>
+      <d:Dependencies>chocolatey:2.0.0:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">19131</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">6031</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/choco-shortcuts-winconfig/0.0.4</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/choco-shortcuts-winconfig/0.0.4</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2023-06-12T17:18:16.587</d:Published>
+      <d:LicenseUrl>https://wiki.creativecommons.org/wiki/Public_domain</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>YmA2t/LNk9Za5xEgcixpB8Faa9QiBfe3yOALlO5VaaGH/NHYwVkBBly2yZi/euU4kGsUX8W3+OlKgaqAqzlb4A==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">7685</d:PackageSize>
+      <d:ProjectUrl>https://github.com/bcurran3/ChocolateyPackages/tree/master/choco-shortcuts-winconfig</d:ProjectUrl>
+      <d:ReleaseNotes>### CHANGELOG:
+* 0.0.4   - Chocolatey v2 compatible - updated due to breaking change for the choco list command. Added dependency for Chocolatey v2.
+* 0.0.3   - updated website links to current URLs, use new icons created by Teknowledgist for Choco-Cleaner and Chocolatey PowerShell, minor logic changes on creating icons for my scripts as well as run them via their "shims", move ChocolateyGUI icon to Chocolatey icons folder if it's installed, uses choco-upgrade-all.ps1 if choco-upgrade-all-at or choco-upgrade-all-at-startup are installed
+* 0.0.2.2 - added FeedBurner RSS link
+* 0.0.2.1 - bug fix, the "egg on face release"
+* 0.0.2   - added link to Chocolatey status website, added support for moving my newer utils icons to the Chocolatey folder, minor organizational and optimization
+* 0.0.1   - initial release
+
+### ROADMAP:
+* I'm open to suggestions - open a GitHub issue please.</d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://github.com/bcurran3/ChocolateyPackages/tree/master/choco-shortcuts-winconfig</d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/bcurran3/ChocolateyPackages/tree/master/choco-shortcuts-winconfig</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl>https://www.patreon.com/bcurran3</d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/bcurran3/ChocolateyPackages/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Waiting</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/8ab6342e40dd40fabebb974f8365beba</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-23T10:33:13.15</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2023-06-12T17:52:04.17</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2023-06-14T03:43:55.773</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2023-06-14T03:43:55.773</d:PackageApprovedDate>
+      <d:PackageReviewer>Windos</d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2023-06-14T04:46:01.287</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2023-06-12T18:27:12.953</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-ChocolateyGUI',Version='3.2.0')</id>
+    <title type="text">mock-ChocolateyGUI</title>
+    <summary type="text">A GUI for Chocolatey</summary>
+    <updated>2026-06-10T15:30:26Z</updated>
+    <author>
+      <name>Chocolatey</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-ChocolateyGUI',Version='3.2.0')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-ChocolateyGUI',Version='3.2.0')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-ChocolateyGUI/3.2.0" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>3.2.0</d:Version>
+      <d:Title>Mock Chocolatey GUI</d:Title>
+      <d:Description>Chocolatey GUI is a delicious GUI on top of the Chocolatey command line tool.
+
+## Package Parameters
+
+See [Chocolatey GUI documentation page](https://docs.chocolatey.org/en-us/chocolatey-gui/setup/installation#package-parameters) for available package parameters.</d:Description>
+      <d:Tags>chocolateygui chocolatey admin foss</d:Tags>
+      <d:Copyright>Copyright 2014 - Present Open Source maintainers of Chocolatey GUI, and Chocolatey Software, Inc. - All Rights Reserved.</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-10T12:57:04.47</d:Created>
+      <d:Dependencies>chocolatey:[2.7.0, 2.999.999]:|chocolatey-core.extension:1.3.3:|dotnetfx:4.8.0.20190930:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">3456366</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">9</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/ChocolateyGUI/3.2.0</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/ChocolateyGUI/3.2.0</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-10T12:57:04.47</d:Published>
+      <d:LicenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE.txt</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>uHmz3joxV2RveMK0GWjNWI30LCy87z0SUWmwejNyZPIXioe/twiPe/yrg+5kASlN3PprK0FWaWC8Xzy5V/2EBg==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">21465680</d:PackageSize>
+      <d:ProjectUrl>https://github.com/chocolatey/ChocolateyGUI</d:ProjectUrl>
+      <d:ReleaseNotes>All release notes for Chocolatey GUI can be found on the docs site - https://docs.chocolatey.org/en-us/chocolatey-gui/release-notes</d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://github.com/chocolatey/ChocolateyGUI</d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey/ChocolateyGUI/tree/develop/nuspec/chocolatey</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/144c856912c6537273b2424b8bf3a650</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-10T14:22:11.167</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-10T13:31:26.02</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-10T14:51:19.64</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-10T14:51:19.64</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-10T15:52:20.09</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-10T14:51:19.64</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-ChocoShortcuts',Version='0.4.1')</id>
+    <title type="text">mock-ChocoShortcuts</title>
+    <summary type="text">Manage Chocolatey Packages via Shortcuts</summary>
+    <updated>2026-06-18T05:45:26Z</updated>
+    <author>
+      <name>mica</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-ChocoShortcuts',Version='0.4.1')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-ChocoShortcuts',Version='0.4.1')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-ChocoShortcuts/0.4.1" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>0.4.1</d:Version>
+      <d:Title>Mock Chocolatey Shortcuts (unofficial)</d:Title>
+      <d:Description>Launch command line menus via file shortcuts for installing, updating, and uninstalling Chocolatey packages. 
+
+Generate shortcuts for each of your packages to a portable directory of your choice.
+
+![Screenshot](https://raw.githubusercontent.com/mica/ChocoShortcuts/master/Screenshot.png)
+
+At installation, a "Chocolatey Shortcuts" folder is placed on your desktop. Rename or move it as you like (I keep mine synced between computers in Dropbox). 
+
+Create shortcuts for packages using "+Add Package Shortcuts". There you'll find options to generate shortcuts individually or in bulk, as well as a search function for finding package IDs.
+
+Launching package shortcuts will present you with options to install (if not installed), update (if available), or uninstall packages. Update multiple packages at once using "+Check for Package Updates".</d:Description>
+      <d:Tags>Chocolatey ChocolateyGUI Shortcuts PowerShell</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2018-03-27T04:25:48.693</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">10449</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">7346</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/ChocoShortcuts/0.4.1</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/ChocoShortcuts/0.4.1</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2018-03-27T04:25:48.693</d:Published>
+      <d:LicenseUrl>https://opensource.org/licenses/MIT</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>DJpQEsA9eTjtKKKB4HQqnkpm+pMflhAddsG7Kxcje4tY/lh4bnJhHe2dFkZuu8cz5qW88rTW5JSZoqCIY/bosQ==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">8115</d:PackageSize>
+      <d:ProjectUrl>https://github.com/mica/ChocoShortcuts</d:ProjectUrl>
+      <d:ReleaseNotes>- Fixed search</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/mica/ChocoShortcuts</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/mica/ChocoShortcuts/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/b4bb98717ec40101089ef69e0203ef2c</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Failing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-19T20:24:35.97</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2018-03-27T04:59:07.353</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2020-07-11T22:26:23.953</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2020-07-11T22:26:23.953</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2018-03-29T12:06:47</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2018-03-27T05:26:00.467</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  
+</feed>

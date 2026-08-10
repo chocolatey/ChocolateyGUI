@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/dev-proxy/main/schemas/v3.0.1/rc.schema.json",
+  "plugins": [
+    {
+      "name": "MockResponsePlugin",
+      "enabled": true,
+      "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll",
+      "configSection": "mocksPlugin"
+    }
+  ],
+  "urlsToWatch": [
+    "https://community.chocolatey.org/*"
+  ],
+  "mocksPlugin": {
+    "mocksFile": "mocks.json"
+  },
+  "logLevel": "information",
+  "newVersionNotification": "none"
+}

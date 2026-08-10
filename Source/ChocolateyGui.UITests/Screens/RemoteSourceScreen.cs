@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
@@ -55,6 +56,29 @@ namespace ChocolateyGui.UITests.Screens
             return Parent
                 .FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.PACKAGES_LIST))
                 .FindAllChildren(cf => cf.ByControlType(ControlType.ListItem));
+        }
+
+        /// <summary>
+        ///     Returns the distinct version strings displayed across all rows in the package list. Used to
+        ///     verify that "all versions" shows the individual remote versions (issue #1146) rather than the
+        ///     installed version repeated for every row.
+        /// </summary>
+        public string[] GetDisplayedVersions()
+        {
+            var versionPattern = new Regex(@"^\d+\.\d+(\.\d+){0,2}(-[0-9A-Za-z][0-9A-Za-z.-]*)?$");
+
+            var packagesList = Parent.FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.PACKAGES_LIST));
+            if (packagesList == null)
+            {
+                throw new ApplicationException("Packages List not found.");
+            }
+
+            return packagesList
+                .FindAllDescendants(cf => cf.ByControlType(ControlType.Text))
+                .Select(element => element.Name)
+                .Where(name => !string.IsNullOrEmpty(name) && versionPattern.IsMatch(name))
+                .Distinct()
+                .ToArray();
         }
     }
 }

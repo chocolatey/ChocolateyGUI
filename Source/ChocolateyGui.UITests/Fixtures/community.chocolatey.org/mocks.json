@@ -1,0 +1,181 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/dev-proxy/main/schemas/v3.0.1/mockresponseplugin.mocksfile.schema.json",
+  "mocks": [
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/api/v2/Search()/$count*searchTerm='mock-chocolateygui'*",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "text/plain"
+          }
+        ],
+        "body": "@count-search-chocolateygui.txt"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/api/v2/Search()/$count*searchTerm=''*",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "text/plain"
+          }
+        ],
+        "body": "@count-default.txt"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/api/v2/$metadata*",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "application/xml;charset=utf-8"
+          }
+        ],
+        "body": "@metadata.xml"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/api/v2/Search()*searchTerm='mock-chocolateygui'*",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "application/atom+xml;charset=utf-8"
+          }
+        ],
+        "body": "@search-chocolateygui.xml"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/api/v2/Search()*searchTerm=''*",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "application/atom+xml;charset=utf-8"
+          }
+        ],
+        "body": "@default-popularity.xml"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/api/v2/Packages()*",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "application/atom+xml;charset=utf-8"
+          }
+        ],
+        "body": "@exact-chocolateygui-latest.xml"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/api/v2/FindPackagesById*",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "application/atom+xml;charset=utf-8"
+          }
+        ],
+        "body": "@exact-chocolateygui-allversions.xml"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/api/v2/*$count*",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "text/plain"
+          }
+        ],
+        "body": "@count-zero.txt"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/api/v2/",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "application/xml;charset=utf-8"
+          }
+        ],
+        "body": "@service-root.xml"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/mock-icon.svg",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "image/svg+xml"
+          }
+        ],
+        "body": "@mock-icon.svg"
+      }
+    },
+    {
+      "request": {
+        "url": "https://community.chocolatey.org/*",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "content-type",
+            "value": "application/atom+xml;charset=utf-8"
+          }
+        ],
+        "body": "@empty-feed.xml"
+      }
+    }
+  ]
+}

@@ -7,6 +7,7 @@ namespace ChocolateyGui.UITests
     internal static class AutomationIds
     {
         internal const string ALL_VERSIONS_CHECK_BOX = "AllVersionsCheckBox";
+        internal const string MATCH_CHECK_BOX = "MatchCheckBox";
         internal const string BACK_BUTTON = "Back";
         internal const string DIALOG = "PART_Dialog";
         internal const string PACKAGES_LIST = "Packages";

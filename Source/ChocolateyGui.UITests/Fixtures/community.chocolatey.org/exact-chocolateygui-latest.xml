@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<feed xml:base="http://community.chocolatey.org/api/v2/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">mock-Packages</title>
+  <id>http://community.chocolatey.org/api/v2/Packages</id>
+  <updated>2026-06-26T02:07:53Z</updated>
+  <link rel="self" title="Packages" href="Packages" />
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-ChocolateyGUI',Version='3.2.0')</id>
+    <title type="text">mock-ChocolateyGUI</title>
+    <summary type="text">A GUI for Chocolatey</summary>
+    <updated>2026-06-10T15:30:26Z</updated>
+    <author>
+      <name>Chocolatey</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-ChocolateyGUI',Version='3.2.0')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-ChocolateyGUI',Version='3.2.0')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-ChocolateyGUI/3.2.0" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>3.2.0</d:Version>
+      <d:Title>Mock Chocolatey GUI</d:Title>
+      <d:Description>Chocolatey GUI is a delicious GUI on top of the Chocolatey command line tool.
+
+## Package Parameters
+
+See [Chocolatey GUI documentation page](https://docs.chocolatey.org/en-us/chocolatey-gui/setup/installation#package-parameters) for available package parameters.</d:Description>
+      <d:Tags>chocolateygui chocolatey admin foss</d:Tags>
+      <d:Copyright>Copyright 2014 - Present Open Source maintainers of Chocolatey GUI, and Chocolatey Software, Inc. - All Rights Reserved.</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-10T12:57:04.47</d:Created>
+      <d:Dependencies>chocolatey:[2.7.0, 2.999.999]:|chocolatey-core.extension:1.3.3:|dotnetfx:4.8.0.20190930:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">3456366</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">9</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/ChocolateyGUI/3.2.0</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/ChocolateyGUI/3.2.0</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-10T12:57:04.47</d:Published>
+      <d:LicenseUrl>https://raw.githubusercontent.com/chocolatey/ChocolateyGUI/develop/LICENSE.txt</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>uHmz3joxV2RveMK0GWjNWI30LCy87z0SUWmwejNyZPIXioe/twiPe/yrg+5kASlN3PprK0FWaWC8Xzy5V/2EBg==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">21465680</d:PackageSize>
+      <d:ProjectUrl>https://github.com/chocolatey/ChocolateyGUI</d:ProjectUrl>
+      <d:ReleaseNotes>All release notes for Chocolatey GUI can be found on the docs site - https://docs.chocolatey.org/en-us/chocolatey-gui/release-notes</d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://github.com/chocolatey/ChocolateyGUI</d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey/ChocolateyGUI/tree/develop/nuspec/chocolatey</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/chocolatey/ChocolateyGUI/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/144c856912c6537273b2424b8bf3a650</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-10T14:22:11.167</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-10T13:31:26.02</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-10T14:51:19.64</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-10T14:51:19.64</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-10T15:52:20.09</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-10T14:51:19.64</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  
+</feed>

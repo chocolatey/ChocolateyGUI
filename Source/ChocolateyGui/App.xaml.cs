@@ -32,6 +32,10 @@ namespace ChocolateyGui
         #region DupFinder Exclusion
         public App()
         {
+#if DEBUG
+            DebugInstallEnvironment.RedirectChocolateyInstallForDebugging();
+#endif
+
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
                 var requestedAssembly = new AssemblyName(args.Name);

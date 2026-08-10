@@ -321,15 +321,44 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     PageCount = (int)Math.Ceiling((double)result.TotalCount / (double)PageSize);
                     Packages.Clear();
 
-                    result.Packages.ToList().ForEach(p =>
+                    // When showing all versions, the source returns them in the active sort order (e.g.
+                    // popularity / download count), which interleaves the versions of a package. Order each
+                    // package's versions newest-first, keeping the packages themselves in their original
+                    // (relevance) order.
+                    var packagesToDisplay = IncludeAllVersions
+                        ? result.Packages
+                            .GroupBy(package => package.Id, StringComparer.OrdinalIgnoreCase)
+                            .SelectMany(group => group.OrderByDescending(package => package.Version))
+                            .ToList()
+                        : result.Packages.ToList();
+
+                    packagesToDisplay.ForEach(p =>
                     {
                         var remoteVersion = p.Version;
-                        var installedPackage = installedPackages.FirstOrDefault(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase));
-                        if (installedPackage != null)
+
+                        if (IncludeAllVersions)
                         {
-                            p.Version = installedPackage.Version;
-                            p.IsPinned = installedPackage.IsPinned;
-                            p.IsInstalled = true;
+                            // When showing all versions, every row is a distinct version of the same package.
+                            // Only flag the row whose version is actually installed, and never overwrite the
+                            // displayed version - otherwise every row collapses to the installed version (#1146).
+                            var installedVersion = installedPackages.FirstOrDefault(package =>
+                                string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)
+                                && Equals(package.Version, p.Version));
+                            if (installedVersion != null)
+                            {
+                                p.IsPinned = installedVersion.IsPinned;
+                                p.IsInstalled = true;
+                            }
+                        }
+                        else
+                        {
+                            var installedPackage = installedPackages.FirstOrDefault(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase));
+                            if (installedPackage != null)
+                            {
+                                p.Version = installedPackage.Version;
+                                p.IsPinned = installedPackage.IsPinned;
+                                p.IsInstalled = true;
+                            }
                         }
 
                         var packageViewModel = Mapper.Map<IPackageViewModel>(p);

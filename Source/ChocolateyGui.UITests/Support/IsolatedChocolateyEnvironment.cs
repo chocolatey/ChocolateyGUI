@@ -109,7 +109,38 @@ namespace ChocolateyGui.UITests.Support
                     Assert.Ignore(
                         $"Failed to seed installed package {id} {version} (exit {process.ExitCode}).{Environment.NewLine}{output}{error}");
                 }
+        /// <summary>
+        ///     Registers (or replaces) a remote source in the isolated Chocolatey configuration so the GUI
+        ///     lists and queries it. Used to point a named source (e.g. <c>hermes</c>) at a local mock feed
+        ///     rather than an external server. Runs choco's own <c>source add</c>, so the config file stays in
+        ///     choco's native format. The source is removed first, so the URL always reflects the current mock
+        ///     (the mock's localhost port varies from run to run).
+        /// </summary>
+        public static void AddSource(string name, string url)
+        {
+            RemoveSource(name);
+
+            var result = RunChoco(string.Format("source add --name \"{0}\" --source \"{1}\" --priority 0", name, url));
+
+            if (!result.Located)
+            {
+                Assert.Ignore("Chocolatey CLI (choco.exe) could not be located; cannot register the mock source.");
             }
+
+            if (result.TimedOut || result.ExitCode != 0)
+            {
+                Assert.Ignore(
+                    $"Failed to register mock source {name} -> {url} (exit {result.ExitCode}).{Environment.NewLine}{result.Output}");
+            }
+        }
+
+        /// <summary>
+        ///     Removes a source from the isolated configuration. Best-effort and idempotent - safe to call
+        ///     whether or not the source currently exists.
+        /// </summary>
+        public static void RemoveSource(string name)
+        {
+            RunChoco(string.Format("source remove --name \"{0}\"", name));
         }
 
         /// <summary>
@@ -164,6 +195,37 @@ namespace ChocolateyGui.UITests.Support
             }
         }
 
+        /// <summary>
+        ///     Deletes Chocolatey GUI's cached "outdated packages" results (<c>outdatedPackages*.xml</c> under
+        ///     <c>%LocalAppData%\Chocolatey GUI</c>) so the next outdated check runs fresh against the mock feed.
+        ///     The result is otherwise cached per source and per prerelease preference for 60 minutes, which makes
+        ///     an outdated-status test non-deterministic across runs. Unlike the HTTP cache this lives in the real
+        ///     user profile (the GUI computes it from <see cref="Environment.SpecialFolder.LocalApplicationData" />),
+        ///     not the isolated install, so it is cleared separately.
+        /// </summary>
+        public static void ClearOutdatedPackagesCache()
+        {
+            var cacheDirectory = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify),
+                "Chocolatey GUI");
+
+            if (!Directory.Exists(cacheDirectory))
+            {
+                return;
+            }
+
+            foreach (var file in Directory.GetFiles(cacheDirectory, "outdatedPackages*.xml"))
+            {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch
+                {
+                    // Best effort - a locked cache file should not fail the test run.
+                }
+            }
+        }
         private static string LocateChocoExecutable()
         {
             var machineInstall = Environment.GetEnvironmentVariable("ChocolateyInstall", EnvironmentVariableTarget.Machine);

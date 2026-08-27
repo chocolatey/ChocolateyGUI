@@ -127,6 +127,12 @@ publish/
 # This line needs to be after the ignore of the build folder (and the packages folder if the line above has been uncommented)
 !packages/build/
 
+# The isolated UITests keep a stub package fixture under a folder named "packages". It is a test
+# fixture (used as a local --source to seed an installed package), NOT the NuGet restore folder,
+# so it must stay tracked despite the "**/packages/*" rule above.
+!Source/ChocolateyGui.UITests/Fixtures/packages/
+!Source/ChocolateyGui.UITests/Fixtures/packages/**
+
 # Windows Azure Build Output
 csx/
 *.build.csdef

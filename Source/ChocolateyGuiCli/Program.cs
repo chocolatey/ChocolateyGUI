@@ -16,6 +16,10 @@ namespace ChocolateyGuiCli
 
         public static void Main(string[] args)
         {
+#if DEBUG
+            DebugInstallEnvironment.RedirectChocolateyInstallForDebugging();
+#endif
+
             AddAssemblyResolver();
 
             Runner.Run(args);

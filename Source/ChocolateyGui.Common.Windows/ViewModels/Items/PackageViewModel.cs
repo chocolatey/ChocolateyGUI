@@ -751,8 +751,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels.Items
                     LatestVersion = message.Version;
                     IsOutdated = true;
                 }
-                else
+                else if (Version == message.Version)
                 {
+                    // When all versions are shown, every version of a package is a separate row that shares
+                    // the package Id, and the outdated broadcast can only be matched by Id. Match on the
+                    // version as well so the update is applied only to the row it actually concerns - matching
+                    // on Id alone overwrites every sibling row's version with the latest and collapses them
+                    // all into a single version (#1146).
                     LatestVersion = null;
                     Version = message.Version;
                 }

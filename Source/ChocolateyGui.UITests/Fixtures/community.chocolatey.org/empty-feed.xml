@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xml:base="https://community.chocolatey.org/api/v2/" xmlns="http://www.w3.org/2005/Atom" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+  <title type="text">MOCK-EMPTY (unmocked request - not live CCR data)</title>
+  <id>https://community.chocolatey.org/api/v2/Search</id>
+  <updated>2024-01-01T00:00:00Z</updated>
+</feed>

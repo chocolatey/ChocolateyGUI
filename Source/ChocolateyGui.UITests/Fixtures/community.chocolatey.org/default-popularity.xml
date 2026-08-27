@@ -1,0 +1,2446 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<feed xml:base="http://community.chocolatey.org/api/v2/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">mock-Search</title>
+  <id>http://community.chocolatey.org/api/v2/Search</id>
+  <updated>2026-06-26T05:18:08Z</updated>
+  <link rel="self" title="Search" href="Search" />
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-adobereader',Version='2026.1.21529')</id>
+    <title type="text">mock-adobereader</title>
+    <summary type="text">View, print, sign, and annotate PDF files.</summary>
+    <updated>2026-06-11T07:46:10Z</updated>
+    <author>
+      <name>Adobe</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-adobereader',Version='2026.1.21529')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-adobereader',Version='2026.1.21529')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-adobereader/2026.1.21529" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>2026.1.21529</d:Version>
+      <d:Title>Mock Adobe Acrobat Reader DC</d:Title>
+      <d:Description>Adobe Acrobat Reader DC software is the free, trusted global standard for viewing, printing, signing, sharing, and annotating PDFs. It's the only PDF viewer that can open and interact with all types of PDF content – including forms and multimedia. And now, it’s connected to Adobe Document Cloud – so you can work with PDFs on computers and mobile devices.
+
+This package installs/upgrades the Multi-lingual ("MUI") release. In some cases, this package will by default be able to install over the top of a language-specific installation. Otherwise, this package will exit and require either a manual uninstall of the language specific installation or having the parameter '/OverwriteInstallation' set to do this automatically.
+
+## Package installation defaults
+
+By default, this package:
+
+- Will _NOT_ install a desktop icon.
+- Will _NOT_ install the Adobe Reader and Acrobat Manager ("ARM") service. It the service already exists, it will _NOT_ remove it (it will disable it unless enabled by parameters).
+- Will _NOT_ uninstall language-specific installations.
+- Will configure Reader to only **check for updates manually** with confirmation for install.
+
+## Package Parameters
+
+- `/DesktopIcon` - The Desktop icon will be installed to the common desktop. (Install only.)
+- `/NoUpdates` - No updates via internal mechanisms (including manual checks). Only downloading from Adobe and running installers or updates (or updating this package) will advance the version of Reader. Once set, only uninstalling this package will remove this update block.
+- `/OverwriteInstallation` - Uninstall a language-specific installation before installing the Multi-lingual ("MUI") release. _Be aware that this will remove all data and features of an existing installation!_
+- `/EnableUpdateService` - Install the AdobeARM service. (Does not override `/NoUpdates`.)
+- `/UpdateMode:#` - Sets the update mode (below). (Does not override `/NoUpdates`.)
+- `/IgnoreInstalled="SOFTWARE NAME"` - This parameter allows you to ignore software whose name matches a comma delimited list of wildcard strings. This is useful if you have other versions of Adobe Acrobat installed (such as [Adobe Acrobat X Pro](https://github.com/pauby/ChocoPackages/issues/197)). For example: `choco install adobereader --params="'/IgnoreInstalled="Adobe X*,Adobe Acrobat Y*"'"` will ignore any installation whose name matches `Adobe X*` or `Adobe Acrobat Y*`. **WARNING**: Only use this parameter if you know what you are doing. If you have an existing installation of Adobe Acrobat Reader and you exclude it from the list using this parameter, then the package will perform an installation believing the software is not installed which _will cause issues_. **You have been warned**.
+
+### Update Modes
+
+- `0` - Manually check for and install updates. (Default and reset on every update).
+- `1` - Same as `0`.
+- `2` - Download updates for me, but let me choose when to install them. (Appears to be no different than `0`).
+- `3` - Install updates automatically (via task scheduler or ARM service if enabled).
+- `4` - Notify me, but let me choose when to download and install updates.
+
+These parameters can be passed to the installer with the use of `--params`.
+
+For example :
+`choco install adobereader --params '"/DesktopIcon /UpdateMode:4"'`
+
+## Notes
+
+- This is an automatically updated package. If you find it is out of date by more than a week, please contact the maintainer(s), to let the know the package is no longer updating, using:
+    - The 'Contact Maintainers' link on the package page, or
+    - The 'Package Source' link on the package page and raising an issue.</d:Description>
+      <d:Tags>adobereader adobe acrobat reader DC pdf MUI multilanguage</d:Tags>
+      <d:Copyright>Copyright Â© 1984-2023 Adobe Systems Incorporated and its licensors</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-05-18T18:51:07.467</d:Created>
+      <d:Dependencies>kb2919355::</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">691011852</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">1549525</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/adobereader/2026.1.21529</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/adobereader/2026.1.21529</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-05-18T18:51:07.467</d:Published>
+      <d:LicenseUrl>http://www.adobe.com/products/eulas/pdfs/Reader10_combined-20100625_1419.pdf</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">true</d:RequireLicenseAcceptance>
+      <d:PackageHash>nq7Pi4N5voMamJvk7DoQg+aw52+GKAblwlGOtTnOMKcnL2kgSwZILSPsROudMFG5la/IRV6yjIhbGb7lpqCxhQ==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">9627</d:PackageSize>
+      <d:ProjectUrl>https://www.adobe.com/products/reader.html</d:ProjectUrl>
+      <d:ReleaseNotes>https://helpx.adobe.com/acrobat/release-note/release-notes-acrobat-reader.html</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/pauby/chocopackages/tree/master/automatic/adobereader</d:PackageSourceUrl>
+      <d:DocsUrl>https://helpx.adobe.com/reader.html</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">false</d:IsApproved>
+      <d:PackageStatus>Exempted</d:PackageStatus>
+      <d:PackageSubmittedStatus>Waiting</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl></d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Exempted</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime" m:null="true"></d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-05-18T19:28:52.097</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-05-19T11:04:54.353</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime" m:null="true"></d:PackageApprovedDate>
+      <d:PackageReviewer>gep13</d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Unknown</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime" m:null="true"></d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>Exempted</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-05-19T11:04:43.807</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-chocolatey',Version='2.7.3')</id>
+    <title type="text">mock-chocolatey</title>
+    <summary type="text">Chocolatey is the package manager for Windows (like apt-get but for Windows)</summary>
+    <updated>2026-06-10T20:20:06Z</updated>
+    <author>
+      <name>Chocolatey Software, Inc</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-chocolatey',Version='2.7.3')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-chocolatey',Version='2.7.3')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-chocolatey/2.7.3" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>2.7.3</d:Version>
+      <d:Title>Mock Chocolatey</d:Title>
+      <d:Description>Chocolatey is a package manager for Windows (like apt-get but for Windows). It was designed to be a decentralized framework for quickly installing applications and tools that you need. It is built on the NuGet infrastructure currently using PowerShell as its focus for delivering packages from the distros to your door, err computer.
+
+Chocolatey is brought to you by the work and inspiration of the community, the work and thankless nights of the [Chocolatey Team](https://github.com/orgs/chocolatey/people), with Rob heading up the direction.
+
+You can host your own sources and add them to Chocolatey, you can extend Chocolatey's capabilities, and folks, it's only going to get better.
+
+### Information
+
+- [Chocolatey Website and Community Package Repository](https://community.chocolatey.org)
+- [Mailing List](http://groups.google.com/group/chocolatey) / [Release Announcements Only Mailing List](https://groups.google.com/group/chocolatey-announce) / [Build Status Mailing List](http://groups.google.com/group/chocolatey-build-status)
+- [Twitter](https://twitter.com/chocolateynuget) / [Facebook](https://www.facebook.com/ChocolateySoftware) / [GitHub](https://github.com/chocolatey)
+- [Blog](https://blog.chocolatey.org/) / [Newsletter](https://chocolatey.us8.list-manage1.com/subscribe?u=86a6d80146a0da7f2223712e4&amp;id=73b018498d)
+- [Documentation](https://docs.chocolatey.org/en-us/) / [Support](https://chocolatey.org/support)
+
+### Commands
+
+There are quite a few commands you can call - you should check out the [command reference](https://docs.chocolatey.org/en-us/choco/commands). Here are the most common:
+
+- Help - choco --help or choco command --help
+- Search - choco search something
+- List - choco list
+- Config - choco config list
+- Install - choco install baretail
+- Pin - choco pin windirstat
+- Outdated - choco outdated
+- Upgrade - choco upgrade baretail
+- Uninstall - choco uninstall baretail
+
+#### Alternative installation sources:
+
+- Install ruby gem - choco install compass -source ruby
+- Install python egg - choco install sphynx -source python
+- Install windows feature - choco install IIS -source windowsfeatures
+
+#### More
+
+For more advanced commands and switches, use `choco --help` or `choco command --help`. You can also look at the [command reference](https://docs.chocolatey.org/en-us/choco/commands), including how you can force a package to install the x86 version of a package.
+
+### Create Packages?
+
+We have some great guidance on how to do that. Where? I'll give you a hint, it rhymes with socks! [Docs!](https://docs.chocolatey.org/en-us/create/create-packages)
+
+In that mess there is a link to the [PowerShell Chocolatey module reference](https://docs.chocolatey.org/en-us/create/functions).</d:Description>
+      <d:Tags>nuget apt-get machine repository chocolatey</d:Tags>
+      <d:Copyright>Copyright © 2017 - 2026 Chocolatey Software, Inc. Copyright © 2011 - 2017, RealDimensions Software, LLC - All Rights Reserved.</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-10T12:56:48.723</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">383941548</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">268</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/chocolatey/2.7.3</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/chocolatey/2.7.3</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-10T12:56:48.723</d:Published>
+      <d:LicenseUrl>https://raw.githubusercontent.com/chocolatey/choco/master/LICENSE</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>Y9tRa6TGg8OBpmQVzmwLVi8DsiFvTFxmPeoA0kLKTcuD7MSrj5pWch/lDvXYpklue3numcj77Br93u4bRBV+nw==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">5719525</d:PackageSize>
+      <d:ProjectUrl>https://github.com/chocolatey/choco</d:ProjectUrl>
+      <d:ReleaseNotes>See all - https://docs.chocolatey.org/en-us/choco/release-notes</d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://github.com/chocolatey/choco</d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey/choco/tree/develop/nuspec/chocolatey/chocolatey</d:PackageSourceUrl>
+      <d:DocsUrl>https://docs.chocolatey.org/en-us/</d:DocsUrl>
+      <d:MailingListUrl>https://groups.google.com/forum/#!forum/chocolatey</d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/chocolatey/choco/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/56b5b835c726e360f618510b38b56efb</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-10T14:19:35.94</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-10T13:31:12.51</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-10T20:20:03.957</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-10T20:20:03.957</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Unknown</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime" m:null="true"></d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-10T20:20:03.903</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-GoogleChrome',Version='150.0.7871.47')</id>
+    <title type="text">mock-GoogleChrome</title>
+    <summary type="text"></summary>
+    <updated>2026-06-25T14:45:23Z</updated>
+    <author>
+      <name>Google LLC.</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-GoogleChrome',Version='150.0.7871.47')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-GoogleChrome',Version='150.0.7871.47')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-GoogleChrome/150.0.7871.47" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>150.0.7871.47</d:Version>
+      <d:Title>Mock Google Chrome</d:Title>
+      <d:Description>Chrome is a fast, simple, and secure web browser, built for the modern web.
+
+### Notes
+
+- This package uses Chrome's administrative MSI installer and installs the 32-bit on 32-bit OSes and the 64-bit version on 64-bit OSes. If this package is installed on a 64-bit OS and the 32-bit version of Chrome is already installed, the package keeps installing/updating the 32-bit version of Chrome.
+- This package always installs the latest version of Google Chrome, regardless of the version specified in the package. Google does not officially offer older versions of Chrome for download. Because of this you may get checksum mismatch between the time Google releases a new installer, and the package is automatically updated.
+- **If the package is out of date please check [Version History](#versionhistory) for the latest submitted version. If you have a question, please ask it in [Chocolatey Community Package Discussions](https://github.com/chocolatey-community/chocolatey-packages/discussions) or raise an issue on the [Chocolatey Community Packages Repository](https://github.com/chocolatey-community/chocolatey-packages/issues) if you have problems with the package. Disqus comments will generally not be responded to.**</d:Description>
+      <d:Tags>google chrome web internet browser admin</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-25T00:13:45.09</d:Created>
+      <d:Dependencies>chocolatey-core.extension:1.3.3:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">380457534</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">807</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/GoogleChrome/150.0.7871.47</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/GoogleChrome/150.0.7871.47</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-25T00:13:45.09</d:Published>
+      <d:LicenseUrl>https://www.google.it/intl/en/chrome/browser/privacy/eula_text.html</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>LN1sPTYDlDXkJ2DYGipL10mw8W7lxT6PJIZmAfq0K+micYSPhQG8iMv4LWxKk+kXJ+bls8+sj0NzaJ+u2xRXDg==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">4436</d:PackageSize>
+      <d:ProjectUrl>https://www.google.com/chrome/browser/</d:ProjectUrl>
+      <d:ReleaseNotes></d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-packages/tree/master/automatic/googlechrome</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/ad75608845125bc1647d5be23ef5a6b8</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-25T01:20:40.647</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-25T00:45:30.45</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-25T13:51:13.09</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-25T13:51:13.09</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">true</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Available</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-25T14:52:42.84</d:DownloadCacheDate>
+      <d:DownloadCache>https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise64.msi^x64/googlechromestandaloneenterprise64.msi^22829B80F9B44E0CC5052331552A574654D96C362AD60FC442516DC3793B528486E2BD5AF7B9E2B488F0363C53206CFB3E736FE7C5BE60D9661B75F17A700552|https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise.msi^x86/googlechromestandaloneenterprise.msi^921784247C99EF3DEDDB58AF28FA4DF07A9A107CCBBFB974CF6DFF3791FB501030BE947528E4C9BF1BBA00D473451C2C3317DB965FD2AEBCD801F4395B6A9391</d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-25T13:51:13.09</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-Firefox',Version='152.0.3')</id>
+    <title type="text">mock-Firefox</title>
+    <summary type="text">Bringing together all kinds of awesomeness to make browsing better for you</summary>
+    <updated>2026-06-25T23:45:25Z</updated>
+    <author>
+      <name>Mozilla</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-Firefox',Version='152.0.3')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-Firefox',Version='152.0.3')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-Firefox/152.0.3" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>152.0.3</d:Version>
+      <d:Title>Mock Mozilla Firefox</d:Title>
+      <d:Description>Bringing together all kinds of awesomeness to make browsing better for you.
+
+## Features
+
+- A powerful, new engine that’s built for rapidfire performance.
+- Better, faster page loading that uses less computer memory.
+- Gorgeous design and smart features for intelligent browsing.
+- Instantly import your online info and favorites from any other browser.
+- The most powerful private browsing mode with added tracking protection.
+- Firefox Quantum features: screenshots, pocket, gaming &amp; VR, library.
+- Customization Features - addons &amp; extensions, themes, toolbar.
+- Synced across devices - passwords, bookmarks, tabs and more.
+- Ad tracker blocking.
+- Password manager.
+
+## Package Parameters
+
+- `/l:LOCALE` - Install given Firefox locale. See the [official page](https://releases.mozilla.org/pub/firefox/releases/latest/README.txt) for a complete list of available locales.
+- `/UseMozillaFallback` Makes a request to mozilla.org and reads the supported Language Culture code from the website.
+
+Command-line options for installer configuration. See the [official page](https://firefox-source-docs.mozilla.org/browser/installer/windows/installer/FullConfig.html) for details and defaults.
+
+- `/InstallDir:PATH`
+- `/NoTaskbarShortcut` Do not create Taskbar Shortcut
+- `/NoDesktopShortcut` Do not create Desktop Shortcut
+- `/NoStartMenuShortcut` Do not create Start Menu Shortcut
+- `/NoMaintenanceService` Do not install Maintenance Service
+- `/RemoveDistributionDir` Remove Distribution directory on installation/update. (This is the default behavior of the Firefox Installer, but not for this Chocolatey Package)
+- `/NoAutoUpdate` Sets a policies.json file to not update Firefox and does not install the Maintenance Service
+
+### Examples
+
+`choco install Firefox --params "/l:en-GB"`
+`choco install Firefox --params "/NoTaskbarShortcut /NoDesktopShortcut /NoAutoUpdate"`
+`choco install Firefox --params "/l:en-GB /RemoveDistributionDir"`
+
+## Notes
+
+- Looking for Firefox Developer Edition? Install the [firefox-dev](/packages/firefox-dev) package.
+- Looking for Firefox Extended Support Release? Install the [FirefoxESR](/packages/FirefoxESR) package.
+- If locale package parameter is not present, this package installs Firefox in the first language which matches this list:
+  1. If Firefox is already installed it uses the same language as the already installed one.
+  1. The Windows system language.
+  1. Language Culture code specified on Mozilla website (only when `/UseMozillaFallback` is specified).
+  1. If Firefox does not support the system language, it will fall back to `en-US`.
+- **If the package is out of date please check [Version History](#versionhistory) for the latest submitted version. If you have a question, please ask it in [Chocolatey Community Package Discussions](https://github.com/chocolatey-community/chocolatey-packages/discussions) or raise an issue on the [Chocolatey Community Packages Repository](https://github.com/chocolatey-community/chocolatey-packages/issues) if you have problems with the package. Disqus comments will generally not be responded to.**</d:Description>
+      <d:Tags>browser mozilla firefox admin foss cross-platform</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-25T18:12:50.977</d:Created>
+      <d:Dependencies>chocolatey-core.extension:1.3.3:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">110752454</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">350</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/Firefox/152.0.3</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/Firefox/152.0.3</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-25T18:12:50.977</d:Published>
+      <d:LicenseUrl>https://www.mozilla.org/en-US/MPL/2.0/</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>rkTh2oQl6Gx34sYHbTPmSvG2GtXLmwKm7qFbGT3KWDNW05tVSgAVIPrw6FuSB2nAnTGzMk6WL91/8ptsV+gq+g==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">25246</d:PackageSize>
+      <d:ProjectUrl>https://www.mozilla.org/en-US/firefox/new/</d:ProjectUrl>
+      <d:ReleaseNotes>https://www.mozilla.org/en-US/firefox/152.0.3/releasenotes/</d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://hg.mozilla.org/mozilla-central/</d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-packages/tree/master/automatic/firefox</d:PackageSourceUrl>
+      <d:DocsUrl>https://developer.mozilla.org/en-US/Firefox</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://bugzilla.mozilla.org/</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/e148cb6db72f680d507a5528ea2bd4bc</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-25T19:00:51.42</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-25T18:44:58.757</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-25T22:48:40.433</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-25T22:48:40.433</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-25T23:49:43.393</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-25T22:48:40.433</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-microsoft-edge',Version='149.0.4022.96')</id>
+    <title type="text">mock-microsoft-edge</title>
+    <summary type="text">Microsoft Edge browser, based on the Chromium open source browser.</summary>
+    <updated>2026-06-26T02:45:27Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-microsoft-edge',Version='149.0.4022.96')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-microsoft-edge',Version='149.0.4022.96')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-microsoft-edge/149.0.4022.96" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>149.0.4022.96</d:Version>
+      <d:Title>Mock Microsoft Edge</d:Title>
+      <d:Description>This package is the stable version of the Microsoft Edge browser, based on the Chromium open source browser. Portions of this browser are based on Third Party Open source software. The entire list of Microsoft utilized open source is available at https://thirdpartysource.microsoft.com/ while the portions and licenses specific to Edge are available at edge://credits/ once installed.
+
+## Package parameters
+* `/NoDesktopIcon` - Don't add a desktop icon.
+Example: `choco install microsoft-edge --params "/NoDesktopIcon"`</d:Description>
+      <d:Tags>edge microsoft browser stable chromium</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-25T22:28:00.983</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">101311355</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">80</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/microsoft-edge/149.0.4022.96</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/microsoft-edge/149.0.4022.96</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-25T22:28:00.983</d:Published>
+      <d:LicenseUrl>https://www.microsoft.com/en-us/servicesagreement/</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>UT0hemu4NYQxKejpsXxCUZe0VqBoaQow3LPuWwtaIx4sc+ZtvrifqWeXRWxq/H8j97Pr3asgHSp3Kb6VzBAnmg==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">3657</d:PackageSize>
+      <d:ProjectUrl>https://www.microsoft.com/en-us/edge</d:ProjectUrl>
+      <d:ReleaseNotes>https://learn.microsoft.com/en-us/deployedge/microsoft-edge-relnote-stable-channel</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/DennisGaida/chocolatey-packages/tree/master/microsoft-edge</d:PackageSourceUrl>
+      <d:DocsUrl>https://learn.microsoft.com/en-us/microsoft-edge/</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/4deaf81360b1cc4ec46f0d82747988df</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-25T23:44:34.02</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-25T22:59:42.11</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-26T01:52:41.443</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-26T01:52:41.443</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-26T02:56:25.017</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-26T01:52:41.443</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-chocolatey-core.extension',Version='1.4.0')</id>
+    <title type="text">mock-chocolatey-core.extension</title>
+    <summary type="text">Helper functions extending core choco functionality</summary>
+    <updated>2026-06-09T02:45:23Z</updated>
+    <author>
+      <name>chocolatey</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-chocolatey-core.extension',Version='1.4.0')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-chocolatey-core.extension',Version='1.4.0')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-chocolatey-core.extension/1.4.0" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.4.0</d:Version>
+      <d:Title>Mock Chocolatey Core Extensions</d:Title>
+      <d:Description>This is a extension package that provides helper functions installed as a Chocolatey extension.
+These functions may be used in Chocolatey install/uninstall scripts by declaring this package a dependency in your package's nuspec.
+This package provides helper functions that can be used to enhance what is already available out of the box with Chocolatey CLI.
+This includes both features that are being tested for Chocolatey CLI itself, and other helpers to make the maintenance of
+Chocolatey packages easier.
+
+Helpers that were available in this package, and were later added to Chocolatey CLI, will be moved to
+the package [chocolatey-compatibility.extension](https://community.chocolatey.org/packages/chocolatey-compatibility.extension).
+
+Backwards compatibility is not considered for helpers available in this package, see the Notes below.
+
+## Notes
+
+- There is [a known bug](https://github.com/chocolatey-community/chocolatey-extensions/issues/11) in the function `Get-AppInstallLocation` with parameter `$AppNamePattern` which is internally used both as wildcard and regex patterns. This usually doesn't create any problems, but may do so if application contains regex symbols in the name, such as [notepad++](https://github.com/chocolatey-community/chocolatey-coreteampackages/issues/1198).
+- This package itself is not concerned with keeping backwards compatibility with Chocolatey CLI. If compatibility is of concern, instead take a dependency on [chocolatey-compatibility.extension](https://community.chocolatey.org/packages/chocolatey-compatibility.extension).</d:Description>
+      <d:Tags>chocolatey core extension admin</d:Tags>
+      <d:Copyright>© 2016 Chocolatey Core Team Package Contributors</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2022-04-19T10:14:00.657</d:Created>
+      <d:Dependencies>chocolatey-compatibility.extension:1.0.0:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">98617305</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">64214084</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/chocolatey-core.extension/1.4.0</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/chocolatey-core.extension/1.4.0</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2022-04-19T10:14:00.657</d:Published>
+      <d:LicenseUrl>https://github.com/chocolatey-community/chocolatey-extensions/blob/master/LICENSE.md</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>ePZsQlm8eur8F379bOGYgRKz73/ENtMw2+fvYBMIoXleuU1OEXcxo77hGEOeWAn7BZJ7Bl4U0MafTi+TvcfhGw==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">14251</d:PackageSize>
+      <d:ProjectUrl>https://github.com/chocolatey-community/chocolatey-extensions</d:ProjectUrl>
+      <d:ReleaseNotes>## 1.4.0
+
+- Bugfix: Expand all aliases used in helper scripts ([#8](https://github.com/chocolatey-community/chocolatey-extensions/issues/8))
+- Add dependency of compatibility packages to prevent breaking changes ([#7](https://github.com/chocolatey-community/chocolatey-extensions/issues/7))
+- Remove `Get-PackageParameters` and `Get-UninstallRegistryKey` that are moved to [chocolatey-compatibility.extension](https://community.chocolatey.org/packages/chocolatey-compatibility.extension) package instead ([#6](https://github.com/chocolatey-community/chocolatey-extensions/issues/6))
+
+## 1.3.5
+
+- Bugfix `Remove-Process`: Fixed Powershell v2 compatibility issue
+
+## 1.3.4
+
+- Added `Remove-Process` function to ensure that process is stopped in reliable way
+
+## 1.3.3
+
+- Bugfix `Get-AppInstallLocation`: fix path is directory
+
+## 1.3.2
+
+- Bugfix `Get-AppInstallLocation`: now checks if path is directory
+
+## 1.3.1
+- Bugfix in `Get-AppInstallLocation`: Removed extra `$location` parameter from Split-Path when parsing the registry UninstallString.
+
+## 1.3.0
+
+- `Get-EffectiveProxy`: Get the current proxy using several methods
+
+## 1.2.0
+
+- Use `$IgnoredArguments` in all functions to allow for future expansion and splatting ([#621](https://github.com/chocolatey/chocolatey-coreteampackages/issues/621))
+- Bugfix in `Get-PackageParameters` parsing of paths containing symbol chars.
+
+## 1.1.0
+- `Get-AvailableDriveLetter`: Get the next unused drive letter
+
+## 1.0.7
+- Bugfix in `Get-PackageParameters`: flags can now have numbers in their names, whereas before, everything past the number would be truncated and the flag would turn into a boolean.
+
+## 1.0.6
+- Bugfix in `Get-AppInstallLocation`: Powershell 2 can not replace on null value.
+
+## 1.0.5
+
+- Bugfix in `Get-UninstallRegistryKey`: Powershell 2 compatibility.
+- Slightly improved documentation of `Get-UninstallRegistryKey`.
+
+## 1.0.4
+
+- Bugfix in `Get-PackageParameters`: Powershell 2 bug workaround ([#465](https://github.com/chocolatey/chocolatey-coreteampackages/issues/465)).
+
+## 1.0.3
+
+- Bugfix in `Get-PackageParameters`: error when parsing of path.
+
+## 1.0.2
+
+- Bugfix in `Get-PackageParameters`: PowerShell 2 compatibility.
+
+## 1.0.1
+
+- Bugfix in `Get-PackageParameters`: unaliased `sls` to work on PowerShell 2.
+
+## 1.0
+
+- Merged `mm-choco.extension`.
+- Merged `chocolatey-uninstall.extension`.
+- Added `Get-PackageCacheLocation`
+- Added `CHANGELOG.md` and `README.md`.
+- Refactoring and more documentation.
+
+## 0.1.3
+
+- `Get-WebContent`:  Download file with choco internals.</d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://github.com/chocolatey-community/chocolatey-extensions/tree/master/src/chocolatey-core.extension</d:ProjectSourceUrl>
+      <d:PackageSourceUrl></d:PackageSourceUrl>
+      <d:DocsUrl>https://github.com/chocolatey-community/chocolatey-extensions/blob/master/src/chocolatey-core.extension/README.md</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/chocolatey-community/chocolatey-extensions/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/b3b11469903ce2a07352c2e0a32fd9d0</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-09T02:59:02.587</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2022-04-19T10:47:07.247</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2025-01-07T01:23:42.973</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2022-04-19T11:13:28.347</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2022-04-19T12:13:51.18</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2022-04-19T11:13:28.347</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-KB2919442',Version='1.0.20160915')</id>
+    <title type="text">mock-KB2919442</title>
+    <summary type="text">The update fixes some issues in the servicing stack of Windows 8.1 and Windows Server 2012 R2.</summary>
+    <updated>2026-06-13T15:45:18Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-KB2919442',Version='1.0.20160915')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-KB2919442',Version='1.0.20160915')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-KB2919442/1.0.20160915" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.0.20160915</d:Version>
+      <d:Title>Mock March 2014 servicing stack update for Windows 8.1 and Windows Server 2012 R2 (KB2919442)</d:Title>
+      <d:Description>The servicing stack includes the files and resources that are required to service a Windows image. This includes the Package Manager executable, the required servicing libraries, and other resources. The servicing stack is included in all Windows installations. The update fixes some issues.
+
+On systems other than Windows 8.1 or Windows Server 2012 R2, this package installs successfully, but does nothing.
+
+This update is required to install Visual Studio 2015 on Windows 8.1 or Windows Server 2012 R2.</d:Description>
+      <d:Tags>Microsoft Visual Studio 2015 Windows Update 2919442</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2016-09-20T20:08:54.2</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">67392912</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">67382328</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/KB2919442/1.0.20160915</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/KB2919442/1.0.20160915</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2016-09-20T20:08:54.2</d:Published>
+      <d:LicenseUrl>https://support.microsoft.com/en-us/kb/2919442</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>TQeoUGG09UgFxQ8kkrknyaOGchD6tctB4eWoyVVNZmGcyMVSTSyvgeB3xmPdF/BLXueGJfRFhEtaGKUF3pE6eA==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">4495</d:PackageSize>
+      <d:ProjectUrl>https://support.microsoft.com/en-us/kb/2919442</d:ProjectUrl>
+      <d:ReleaseNotes>1.0.20160915:
+- fixed installation on PowerShell 2.0
+- fixed installation on machines which already have a superseding hotfix installed</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl></d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Waiting</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/d7a980eb0c86fc48e34dba4ec8fc9e42</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-13T15:58:43.063</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2016-09-20T20:43:00.52</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2016-09-20T22:21:50.3</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2016-09-20T22:21:50.3</d:PackageApprovedDate>
+      <d:PackageReviewer>jberezanski</d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2017-04-30T21:11:41.227</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2016-09-20T22:24:03.637</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-KB2919355',Version='1.0.20160915')</id>
+    <title type="text">mock-KB2919355</title>
+    <summary type="text">This update is a cumulative update that includes the security updates and the non-security updates for Windows RT 8.1, Windows 8.1, and Windows Server 2012 R2 that were released before March 2014.</summary>
+    <updated>2026-06-13T15:45:18Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-KB2919355',Version='1.0.20160915')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-KB2919355',Version='1.0.20160915')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-KB2919355/1.0.20160915" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.0.20160915</d:Version>
+      <d:Title>Mock Windows RT 8.1, Windows 8.1, and Windows Server 2012 R2 update: April 2014 (KB2919355)</d:Title>
+      <d:Description>This update is a cumulative update that includes the security updates and the non-security updates for Windows RT 8.1, Windows 8.1, and Windows Server 2012 R2 that were released before March 2014. In addition to previous updates, it includes features such as improved Internet Explorer 11 compatibility for enterprise applications, usability improvements, extended mobile device management, and improved hardware support.
+
+All future security and nonsecurity updates for Windows RT 8.1, Windows 8.1, and Windows Server 2012 R2 require this update to be installed.
+
+On systems other than Windows 8.1 or Windows Server 2012 R2, this package installs successfully, but does nothing.
+
+This update is required to install Visual Studio 2015 on Windows 8.1 or Windows Server 2012 R2.</d:Description>
+      <d:Tags>Microsoft Visual Studio 2015 Windows Update KB2919355</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2016-09-20T20:08:25.937</d:Created>
+      <d:Dependencies>kb2919442:1.0.20160915:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">67236871</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">67226016</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/KB2919355/1.0.20160915</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/KB2919355/1.0.20160915</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2016-09-20T20:08:25.937</d:Published>
+      <d:LicenseUrl>https://support.microsoft.com/en-us/kb/2919355</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>RCCHts7pC4SV1kJdKJMOC3mzKtjmiShaBkl0KmTsF1G9mNKNXB1qWckzDOQ++J4rIIhk6RWEjQhjb3eFKxOmLg==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">4865</d:PackageSize>
+      <d:ProjectUrl>https://support.microsoft.com/en-us/kb/2919355</d:ProjectUrl>
+      <d:ReleaseNotes>1.0.20160915:
+- fixed installation on PowerShell 2.0</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl></d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Waiting</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/3683d2f5671696f6fc0c1b630c91c50e</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-13T15:56:52.997</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2016-09-20T20:42:58.683</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2016-09-20T22:22:56.457</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2016-09-20T22:22:56.457</d:PackageApprovedDate>
+      <d:PackageReviewer>jberezanski</d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2017-04-30T21:11:39.467</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2016-09-20T22:10:40.257</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-flashplayerplugin',Version='32.0.0.465')</id>
+    <title type="text">mock-flashplayerplugin</title>
+    <summary type="text">Adobe Flash Player Plugin for other browsers</summary>
+    <updated>2026-06-01T05:30:23Z</updated>
+    <author>
+      <name>Adobe Systems Incorporated</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-flashplayerplugin',Version='32.0.0.465')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-flashplayerplugin',Version='32.0.0.465')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-flashplayerplugin/32.0.0.465" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>32.0.0.465</d:Version>
+      <d:Title>Mock Flash Player Plugin</d:Title>
+      <d:Description>The Adobe Flash Player is freeware software for viewing multimedia, executing Rich Internet Applications, and streaming video and audio, content created on the Adobe Flash platform.
+
+## Notes
+
+- This vendor versions software only by the latest major version so `-version` parameter wich targets specific minor version will always install latest minor version.</d:Description>
+      <d:Tags>adobe flash player plugin freeware cross-platform browser admin</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2020-12-08T12:09:06.947</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">66563402</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">21519441</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/flashplayerplugin/32.0.0.465</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/flashplayerplugin/32.0.0.465</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2020-12-08T12:09:06.947</d:Published>
+      <d:LicenseUrl>https://www.adobe.com/products/clients/all_dist_agreement.html</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>P+Jh6IH9htQkOs3N15aD7V/m4y+0w49d4e3GJxPJb0Mt+L3YplZMbDk4COM/BB3fzKDGY5qa0aXp0yVIQPszqw==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">3976</d:PackageSize>
+      <d:ProjectUrl>https://www.adobe.com/software/flash/about/</d:ProjectUrl>
+      <d:ReleaseNotes></d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-coreteampackages/tree/master/automatic/flashplayerplugin</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/1dfc9ac98a9f8b1eb36a0c67e4a473f0</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Failing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-01T05:41:08.757</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2020-12-08T12:41:37.02</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2020-12-08T13:04:10.057</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2020-12-08T13:04:10.057</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">true</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Available</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2020-12-08T14:08:53.237</d:DownloadCacheDate>
+      <d:DownloadCache>https://download.macromedia.com/get/flashplayer/pdc/32.0.0.465/install_flash_player_32_plugin.msi^x86/install_flash_player_32_plugin.msi^77943FA81A3E6862DCDFDE873840ED86770C683D1EE3DDDBAC0BC863FE031C9A4D6E085DB3D3D2C5C803C9AC26DB783D624B536F89FFFEA6BF86F849248FD79F</d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2020-12-08T14:30:17.313</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-zoom',Version='7.1.0.41345')</id>
+    <title type="text">mock-zoom</title>
+    <summary type="text">Zoom unifies cloud video conferencing, simple online meetings, group messaging, and a software-defined conference room solution into one easy-to-use platform.</summary>
+    <updated>2026-06-22T16:15:24Z</updated>
+    <author>
+      <name>Zoom Video Communications, Inc.</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-zoom',Version='7.1.0.41345')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-zoom',Version='7.1.0.41345')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-zoom/7.1.0.41345" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>7.1.0.41345</d:Version>
+      <d:Title>Mock Zoom Client for Meetings</d:Title>
+      <d:Description>Zoom unifies cloud video conferencing, simple online meetings, group messaging, and a software-defined conference room solution into one easy-to-use platform.
+solution offers the best video, audio, and wireless screen-sharing experience across Windows, Mac, iOS, Android, Blackberry, Linux, Zoom Rooms, and H.323/SIP
+room systems. Founded in 2011, Zoom's mission is to develop a people-centric cloud service that transforms the real-time collaboration experience and improves
+the quality and effectiveness of communications forever.
+
+### Package Specific
+#### Architecture Support
+* Zoom upstream no longer provides 32-bit Windows installers.
+* This package is x64-only.
+* Last package version that supports x86 is `6.6.11.23272`.
+
+#### Package Parameters
+The following package parameters can be set:
+
+* `/DisableRestartManager` - Wait until the in-progress meeting is over before installing
+* `/NoAutoUpdate` - Remove the Check for Updates option in the client
+* `/NoDesktopShortcut` - Prevent the creation of a desktop shortcut on install or update
+* `/NoInstallIfRunning` - Abort installation if Zoom is running
+* `/SilentStart` - Automatically start client in the system tray after reboot
+* `/SSOHost:` - Set the SSO URL
+
+To pass parameters, use `--params "''"` (e.g. `choco install packageID [other options] --params="'/ITEM:value /ITEM2:value2 /FLAG_BOOLEAN'"`).
+To have choco remember parameters on upgrade, be sure to set `choco feature enable -n=useRememberedArgumentsForUpgrades`.</d:Description>
+      <d:Tags>zoom admin webinar webcam meeting</d:Tags>
+      <d:Copyright>Copyright ©2020 Zoom Video Communications, Inc. All rights reserved.</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-22T14:09:43.797</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">64095345</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">5332</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/zoom/7.1.0.41345</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/zoom/7.1.0.41345</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-22T14:09:43.797</d:Published>
+      <d:LicenseUrl>http://zoom.us/pricing</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>P3bbkDQ5/mDgqC5/YssZsyw5ksFqSwNwBbSz+8FRWIMVOWKBJCGpUgXZoeNM8Wl0Peyim+SwDT/lDbkX+3bmQQ==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">4643</d:PackageSize>
+      <d:ProjectUrl>https://zoom.us/</d:ProjectUrl>
+      <d:ReleaseNotes></d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/mikecole/chocolatey-packages</d:PackageSourceUrl>
+      <d:DocsUrl>https://support.zoom.us/hc/en-us</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://support.zoom.us/hc/en-us/requests/new</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/57d4d8f2a62b13b333207fd00451249f</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-22T14:48:50.28</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-22T14:45:18.773</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-22T15:27:43.83</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-22T15:27:43.83</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-22T16:30:06.83</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-22T15:27:43.83</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-chocolatey-compatibility.extension',Version='1.0.0')</id>
+    <title type="text">mock-chocolatey-compatibility.extension</title>
+    <summary type="text">Extension package to provide compatibility with older versions of Chocolatey</summary>
+    <updated>2026-06-08T23:00:21Z</updated>
+    <author>
+      <name>chocolatey-community</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-chocolatey-compatibility.extension',Version='1.0.0')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-chocolatey-compatibility.extension',Version='1.0.0')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-chocolatey-compatibility.extension/1.0.0" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.0.0</d:Version>
+      <d:Title>Mock Chocolatey Compatibility Extension</d:Title>
+      <d:Description>This package provides helper functions that re-introduces helpers that were removed or updated
+in Chocolatey, as well as helpers that are not available in older version of Chocolatey CLI.
+The purpose of the package is to allow older packages to keep functioning even on later versions
+of Chocolatey CLI where certain helpers have been removed.
+
+The helpers included in this package may not have any logic to handle the functionality to keep
+existing, but rather to ensure that packages using the helpers do not stop working.
+
+**WARNING: Do NOT use helpers located in this package for removed functionality, unless absolutely necessary!**</d:Description>
+      <d:Tags>chocolatey-compatibility compatibility extension</d:Tags>
+      <d:Copyright>© 2022 Chocolatey Community Maintainers</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2022-04-07T10:40:58.5</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">63384568</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">63384568</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/chocolatey-compatibility.extension/1.0.0</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/chocolatey-compatibility.extension/1.0.0</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2022-04-07T10:40:58.5</d:Published>
+      <d:LicenseUrl>https://github.com/chocolatey-community/chocolatey-extensions/blob/master/LICENSE.md</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>cRfCv902OWoBUREOIdPpWS5y7Hm+qpscBpEeJ0X2IC1qNkoChFKHPM/X8H0jeutO/o/6tD/4uNSmUueRWjJWjQ==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">13272</d:PackageSize>
+      <d:ProjectUrl>https://github.com/chocolatey-community/chocolatey-extensions</d:ProjectUrl>
+      <d:ReleaseNotes>## 1.0.0
+
+- Add compatibility layer for removed function `Install-ChocolateyDesktopLink`
+- Add compatibility layer for removed function `Write-ChocolateyFailure`
+- Add compatibility layer for removed function `Write-ChocolateySuccess`
+- Add compatibility layer for removed function `Write-FileUpdateLog`
+- Add support for `Get-PackageParameters`.
+- Add support for `Get-UninstallRegistryKey`.</d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://github.com/chocolatey-community/chocolatey-extensions/tree/master/src/chocolatey-compatibility.extension</d:ProjectSourceUrl>
+      <d:PackageSourceUrl></d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/chocolatey-community/chocolatey-extensions/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Waiting</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/8c7be5dbf6f5b4f105f752ca11b6703c</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-08T23:12:40.94</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2022-04-07T11:14:47.427</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2025-01-06T22:09:14.15</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2025-01-06T22:09:14.15</d:PackageApprovedDate>
+      <d:PackageReviewer>Pauby</d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2022-04-12T17:40:34.733</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2022-04-07T11:30:32.847</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-vcredist140',Version='14.51.36247')</id>
+    <title type="text">mock-vcredist140</title>
+    <summary type="text">Run-time components that are required to run C++ applications that are built by using Visual Studio 2015-2026</summary>
+    <updated>2026-06-11T04:00:24Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-vcredist140',Version='14.51.36247')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-vcredist140',Version='14.51.36247')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-vcredist140/14.51.36247" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>14.51.36247</d:Version>
+      <d:Title>Mock Microsoft Visual C++ Redistributable for Visual Studio 2015-2026</d:Title>
+      <d:Description>Microsoft Visual C++ Redistributable for Visual Studio 2015-2026 installs run-time components of Visual C++ libraries. These components are required to run C++ applications that are developed using Visual Studio 2015-2026 and link dynamically to Visual C++ libraries. The packages can be used to run such applications on a computer even if it does not have Visual Studio 2015-2026 installed. These packages also install run-time components of C Runtime (CRT), Standard C++, MFC, C++ AMP, and OpenMP libraries.
+
+The Visual C++ Redistributable for Visual Studio 2015-2026 consists of files vcruntime140.dll, msvcp140.dll, vcomp140.dll, vcamp140.dll, mfc140.dll and other.
+
+## Notes
+
+- [Supported Operating Systems](https://docs.microsoft.com/en-us/visualstudio/releases/2019/system-requirements#microsoft-visual-c-2015-2019-redistributable-system-requirements): Windows 10, Windows 8.1 / Server 2012 R2 (with KB2919355), Windows 8 / Windows Server 2012, Windows 7 SP1 (with KB3033929) / Server 2008 R2 SP1, Windows Vista SP2 / Server 2008 SP2, Windows XP SP3 / Windows Server 2003 SP2
+- On some systems, if KB2999226 is installed as a dependency of this package, the computer may need to be restarted before the installation of this package will succeed.
+- **If the package is out of date please check [Version History](#versionhistory) for the latest submitted version. If you have a question, please ask it in [Chocolatey Community Package Discussions](https://github.com/chocolatey-community/chocolatey-packages/discussions) or raise an issue on the [Chocolatey Community Packages Repository](https://github.com/chocolatey-community/chocolatey-packages/issues) if you have problems with the package. Disqus comments will generally not be responded to.**</d:Description>
+      <d:Tags>microsoft visual c++ redistributable 140 2015 2017 2019 admin</d:Tags>
+      <d:Copyright>https://www.microsoft.com/en-us/legal/intellectualproperty/permissions</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-10T00:18:43.243</d:Created>
+      <d:Dependencies>chocolatey-core.extension:1.3.3:|kb3033929:1.0.3:|kb2919355:1.0.20160915:|kb2999226:1.0.20170509:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">62447368</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">480</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/vcredist140/14.51.36247</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/vcredist140/14.51.36247</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-10T00:18:43.243</d:Published>
+      <d:LicenseUrl>https://visualstudio.microsoft.com/license-terms/mlt031619/</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>ZFvu3eXh4aus3maF+ubtx24XwI6wd6pKg8UwpEcrgiJCM+HeOP0u5t8ZLH80XCRxR7oyJQKVY392sNxJCSvrsA==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">6699</d:PackageSize>
+      <d:ProjectUrl>https://visualstudio.microsoft.com/vs/</d:ProjectUrl>
+      <d:ReleaseNotes></d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-packages/tree/master/automatic/vcredist140</d:PackageSourceUrl>
+      <d:DocsUrl>https://docs.microsoft.com/en-us/visualstudio/ide/getting-started-with-cpp-in-visual-studio</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://developercommunity.visualstudio.com/</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/ce20a33b927b939f843dd71289e60faf</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-10T19:38:22.253</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-10T00:55:18.153</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-11T02:58:21.173</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-11T02:58:21.173</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-11T04:01:31.713</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-11T02:58:21.173</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-Silverlight',Version='5.1.50918.0')</id>
+    <title type="text">mock-Silverlight</title>
+    <summary type="text">Silverlight is a powerful development tool for creating engaging, interactive user experiences for Web and mobile applications</summary>
+    <updated>2026-05-30T04:30:24Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-Silverlight',Version='5.1.50918.0')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-Silverlight',Version='5.1.50918.0')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-Silverlight/5.1.50918.0" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>5.1.50918.0</d:Version>
+      <d:Title>Mock Microsoft Silverlight</d:Title>
+      <d:Description>Silverlight is a powerful development tool for creating engaging, interactive user experiences for Web and mobile applications</d:Description>
+      <d:Tags>Silverlight microsoft admin</d:Tags>
+      <d:Copyright>Copyright 2012 Microsoft</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2020-07-13T14:19:49.36</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">58711718</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">55811473</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/Silverlight/5.1.50918.0</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/Silverlight/5.1.50918.0</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2020-07-13T14:19:49.36</d:Published>
+      <d:LicenseUrl>http://www.microsoft.com/getsilverlight/get-started/install/license.aspx?v=5.1.50918.0</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>GaahkZ8VNw4UAU5+5HTX0oemd/dJIcv+JGIMffhCn6wXxeREZNV+QsVcfupCtkRA4KnF/N0+ZRLlKkTbn6E+8g==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">3580</d:PackageSize>
+      <d:ProjectUrl>https://github.com/johnselkirk/chocolatey-packages</d:ProjectUrl>
+      <d:ReleaseNotes>https://github.com/johnselkirk/chocolatey-packages/blob/master/Silverlight/release-notes.md</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl></d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Waiting</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/87ff3a1d20050d72c2238601a3851e62</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Failing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-05-30T04:41:58.03</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2020-07-13T14:55:17.96</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2020-07-15T12:16:18.66</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2020-07-15T12:16:18.66</d:PackageApprovedDate>
+      <d:PackageReviewer>flcdrg</d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">true</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Available</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2020-07-15T13:19:42.82</d:DownloadCacheDate>
+      <d:DownloadCache>https://download.microsoft.com/download/D/D/F/DDF23DF4-0186-495D-AA35-C93569204409/50918.00/Silverlight_x64.exe^x64/Silverlight_x64.exe^C75ED32073CE5A55DE25B1DF78E3F303FC5ACEBBC512D0C55A06917A839A9A1D61DDAF22CFA10A9CD0C938AD88EA138C4E8B30F27547018EB836DD7F06346DAF|https://download.microsoft.com/download/D/D/F/DDF23DF4-0186-495D-AA35-C93569204409/50918.00/Silverlight.exe^x86/Silverlight.exe^D8DD456E59B002A8B25C6D09CB8B7F485F7C2F5F636D520227C693DE6C8BA571AA4CAE16E4E10ACB764AF31E4C34E048DD157075B7267A3EAE9214D8AD293528</d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2020-07-13T16:13:58.453</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-chocolatey-windowsupdate.extension',Version='1.0.5')</id>
+    <title type="text">mock-chocolatey-windowsupdate.extension</title>
+    <summary type="text">Helper functions useful for developing packages for Windows updates (KBs).</summary>
+    <updated>2026-06-11T15:15:24Z</updated>
+    <author>
+      <name>Jakub Bereżański</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-chocolatey-windowsupdate.extension',Version='1.0.5')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-chocolatey-windowsupdate.extension',Version='1.0.5')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-chocolatey-windowsupdate.extension/1.0.5" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.0.5</d:Version>
+      <d:Title>Mock Chocolatey Windows Update extensions</d:Title>
+      <d:Description>This package provides helper functions useful for developing packages for Windows updates (KBs).</d:Description>
+      <d:Tags>chocolatey extension admin windows update kb</d:Tags>
+      <d:Copyright>© 2017 Jakub Bereżański</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2022-10-15T19:28:59.94</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">54885413</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">36735674</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/chocolatey-windowsupdate.extension/1.0.5</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/chocolatey-windowsupdate.extension/1.0.5</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2022-10-15T19:28:59.94</d:Published>
+      <d:LicenseUrl>https://rawcdn.githack.com/jberezanski/ChocolateyPackages/8086c84fed16d4150a50ba1e97fd6b75e3c4f511/LICENSE</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>uZdp2WxTVq8bq8ksHoeK3EnOmZgyBnMEJf7p9ycVpQKUvEz4T8XjGB0bg6svF8lBvEq9lDhkDXQI1qnnJOxf4A==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">23279</d:PackageSize>
+      <d:ProjectUrl>https://github.com/jberezanski/ChocolateyPackages/tree/master/chocolatey-windowsupdate.extension</d:ProjectUrl>
+      <d:ReleaseNotes>[Change log](https://github.com/jberezanski/ChocolateyPackages/tree/master/chocolatey-windowsupdate.extension/CHANGELOG.md)</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/jberezanski/ChocolateyPackages/tree/master/chocolatey-windowsupdate.extension</d:PackageSourceUrl>
+      <d:DocsUrl>https://github.com/jberezanski/ChocolateyPackages/tree/master/chocolatey-windowsupdate.extension/README.md</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/jberezanski/ChocolateyPackages/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/70c2a3d17ea7f2b600a4966e29bfa2ce</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-11T15:17:03.727</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2022-10-15T20:01:46.41</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2025-01-13T19:37:41.257</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2022-10-22T21:30:36.35</d:PackageApprovedDate>
+      <d:PackageReviewer>mkevenaar</d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2022-10-22T22:31:27.87</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2022-10-22T21:30:36.35</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-KB2999226',Version='1.0.20181019')</id>
+    <title type="text">mock-KB2999226</title>
+    <summary type="text">Update for Universal C Runtime (CRT) in Windows. Before you install this update, check out the prerequisites section.</summary>
+    <updated>2026-06-22T19:00:25Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-KB2999226',Version='1.0.20181019')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-KB2999226',Version='1.0.20181019')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-KB2999226/1.0.20181019" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.0.20181019</d:Version>
+      <d:Title>Mock Update for Universal C Runtime in Windows (KB2999226)</d:Title>
+      <d:Description>The Windows 10 Universal CRT is a Windows operating system component that enables CRT functionality on the Windows operating system. This update allows Windows desktop applications that depend on the Windows 10 Universal CRT release to run on earlier Windows operating systems.
+    Microsoft Visual Studio 2015 creates a dependency on the Universal CRT when applications are built by using the Windows 10 Software Development Kit (SDK). You can install this update on earlier Windows operating systems to enable these applications to run correctly.
+    This update applies to the following operating systems: Windows Server 2012 R2 Datacenter, Windows Server 2012 R2 Standard, Windows Server 2012 R2 Essentials, Windows Server 2012 R2 Foundation, Windows 8.1 Enterprise, Windows 8.1 Pro, Windows 8.1, Windows RT 8.1, Windows Server 2012 Datacenter, Windows Server 2012 Standard, Windows Server 2012 Essentials, Windows Server 2012 Foundation, Windows 8 Enterprise, Windows 8 Pro, Windows 8, Windows RT, Windows Server 2008 R2 Service Pack 1, Windows 7 Service Pack 1, Windows Server 2008 Service Pack 2, Windows Vista Service Pack 2</d:Description>
+      <d:Tags>microsoft visual studio 2015 windows update kb2919355</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2018-10-20T17:30:04.237</d:Created>
+      <d:Dependencies>kb2919355:1.0.20160915:|chocolatey-windowsupdate.extension:1.0.2:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">53131337</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">52281621</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/KB2999226/1.0.20181019</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/KB2999226/1.0.20181019</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2018-10-20T17:30:04.237</d:Published>
+      <d:LicenseUrl>https://support.microsoft.com/en-us/kb/2999226</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>I835VAD2tV0upl6KII8haovTLip3QkrtfdjcrxqdzVPiy+x4E9dln+FBgfl/R5phzD0AWgWmIC7g6PVusrpF+w==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">6525</d:PackageSize>
+      <d:ProjectUrl>https://support.microsoft.com/en-us/kb/2999226</d:ProjectUrl>
+      <d:ReleaseNotes>* 1.0.20181019: Ensure the correct Install-WindowsUpdate function is called (work around [Boxstarter issue](https://github.com/chocolatey/boxstarter/issues/293))
+* 1.0.20170509: Fixed KB id in install script
+* 1.0.20170422: Changed to use chocolatey-windowsupdate.extension
+* 1.0.20161201: Fixed installation for windows 10 versions
+* 1.0.20161030: Fixed installation on a few specific OS versions; added checking for requisite Service Packs; simplified install script</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl></d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/ff2b4905404fddd8deb9341fddfcd14d</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-22T19:11:06.067</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2018-10-20T18:05:07.837</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2025-01-15T09:13:44.193</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2025-01-15T09:13:44.193</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2018-10-21T00:21:42.713</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2018-10-20T19:39:30.303</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-KB3035131',Version='1.0.3')</id>
+    <title type="text">mock-KB3035131</title>
+    <summary type="text">This security update resolves privately reported vulnerabilities in Windows.</summary>
+    <updated>2026-06-25T05:00:23Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-KB3035131',Version='1.0.3')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-KB3035131',Version='1.0.3')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-KB3035131/1.0.3" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.0.3</d:Version>
+      <d:Title>Mock Security update for Windows kernel: March 10, 2015</d:Title>
+      <d:Description>This security update resolves privately reported vulnerabilities in Windows. The most severe effect of the vulnerabilities is elevation of privilege if an attacker logs on to an affected system and runs a specially crafted application. An attacker who has successfully exploited the vulnerabilities could run arbitrary code in the security context of the account of another user who is logged on to the affected system. An attacker could then install programs; view, change, or delete data; or create new accounts that have full user rights. To learn more about the vulnerabilities, see [Microsoft Security Bulletin MS15-025](https://technet.microsoft.com/library/security/ms15-025).
+
+This package requires Service Pack 1 for Windows 7 or Windows Server 2008 R2 to be installed first. The [KB976932 package](https://chocolatey.org/packages/KB976932) may be used to install it. On Windows Vista or Windows Server 2008, Service Pack 2 is required.
+
+On systems later than Windows 8.1 or Windows Server 2012 R2, this package installs successfully, but does nothing.
+
+This update is recommended to install before installing KB3033929 on Windows 7 or Windows Server 2008 R2.</d:Description>
+      <d:Tags>microsoft windows update kb3035131 admin</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2019-04-27T00:24:44.047</d:Created>
+      <d:Dependencies>chocolatey-windowsupdate.extension:1.0.4:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">52963802</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">51486439</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/KB3035131/1.0.3</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/KB3035131/1.0.3</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2019-04-27T00:24:44.047</d:Published>
+      <d:LicenseUrl>http://go.microsoft.com/fwlink/?LinkID=206977</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>YSHu/anZrSNGjXxAQoDcqNjhdY2qjZQndonleto3HTnAbit/yA/ltRQrQCZ+kZqMgiJZk8gQ1snn6NupYsdxdg==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">5839</d:PackageSize>
+      <d:ProjectUrl>https://support.microsoft.com/en-us/kb/3035131</d:ProjectUrl>
+      <d:ReleaseNotes>1.0.3: update extension dependency to fix exit code handling on licensed Chocolatey.</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/jberezanski/ChocolateyPackages/tree/master/KB3035131</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/c4b2b63c0bbcb38ed075b0fbf1504816</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-25T05:06:18.357</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2019-04-27T00:58:15.987</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2025-01-16T18:47:08.787</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2019-04-27T03:33:04.727</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2019-04-27T02:29:30.427</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2019-04-27T03:33:04.727</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-KB3033929',Version='1.0.5')</id>
+    <title type="text">mock-KB3033929</title>
+    <summary type="text">The update adds SHA-2 hashing algorithm signing and verification support to Windows 7 and Windows Server 2008 R2</summary>
+    <updated>2026-06-25T05:00:23Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-KB3033929',Version='1.0.5')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-KB3033929',Version='1.0.5')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-KB3033929/1.0.5" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.0.5</d:Version>
+      <d:Title>Mock Microsoft security advisory: Availability of SHA-2 code signing support for Windows 7 and Windows Server 2008 R2: March 10, 2015</d:Title>
+      <d:Description>Microsoft has released a security advisory for IT professionals about SHA-2 code signing support. The security advisory announces the availability of a security update and contains additional security-related information. To view the security advisory, go to the following Microsoft website: 
+https://technet.microsoft.com/en-us/library/security/3033929
+
+This package requires Service Pack 1 for Windows 7 or Windows Server 2008 R2 to be installed first. The [KB976932 package](https://chocolatey.org/packages/KB976932) may be used to install it.
+
+On systems other than Windows 7 or Windows Server 2008 R2, this package installs successfully, but does nothing.
+
+This update is required to install Visual Studio 2017 on Windows 7 or Windows Server 2008 R2.</d:Description>
+      <d:Tags>microsoft windows update kb3033929 admin visual studio 2017</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2019-04-27T00:23:44.833</d:Created>
+      <d:Dependencies>chocolatey-windowsupdate.extension:1.0.4:|kb3035131:1.0.3:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">52946513</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">51374876</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/KB3033929/1.0.5</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/KB3033929/1.0.5</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2019-04-27T00:23:44.833</d:Published>
+      <d:LicenseUrl>https://support.microsoft.com/en-us/kb/3033929</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>BVvLl4AxeRTgkbQpccUzxjs6epyKL4b9amFyG74KpWdjJ1yOS4cQf2K5oYW5+SmUkh7ICJjLPMEgdJAFK3snRw==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">4766</d:PackageSize>
+      <d:ProjectUrl>https://support.microsoft.com/en-us/kb/3033929</d:ProjectUrl>
+      <d:ReleaseNotes>1.0.5: update dependencies to fix exit code handling on licensed Chocolatey.</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/jberezanski/ChocolateyPackages/tree/master/KB3033929</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/e236cb47e37512cf9c27da790e0bdea8</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-25T05:03:46.507</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2019-04-27T00:58:14.003</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2025-01-16T18:45:32.11</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2019-04-27T03:44:21.797</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2019-04-27T02:24:28.473</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2019-04-27T03:44:21.797</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-microsoft-teams.install',Version='1.8.0.27654')</id>
+    <title type="text">mock-microsoft-teams.install</title>
+    <summary type="text">Microsoft Teams helps your team work better together. It's one app that brings your team's conversations, meetings, files and notes together into a single place for open and seamless collaboration.</summary>
+    <updated>2025-10-15T12:19:49Z</updated>
+    <author>
+      <name>Microsoft Corporation</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-microsoft-teams.install',Version='1.8.0.27654')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-microsoft-teams.install',Version='1.8.0.27654')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-microsoft-teams.install/1.8.0.27654" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.8.0.27654</d:Version>
+      <d:Title>Mock Microsoft Teams Classic Desktop App (Machine-Wide Install)</d:Title>
+      <d:Description>Microsoft Teams is a messaging app for teams where all conversations, meetings, files, and notes can be accessed by everyone, all in one place. It's a place for collaboration and work to happen in the open.
+
+The installed software is named:
+
+- "Microsoft Teams classic" for Windows 10 and Mac devices.
+- "Micrsoft Teams classic (work or school)" for Windows 11 devices.
+
+Here's why you should use it:
+
+- It's great.
+- It makes communicating one-on-one and with groups a snap.
+- Collaboration happens in real time.
+- Everything your team cares about (all your files, docs, contact info, and more) is in once place.
+
+This package installs Microsoft Teams for all users using the MSI installer.
+
+The Teams MSI will place an installer in Program Files. Whenever a user signs into a new Windows User Profile, the installer will be launched and a copy of the Teams app will be installed in that user's AppData folder. If a user already has the Teams app installed in the AppData folder, the MSI installer will skip the process for that user.
+
+See https://docs.microsoft.com/en-us/MicrosoftTeams/msi-deployment for more information about how the MSI installer works (and is different to a regular Teams install).
+
+### Package Specific
+#### Package Parameters
+The following package parameters can be set:
+
+ * `/AllUser` - When you set this parameter, Teams Machine-Wide Installer appears in Programs and Features in Control Panel and in Apps &amp; Machine-wide installer for VDI/WVD sessionhost.
+ * `/AllUsers` - When you set this parameter, Teams Machine-Wide Installer appears in Programs and Features in Control Panel and in Apps &amp; features in Windows Settings for all users of the computer. All users can then uninstall Teams if they have admin credentials on the computer.
+  * `/NoAutoStart` - When a user logs in to Windows, Teams is installed with the MSI and a shortcut to start Teams is added to the user's desktop. Teams won't start until the user manually starts Teams. After the user manually starts Teams, Teams automatically starts whenever the user logs in.
+
+To pass parameters, use `--params "''"` (e.g. `choco install packageID [other options] --params="'/ITEM:value /ITEM2:value2 /FLAG_BOOLEAN'"`).
+
+eg.
+
+```
+choco install microsoft-teams.install --params "'/AllUsers /NoAutoStart'"
+```
+
+To have choco remember parameters on upgrade, be sure to set `choco feature enable -n=useRememberedArgumentsForUpgrades`.
+
+#### Package updates
+
+New versions of this package are published automatically via the `update.ps1` script (viewable in the package source on GitHub).</d:Description>
+      <d:Tags>microsoft-teams teams office 365 chat collaboration slack admin</d:Tags>
+      <d:Copyright>2017 Microsoft Corporation</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2025-10-15T00:06:58.993</d:Created>
+      <d:Dependencies>dotnet4.5:4.5.20120822:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">52476155</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">15</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/microsoft-teams.install/1.8.0.27654</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/microsoft-teams.install/1.8.0.27654</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2025-10-15T00:06:58.993</d:Published>
+      <d:LicenseUrl>https://support.microsoft.com/en-us/office/microsoft-teams-subscription-supplemental-notice-60cc09bf-b02a-4a26-8e4a-ad697194bebf?ui=en-us&amp;rs=en-us&amp;ad=us</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">true</d:RequireLicenseAcceptance>
+      <d:PackageHash>3QIOU0XprY/cZb2GVATJjq9hQN/8Kgv/krKkHqzOA8F+Fi2WhpK/5UfY3gUfnm1i0BuBTJ/n/RTYmCEJ4JNi2A==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">6307</d:PackageSize>
+      <d:ProjectUrl>https://www.microsoft.com/en-us/microsoft-teams/group-chat-software</d:ProjectUrl>
+      <d:ReleaseNotes>https://support.office.com/en-us/article/Release-notes-for-Microsoft-Teams-d7092a6d-c896-424c-b362-a472d5f105de</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/flcdrg/au-packages/tree/master/microsoft-teams.install</d:PackageSourceUrl>
+      <d:DocsUrl>https://support.office.com/en-us/teams</d:DocsUrl>
+      <d:MailingListUrl>https://techcommunity.microsoft.com/t5/microsoft-teams/bd-p/MicrosoftTeams</d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/ed50e68dc62f5534f9d522acd17efbc7</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2025-10-15T10:54:38.543</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2025-10-15T01:46:35.443</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2025-10-15T11:24:04.18</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2025-10-15T11:24:04.18</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2025-10-15T12:25:16.927</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>Flagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2025-10-15T11:24:04.18</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Note</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-teamviewer',Version='15.79.4')</id>
+    <title type="text">mock-teamviewer</title>
+    <summary type="text">Empowering secure remote desktop access and support.</summary>
+    <updated>2026-06-23T15:30:23Z</updated>
+    <author>
+      <name>TeamViewer GmbH</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-teamviewer',Version='15.79.4')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-teamviewer',Version='15.79.4')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-teamviewer/15.79.4" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>15.79.4</d:Version>
+      <d:Title>Mock Teamviewer (Install)</d:Title>
+      <d:Description>TeamViewer connects people, places and things around the world on the widest array of platforms and technologies.
+Free for private use. Commercial users are welcome to use for trial purposes.
+
+## Why TeamViewer for remote desktop access and support?
+
+* Save time and money
+  With TeamViewer, all the tools you need to stay connected are at your fingertips. Whether accessing your office PC from the road, video conferencing across town, or sharing your screen for remote support from the other side of the world, our tools can help reduce travel costs and downtime by keeping all your people and devices connected.
+
+* Focus on your work, not getting it to work
+  How many hours do you lose in your business just trying to get things to work or access to the tools you need? TeamViewer's remote solutions are designed to get you working, or help on any device—in seconds.
+
+* Feel safe and secure
+  TeamViewer's dedication to security means you won't have to worry whether confidential files or sensitive information is at risk when connecting to devices. Private data, private conversations, and private meetings stay that way.
+
+## Notes
+
+* The vendor does not update the version number but will update the software from time to time rendering the checksum invalid. If this happens then you can use the `--ignore-checksums` switch or wait until the new version is released.
+* This is an automatically updated package. If you find it is out of date by more than a week, please contact the maintainer(s) and let them know the package is no longer updating correctly.
+* I am unable to answer comments left on Disqus. If you have something related to the **_package_**:
+  1. Raise a [discussion](https://github.com/pauby/chocopackages/discussions) for questions.
+  2. Raise an [issue](https://github.com/pauby/chocopackages/issues) for a broken package.</d:Description>
+      <d:Tags>admin remote control</d:Tags>
+      <d:Copyright>2017 Teamviewer GmbH</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-23T12:15:30.2</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">49713352</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">24</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/teamviewer/15.79.4</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/teamviewer/15.79.4</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-23T12:15:30.2</d:Published>
+      <d:LicenseUrl>https://www.teamviewer.com/en/eula/</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">true</d:RequireLicenseAcceptance>
+      <d:PackageHash>CXXNUbKwYXTxGdiZhfFvGr1ynT4Y3F6RVMcleLHKoRVgDQ8bd6aQ3JfF7XYuCA6TtI3ms/CDREdiTYaPGgT7yw==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">4993</d:PackageSize>
+      <d:ProjectUrl>http://www.teamviewer.com/</d:ProjectUrl>
+      <d:ReleaseNotes>https://www.teamviewer.com/en/download/changelog/</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/pauby/chocopackages/tree/master/automatic/teamviewer</d:PackageSourceUrl>
+      <d:DocsUrl>https://www.teamviewer.com/en/support/documents/</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/7f17ea0fba09f5386d4734c3b281d372</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-23T12:57:25.227</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-23T12:51:57.447</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-23T14:31:09.587</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-23T14:31:09.587</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">true</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Available</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-23T15:34:04.473</d:DownloadCacheDate>
+      <d:DownloadCache>https://download.teamviewer.com/download/version_15x/TeamViewer_Setup_x64.exe^x64/TeamViewer_Setup_x64.exe^154074938C17A7195A4B7B0158BBF5FF079FBDEF191B54EEC36095E6619BA4D5E34C80C18652853E72E991CD973C7ACDE57233FF60D4F2490DADD63D5A8AADB9|https://download.teamviewer.com/download/version_15x/TeamViewer_Setup.exe^x86/TeamViewer_Setup.exe^9A73C58BDBCD7883CD4A9CC6B93290527909B6845A91FB4C865DA5529BAE8E6CB4F9EEE98884D07A69F49C681D545CE6346BB36359D1555C22B2E8FD0D7DDEBF</d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-23T14:31:09.587</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-python3',Version='3.14.6')</id>
+    <title type="text">mock-python3</title>
+    <summary type="text">Python 3.x is a programming language that lets you work more quickly and integrate your systems more effectively. You can learn to use Python 3.x and see almost immediate gains in productivity and lower maintenance costs.</summary>
+    <updated>2026-06-24T12:33:39Z</updated>
+    <author>
+      <name>Python Software Foundation</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-python3',Version='3.14.6')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-python3',Version='3.14.6')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-python3/3.14.6" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>3.14.6</d:Version>
+      <d:Title>Mock Python 3.x</d:Title>
+      <d:Description>Python 3.x is a programming language that lets you work more quickly and integrate your systems more effectively. You can learn to use Python 3.x and see almost immediate gains in productivity and lower maintenance costs.
+
+  ## Notes
+
+  - This package depends on the latest major + minor version of python package.
+  - This package do not support package parameters, please install the package [python314](https://community.chocolatey.org/packages/python314) directly when using package parameters.
+  - To completely uninstall python, the package `python314` must also be uninstalled.
+  - **If the package is out of date please check [Version History](#versionhistory) for the latest submitted version. If you have a question, please ask it in [Chocolatey Community Package Discussions](https://github.com/chocolatey-community/chocolatey-packages/discussions) or raise an issue on the [Chocolatey Community Packages Repository](https://github.com/chocolatey-community/chocolatey-packages/issues) if you have problems with the package. Disqus comments will generally not be responded to.**</d:Description>
+      <d:Tags>python programming development foss cross-platform admin</d:Tags>
+      <d:Copyright>Copyright © 2001 Python Software Foundation. All rights reserved.
+Copyright © 2000 BeOpen.com. All rights reserved.
+Copyright © 1995-2000 Corporation for National Research Initiatives. All rights reserved.
+Copyright © 1991-1995 Stichting Mathematisch Centrum. All rights reserved.</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-10T18:17:55.507</d:Created>
+      <d:Dependencies>python314:[3.14.6]:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">48172546</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">317986</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/python3/3.14.6</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/python3/3.14.6</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">false</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-10T18:17:55.507</d:Published>
+      <d:LicenseUrl>https://docs.python.org/3.14/license.html</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>1lwAHTvS7jldrBm997dxHAjMaVM5/kW3XXbk12pA4zOJ5QR6ce0G5CO0G4SMvRFVqpsK6TM0TjAEZjoEOC5LPw==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">3089</d:PackageSize>
+      <d:ProjectUrl>http://www.python.org/</d:ProjectUrl>
+      <d:ReleaseNotes></d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://www.python.org/downloads/source</d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-packages/tree/master/automatic/python3</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl></d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Exempted</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime" m:null="true"></d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-11T16:57:52.773</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-11T17:00:12.593</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-11T17:00:12.593</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-11T18:04:54.657</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-11T17:00:12.593</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-vcredist2015',Version='14.0.24215.20170201')</id>
+    <title type="text">mock-vcredist2015</title>
+    <summary type="text">Run-time components that are required to run C++ applications that are built by using Visual Studio 2015 Update 3</summary>
+    <updated>2026-06-16T06:15:26Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-vcredist2015',Version='14.0.24215.20170201')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-vcredist2015',Version='14.0.24215.20170201')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-vcredist2015/14.0.24215.20170201" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>14.0.24215.20170201</d:Version>
+      <d:Title>Mock Microsoft Visual C++ Redistributable for Visual Studio 2015 Update 3 (with hotfix 2016-09-14)</d:Title>
+      <d:Description>Microsoft Visual C++ Redistributable for Visual Studio 2015 Update 3 installs run-time components of Visual C++ libraries. These components are required to run C++ applications that are developed using Visual Studio 2015 Update 3 and link dynamically to Visual C++ libraries. The packages can be used to run such applications on a computer even if it does not have Visual Studio 2015 installed. These packages also install run-time components of C Runtime (CRT), Standard C++, MFC, C++ AMP, and OpenMP libraries.
+
+## Notes
+
+[Supported Operating Systems](https://www.visualstudio.com/en-us/productinfo/vs2015-sysrequirements-vs): Windows 10, Windows 8.1 / Server 2012 R2 (with KB2919355), Windows 8 / Windows Server 2012, Windows 7 SP1 (with KB3033929) / Server 2008 R2 SP1, Windows Vista SP2 / Server 2008 SP2, Windows XP SP3 / Windows Server 2003 SP2
+
+On some systems, if KB2999226 is installed as a dependency of this package, the computer may need to be restarted before the installation of this package will succeed.</d:Description>
+      <d:Tags>microsoft visual c++ redistributable 2015 studio admin</d:Tags>
+      <d:Copyright>http://www.microsoft.com/about/legal/en/us/IntellectualProperty/Copyright/Default.aspx</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2017-02-11T11:29:21.88</d:Created>
+      <d:Dependencies>vcredist140:14.0.24215.1:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">46597757</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">46507046</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/vcredist2015/14.0.24215.20170201</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/vcredist2015/14.0.24215.20170201</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2017-02-11T11:29:21.88</d:Published>
+      <d:LicenseUrl>https://msdn.microsoft.com/cc300389.aspx</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>rEySFexkP2FDdfkT/ueyELfyGRBIqShMZjZteOW991sUQ6M/US8qD6fI/l3Fh3o4CXfS7/NXJPeU7qdsgsZe0A==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">4617</d:PackageSize>
+      <d:ProjectUrl>https://blogs.msdn.microsoft.com/vcblog/2016/06/28/visual-studio-2015-update-3-available-now/</d:ProjectUrl>
+      <d:ReleaseNotes>#### Program
+[Visual Studio 2015 Update 3 Release Notes](https://www.visualstudio.com/en-us/news/releasenotes/vs2015-update3-vs)
+#### Package
+14.0.24215.20170201: updated metadata, refactored into a virtual package dependent upon vcredist140</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey/chocolatey-coreteampackages/tree/master/manual/vcredist2015</d:PackageSourceUrl>
+      <d:DocsUrl>https://msdn.microsoft.com/library/jj620919.aspx</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://visualstudio.uservoice.com/forums/121579-visual-studio</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Waiting</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/f521da471cc92b3bf3f83c01c4dfad96</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-16T06:20:57.333</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2017-02-11T12:01:12.327</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2017-02-17T00:31:36.633</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2017-02-17T00:31:36.633</d:PackageApprovedDate>
+      <d:PackageReviewer>flcdrg</d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2017-02-21T21:45:13.327</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2017-02-22T16:12:32.86</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-notepadplusplus.install',Version='8.9.6.4')</id>
+    <title type="text">mock-notepadplusplus.install</title>
+    <summary type="text">Notepad++ is a free (as in "free speech" and also as in "free beer") source code editor and Notepad replacement that supports several languages.</summary>
+    <updated>2026-06-04T12:15:24Z</updated>
+    <author>
+      <name>Don Ho</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-notepadplusplus.install',Version='8.9.6.4')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-notepadplusplus.install',Version='8.9.6.4')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-notepadplusplus.install/8.9.6.4" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>8.9.6.4</d:Version>
+      <d:Title>Mock Notepad++ (Install)</d:Title>
+      <d:Description>Notepad++ is a free (as in "free speech" and also as in "free beer") source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GPL License.
+
+Based on the powerful editing component Scintilla, Notepad++ is written in C++ and uses pure Win32 API and STL which ensures a higher execution speed and smaller program size. By optimizing as many routines as possible without losing user friendliness, Notepad++ is trying to reduce the world carbon dioxide emissions. When using less CPU power, the PC can throttle down and reduce power consumption, resulting in a greener environment.
+
+## Features
+
+* Syntax Highlighting and Syntax Folding
+* User Defined Syntax Highlighting and Folding: [screenshot 1](https://notepad-plus-plus.org/assets/images/scsh/ulds_folder.gif), [screenshot 2](https://notepad-plus-plus.org/assets/images/scsh/ulds_keywords.gif), [screenshot 3](https://notepad-plus-plus.org/assets/images/scsh/ulds_comment.gif) and [screenshot 4](https://notepad-plus-plus.org/assets/images/scsh/ulds_op.gif)
+* PCRE (Perl Compatible Regular Expression) Search/Replace
+* GUI entirely customizable: [minimalist](https://notepad-plus-plus.org/assets/images/scsh/scsh_gui_minimalist.png), [tab with close button](https://notepad-plus-plus.org/assets/images/scsh/scsh_gui_tabCloseButton.png), [multi-line tab](https://notepad-plus-plus.org/assets/images/scsh/scsh_gui_multiLineTab.png), [vertical tab](https://notepad-plus-plus.org/assets/images/scsh/scsh_gui_verticalTab.png) and [vertical document list](https://notepad-plus-plus.org/assets/images/scsh/scsh_gui_verticalDocList.png)
+* [Document Map](https://notepad-plus-plus.org/assets/images/docMap.png)
+* Auto-completion: Word completion, Function completion and Function parameters hint
+* Multi-Document (Tab interface)
+* Multi-View
+* WYSIWYG (Printing)
+* Zoom in and zoom out
+* Multi-Language environment supported
+* Bookmark
+* Macro recording and playback
+* Launch with different [arguments](https://notepad-plus-plus.org/assets/images/scsh/scsh_cmdlineArguments.png)
+
+## Notes
+
+* To force the installation of x32 version, use the `--x86` argument with `choco install`.
+* Starting in v8.3.3.20220321 and above the Notepad++ process will be closed during install, upgrade and uninstalls.
+  This may in rare cases result in data loss if there are unsaved text files open. Make sure all files are
+  saved before installing, upgrading or uninstalling this package.
+* **If the package is out of date please check [Version History](#versionhistory) for the latest submitted version. If you have a question, please ask it in [Chocolatey Community Package Discussions](https://github.com/chocolatey-community/chocolatey-packages/discussions) or raise an issue on the [Chocolatey Community Packages Repository](https://github.com/chocolatey-community/chocolatey-packages/issues) if you have problems with the package. Disqus comments will generally not be responded to.**</d:Description>
+      <d:Tags>notepad notepadplusplus notepad-plus-plus editor text development foss</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-04T00:14:47.45</d:Created>
+      <d:Dependencies>chocolatey-core.extension:1.3.3:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">45819087</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">38</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/notepadplusplus.install/8.9.6.4</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/notepadplusplus.install/8.9.6.4</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-04T00:14:47.45</d:Published>
+      <d:LicenseUrl>https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/LICENSE</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>DMJPvf33mZjhe/kmMGgcSEUh3/ADB+tmQFXlBdlybjcKNrbVf015UA212Wo0j7N6EIVoXe+aEznKBsz59qjgPA==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">13493215</d:PackageSize>
+      <d:ProjectUrl>https://notepad-plus-plus.org/</d:ProjectUrl>
+      <d:ReleaseNotes>https://notepad-plus-plus.org/news</d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://github.com/notepad-plus-plus/notepad-plus-plus</d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-packages/tree/master/automatic/notepadplusplus.install</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl>https://notepad-plus-plus.org/community/</d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/notepad-plus-plus/notepad-plus-plus/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/f66194c2c2469ca0f99cfe60940d7653</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-04T01:03:51.58</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-04T00:57:10.817</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-04T11:24:12.217</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-04T11:24:12.217</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-04T12:24:57.96</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-04T11:24:12.217</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-Office365Business',Version='20026.20112.0')</id>
+    <title type="text">mock-Office365Business</title>
+    <summary type="text">Office 365 Business</summary>
+    <updated>2026-06-12T08:45:24Z</updated>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-Office365Business',Version='20026.20112.0')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-Office365Business',Version='20026.20112.0')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-Office365Business/20026.20112.0" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>20026.20112.0</d:Version>
+      <d:Title>Mock Office 365 Business</d:Title>
+      <d:Description>## Description
+
+Microsoft 365 (formerly Office 365) is a line of subscription services offered by Microsoft as part of the Microsoft Office product line. The brand encompasses plans that allow use of the Microsoft Office software suite over the life of the subscription, as well as cloud-based software as a service products for business environments, such as hosted Exchange Server, Skype for Business Server, and SharePoint, among others. All Microsoft 365 plans include automatic updates to their respective software at no additional charge, as opposed to conventional licenses for these programs—where new versions require purchase of a new license.
+
+This package installs the [Microsoft 365 Business Retail](https://www.microsoft.com/en-us/microsoft-365/business/microsoft-365-apps-for-business) edition with the language and architecture (32/64 bits) matching the device if not specified otherwise on the parameters.
+
+## Note
+
+- This installer *will uninstall any other Office packages installed* prior to installing this one to avoid possible errors during installation.
+- If you want to force the 32bit version on a 64bit Windows, use the choco `--forcex86` parameter when installing the package.
+
+## Package installation defaults
+
+By default, **installation** of this package:
+
+- Will uninstall other Microsoft 365 packages present on the device.
+- Will install with the matching the language of the operating system.
+- Will install the [Microsoft 365 Business Retail](https://www.microsoft.com/en-us/microsoft-365/business/microsoft-365-apps-for-business) product with all the default apps if not specified otherwise as a parameter.
+- Will set the [release channel](https://docs.microsoft.com/en-gb/deployoffice/overview-update-channels) to `Current`.
+- Will enable auto-updates.
+
+## Package Parameters
+
+- `/configpath` - Allows you to specify a [custom XML configuration](https://docs.microsoft.com/en-gb/deployoffice/office-deployment-tool-configuration-options) for the installer which is present on the system.
+- `/productid` - Allows you to change the default product id to install from `O365BusinessRetail` to [something else](https://docs.microsoft.com/en-us/office365/troubleshoot/installation/product-ids-supported-office-deployment-click-to-run#more-information).
+- `/exclude` - Allows you to exclude some applications from the default product id you install.
+- `/language` - Allows you to specify a [language](https://docs.microsoft.com/en-gb/deployoffice/overview-deploying-languages-microsoft-365-apps#languages-culture-codes-and-companion-proofing-languages) different to the default one present on the device.
+- `/updates` - Enables auto-updates.
+- `/eula` - Automatically accepts EULA.
+
+## Installation
+
+Installation without parameters with default values.
+
+```ps1
+choco install office365business
+```
+
+Installation with parameters. Will select Microsoft 365 Home Premium retail edition in 32bits, only install Excel, Powerpoint and Word in French with updates disabled and EULA not accepted automatically.
+
+```powershell
+ choco install office365business --forcex86 --params "'/productid:O365HomePremRetail /exclude:Access Groove Lync OneDrive OneNote Outlook Publisher /language:fr-FR /updates:FALSE /eula:FALSE'"
+```
+
+## Disclaimer
+
+These Chocolatey Packages only contain installation routines. The software itself is downloaded from the official sources of the software developer. The maintainers of this package have no affiliation with the software developer.
+
+## Author
+
+- [Jordi Garcia](https://jordigarcia.net)
+
+## License
+
+This project is under the Apache License 2.0 License. See the [LICENSE](LICENSE) file for the full license text.
+
+## Copyright
+
+(c) 2020, Jordi Garcia</d:Description>
+      <d:Tags>Microsoft Office365Business Office 365 Bussines Microsoft365 admin</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-11T17:40:56.227</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">45009051</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">101</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/Office365Business/20026.20112.0</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/Office365Business/20026.20112.0</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-11T17:40:56.227</d:Published>
+      <d:LicenseUrl>http://windows.microsoft.com/en-us/windows-live/microsoft-services-agreement</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>bUJHRGUGSmhZBIIEL1hluKxGHeK5bamPg77Bu0ZMIo4VTYPXYG92lXJnvxYNHYmqZrqrOBkXA+gdmbHxAjFSWw==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">6864</d:PackageSize>
+      <d:ProjectUrl>https://www.microsoft.com/en-us/microsoft-365</d:ProjectUrl>
+      <d:ReleaseNotes>enable optional installation parameters</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/jordigg/chocolatey-officebusiness/tree/master/office365business</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl></d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Exempted</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime" m:null="true"></d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-11T18:14:01.67</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-12T07:46:38.02</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-12T07:46:38.02</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-12T08:49:57.563</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-12T07:46:38.02</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-python',Version='3.14.6')</id>
+    <title type="text">mock-python</title>
+    <summary type="text">Python is a programming language that lets you work more quickly and integrate your systems more effectively. You can learn to use Python and see almost immediate gains in productivity and lower maintenance costs.</summary>
+    <updated>2026-06-24T12:42:07Z</updated>
+    <author>
+      <name>Python Software Foundation</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-python',Version='3.14.6')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-python',Version='3.14.6')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-python/3.14.6" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>3.14.6</d:Version>
+      <d:Title>Mock Python</d:Title>
+      <d:Description>Python is a programming language that lets you work more quickly and integrate your systems more effectively. You can learn to use Python and see almost immediate gains in productivity and lower maintenance costs.
+
+## Notes
+
+- This package depends on the the latest major version of python package.
+- This package do not support package parameters, please install the package [python314](https://chocolatey.org/packages/python314) directly when using package parameters.
+- **If the package is out of date please check [Version History](#versionhistory) for the latest submitted version. If you have a question, please ask it in [Chocolatey Community Package Discussions](https://github.com/chocolatey-community/chocolatey-packages/discussions) or raise an issue on the [Chocolatey Community Packages Repository](https://github.com/chocolatey-community/chocolatey-packages/issues) if you have problems with the package. Disqus comments will generally not be responded to.**</d:Description>
+      <d:Tags>python programming development foss cross-platform admin</d:Tags>
+      <d:Copyright>Copyright © 2001 Python Software Foundation. All rights reserved.
+Copyright © 2000 BeOpen.com. All rights reserved.
+Copyright © 1995-2000 Corporation for National Research Initiatives. All rights reserved.
+Copyright © 1991-1995 Stichting Mathematisch Centrum. All rights reserved.</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-06-10T18:17:46.483</d:Created>
+      <d:Dependencies>python3:[3.14.6]:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">44203186</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">308259</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/python/3.14.6</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/python/3.14.6</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">false</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-06-10T18:17:46.483</d:Published>
+      <d:LicenseUrl>https://docs.python.org/3.14/license.html</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>TgSOHIemaKLNTymAh8N+AwoIjsRwsNri7YDB0AkxiAyfHW3/M9ooCNyKKjg9ULItFaBsPn8X80DiAyr2Ut6ZzQ==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">2986</d:PackageSize>
+      <d:ProjectUrl>http://www.python.org/</d:ProjectUrl>
+      <d:ReleaseNotes></d:ReleaseNotes>
+      <d:ProjectSourceUrl>https://www.python.org/downloads/source</d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-packages/tree/master/automatic/python</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl></d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Exempted</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime" m:null="true"></d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-06-11T17:07:51.35</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-06-11T18:39:17.167</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-06-11T18:39:17.167</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-06-11T19:40:20.65</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-06-11T18:39:17.167</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-7zip.install',Version='26.1.0')</id>
+    <title type="text">mock-7zip.install</title>
+    <summary type="text">7-Zip is a file archiver with a high compression ratio.</summary>
+    <updated>2026-05-28T15:00:23Z</updated>
+    <author>
+      <name>Igor Pavlov</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-7zip.install',Version='26.1.0')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-7zip.install',Version='26.1.0')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-7zip.install/26.1.0" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>26.1.0</d:Version>
+      <d:Title>Mock 7-Zip (Install)</d:Title>
+      <d:Description>7-Zip is a file archiver with a high compression ratio.
+
+## Features
+
+- High compression ratio in [7z format](http://www.7-zip.org/7z.html) with **LZMA** and **LZMA2** compression
+- Supported formats:
+- Packing / unpacking: 7z, XZ, BZIP2, GZIP, TAR, ZIP and WIM
+- Unpacking only: AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, GPT, HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, SquashFS, UDF, UEFI, VDI, VHD, VMDK, WIM, XAR and Z.
+- For ZIP and GZIP formats, **7-Zip** provides a compression ratio that is 2-10 % better than the ratio provided by PKZip and WinZip
+- Strong AES-256 encryption in 7z and ZIP formats
+- Self-extracting capability for 7z format
+- Integration with Windows Shell
+- Powerful File Manager
+- Powerful command line version
+- Plugin for FAR Manager
+- Localizations for 87 languages
+
+## Notes
+- The installer for 7-Zip is known to close the Explorer process. This means you may lose current work. If it doesn't automatically restart explorer, type `explorer` on the command shell to restart it.
+- **If the package is out of date please check [Version History](#versionhistory) for the latest submitted version. If you have a question, please ask it in [Chocolatey Community Package Discussions](https://github.com/chocolatey-community/chocolatey-packages/discussions) or raise an issue on the [Chocolatey Community Packages Repository](https://github.com/chocolatey-community/chocolatey-packages/issues) if you have problems with the package. Disqus comments will generally not be responded to.**</d:Description>
+      <d:Tags>7zip zip archiver admin cross-platform cli foss</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-05-28T13:24:32.537</d:Created>
+      <d:Dependencies>chocolatey-core.extension:1.3.3:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">42455528</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">121</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/7zip.install/26.1.0</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/7zip.install/26.1.0</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-05-28T13:24:32.537</d:Published>
+      <d:LicenseUrl>http://www.7-zip.org/license.txt</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>eySKaPxYNJbvsJndQdqrcKjbp51jY5PQLmtlvriK6w8bkQ8vBZkWcj/29NSz4dKW4DBLo/I0YwBvneCBH3I66A==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">2988640</d:PackageSize>
+      <d:ProjectUrl>http://www.7-zip.org/</d:ProjectUrl>
+      <d:ReleaseNotes>[Software Changelog](http://www.7-zip.org/history.txt)
+[Package Changelog](https://github.com/chocolatey-community/chocolatey-coreteampackages/blob/master/automatic/7zip.install/Changelog.md)</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-packages/tree/master/automatic/7zip.install</d:PackageSourceUrl>
+      <d:DocsUrl>http://www.7-zip.org/faq.html</d:DocsUrl>
+      <d:MailingListUrl>https://sourceforge.net/p/sevenzip/discussion/45797/</d:MailingListUrl>
+      <d:BugTrackerUrl>https://sourceforge.net/p/sevenzip/_list/tickets?source=navbar</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/5f7cdef37c11f6266b2671ca285b5c66</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-05-28T14:05:11.99</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-05-28T13:59:03.683</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-05-28T14:06:33.717</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-05-28T14:06:33.717</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-05-28T15:09:34.89</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-05-28T14:06:33.717</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-jre8',Version='8.0.491')</id>
+    <title type="text">mock-jre8</title>
+    <summary type="text"></summary>
+    <updated>2026-05-04T23:00:16Z</updated>
+    <author>
+      <name>Oracle</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-jre8',Version='8.0.491')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-jre8',Version='8.0.491')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-jre8/8.0.491" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>8.0.491</d:Version>
+      <d:Title>Mock Java SE Runtime Environment</d:Title>
+      <d:Description>Java allows you to play online games, chat with people around the world, calculate your mortgage interest, and view images in 3D, just to name a few. It's also integral to the intranet applications and other e-business solutions that are the foundation of corporate computing. Please note you now need a Java License from Oracle to use unless installed for Personal Use and Development Use. 
+
+### Note
+
+This package installs the Java version offered at https://www.java.com. It also sets `SPONSORS=0`  ([see docs](http://docs.oracle.com/javase/7/docs/webnotes/install/windows/jre-installer-options.html#running)).
+
+If you wish to only install the 32-bit version of Java use the /exclude parameter. The switch to exclude 32-bit is /exclude:32 and to exclude 64-bit /exclude:64 
+For example: choco install jre8 -PackageParameters "/exclude:64" -y
+You then need to tell Chocolatey to save that parameter for future upgrades by running choco feature enable -n=useRememberedArgumentsForUpgrades 
+This package no longer manually adds an environment variable. 
+x86 installs of Windows you can expect to see an error while reading the registry, but the script will still function normally. 
+
+This package can install 32-bit, 64-bit, or both versions. Find on [GitHub](https://github.com/proudcanadianeh/ChocoPackages/tree/master/jre8/master)</d:Description>
+      <d:Tags>java runtime environment</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-05-04T18:56:31.667</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">40491924</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">89</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/jre8/8.0.491</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/jre8/8.0.491</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-05-04T18:56:31.667</d:Published>
+      <d:LicenseUrl>http://www.oracle.com/technetwork/java/javase/terms/license/index.html</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>9Pe9Ah3StL3v8n8dx7h5Jbr8aG0l0Z3GJJhOvGSqb3lj9jGEPsYhvO+AU3rSlrdsbPiZPtCjZ5qs06X6roVovQ==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">6611</d:PackageSize>
+      <d:ProjectUrl>http://www.java.com/</d:ProjectUrl>
+      <d:ReleaseNotes></d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/proudcanadianeh/ChocoPackages/tree/master/jre8/master</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/e741c949eeebbfe7dcf61442015d1110</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-05-04T20:00:52.03</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-05-04T19:32:27.213</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-05-04T22:07:31.557</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-05-04T22:07:31.557</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-05-04T23:09:51.413</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-05-04T22:07:31.557</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-chocolatey-dotnetfx.extension',Version='1.0.1')</id>
+    <title type="text">mock-chocolatey-dotnetfx.extension</title>
+    <summary type="text">Helper functions useful for developing packages for Microsoft .NET Framework runtime and Developer Pack.</summary>
+    <updated>2026-05-27T20:33:32Z</updated>
+    <author>
+      <name>Jakub Bereżański</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-chocolatey-dotnetfx.extension',Version='1.0.1')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-chocolatey-dotnetfx.extension',Version='1.0.1')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-chocolatey-dotnetfx.extension/1.0.1" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>1.0.1</d:Version>
+      <d:Title>Mock Chocolatey .NET Framework extensions</d:Title>
+      <d:Description>This package provides helper functions useful for developing packages for Microsoft .NET Framework runtime and Developer Pack.</d:Description>
+      <d:Tags>chocolatey extension admin windows update .net net dotnet framework devpack developer pack</d:Tags>
+      <d:Copyright>© 2019 Jakub Bereżański</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2019-09-30T20:18:41.66</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">36027953</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">35829059</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/chocolatey-dotnetfx.extension/1.0.1</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/chocolatey-dotnetfx.extension/1.0.1</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2019-09-30T20:18:41.66</d:Published>
+      <d:LicenseUrl>https://cdn.rawgit.com/jberezanski/ChocolateyPackages/8086c84fed16d4150a50ba1e97fd6b75e3c4f511/LICENSE</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>IfDdlUI5bT4GGrTyCwJJw733AdHEsRdx93CL3Y7FlAzKEqjyfMlAcbz64qN4x5ddz5RwIqNqC7fPh2kh+VMxkQ==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">10297</d:PackageSize>
+      <d:ProjectUrl>https://github.com/jberezanski/ChocolateyPackages/tree/master/chocolatey-dotnetfx.extension</d:ProjectUrl>
+      <d:ReleaseNotes>[Change log](https://github.com/jberezanski/ChocolateyPackages/tree/master/chocolatey-dotnetfx.extension/CHANGELOG.md)</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/jberezanski/ChocolateyPackages/tree/master/chocolatey-dotnetfx.extension</d:PackageSourceUrl>
+      <d:DocsUrl>https://github.com/jberezanski/ChocolateyPackages/tree/master/chocolatey-dotnetfx.extension/README.md</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl>https://github.com/jberezanski/ChocolateyPackages/issues</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">false</d:IsApproved>
+      <d:PackageStatus>Exempted</d:PackageStatus>
+      <d:PackageSubmittedStatus>Waiting</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/2db81fd1e97bea96f54928b433f74dec</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-05-27T20:33:31.803</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2019-09-30T20:51:33.517</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2024-04-05T12:18:51.06</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime" m:null="true"></d:PackageApprovedDate>
+      <d:PackageReviewer>AdmiringWorm</d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2019-10-05T12:20:13.013</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>Investigate</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2019-09-30T21:15:20.83</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-7zip',Version='26.1.0')</id>
+    <title type="text">mock-7zip</title>
+    <summary type="text">7-Zip is a file archiver with a high compression ratio.</summary>
+    <updated>2026-05-28T15:15:23Z</updated>
+    <author>
+      <name>Igor Pavlov</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-7zip',Version='26.1.0')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-7zip',Version='26.1.0')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-7zip/26.1.0" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>26.1.0</d:Version>
+      <d:Title>Mock 7-Zip</d:Title>
+      <d:Description>7-Zip is a file archiver with a high compression ratio.
+
+## Features
+- High compression ratio in [7z format](http://www.7-zip.org/7z.html) with **LZMA** and **LZMA2** compression
+- Supported formats:
+- Packing / unpacking: 7z, XZ, BZIP2, GZIP, TAR, ZIP and WIM
+- Unpacking only: AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, GPT, HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, SquashFS, UDF, UEFI, VDI, VHD, VMDK, WIM, XAR and Z.
+- For ZIP and GZIP formats, **7-Zip** provides a compression ratio that is 2-10 % better than the ratio provided by PKZip and WinZip
+- Strong AES-256 encryption in 7z and ZIP formats
+- Self-extracting capability for 7z format
+- Integration with Windows Shell
+- Powerful File Manager
+- Powerful command line version
+- Plugin for FAR Manager
+- Localizations for 87 languages
+
+## Notes
+- The installer for 7-Zip is known to close the Explorer process. This means you may lose current work. If it doesn't automatically restart explorer, type `explorer` on the command shell to restart it.
+- **If the package is out of date please check [Version History](#versionhistory) for the latest submitted version. If you have a question, please ask it in [Chocolatey Community Package Discussions](https://github.com/chocolatey-community/chocolatey-packages/discussions) or raise an issue on the [Chocolatey Community Packages Repository](https://github.com/chocolatey-community/chocolatey-packages/issues) if you have problems with the package. Disqus comments will generally not be responded to.**</d:Description>
+      <d:Tags>7zip zip archiver admin foss</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-05-28T13:24:31.49</d:Created>
+      <d:Dependencies>7zip.install:[26.1.0]:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">34243290</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">197</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/7zip/26.1.0</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/7zip/26.1.0</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-05-28T13:24:31.49</d:Published>
+      <d:LicenseUrl>http://www.7-zip.org/license.txt</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>pg1BQSf/TT0IkL+y6mnThXd5K02sLms1FzLfSJ/9Q6rjYF5eQNischYB9c84AVfzrTn9RmPVNjkmbGb3LiL8rA==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">3612</d:PackageSize>
+      <d:ProjectUrl>http://www.7-zip.org/</d:ProjectUrl>
+      <d:ReleaseNotes>http://www.7-zip.org/history.txt</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-packages/tree/master/automatic/7zip</d:PackageSourceUrl>
+      <d:DocsUrl>http://www.7-zip.org/faq.html</d:DocsUrl>
+      <d:MailingListUrl>https://sourceforge.net/p/sevenzip/discussion/45797/</d:MailingListUrl>
+      <d:BugTrackerUrl>https://sourceforge.net/p/sevenzip/_list/tickets?source=navbar</d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/c9a6df1f4411a3a5eabe06c93f9e7776</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-05-28T14:13:07.45</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-05-28T14:09:23.727</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-05-28T14:16:57.213</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-05-28T14:16:57.213</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Checked</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-05-28T15:19:49.677</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-05-28T14:16:57.213</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-DellCommandUpdate',Version='5.7.0')</id>
+    <title type="text">mock-DellCommandUpdate</title>
+    <summary type="text">Dell utility that allows you to automate driver, BIOS and firmware updates on your system</summary>
+    <updated>2026-04-18T14:45:21Z</updated>
+    <author>
+      <name>Dell Inc</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-DellCommandUpdate',Version='5.7.0')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-DellCommandUpdate',Version='5.7.0')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-DellCommandUpdate/5.7.0" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>5.7.0</d:Version>
+      <d:Title>Mock Dell Command | Update</d:Title>
+      <d:Description>You can use Dell Command | Update to update a Dell system with the latest drivers, BIOS, firmware, and Dell software applications.
+
+Dell Command | Update provides the following new features:
+
+- Support for installing base drivers on a system that contains only an operating system, network adapter, a compatible network adapter driver, and an installation of Dell Command | Update, using the Advanced Driver Restore feature.
+- Support for updating intra-component dependencies as shown in the Partner Development Kit (PDK) catalog.
+- Notification when system restore points are created.
+- Enhanced updates Schedule — You can configure Dell Command | Update to automatically check for updates on the system at specific intervals of time
+
+Supported on OptiPlex, Venue Pro Tablet, Precision, XPS Notebook and Latitude models that are running the following Windows operating systems: Windows 7,Windows 8, Windows 8.1 and Windows 10.
+
+### Package updates
+
+This package is updated automatically by querying the Dell Version Control Catalog. There can sometimes be a short delay between the time new software version is released and when it is added to the catalog (which is also used by Dell applications to auto-update)
+
+If you notice a newer version is available but the package has not been updated, please [open an issue on the GitHub repository](https://github.com/flcdrg/au-packages/issues) or leave a comment below.</d:Description>
+      <d:Tags>dell command update admin</d:Tags>
+      <d:Copyright>Copyright © 2020 Dell Inc. All rights reserved</d:Copyright>
+      <d:Created m:type="Edm.DateTime">2026-04-18T00:11:56.473</d:Created>
+      <d:Dependencies>dotnet-8.0-desktopruntime:8.0.15:</d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">31083434</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">55</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/DellCommandUpdate/5.7.0</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/DellCommandUpdate/5.7.0</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2026-04-18T00:11:56.473</d:Published>
+      <d:LicenseUrl>https://www.dell.com/learn/us/en/uscorp1/terms-of-sale-consumer-license-agreements</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">true</d:RequireLicenseAcceptance>
+      <d:PackageHash>MXZ2MwXFzutbBo8sLoDE95rOOoqjSZFwV+fkyww/hu1hI3eTXAwkuKRYR8WHeC4ZI+GD+BndNe8eQjwUtNZyLw==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">4478</d:PackageSize>
+      <d:ProjectUrl>https://www.dell.com/support/article/en-au/sln311129/dell-command-update?lang=en</d:ProjectUrl>
+      <d:ReleaseNotes>https://www.dell.com/support/home/us/en/19/Drivers/DriversDetails?driverId=RXT5N</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/flcdrg/au-packages/tree/master/dellcommandupdate</d:PackageSourceUrl>
+      <d:DocsUrl>https://www.dell.com/support/manuals/en-au/command-update/dellcommandupdate_ug/dell-command--update?guid=guid-3527787d-8c0c-4306-ba9f-0e258caf9faa&amp;lang=en-us</d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl></d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Exempted</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime" m:null="true"></d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2026-04-18T00:47:03.053</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2026-04-18T13:44:35.927</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2026-04-18T13:44:35.927</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">true</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Available</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2026-04-18T14:58:22.79</d:DownloadCacheDate>
+      <d:DownloadCache>https://dl.dell.com/FOLDER14424243M/1/Dell-Command-Update-Application_RXT5N_WIN64_5.7.0_A00.EXE^x86/Dell-Command-Update-Application_RXT5N_WIN64_5.7.0_A00.EXE^DF9577D2A60ABBCD6382729380401C5A1ADA2FC1B9AEEEFF656FD9E656F9AAE6A69EBCF17DAB937626F9F3C06759AFE5C44C38C291CD1CFB0EB608F9ECAE18ED</d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2026-04-18T13:44:35.927</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>None</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  <entry>
+    <id>http://community.chocolatey.org/api/v2/Packages(Id='mock-flashplayeractivex',Version='32.0.0.465')</id>
+    <title type="text">mock-flashplayeractivex</title>
+    <summary type="text">Adobe Flash Player ActiveX for Internet Explorer</summary>
+    <updated>2026-06-01T05:30:23Z</updated>
+    <author>
+      <name>Adobe Systems Incorporated</name>
+    </author>
+    <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='mock-flashplayeractivex',Version='32.0.0.465')/$value" />
+    <link rel="edit" title="V2FeedPackage" href="Packages(Id='mock-flashplayeractivex',Version='32.0.0.465')" />
+    <category term="CCR.Website.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/zip" src="https://community.chocolatey.org/api/v2/package/mock-flashplayeractivex/32.0.0.465" />
+    <m:properties xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">
+      <d:Version>32.0.0.465</d:Version>
+      <d:Title>Mock Flash Player ActiveX</d:Title>
+      <d:Description>The Adobe Flash Player is freeware software for viewing multimedia, executing Rich Internet Applications, and streaming video and audio, content created on the Adobe Flash platform.
+
+## Notes
+
+- This package is only for Windows XP to Windows 7, because Windows 8 already contains an integrated Flash Player for Internet Explorer.
+- **Warning**: The installation of Flash Player ActiveX fails with a 1603 error when Internet Explorer is open.</d:Description>
+      <d:Tags>adobe flash player activex admin freeware</d:Tags>
+      <d:Copyright></d:Copyright>
+      <d:Created m:type="Edm.DateTime">2020-12-08T12:09:14.357</d:Created>
+      <d:Dependencies></d:Dependencies>
+      <d:DownloadCount m:type="Edm.Int32">30754714</d:DownloadCount>
+      <d:VersionDownloadCount m:type="Edm.Int32">5660175</d:VersionDownloadCount>
+      <d:GalleryDetailsUrl>https://community.chocolatey.org/packages/flashplayeractivex/32.0.0.465</d:GalleryDetailsUrl>
+      <d:ReportAbuseUrl>https://community.chocolatey.org/package/ReportAbuse/flashplayeractivex/32.0.0.465</d:ReportAbuseUrl>
+      <d:IconUrl>https://community.chocolatey.org/mock-icon.svg</d:IconUrl>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language></d:Language>
+      <d:Published m:type="Edm.DateTime">2020-12-08T12:09:14.357</d:Published>
+      <d:LicenseUrl>https://www.adobe.com/products/clients/all_dist_agreement.html</d:LicenseUrl>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:PackageHash>dyj+zSCU3YJR0g+LUuBOE3+quDKEyB1mKfJa2dHX77JTV2FlgUkSv/tdeqVN70VeqB5Dq6UpAIIvifd8X4Z4Xw==</d:PackageHash>
+      <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+      <d:PackageSize m:type="Edm.Int64">4449</d:PackageSize>
+      <d:ProjectUrl>https://www.adobe.com/software/flash/about/</d:ProjectUrl>
+      <d:ReleaseNotes>https://helpx.adobe.com/flash-player/flash-player-releasenotes.html</d:ReleaseNotes>
+      <d:ProjectSourceUrl></d:ProjectSourceUrl>
+      <d:PackageSourceUrl>https://github.com/chocolatey-community/chocolatey-coreteampackages/tree/master/automatic/flashplayeractivex</d:PackageSourceUrl>
+      <d:DocsUrl></d:DocsUrl>
+      <d:MailingListUrl></d:MailingListUrl>
+      <d:BugTrackerUrl></d:BugTrackerUrl>
+      <d:IsApproved m:type="Edm.Boolean">true</d:IsApproved>
+      <d:PackageStatus>Approved</d:PackageStatus>
+      <d:PackageSubmittedStatus>Ready</d:PackageSubmittedStatus>
+      <d:PackageTestResultUrl>https://gist.github.com/choco-bot/3ea181a7eaed4a51c0d604ecf5947fdf</d:PackageTestResultUrl>
+      <d:PackageTestResultStatus>Passing</d:PackageTestResultStatus>
+      <d:PackageTestResultStatusDate m:type="Edm.DateTime">2026-06-01T05:43:14.61</d:PackageTestResultStatusDate>
+      <d:PackageValidationResultStatus>Passing</d:PackageValidationResultStatus>
+      <d:PackageValidationResultDate m:type="Edm.DateTime">2020-12-08T12:41:32.953</d:PackageValidationResultDate>
+      <d:PackageCleanupResultDate m:type="Edm.DateTime" m:null="true"></d:PackageCleanupResultDate>
+      <d:PackageReviewedDate m:type="Edm.DateTime">2025-01-21T14:20:35.23</d:PackageReviewedDate>
+      <d:PackageApprovedDate m:type="Edm.DateTime">2020-12-08T14:30:19.103</d:PackageApprovedDate>
+      <d:PackageReviewer></d:PackageReviewer>
+      <d:IsDownloadCacheAvailable m:type="Edm.Boolean">false</d:IsDownloadCacheAvailable>
+      <d:DownloadCacheStatus>Investigate</d:DownloadCacheStatus>
+      <d:DownloadCacheDate m:type="Edm.DateTime">2020-12-08T14:08:43.493</d:DownloadCacheDate>
+      <d:DownloadCache></d:DownloadCache>
+      <d:PackageScanStatus>NotFlagged</d:PackageScanStatus>
+      <d:PackageScanResultDate m:type="Edm.DateTime">2020-12-08T14:30:19.103</d:PackageScanResultDate>
+      <d:PackageScanFlagResult>Unknown</d:PackageScanFlagResult>
+    </m:properties>
+  </entry>
+  
+</feed>

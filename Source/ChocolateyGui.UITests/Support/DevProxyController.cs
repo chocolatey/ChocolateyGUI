@@ -27,6 +27,7 @@ namespace ChocolateyGui.UITests.Support
         private readonly string _configDirectory;
 
         private Process _process;
+        private ManualResetEventSlim _listening;
         private int _originalProxyEnable;
         private string _originalProxyServer;
         private bool _proxyStateCaptured;
@@ -69,7 +70,10 @@ namespace ChocolateyGui.UITests.Support
                 CreateNoWindow = true,
             };
 
-            var listening = new ManualResetEventSlim(false);
+            // Held as a field, not a local 'using', because the OutputDataReceived handler below can fire on a
+            // background thread for the process's lifetime; disposing it here would risk a Set() on a disposed
+            // handle. It is disposed in Stop(), after the process (and thus its output events) is torn down.
+            _listening = new ManualResetEventSlim(false);
 
             _process = new Process { StartInfo = startInfo, EnableRaisingEvents = true };
             _process.OutputDataReceived += (_, e) =>
@@ -78,7 +82,7 @@ namespace ChocolateyGui.UITests.Support
                 // API listener line ("Dev Proxy API listening on http://127.0.0.1:8897..."), which comes up first.
                 if (e.Data != null && e.Data.IndexOf("Dev Proxy listening on", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    listening.Set();
+                    _listening.Set();
                 }
             };
 
@@ -86,7 +90,7 @@ namespace ChocolateyGui.UITests.Support
             _process.BeginOutputReadLine();
             _process.BeginErrorReadLine();
 
-            if (!listening.Wait(TimeSpan.FromSeconds(60)))
+            if (!_listening.Wait(TimeSpan.FromSeconds(60)))
             {
                 Stop();
                 throw new TimeoutException("Dev Proxy did not report that it was listening within 60 seconds.");
@@ -116,6 +120,8 @@ namespace ChocolateyGui.UITests.Support
             {
                 _process?.Dispose();
                 _process = null;
+                _listening?.Dispose();
+                _listening = null;
                 RestoreProxyState();
             }
         }

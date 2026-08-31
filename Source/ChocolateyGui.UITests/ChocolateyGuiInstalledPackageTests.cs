@@ -25,7 +25,7 @@ namespace ChocolateyGui.UITests
         // (every row is overwritten with the installed 3.0.0), after the fix they do.
         private static readonly string[] ExpectedAllVersionsSample = { "3.2.0", "3.1.0", "3.0.1", "2.1.1" };
 
-        protected new ApplicationStartMode ApplicationStartMode => ApplicationStartMode.OncePerFixture;
+        protected override ApplicationStartMode ApplicationStartMode => ApplicationStartMode.OncePerFixture;
 
         // Install the package fresh before the application launches (remove any leftover first so the state is
         // deterministic and idempotent regardless of what a previous run left behind).

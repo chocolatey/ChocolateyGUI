@@ -27,7 +27,7 @@ namespace ChocolateyGui.UITests
         // Distinct versions the mocked feed returns for an all-versions, exact search (newest-first).
         private static readonly string[] ExpectedAllVersionsSample = { "3.2.0", "3.1.0", "3.0.1", "2.1.1" };
 
-        protected new ApplicationStartMode ApplicationStartMode => ApplicationStartMode.OncePerFixture;
+        protected override ApplicationStartMode ApplicationStartMode => ApplicationStartMode.OncePerFixture;
 
         // Uses the base PrepareInstalledState default => the package under test is NOT installed.
         [SetUp]

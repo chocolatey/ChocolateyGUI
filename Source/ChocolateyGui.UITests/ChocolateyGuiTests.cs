@@ -1,16 +1,26 @@
 ﻿using ChocolateyGui.UITests.Screens;
+using ChocolateyGui.UITests.Support.Feed;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
 using FlaUI.TestUtilities;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace ChocolateyGui.UITests
 {
 
     [TestFixture]
-    public class ChocolateyGuiTests : ChocolateyGuiTestBase
+    public class ChocolateyGuiTests : WireMockRemoteSourceTestBase
     {
-        protected new ApplicationStartMode ApplicationStartMode => ApplicationStartMode.OncePerFixture;        
+        protected override ApplicationStartMode ApplicationStartMode => ApplicationStartMode.OncePerFixture;
+
+        // RemoteSourceScreenTest drills into the hermes source; the About/Settings tests ignore it. One WireMock
+        // feed (the shared hermes dataset, which includes absolute-extracted-path) serves the whole fixture, so
+        // the tests no longer depend on an externally registered hermes source.
+        protected override IEnumerable<MockSourceDefinition> Sources => new[]
+        {
+            new MockSourceDefinition("hermes", MockFeeds.Hermes()),
+        };
 
         [Test]
         public void AboutScreenTest()

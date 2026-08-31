@@ -75,6 +75,36 @@ namespace ChocolateyGui.UITests.Screens
                 }).As<RemoteSourceScreen>();
         }
 
+        public void ReturnToSourcesList()
+        {
+            // Under OncePerFixture the application instance is shared across the fixture's tests, so a previous
+            // test may have drilled into a package-details view that hides the sources list. Click Back until the
+            // sources list is visible again; on a freshly launched application it is already there and nothing is
+            // clicked.
+            Retry.WhileNull(
+                () =>
+                {
+                    var sourcesListView = FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.SOURCES_LIST_VIEW));
+                    if (sourcesListView != null)
+                    {
+                        return sourcesListView;
+                    }
+
+                    var backButton = FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.BACK_BUTTON));
+                    if (backButton != null)
+                    {
+                        backButton.AsButton().Click();
+                    }
+
+                    return null;
+                },
+                timeout: TimeSpan.FromSeconds(10),
+                interval: TimeSpan.FromMilliseconds(500),
+                throwOnTimeout: true,
+                ignoreException: true,
+                timeoutMessage: "Could not return to the sources list.");
+        }
+
         public void WaitForDialog()
         {
             // The dialog has a fade in and out, sometimes this messes with the detection of the dialog.

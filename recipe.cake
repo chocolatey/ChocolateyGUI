@@ -161,4 +161,74 @@ BuildParameters.Tasks.InitTask.IsDependentOn("Strong-Name-Signer");
 
 BuildParameters.PrintParameters(Context);
 
+///////////////////////////////////////////////////////////////////////////////
+// UI TESTS (opt-in)
+///////////////////////////////////////////////////////////////////////////////
+
+// The FlaUI UI tests live in ChocolateyGui.UITests. They drive the real Chocolatey
+// GUI window, so they need an interactive, elevated (Administrator) desktop session
+// and are deliberately NOT part of the Default build: the project is named *.UITests,
+// which sits outside Chocolatey.Cake.Recipe's *.Tests discovery convention, so a normal
+// build compiles them but never runs them. This target runs them on demand only - it is
+// not wired into any other task, so Default and the CI build never reach it. Run with:
+//
+//     .\build.bat --target=Test-UITests
+//
+// This target always builds and runs Debug (regardless of --configuration) because the
+// UI tests only behave correctly against a DEBUG GUI build. Only a DEBUG build redirects
+// its ChocolateyInstall to an isolated folder beside the binaries (DebugInstallEnvironment,
+// compiled under #if DEBUG); a Release GUI instead uses the machine-wide Chocolatey install,
+// so it queries the developer's real, enabled sources (very slow) and never sees the
+// "installed" packages the tests seed into the isolated location (wrong results). The
+// UITests project has no reference to the GUI - it launches ChocolateyGUI.exe from the GUI's
+// own bin directory - so this target builds the GUI itself first.
+Task("Test-UITests")
+    .WithCriteria(() => BuildParameters.BuildAgentOperatingSystem == PlatformFamily.Windows, "Skipping because the UI tests only run on Windows")
+    .Does(() =>
+{
+    using (var identity = System.Security.Principal.WindowsIdentity.GetCurrent())
+    {
+        var principal = new System.Security.Principal.WindowsPrincipal(identity);
+        if (!principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
+        {
+            throw new Exception("The UI tests must be run from an elevated (Administrator) session - they configure a system proxy and drive the Chocolatey GUI on an interactive desktop.");
+        }
+    }
+
+    var uiTestProjects = GetFiles(BuildParameters.TestDirectoryPath + "/**/*.UITests.csproj");
+
+    if (uiTestProjects.Count == 0)
+    {
+        throw new Exception("No *.UITests.csproj projects were found to run.");
+    }
+
+    // The UI tests only work against a DEBUG GUI build (see the note above), so build and run
+    // Debug explicitly rather than using BuildParameters.Configuration (which defaults to Release).
+    const string uiTestConfiguration = "Debug";
+
+    Information("Building the Chocolatey GUI in {0} so the UI tests drive an isolated Chocolatey install...", uiTestConfiguration);
+    DotNetCoreBuild("./Source/ChocolateyGui/ChocolateyGui.csproj", new DotNetCoreBuildSettings
+    {
+        Configuration = uiTestConfiguration
+    });
+
+    var resultsDirectory = BuildParameters.Paths.Directories.TestResults.Combine("UITests");
+    EnsureDirectoryExists(resultsDirectory);
+
+    foreach (var uiTestProject in uiTestProjects)
+    {
+        Information("Running UI tests for project: {0}", uiTestProject);
+
+        DotNetCoreTest(uiTestProject.FullPath, new DotNetCoreTestSettings
+        {
+            Configuration = uiTestConfiguration,
+            ArgumentCustomization = args => args
+                .Append("--logger")
+                .Append("trx")
+                .Append("--results-directory")
+                .AppendQuoted(resultsDirectory.FullPath)
+        });
+    }
+});
+
 Build.RunDotNet();

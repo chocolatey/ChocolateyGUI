@@ -92,6 +92,7 @@ namespace ChocolateyGui.UITests
         protected void OpenRemoteSourceAtBaseline()
         {
             MainScreen = Application.GetMainWindow(Automation).As<MainScreen>();
+            MainScreen.ReturnToSourcesList();
             RemoteSourceScreen = MainScreen.OpenAndGetRemoteSourceScreen(SourceName);
 
             SetCheckBox(AutomationIds.ALL_VERSIONS_CHECK_BOX, false);

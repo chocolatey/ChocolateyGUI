@@ -13,6 +13,7 @@ using System.Windows.Media;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Models.Messages;
 using ChocolateyGui.Common.ViewModels.Items;
+using ChocolateyGui.Common.Windows.ViewModels;
 
 namespace ChocolateyGui.Common.Windows.Views
 {
@@ -46,6 +47,32 @@ namespace ChocolateyGui.Common.Windows.Views
         private void RemoteSourceViewOnLoaded(object sender, RoutedEventArgs e)
         {
             this.SearchTextBox.Focus();
+        }
+
+        private void Packages_OnScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            var scrollViewer = e.OriginalSource as ScrollViewer;
+            if (scrollViewer == null)
+            {
+                return;
+            }
+
+            var remaining = scrollViewer.ExtentHeight - scrollViewer.VerticalOffset - scrollViewer.ViewportHeight;
+            var shouldPrefetch = scrollViewer.ScrollableHeight <= 0
+                                 || remaining <= scrollViewer.ViewportHeight * 2;
+
+            if (!shouldPrefetch)
+            {
+                return;
+            }
+
+            var viewModel = DataContext as RemoteSourceViewModel;
+            if (viewModel != null)
+            {
+#pragma warning disable 4014
+                viewModel.LoadMorePackages();
+#pragma warning restore 4014
+            }
         }
 
         private void Packages_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)

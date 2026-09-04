@@ -340,7 +340,9 @@ namespace ChocolateyGui.Common.Windows.Services
                 return new PackageResults
                 {
                     Packages = packages.ToArray(),
-                    TotalCount = await Task.Run(() => _choco.ListCount())
+                    TotalCount = options.IncludeTotalCount
+                        ? await Task.Run(() => _choco.ListCount())
+                        : 0
                 };
             }
         }

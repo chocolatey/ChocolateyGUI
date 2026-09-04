@@ -252,6 +252,36 @@ namespace ChocolateyGui.Common.Windows.Tests.ViewModels
             viewModel.HasMore.Should().BeTrue();
         }
 
+        [Test]
+        public void LoadPackages_WhenTotalCountIsUnknown_DoesNotShowNegativeTotal()
+        {
+            var chocolateyService = new Mock<IChocolateyService>();
+            chocolateyService.Setup(s => s.Search(It.IsAny<string>(), It.IsAny<PackageSearchOptions>()))
+                .Returns((string _, PackageSearchOptions options) =>
+                {
+                    var packages = options.CurrentPage == 0
+                        ? new[] { Package("alpha", "1.0.0") }
+                        : Array.Empty<Package>();
+                    return Task.FromResult(new PackageResults
+                    {
+                        Packages = packages,
+                        TotalCount = -1,
+                    });
+                });
+            chocolateyService.Setup(s => s.GetInstalledPackages())
+                .ReturnsAsync(Array.Empty<Package>().AsEnumerable());
+            chocolateyService.Setup(s => s.GetOutdatedPackages(It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<ChocolateySource>()))
+                .ReturnsAsync((IReadOnlyList<OutdatedPackage>)new List<OutdatedPackage>());
+
+            var viewModel = BuildViewModel(chocolateyService, includeAllVersions: true);
+
+            viewModel.LoadPackages(false).GetAwaiter().GetResult();
+
+            viewModel.Packages.Should().HaveCount(1);
+            viewModel.TotalCount.Should().Be(1);
+            viewModel.HasMore.Should().BeFalse();
+        }
+
         private static IPackageViewModel CreatePackageViewModelStub()
         {
             var packageViewModel = new Mock<IPackageViewModel>();

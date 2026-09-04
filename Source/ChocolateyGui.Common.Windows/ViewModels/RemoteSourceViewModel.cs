@@ -380,6 +380,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                     ShowShouldPreventPreloadMessage = false;
                     _nextPage = 0;
                     HasMore = true;
+                    TotalCount = 0;
                     Packages.Clear();
                     NotifyListCounts();
                 }
@@ -421,26 +422,16 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                                     IncludeAllVersions,
                                     MatchWord,
                                     Source.Value,
-                                    reset && page == 0));
+                                    false));
 
                             if (loadId != _loadId)
                             {
                                 return;
                             }
 
-                            added = await ApplySearchResultAsync(result, reset, page);
+                            added = await ApplySearchResultAsync(result, reset, page, loadId);
                         }
-                        while (added == 0 && HasMore);
-
-                        if (reset)
-                        {
-                            var outdatedPackages = await GetOutdatedPackagesAsync(forceCheckForOutdatedPackages);
-
-                            foreach (var update in outdatedPackages)
-                            {
-                                await _eventAggregator.PublishOnUIThreadAsync(new PackageOutdatedMessage(update.Id, update.Version, source: Source));
-                            }
-                        }
+                        while (added == 0 && HasMore && loadId == _loadId);
                     }
                     finally
                     {
@@ -453,6 +444,26 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
                     if (reset && loadId == _loadId)
                     {
+                        // Outdated check and prefetch run after the modal closes so the list is usable.
+                        try
+                        {
+                            var outdatedPackages = await GetOutdatedPackagesAsync(forceCheckForOutdatedPackages);
+
+                            foreach (var update in outdatedPackages)
+                            {
+                                if (loadId != _loadId)
+                                {
+                                    break;
+                                }
+
+                                await _eventAggregator.PublishOnUIThreadAsync(new PackageOutdatedMessage(update.Id, update.Version, source: Source));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error(ex, "Failed to check for outdated packages after remote load.");
+                        }
+
                         // Do not await: extra pages arrive in the background so the list stays interactive.
 #pragma warning disable 4014
                         PrefetchAhead(loadId);
@@ -523,30 +534,63 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             // Chocolatey search is expensive; keep it off the dispatcher so scrolling stays responsive.
             if (Application.Current != null)
             {
-                return await Task.Run(() => _chocolateyPackageService.Search(SearchQuery, options)).ConfigureAwait(false);
+                return await Task.Run(async () =>
+                    await _chocolateyPackageService.Search(SearchQuery, options).ConfigureAwait(false)).ConfigureAwait(false);
             }
 
             return await _chocolateyPackageService.Search(SearchQuery, options);
         }
 
-        private async Task<int> ApplySearchResultAsync(PackageResults result, bool reset, int page)
+        private async Task<int> ApplySearchResultAsync(PackageResults result, bool reset, int page, int loadId)
         {
+            if (loadId != _loadId)
+            {
+                return 0;
+            }
+
             var fetchedCount = result.Packages == null ? 0 : result.Packages.Length;
             var viewModels = Application.Current != null
                 ? await Task.Run(() => CreatePackageViewModels(result.Packages)).ConfigureAwait(false)
                 : CreatePackageViewModels(result.Packages);
 
-            var added = await AddViewModelsAsync(viewModels);
+            if (loadId != _loadId)
+            {
+                return 0;
+            }
+
+            var added = await AddViewModelsAsync(viewModels, loadId);
+
+            if (loadId != _loadId)
+            {
+                return 0;
+            }
 
             System.Action commitPage = () =>
             {
+                if (loadId != _loadId)
+                {
+                    return;
+                }
+
                 if (reset && page == 0)
                 {
-                    TotalCount = result.TotalCount;
+                    // Totals from ListCount are skipped (can hang). Seed from this page; HasMore
+                    // keeps loading until a short page arrives.
+                    TotalCount = result.TotalCount > 0 ? result.TotalCount : fetchedCount;
                 }
 
                 _nextPage = page + 1;
                 HasMore = fetchedCount >= PageSize;
+                if (TotalCount < LoadedCount)
+                {
+                    TotalCount = LoadedCount;
+                }
+
+                if (!HasMore)
+                {
+                    TotalCount = LoadedCount;
+                }
+
                 NotifyListCounts();
             };
 
@@ -627,9 +671,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             return viewModels;
         }
 
-        private async Task<int> AddViewModelsAsync(IList<IPackageViewModel> viewModels)
+        private async Task<int> AddViewModelsAsync(IList<IPackageViewModel> viewModels, int loadId)
         {
-            if (viewModels == null || viewModels.Count == 0)
+            if (viewModels == null || viewModels.Count == 0 || loadId != _loadId)
             {
                 return 0;
             }
@@ -646,17 +690,29 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 return viewModels.Count;
             }
 
+            var added = 0;
             for (var index = 0; index < viewModels.Count; index += UiAddChunkSize)
             {
+                if (loadId != _loadId)
+                {
+                    return added;
+                }
+
                 var start = index;
                 var count = Math.Min(UiAddChunkSize, viewModels.Count - index);
                 await dispatcher.InvokeAsync(() =>
                 {
+                    if (loadId != _loadId)
+                    {
+                        return;
+                    }
+
                     for (var offset = 0; offset < count; offset++)
                     {
                         Packages.Add(viewModels[start + offset]);
                     }
 
+                    added += count;
                     NotifyListCounts();
                 }).Task.ConfigureAwait(false);
 
@@ -664,7 +720,7 @@ namespace ChocolateyGui.Common.Windows.ViewModels
                 await dispatcher.InvokeAsync(() => { }, DispatcherPriority.Input).Task.ConfigureAwait(false);
             }
 
-            return viewModels.Count;
+            return added;
         }
 
         private void NotifyListCounts()

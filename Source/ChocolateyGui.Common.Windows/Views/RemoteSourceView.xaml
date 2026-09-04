@@ -534,58 +534,20 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="2" Margin="4" Grid.IsSharedSizeScope="True">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
-                <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
-                <ColumnDefinition Width="Auto" SharedSizeGroup="ButtonCol" />
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0"
-                    Name="FirstPage"
-                    Content="{lang:Localize RemoteSourceView_ButtonGotoFirstPage}"
-                    AutomationProperties.Name="Go to First Page"
-                    ToolTip="{lang:Localize RemoteSourceView_TooltipGotoFirstPage}"
-                    Command="{commands:DataContextCommandAdapter Executed=GoToFirst, CanExecute=CanGoToFirst}"
-                    Style="{DynamicResource PaginationButtonStyle}"/>
-            <Button Grid.Column="1"
-                    Name="BackPage"
-                    Content="{lang:Localize RemoteSourceView_ButtonGoBackAPage}"
-                    AutomationProperties.Name="Go Back a Page"
-                    ToolTip="{lang:Localize RemoteSourceView_TooltipGoBackAPage}"
-                    Command="{commands:DataContextCommandAdapter Executed=GoToPrevious, CanExecute=CanGoToPrevious}"
-                    Style="{DynamicResource PaginationButtonStyle}"/>
-
-            <TextBlock Grid.Column="2"
-                       Name="CurrentPage"
-                       AutomationProperties.Name="Current Page"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Style="{StaticResource PageCountTextStyle}">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}{0} / {1}">
-                        <Binding Path="CurrentPage" Mode="OneWay" />
-                        <Binding Path="PageCount" Mode="OneWay" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-
-            <Button Grid.Column="3"
-                    Name="ForwardPage"
-                    Content="{lang:Localize RemoteSourceView_ButtonGoForwardAPage}"
-                    AutomationProperties.Name="Go Forward a Page"
-                    ToolTip="{lang:Localize RemoteSourceView_TooltipGoForwardAPage}"
-                    Command="{commands:DataContextCommandAdapter Executed=GoToNext, CanExecute=CanGoToNext}"
-                    Style="{DynamicResource PaginationButtonStyle}"/>
-            <Button Grid.Column="4"
-                    Name="LastPage"
-                    Content="{lang:Localize RemoteSourceView_ButtonGotoLastPage}"
-                    AutomationProperties.Name="Go to Last Page"
-                    ToolTip="{lang:Localize RemoteSourceView_TooltipGotoLastPage}"
-                    Command="{commands:DataContextCommandAdapter Executed=GoToLast, CanExecute=CanGoToLast}"
-                    Style="{DynamicResource PaginationButtonStyle}"/>
-        </Grid>
+        <TextBlock Grid.Row="2"
+                   Name="PackageListStatus"
+                   Margin="4"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   AutomationProperties.Name="Package List Status"
+                   Style="{StaticResource PageCountTextStyle}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} / {1}">
+                    <Binding Path="LoadedCount" Mode="OneWay" />
+                    <Binding Path="TotalCount" Mode="OneWay" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
 
         <Grid Grid.Row="1">
             <ListView x:Name="Packages"
@@ -596,6 +558,7 @@
                       HorizontalContentAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.IsDeferredScrollingEnabled="False"
+                      ScrollViewer.ScrollChanged="Packages_OnScrollChanged"
                       MouseDoubleClick="Packages_OnMouseDoubleClick" />
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"

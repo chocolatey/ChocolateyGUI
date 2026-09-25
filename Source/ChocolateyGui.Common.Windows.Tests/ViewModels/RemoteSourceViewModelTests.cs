@@ -125,6 +125,163 @@ namespace ChocolateyGui.Common.Windows.Tests.ViewModels
             viewModel.Packages[0].IsInstalled.Should().BeTrue();
         }
 
+        [Test]
+        public void LoadPackages_PrefetchesTwoAdditionalPages()
+        {
+            var chocolateyService = BuildChocolateyService(
+                remote: new[]
+                {
+                    Package("alpha", "1.0.0"),
+                    Package("bravo", "1.0.0"),
+                    Package("charlie", "1.0.0"),
+                    Package("delta", "1.0.0"),
+                    Package("echo", "1.0.0"),
+                    Package("foxtrot", "1.0.0"),
+                    Package("golf", "1.0.0"),
+                    Package("hotel", "1.0.0"),
+                },
+                installed: Array.Empty<Package>());
+
+            var viewModel = BuildViewModel(chocolateyService, includeAllVersions: false);
+            viewModel.PageSize = 2;
+
+            viewModel.LoadPackages(false).GetAwaiter().GetResult();
+
+            // First page plus two prefetched pages, so the next icons are ready before the user reaches the bottom.
+            viewModel.Packages.Select(p => p.Id).Should().Equal("alpha", "bravo", "charlie", "delta", "echo", "foxtrot");
+            viewModel.HasMore.Should().BeTrue();
+            viewModel.TotalCount.Should().Be(8);
+            chocolateyService.Verify(
+                s => s.Search(It.IsAny<string>(), It.IsAny<PackageSearchOptions>()),
+                Times.Exactly(3));
+            chocolateyService.Verify(s => s.GetInstalledPackages(), Times.Once);
+        }
+
+        [Test]
+        public void LoadMorePackages_AppendsNextBatch_WithoutClearing()
+        {
+            var chocolateyService = BuildChocolateyService(
+                remote: new[]
+                {
+                    Package("alpha", "1.0.0"),
+                    Package("bravo", "1.0.0"),
+                    Package("charlie", "1.0.0"),
+                    Package("delta", "1.0.0"),
+                    Package("echo", "1.0.0"),
+                    Package("foxtrot", "1.0.0"),
+                    Package("golf", "1.0.0"),
+                    Package("hotel", "1.0.0"),
+                },
+                installed: Array.Empty<Package>());
+
+            var viewModel = BuildViewModel(chocolateyService, includeAllVersions: false);
+            viewModel.PageSize = 2;
+
+            viewModel.LoadPackages(false).GetAwaiter().GetResult();
+            viewModel.Packages.Should().HaveCount(6);
+
+            viewModel.LoadMorePackages().GetAwaiter().GetResult();
+
+            viewModel.Packages.Select(p => p.Id).Should().Equal(
+                "alpha", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel");
+            viewModel.LoadedCount.Should().Be(8);
+
+            // A full final page cannot prove the feed is exhausted; the next fetch is empty.
+            viewModel.HasMore.Should().BeTrue();
+            viewModel.LoadMorePackages().GetAwaiter().GetResult();
+            viewModel.HasMore.Should().BeFalse();
+            viewModel.LoadedCount.Should().Be(8);
+
+            chocolateyService.Verify(s => s.GetInstalledPackages(), Times.Once);
+        }
+
+        [Test]
+        public void LoadMorePackages_WhenLastBatchIsShort_DoesNotFetchAgain()
+        {
+            var chocolateyService = BuildChocolateyService(
+                remote: new[]
+                {
+                    Package("alpha", "1.0.0"),
+                    Package("bravo", "1.0.0"),
+                    Package("charlie", "1.0.0"),
+                },
+                installed: Array.Empty<Package>());
+
+            var viewModel = BuildViewModel(chocolateyService, includeAllVersions: false);
+            viewModel.PageSize = 2;
+
+            viewModel.LoadPackages(false).GetAwaiter().GetResult();
+            viewModel.LoadMorePackages().GetAwaiter().GetResult();
+
+            chocolateyService.Verify(
+                s => s.Search(It.IsAny<string>(), It.IsAny<PackageSearchOptions>()),
+                Times.Exactly(2));
+            viewModel.Packages.Should().HaveCount(3);
+            viewModel.HasMore.Should().BeFalse();
+        }
+
+        [Test]
+        public void LoadPackages_AfterAppend_ReplacesPreviouslyLoadedItems()
+        {
+            var chocolateyService = BuildChocolateyService(
+                remote: new[]
+                {
+                    Package("alpha", "1.0.0"),
+                    Package("bravo", "1.0.0"),
+                    Package("charlie", "1.0.0"),
+                    Package("delta", "1.0.0"),
+                    Package("echo", "1.0.0"),
+                    Package("foxtrot", "1.0.0"),
+                    Package("golf", "1.0.0"),
+                    Package("hotel", "1.0.0"),
+                    Package("india", "1.0.0"),
+                    Package("juliet", "1.0.0"),
+                },
+                installed: Array.Empty<Package>());
+
+            var viewModel = BuildViewModel(chocolateyService, includeAllVersions: false);
+            viewModel.PageSize = 2;
+
+            viewModel.LoadPackages(false).GetAwaiter().GetResult();
+            viewModel.LoadMorePackages().GetAwaiter().GetResult();
+            viewModel.Packages.Should().HaveCount(8);
+
+            viewModel.LoadPackages(false).GetAwaiter().GetResult();
+
+            viewModel.Packages.Select(p => p.Id).Should().Equal("alpha", "bravo", "charlie", "delta", "echo", "foxtrot");
+            viewModel.HasMore.Should().BeTrue();
+        }
+
+        [Test]
+        public void LoadPackages_WhenTotalCountIsUnknown_DoesNotShowNegativeTotal()
+        {
+            var chocolateyService = new Mock<IChocolateyService>();
+            chocolateyService.Setup(s => s.Search(It.IsAny<string>(), It.IsAny<PackageSearchOptions>()))
+                .Returns((string _, PackageSearchOptions options) =>
+                {
+                    var packages = options.CurrentPage == 0
+                        ? new[] { Package("alpha", "1.0.0") }
+                        : Array.Empty<Package>();
+                    return Task.FromResult(new PackageResults
+                    {
+                        Packages = packages,
+                        TotalCount = -1,
+                    });
+                });
+            chocolateyService.Setup(s => s.GetInstalledPackages())
+                .ReturnsAsync(Array.Empty<Package>().AsEnumerable());
+            chocolateyService.Setup(s => s.GetOutdatedPackages(It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<ChocolateySource>()))
+                .ReturnsAsync((IReadOnlyList<OutdatedPackage>)new List<OutdatedPackage>());
+
+            var viewModel = BuildViewModel(chocolateyService, includeAllVersions: true);
+
+            viewModel.LoadPackages(false).GetAwaiter().GetResult();
+
+            viewModel.Packages.Should().HaveCount(1);
+            viewModel.TotalCount.Should().Be(1);
+            viewModel.HasMore.Should().BeFalse();
+        }
+
         private static IPackageViewModel CreatePackageViewModelStub()
         {
             var packageViewModel = new Mock<IPackageViewModel>();
@@ -148,7 +305,16 @@ namespace ChocolateyGui.Common.Windows.Tests.ViewModels
             var service = new Mock<IChocolateyService>();
 
             service.Setup(s => s.Search(It.IsAny<string>(), It.IsAny<PackageSearchOptions>()))
-                .ReturnsAsync(new PackageResults { Packages = remote, TotalCount = remote.Length });
+                .Returns((string _, PackageSearchOptions options) =>
+                {
+                    var pageSize = options.PageSize > 0 ? options.PageSize : remote.Length;
+                    var packages = remote.Skip(options.CurrentPage * pageSize).Take(pageSize).ToArray();
+                    return Task.FromResult(new PackageResults
+                    {
+                        Packages = packages,
+                        TotalCount = remote.Length
+                    });
+                });
 
             service.Setup(s => s.GetInstalledPackages())
                 .ReturnsAsync(installed.AsEnumerable());

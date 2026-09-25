@@ -16,7 +16,8 @@ namespace ChocolateyGui.Common.Models
             bool includePrerelease,
             bool includeAllVersions,
             bool matchWord,
-            string source)
+            string source,
+            bool includeTotalCount = true)
             : this()
         {
             PageSize = pageSize;
@@ -26,9 +27,12 @@ namespace ChocolateyGui.Common.Models
             IncludePrerelease = includePrerelease;
             MatchQuery = matchWord;
             Source = source;
+            IncludeTotalCount = includeTotalCount;
         }
 
         public int CurrentPage { get; set;  }
+
+        public bool IncludeTotalCount { get; set; }
 
         public bool IncludeAllVersions { get; set; }
 

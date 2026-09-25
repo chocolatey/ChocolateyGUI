@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
@@ -14,6 +15,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Threading;
 using AutoMapper;
 using Caliburn.Micro;
 using ChocolateyGui.Common.Enums;
@@ -27,7 +29,6 @@ using ChocolateyGui.Common.ViewModels.Items;
 using ChocolateyGui.Common.Windows.Services;
 using ChocolateyGui.Common.Windows.Utilities;
 using ChocolateyGui.Common.Windows.Utilities.Extensions;
-using NuGet.Packaging;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
@@ -35,6 +36,9 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 {
     public sealed class RemoteSourceViewModel : ViewModelScreen, ISourceViewModelBase
     {
+        private const int PrefetchPageCount = 2;
+        private const int UiAddChunkSize = 5;
+
         private static readonly ILogger Logger = Log.ForContext<RemoteSourceViewModel>();
         private readonly IChocolateyService _chocolateyPackageService;
         private readonly IDialogService _dialogService;
@@ -43,15 +47,19 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         private readonly IConfigService _configService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
-        private int _currentPage = 1;
         private bool _hasLoaded;
+        private bool _hasMore;
+        private bool _isLoadingMore;
         private bool _shouldShowPreventPreloadMessage;
         private bool _includeAllVersions;
         private bool _includePrerelease;
         private bool _matchWord;
         private ObservableCollection<IPackageViewModel> _packageViewModels;
-        private int _pageCount = 1;
         private int _pageSize = 50;
+        private int _totalCount;
+        private int _nextPage;
+        private int _loadId;
+        private IList<Package> _installedPackages = new List<Package>();
         private string _searchQuery;
         private string _sortSelection;
         private string _sortSelectionName;
@@ -117,6 +125,12 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             set { this.SetPropertyValue(ref _hasLoaded, value); }
         }
 
+        public bool HasMore
+        {
+            get { return _hasMore; }
+            set { this.SetPropertyValue(ref _hasMore, value); }
+        }
+
         public bool ShowShouldPreventPreloadMessage
         {
             get { return _shouldShowPreventPreloadMessage; }
@@ -145,10 +159,15 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public ICollectionView PackageSource { get; }
 
-        public int CurrentPage
+        public int LoadedCount
         {
-            get { return _currentPage; }
-            set { this.SetPropertyValue(ref _currentPage, value); }
+            get { return Packages == null ? 0 : Packages.Count; }
+        }
+
+        public int TotalCount
+        {
+            get { return _totalCount; }
+            set { this.SetPropertyValue(ref _totalCount, value); }
         }
 
         public bool IncludeAllVersions
@@ -167,12 +186,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
         {
             get { return _matchWord; }
             set { this.SetPropertyValue(ref _matchWord, value); }
-        }
-
-        public int PageCount
-        {
-            get { return _pageCount; }
-            set { this.SetPropertyValue(ref _pageCount, value); }
         }
 
         public int PageSize
@@ -205,52 +218,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             }
         }
 
-        public bool CanGoToFirst()
-        {
-            return CurrentPage > 1;
-        }
-
-        public bool CanGoToLast()
-        {
-            return CurrentPage < PageCount;
-        }
-
-        public bool CanGoToNext()
-        {
-            return CurrentPage < PageCount;
-        }
-
-        public bool CanGoToPrevious()
-        {
-            return CurrentPage > 1;
-        }
-
-        public void GoToFirst()
-        {
-            CurrentPage = 1;
-        }
-
-        public void GoToLast()
-        {
-            CurrentPage = PageCount;
-        }
-
-        public void GoToNext()
-        {
-            if (CurrentPage < PageCount)
-            {
-                CurrentPage++;
-            }
-        }
-
-        public void GoToPrevious()
-        {
-            if (CurrentPage > 1)
-            {
-                CurrentPage--;
-            }
-        }
-
         public bool CanSearchForPackages()
         {
             return HasLoaded;
@@ -277,129 +244,17 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 
         public async Task LoadPackages(bool forceCheckForOutdatedPackages)
         {
-            try
+            await LoadPackages(true, forceCheckForOutdatedPackages);
+        }
+
+        public async Task LoadMorePackages()
+        {
+            if (!HasLoaded || _isLoadingMore || !HasMore)
             {
-                if (!IsActive || (!CanLoadRemotePackages() && Packages.Any()))
-                {
-                    return;
-                }
-
-                if (!HasLoaded && (_configService.GetEffectiveConfiguration().PreventPreload ?? false))
-                {
-                    ShowShouldPreventPreloadMessage = true;
-                    HasLoaded = true;
-                    return;
-                }
-
-                HasLoaded = false;
-                ShowShouldPreventPreloadMessage = false;
-
-                var sort = _sortSelectionName;
-
-                await _progressService.StartLoading(L(nameof(Resources.RemoteSourceViewModel_LoadingPage), CurrentPage));
-
-                _progressService.WriteMessage(L(nameof(Resources.RemoteSourceViewModel_FetchingPackages)));
-
-                try
-                {
-                    var result =
-                        await
-                            _chocolateyPackageService.Search(
-                                SearchQuery,
-                                new PackageSearchOptions(
-                                    PageSize,
-                                    CurrentPage - 1,
-                                    sort,
-                                    IncludePrerelease,
-                                    IncludeAllVersions,
-                                    MatchWord,
-                                    Source.Value));
-                    var installedPackages = await _chocolateyPackageService.GetInstalledPackages();
-                    
-                    PackageSource.Refresh();
-
-                    PageCount = (int)Math.Ceiling((double)result.TotalCount / (double)PageSize);
-                    Packages.Clear();
-
-                    // When showing all versions, the source returns them in the active sort order (e.g.
-                    // popularity / download count), which interleaves the versions of a package. Order each
-                    // package's versions newest-first, keeping the packages themselves in their original
-                    // (relevance) order.
-                    var packagesToDisplay = IncludeAllVersions
-                        ? result.Packages
-                            .GroupBy(package => package.Id, StringComparer.OrdinalIgnoreCase)
-                            .SelectMany(group => group.OrderByDescending(package => package.Version))
-                            .ToList()
-                        : result.Packages.ToList();
-
-                    packagesToDisplay.ForEach(p =>
-                    {
-                        var remoteVersion = p.Version;
-
-                        if (IncludeAllVersions)
-                        {
-                            // When showing all versions, every row is a distinct version of the same package.
-                            // Only flag the row whose version is actually installed, and never overwrite the
-                            // displayed version - otherwise every row collapses to the installed version (#1146).
-                            var installedVersion = installedPackages.FirstOrDefault(package =>
-                                string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)
-                                && Equals(package.Version, p.Version));
-                            if (installedVersion != null)
-                            {
-                                p.IsPinned = installedVersion.IsPinned;
-                                p.IsInstalled = true;
-                            }
-                        }
-                        else
-                        {
-                            var installedPackage = installedPackages.FirstOrDefault(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase));
-                            if (installedPackage != null)
-                            {
-                                p.Version = installedPackage.Version;
-                                p.IsPinned = installedPackage.IsPinned;
-                                p.IsInstalled = true;
-                            }
-                        }
-
-                        var packageViewModel = Mapper.Map<IPackageViewModel>(p);
-                        packageViewModel.ChocolateySource = Source;
-                        packageViewModel.RemoteVersion = remoteVersion;
-                        Packages.Add(packageViewModel);
-                    });
-
-                    if (_configService.GetEffectiveConfiguration().ExcludeInstalledPackages ?? false)
-                    {
-                        Packages.RemoveAll(x => x.IsInstalled);
-                    }
-
-                    if (PageCount < CurrentPage)
-                    {
-                        CurrentPage = PageCount == 0 ? 1 : PageCount;
-                    }
-
-                    var outdatedPackages = await _chocolateyPackageService.GetOutdatedPackages(IncludePrerelease, forceCheckForOutdatedPackages: forceCheckForOutdatedPackages, source: Source);
-
-                    foreach (var update in outdatedPackages)
-                    {
-                        await _eventAggregator.PublishOnUIThreadAsync(new PackageOutdatedMessage(update.Id, update.Version, source: Source));
-                    }
-                }
-                finally
-                {
-                    await _progressService.StopLoading();
-                    HasLoaded = true;
-                }
-
-                await _eventAggregator.PublishOnUIThreadAsync(new ResetScrollPositionMessage());
+                return;
             }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "Failed to load new packages.");
-                await _dialogService.ShowMessageAsync(
-                    L(nameof(Resources.RemoteSourceViewModel_FailedToLoad)),
-                    L(nameof(Resources.RemoteSourceViewModel_FailedToLoadRemotePackages), ex.Message));
-                throw;
-            }
+
+            await LoadPackages(false, false);
         }
 
         public bool CanCheckForOutdatedPackages()
@@ -465,15 +320,6 @@ namespace ChocolateyGui.Common.Windows.ViewModels
 #pragma warning disable 4014
                     .Subscribe(e => LoadPackages(false));
 #pragma warning restore 4014
-
-                Observable.FromEventPattern<PropertyChangedEventArgs>(this, "PropertyChanged")
-                    .Where(e => e.EventArgs.PropertyName == "CurrentPage")
-                    .Throttle(TimeSpan.FromMilliseconds(300))
-                    .DistinctUntilChanged()
-                    .ObserveOnDispatcher()
-#pragma warning disable 4014
-                    .Subscribe(e => LoadPackages(false));
-#pragma warning restore 4014
             }
             catch (InvalidOperationException ex)
             {
@@ -504,6 +350,384 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             RemoveOldSortOptions();
         }
 
+        private async Task LoadPackages(bool reset, bool forceCheckForOutdatedPackages)
+        {
+            try
+            {
+                if (!IsActive || (!CanLoadRemotePackages() && Packages.Any()))
+                {
+                    return;
+                }
+
+                if (reset && !HasLoaded && (_configService.GetEffectiveConfiguration().PreventPreload ?? false))
+                {
+                    ShowShouldPreventPreloadMessage = true;
+                    HasLoaded = true;
+                    HasMore = false;
+                    return;
+                }
+
+                if (!reset && (!HasLoaded || _isLoadingMore || !HasMore))
+                {
+                    return;
+                }
+
+                var loadId = reset ? ++_loadId : _loadId;
+
+                if (reset)
+                {
+                    HasLoaded = false;
+                    ShowShouldPreventPreloadMessage = false;
+                    _nextPage = 0;
+                    HasMore = true;
+                    TotalCount = 0;
+                    Packages.Clear();
+                    NotifyListCounts();
+                }
+                else
+                {
+                    _isLoadingMore = true;
+                }
+
+                try
+                {
+                    if (reset)
+                    {
+                        await _progressService.StartLoading(L(nameof(Resources.RemoteSourceViewModel_FetchingPackages)));
+                        _progressService.WriteMessage(L(nameof(Resources.RemoteSourceViewModel_FetchingPackages)));
+                    }
+
+                    try
+                    {
+                        if (reset)
+                        {
+                            _installedPackages = (await GetInstalledPackagesAsync()).ToList();
+                        }
+
+                        var added = 0;
+                        do
+                        {
+                            if (loadId != _loadId)
+                            {
+                                return;
+                            }
+
+                            var page = _nextPage;
+                            var result = await SearchPackagesAsync(
+                                new PackageSearchOptions(
+                                    PageSize,
+                                    page,
+                                    _sortSelectionName,
+                                    IncludePrerelease,
+                                    IncludeAllVersions,
+                                    MatchWord,
+                                    Source.Value,
+                                    false));
+
+                            if (loadId != _loadId)
+                            {
+                                return;
+                            }
+
+                            added = await ApplySearchResultAsync(result, reset, page, loadId);
+                        }
+                        while (added == 0 && HasMore && loadId == _loadId);
+                    }
+                    finally
+                    {
+                        if (reset)
+                        {
+                            await _progressService.StopLoading();
+                            HasLoaded = true;
+                        }
+                    }
+
+                    if (reset && loadId == _loadId)
+                    {
+                        // Outdated check and prefetch run after the modal closes so the list is usable.
+                        try
+                        {
+                            var outdatedPackages = await GetOutdatedPackagesAsync(forceCheckForOutdatedPackages);
+
+                            foreach (var update in outdatedPackages)
+                            {
+                                if (loadId != _loadId)
+                                {
+                                    break;
+                                }
+
+                                await _eventAggregator.PublishOnUIThreadAsync(new PackageOutdatedMessage(update.Id, update.Version, source: Source));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error(ex, "Failed to check for outdated packages after remote load.");
+                        }
+
+                        // Do not await: extra pages arrive in the background so the list stays interactive.
+#pragma warning disable 4014
+                        PrefetchAhead(loadId);
+#pragma warning restore 4014
+                        await _eventAggregator.PublishOnUIThreadAsync(new ResetScrollPositionMessage());
+                    }
+                }
+                finally
+                {
+                    if (!reset)
+                    {
+                        _isLoadingMore = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Failed to load new packages.");
+                await _dialogService.ShowMessageAsync(
+                    L(nameof(Resources.RemoteSourceViewModel_FailedToLoad)),
+                    L(nameof(Resources.RemoteSourceViewModel_FailedToLoadRemotePackages), ex.Message));
+                throw;
+            }
+        }
+
+        private async Task PrefetchAhead(int loadId)
+        {
+            try
+            {
+                for (var i = 0; i < PrefetchPageCount; i++)
+                {
+                    if (loadId != _loadId || !HasMore)
+                    {
+                        return;
+                    }
+
+                    await LoadPackages(false, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Failed to prefetch packages.");
+            }
+        }
+
+        private async Task<IEnumerable<Package>> GetInstalledPackagesAsync()
+        {
+            if (Application.Current != null)
+            {
+                return await Task.Run(() => _chocolateyPackageService.GetInstalledPackages()).ConfigureAwait(false);
+            }
+
+            return await _chocolateyPackageService.GetInstalledPackages();
+        }
+
+        private async Task<IReadOnlyList<OutdatedPackage>> GetOutdatedPackagesAsync(bool forceCheckForOutdatedPackages)
+        {
+            if (Application.Current != null)
+            {
+                return await Task.Run(() => _chocolateyPackageService.GetOutdatedPackages(IncludePrerelease, forceCheckForOutdatedPackages, Source)).ConfigureAwait(false);
+            }
+
+            return await _chocolateyPackageService.GetOutdatedPackages(IncludePrerelease, forceCheckForOutdatedPackages, Source);
+        }
+
+        private async Task<PackageResults> SearchPackagesAsync(PackageSearchOptions options)
+        {
+            // Chocolatey search is expensive; keep it off the dispatcher so scrolling stays responsive.
+            if (Application.Current != null)
+            {
+                return await Task.Run(async () =>
+                    await _chocolateyPackageService.Search(SearchQuery, options).ConfigureAwait(false)).ConfigureAwait(false);
+            }
+
+            return await _chocolateyPackageService.Search(SearchQuery, options);
+        }
+
+        private async Task<int> ApplySearchResultAsync(PackageResults result, bool reset, int page, int loadId)
+        {
+            if (loadId != _loadId)
+            {
+                return 0;
+            }
+
+            var fetchedCount = result.Packages == null ? 0 : result.Packages.Length;
+            var viewModels = Application.Current != null
+                ? await Task.Run(() => CreatePackageViewModels(result.Packages)).ConfigureAwait(false)
+                : CreatePackageViewModels(result.Packages);
+
+            if (loadId != _loadId)
+            {
+                return 0;
+            }
+
+            var added = await AddViewModelsAsync(viewModels, loadId);
+
+            if (loadId != _loadId)
+            {
+                return 0;
+            }
+
+            System.Action commitPage = () =>
+            {
+                if (loadId != _loadId)
+                {
+                    return;
+                }
+
+                if (reset && page == 0)
+                {
+                    // Totals from ListCount are skipped (can hang). Seed from this page; HasMore
+                    // keeps loading until a short page arrives.
+                    TotalCount = result.TotalCount > 0 ? result.TotalCount : fetchedCount;
+                }
+
+                _nextPage = page + 1;
+                HasMore = fetchedCount >= PageSize;
+                if (TotalCount < LoadedCount)
+                {
+                    TotalCount = LoadedCount;
+                }
+
+                if (!HasMore)
+                {
+                    TotalCount = LoadedCount;
+                }
+
+                NotifyListCounts();
+            };
+
+            var dispatcher = Application.Current != null ? Application.Current.Dispatcher : null;
+            if (dispatcher != null && !dispatcher.CheckAccess())
+            {
+                await dispatcher.InvokeAsync(commitPage).Task.ConfigureAwait(false);
+            }
+            else
+            {
+                commitPage();
+            }
+
+            return added;
+        }
+
+        private IList<IPackageViewModel> CreatePackageViewModels(IEnumerable<Package> packages)
+        {
+            var viewModels = new List<IPackageViewModel>();
+            if (packages == null)
+            {
+                return viewModels;
+            }
+
+            var installedPackages = _installedPackages ?? new List<Package>();
+
+            // When showing all versions, the source returns them in the active sort order (e.g.
+            // popularity / download count), which interleaves the versions of a package. Order each
+            // package's versions newest-first, keeping the packages themselves in their original
+            // (relevance) order.
+            var packagesToDisplay = IncludeAllVersions
+                ? packages
+                    .GroupBy(package => package.Id, StringComparer.OrdinalIgnoreCase)
+                    .SelectMany(group => group.OrderByDescending(package => package.Version))
+                    .ToList()
+                : packages.ToList();
+
+            packagesToDisplay.ForEach(p =>
+            {
+                var remoteVersion = p.Version;
+
+                if (IncludeAllVersions)
+                {
+                    // When showing all versions, every row is a distinct version of the same package.
+                    // Only flag the row whose version is actually installed, and never overwrite the
+                    // displayed version - otherwise every row collapses to the installed version (#1146).
+                    var installedVersion = installedPackages.FirstOrDefault(package =>
+                        string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase)
+                        && Equals(package.Version, p.Version));
+                    if (installedVersion != null)
+                    {
+                        p.IsPinned = installedVersion.IsPinned;
+                        p.IsInstalled = true;
+                    }
+                }
+                else
+                {
+                    var installedPackage = installedPackages.FirstOrDefault(package => string.Equals(package.Id, p.Id, StringComparison.OrdinalIgnoreCase));
+                    if (installedPackage != null)
+                    {
+                        p.Version = installedPackage.Version;
+                        p.IsPinned = installedPackage.IsPinned;
+                        p.IsInstalled = true;
+                    }
+                }
+
+                var packageViewModel = Mapper.Map<IPackageViewModel>(p);
+                packageViewModel.ChocolateySource = Source;
+                packageViewModel.RemoteVersion = remoteVersion;
+                viewModels.Add(packageViewModel);
+            });
+
+            if (_configService.GetEffectiveConfiguration().ExcludeInstalledPackages ?? false)
+            {
+                viewModels.RemoveAll(package => package.IsInstalled);
+            }
+
+            return viewModels;
+        }
+
+        private async Task<int> AddViewModelsAsync(IList<IPackageViewModel> viewModels, int loadId)
+        {
+            if (viewModels == null || viewModels.Count == 0 || loadId != _loadId)
+            {
+                return 0;
+            }
+
+            var dispatcher = Application.Current != null ? Application.Current.Dispatcher : null;
+            if (dispatcher == null)
+            {
+                foreach (var packageViewModel in viewModels)
+                {
+                    Packages.Add(packageViewModel);
+                }
+
+                NotifyListCounts();
+                return viewModels.Count;
+            }
+
+            var added = 0;
+            for (var index = 0; index < viewModels.Count; index += UiAddChunkSize)
+            {
+                if (loadId != _loadId)
+                {
+                    return added;
+                }
+
+                var start = index;
+                var count = Math.Min(UiAddChunkSize, viewModels.Count - index);
+                await dispatcher.InvokeAsync(() =>
+                {
+                    if (loadId != _loadId)
+                    {
+                        return;
+                    }
+
+                    for (var offset = 0; offset < count; offset++)
+                    {
+                        Packages.Add(viewModels[start + offset]);
+                    }
+
+                    added += count;
+                    NotifyListCounts();
+                }).Task.ConfigureAwait(false);
+
+                // Let scroll input and layout run before the next tiles are materialized.
+                await dispatcher.InvokeAsync(() => { }, DispatcherPriority.Input).Task.ConfigureAwait(false);
+            }
+
+            return added;
+        }
+
+        private void NotifyListCounts()
+        {
+            NotifyOfPropertyChange(nameof(LoadedCount));
+        }
+
         private void AddSortOptions()
         {
             var downloadCount = L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity));
@@ -529,7 +753,13 @@ namespace ChocolateyGui.Common.Windows.ViewModels
             var downloadCount = L(nameof(Resources.RemoteSourceViewModel_SortSelectionPopularity));
             var title = L(nameof(Resources.RemoteSourceViewModel_SortSelectionAtoZ));
 
-            SortOptions.RemoveAll(so => so != downloadCount && so != title);
+            for (var index = SortOptions.Count - 1; index >= 0; index--)
+            {
+                if (SortOptions[index] != downloadCount && SortOptions[index] != title)
+                {
+                    SortOptions.RemoveAt(index);
+                }
+            }
         }
 
         private void SubscribeToLoadPackagesOnSearchQueryChange()

@@ -71,7 +71,7 @@ namespace ChocolateyGuiCli
 #if DEBUG
                     Bootstrapper.Logger.Warning(" (DEBUG BUILD)".FormatWith("Chocolatey GUI", configuration.Information.DisplayVersion));
 #else
-                    Bootstrapper.Logger.Warning("{0}".format_with(configuration.Information.DisplayVersion));
+                    Bootstrapper.Logger.Warning("{0}".FormatWith(configuration.Information.DisplayVersion));
 #endif
 
                     if (args.Length == 0)

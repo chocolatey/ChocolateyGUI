@@ -320,8 +320,9 @@ namespace ChocolateyGui.Common.Windows.Services
                             config.ListCommand.LocalOnly = false;
                             if (string.IsNullOrWhiteSpace(query) || !string.IsNullOrWhiteSpace(options.SortColumn))
                             {
-                                config.ListCommand.OrderByPopularity = string.IsNullOrWhiteSpace(options.SortColumn)
-                                                                       || options.SortColumn == "DownloadCount";
+                                config.ListCommand.OrderBy = string.IsNullOrWhiteSpace(options.SortColumn) || options.SortColumn == "DownloadCount"
+                                                                 ? PackageOrder.Popularity
+                                                                 : PackageOrder.Id;
                             }
                             config.ListCommand.Exact = options.MatchQuery;
                             if (!string.IsNullOrWhiteSpace(options.Source))
